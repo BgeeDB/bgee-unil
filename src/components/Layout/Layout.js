@@ -7,7 +7,7 @@ import Alert from '../Alert';
 const Layout = ({ children }) => (
   <div className={styles.layout}>
     <Header />
-    <Alert type="warning" light closable>
+    <Alert type="warning" light>
       <>
         We are happy to announce that we have released the new Bgee 15 version
         as a beta test. Please check it out at{' '}

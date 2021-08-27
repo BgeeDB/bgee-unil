@@ -3,6 +3,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 0.9rem !important;
 }
 
 code {
@@ -12,33 +13,34 @@ code {
 /*
  * navbar style
  */
-.navbar .navbar-burger:hover {
-  color: #ffffff !important;
+@media only screen and (max-width: 1090px) {
+  .navbar .navbar-burger:hover {
+    color: #ffffff !important;
+  }
+  .navbar img.logo {
+    width: 99px;
+    max-width: 99px;
+    height: 40px;
+    max-height: 40px;
+  }
+  .navbar .navbar-link:hover, .navbar .navbar-link.active {
+    background-color: #555555;
+    color: #ffffff;
+  }
+  .navbar .custom.navbar-item {
+    color: #aaaaaa;
+  }
+  .navbar .custom.navbar-item:hover {
+    background-color: #ffffff;
+    color: #333333;
+  }
+  .navbar .navbar-dropdown {
+    display: none;
+  }
+  .navbar .navbar-dropdown.open {
+    display: block;
+  }
 }
-.navbar img.logo {
-  width: 99px;
-  max-width: 99px;
-  height: 40px;
-  max-height: 40px;
-}
-.navbar .navbar-link:hover, .navbar .navbar-link.active {
-  background-color: #555555;
-  color: #ffffff;
-}
-.navbar .custom.navbar-item {
-  color: #aaaaaa;
-}
-.navbar .custom.navbar-item:hover {
-  background-color: #ffffff;
-  color: #333333;
-}
-.navbar .navbar-dropdown {
-  display: none;
-}
-.navbar .navbar-dropdown.open {
-  display: block;
-}
-
 /*
  * END navbar style
  */
@@ -53,6 +55,7 @@ footer.footer a {
 }
 footer.footer a.image {
   position: relative;
+  height: 15px;
 }
 footer.footer a.image img {
   margin: 0;
@@ -67,6 +70,26 @@ footer.footer a.image img.bgee-cc {
   max-width: 80px;
 }
 
+@media only screen and (max-width: 1090px) {
+  footer.footer > div {
+    flex-direction: column;
+    justify-content: normal !important;
+  }
+  footer.footer .left-wrapper, footer.footer .right-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  footer.footer .left-wrapper a:not(:first-child) {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  footer.footer .right-wrapper a {
+    margin-top: 10px;
+  }
+  footer.footer .right-wrapper a:not(:last-child) {
+    margin-right: 0;
+  }
+}
 /* Bulma Base */
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
 html,

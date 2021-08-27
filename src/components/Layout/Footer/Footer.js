@@ -21,8 +21,6 @@ const Footer = () => (
           <img
             className="bgee-cc"
             src="https://bgee.org/img/cc-zero.png"
-            width="80"
-            height="15"
             alt="CC0"
           />
         </a>

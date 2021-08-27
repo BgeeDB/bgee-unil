@@ -9,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: .9rem !important;
 }
 
 code {
@@ -33,37 +34,38 @@ $colors: map-merge($colors, $custom-colors);
 $navbar-background-color: $dark-bg-color;
 $navbar-item-color: $dark-color;
 $navbar-dropdown-arrow: $dark-color;
-
-
-.navbar {
-  .navbar-burger:hover {
-    color: $dark-color !important;
-  }
-  img.logo {
-    width: 99px;
-    max-width: 99px;
-    height: 40px;
-    max-height: 40px;
-  }
-  .navbar-link:hover, .navbar-link.active {
-    background-color: $dark-bg-hover-color;
-    color: $dark-color;
-  }
-  .custom.navbar-item {
-    color: #aaaaaa;
-    &:hover {
-      background-color: $dark-color;
-      color: $dark-bg-color;
+@media only screen and (max-width: $desktop) {
+  .navbar {
+    .navbar-burger:hover {
+      color: $dark-color !important;
     }
-  }
+    img.logo {
+      width: 99px;
+      max-width: 99px;
+      height: 40px;
+      max-height: 40px;
+    }
+    .navbar-link:hover, .navbar-link.active {
+      background-color: $dark-bg-hover-color;
+      color: $dark-color;
+    }
+    .custom.navbar-item {
+      color: #aaaaaa;
+      &:hover {
+        background-color: $dark-color;
+        color: $dark-bg-color;
+      }
+    }
 
-  .navbar-dropdown {
-    display: none;
-    &.open {
-      display: block;
+    .navbar-dropdown {
+      display: none;
+      &.open {
+        display: block;
+      }
     }
   }
 }
+
 /*
  * END navbar style
  */
@@ -71,8 +73,6 @@ $navbar-dropdown-arrow: $dark-color;
 $footer-background-color: $dark-bg-color;
 $footer-color: $dark-color;
 $footer-padding: 1rem;
-
-
 
 footer.footer {
   .left-wrapper a:not(:first-child) {
@@ -85,6 +85,7 @@ footer.footer {
     color: #ffffff;
     &.image {
       position: relative;
+      height: 15px;
       img {
         margin: 0;
         position: absolute;
@@ -96,6 +97,29 @@ footer.footer {
           width: 80px;
           max-width: 80px;
         }
+      }
+    }
+  }
+}
+@media only screen and (max-width: $desktop) {
+  footer.footer {
+    & > div {
+      flex-direction: column;
+      justify-content: normal !important;
+    }
+    .left-wrapper, .right-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left-wrapper a:not(:first-child) {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+    .right-wrapper a {
+      margin-top: 10px;
+      &:not(:last-child) {
+        margin-right: 0;
       }
     }
   }
