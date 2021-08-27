@@ -19,6 +19,7 @@ code {
 
 $dark-color: #ffffff;
 $dark-bg-color: #333333;
+$dark-bg-hover-color: #555555;
 
 $desktop: 1090px;
 
@@ -28,6 +29,41 @@ $desktop: 1090px;
 @import "../../node_modules/bulma/sass/utilities/derived-variables";
 $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 $colors: map-merge($colors, $custom-colors);
+
+$navbar-background-color: $dark-bg-color;
+$navbar-item-color: $dark-color;
+$navbar-dropdown-arrow: $dark-color;
+
+
+.navbar {
+  .navbar-burger:hover {
+    color: $dark-color !important;
+  }
+  img.logo {
+    width: 99px;
+    max-width: 99px;
+    height: 40px;
+    max-height: 40px;
+  }
+  .navbar-link:hover, .navbar-link.active {
+    background-color: $dark-bg-hover-color;
+    color: $dark-color;
+  }
+  .custom.navbar-item {
+    color: #aaaaaa;
+    &:hover {
+      background-color: $dark-color;
+      color: $dark-bg-color;
+    }
+  }
+
+  .navbar-dropdown {
+    display: none;
+    &.open {
+      display: block;
+    }
+  }
+}
 /*
  * END navbar style
  */
@@ -68,7 +104,11 @@ footer.footer {
 @import "../../node_modules/bulma/sass/base/all";
 @import "../../node_modules/bulma/sass/utilities/all";
 @import "../../node_modules/bulma/sass/components/navbar";
+@import "../../node_modules/bulma/sass/elements/other";
+@import "../../node_modules/bulma/sass/elements/notification";
 @import "../../node_modules/bulma/sass/layout/footer";
 @import "../../node_modules/bulma/sass/helpers/flexbox";
 @import "../../node_modules/bulma/sass/helpers/visibility";
+
+//@import "../../node_modules/bulma/sass/elements/all";
 //@import "../../node_modules/bulma/bulma";

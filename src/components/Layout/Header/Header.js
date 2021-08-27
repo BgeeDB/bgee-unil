@@ -192,91 +192,127 @@ const NAVBAR_RIGHT = [
   },
 ];
 
-const Header = () => (
-  <nav
-    className="navbar is-bgee-inverted"
-    role="navigation"
-    aria-label="main navigation"
-  >
-    <div className="navbar-brand">
-      <a className="navbar-item" href="https://bulma.io">
-        <img alt="Bgee logo" src={assets.bgeeLogo} width="99" height="40" />
-      </a>
+const Header = () => {
+  const [openedMenuId, setOpenMenuId] = React.useState(undefined);
+  const toggleOpenMenu = React.useCallback(
+    (key) => () => {
+      setOpenMenuId(openedMenuId === key ? undefined : key);
+    },
+    [openedMenuId]
+  );
 
-      <a
-        role="button"
-        className="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
-      >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-      </a>
-    </div>
+  const [hamburgerActive, setHamburgerActive] = React.useState(false);
+  const [hamburgerVisible, setHamburgerVisible] = React.useState(
+    window.innerWidth < 1090
+  );
 
-    <div className="navbar-menu">
-      <div className="navbar-start">
-        {NAVBAR_LEFT.map(({ key, children }) => (
-          <div key={key} className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">{i18n.t(key)}</a>
+  React.useEffect(() => {
+    function handleResize() {
+      setHamburgerVisible(window.innerWidth < 1090);
+    }
 
-            <div className="navbar-dropdown">
-              {children.map(({ key: keyChild, type, ...childProps }) => {
-                switch (type) {
-                  case 'mail':
-                    return (
-                      <a
-                        key={keyChild}
-                        className="navbar-item"
-                        href={`mailto:${childProps.mail}`}
-                      >
-                        {i18n.t(keyChild)}
-                      </a>
-                    );
-                  case 'external':
-                    return (
-                      <a
-                        key={keyChild}
-                        className="navbar-item"
-                        href={childProps.path}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {i18n.t(keyChild)}
-                      </a>
-                    );
-                  case 'internal':
-                  default:
-                    return (
-                      <Link
-                        key={keyChild}
-                        to={childProps.path}
-                        className="navbar-item"
-                        onClick={(event) => {
-                          event.target.blur();
-                        }}
-                      >
-                        {i18n.t(keyChild)}
-                      </Link>
-                    );
-                }
-              })}
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <nav
+      className={`navbar ${hamburgerVisible ? '' : 'is-bgee-inverted'}`}
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div className="navbar-brand">
+        <Link className="navbar-item" to={PATHS.HOME}>
+          <img alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
+        </Link>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
+        <a
+          role="button"
+          className="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+          onClick={() => setHamburgerActive(!hamburgerActive)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </a>
+      </div>
+
+      <div className={`navbar-menu ${hamburgerActive ? 'is-active' : ''}`}>
+        <div className="navbar-start">
+          {NAVBAR_LEFT.map(({ key, children }) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+            <div
+              key={key}
+              className="navbar-item has-dropdown is-hoverable"
+              onClick={toggleOpenMenu(key)}
+            >
+              <a className="navbar-link">{i18n.t(key)}</a>
+
+              <div
+                className={`navbar-dropdown ${
+                  key === openedMenuId ? 'open' : ''
+                }`}
+              >
+                {children.map(({ key: keyChild, type, ...childProps }) => {
+                  switch (type) {
+                    case 'mail':
+                      return (
+                        <a
+                          key={keyChild}
+                          className="navbar-item custom"
+                          href={`mailto:${childProps.mail}`}
+                        >
+                          {i18n.t(keyChild)}
+                        </a>
+                      );
+                    case 'external':
+                      return (
+                        <a
+                          key={keyChild}
+                          className="navbar-item custom"
+                          href={childProps.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {i18n.t(keyChild)}
+                        </a>
+                      );
+                    case 'internal':
+                    default:
+                      return (
+                        <Link
+                          key={keyChild}
+                          to={childProps.path}
+                          className="navbar-item custom"
+                          onClick={(event) => {
+                            event.target.blur();
+                          }}
+                        >
+                          {i18n.t(keyChild)}
+                        </Link>
+                      );
+                  }
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="navbar-end">
-        {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
-          <a key={href} className="navbar-item" href={href}>
-            <img alt={alt} {...imgProps} />
-          </a>
-        ))}
+        <div className="navbar-end">
+          {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
+            <a key={href} className="navbar-item" href={href}>
+              <img alt={alt} {...imgProps} />
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 export default Header;
