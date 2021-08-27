@@ -1,3 +1,7 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +15,60 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+$dark-color: #ffffff;
+$dark-bg-color: #333333;
+
+$desktop: 1090px;
+
+/*
+ * navbar style
+ */
+@import "../../node_modules/bulma/sass/utilities/derived-variables";
+$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
+$colors: map-merge($colors, $custom-colors);
+/*
+ * END navbar style
+ */
+
+$footer-background-color: $dark-bg-color;
+$footer-color: $dark-color;
+$footer-padding: 1rem;
+
+
+
+footer.footer {
+  .left-wrapper a:not(:first-child) {
+    margin-left: 15px;
+  }
+  .right-wrapper a:not(:last-child) {
+    margin-right: 15px;
+  }
+  a {
+    color: #ffffff;
+    &.image {
+      position: relative;
+      img {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        &.bgee-cc {
+          height: 15px;
+          width: 80px;
+          max-width: 80px;
+        }
+      }
+    }
+  }
+}
+
+@import "../../node_modules/bulma/sass/base/all";
+@import "../../node_modules/bulma/sass/utilities/all";
+@import "../../node_modules/bulma/sass/components/navbar";
+@import "../../node_modules/bulma/sass/layout/footer";
+@import "../../node_modules/bulma/sass/helpers/flexbox";
+@import "../../node_modules/bulma/sass/helpers/visibility";
+//@import "../../node_modules/bulma/bulma";
