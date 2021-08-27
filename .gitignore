@@ -43,3 +43,4 @@ yarn-error.log*
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea
