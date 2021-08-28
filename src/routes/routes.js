@@ -15,6 +15,7 @@ import DataDumps from '../pages/download/DataDumps';
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
 
+import Docs from '../pages/resources/Docs';
 import RPackages from '../pages/resources/RPackages';
 import Sparql from '../pages/resources/Sparql';
 import Annotations from '../pages/resources/Annotations';
@@ -77,6 +78,10 @@ const DOWNLOAD = {
   },
 };
 const RESOURCES = {
+  [PATHS.RESOURCES.DOCS]: {
+    i18nKey: 'page.resources.docs',
+    component: Docs,
+  },
   [PATHS.RESOURCES.R_PACKAGES]: {
     i18nKey: 'page.resources.r-packages',
     component: RPackages,

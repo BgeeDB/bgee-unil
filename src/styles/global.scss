@@ -4,9 +4,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: .9rem !important;
@@ -31,10 +29,10 @@ $desktop: 1090px;
 $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
-$navbar-background-color: $dark-bg-color;
-$navbar-item-color: $dark-color;
-$navbar-dropdown-arrow: $dark-color;
 @media only screen and (max-width: $desktop) {
+  $navbar-background-color: $dark-bg-color;
+  $navbar-item-color: $dark-color;
+  $navbar-dropdown-arrow: $dark-color;
   .navbar {
     .navbar-burger:hover {
       color: $dark-color !important;
@@ -50,7 +48,7 @@ $navbar-dropdown-arrow: $dark-color;
       color: $dark-color;
     }
     .custom.navbar-item {
-      color: #aaaaaa;
+      color: #aaaaaa !important;
       &:hover {
         background-color: $dark-color;
         color: $dark-bg-color;
@@ -125,12 +123,57 @@ footer.footer {
   }
 }
 
+$title-color: #e2011b;
+
+.notification {
+  margin-bottom: 0 !important;
+}
+
+div.static-section > *:not(:first-child) {
+  margin-top: .7rem;
+}
+.title.gradient-underline {
+  margin: 1rem 0 !important;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2px #e2011b solid;
+  -webkit-border-image: linear-gradient(to right, $title-color 70%,rgba(146,2,9,0));
+  border-image: linear-gradient(to right, $title-color 70%,rgba(146,2,9,0));
+  border-image-slice: 1;
+}
+
+$link: #920209;
+a.internal-link, a.external-link {
+  text-decoration: underline;
+}
+a.external-link {
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(transparent,transparent),url(../assets/img/external_link.png);
+  background-size: 9px;
+  padding-right: 13px;
+}
+
+ul.unordered {
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 40px;
+}
 @import "../../node_modules/bulma/sass/base/all";
 @import "../../node_modules/bulma/sass/utilities/all";
 @import "../../node_modules/bulma/sass/components/navbar";
-@import "../../node_modules/bulma/sass/elements/other";
+@import "../../node_modules/bulma/sass/elements/container";
+@import "../../node_modules/bulma/sass/elements/content";
 @import "../../node_modules/bulma/sass/elements/notification";
+@import "../../node_modules/bulma/sass/elements/other";
+@import "../../node_modules/bulma/sass/elements/title";
+@import "../../node_modules/bulma/sass/helpers/all";
 @import "../../node_modules/bulma/sass/layout/footer";
+@import "../../node_modules/bulma/sass/layout/section";
 @import "../../node_modules/bulma/sass/helpers/flexbox";
 @import "../../node_modules/bulma/sass/helpers/visibility";
 

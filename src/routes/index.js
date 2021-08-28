@@ -69,6 +69,11 @@ const Router = () => (
 
         <Route
           exact
+          path={PATHS.RESOURCES.DOCS}
+          component={ROUTES.RESOURCES[PATHS.RESOURCES.DOCS].component}
+        />
+        <Route
+          exact
           path={PATHS.RESOURCES.R_PACKAGES}
           component={ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].component}
         />

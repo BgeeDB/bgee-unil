@@ -11,11 +11,12 @@ const PATHS = {
     SPECIES: '/search/species',
   },
   DOWNLOAD: {
-    GENE_EXPRESSION_VALUES: '/download/expr-calls',
+    GENE_EXPRESSION_VALUES: '/download/gene-expr-calls',
     PROCESSED_EXPRESSION_VALUES: '/download/proc-values',
-    DATA_DUMPS: '/download/dumps',
+    DATA_DUMPS: '/download/data-dumps',
   },
   RESOURCES: {
+    DOCS: '/resources/',
     R_PACKAGES: '/resources/r-packages',
     SPARQL: '/resources/sparql',
     ANNOTATIONS: '/resources/annotations',

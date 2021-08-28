@@ -5,6 +5,7 @@
 }
 .layout .container {
   flex: 1;
+  margin: 1rem;
 }
 
 /*# sourceMappingURL=layout.module.css.map */
