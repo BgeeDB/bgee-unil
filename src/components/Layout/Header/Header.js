@@ -291,6 +291,7 @@ const Header = () => {
                           className="navbar-item custom"
                           onClick={(event) => {
                             event.target.blur();
+                            setHamburgerActive(false);
                           }}
                         >
                           {i18n.t(keyChild)}
