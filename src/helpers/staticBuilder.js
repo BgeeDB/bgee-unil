@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 const richTextBuilder = (elements) =>
   elements.map(({ type, ...props }) => {
     switch (type) {
+      case 'break_line':
+        return (
+          <>
+            <br />
+          </>
+        );
       case 'bold':
         return <b>{props.content}</b>;
       case 'code':

@@ -129,6 +129,9 @@ ul.unordered {
   margin-inline-end: 0;
   padding-inline-start: 40px;
 }
+ul.unordered li:not(:first-child) {
+  margin-top: 10px;
+}
 
 /* Bulma Base */
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
