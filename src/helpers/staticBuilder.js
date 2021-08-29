@@ -14,6 +14,8 @@ const richTextBuilder = (elements) =>
         return <b>{props.content}</b>;
       case 'code':
         return <code>{props.content}</code>;
+      case 'italic':
+        return <i>{props.content}</i>;
       case 'text':
         return props.content;
       case 'link_internal':
@@ -33,6 +35,16 @@ const richTextBuilder = (elements) =>
             {props.text}
           </a>
         );
+      case 'link_mail':
+        return (
+          <a className="mail-link" href={`mailto:${props.email}`}>
+            {props.text}
+          </a>
+        );
+      case 'link_phone_number':
+        return <a href={`tel:${props.phoneNumber}`}>{props.text}</a>;
+      case 'rich_text':
+        return richTextBuilder(props.content);
       default:
         return null;
     }
@@ -41,6 +53,12 @@ const richTextBuilder = (elements) =>
 const staticBuilder = (json) =>
   json.map(({ type, ...props }) => {
     switch (type) {
+      case 'break_line':
+        return (
+          <>
+            <br />
+          </>
+        );
       case 'bold':
         return <b>{props.content}</b>;
       case 'text':
@@ -66,6 +84,14 @@ const staticBuilder = (json) =>
               <li>{staticBuilder([element])}</li>
             ))}
           </ul>
+        );
+      case 'ordered_list':
+        return (
+          <ol className="ordered">
+            {props.children.map((element) => (
+              <li>{staticBuilder([element])}</li>
+            ))}
+          </ol>
         );
       case 'section':
         return (

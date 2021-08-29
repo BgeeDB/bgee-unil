@@ -1,8 +1,9 @@
 import React from 'react';
+import staticBuilder from '../../helpers/staticBuilder';
+import json from '../../static/about/privacyPolicy';
 
-const PrivacyPolicy = () => {
-  const page = 'PrivacyPolicy';
-  return <div>{page}</div>;
-};
+const PrivacyPolicy = () => (
+  <div className="container">{staticBuilder(json)}</div>
+);
 
 export default PrivacyPolicy;

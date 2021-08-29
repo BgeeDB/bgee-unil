@@ -144,7 +144,7 @@ div.static-section > *:not(:first-child) {
 }
 
 $link: #920209;
-a.internal-link, a.external-link {
+a.internal-link, a.external-link, a.mail-link {
   text-decoration: underline;
 }
 a.external-link {
@@ -155,8 +155,11 @@ a.external-link {
   padding-right: 13px;
 }
 
+
 ul.unordered {
   list-style-type: disc;
+}
+ol.ordered, ul.unordered {
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0;

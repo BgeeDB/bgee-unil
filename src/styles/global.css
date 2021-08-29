@@ -109,7 +109,7 @@ div.static-section > *:not(:first-child) {
   border-image-slice: 1;
 }
 
-a.internal-link, a.external-link {
+a.internal-link, a.external-link, a.mail-link {
   text-decoration: underline;
 }
 
@@ -123,13 +123,16 @@ a.external-link {
 
 ul.unordered {
   list-style-type: disc;
+}
+
+ol.ordered, ul.unordered {
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0;
   margin-inline-end: 0;
   padding-inline-start: 40px;
 }
-ul.unordered li:not(:first-child) {
+ol.ordered li:not(:first-child), ul.unordered li:not(:first-child) {
   margin-top: 10px;
 }
 
