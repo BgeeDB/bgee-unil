@@ -1,4 +1,16 @@
 # Blocks
+
+### Grid
+````js
+const block = {
+  type: 'title',
+  content: [
+    // array of blocks 
+  ],
+  cols: number
+};
+````
+
 ### Title
 ````js
 const block = {

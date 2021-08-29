@@ -1,5 +1,7 @@
+/* eslint-disable no-use-before-define */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import arrayHelper from './array';
 
 const richTextBuilder = (elements) =>
   elements.map(({ type, ...props }) => {
@@ -50,8 +52,30 @@ const richTextBuilder = (elements) =>
     }
   });
 
+const gridBuilder = ({ cols, content, fillRow }) => (
+  <>
+    {arrayHelper
+      .chunked(content, cols, {
+        fillChunk: fillRow,
+        defaultItemFactory: () => ({ children: [] }),
+      })
+      .map((tiles) => (
+        <div className="tile is-ancestor">
+          {tiles.map(({ classNames, children }) => (
+            <div className="tile is-parent">
+              <article className={`tile is-child ${classNames || ''}`}>
+                {staticBuilder(children)}
+              </article>
+            </div>
+          ))}
+        </div>
+      ))}
+  </>
+);
+
 const staticBuilder = (json) =>
   json.map(({ type, ...props }) => {
+    let Component = null;
     switch (type) {
       case 'break_line':
         return (
@@ -62,9 +86,11 @@ const staticBuilder = (json) =>
       case 'bold':
         return <b>{props.content}</b>;
       case 'text':
-        return <p>{props.content}</p>;
+        return <p className={props.classNames}>{props.content}</p>;
       case 'rich_text':
-        return <p>{richTextBuilder(props.content)}</p>;
+        return (
+          <p className={props.classNames}>{richTextBuilder(props.content)}</p>
+        );
       case 'title':
         return (
           <div className="content has-text-centered">
@@ -102,6 +128,49 @@ const staticBuilder = (json) =>
             </div>
           </>
         );
+      case 'grid':
+        return gridBuilder(props);
+      case 'card':
+        Component = () => (
+          <div className={`card custom-card ${props.classNames || ''}`}>
+            {props.image && (
+              <div className="card-image">
+                <figure
+                  className={`image ${
+                    props.imageClass ? props.imageClass : 'is-128x128'
+                  }`}
+                >
+                  <img {...props.image} />
+                </figure>
+              </div>
+            )}
+
+            <div className="card-content">
+              <p className="card-title">{props.title}</p>
+              {props.description && (
+                <p className="card-description">{props.description}</p>
+              )}
+              {props.richDescription && (
+                <p className="card-description">
+                  {richTextBuilder(props.richDescription)}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+        if (props.linkType === 'internal')
+          return (
+            <Link to={props.link}>
+              <Component />
+            </Link>
+          );
+        if (props.linkType === 'external')
+          return (
+            <a href={props.link} target="_blank" rel="noopener noreferrer">
+              <Component />
+            </a>
+          );
+        return <Component />;
       default:
         return null;
     }

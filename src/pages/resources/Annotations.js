@@ -1,8 +1,9 @@
 import React from 'react';
+import staticBuilder from '../../helpers/staticBuilder';
+import json from '../../static/resources/annotations';
 
-const Annotations = () => {
-  const page = 'Annotations';
-  return <div>{page}</div>;
-};
+const Annotations = () => (
+  <div className="container">{staticBuilder(json)}</div>
+);
 
 export default Annotations;

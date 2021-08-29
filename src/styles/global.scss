@@ -170,14 +170,38 @@ ol.ordered, ul.unordered {
   }
 }
 
+div.card.custom-card {
+  box-shadow: none;
+  cursor: pointer;
+  padding: .5rem 0;
+  &:hover {
+    box-shadow: 0 0.125em 0.25em rgba(10,10, 10, 1/3);
+  }
+  .card-content {
+    padding-bottom: 0;
+  }
+  .card-image {
+    display: flex;
+    justify-content: center;
+  }
+  .card-title {
+    color: $title-color;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: underline;
+  }
+}
+
 @import "../../node_modules/bulma/sass/base/all";
 @import "../../node_modules/bulma/sass/utilities/all";
 @import "../../node_modules/bulma/sass/components/navbar";
 @import "../../node_modules/bulma/sass/elements/container";
 @import "../../node_modules/bulma/sass/elements/content";
+@import "../../node_modules/bulma/sass/elements/image";
 @import "../../node_modules/bulma/sass/elements/notification";
 @import "../../node_modules/bulma/sass/elements/other";
 @import "../../node_modules/bulma/sass/elements/title";
+@import "../../node_modules/bulma/sass/grid/all";
 @import "../../node_modules/bulma/sass/helpers/all";
 @import "../../node_modules/bulma/sass/layout/footer";
 @import "../../node_modules/bulma/sass/layout/section";
@@ -185,4 +209,4 @@ ol.ordered, ul.unordered {
 @import "../../node_modules/bulma/sass/helpers/visibility";
 
 //@import "../../node_modules/bulma/sass/elements/all";
-//@import "../../node_modules/bulma/bulma";
+@import "../../node_modules/bulma/bulma";
