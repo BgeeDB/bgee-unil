@@ -1,4 +1,3 @@
-import React from 'react';
 import PATHS from './paths';
 
 import Home from '../pages/Home';
