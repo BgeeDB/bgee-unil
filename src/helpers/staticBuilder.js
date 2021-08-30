@@ -139,7 +139,7 @@ const staticBuilder = (json, prefixKey = '') =>
                     props.imageClass ? props.imageClass : 'is-128x128'
                   }`}
                 >
-                  <img {...props.image} />
+                  <img alt={props.image.alt} {...props.image} />
                 </figure>
               </div>
             )}
@@ -170,6 +170,24 @@ const staticBuilder = (json, prefixKey = '') =>
             </a>
           );
         return <Component />;
+      case 'columns':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            className={`columns ${props.classNames || ''}`}
+          >
+            {props.content.map((col, colKey) => (
+              <div
+                key={`${prefixKey}-${key}-${colKey}`}
+                className={`column ${col.size ? `is-${col.size}` : ''} ${
+                  col.classNames || ''
+                }`}
+              >
+                {staticBuilder(col.content, `${prefixKey}-${key}-${colKey}`)}
+              </div>
+            ))}
+          </div>
+        );
       case 'grid':
         return <div key={`${prefixKey}-${key}`}>{gridBuilder(props)}</div>;
       case 'link_external':
@@ -234,6 +252,8 @@ const staticBuilder = (json, prefixKey = '') =>
             </div>
           </div>
         );
+      case 'separator':
+        return <div className="separator" />;
       case 'text':
         return (
           <p className={props.classNames} key={`${prefixKey}-${key}`}>

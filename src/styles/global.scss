@@ -209,7 +209,10 @@ pre {
     border: none;
   }
 }
-
+$table-cell-border-width: 0;
+div.separator {
+  border-top: 1px solid $text;
+}
 
 @import "../../node_modules/bulma/sass/base/all";
 @import "../../node_modules/bulma/sass/utilities/all";
@@ -219,6 +222,7 @@ pre {
 @import "../../node_modules/bulma/sass/elements/image";
 @import "../../node_modules/bulma/sass/elements/notification";
 @import "../../node_modules/bulma/sass/elements/other";
+@import "../../node_modules/bulma/sass/elements/table";
 @import "../../node_modules/bulma/sass/elements/title";
 @import "../../node_modules/bulma/sass/grid/all";
 @import "../../node_modules/bulma/sass/helpers/all";

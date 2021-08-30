@@ -48,7 +48,7 @@ const sparql = [
           {
             type: 'link_internal',
             path: PATHS.ABOUT.COLLABORATIONS,
-            text: 'BioSODA projec',
+            text: 'BioSODA project',
           },
           {
             type: 'text',

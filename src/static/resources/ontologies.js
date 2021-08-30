@@ -99,7 +99,7 @@ const docs = [
               {
                 type: 'text',
                 content:
-                  'Bgee uses the cross-species ontology Uberon covering anatomical structures in animals. A',
+                  'Bgee uses the cross-species ontology Uberon covering anatomical structures in animals. A ',
               },
               {
                 type: 'link_external',

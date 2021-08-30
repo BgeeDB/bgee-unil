@@ -51,7 +51,7 @@ const gtex = [
           {
             type: 'text',
             content:
-              'All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently with all other healthy RNA-seq from human and other species. These data are being made available both through the website, and through',
+              'All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently with all other healthy RNA-seq from human and other species. These data are being made available both through the website, and through ',
           },
           {
             type: 'link_external',
