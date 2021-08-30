@@ -18,8 +18,6 @@ const richTextBuilder = (elements) =>
         return <code className={props.classNames}>{props.content}</code>;
       case 'italic':
         return <i>{props.content}</i>;
-      case 'text':
-        return props.content;
       case 'link_internal':
         return (
           <Link to={props.path} className="internal-link">
@@ -45,8 +43,16 @@ const richTextBuilder = (elements) =>
         );
       case 'link_phone_number':
         return <a href={`tel:${props.phoneNumber}`}>{props.text}</a>;
+      case 'pre_code':
+        return (
+          <pre>
+            <code className={props.classNames}>{props.content}</code>
+          </pre>
+        );
       case 'rich_text':
         return richTextBuilder(props.content);
+      case 'text':
+        return props.content;
       default:
         return null;
     }
@@ -84,7 +90,11 @@ const staticBuilder = (json) =>
           </>
         );
       case 'bold':
-        return <b>{props.content}</b>;
+        return (
+          <p>
+            <b>{props.content}</b>
+          </p>
+        );
       case 'card':
         Component = () => (
           <div className={`card custom-card ${props.classNames || ''}`}>
