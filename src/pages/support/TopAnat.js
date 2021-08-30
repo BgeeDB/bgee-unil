@@ -1,8 +1,7 @@
 import React from 'react';
+import staticBuilder from '../../helpers/staticBuilder';
+import json from '../../static/support/topAnat';
 
-const TopAnat = () => {
-  const page = 'TopAnat';
-  return <div>{page}</div>;
-};
+const TopAnat = () => <div className="container">{staticBuilder(json)}</div>;
 
 export default TopAnat;
