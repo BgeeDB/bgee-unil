@@ -159,6 +159,24 @@ div.card.custom-card .card-title {
   text-decoration: underline;
 }
 
+code {
+  border: 1px solid #999;
+}
+
+code.bio-query {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: none;
+}
+
+pre {
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+pre > code {
+  border: none;
+}
+
 /* Bulma Base */
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
 html,
@@ -280,7 +298,7 @@ pre {
 }
 
 body {
-  color: #4a4a4a;
+  color: #626262;
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5;
@@ -300,7 +318,7 @@ a:hover {
 
 code {
   background-color: whitesmoke;
-  color: #da1039;
+  color: #626262;
   font-size: 0.875em;
   font-weight: normal;
   padding: 0.25em 0.5em 0.25em;
@@ -345,7 +363,7 @@ fieldset {
 pre {
   -webkit-overflow-scrolling: touch;
   background-color: whitesmoke;
-  color: #4a4a4a;
+  color: #626262;
   font-size: 0.875em;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
@@ -1269,7 +1287,7 @@ body.has-navbar-fixed-bottom {
 }
 
 .navbar-burger {
-  color: #4a4a4a;
+  color: #626262;
   cursor: pointer;
   display: block;
   height: 3.25rem;
@@ -1317,7 +1335,7 @@ body.has-navbar-fixed-bottom {
 
 .navbar-item,
 .navbar-link {
-  color: #4a4a4a;
+  color: #626262;
   display: block;
   line-height: 1.5;
   padding: 0.5rem 0.75rem;
@@ -2155,7 +2173,7 @@ body.has-spaced-navbar-fixed-bottom {
 }
 
 .subtitle {
-  color: #4a4a4a;
+  color: #626262;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -6747,7 +6765,7 @@ pre {
 }
 
 body {
-  color: #4a4a4a;
+  color: #626262;
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5;
@@ -6767,7 +6785,7 @@ a:hover {
 
 code {
   background-color: whitesmoke;
-  color: #da1039;
+  color: #626262;
   font-size: 0.875em;
   font-weight: normal;
   padding: 0.25em 0.5em 0.25em;
@@ -6812,7 +6830,7 @@ fieldset {
 pre {
   -webkit-overflow-scrolling: touch;
   background-color: whitesmoke;
-  color: #4a4a4a;
+  color: #626262;
   font-size: 0.875em;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
@@ -6851,7 +6869,7 @@ table th {
   background-color: white;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  color: #626262;
   display: block;
   padding: 1.25rem;
 }
@@ -6914,7 +6932,7 @@ a.box:active {
 .button.is-text {
   background-color: transparent;
   border-color: transparent;
-  color: #4a4a4a;
+  color: #626262;
   text-decoration: underline;
 }
 .button.is-text:hover, .button.is-text.is-hovered, .button.is-text:focus, .button.is-text.is-focused {
@@ -8528,13 +8546,13 @@ div.icon-text {
   background-color: #ededed;
 }
 .progress::-webkit-progress-value {
-  background-color: #4a4a4a;
+  background-color: #626262;
 }
 .progress::-moz-progress-bar {
-  background-color: #4a4a4a;
+  background-color: #626262;
 }
 .progress::-ms-fill {
-  background-color: #4a4a4a;
+  background-color: #626262;
   border: none;
 }
 .progress.is-white::-webkit-progress-value {
@@ -8675,7 +8693,7 @@ div.icon-text {
   animation-name: moveIndeterminate;
   animation-timing-function: linear;
   background-color: #ededed;
-  background-image: linear-gradient(to right, #4a4a4a 30%, #ededed 30%);
+  background-image: linear-gradient(to right, #626262 30%, #ededed 30%);
   background-position: top left;
   background-repeat: no-repeat;
   background-size: 150% 150%;
@@ -8938,7 +8956,7 @@ div.icon-text {
   align-items: center;
   background-color: whitesmoke;
   border-radius: 4px;
-  color: #4a4a4a;
+  color: #626262;
   display: inline-flex;
   font-size: 0.75rem;
   height: 2em;
@@ -9138,7 +9156,7 @@ a.tag:hover {
 }
 
 .subtitle {
-  color: #4a4a4a;
+  color: #626262;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -9958,7 +9976,7 @@ a.tag:hover {
 
 .file-cta {
   background-color: whitesmoke;
-  color: #4a4a4a;
+  color: #626262;
 }
 
 .file-name {
@@ -10218,7 +10236,7 @@ a.tag:hover {
 .control.has-icons-left .input:focus ~ .icon,
 .control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon,
 .control.has-icons-right .select:focus ~ .icon {
-  color: #4a4a4a;
+  color: #626262;
 }
 .control.has-icons-left .input.is-small ~ .icon,
 .control.has-icons-left .select.is-small ~ .icon, .control.has-icons-right .input.is-small ~ .icon,
@@ -10352,7 +10370,7 @@ a.tag:hover {
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  color: #626262;
   max-width: 100%;
   position: relative;
 }
@@ -10483,7 +10501,7 @@ a.tag:hover {
 }
 
 .dropdown-item {
-  color: #4a4a4a;
+  color: #626262;
   display: block;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -10692,7 +10710,7 @@ button.dropdown-item.is-active {
 }
 .menu-list a {
   border-radius: 2px;
-  color: #4a4a4a;
+  color: #626262;
   display: block;
   padding: 0.5em 0.75em;
 }
@@ -10863,7 +10881,7 @@ button.dropdown-item.is-active {
 
 .message-header {
   align-items: center;
-  background-color: #4a4a4a;
+  background-color: #626262;
   border-radius: 4px 4px 0 0;
   color: #fff;
   display: flex;
@@ -10889,7 +10907,7 @@ button.dropdown-item.is-active {
   border-radius: 4px;
   border-style: solid;
   border-width: 0 0 0 4px;
-  color: #4a4a4a;
+  color: #626262;
   padding: 1.25em 1.5em;
 }
 .message-body code,
@@ -11670,7 +11688,7 @@ body.has-navbar-fixed-bottom {
 }
 
 .navbar-burger {
-  color: #4a4a4a;
+  color: #626262;
   cursor: pointer;
   display: block;
   height: 3.25rem;
@@ -11718,7 +11736,7 @@ body.has-navbar-fixed-bottom {
 
 .navbar-item,
 .navbar-link {
-  color: #4a4a4a;
+  color: #626262;
   display: block;
   line-height: 1.5;
   padding: 0.5rem 0.75rem;
@@ -12377,7 +12395,7 @@ body.has-spaced-navbar-fixed-bottom {
 }
 
 .panel-list a {
-  color: #4a4a4a;
+  color: #626262;
 }
 .panel-list a:hover {
   color: #920209;
@@ -12453,7 +12471,7 @@ label.panel-block:hover {
   border-bottom-color: #dbdbdb;
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  color: #4a4a4a;
+  color: #626262;
   display: flex;
   justify-content: center;
   margin-bottom: -1px;

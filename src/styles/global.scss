@@ -16,6 +16,8 @@ code {
 }
 
 
+$text: #626262;
+$code: #626262;
 $dark-color: #ffffff;
 $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
@@ -191,6 +193,23 @@ div.card.custom-card {
     text-decoration: underline;
   }
 }
+
+code {
+  border: 1px solid #999;
+}
+code.bio-query {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: none;
+}
+pre {
+  border: 1px solid #999;
+  border-radius: 4px;
+  & > code {
+    border: none;
+  }
+}
+
 
 @import "../../node_modules/bulma/sass/base/all";
 @import "../../node_modules/bulma/sass/utilities/all";
