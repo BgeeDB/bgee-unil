@@ -171,7 +171,7 @@ const staticBuilder = (json, prefixKey = '') =>
           );
         return <Component />;
       case 'grid':
-        return <div key={`${prefixKey}-${key}`}>gridBuilder(props)</div>;
+        return <div key={`${prefixKey}-${key}`}>{gridBuilder(props)}</div>;
       case 'link_external':
         return (
           <a
