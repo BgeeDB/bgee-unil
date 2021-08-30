@@ -11,7 +11,7 @@ const PATHS = {
     SPECIES: '/search/species',
   },
   DOWNLOAD: {
-    GENE_EXPRESSION_VALUES: '/download/gene-expr-calls',
+    GENE_EXPRESSION_CALLS: '/download/gene-expr-calls',
     PROCESSED_EXPRESSION_VALUES: '/download/proc-values',
     DATA_DUMPS: '/download/data-dumps',
   },

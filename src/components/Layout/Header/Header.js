@@ -51,7 +51,7 @@ const NAVBAR_LEFT = [
       {
         key: 'page.download.gene-expression-calls',
         type: 'internal',
-        path: PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES,
+        path: PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS,
       },
       {
         key: 'page.download.processed-expression-values',

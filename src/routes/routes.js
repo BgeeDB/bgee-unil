@@ -64,7 +64,7 @@ const SEARCH = {
   },
 };
 const DOWNLOAD = {
-  [PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES]: {
+  [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
     i18nKey: 'page.download.gene-expression-calls',
     component: GeneExpressionCallsDownload,
   },
