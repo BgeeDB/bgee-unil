@@ -1,8 +1,7 @@
 import React from 'react';
+import staticBuilder from '../../helpers/staticBuilder';
+import json from '../../static/about/sources';
 
-const Sources = () => {
-  const page = 'Sources';
-  return <div>{page}</div>;
-};
+const Sources = () => <div className="container">{staticBuilder(json)}</div>;
 
 export default Sources;

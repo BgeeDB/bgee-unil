@@ -1,8 +1,7 @@
 import React from 'react';
+import staticBuilder from '../../helpers/staticBuilder';
+import json from '../../static/support/gtex';
 
-const GTEx = () => {
-  const page = 'GTEx';
-  return <div>{page}</div>;
-};
+const GTEx = () => <div className="container">{staticBuilder(json)}</div>;
 
 export default GTEx;

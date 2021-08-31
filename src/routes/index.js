@@ -48,9 +48,9 @@ const Router = () => (
 
         <Route
           exact
-          path={PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES}
+          path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
           component={
-            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES].component
+            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS].component
           }
         />
         <Route

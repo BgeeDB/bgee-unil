@@ -1,34 +1,56 @@
 /* eslint-disable no-use-before-define */
+/* eslint-disable no-case-declarations */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './array';
+import Accordion from '../components/Accordion';
+// eslint-disable-next-line import/no-cycle
+import Table from '../components/Table';
 
-const richTextBuilder = (elements) =>
-  elements.map(({ type, ...props }) => {
+const richTextBuilder = (elements, prefixKey) =>
+  elements.map(({ type, ...props }, key) => {
     switch (type) {
       case 'break_line':
         return (
           <>
-            <br />
+            <br key={`${prefixKey}-${key}`} />
           </>
         );
       case 'bold':
-        return <b>{props.content}</b>;
+        return <b key={`${prefixKey}-${key}`}>{props.content}</b>;
       case 'code':
-        return <code>{props.content}</code>;
+        return (
+          <code key={`${prefixKey}-${key}`} className={props.classNames}>
+            {props.content}
+          </code>
+        );
       case 'italic':
-        return <i>{props.content}</i>;
-      case 'text':
-        return props.content;
+        return <i key={`${prefixKey}-${key}`}>{props.content}</i>;
+      case 'link_anchor':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={`#${props.selector}`}
+            className="internal-link"
+          >
+            {props.text}
+          </a>
+        );
       case 'link_internal':
         return (
-          <Link to={props.path} className="internal-link">
+          <Link
+            key={`${prefixKey}-${key}`}
+            to={props.path}
+            className="internal-link"
+          >
             {props.text}
           </Link>
         );
       case 'link_external':
         return (
           <a
+            key={`${prefixKey}-${key}`}
             href={props.path}
             target="_blank"
             rel="noopener noreferrer"
@@ -39,14 +61,32 @@ const richTextBuilder = (elements) =>
         );
       case 'link_mail':
         return (
-          <a className="mail-link" href={`mailto:${props.email}`}>
+          <a
+            key={`${prefixKey}-${key}`}
+            className="mail-link"
+            href={`mailto:${props.email}`}
+          >
             {props.text}
           </a>
         );
       case 'link_phone_number':
-        return <a href={`tel:${props.phoneNumber}`}>{props.text}</a>;
+        return (
+          <a key={`${prefixKey}-${key}`} href={`tel:${props.phoneNumber}`}>
+            {props.text}
+          </a>
+        );
+      case 'pre_code':
+        return (
+          <pre key={`${prefixKey}-${key}`}>
+            <code className={props.classNames}>{props.content}</code>
+          </pre>
+        );
       case 'rich_text':
-        return richTextBuilder(props.content);
+        return richTextBuilder(props.content, `${prefixKey}-${key}`);
+      case 'text':
+        return props.content;
+      case 'underline':
+        return <u>{props.content}</u>;
       default:
         return null;
     }
@@ -73,66 +113,39 @@ const gridBuilder = ({ cols, content, fillRow }) => (
   </>
 );
 
-const staticBuilder = (json) =>
-  json.map(({ type, ...props }) => {
-    let Component = null;
+const staticBuilder = (json, prefixKey = '') =>
+  json.map(({ type, ...props }, key) => {
     switch (type) {
+      case 'accordion':
+        const elements = props.children.map(({ title, body }) => {
+          let formattedBody = null;
+          if (typeof body === 'string') formattedBody = body;
+          if (Array.isArray(body))
+            formattedBody = staticBuilder(body, `${prefixKey}-${key}`);
+          return {
+            title,
+            body: formattedBody,
+          };
+        });
+        return <Accordion key={`${prefixKey}-${key}`} elements={elements} />;
       case 'break_line':
         return (
           <>
-            <br />
+            <br key={`${prefixKey}-${key}`} />
           </>
         );
       case 'bold':
-        return <b>{props.content}</b>;
-      case 'text':
-        return <p className={props.classNames}>{props.content}</p>;
-      case 'rich_text':
         return (
-          <p className={props.classNames}>{richTextBuilder(props.content)}</p>
+          <p key={`${prefixKey}-${key}`}>
+            <b>{props.content}</b>
+          </p>
         );
-      case 'title':
-        return (
-          <div className="content has-text-centered">
-            <p className="title is-5">{props.content}</p>
-          </div>
-        );
-      case 'link_image':
-        return (
-          <a href={props.path} target="_blank" rel="noopener noreferrer">
-            <img src={props.src} alt={props.alt} style={props.style} />
-          </a>
-        );
-      case 'unordered_list':
-        return (
-          <ul className="unordered">
-            {props.children.map((element) => (
-              <li>{staticBuilder([element])}</li>
-            ))}
-          </ul>
-        );
-      case 'ordered_list':
-        return (
-          <ol className="ordered">
-            {props.children.map((element) => (
-              <li>{staticBuilder([element])}</li>
-            ))}
-          </ol>
-        );
-      case 'section':
-        return (
-          <>
-            <p className="title is-6 gradient-underline">{props.title}</p>
-            <div className="static-section">
-              {staticBuilder(props.children)}
-            </div>
-          </>
-        );
-      case 'grid':
-        return gridBuilder(props);
       case 'card':
-        Component = () => (
-          <div className={`card custom-card ${props.classNames || ''}`}>
+        const Component = () => (
+          <div
+            key={`${prefixKey}-${key}`}
+            className={`card custom-card ${props.classNames || ''}`}
+          >
             {props.image && (
               <div className="card-image">
                 <figure
@@ -140,7 +153,7 @@ const staticBuilder = (json) =>
                     props.imageClass ? props.imageClass : 'is-128x128'
                   }`}
                 >
-                  <img {...props.image} />
+                  <img alt={props.image.alt} {...props.image} />
                 </figure>
               </div>
             )}
@@ -171,6 +184,149 @@ const staticBuilder = (json) =>
             </a>
           );
         return <Component />;
+      case 'columns':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            className={`columns ${props.classNames || ''}`}
+          >
+            {props.content.map((col, colKey) => (
+              <div
+                key={`${prefixKey}-${key}-${colKey}`}
+                className={`column ${col.size ? `is-${col.size}` : ''} ${
+                  col.classNames || ''
+                }`}
+              >
+                {staticBuilder(col.content, `${prefixKey}-${key}-${colKey}`)}
+              </div>
+            ))}
+          </div>
+        );
+      case 'grid':
+        return <div key={`${prefixKey}-${key}`}>{gridBuilder(props)}</div>;
+      case 'link_anchor':
+        return (
+          <p>
+            <a
+              key={`${prefixKey}-${key}`}
+              href={`#${props.selector}`}
+              className={`internal-link ${props.classNames || ''}`}
+            >
+              {props.text}
+            </a>
+          </p>
+        );
+      case 'link_external':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={props.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="external-link"
+          >
+            {props.text}
+          </a>
+        );
+      case 'link_image':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={props.path}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={props.src} alt={props.alt} style={props.style} />
+          </a>
+        );
+      case 'link_internal':
+        return (
+          <Link
+            key={`${prefixKey}-${key}`}
+            to={props.path}
+            className="internal-link"
+          >
+            {props.text}
+          </Link>
+        );
+      case 'notification':
+        return (
+          <div className={`notification ${props.classNames || ''}`}>
+            {props.content}
+          </div>
+        );
+      case 'ordered_list':
+        return (
+          <ol key={`${prefixKey}-${key}`} className="ordered">
+            {props.children.map((element) => (
+              <li>{staticBuilder([element])}</li>
+            ))}
+          </ol>
+        );
+      case 'pre_code':
+        return (
+          <pre key={`${prefixKey}-${key}`}>
+            <code className={props.classNames}>{props.content}</code>
+          </pre>
+        );
+      case 'rich_text':
+        return (
+          <p
+            id={props.id}
+            className={props.classNames}
+            key={`${prefixKey}-${key}`}
+          >
+            {richTextBuilder(props.content, `${prefixKey}-${key}`)}
+          </p>
+        );
+      case 'section':
+        return (
+          <div id={props.id} key={`${prefixKey}-${key}`}>
+            <p className="title is-6 gradient-underline">{props.title}</p>
+            <div className="static-section">
+              {staticBuilder(props.children)}
+            </div>
+          </div>
+        );
+      case 'separator':
+        return <div className="separator" />;
+      case 'table':
+        return <Table key={`${prefixKey}-${key}`} {...props} />;
+      case 'text':
+        return (
+          <p
+            id={props.id}
+            className={props.classNames}
+            key={`${prefixKey}-${key}`}
+          >
+            {props.content}
+          </p>
+        );
+      case 'title':
+        return (
+          <div
+            className="content has-text-centered"
+            key={`${prefixKey}-${key}`}
+          >
+            <p className={`title is-5 ${props.classNames || ''}`}>
+              {props.content}
+            </p>
+          </div>
+        );
+      case 'sub_title':
+        return (
+          <p className={`title is-6 ${props.classNames || ''}`}>
+            {props.content}
+          </p>
+        );
+      case 'unordered_list':
+        return (
+          <ul className="unordered" key={`${prefixKey}-${key}`}>
+            {props.children.map((element) => (
+              <li>{staticBuilder([element])}</li>
+            ))}
+          </ul>
+        );
       default:
         return null;
     }
