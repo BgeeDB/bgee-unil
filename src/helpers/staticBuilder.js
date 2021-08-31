@@ -5,6 +5,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './array';
 import Accordion from '../components/Accordion';
+// eslint-disable-next-line import/no-cycle
+import Table from '../components/Table';
 
 const richTextBuilder = (elements, prefixKey) =>
   elements.map(({ type, ...props }, key) => {
@@ -25,6 +27,16 @@ const richTextBuilder = (elements, prefixKey) =>
         );
       case 'italic':
         return <i key={`${prefixKey}-${key}`}>{props.content}</i>;
+      case 'link_anchor':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={`#${props.selector}`}
+            className="internal-link"
+          >
+            {props.text}
+          </a>
+        );
       case 'link_internal':
         return (
           <Link
@@ -73,6 +85,8 @@ const richTextBuilder = (elements, prefixKey) =>
         return richTextBuilder(props.content, `${prefixKey}-${key}`);
       case 'text':
         return props.content;
+      case 'underline':
+        return <u>{props.content}</u>;
       default:
         return null;
     }
@@ -190,6 +204,18 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'grid':
         return <div key={`${prefixKey}-${key}`}>{gridBuilder(props)}</div>;
+      case 'link_anchor':
+        return (
+          <p>
+            <a
+              key={`${prefixKey}-${key}`}
+              href={`#${props.selector}`}
+              className={`internal-link ${props.classNames || ''}`}
+            >
+              {props.text}
+            </a>
+          </p>
+        );
       case 'link_external':
         return (
           <a
@@ -223,6 +249,12 @@ const staticBuilder = (json, prefixKey = '') =>
             {props.text}
           </Link>
         );
+      case 'notification':
+        return (
+          <div className={`notification ${props.classNames || ''}`}>
+            {props.content}
+          </div>
+        );
       case 'ordered_list':
         return (
           <ol key={`${prefixKey}-${key}`} className="ordered">
@@ -239,13 +271,17 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'rich_text':
         return (
-          <p className={props.classNames} key={`${prefixKey}-${key}`}>
+          <p
+            id={props.id}
+            className={props.classNames}
+            key={`${prefixKey}-${key}`}
+          >
             {richTextBuilder(props.content, `${prefixKey}-${key}`)}
           </p>
         );
       case 'section':
         return (
-          <div key={`${prefixKey}-${key}`}>
+          <div id={props.id} key={`${prefixKey}-${key}`}>
             <p className="title is-6 gradient-underline">{props.title}</p>
             <div className="static-section">
               {staticBuilder(props.children)}
@@ -254,9 +290,15 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'separator':
         return <div className="separator" />;
+      case 'table':
+        return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
         return (
-          <p className={props.classNames} key={`${prefixKey}-${key}`}>
+          <p
+            id={props.id}
+            className={props.classNames}
+            key={`${prefixKey}-${key}`}
+          >
             {props.content}
           </p>
         );
@@ -266,8 +308,16 @@ const staticBuilder = (json, prefixKey = '') =>
             className="content has-text-centered"
             key={`${prefixKey}-${key}`}
           >
-            <p className="title is-5">{props.content}</p>
+            <p className={`title is-5 ${props.classNames || ''}`}>
+              {props.content}
+            </p>
           </div>
+        );
+      case 'sub_title':
+        return (
+          <p className={`title is-6 ${props.classNames || ''}`}>
+            {props.content}
+          </p>
         );
       case 'unordered_list':
         return (

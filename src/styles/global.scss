@@ -17,7 +17,8 @@ code {
 
 
 $text: #626262;
-$code: #626262;
+$code: #e2011b;
+$title-color: #e2011b;
 $dark-color: #ffffff;
 $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
@@ -125,8 +126,6 @@ footer.footer {
   }
 }
 
-$title-color: #e2011b;
-
 .notification {
   margin-bottom: 0 !important;
 }
@@ -210,6 +209,15 @@ pre {
   }
 }
 $table-cell-border-width: 0;
+
+.table thead td, .table thead th {
+  border-width: 2px 0 !important;
+}
+table.table.small-font {
+  td, th  {
+    font-size: 10px;
+  }
+}
 div.separator {
   border-top: 1px solid $text;
 }
