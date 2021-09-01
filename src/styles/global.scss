@@ -96,13 +96,19 @@ $colors: map-merge($colors, $custom-colors);
  * END navbar style
  */
 
+/*
+ * footer style
+ */
 $footer-background-color: $dark-bg-color;
 $footer-color: $dark-color;
 $footer-padding: 1rem;
 
 footer.footer {
-  .left-wrapper a:not(:first-child) {
-    margin-left: 15px;
+  .left-wrapper {
+    display: flex;
+    a:not(:first-child) {
+      margin-left: 15px;
+    }
   }
   .right-wrapper a:not(:last-child) {
     margin-right: 15px;
@@ -151,6 +157,9 @@ footer.footer {
   }
 }
 
+/*
+ * END footer style
+ */
 .notification {
   margin-bottom: 0 !important;
 }
