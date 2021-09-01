@@ -1,12 +1,12 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-case-declarations */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './array';
 import Accordion from '../components/Accordion';
-// eslint-disable-next-line import/no-cycle
-import Table from '../components/Table';
+import Table from '../components/Table/Table';
 
 const richTextBuilder = (elements, prefixKey) =>
   elements.map(({ type, ...props }, key) => {

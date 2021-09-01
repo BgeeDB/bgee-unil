@@ -1,6 +1,7 @@
 {
   "global": {
     "app-name": "Bgee",
+    "search": "Search",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
       "copy-link": "Copy permanent link",
@@ -56,5 +57,25 @@
       "privacy-policy": "Bgee privacy notice"
     },
     "error": "Error"
+  },
+  "analysis": {
+    "top-anat": {
+      "recent-jobs": "Recent Jobs",
+      "documentation": "Documentation",
+      "examples": "Examples",
+
+      "gene-list": "Gene list",
+      "gene-list-details": "{IDs} IDs provided, {UNIQUEs} unique genes found in {SPECIE} ",
+      "textarea-placeholder-gene-list": "Enter a list of Ensembl identifiers, one ID per line, no quotes, no comma.",
+
+      "submit-job": "Submit your job",
+      "email": "Email",
+      "job-description": "Job description",
+      "view": "View",
+      "all-stage-present": "all stages, expression type \"Present\" ",
+      "download-job-archive": "Download job archive",
+      "show-entries": "Show entries",
+      "showing-entries-on-total": "Showing {START} to {END} of {TOTAL} entries"
+    }
   }
 }

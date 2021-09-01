@@ -16,9 +16,11 @@ code {
 }
 
 
+$primary: #e2011b;
+$link: #920209;
 $text: #626262;
-$code: #e2011b;
-$title-color: #e2011b;
+$code: $primary;
+$title-color: $primary;
 $dark-color: #ffffff;
 $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
@@ -30,6 +32,7 @@ $desktop: 1090px;
  */
 @import "../../node_modules/bulma/sass/utilities/derived-variables";
 $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
+$custom-colors: ("bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
 @media only screen and (max-width: $desktop) {
@@ -144,7 +147,6 @@ div.static-section > *:not(:first-child) {
   border-image-slice: 1;
 }
 
-$link: #920209;
 a.internal-link, a.external-link, a.mail-link {
   text-decoration: underline;
 }
@@ -218,6 +220,14 @@ table.table.small-font {
     font-size: 10px;
   }
 }
+table.table.sortable {
+  thead > tr > th {
+    cursor: pointer;
+    &:hover {
+      opacity: .5;
+    }
+  }
+}
 div.separator {
   border-top: 1px solid $text;
 }
@@ -227,11 +237,13 @@ div.separator {
 @import "../../node_modules/bulma/sass/components/navbar";
 @import "../../node_modules/bulma/sass/elements/container";
 @import "../../node_modules/bulma/sass/elements/content";
+@import "../../node_modules/bulma/sass/elements/icon";
 @import "../../node_modules/bulma/sass/elements/image";
 @import "../../node_modules/bulma/sass/elements/notification";
 @import "../../node_modules/bulma/sass/elements/other";
 @import "../../node_modules/bulma/sass/elements/table";
 @import "../../node_modules/bulma/sass/elements/title";
+@import "../../node_modules/bulma/sass/form/all";
 @import "../../node_modules/bulma/sass/grid/all";
 @import "../../node_modules/bulma/sass/helpers/all";
 @import "../../node_modules/bulma/sass/layout/footer";
@@ -239,7 +251,6 @@ div.separator {
 @import "../../node_modules/bulma/sass/helpers/flexbox";
 @import "../../node_modules/bulma/sass/helpers/visibility";
 
-//@import "../../node_modules/bulma/sass/elements/all";
 @import "../../node_modules/bulma/bulma";
 @import '../../node_modules/@creativebulma/bulma-collapsible';
 
@@ -267,4 +278,11 @@ div.separator {
       border-radius: 0 0 4px 4px;
     }
   }
+}
+
+.color-primary {
+  color: $primary !important;
+}
+.color-link {
+  color: $link !important;
 }
