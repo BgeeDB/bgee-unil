@@ -32,7 +32,8 @@ $desktop: 1090px;
  */
 @import "../../node_modules/bulma/sass/utilities/derived-variables";
 $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
-$custom-colors: ("bgee-link": ($link, $dark-color));
+//$custom-colors: ("bgee-link": ($link, $dark-color));
+//$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
 @media only screen and (max-width: $desktop) {
@@ -49,22 +50,43 @@ $colors: map-merge($colors, $custom-colors);
       height: 40px;
       max-height: 40px;
     }
-    .navbar-link:hover, .navbar-link.active {
-      background-color: $dark-bg-hover-color;
-      color: $dark-color;
-    }
-    .custom.navbar-item {
-      color: #aaaaaa !important;
-      &:hover {
-        background-color: $dark-color;
-        color: $dark-bg-color;
-      }
-    }
 
-    .navbar-dropdown {
-      display: none;
-      &.open {
-        display: block;
+    .navbar-menu {
+      background-color: $dark-bg-color !important;
+    }
+    .navbar-item.has-dropdown {
+      .navbar-link {
+        &:hover, &.active  {
+          background-color: $dark-bg-hover-color;
+          color: $dark-color;
+        }
+        &::after {
+          transition: .3s;
+          border-color: $dark-color !important;
+        }
+      }
+      .navbar-dropdown {
+        display: none;
+        .custom.navbar-item {
+          color: #aaaaaa !important;
+          &:hover {
+            background-color: $dark-bg-hover-color;
+            color: $dark-color;
+          }
+        }
+      }
+      &.is-open {
+        .navbar-link {
+          background-color: $dark-bg-hover-color;
+          color: $dark-color;
+          &::after {
+            transform: rotate(135deg);
+            transition: .3s;
+          }
+        }
+        .navbar-dropdown {
+            display: block;
+        }
       }
     }
   }

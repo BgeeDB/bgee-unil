@@ -219,7 +219,7 @@ const Header = () => {
 
   return (
     <nav
-      className={`navbar ${hamburgerVisible ? '' : 'is-bgee-inverted'}`}
+      className="navbar is-bgee-inverted"
       role="navigation"
       aria-label="main navigation"
     >
@@ -248,7 +248,9 @@ const Header = () => {
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
               key={key}
-              className="navbar-item has-dropdown is-hoverable"
+              className={`navbar-item has-dropdown is-hoverable ${
+                key === openedMenuId ? 'is-open' : ''
+              }`}
               onClick={toggleOpenMenu(key)}
             >
               <a className="navbar-link">{i18n.t(key)}</a>

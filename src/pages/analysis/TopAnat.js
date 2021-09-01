@@ -273,6 +273,7 @@ const TopAnat = () => {
           data={data}
           onRenderCell={onRenderCell}
           sortable
+          pagination
           classNamesTable="is-striped"
           customHeader={customHeader}
         />
