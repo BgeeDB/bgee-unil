@@ -2,6 +2,7 @@
   "global": {
     "app-name": "Bgee",
     "search": "Search",
+    "download": "download",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
       "copy-link": "Copy permanent link",
@@ -90,7 +91,35 @@
   },
   "search": {
     "species": {
-      "list-title": "Bgee species list"
+      "list-title": "Bgee species list",
+      "species": "Species",
+      "general-information": "General information",
+      "scientific-name": "Scientific name",
+      "common-name": "Common name",
+      "species-id": "Species ID",
+      "genome-source": "Genome source",
+      "genome-source-provider": "Ensembl",
+      "genome-version": "Genome version",
+      "gene-expr-call-files": "Gene expression call files",
+      "gene-expr-call-files-description": "Bgee provides calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression. More information in our ",
+      "gene-expr-call-files-doc": "documentation",
+      "anatomical-only": "Anatomical entities only",
+      "anatomical-only-simple": "File without advanced column: ",
+      "anatomical-only-advanced": "File with advanced columns: ",
+      "anatomical-full":  "Anatomical entities, developmental stages, sexes and strains",
+      "anatomical-full-simple":  "File without advanced column: ",
+      "anatomical-full-advanced":  "File with advanced columns: ",
+      "processed-expr-value-files": "Processed expression value files",
+      "processed-expr-value-files-description": "Bgee provides annotations and experiment annotations, and processed expression values.",
+      "affymetrix": "Affymetrix",
+      "affymetrix-experiment": "Experiments/chips annotations and meta data: ",
+      "affymetrix-data": "Data (signal intensities): ",
+      "rna-seq": "RNA-Seq",
+      "rna-seq-experiment": "Experiments/chips annotations and meta data: ",
+      "rna-seq-data": "Data (read counts, TPMs, and FPKMs): ",
+      "full-rna-seq": "Single cell full length RNA-Seq",
+      "full-rna-seq-experiment": "Experiments/chips annotations and meta data: ",
+      "full-rna-seq-data": "Data (read counts, TPMs, and FPKMs): "
     }
   }
 }

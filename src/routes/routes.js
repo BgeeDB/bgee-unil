@@ -32,6 +32,7 @@ import Sources from '../pages/about/Sources';
 import PrivacyPolicy from '../pages/about/PrivacyPolicy';
 
 import Error from '../pages/Error';
+import Species from '../pages/search/Species';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -55,6 +56,10 @@ const SEARCH = {
   [PATHS.SEARCH.SPECIES]: {
     i18nKey: 'page.search.species',
     component: SpeciesList,
+  },
+  [PATHS.SEARCH.SPECIES_ITEM]: {
+    i18nKey: 'page.search.species-item',
+    component: Species,
   },
 };
 const DOWNLOAD = {

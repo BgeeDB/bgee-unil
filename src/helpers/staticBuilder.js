@@ -290,6 +290,12 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'separator':
         return <div className="separator" />;
+      case 'sub_title':
+        return (
+          <p className={`title is-6 ${props.classNames || ''}`}>
+            {props.content}
+          </p>
+        );
       case 'table':
         return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
@@ -312,12 +318,6 @@ const staticBuilder = (json, prefixKey = '') =>
               {props.content}
             </p>
           </div>
-        );
-      case 'sub_title':
-        return (
-          <p className={`title is-6 ${props.classNames || ''}`}>
-            {props.content}
-          </p>
         );
       case 'unordered_list':
         return (

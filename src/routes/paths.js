@@ -8,6 +8,7 @@ const PATHS = {
     GENE: '/search/gene',
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homologysss',
     SPECIES: '/search/species',
+    SPECIES_ITEM: '/search/species/:id',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expr-calls',
