@@ -22,11 +22,10 @@ const Table = ({
         newSortOpt = { key, sort: 'ascending' };
       } else if (sortOption.sort === 'ascending')
         newSortOpt = { key, sort: 'descending' };
-
       setSortOption(newSortOpt);
       if (onSort) onSort(newSortOpt);
     },
-    [sortOption]
+    [sortOption, onSort]
   );
 
   const [isExpanded, setIsExpanded] = React.useState();

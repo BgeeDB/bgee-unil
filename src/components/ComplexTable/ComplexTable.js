@@ -29,7 +29,7 @@ const ComplexTable = ({
   const internalData = React.useMemo(() => {
     const clone = JSON.parse(JSON.stringify(data));
     const filtered =
-      search === '' && !onFilter ? clone : clone.filter(onFilter(search));
+      search === '' || !onFilter ? clone : clone.filter(onFilter(search));
     if (sort) {
       filtered.sort((onSort || defaultSort)(sort.key, sort.sort));
     }
@@ -103,7 +103,7 @@ const ComplexTable = ({
           return clone.map(mappingObj);
         })()}
         onRenderCell={onRenderCell}
-        onSort={setSort}
+        onSort={onSort ? setSort : undefined}
         {...props}
       />
       {pagination && (

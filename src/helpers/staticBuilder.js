@@ -8,7 +8,7 @@ import arrayHelper from './array';
 import Accordion from '../components/Accordion';
 import Table from '../components/Table/Table';
 
-const richTextBuilder = (elements, prefixKey) =>
+export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, ...props }, key) => {
     switch (type) {
       case 'break_line':
