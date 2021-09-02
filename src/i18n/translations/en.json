@@ -87,5 +87,10 @@
       "results": "Results",
       "results-description": "Results are ordered by default by descendant \"Conservation score\", then ascendant \"Genes with absence of expression\", then descendant \"Max expression score\". The order could be changed by clicking on one column, then press shift and click on another column."
     }
+  },
+  "search": {
+    "species": {
+      "list-title": "Bgee species list"
+    }
   }
 }

@@ -225,6 +225,23 @@ div.card.custom-card {
     text-decoration: underline;
   }
 }
+div.card.species {
+  cursor: pointer;
+  padding: .5rem 0;
+  width: 146px;
+  &:hover {
+    box-shadow: 0 0 1em -0.125em rgba(146, 2, 9, .75)
+  }
+  .card-image {
+    display: flex;
+    justify-content: center;
+  }
+}
+.grid-species {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
+  grid-row-gap: 20px;
+}
 
 code {
   border: 1px solid #999;
