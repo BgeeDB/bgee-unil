@@ -7,7 +7,6 @@ import ExpComp from '../pages/analysis/ExpComp';
 
 import GeneSearch from '../pages/search/GeneSearch';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
-import SparqlSearch from '../pages/search/SparqlSearch';
 import SpeciesList from '../pages/search/SpeciesList';
 
 import DataDumps from '../pages/download/DataDumps';
@@ -52,10 +51,6 @@ const SEARCH = {
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
     i18nKey: 'page.search.anatomical-homology-search',
     component: AnatomicalHomologySearch,
-  },
-  [PATHS.SEARCH.SPARQL]: {
-    i18nKey: 'page.search.sparql',
-    component: SparqlSearch,
   },
   [PATHS.SEARCH.SPECIES]: {
     i18nKey: 'page.search.species',

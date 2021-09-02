@@ -34,11 +34,6 @@ const NAVBAR_LEFT = [
         path: PATHS.SEARCH.ANATOMICAL_HOMOLOGY,
       },
       {
-        key: 'page.search.sparql',
-        type: 'internal',
-        path: PATHS.SEARCH.SPARQL,
-      },
-      {
         key: 'page.search.species',
         type: 'internal',
         path: PATHS.SEARCH.SPECIES,

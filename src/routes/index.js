@@ -37,11 +37,6 @@ const Router = () => (
         />
         <Route
           exact
-          path={PATHS.SEARCH.SPARQL}
-          component={ROUTES.SEARCH[PATHS.SEARCH.SPARQL].component}
-        />
-        <Route
-          exact
           path={PATHS.SEARCH.SPECIES}
           component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component}
         />

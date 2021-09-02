@@ -6,8 +6,7 @@ const PATHS = {
   },
   SEARCH: {
     GENE: '/search/gene',
-    ANATOMICAL_HOMOLOGY: '/search/anat-similarities',
-    SPARQL: '/search/sparql',
+    ANATOMICAL_HOMOLOGY: '/search/anatomical-homologysss',
     SPECIES: '/search/species',
   },
   DOWNLOAD: {
@@ -18,7 +17,6 @@ const PATHS = {
   RESOURCES: {
     DOCS: '/resources/',
     R_PACKAGES: '/resources/r-packages',
-    SPARQL: '/resources/sparql',
     ANNOTATIONS: '/resources/annotations',
     ONTOLOGIES: '/resources/ontologies',
     SOURCE_CODE: '/resources/source-code',
