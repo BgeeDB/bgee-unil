@@ -5,34 +5,33 @@ import i18n from '../../i18n';
 import Select from '../Select';
 import Input from '../Input';
 
+const defaultSort = (sortKey, sortDirection) => (a, b) => {
+  if (a === b) return 0;
+  if (sortDirection === 'ascending') return a > b ? 1 : -1;
+  if (sortDirection === 'descending') return a < b ? 1 : -1;
+  return 0;
+};
+
 const ComplexTable = ({
   columns,
   data,
+  onSort,
+  onFilter,
   onRenderCell,
-  sortable,
   classNamesTable = '',
   pagination = false,
   customHeader,
+  mappingObj = (arr) => arr,
+  ...props
 }) => {
   const [search, setSearch] = React.useState('');
   const [sort, setSort] = React.useState(undefined);
   const internalData = React.useMemo(() => {
     const clone = JSON.parse(JSON.stringify(data));
     const filtered =
-      search === ''
-        ? clone
-        : clone.filter(
-            (obj) =>
-              Boolean(new RegExp(search).test(obj.anatEntityId)) ||
-              Boolean(new RegExp(search).test(obj.anatEntityName))
-          );
+      search === '' && !onFilter ? clone : clone.filter(onFilter(search));
     if (sort) {
-      filtered.sort(({ [sort.key]: a }, { [sort.key]: b }) => {
-        if (a === b) return 0;
-        if (sort.sort === 'ascending') return a > b ? 1 : -1;
-        if (sort.sort === 'descending') return a < b ? 1 : -1;
-        return 0;
-      });
+      filtered.sort((onSort || defaultSort)(sort.key, sort.sort));
     }
     return filtered;
   }, [data, search, sort]);
@@ -97,35 +96,15 @@ const ComplexTable = ({
           let pointer = (currentPage - 1) * pageSize;
           if (pointer > 0) pointer -= 1;
 
-          const clone = JSON.parse(JSON.stringify(data)).slice(
+          const clone = JSON.parse(JSON.stringify(internalData)).slice(
             pointer,
             pointer + pageSize
           );
-          return clone.map(
-            ({
-              anatEntityId,
-              anatEntityName,
-              annotated,
-              significant,
-              expected,
-              foldEnrichment,
-              pValue,
-              FDR,
-            }) => [
-              anatEntityId,
-              anatEntityName,
-              annotated,
-              significant,
-              expected,
-              foldEnrichment,
-              pValue,
-              FDR,
-            ]
-          );
+          return clone.map(mappingObj);
         })()}
         onRenderCell={onRenderCell}
-        sortable={sortable}
         onSort={setSort}
+        {...props}
       />
       {pagination && (
         <Pagination

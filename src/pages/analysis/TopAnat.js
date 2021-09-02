@@ -5,7 +5,6 @@ import staticBuilder from '../../helpers/staticBuilder';
 import PATHS from '../../routes/paths';
 import mockData from './mockTopAnat.json';
 import ComplexTable from '../../components/ComplexTable';
-import Select from '../../components/Select';
 
 const staticContent = [
   {
@@ -42,6 +41,15 @@ const staticContent = [
     ],
   },
 ];
+const onSort =
+  (sortKey, sortDirection) =>
+  ({ [sortKey]: a }, { [sortKey]: b }) => {
+    if (a === b) return 0;
+    if (sortDirection === 'ascending') return a > b ? 1 : -1;
+    if (sortDirection === 'descending') return a < b ? 1 : -1;
+    return 0;
+  };
+
 const TopAnat = () => {
   const initialData = React.useMemo(() => mockData, []);
 
@@ -274,8 +282,31 @@ const TopAnat = () => {
           onRenderCell={onRenderCell}
           sortable
           pagination
+          onFilter={(search) => (element) =>
+            Boolean(new RegExp(search).test(element.anatEntityId)) ||
+            Boolean(new RegExp(search).test(element.anatEntityName))}
+          onSort={onSort}
           classNamesTable="is-striped"
           customHeader={customHeader}
+          mappingObj={({
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          }) => [
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          ]}
         />
       </section>
     </div>

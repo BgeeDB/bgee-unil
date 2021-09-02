@@ -29,9 +29,17 @@ const Table = ({
     [sortOption]
   );
 
+  const [isExpanded, setIsExpanded] = React.useState();
+  const expandAction = React.useCallback(
+    (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
+    [isExpanded]
+  );
   const defaultRender = (cell, key) => {
-    if (typeof cell === 'string' || typeof cell === 'number') return cell;
-    return Array.isArray(cell) ? staticBuilder(cell) : null;
+    if (typeof cell === 'string' || typeof cell === 'number')
+      return <p key={key}>{cell}</p>;
+    return Array.isArray(cell) ? (
+      <div key={key}>{staticBuilder(cell)}</div>
+    ) : null;
   };
   let TableObject = (
     <table
@@ -77,11 +85,21 @@ const Table = ({
       </tfoot>
       <tbody>
         {data.map((row, key) => (
-          <tr key={key}>
+          <tr
+            key={key}
+            className={`${isExpanded === key ? 'is-expanded' : ''}`}
+          >
             {row.map((cell, cellKey) => (
               <td key={`${key}-${cellKey}`}>
                 {onRenderCell
-                  ? onRenderCell({ cell, key: cellKey }, defaultRender)
+                  ? onRenderCell(
+                      { cell, key: cellKey, keyRow: key },
+                      defaultRender,
+                      {
+                        expandAction: expandAction(key),
+                        isExpanded: isExpanded === key,
+                      }
+                    )
                   : defaultRender(cell, cellKey)}
               </td>
             ))}
