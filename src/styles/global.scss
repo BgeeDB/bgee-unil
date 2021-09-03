@@ -241,6 +241,10 @@ div.card.species {
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
   grid-row-gap: 20px;
+  .center-in-grid {
+    align-self: center;
+    justify-self: center;
+  }
 }
 
 code {
@@ -259,6 +263,9 @@ pre {
   }
 }
 $table-cell-border-width: 0;
+.card.search-input {
+  max-width: 500px;
+}
 
 table.table {
   &.sortable {
@@ -360,4 +367,25 @@ div.separator {
 }
 .color-link {
   color: $link !important;
+}
+
+.download-button {
+  color: $link;
+  border: 2px solid $link;
+  padding: 35px 20px;
+  border-radius: 5px;
+  &:hover {
+    background-color: $link;
+    color: $background;
+  }
+}
+
+figure.image {
+  &.rounded-border img {
+    border-radius: 5px;
+  }
+  &.is-150x150 {
+    height: 150px !important;
+    width: 150px !important;
+  }
 }

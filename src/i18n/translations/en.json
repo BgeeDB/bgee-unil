@@ -121,5 +121,53 @@
       "full-rna-seq-experiment": "Experiments/chips annotations and meta data: ",
       "full-rna-seq-data": "Data (read counts, TPMs, and FPKMs): "
     }
+  },
+  "download": {
+    "gene-exp-calls": {
+      "title": "Gene expression calls",
+      "description-1": "This page provides calls of baseline presence/absence of expression, and of differential over-/under-expression, either in single species, or made comparable between multiple species. Click on a species or a group of species to browse files available for download. It is possible to download these data directly into R using our ",
+      "description-link-1": "R package",
+      "description-2": ". See also ",
+      "description-link-2": "processed expression values",
+      "description-3": ". All data are available under the ",
+      "description-link-3": "Creative Commons Zero license (CC0)",
+      "description-4": ".",
+      "single-species": "Single-species",
+      "multi-species": "Multi-species",
+      "available-future-release": "These files will be available in a future release.",
+      "presence-absence-exp": "Presence/Absence of expression",
+      "choose-condition-parameters": "Choose condition parameters",
+      "get-advanced-cols": "Get advanced columns",
+      "over-under-exp": "Over-/Under-expression",
+      "improvement-in-progress": "Improvement of these files is in progress"
+    },
+    "processed-exp-values": {
+      "title": "Processed expression values",
+      "description-1": "This page provides annotations and experiment information (e.g., annotations to anatomy, development, sex and strain, quality scores used in QCs, chip or library information), and processed expression values (e.g., read counts, TPM and FPKM values, log values of Affymetrix probeset normalized signal intensities). Click on a species to browse files available for download. It is possible to download these data directly into R using our ",
+      "description-link-1": "R package",
+      "description-2": ". See also ",
+      "description-link-2": "gene expression calls",
+      "description-3": ". All data are available under the ",
+      "description-link-3": "Creative Commons Zero license (CC0)",
+      "description-4": ".",
+      "search-label": "Search species",
+      "search-placeholder": "Scientific name, common name, ...",
+      "species": "Species with data in Bgee",
+      "rna-seq": "RNA-Seq data",
+      "rna-seq-desc": "Files can also be retrieved per experiment, see ",
+      "rna-seq-desc-link": "RNA-Seq data directory",
+      "rna-seq-button-experiments": "Download experiments/libraries info",
+      "rna-seq-button-count": "Download read count; TPMs and FPKMs",
+      "affymetrix": "Affymetrix data",
+      "affymetrix-desc": "Files can also be retrieved per experiment, see ",
+      "affymetrix-desc-link": "Affymetrix data directory",
+      "affymetrix-button-experiments": "Download experiments/chips info",
+      "affymetrix-button-signal": "Download signal intensities",
+      "full-rna-seq": "Single cell full length RNA-Seq data",
+      "full-rna-seq-desc": "Files can also be retrieved per experiment, see ",
+      "full-rna-seq-desc-link": "Single cell full length RNA-Seq data directory",
+      "full-rna-seq-button-experiments": "Download experiments/libraries info",
+      "full-rna-seq-button-count": "Download read count; TPMs and FPKMs"
+    }
   }
 }
