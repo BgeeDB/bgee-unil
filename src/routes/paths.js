@@ -6,9 +6,9 @@ const PATHS = {
   },
   SEARCH: {
     GENE: '/search/gene',
-    ANATOMICAL_HOMOLOGY: '/search/anat-similarities',
-    SPARQL: '/search/sparql',
+    ANATOMICAL_HOMOLOGY: '/search/anatomical-homologysss',
     SPECIES: '/search/species',
+    SPECIES_ITEM: '/search/species/:id',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expr-calls',
@@ -18,7 +18,6 @@ const PATHS = {
   RESOURCES: {
     DOCS: '/resources/',
     R_PACKAGES: '/resources/r-packages',
-    SPARQL: '/resources/sparql',
     ANNOTATIONS: '/resources/annotations',
     ONTOLOGIES: '/resources/ontologies',
     SOURCE_CODE: '/resources/source-code',

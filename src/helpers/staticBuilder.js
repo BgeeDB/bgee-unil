@@ -1,14 +1,14 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-case-declarations */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './array';
 import Accordion from '../components/Accordion';
-// eslint-disable-next-line import/no-cycle
-import Table from '../components/Table';
+import Table from '../components/Table/Table';
 
-const richTextBuilder = (elements, prefixKey) =>
+export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, ...props }, key) => {
     switch (type) {
       case 'break_line':
@@ -290,6 +290,12 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'separator':
         return <div className="separator" />;
+      case 'sub_title':
+        return (
+          <p className={`title is-6 ${props.classNames || ''}`}>
+            {props.content}
+          </p>
+        );
       case 'table':
         return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
@@ -312,12 +318,6 @@ const staticBuilder = (json, prefixKey = '') =>
               {props.content}
             </p>
           </div>
-        );
-      case 'sub_title':
-        return (
-          <p className={`title is-6 ${props.classNames || ''}`}>
-            {props.content}
-          </p>
         );
       case 'unordered_list':
         return (

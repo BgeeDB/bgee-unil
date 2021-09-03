@@ -1,6 +1,8 @@
 {
   "global": {
     "app-name": "Bgee",
+    "search": "Search",
+    "download": "download",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
       "copy-link": "Copy permanent link",
@@ -56,5 +58,68 @@
       "privacy-policy": "Bgee privacy notice"
     },
     "error": "Error"
+  },
+  "analysis": {
+    "top-anat": {
+      "recent-jobs": "Recent Jobs",
+      "documentation": "Documentation",
+      "examples": "Examples",
+
+      "gene-list": "Gene list",
+      "gene-list-details": "{IDs} IDs provided, {UNIQUEs} unique genes found in {SPECIE} ",
+      "textarea-placeholder-gene-list": "Enter a list of Ensembl identifiers, one ID per line, no quotes, no comma.",
+
+      "submit-job": "Submit your job",
+      "email": "Email",
+      "job-description": "Job description",
+      "view": "View",
+      "all-stage-present": "all stages, expression type \"Present\" ",
+      "download-job-archive": "Download job archive",
+      "show-entries": "Show entries",
+      "showing-entries-on-total": "Showing {START} to {END} of {TOTAL} entries"
+    },
+    "expression-comparison": {
+      "title": "Expression comparison",
+      "description": "Compare expression of several genes. If genes belong to several species, comparisons will be performed in homologous organs. Please enter one Ensembl ID per line.",
+      "gene-list": "Gene list",
+      "gene-list-placeholder": "Enter a list of Ensembl IDs (one ID per line or separated by a comma)",
+      "search-button": "Search",
+      "unknown-ensembl-ids": "Unknown Ensembl IDs:",
+      "results": "Results",
+      "results-description": "Results are ordered by default by descendant \"Conservation score\", then ascendant \"Genes with absence of expression\", then descendant \"Max expression score\". The order could be changed by clicking on one column, then press shift and click on another column."
+    }
+  },
+  "search": {
+    "species": {
+      "list-title": "Bgee species list",
+      "species": "Species",
+      "general-information": "General information",
+      "scientific-name": "Scientific name",
+      "common-name": "Common name",
+      "species-id": "Species ID",
+      "genome-source": "Genome source",
+      "genome-source-provider": "Ensembl",
+      "genome-version": "Genome version",
+      "gene-expr-call-files": "Gene expression call files",
+      "gene-expr-call-files-description": "Bgee provides calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression. More information in our ",
+      "gene-expr-call-files-doc": "documentation",
+      "anatomical-only": "Anatomical entities only",
+      "anatomical-only-simple": "File without advanced column: ",
+      "anatomical-only-advanced": "File with advanced columns: ",
+      "anatomical-full":  "Anatomical entities, developmental stages, sexes and strains",
+      "anatomical-full-simple":  "File without advanced column: ",
+      "anatomical-full-advanced":  "File with advanced columns: ",
+      "processed-expr-value-files": "Processed expression value files",
+      "processed-expr-value-files-description": "Bgee provides annotations and experiment annotations, and processed expression values.",
+      "affymetrix": "Affymetrix",
+      "affymetrix-experiment": "Experiments/chips annotations and meta data: ",
+      "affymetrix-data": "Data (signal intensities): ",
+      "rna-seq": "RNA-Seq",
+      "rna-seq-experiment": "Experiments/chips annotations and meta data: ",
+      "rna-seq-data": "Data (read counts, TPMs, and FPKMs): ",
+      "full-rna-seq": "Single cell full length RNA-Seq",
+      "full-rna-seq-experiment": "Experiments/chips annotations and meta data: ",
+      "full-rna-seq-data": "Data (read counts, TPMs, and FPKMs): "
+    }
   }
 }

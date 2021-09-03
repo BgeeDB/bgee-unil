@@ -7,7 +7,6 @@ import ExpComp from '../pages/analysis/ExpComp';
 
 import GeneSearch from '../pages/search/GeneSearch';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
-import SparqlSearch from '../pages/search/SparqlSearch';
 import SpeciesList from '../pages/search/SpeciesList';
 
 import DataDumps from '../pages/download/DataDumps';
@@ -33,6 +32,7 @@ import Sources from '../pages/about/Sources';
 import PrivacyPolicy from '../pages/about/PrivacyPolicy';
 
 import Error from '../pages/Error';
+import Species from '../pages/search/Species';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -53,13 +53,13 @@ const SEARCH = {
     i18nKey: 'page.search.anatomical-homology-search',
     component: AnatomicalHomologySearch,
   },
-  [PATHS.SEARCH.SPARQL]: {
-    i18nKey: 'page.search.sparql',
-    component: SparqlSearch,
-  },
   [PATHS.SEARCH.SPECIES]: {
     i18nKey: 'page.search.species',
     component: SpeciesList,
+  },
+  [PATHS.SEARCH.SPECIES_ITEM]: {
+    i18nKey: 'page.search.species-item',
+    component: Species,
   },
 };
 const DOWNLOAD = {

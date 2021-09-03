@@ -16,9 +16,11 @@ code {
 }
 
 
+$primary: #e2011b;
+$link: #920209;
 $text: #626262;
-$code: #e2011b;
-$title-color: #e2011b;
+$code: $primary;
+$title-color: $primary;
 $dark-color: #ffffff;
 $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
@@ -30,6 +32,8 @@ $desktop: 1090px;
  */
 @import "../../node_modules/bulma/sass/utilities/derived-variables";
 $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
+//$custom-colors: ("bgee-link": ($link, $dark-color));
+//$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
 @media only screen and (max-width: $desktop) {
@@ -46,22 +50,43 @@ $colors: map-merge($colors, $custom-colors);
       height: 40px;
       max-height: 40px;
     }
-    .navbar-link:hover, .navbar-link.active {
-      background-color: $dark-bg-hover-color;
-      color: $dark-color;
-    }
-    .custom.navbar-item {
-      color: #aaaaaa !important;
-      &:hover {
-        background-color: $dark-color;
-        color: $dark-bg-color;
-      }
-    }
 
-    .navbar-dropdown {
-      display: none;
-      &.open {
-        display: block;
+    .navbar-menu {
+      background-color: $dark-bg-color !important;
+    }
+    .navbar-item.has-dropdown {
+      .navbar-link {
+        &:hover, &.active  {
+          background-color: $dark-bg-hover-color;
+          color: $dark-color;
+        }
+        &::after {
+          transition: .3s;
+          border-color: $dark-color !important;
+        }
+      }
+      .navbar-dropdown {
+        display: none;
+        .custom.navbar-item {
+          color: #aaaaaa !important;
+          &:hover {
+            background-color: $dark-bg-hover-color;
+            color: $dark-color;
+          }
+        }
+      }
+      &.is-open {
+        .navbar-link {
+          background-color: $dark-bg-hover-color;
+          color: $dark-color;
+          &::after {
+            transform: rotate(135deg);
+            transition: .3s;
+          }
+        }
+        .navbar-dropdown {
+            display: block;
+        }
       }
     }
   }
@@ -71,13 +96,19 @@ $colors: map-merge($colors, $custom-colors);
  * END navbar style
  */
 
+/*
+ * footer style
+ */
 $footer-background-color: $dark-bg-color;
 $footer-color: $dark-color;
 $footer-padding: 1rem;
 
 footer.footer {
-  .left-wrapper a:not(:first-child) {
-    margin-left: 15px;
+  .left-wrapper {
+    display: flex;
+    a:not(:first-child) {
+      margin-left: 15px;
+    }
   }
   .right-wrapper a:not(:last-child) {
     margin-right: 15px;
@@ -126,6 +157,9 @@ footer.footer {
   }
 }
 
+/*
+ * END footer style
+ */
 .notification {
   margin-bottom: 0 !important;
 }
@@ -144,7 +178,6 @@ div.static-section > *:not(:first-child) {
   border-image-slice: 1;
 }
 
-$link: #920209;
 a.internal-link, a.external-link, a.mail-link {
   text-decoration: underline;
 }
@@ -192,14 +225,31 @@ div.card.custom-card {
     text-decoration: underline;
   }
 }
+div.card.species {
+  cursor: pointer;
+  padding: .5rem 0;
+  width: 146px;
+  &:hover {
+    box-shadow: 0 0 1em -0.125em rgba(146, 2, 9, .75)
+  }
+  .card-image {
+    display: flex;
+    justify-content: center;
+  }
+}
+.grid-species {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
+  grid-row-gap: 20px;
+}
 
 code {
   border: 1px solid #999;
-}
-code.bio-query {
-  background-color: #0ff;
-  border-radius: 4px;
-  border: none;
+  &.bio-query {
+    background-color: #0ff;
+    border-radius: 4px;
+    border: none;
+  }
 }
 pre {
   border: 1px solid #999;
@@ -210,12 +260,47 @@ pre {
 }
 $table-cell-border-width: 0;
 
-.table thead td, .table thead th {
-  border-width: 2px 0 !important;
-}
-table.table.small-font {
-  td, th  {
-    font-size: 10px;
+table.table {
+  &.sortable {
+    thead > tr > th {
+      cursor: pointer;
+      &:hover {
+        opacity: .5;
+      }
+    }
+  }
+  &.small-font {
+    td, th  {
+      font-size: 10px;
+    }
+  }
+  thead {
+    td, th {
+      border-width: 2px 0 !important
+    }
+  }
+  tbody {
+    tr {
+      &.is-expanded {
+        td {
+          .expand-content {
+            display: block;
+          }
+          .expand-button ion-icon {
+            transform: rotate(180deg);
+            transition: .35s;
+          }
+        }
+      }
+      td {
+        .expand-content {
+          display: none;
+        }
+        .expand-button ion-icon {
+          transition: .35s;
+        }
+      }
+    }
   }
 }
 div.separator {
@@ -227,11 +312,13 @@ div.separator {
 @import "../../node_modules/bulma/sass/components/navbar";
 @import "../../node_modules/bulma/sass/elements/container";
 @import "../../node_modules/bulma/sass/elements/content";
+@import "../../node_modules/bulma/sass/elements/icon";
 @import "../../node_modules/bulma/sass/elements/image";
 @import "../../node_modules/bulma/sass/elements/notification";
 @import "../../node_modules/bulma/sass/elements/other";
 @import "../../node_modules/bulma/sass/elements/table";
 @import "../../node_modules/bulma/sass/elements/title";
+@import "../../node_modules/bulma/sass/form/all";
 @import "../../node_modules/bulma/sass/grid/all";
 @import "../../node_modules/bulma/sass/helpers/all";
 @import "../../node_modules/bulma/sass/layout/footer";
@@ -239,7 +326,6 @@ div.separator {
 @import "../../node_modules/bulma/sass/helpers/flexbox";
 @import "../../node_modules/bulma/sass/helpers/visibility";
 
-//@import "../../node_modules/bulma/sass/elements/all";
 @import "../../node_modules/bulma/bulma";
 @import '../../node_modules/@creativebulma/bulma-collapsible';
 
@@ -267,4 +353,11 @@ div.separator {
       border-radius: 0 0 4px 4px;
     }
   }
+}
+
+.color-primary {
+  color: $primary !important;
+}
+.color-link {
+  color: $link !important;
 }
