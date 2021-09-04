@@ -3,6 +3,14 @@
 import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
 
+const defaultRender = (cell, key) => {
+  if (typeof cell === 'string' || typeof cell === 'number')
+    return <p key={key}>{cell}</p>;
+  return Array.isArray(cell) ? (
+    <div key={key}>{staticBuilder(cell)}</div>
+  ) : null;
+};
+
 const Table = ({
   scrollable = false,
   fullwidth = true,
@@ -33,13 +41,6 @@ const Table = ({
     (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
     [isExpanded]
   );
-  const defaultRender = (cell, key) => {
-    if (typeof cell === 'string' || typeof cell === 'number')
-      return <p key={key}>{cell}</p>;
-    return Array.isArray(cell) ? (
-      <div key={key}>{staticBuilder(cell)}</div>
-    ) : null;
-  };
   let TableObject = (
     <table
       className={`table ${sortable ? 'sortable' : ''} ${classNames} ${
@@ -88,20 +89,37 @@ const Table = ({
             key={key}
             className={`${isExpanded === key ? 'is-expanded' : ''}`}
           >
-            {row.map((cell, cellKey) => (
-              <td key={`${key}-${cellKey}`}>
-                {onRenderCell
-                  ? onRenderCell(
-                      { cell, key: cellKey, keyRow: key },
-                      defaultRender,
-                      {
-                        expandAction: expandAction(key),
-                        isExpanded: isExpanded === key,
-                      }
-                    )
-                  : defaultRender(cell, cellKey)}
-              </td>
-            ))}
+            {Array.isArray(row) &&
+              row.map((cell, cellKey) => (
+                <td key={`${key}-${cellKey}`}>
+                  {onRenderCell
+                    ? onRenderCell(
+                        { cell, key: cellKey, keyRow: key },
+                        defaultRender,
+                        {
+                          expandAction: expandAction(key),
+                          isExpanded: isExpanded === key,
+                        }
+                      )
+                    : defaultRender(cell, cellKey)}
+                </td>
+              ))}
+            {typeof row &&
+              !Array.isArray(row) &&
+              columns.map((c, keyCol) => (
+                <td key={`${key}-col-${keyCol}`}>
+                  {onRenderCell
+                    ? onRenderCell(
+                        { cell: row, key: c.key || keyCol, keyRow: key },
+                        defaultRender,
+                        {
+                          expandAction: expandAction(key),
+                          isExpanded: isExpanded === key,
+                        }
+                      )
+                    : null}
+                </td>
+              ))}
           </tr>
         ))}
       </tbody>

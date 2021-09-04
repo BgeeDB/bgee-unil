@@ -5,7 +5,8 @@ const PATHS = {
     EXPRESSION_COMPARISON: '/analysis/expr-comparison',
   },
   SEARCH: {
-    GENE: '/search/gene',
+    GENE: '/search/genes',
+    GENE_ITEM: '/search/gene/:id',
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homologysss',
     SPECIES: '/search/species',
     SPECIES_ITEM: '/search/species/:id',

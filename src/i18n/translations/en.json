@@ -3,6 +3,9 @@
     "app-name": "Bgee",
     "search": "Search",
     "download": "download",
+    "search": "Search",
+    "example": "Example",
+    "results": "Results",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
       "copy-link": "Copy permanent link",
@@ -90,6 +93,21 @@
     }
   },
   "search": {
+    "genes": {
+      "title": "Gene search",
+      "description": "Search for genes based on Ensembl gene IDs, gene names, gene descriptions, synonyms and cross-references.",
+      "search-gene": "Search gene",
+      "genes-found": "gene(s) found for"
+    },
+    "anatomical-homology": {
+      "title": "Anatomical homology",
+      "description": "Retrieve anatomical homologies from a list of species and a list of Uberon IDs. Retrieve Uberon IDs from organ names ",
+      "anat-label": "Anatomical entities",
+      "species-common-ancestor-label": "Species to define least common ancestor",
+      "least-common-ancestor": "Least common ancestor of provided species",
+      "ancestral-taxon-label": "Ancestral taxon",
+      "presence-among-label": "Presence among selected species"
+    },
     "species": {
       "list-title": "Bgee species list",
       "species": "Species",

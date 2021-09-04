@@ -389,3 +389,10 @@ figure.image {
     width: 150px !important;
   }
 }
+
+.control.checkboxes {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1rem;
+  grid-row-gap: .25rem;
+}

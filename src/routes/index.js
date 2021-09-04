@@ -32,6 +32,11 @@ const Router = () => (
         />
         <Route
           exact
+          path={PATHS.SEARCH.GENE_ITEM}
+          component={ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].component}
+        />
+        <Route
+          exact
           path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
           component={ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component}
         />
@@ -77,11 +82,12 @@ const Router = () => (
           path={PATHS.RESOURCES.R_PACKAGES}
           component={ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].component}
         />
-        <Route
-          exact
-          path={PATHS.RESOURCES.SPARQL}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].component}
-        />
+        {/* TODO issue SPARQL */}
+        {/* <Route */}
+        {/*  exact */}
+        {/*  path={PATHS.RESOURCES.SPARQL} */}
+        {/*  component={ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].component} */}
+        {/* /> */}
         <Route
           exact
           path={PATHS.RESOURCES.ANNOTATIONS}
@@ -147,7 +153,7 @@ const Router = () => (
           component={ROUTES.ABOUT[PATHS.ABOUT.PRIVACY_POLICY].component}
         />
 
-        <Route path={PATHS.ERROR} component={Error} />
+        {/* <Route path={PATHS.ERROR} component={Error} /> */}
 
         <Redirect to={PATHS.HOME} />
       </Switch>

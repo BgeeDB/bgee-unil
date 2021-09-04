@@ -5,7 +5,7 @@ import Home from '../pages/Home';
 import TopAnatAnalysis from '../pages/analysis/TopAnat';
 import ExpComp from '../pages/analysis/ExpComp';
 
-import GeneSearch from '../pages/search/GeneSearch';
+import GeneList from '../pages/search/GeneList';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 
@@ -33,6 +33,7 @@ import PrivacyPolicy from '../pages/about/PrivacyPolicy';
 
 import Error from '../pages/Error';
 import Species from '../pages/search/Species';
+import Gene from '../pages/search/Gene';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -47,7 +48,11 @@ const ANALYSIS = {
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
     i18nKey: 'page.search.gene-search',
-    component: GeneSearch,
+    component: GeneList,
+  },
+  [PATHS.SEARCH.GENE_ITEM]: {
+    i18nKey: 'page.search.gene-search',
+    component: Gene,
   },
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
     i18nKey: 'page.search.anatomical-homology-search',
