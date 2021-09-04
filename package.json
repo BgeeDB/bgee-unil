@@ -1,6 +1,6 @@
 {
   "name": "bgee",
-  "version": "0.1.0",
+  "version": "15.beta",
   "private": true,
   "dependencies": {
     "@creativebulma/bulma-collapsible": "^1.0.4",

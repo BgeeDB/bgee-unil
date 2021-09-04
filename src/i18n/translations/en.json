@@ -1,6 +1,8 @@
 {
   "global": {
     "app-name": "Bgee",
+    "description": "Gene expression data in animals",
+    "version": "Version",
     "search": "Search",
     "download": "download",
     "search": "Search",
@@ -61,6 +63,18 @@
       "privacy-policy": "Bgee privacy notice"
     },
     "error": "Error"
+  },
+  "home": {
+    "exp-comparison": "Expression comparison",
+    "exp-enrichment-analysis": "Expression enrichment analysis",
+    "gene-search": "Gene search",
+    "description-1": "Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species.",
+    "description-2": "It provides an intuitive answer to the question \"where is a gene expressed?\" and supports research in cancer and agriculture as well as evolutionary biology.",
+    "grid-species-title": "Species with data in Bgee",
+    "news": "News",
+    "image-right": "Images from Wikimedia Commons. In most cases, pictures corresponds to the sequenced strains. ",
+    "image-right-link": "Show information about original images.",
+    "view-archives": "View archive sites"
   },
   "analysis": {
     "top-anat": {
