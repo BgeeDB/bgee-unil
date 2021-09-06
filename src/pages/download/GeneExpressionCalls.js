@@ -5,7 +5,7 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
-import LINK_ANCHOR from '../support/linkAnchor';
+import LINK_ANCHOR from '../../routes/linkAnchor';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/Custom/DlGeneExpressionCallsSpeciesModal';
@@ -36,7 +36,7 @@ const GeneExpressionCalls = () => {
   }, [speciesID, filteredSpecies, selectedSpecies]);
 
   return (
-    <div className="section pt-1">
+    <div className="section pt-5">
       <div className="content has-text-centered">
         <p className="title is-5">{`${i18n.t(
           'download.gene-exp-calls.title'

@@ -197,7 +197,7 @@ const GeneList = () => {
   }, [query]);
 
   return (
-    <div className="section pt-1">
+    <div className="section pt-5">
       <div className="content has-text-centered">
         <p className="title is-5">{`${i18n.t('search.genes.title')}`}</p>
       </div>

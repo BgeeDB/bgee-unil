@@ -83,7 +83,14 @@ const Home = () => {
               patterns across multiple animal species, produced from multiple
               data types (bulk RNA-Seq, single-cell RNA-Seq, Affymetrix, in situ
               hybridization, and EST data) and from multiple data sets
-              (including GTEx data).
+              (including{' '}
+              <a
+                href="https://www.gtexportal.org/home/"
+                className="external-link"
+              >
+                GTEx data
+              </a>
+              ).
             </div>
           </div>
           <div className="column is-4">

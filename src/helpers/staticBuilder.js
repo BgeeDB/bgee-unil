@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import arrayHelper from './array';
 import Accordion from '../components/Accordion';
 import Table from '../components/Table/Table';
+import LinkExternal from '../components/LinkExternal';
 
 export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, ...props }, key) => {
@@ -218,15 +219,11 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'link_external':
         return (
-          <a
+          <LinkExternal
             key={`${prefixKey}-${key}`}
-            href={props.path}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="external-link"
-          >
-            {props.text}
-          </a>
+            to={props.path}
+            text={props.text}
+          />
         );
       case 'link_image':
         return (

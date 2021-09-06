@@ -227,8 +227,8 @@ div.card.custom-card {
 }
 div.card.species {
   cursor: pointer;
-  padding: .5rem 0;
-  width: 146px;
+  padding: .5rem 0 0;
+  width: 126px;
   &:hover {
     box-shadow: 0 0 1em -0.125em rgba(146, 2, 9, .75)
   }
@@ -239,8 +239,9 @@ div.card.species {
 }
 .grid-species {
   display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
-  grid-row-gap: 20px;
+  grid-template-columns: repeat( auto-fit, minmax(126px, 1fr) );
+  grid-row-gap: 10px;
+  grid-column-gap: 5px;
   .center-in-grid {
     align-self: center;
     justify-self: center;
@@ -405,5 +406,11 @@ figure.image {
   display: none;
   &.is-open {
     display: block;
+  }
+}
+
+.near-columns {
+  .column {
+    padding-bottom: 0 !important;
   }
 }

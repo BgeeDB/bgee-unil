@@ -119,7 +119,7 @@ const TopAnat = () => {
 
   return (
     <div>
-      <section className="section pt-1">
+      <section className="section pt-5">
         {staticBuilder(staticContent)}
         {/* <div className="my-4 is-flex"> */}
         {/*  <div> */}

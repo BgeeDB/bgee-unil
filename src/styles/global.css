@@ -1,9 +1,9 @@
 /* Error: Can't find stylesheet to import.
  *     ,
- * 337 | @import '../../node_modules/@creativebulma/bulma-collapsible';
+ * 338 | @import '../../node_modules/@creativebulma/bulma-collapsible';
  *     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *     '
- *   global.scss 337:9  root stylesheet */
+ *   global.scss 338:9  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -13,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a     \2577 \a 337 \2502  @import '../../node_modules/@creativebulma/bulma-collapsible';\d\a     \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a     \2575 \a   global.scss 337:9  root stylesheet";
+  content: "Error: Can't find stylesheet to import.\a     \2577 \a 338 \2502  @import '../../node_modules/@creativebulma/bulma-collapsible';\d\a     \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a     \2575 \a   global.scss 338:9  root stylesheet";
 }

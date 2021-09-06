@@ -141,7 +141,7 @@ const ExpComp = () => {
 
   return (
     <div>
-      <section className="section pt-1">
+      <section className="section pt-5">
         <div>
           {staticBuilder([
             {

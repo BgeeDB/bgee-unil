@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PATHS from '../../../routes/paths';
 import i18n from '../../../i18n';
-import LINK_ANCHOR from '../../../pages/support/linkAnchor';
+import LINK_ANCHOR from '../../../routes/linkAnchor';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) =>
   species ? (
