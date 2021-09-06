@@ -36,7 +36,7 @@ const GeneExpressionCalls = () => {
   }, [speciesID, filteredSpecies, selectedSpecies]);
 
   return (
-    <div className="section pt-1">
+    <div className="section pt-5">
       <div className="content has-text-centered">
         <p className="title is-5">{`${i18n.t(
           'download.gene-exp-calls.title'

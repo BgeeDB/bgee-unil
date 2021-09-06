@@ -34,7 +34,7 @@ const SpeciesList = () => {
       'ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/rna_seq/Danio_rerio/Danio_rerio_RNA-Seq_read_counts_TPM_FPKM.tar.gz',
   };
   return (
-    <div className="section pt-1">
+    <div className="section pt-5">
       <div className="content has-text-centered">
         <p className="title is-5">{`${i18n.t('search.species.species')}: ${
           species.scientificName

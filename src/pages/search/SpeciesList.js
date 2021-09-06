@@ -9,7 +9,7 @@ import { CardSpecies } from '../../components/CustomCard';
 const SpeciesList = () => {
   const page = 'SpeciesList';
   return (
-    <div className="section pt-1">
+    <div className="section pt-5">
       <div className="content has-text-centered">
         <p className="title is-5">{i18n.t('search.species.list-title')}</p>
       </div>

@@ -19,7 +19,7 @@ const Gene = ({
   );
 
   return (
-    <section className="section pt-3">
+    <section className="section pt-5">
       <div className="columns is-vcentered">
         <div className="column is-3">
           <div className="card search-input mx-auto my-3">
@@ -53,7 +53,7 @@ const Gene = ({
             </div>
           </div>
         </div>
-        <div className="column is-9 is-flex is-flex-direction-row is-align-items-center">
+        <div className="column is-9 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
           <figure className="image is-128x128">
             <img src="https://bulma.io/images/placeholders/128x128.png" />
           </figure>
