@@ -1,19 +1,12 @@
 import PATHS from '../../routes/paths';
-
-const SINGLE_SPECIES_DL_FILES_ID = 'single';
-const SINGLE_EXPR_ID = 'single_expr';
-const SINGLE_EXPR_SIMPLE_ID = 'single_expr_simple';
-const SINGLE_EXPR_ADVANCED_ID = 'single_expr_advanced';
-const SINGLE_DIFF_ID = 'single_diff';
-const SINGLE_DIFF_SIMPLE_ID = 'single_diff_simple';
-const SINGLE_DIFF_COMPLETE_ID = 'single_diff_complete';
+import LINK_ANCHOR from '../../pages/support/linkAnchor';
 
 const singleExprSimple = [
   {
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6',
     content: 'Simple file',
-    id: SINGLE_EXPR_SIMPLE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_SIMPLE_ID,
   },
   {
     type: 'text',
@@ -554,7 +547,7 @@ const singleExprAdvanced = [
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6',
     content: 'Advanced file',
-    id: SINGLE_EXPR_ADVANCED_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ADVANCED_ID,
   },
   {
     type: 'text',
@@ -2108,7 +2101,7 @@ const singleExpr = [
     type: 'sub_title',
     classNames: 'mb-2 mt-5',
     content: 'Presence/absence of expression',
-    id: SINGLE_EXPR_SIMPLE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
   },
   {
     type: 'rich_text',
@@ -2267,12 +2260,12 @@ const singleExpr = [
     children: [
       {
         type: 'link_anchor',
-        selector: SINGLE_EXPR_SIMPLE_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_SIMPLE_ID,
         text: 'simple file',
       },
       {
         type: 'link_anchor',
-        selector: SINGLE_EXPR_ADVANCED_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ADVANCED_ID,
         text: 'advanced file',
       },
     ],
@@ -2281,7 +2274,7 @@ const singleExpr = [
   ...singleExprAdvanced,
   {
     type: 'link_anchor',
-    id: SINGLE_EXPR_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
     text: 'Back to presence/absence of expression menu',
   },
   {
@@ -2296,7 +2289,7 @@ const singleDiffSimple = [
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6',
     content: 'Simple file',
-    id: SINGLE_DIFF_SIMPLE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_SIMPLE_ID,
   },
   {
     type: 'text',
@@ -2309,7 +2302,7 @@ const singleDiffComplete = [
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6',
     content: 'Complete file',
-    id: SINGLE_DIFF_COMPLETE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_COMPLETE_ID,
   },
   {
     type: 'text',
@@ -2337,7 +2330,7 @@ const singleDiff = [
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6',
     content: 'Over-/under-expression across anatomy or life stages',
-    id: SINGLE_DIFF_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID,
   },
   {
     type: 'text',
@@ -2405,12 +2398,12 @@ const singleDiff = [
     children: [
       {
         type: 'link_anchor',
-        selector: SINGLE_DIFF_SIMPLE_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_SIMPLE_ID,
         text: 'simple file',
       },
       {
         type: 'link_anchor',
-        selector: SINGLE_DIFF_COMPLETE_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_COMPLETE_ID,
         text: 'complete file',
       },
     ],
@@ -2420,7 +2413,7 @@ const singleDiff = [
   ...singleDiffComplete,
   {
     type: 'link_anchor',
-    selector: SINGLE_DIFF_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID,
     text: 'Back to over-/under-expression menu',
   },
 ];
@@ -2771,19 +2764,19 @@ const geneExpCalls = [
   },
   {
     type: 'link_anchor',
-    selector: SINGLE_SPECIES_DL_FILES_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_SPECIES_DL_FILES_ID,
     text: 'Single-species download files',
   },
   {
     type: 'link_anchor',
     classNames: 'ml-6',
-    selector: SINGLE_EXPR_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
     text: 'Presence/absence of expression',
   },
   {
     type: 'link_anchor',
     classNames: 'ml-6',
-    selector: SINGLE_DIFF_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID,
     text: 'Over-/under-expression across anatomy or life stages',
   },
   {
@@ -2807,7 +2800,7 @@ const geneExpCalls = [
   {
     type: 'section',
     title: 'Single-species download files',
-    id: SINGLE_SPECIES_DL_FILES_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_SPECIES_DL_FILES_ID,
     children: [
       {
         type: 'text',
@@ -2818,12 +2811,12 @@ const geneExpCalls = [
         children: [
           {
             type: 'link_anchor',
-            selector: SINGLE_EXPR_ID,
+            selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
             text: 'Presence/absence of expression',
           },
           {
             type: 'link_anchor',
-            selector: SINGLE_DIFF_ID,
+            selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID,
             text: 'Over-/under-expression across anatomy or life stages',
           },
         ],

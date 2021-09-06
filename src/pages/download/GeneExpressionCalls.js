@@ -5,6 +5,7 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
+import LINK_ANCHOR from '../support/linkAnchor';
 
 const GeneExpressionCalls = () => {
   const [selectedSpecies, setSelectedSpecies] = React.useState(null);
@@ -155,9 +156,15 @@ const GeneExpressionCalls = () => {
                   </div>
                 </div>
               </article>
-              <div className="mt-2">
+              <div className="mt-3">
                 <p className="has-text-weight-semibold is-size-5">
                   {i18n.t('download.gene-exp-calls.presence-absence-exp')}
+                  <Link
+                    className="is-size-6 internal-link ml-2"
+                    to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
+                  >
+                    {i18n.t('global.see-documentation')}
+                  </Link>
                 </p>
                 <div className="is-flex">
                   <div className="mx-5 my-auto">
@@ -187,6 +194,12 @@ const GeneExpressionCalls = () => {
                     </div>
                     <p className="has-text-weight-semibold mt-4">
                       {i18n.t('download.gene-exp-calls.get-advanced-cols')}
+                      <Link
+                        className="is-size-6 internal-link ml-2"
+                        to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
+                      >
+                        {i18n.t('global.see-documentation')}
+                      </Link>
                     </p>
                     <div className="control">
                       <label className="radio" htmlFor="answer">

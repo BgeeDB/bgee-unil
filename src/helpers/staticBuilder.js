@@ -292,7 +292,7 @@ const staticBuilder = (json, prefixKey = '') =>
         return <div className="separator" />;
       case 'sub_title':
         return (
-          <p className={`title is-6 ${props.classNames || ''}`}>
+          <p id={props.id} className={`title is-6 ${props.classNames || ''}`}>
             {props.content}
           </p>
         );
