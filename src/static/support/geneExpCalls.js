@@ -1,5 +1,5 @@
 import PATHS from '../../routes/paths';
-import LINK_ANCHOR from '../../pages/support/linkAnchor';
+import LINK_ANCHOR from '../../routes/linkAnchor';
 
 const singleExprSimple = [
   {

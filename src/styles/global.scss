@@ -407,3 +407,9 @@ figure.image {
     display: block;
   }
 }
+
+.near-columns {
+  .column {
+    padding-bottom: 0 !important;
+  }
+}

@@ -5,7 +5,7 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
-import LINK_ANCHOR from '../support/linkAnchor';
+import LINK_ANCHOR from '../../routes/linkAnchor';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/Custom/DlGeneExpressionCallsSpeciesModal';

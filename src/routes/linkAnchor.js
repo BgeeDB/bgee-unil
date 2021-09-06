@@ -1,4 +1,8 @@
 const LINK_ANCHOR = {
+  GENE: {
+    ORTHOLOGS: 'ortologs',
+    PARALOGS: 'paralogs',
+  },
   GENE_EXPRESSION_CALLS: {
     SINGLE_SPECIES_DL_FILES_ID: 'single',
     SINGLE_EXPR_ID: 'single_expr',
