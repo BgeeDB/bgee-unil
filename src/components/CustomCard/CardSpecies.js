@@ -3,7 +3,7 @@ import React from 'react';
 const CardSpecies = ({ scientificName, name, src }) => (
   <div className="card species">
     <div className="card-image">
-      <figure className="image is-96x96 rounded-border">
+      <figure className="image rounded-border">
         <img src={src} alt={`species ${scientificName} ${name}`} />
       </figure>
     </div>
