@@ -151,68 +151,74 @@ const GeneExpressionCalls = () => {
                 </div>
               </article>
               <div className="mt-3">
-                <p className="has-text-weight-semibold is-size-5">
-                  {i18n.t('download.gene-exp-calls.presence-absence-exp')}
-                  <Link
-                    className="is-size-6 internal-link ml-2"
-                    to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
-                  >
-                    {i18n.t('global.see-documentation')}
-                  </Link>
-                </p>
-                <div className="is-flex">
-                  <div className="mx-5 my-auto">
-                    <a className="download-button">
-                      {i18n.t('global.download')}
-                    </a>
-                  </div>
+                <div>
+                  <p className="has-text-weight-semibold is-size-5">
+                    {i18n.t('download.gene-exp-calls.presence-absence-exp')}
+                    <Link
+                      className="is-size-6 internal-link ml-2"
+                      to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
+                    >
+                      {i18n.t('global.see-documentation')}
+                    </Link>
+                  </p>
                   <div>
-                    <p className="has-text-weight-semibold">
+                    <div>
+                      <p className="has-text-weight-semibold mt-3">
+                        {i18n.t('download.gene-exp-calls.anat-entities-only')}
+                      </p>
+                      <div className="field has-addons">
+                        <p className="control">
+                          <button className="button" type="button">
+                            <span>{i18n.t('global.simple-file')}</span>
+                          </button>
+                        </p>
+                        <p className="control">
+                          <button className="button" type="button">
+                            <span>{i18n.t('global.advanced-file')}</span>
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="has-text-weight-semibold mt-3">
+                        {i18n.t(
+                          'download.gene-exp-calls.anat-entities-and-dev'
+                        )}
+                      </p>
+                      <div className="field has-addons">
+                        <p className="control">
+                          <button className="button" type="button">
+                            <span>{i18n.t('global.simple-file')}</span>
+                          </button>
+                        </p>
+                        <p className="control">
+                          <button className="button" type="button">
+                            <span>{i18n.t('global.advanced-file')}</span>
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2 is-italic">
                       {i18n.t(
-                        'download.gene-exp-calls.choose-condition-parameters'
+                        'download.gene-exp-calls.advanced-file-description'
                       )}
                     </p>
-                    <div className="field is-grouped">
-                      <p className="control">
-                        <label className="checkbox" htmlFor="xxxxx1">
-                          <input type="checkbox" name="xxxxx1" />
-                          key
-                        </label>
-                      </p>
-                      <p className="control">
-                        <label className="checkbox" htmlFor="xxxxx1">
-                          <input type="checkbox" name="xxxxx1" />
-                          key
-                        </label>
-                      </p>
-                    </div>
-                    <p className="has-text-weight-semibold mt-4">
-                      {i18n.t('download.gene-exp-calls.get-advanced-cols')}
-                      <Link
-                        className="is-size-6 internal-link ml-2"
-                        to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
-                      >
-                        {i18n.t('global.see-documentation')}
-                      </Link>
-                    </p>
-                    <div className="control">
-                      <label className="radio" htmlFor="answer">
-                        <input type="radio" name="answer" />
-                        Yes
-                      </label>
-                      <label className="radio" htmlFor="answer2">
-                        <input type="radio" name="answer2" />
-                        No
-                      </label>
-                    </div>
                   </div>
                 </div>
-                <p className="has-text-weight-semibold is-size-5 mt-2">
-                  {i18n.t('download.gene-exp-calls.over-under-exp')}
-                </p>
-                <p>
-                  {i18n.t('download.gene-exp-calls.improvement-in-progress')}
-                </p>
+                <div>
+                  <p className="has-text-weight-semibold is-size-5 mt-2">
+                    {i18n.t('download.gene-exp-calls.over-under-exp')}
+                    <Link
+                      className="is-size-6 internal-link ml-2"
+                      to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
+                    >
+                      {i18n.t('global.see-documentation')}
+                    </Link>
+                  </p>
+                  <p>
+                    {i18n.t('download.gene-exp-calls.improvement-in-progress')}
+                  </p>
+                </div>
               </div>
             </div>
           ) : null
