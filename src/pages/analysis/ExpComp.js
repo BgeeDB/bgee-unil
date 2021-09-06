@@ -141,125 +141,129 @@ const ExpComp = () => {
 
   return (
     <div>
-      <div>
-        {staticBuilder([
-          {
-            type: 'title',
-            content: i18n.t('analysis.expression-comparison.title'),
-          },
-          {
-            type: 'text',
-            content: i18n.t('analysis.expression-comparison.description'),
-          },
-        ])}
-        <div className="is-flex is-justify-content-center my-3">
-          <div className="message" style={{ maxWidth: '500px' }}>
-            <header className="message-header">
-              <p className="is-size-5">
-                {i18n.t('analysis.expression-comparison.gene-list')}
-              </p>
-            </header>
-            <div className="message-body">
-              <div className="field">
-                <div className="control">
-                  <textarea
-                    className="textarea is-small"
-                    placeholder={i18n.t(
-                      'analysis.expression-comparison.gene-list-placeholder'
-                    )}
-                    rows="10"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <div className="control">
-                  <button className="button" type="button">
-                    {i18n.t('analysis.expression-comparison.search-button')}
-                  </button>
-                </div>
-              </div>
-              <div className="field">
-                <p className="is-size-7">
-                  Examples:{' '}
-                  <Link className="internal-link" to="?data=8798798749849841">
-                    SRRM4
-                  </Link>{' '}
-                  (brain specific genes){' '}
-                  <a className="internal-link" to="?data=8798798749849841">
-                    Hoxd12
-                  </a>{' '}
-                  (development pattern genes)
+      <section className="section pt-1">
+        <div>
+          {staticBuilder([
+            {
+              type: 'title',
+              content: i18n.t('analysis.expression-comparison.title'),
+            },
+            {
+              type: 'text',
+              content: i18n.t('analysis.expression-comparison.description'),
+            },
+          ])}
+          <div className="is-flex is-justify-content-center my-3">
+            <div className="message" style={{ maxWidth: '500px' }}>
+              <header className="message-header">
+                <p className="is-size-5">
+                  {i18n.t('analysis.expression-comparison.gene-list')}
                 </p>
+              </header>
+              <div className="message-body">
+                <div className="field">
+                  <div className="control">
+                    <textarea
+                      className="textarea is-small"
+                      placeholder={i18n.t(
+                        'analysis.expression-comparison.gene-list-placeholder'
+                      )}
+                      rows="10"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <div className="control">
+                    <button className="button" type="button">
+                      {i18n.t('analysis.expression-comparison.search-button')}
+                    </button>
+                  </div>
+                </div>
+                <div className="field">
+                  <p className="is-size-7">
+                    Examples:{' '}
+                    <Link className="internal-link" to="?data=8798798749849841">
+                      SRRM4
+                    </Link>{' '}
+                    (brain specific genes){' '}
+                    <a className="internal-link" to="?data=8798798749849841">
+                      Hoxd12
+                    </a>{' '}
+                    (development pattern genes)
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {data && (
-        <div>
-          <p>{i18n.t('analysis.expression-comparison.unknown-ensembl-ids')}</p>
-          {staticBuilder([
-            {
-              type: 'section',
-              title: i18n.t('analysis.expression-comparison.results'),
-              children: [
+        {data && (
+          <div>
+            <p>
+              {i18n.t('analysis.expression-comparison.unknown-ensembl-ids')}
+            </p>
+            {staticBuilder([
+              {
+                type: 'section',
+                title: i18n.t('analysis.expression-comparison.results'),
+                children: [
+                  {
+                    type: 'text',
+                    content: i18n.t(
+                      'analysis.expression-comparison.results-description'
+                    ),
+                  },
+                ],
+              },
+            ])}
+            <ComplexTable
+              sortable
+              scrollable
+              pagination
+              classNamesTable="is-striped"
+              onFilter={onFilter}
+              onSort={onSort}
+              columns={[
                 {
-                  type: 'text',
-                  content: i18n.t(
-                    'analysis.expression-comparison.results-description'
-                  ),
+                  key: 'anat-entities',
+                  text: 'Anatomical entities',
                 },
-              ],
-            },
-          ])}
-          <ComplexTable
-            sortable
-            scrollable
-            pagination
-            classNamesTable="is-striped"
-            onFilter={onFilter}
-            onSort={onSort}
-            columns={[
-              {
-                key: 'anat-entities',
-                text: 'Anatomical entities',
-              },
-              {
-                key: 'xpr-score',
-                text: 'Conservation score',
-              },
-              {
-                key: 'max-xpr-score',
-                text: 'Max expression score',
-              },
-              {
-                key: 'gene-present',
-                text: 'Genes with presence of expression',
-              },
-              {
-                key: 'gene-absent',
-                text: 'Genes with absence of expression',
-              },
-              {
-                key: 'gene-no-data',
-                text: 'Genes with no data',
-              },
-              {
-                key: 'species-present',
-                text: 'Species with presence of expression',
-              },
-              {
-                key: 'species-absent',
-                text: 'Species with absence of expression',
-              },
-              'See details',
-            ]}
-            data={json}
-            customHeader={customHeader}
-            onRenderCell={onRenderCell}
-          />
-        </div>
-      )}
+                {
+                  key: 'xpr-score',
+                  text: 'Conservation score',
+                },
+                {
+                  key: 'max-xpr-score',
+                  text: 'Max expression score',
+                },
+                {
+                  key: 'gene-present',
+                  text: 'Genes with presence of expression',
+                },
+                {
+                  key: 'gene-absent',
+                  text: 'Genes with absence of expression',
+                },
+                {
+                  key: 'gene-no-data',
+                  text: 'Genes with no data',
+                },
+                {
+                  key: 'species-present',
+                  text: 'Species with presence of expression',
+                },
+                {
+                  key: 'species-absent',
+                  text: 'Species with absence of expression',
+                },
+                'See details',
+              ]}
+              data={json}
+              customHeader={customHeader}
+              onRenderCell={onRenderCell}
+            />
+          </div>
+        )}
+      </section>
     </div>
   );
 };
