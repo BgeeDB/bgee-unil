@@ -8,6 +8,9 @@
     "search": "Search",
     "example": "Example",
     "results": "Results",
+    "see-documentation": "See documentation",
+    "simple-file": "Simple file",
+    "advanced-file": "Advanced file",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
       "copy-link": "Copy permanent link",
@@ -169,7 +172,10 @@
       "available-future-release": "These files will be available in a future release.",
       "presence-absence-exp": "Presence/Absence of expression",
       "choose-condition-parameters": "Choose condition parameters",
+      "anat-entities-only": "Anatomical entities only",
+      "anat-entities-and-dev": "Anatomical entities and combination anatomy-development",
       "get-advanced-cols": "Get advanced columns",
+      "advanced-file-description": "Advanced file includes information by data types.",
       "over-under-exp": "Over-/Under-expression",
       "improvement-in-progress": "Improvement of these files is in progress"
     },

@@ -7,6 +7,7 @@ import packageJson from '../../package.json';
 import NewsItem from '../components/NewsItem';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
+import { CardSpecies } from '../components/CustomCard';
 
 const Home = () => {
   const page = 'Home';
@@ -120,28 +121,7 @@ const Home = () => {
                 {species.map((s, key) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/no-array-index-key
                   <Link key={key} className="center-in-grid">
-                    <div className="card species">
-                      <div className="card-image">
-                        <figure className="image is-96x96 rounded-border">
-                          <img
-                            src={s.src}
-                            alt={`species ${s.scientificName} ${s.name}`}
-                          />
-                        </figure>
-                      </div>
-                      <div className="card-content py-2 px-1">
-                        <div className="media">
-                          <div className="media-content">
-                            <p className="is-5 has-text-centered mb-1 is-underlined is-italic has-text-primary">
-                              {s.scientificName}
-                            </p>
-                            <p className="subtitle is-6 has-text-centered">
-                              {s.name}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <CardSpecies {...s} />
                   </Link>
                 ))}
               </div>

@@ -37,11 +37,17 @@ const ComplexTable = ({
   }, [data, search, sort]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(pagination ? 10 : data.length);
-  const totalPage = React.useMemo(
-    () => Math.round(data.length / pageSize),
-    [data, pageSize]
+  const [pageSize, setPageSize] = React.useState(
+    pagination ? 10 : internalData.length
   );
+  const totalPage = React.useMemo(
+    () => Math.round(internalData.length / pageSize),
+    [internalData, pageSize]
+  );
+
+  // React.useEffect(() => {
+  //   set()
+  // }, [internalData]);
 
   const pageSizeSelector = React.useMemo(
     () =>
@@ -55,7 +61,7 @@ const ComplexTable = ({
           />
         </div>
       ) : null,
-    [pageSize, currentPage, data, pagination]
+    [pageSize, currentPage, internalData, pagination]
   );
   const showEntriesText = React.useMemo(
     () => (
@@ -65,16 +71,17 @@ const ComplexTable = ({
           .replace('{START}', ((currentPage - 1) * pageSize + 1).toString(10))
           .replace(
             '{END}',
-            (pageSize * currentPage > data.length
-              ? data.length
+            (pageSize * currentPage > internalData.length
+              ? internalData.length
               : pageSize * currentPage
             ).toString(10)
           )
-          .replace('{TOTAL}', data.length)}
+          .replace('{TOTAL}', internalData.length)}
       </p>
     ),
-    [data, currentPage, pageSize]
+    [internalData, currentPage, pageSize]
   );
+
   const searchInput = React.useMemo(
     () => (
       <div className="control is-flex-grow-1 is-flex-shrink-1">

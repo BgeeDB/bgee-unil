@@ -1,12 +1,16 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import speciesList from '../search/species.json';
 import Modal from '../../components/Modal';
+import { CardSpecies } from '../../components/CustomCard';
+import useQuery from '../../hooks/useQuery';
+import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/Custom/DlProcessedExpressionValuesSpeciesModal';
 
 const ProcessedExpressionValues = () => {
+  const history = useHistory();
   const [selectedSpecies, setSelectedSpecies] = React.useState(null);
   const [search, setSearch] = React.useState('');
   const filteredSpecies = React.useMemo(() => {
@@ -18,6 +22,17 @@ const ProcessedExpressionValues = () => {
     );
   }, [search]);
 
+  const speciesID = useQuery('id');
+  React.useEffect(() => {
+    if (!selectedSpecies && speciesID) {
+      const species = filteredSpecies.find(
+        (s) => s.scientificName === speciesID
+      );
+      if (species) setSelectedSpecies(species);
+    } else if (selectedSpecies && !speciesID) {
+      setSelectedSpecies(null);
+    }
+  }, [speciesID, filteredSpecies, selectedSpecies]);
   return (
     <div className="section pt-1">
       <div className="content has-text-centered">
@@ -85,34 +100,13 @@ const ProcessedExpressionValues = () => {
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
                 // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <div
+                <Link
                   key={key}
                   className="center-in-grid"
-                  onClick={() => setSelectedSpecies(s)}
+                  to={`?id=${s.scientificName}`}
                 >
-                  <div className="card species">
-                    <div className="card-image">
-                      <figure className="image is-96x96">
-                        <img
-                          src={s.src}
-                          alt={`species ${s.scientificName} ${s.name}`}
-                        />
-                      </figure>
-                    </div>
-                    <div className="card-content py-2 px-1">
-                      <div className="media">
-                        <div className="media-content">
-                          <p className="is-5 has-text-centered mb-1 is-underlined is-italic has-text-primary">
-                            {s.scientificName}
-                          </p>
-                          <p className="subtitle is-6 has-text-centered">
-                            {s.name}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <CardSpecies {...s} />
+                </Link>
               ))}
             </div>
           </div>
@@ -121,152 +115,11 @@ const ProcessedExpressionValues = () => {
 
       <Modal
         isActive={Boolean(selectedSpecies)}
-        closeModal={() => setSelectedSpecies(null)}
+        closeModal={() =>
+          history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)
+        }
         content={
-          selectedSpecies ? (
-            <div>
-              <article className="media">
-                <div className="media-content my-auto">
-                  <p className="title">
-                    {selectedSpecies
-                      ? `${selectedSpecies.scientificName} (${selectedSpecies.name})`
-                      : null}
-                  </p>
-                </div>
-                <div className="media-right">
-                  <div className="">
-                    <figure className="image is-128x128 rounded-border">
-                      <img
-                        src={selectedSpecies.src}
-                        alt={selectedSpecies.scientificName}
-                      />
-                    </figure>
-                  </div>
-                </div>
-              </article>
-              <div className="mt-2">
-                <div>
-                  <p className="mb-2">
-                    <b>{i18n.t('download.processed-exp-values.rna-seq')}</b>
-                  </p>
-                  <div className="field has-addons">
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.rna-seq-button-experiments'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.rna-seq-button-count'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                  </div>
-                  <p>
-                    {i18n.t('download.processed-exp-values.rna-seq-desc')}
-                    <Link>
-                      {i18n.t(
-                        'download.processed-exp-values.rna-seq-desc-link'
-                      )}
-                    </Link>
-                  </p>
-                </div>
-                <div className="mt-4">
-                  <p className="mb-2">
-                    <b>{i18n.t('download.processed-exp-values.affymetrix')}</b>
-                  </p>
-                  <div className="field has-addons">
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.affymetrix-button-experiments'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.affymetrix-button-signal'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                  </div>
-                  <p>
-                    {i18n.t('download.processed-exp-values.affymetrix-desc')}
-                    <Link>
-                      {i18n.t(
-                        'download.processed-exp-values.affymetrix-desc-link'
-                      )}
-                    </Link>
-                  </p>
-                </div>
-                <div className="mt-4">
-                  <p className="mb-2">
-                    <b>
-                      {i18n.t('download.processed-exp-values.full-rna-seq')}
-                    </b>
-                  </p>
-                  <div className="field has-addons">
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.full-rna-seq-button-experiments'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                    <p className="control">
-                      <button
-                        className="button is-primary is-outlined"
-                        type="button"
-                      >
-                        <span>
-                          {i18n.t(
-                            'download.processed-exp-values.full-rna-seq-button-count'
-                          )}
-                        </span>
-                      </button>
-                    </p>
-                  </div>
-                  <p>
-                    {i18n.t('download.processed-exp-values.full-rna-seq-desc')}
-                    <Link>
-                      {i18n.t(
-                        'download.processed-exp-values.full-rna-seq-desc-link'
-                      )}
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : null
+          <DlProcessedExpressionValuesSpeciesModal species={selectedSpecies} />
         }
       />
     </div>
