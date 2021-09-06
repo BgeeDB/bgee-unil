@@ -21,9 +21,12 @@ const Layout = ({ children }) => {
             onClick={() => setBetaNotif(false)}
           />
           <div>
-            We are happy to announce that we have released the new Bgee 15
-            version as a beta test. Please check it out at{' '}
-            <a href="https://bgee.org/bgee15_0">https://bgee.org/bgee15_0</a>.
+            <p className="is-size-7">
+              This release is a <b>beta</b> version. Please be aware that the
+              data will not be archived and should not yet be referenced in
+              publications, expecting long-term retrieval. The SPARQL endpoint
+              was not updated.
+            </p>
           </div>
         </Alert>
       )}

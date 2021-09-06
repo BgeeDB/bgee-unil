@@ -13,12 +13,18 @@ const SpeciesList = () => {
       <div className="content has-text-centered">
         <p className="title is-5">{i18n.t('search.species.list-title')}</p>
       </div>
-      <div className="grid-species">
-        {species.map((s, key) => (
-          <Link key={key} to={`${PATHS.SEARCH.SPECIES}/165198498498789789`}>
-            <CardSpecies {...s} />
-          </Link>
-        ))}
+      <div className="content">
+        <div className="grid-species">
+          {species.map((s, key) => (
+            <Link
+              key={key}
+              to={`${PATHS.SEARCH.SPECIES}/165198498498789789`}
+              className="center-in-grid"
+            >
+              <CardSpecies {...s} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
