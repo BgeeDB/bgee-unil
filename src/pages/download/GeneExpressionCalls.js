@@ -1,14 +1,16 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
 import LINK_ANCHOR from '../support/linkAnchor';
 import { CardSpecies } from '../../components/CustomCard';
+import useQuery from '../../hooks/useQuery';
 
 const GeneExpressionCalls = () => {
+  const history = useHistory();
   const [selectedSpecies, setSelectedSpecies] = React.useState(null);
   const [search, setSearch] = React.useState('');
   const filteredSpecies = React.useMemo(() => {
@@ -19,6 +21,18 @@ const GeneExpressionCalls = () => {
       (s) => regExp.test(s.scientificName) || regExp.test(s.name)
     );
   }, [search]);
+
+  const speciesID = useQuery('id');
+  React.useEffect(() => {
+    if (!selectedSpecies && speciesID) {
+      const species = filteredSpecies.find(
+        (s) => s.scientificName === speciesID
+      );
+      if (species) setSelectedSpecies(species);
+    } else if (selectedSpecies && !speciesID) {
+      setSelectedSpecies(null);
+    }
+  }, [speciesID, filteredSpecies, selectedSpecies]);
 
   return (
     <div className="section pt-1">
@@ -87,13 +101,13 @@ const GeneExpressionCalls = () => {
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
                 // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <div
+                <Link
                   key={key}
                   className="center-in-grid"
-                  onClick={() => setSelectedSpecies(s)}
+                  to={`?id=${s.scientificName}`}
                 >
                   <CardSpecies {...s} />
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -113,7 +127,7 @@ const GeneExpressionCalls = () => {
       </div>
       <Modal
         isActive={Boolean(selectedSpecies)}
-        closeModal={() => setSelectedSpecies(null)}
+        closeModal={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
         content={
           selectedSpecies ? (
             <div>
