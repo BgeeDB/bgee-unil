@@ -423,3 +423,33 @@ figure.image {
     padding-bottom: 0 !important;
   }
 }
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  .tooltip-content {
+    visibility: hidden;
+    width: max-content;
+    max-width: 300px;
+    background-color: #fff;
+    border: 1px solid #acacac;
+    color: #626262;
+    border-radius: 2px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 0;
+  }
+  &:hover .tooltip-content {
+    visibility: visible;
+    .tooltip-header {
+      background-color: #f5f5f5;
+    }
+    .tooltip-header, .tooltip-body {
+      padding: 10px;
+    }
+  }
+}

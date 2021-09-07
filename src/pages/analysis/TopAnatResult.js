@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import i18n from '../../i18n';
 import staticBuilder from '../../helpers/staticBuilder';
 import PATHS from '../../routes/paths';
@@ -11,6 +12,8 @@ import ComplexTable from '../../components/ComplexTable';
 import TextArea from '../../components/Form/TextArea';
 import Toggle from '../../components/Form/Toggle';
 import Input from '../../components/Form/Input';
+import InfoIcon from '../../components/InfoIcon';
+import HelpIcon from '../../components/HelpIcon';
 
 const staticContent = [
   {
@@ -210,7 +213,32 @@ const TopAnat = () => {
                 </p>
               </div>
               <div className="message-body">
-                {i18n.t('analysis.top-anat.gene-list-details')}
+                <div className="is-flex is-align-items-center">
+                  <p className="mr-1">
+                    {i18n.t('analysis.top-anat.gene-list-details')}
+                  </p>
+                  <InfoIcon
+                    title="Gene detection details"
+                    content={
+                      <div className="content">
+                        <p>
+                          Selected species: Mus musculus, 332 unique genes
+                          identified in Bgee
+                        </p>
+                        <p>IDs not identified: 2</p>
+                        <p>IDs not identified:</p>
+                        <ul className="unordered">
+                          <li>
+                            <p>ENSMUSG00000030771</p>
+                          </li>
+                          <li>
+                            <p>ENSMUSG00000094727</p>
+                          </li>
+                        </ul>
+                      </div>
+                    }
+                  />
+                </div>
               </div>
             </article>
             <div className="field">
@@ -225,6 +253,19 @@ const TopAnat = () => {
                 <p className="is-size-6">
                   {i18n.t('analysis.top-anat.background')}
                 </p>
+                <HelpIcon
+                  title="Custom background"
+                  content={
+                    <p>
+                      By default, the gene universe considered for the
+                      enrichment analysis is all genes with data in Bgee for the
+                      selected species. It is possible to provide a custom gene
+                      universe, as a list of Ensembl gene IDs. All gene IDs
+                      present in the foreground must be present in the
+                      background.
+                    </p>
+                  }
+                />
               </div>
               <div className="message-body">
                 {i18n.t('analysis.top-anat.gene-list-details')}
