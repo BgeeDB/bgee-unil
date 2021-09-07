@@ -1,10 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 import i18n from '../../i18n';
 import staticBuilder from '../../helpers/staticBuilder';
 import PATHS from '../../routes/paths';
 import mockData from './mockTopAnat.json';
 import ComplexTable from '../../components/ComplexTable';
+import TextArea from '../../components/Form/TextArea';
+import Toggle from '../../components/Form/Toggle';
+import Input from '../../components/Form/Input';
 
 const staticContent = [
   {
@@ -51,6 +57,8 @@ const onSort =
   };
 
 const TopAnat = () => {
+  const [expandOpts, setExpandOpts] = React.useState(false);
+  const { id } = useParams();
   const initialData = React.useMemo(() => mockData, []);
 
   const data = React.useMemo(
@@ -117,132 +125,312 @@ const TopAnat = () => {
     []
   );
 
+  React.useEffect(() => {
+    console.log(id);
+    // axios
+    //   .get(
+    //     `https://bgee.org/bgee15_0/?page=top_anat&gene_info=1&display_rp=1&ajax=1&action=get_results&display_type=json&data=${id}`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
+  }, [id]);
+
   return (
     <div>
       <section className="section pt-5">
         {staticBuilder(staticContent)}
-        {/* <div className="my-4 is-flex"> */}
-        {/*  <div> */}
-        {/*    <div className="buttons has-addons"> */}
-        {/*      <button className="button is-bgee-link is-outlined" type="button"> */}
-        {/*        <span className="icon"> */}
-        {/*          <ion-icon name="list-outline" /> */}
-        {/*        </span> */}
-        {/*        <span>{i18n.t('analysis.top-anat.recent-jobs')}</span> */}
-        {/*      </button> */}
-        {/*      <Link */}
-        {/*        to={PATHS.SUPPORT.TOP_ANAT} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span className="icon"> */}
-        {/*          <ion-icon name="newspaper-outline" /> */}
-        {/*        </span> */}
-        {/*        <span>{i18n.t('analysis.top-anat.documentation')}</span> */}
-        {/*      </Link> */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/*  <div className="is-align-items-center is-flex"> */}
-        {/*    <span className="icon-text"> */}
-        {/*      <span className="icon"> */}
-        {/*        <ion-icon name="bookmarks-sharp" /> */}
-        {/*      </span> */}
-        {/*      <span>{i18n.t('analysis.top-anat.examples')}</span> */}
-        {/*    </span> */}
-        {/*    <div className="ml-1 buttons has-addons"> */}
-        {/*      <Link */}
-        {/*        to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span>1</span> */}
-        {/*      </Link> */}
-        {/*      <Link */}
-        {/*        to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span>2</span> */}
-        {/*      </Link> */}
-        {/*      <Link */}
-        {/*        to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span>3</span> */}
-        {/*      </Link> */}
-        {/*      <Link */}
-        {/*        to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span>4</span> */}
-        {/*      </Link> */}
-        {/*      <Link */}
-        {/*        to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`} */}
-        {/*        className="button is-bgee-link is-outlined" */}
-        {/*      > */}
-        {/*        <span>5</span> */}
-        {/*      </Link> */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/* </div> */}
-        {/* <div className="columns "> */}
-        {/*  <div className="column is-4"> */}
-        {/*    <article className="message  is-small"> */}
-        {/*      <div className="message-header"> */}
-        {/*        <p className="is-size-5"> */}
-        {/*          {i18n.t('analysis.top-anat.gene-list')} */}
-        {/*        </p> */}
-        {/*      </div> */}
-        {/*      <div className="message-body"> */}
-        {/*        {i18n.t('analysis.top-anat.gene-list-details')} */}
-        {/*      </div> */}
-        {/*    </article> */}
-        {/*    <div className="field"> */}
-        {/*      <div className="control"> */}
-        {/*        <textarea */}
-        {/*          rows={10} */}
-        {/*          className="textarea" */}
-        {/*          placeholder={i18n.t( */}
-        {/*            'analysis.top-anat.textarea-placeholder-gene-list' */}
-        {/*          )} */}
-        {/*        /> */}
-        {/*      </div> */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/*  <div className="column is-4"> */}
-        {/*    <div className="field"> */}
-        {/*      <div className="control"> */}
-        {/*        <textarea className="textarea" rows={10} disabled /> */}
-        {/*      </div> */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/* </div> */}
-        {/* <div> */}
-        {/*  <div className="field is-grouped"> */}
-        {/*    <p className="control"> */}
-        {/*      <a className="button is-primary"> */}
-        {/*        {i18n.t('analysis.top-anat.submit-job')} */}
-        {/*      </a> */}
-        {/*    </p> */}
-        {/*    <div className="control has-icons-left"> */}
-        {/*      <Input */}
-        {/*        type="email" */}
-        {/*        placeholder={i18n.t('analysis.top-anat.email')} */}
-        {/*      /> */}
-        {/*      <span className="icon is-left"> */}
-        {/*        <ion-icon name="mail-outline" /> */}
-        {/*      </span> */}
-        {/*    </div> */}
-        {/*    <div className="control has-icons-left has-icons-right"> */}
-        {/*      <Input */}
-        {/*        placeholder={i18n.t('analysis.top-anat.job-description')} */}
-        {/*      /> */}
-        {/*      <span className="icon is-left"> */}
-        {/*        <ion-icon name="document-outline" /> */}
-        {/*      </span> */}
-        {/*    </div> */}
-        {/*  </div> */}
-        {/* </div> */}
+        <div className="my-4 is-flex">
+          <div>
+            <div className="buttons has-addons">
+              <button className="button is-bgee-link is-outlined" type="button">
+                <span className="icon">
+                  <ion-icon name="list-outline" />
+                </span>
+                <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
+              </button>
+              <Link
+                to={PATHS.SUPPORT.TOP_ANAT}
+                className="button is-bgee-link is-outlined"
+              >
+                <span className="icon">
+                  <ion-icon name="newspaper-outline" />
+                </span>
+                <span>{i18n.t('analysis.top-anat.documentation')}</span>
+              </Link>
+            </div>
+          </div>
+          <div className="is-align-items-center is-flex">
+            <span className="icon-text">
+              <span className="icon">
+                <ion-icon name="bookmarks-sharp" />
+              </span>
+              <span>{i18n.t('analysis.top-anat.examples')}</span>
+            </span>
+            <div className="ml-1 buttons has-addons">
+              <Link
+                to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`}
+                className="button is-bgee-link is-outlined"
+              >
+                <span>1</span>
+              </Link>
+              <Link
+                to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`}
+                className="button is-bgee-link is-outlined"
+              >
+                <span>2</span>
+              </Link>
+              <Link
+                to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`}
+                className="button is-bgee-link is-outlined"
+              >
+                <span>3</span>
+              </Link>
+              <Link
+                to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`}
+                className="button is-bgee-link is-outlined"
+              >
+                <span>4</span>
+              </Link>
+              <Link
+                to={`${PATHS.SUPPORT.TOP_ANAT}?id=1234564987`}
+                className="button is-bgee-link is-outlined"
+              >
+                <span>5</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="columns ">
+          <div className="column is-4">
+            <article className="message  is-small">
+              <div className="message-header">
+                <p className="is-size-6">
+                  {i18n.t('analysis.top-anat.gene-list')}
+                </p>
+              </div>
+              <div className="message-body">
+                {i18n.t('analysis.top-anat.gene-list-details')}
+              </div>
+            </article>
+            <div className="field">
+              <div className="control">
+                <TextArea rows={10} className="is-small" disabled />
+              </div>
+            </div>
+          </div>
+          <div className="column is-4">
+            <article className="message  is-small">
+              <div className="message-header">
+                <p className="is-size-6">
+                  {i18n.t('analysis.top-anat.background')}
+                </p>
+              </div>
+              <div className="message-body">
+                {i18n.t('analysis.top-anat.gene-list-details')}
+              </div>
+            </article>
+            <div className="field">
+              <div className="control">
+                <TextArea rows={10} className="is-small" disabled />
+              </div>
+            </div>
+          </div>
+          <div className="column is-4">
+            <article className="message  is-small">
+              <div className="message-header">
+                <p className="is-size-6">
+                  {i18n.t('analysis.top-anat.analysis-opts')}
+                </p>
+              </div>
+            </article>
+            <div className="columns">
+              <div className="column is-6">
+                <p className="has-text-weight-semibold mb-2">
+                  {i18n.t('analysis.top-anat.expr-types')}
+                </p>
+                <p>Present</p>
+              </div>
+              <div className="column is-6">
+                <p className="has-text-weight-semibold mb-2">
+                  {i18n.t('analysis.top-anat.data-types')}
+                </p>
+                <div className="control">
+                  <label className="checkbox" disabled>
+                    <input type="checkbox" disabled checked />
+                    Remember me
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox" disabled>
+                    <input type="checkbox" disabled checked />
+                    Remember me
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox" disabled>
+                    <input type="checkbox" disabled checked />
+                    Remember me
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox" disabled>
+                    <input type="checkbox" disabled checked />
+                    Remember me
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox" disabled>
+                    <input type="checkbox" disabled checked />
+                    Remember me
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="columns is-flex-direction-column">
+          <a onClick={() => setExpandOpts(!expandOpts)}>
+            <article className="message  is-small">
+              <div className="message-header">
+                <p className="is-size-5">Advanced Options</p>
+                <span className={`icon is-medium ${expandOpts ? 'open' : ''}`}>
+                  <ion-icon name="chevron-up-outline" size="large" />
+                </span>
+              </div>
+            </article>
+          </a>
+
+          <div
+            className="mt-5"
+            style={{ display: expandOpts ? 'block' : 'none' }}
+          >
+            <div className="columns">
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="stages">
+                    Stages
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <Toggle
+                          elements={[
+                            { value: 'all', text: 'All stages' },
+                            { value: 'custom', text: 'Custom stages' },
+                          ]}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="dataQuality">
+                    dataQuality
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <Toggle
+                          elements={[
+                            { value: 'all', text: 'All' },
+                            { value: 'gold', text: 'Gold confidence' },
+                          ]}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column is-12">
+                <div className="field">
+                  <label className="label" htmlFor="decorrelationType">
+                    decorrelationType
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <Toggle
+                        elements={[
+                          { value: 'no', text: 'No decorrelation' },
+                          { value: 'elim', text: 'Elim' },
+                          { value: 'weight', text: 'Weight' },
+                          { value: 'parent-child', text: 'Parent-child' },
+                        ]}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="nodeSize">
+                    nodeSize
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <Input value={data.nodeSize} disabled />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="nbNode">
+                    nbNode
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <Input value={data.nbNode} disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="fdrThreshold">
+                    fdrThreshold
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <Input value={data.fdrThreshold} disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="column is-6">
+                <div className="field">
+                  <label className="label" htmlFor="pValueThreshold">
+                    pValueThreshold
+                  </label>
+                  <div className="field-body">
+                    <div className="field">
+                      <Input value={data.pValueThreshold} disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="section">
+      <section className="section pt-0">
+        <p className="title is-6 gradient-underline">
+          {i18n.t('global.results')}
+        </p>
         <ComplexTable
           columns={[
             {
