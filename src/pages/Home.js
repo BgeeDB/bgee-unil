@@ -129,7 +129,7 @@ const Home = () => {
               <div className="grid-species">
                 {species.map((s, key) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/no-array-index-key
-                  <Link key={key} className="center-in-grid">
+                  <Link key={key} className="center-in-grid" to="">
                     <CardSpecies {...s} />
                   </Link>
                 ))}
