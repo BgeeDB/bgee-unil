@@ -311,8 +311,17 @@ table.table {
     }
   }
 }
+
 div.separator {
   border-top: 1px solid $text;
+}
+
+span.icon {
+  &.open {
+    transform: rotate(-180deg);
+    transition: .35s;
+  }
+    transition: .35s;
 }
 
 @import "../../node_modules/bulma/sass/base/all";

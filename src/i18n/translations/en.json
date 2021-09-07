@@ -5,7 +5,6 @@
     "version": "Version",
     "search": "Search",
     "download": "download",
-    "search": "Search",
     "example": "Example",
     "results": "Results",
     "see-documentation": "See documentation",
@@ -86,8 +85,12 @@
       "examples": "Examples",
 
       "gene-list": "Gene list",
+      "background": "Background",
+      "analysis-opts": "Analysis options",
       "gene-list-details": "{IDs} IDs provided, {UNIQUEs} unique genes found in {SPECIE} ",
       "textarea-placeholder-gene-list": "Enter a list of Ensembl identifiers, one ID per line, no quotes, no comma.",
+      "expr-types": "Expression types",
+      "data-types": "Data types",
 
       "submit-job": "Submit your job",
       "email": "Email",

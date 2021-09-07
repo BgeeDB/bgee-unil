@@ -3,7 +3,7 @@ import Table from '../Table';
 import Pagination from '../Pagination';
 import i18n from '../../i18n';
 import Select from '../Select';
-import Input from '../Input';
+import Input from '../Form/Input';
 
 const defaultSort = (sortKey, sortDirection) => (a, b) => {
   if (a === b) return 0;
@@ -85,10 +85,14 @@ const ComplexTable = ({
   const searchInput = React.useMemo(
     () => (
       <div className="control is-flex-grow-1 is-flex-shrink-1">
-        <Input placeholder={i18n.t('global.search')} onChange={setSearch} />
+        <Input
+          placeholder={i18n.t('global.search')}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
     ),
-    []
+    [search]
   );
 
   return (

@@ -34,11 +34,16 @@ import PrivacyPolicy from '../pages/about/PrivacyPolicy';
 import Error from '../pages/Error';
 import Species from '../pages/search/Species';
 import Gene from '../pages/search/Gene';
+import TopAnatResult from '../pages/analysis/TopAnatResult';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
     i18nKey: 'page.analysis.top-anat',
     component: TopAnatAnalysis,
+  },
+  [PATHS.ANALYSIS.TOP_ANAT_RESULT]: {
+    i18nKey: 'page.analysis.top-anat-result',
+    component: TopAnatResult,
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
     i18nKey: 'page.analysis.expression-comparison',
