@@ -44,3 +44,4 @@ yarn-error.log*
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 .idea
+src/styles/global.css
