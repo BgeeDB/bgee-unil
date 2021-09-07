@@ -13,11 +13,7 @@ export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, ...props }, key) => {
     switch (type) {
       case 'break_line':
-        return (
-          <>
-            <br key={`${prefixKey}-${key}`} />
-          </>
-        );
+        return <br key={`${prefixKey}-${key}`} />;
       case 'bold':
         return <b key={`${prefixKey}-${key}`}>{props.content}</b>;
       case 'code':
@@ -87,7 +83,7 @@ export const richTextBuilder = (elements, prefixKey = '') =>
       case 'text':
         return props.content;
       case 'underline':
-        return <u>{props.content}</u>;
+        return <u key={`${prefixKey}-${key}`}>{props.content}</u>;
       default:
         return null;
     }
@@ -207,9 +203,8 @@ const staticBuilder = (json, prefixKey = '') =>
         return <div key={`${prefixKey}-${key}`}>{gridBuilder(props)}</div>;
       case 'link_anchor':
         return (
-          <p>
+          <p key={`${prefixKey}-${key}`}>
             <a
-              key={`${prefixKey}-${key}`}
               href={`#${props.selector}`}
               className={`internal-link ${props.classNames || ''}`}
             >
@@ -246,9 +241,13 @@ const staticBuilder = (json, prefixKey = '') =>
             {props.text}
           </Link>
         );
+
       case 'notification':
         return (
-          <div className={`notification ${props.classNames || ''}`}>
+          <div
+            className={`notification ${props.classNames || ''}`}
+            key={`${prefixKey}-${key}`}
+          >
             {props.content}
           </div>
         );
@@ -286,10 +285,14 @@ const staticBuilder = (json, prefixKey = '') =>
           </div>
         );
       case 'separator':
-        return <div className="separator" />;
+        return <div className="separator" key={`${prefixKey}-${key}`} />;
       case 'sub_title':
         return (
-          <p id={props.id} className={`title is-6 ${props.classNames || ''}`}>
+          <p
+            id={props.id}
+            className={`title is-6 ${props.classNames || ''}`}
+            key={`${prefixKey}-${key}`}
+          >
             {props.content}
           </p>
         );
@@ -319,8 +322,10 @@ const staticBuilder = (json, prefixKey = '') =>
       case 'unordered_list':
         return (
           <ul className="unordered" key={`${prefixKey}-${key}`}>
-            {props.children.map((element) => (
-              <li>{staticBuilder([element])}</li>
+            {props.children.map((element, eKey) => (
+              <li key={`${prefixKey}-${key}-${eKey}`}>
+                {staticBuilder([element], `ul-${prefixKey}-${key}-${eKey}`)}
+              </li>
             ))}
           </ul>
         );
