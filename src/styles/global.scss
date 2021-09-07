@@ -414,3 +414,57 @@ figure.image {
     padding-bottom: 0 !important;
   }
 }
+
+.select-wrapper {
+  position: relative;
+  .select-background {
+    position: absolute;
+    background-color: #626262;
+    height: 100vh;
+    width: 100vw;
+    top: 0
+  }
+  .select-input {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(118, 118, 118);
+    min-width: 80px;
+    cursor: pointer;
+    padding-right: 2rem;
+    &:hover {
+      box-shadow: $shadow;
+    }
+    p {
+      padding: 0 .5rem
+    }
+  }
+  .select-body {
+    position: absolute;
+    z-index: 9;
+    visibility: hidden;
+    box-shadow: $shadow;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(118, 118, 118);
+    color: $dark;
+    cursor: pointer;
+    width: 100%;
+    .select-item {
+      padding: .5rem;
+      background-color: $white;
+      &:hover, &.selected {
+        color: $link;
+        background-color: $grey-lightest;
+        font-weight: 600;
+        p {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+  &.active {
+    .select-body {
+      visibility: visible;
+    }
+  }
+}

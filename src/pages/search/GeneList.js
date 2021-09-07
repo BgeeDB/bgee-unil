@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
+import SelectCustom from '../../components/Select/SelectCustom';
 
 const onRenderCell =
   (search) =>
@@ -51,6 +52,7 @@ const GeneList = () => {
   const [search, setSearch] = React.useState('');
   const query = useQuery('search');
   const [results, setResults] = React.useState(undefined);
+  const [v, setV] = React.useState([]);
 
   React.useEffect(() => {
     setSearch(query);
@@ -201,6 +203,29 @@ const GeneList = () => {
       <div className="content has-text-centered">
         <p className="title is-5">{`${i18n.t('search.genes.title')}`}</p>
       </div>
+      <SelectCustom
+        elements={[
+          {
+            key: 123,
+            text: '123',
+          },
+          {
+            key: 756,
+            text: '756',
+          },
+          {
+            key: 789,
+            text: '789',
+          },
+          {
+            key: 645,
+            text: '645',
+          },
+        ]}
+        value={v}
+        multiple
+        onChange={setV}
+      />
       <p>{i18n.t('search.genes.description')}</p>
       <div>
         <div className="card search-input mx-auto my-3">
