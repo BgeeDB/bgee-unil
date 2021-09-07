@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ROUTES from './routes';
 import Home from '../pages/Home';
-import Error from '../pages/Error';
 import PATHS from './paths';
 
 const Router = () => (
@@ -16,6 +15,11 @@ const Router = () => (
           exact
           path={PATHS.ANALYSIS.TOP_ANAT}
           component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT].component}
+        />
+        <Route
+          exact
+          path={PATHS.ANALYSIS.TOP_ANAT_RESULT}
+          component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT_RESULT].component}
         />
         <Route
           exact

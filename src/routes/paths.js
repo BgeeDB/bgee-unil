@@ -2,6 +2,7 @@ const PATHS = {
   HOME: '/',
   ANALYSIS: {
     TOP_ANAT: '/analysis/top-anat',
+    TOP_ANAT_RESULT: '/analysis/top-anat/:id',
     EXPRESSION_COMPARISON: '/analysis/expr-comparison',
   },
   SEARCH: {
