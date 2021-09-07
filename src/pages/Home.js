@@ -8,6 +8,7 @@ import NewsItem from '../components/NewsItem';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';
+import SelectCustom from '../components/Select/SelectCustom';
 
 const Home = () => {
   const page = 'Home';
@@ -75,6 +76,7 @@ const Home = () => {
             <p className="has-text-centered">{i18n.t('home.description-2')}</p>
           </div>
         </div>
+        {/* <SelectCustom /> */}
         <div className="columns">
           <div className="column is-4">
             <div>

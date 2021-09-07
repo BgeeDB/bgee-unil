@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
+import SelectCustom from '../../components/Select/SelectCustom';
 
 const onRenderCell =
   (search) =>
@@ -51,6 +52,7 @@ const GeneList = () => {
   const [search, setSearch] = React.useState('');
   const query = useQuery('search');
   const [results, setResults] = React.useState(undefined);
+  const [v, setV] = React.useState([]);
 
   React.useEffect(() => {
     setSearch(query);
