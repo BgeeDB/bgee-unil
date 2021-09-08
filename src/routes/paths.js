@@ -20,6 +20,7 @@ const PATHS = {
   RESOURCES: {
     DOCS: '/resources/',
     R_PACKAGES: '/resources/r-packages',
+    SPARQL: '/resources/sparql',
     ANNOTATIONS: '/resources/annotations',
     ONTOLOGIES: '/resources/ontologies',
     SOURCE_CODE: '/resources/source-code',
