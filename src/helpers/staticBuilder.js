@@ -133,7 +133,7 @@ const staticBuilder = (json, prefixKey = '') =>
         );
       case 'bold':
         return (
-          <p key={`${prefixKey}-${key}`}>
+          <p key={`${prefixKey}-${key}`} id={props.id}>
             <b>{props.content}</b>
           </p>
         );
