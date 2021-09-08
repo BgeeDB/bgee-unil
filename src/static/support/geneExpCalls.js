@@ -2274,7 +2274,7 @@ const singleExpr = [
   ...singleExprAdvanced,
   {
     type: 'link_anchor',
-    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID,
     text: 'Back to presence/absence of expression menu',
   },
   {
@@ -4275,18 +4275,12 @@ const singleDiff = [
   ...singleDiffComplete,
 ];
 
-const MULTI_SPECIES_DL_FILES_ID = 'multi';
-const OMA_HOG_ID = 'oma_hog';
-const MULTI_DIFF_ID = 'multi_diff';
-const MULTI_DIFF_SIMPLE_ID = 'multi_diff_simple';
-const MULTI_DIFF_COMPLETE_ID = 'multi_diff_complete';
-
 const omaHog = [
   {
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6 has-text-primary',
     content: 'OMA Hierarchical orthologous groups file',
-    id: OMA_HOG_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
   },
   {
     type: 'notification',
@@ -4388,7 +4382,7 @@ const omaHog = [
       },
       {
         type: 'link_anchor',
-        selector: OMA_HOG_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
         text: 'hierarchical orthologous groups file',
       },
       { type: 'text', content: '.' },
@@ -4428,7 +4422,7 @@ const omaHog = [
 
   {
     type: 'link_anchor',
-    selector: MULTI_SPECIES_DL_FILES_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_SPECIES_DL_FILES_ID,
     text: 'Back to multi-species download files menu',
   },
 ];
@@ -4438,7 +4432,7 @@ const multiDiffSimple = [
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6 has-text-primary',
     content: 'Simple file',
-    id: MULTI_DIFF_SIMPLE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID,
   },
   {
     type: 'text',
@@ -4460,7 +4454,7 @@ const multiDiffSimple = [
       },
       {
         type: 'link_anchor',
-        selector: OMA_HOG_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
         text: 'hierarchical orthologous groups file',
       },
       { type: 'text', content: '.' },
@@ -4481,7 +4475,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col1`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col1`,
                 text: 'OMA ID',
               },
             ],
@@ -4498,7 +4492,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col2`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col2`,
                 text: 'Anatomical entity IDs',
               },
             ],
@@ -4515,7 +4509,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col3`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col3`,
                 text: 'Anatomical entity names',
               },
             ],
@@ -4532,7 +4526,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col4`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col4`,
                 text: 'Developmental stage ID',
               },
             ],
@@ -4549,7 +4543,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col5`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col5`,
                 text: 'Developmental stage name',
               },
             ],
@@ -4567,7 +4561,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col6`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col6`,
                 text: 'Over-expressed gene count for species1',
               },
               {
@@ -4596,7 +4590,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col7`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col7`,
                 text: 'Under-expressed gene count for species1',
               },
               {
@@ -4625,7 +4619,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col9`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col9`,
                 text: 'Not diff. expressed gene count for species1',
               },
               {
@@ -4654,7 +4648,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col9`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col9`,
                 text: 'NA gene count for species1',
               },
               {
@@ -4683,7 +4677,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col6`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col6`,
                 text: 'Over-expressed gene count for species2',
               },
               {
@@ -4712,7 +4706,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col7`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col7`,
                 text: 'Under-expressed gene count for species2',
               },
               {
@@ -4741,7 +4735,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col9`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col9`,
                 text: 'Not diff. expressed gene count for species2',
               },
               {
@@ -4770,7 +4764,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col9`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col9`,
                 text: 'NA gene count for species2',
               },
               {
@@ -4822,7 +4816,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col_gene_ids`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col_gene_ids`,
                 text: 'Gene IDs',
               },
             ],
@@ -4839,7 +4833,7 @@ const multiDiffSimple = [
             content: [
               {
                 type: 'link_anchor',
-                selector: `${MULTI_DIFF_SIMPLE_ID}_col_gene_names`,
+                selector: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col_gene_names`,
                 text: 'Gene names',
               },
             ],
@@ -4927,13 +4921,547 @@ const multiDiffSimple = [
       ],
     ],
   },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col1`,
+    classNames: 'mt-2',
+    content: 'OMA ID (column 1)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from ',
+      },
+      {
+        type: 'link_external',
+        path: 'https://omabrowser.org/oma/hogs/',
+        content: 'the OMA browser',
+      },
+      {
+        type: 'text',
+        content:
+          '. They are provided solely to group data from orthologous genes belonging to the same orthology group. Genes member of an OMA gene orthology group can be retrieved through the associated ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col2`,
+    classNames: 'mt-2',
+    content: 'Anatomical entity IDs (column 2)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Unique identifiers of the homologous anatomical entities, from the Uberon ontology. Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character |.',
+      },
+      {
+        type: 'text',
+        content: '|.',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content:
+      'In most cases, the cardinality is 1, as most of the homologous anatomical entities compared in different species are not derived enough so that they are described by different anatomical concepts. But the cardinality can sometimes be greater, when homologous anatomical entities are highly derived in the species compared, and represented by distinct anatomical concepts.',
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col3`,
+    classNames: 'mt-2',
+    content: 'Anatomical entity names (column 3)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Names of the anatomical entities defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 2). Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character ',
+      },
+      {
+        type: 'code',
+        content: '|',
+      },
+      {
+        type: 'text',
+        content: '. See ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' column description for more details.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col4`,
+    classNames: 'mt-2',
+    content: 'Developmental stage ID (column 4)',
+  },
+  {
+    type: 'string',
+    content:
+      'Unique identifier of the developmental stage, from the Uberon ontology. For multi-species analyses, only broad developmental stages are used, common to the species being compared.',
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col5`,
+    classNames: 'mt-2',
+    content: 'Developmental stage name (column 5)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Name of the developmental stage defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 4)',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col6`,
+    classNames: 'mt-2',
+    content: 'Over-expressed gene count for speciesXX',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of genes, members of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1), shown in one or more analyses to have a significant over-expression in this condition (',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (results generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Please note that the list of all genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 1) is provided through the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col7`,
+    classNames: 'mt-2',
+    content: 'Under-expressed gene count for speciesXX',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of genes, members of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1), shown in one or more analyses to have a significant under-expression in this condition (',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (results generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Please note that the list of all genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 1) is provided through the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col8`,
+    classNames: 'mt-2',
+    content: 'Not diff. expressed gene count for speciesXX',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of genes, members of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1), that were tested for differential expression in this condition (',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content:
+          '(column 4)), but that were never shown to have a significant variation of their level of expression as compared to the other conditions of the analyses, or for which conflicting results were generated from different data types.',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Please note that the list of all genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 1) is provided through the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col9`,
+    classNames: 'mt-2',
+    content: 'NA gene count for speciesXX',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of genes, members of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1), that were not tested for differential expression in this condition (',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 4)).',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Please note that the list of all genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 1) is provided through the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col_gene_ids`,
+    classNames: 'mt-2',
+    content: 'Gene IDs',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'IDs of the genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1). Cardinality 2 or greater. IDs are separated with the character ',
+      },
+      {
+        type: 'code',
+        content: '|',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID}_col_gene_names`,
+    classNames: 'mt-2',
+    content: 'Gene names',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Name of the genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 1). Cardinality 2 or greater. IDs are separated with the character ',
+      },
+      {
+        type: 'code',
+        content: '|',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'link_anchor',
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_ID,
+    text: 'Back to over-/under-expression menu',
+  },
 ];
 const multiDiffComplete = [
   {
     type: 'text',
     classNames: 'has-text-weight-semibold is-size-6 has-text-primary',
     content: 'Complete file',
-    id: MULTI_DIFF_COMPLETE_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID,
   },
   {
     type: 'text',
@@ -4950,7 +5478,7 @@ const multiDiffComplete = [
       },
       {
         type: 'link_anchor',
-        selector: OMA_HOG_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
         text: 'hierarchical orthologous groups file',
       },
       {
@@ -5448,6 +5976,1118 @@ const multiDiffComplete = [
       ],
     ],
   },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col1`,
+    classNames: 'mt-2',
+    content: 'OMA ID (column 1)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from ',
+      },
+      {
+        type: 'link_external',
+        path: 'text',
+        test: 'the OMA browser',
+      },
+      {
+        type: 'text',
+        content:
+          '. They are provided solely to group data from orthologous genes belonging to the same orthology group. Genes member of an OMA gene orthology group can be retrieved through the associated ',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col2`,
+    classNames: 'mt-2',
+    content: 'Gene ID (column 2) (column 2)',
+  },
+  {
+    type: 'text',
+    content: 'Unique identifier of gene from Ensembl.',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Please note that for ',
+      },
+      {
+        type: 'italic',
+        content: 'P. paniscus',
+      },
+      {
+        type: 'text',
+        content: ' (bonobo) we use ',
+      },
+      {
+        type: 'italic',
+        content: 'P. troglodytes',
+      },
+      {
+        type: 'text',
+        content: ' genome (chimpanzee), and that for ',
+      },
+      {
+        type: 'italic',
+        content: 'P. pygmaeus',
+      },
+      {
+        type: 'text',
+        content: ' (Bornean orangutan) we use ',
+      },
+      {
+        type: 'italic',
+        content: 'P. abelii',
+      },
+      {
+        type: 'text',
+        content:
+          " genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.",
+      },
+    ],
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Please note that the list of all genes member of the OMA orthologous gene group with ID provided in ',
+      },
+      {
+        type: 'code',
+        content: 'OMA ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 1) is provided through the ',
+      },
+      {
+        type: 'link_anchor',
+        path: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
+        text: 'hierarchical orthologous groups file',
+      },
+      {
+        type: 'text',
+        content:
+          '. If a gene listed in this file has no call for the condition ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 4), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 6), it means that there is no data available for this gene in this condition.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col3`,
+    classNames: 'mt-2',
+    content: 'Gene name (column 3)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Name of the gene defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Gene ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 2)',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col4`,
+    classNames: 'mt-2',
+    content: 'Anatomical entity IDs (column 4)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Unique identifiers of the homologous anatomical entities, from the Uberon ontology. Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character ',
+      },
+      {
+        type: 'code',
+        content: '|',
+      },
+      {
+        type: 'text',
+        content: '.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col5`,
+    classNames: 'mt-2',
+    content: 'Anatomical entity names (column 5)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Names of the anatomical entities defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 4). Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character ',
+      },
+      {
+        type: 'code',
+        content: '|',
+      },
+      {
+        type: 'text',
+        content: '. See ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' column description for more details.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col6`,
+    classNames: 'mt-2',
+    content: 'Developmental stage ID (column 6)',
+  },
+  {
+    type: 'text',
+    content:
+      'Unique identifier of the developmental stage, from the Uberon ontology. For multi-species analyses, only broad developmental stages are used, common to the species being compared.',
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col7`,
+    classNames: 'mt-2',
+    content: 'Developmental stage name (column 7)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Name of the developmental stage defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 6)',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col8`,
+    classNames: 'mt-2',
+    content: 'Latin species name (column 8)',
+  },
+  {
+    type: 'text',
+    content:
+      'The latin name of the species which the gene in Gene ID (column 2) belongs to.',
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col9`,
+    classNames: 'mt-2',
+    content: 'Differential expression (column 9)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Call generated from all data types for ',
+      },
+      {
+        type: 'code',
+        content: 'Gene ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), in ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 4), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 6).',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'over-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant over-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'under-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant under-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no diff expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'weak ambiguity',
+          },
+          {
+            type: 'text',
+            content:
+              ': there exists a call of over-expression or under-expression generated from a data type, but another data type showed no significant variation of the level of expression of this gene in the same condition; or, a gene was shown to be never expressed in a condition by some analyses of a given data type, but other analyses of different data types produced a call of over-expression or of absence of differential expression for the same gene, in the same condition (note that conflicts where a data type produced an under-expression call in a condition, while another data type showed the same gene to be never expressed in that condition, do not produce a',
+          },
+          {
+            type: 'code',
+            content: 'weak ambiguity',
+          },
+          {
+            type: 'text',
+            content: ' call, but a call of ',
+          },
+          {
+            type: 'code',
+            content: 'under-expression low quality',
+          },
+          {
+            type: 'text',
+            content: ').',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'strong ambiguity',
+          },
+          {
+            type: 'text',
+            content:
+              ': there exists a call of over-expression or under-expression generated from a data type, but there exists a call in the opposite direction generated from another data type for the same gene, anatomical entity and developmental stage. For instance, gene A is reported to be over-expressed in the midbrain at young adult stage from Affymetrix data, but is reported to be under-expressed in the midbrain at young adult stage from RNA-Seq data.',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col10`,
+    classNames: 'mt-2',
+    content: 'Call quality (column 10)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Confidence in the differential expression call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'Differential expression',
+      },
+      {
+        type: 'text',
+        content: ' (column 2).',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'high quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as high quality, with no contradicting call from same type of analysis (across anatomy/across life stages), for same gene, in same anatomical entity and developmental stage, (call generated either from multiple congruent analyses, or from a single analysis).',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'poor quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is ',
+          },
+          {
+            type: 'code',
+            content: 'under-expression low quality',
+          },
+          {
+            type: 'text',
+            content: '.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'NA',
+          },
+          {
+            type: 'text',
+            content: ': no quality applicable when ambiguity state in ',
+          },
+          {
+            type: 'code',
+            content: 'Differential expression',
+          },
+          {
+            type: 'text',
+            content: ' (column 2).',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col11`,
+    classNames: 'mt-2',
+    content: 'Affymetrix data (column 11)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Call generated from Affymetrix data for ',
+      },
+      {
+        type: 'code',
+        content: 'Gene ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), in ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 4), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 6).',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'over-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant over-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'under-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant under-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no diff expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no data',
+          },
+          {
+            type: 'text',
+            content:
+              ': no analyses of this data type compared expression level of this gene in this condition.',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col12`,
+    classNames: 'mt-2',
+    content: 'Affymetrix call quality (column 12)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Confidence in the differential expression call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'Affymetrix data',
+      },
+      {
+        type: 'text',
+        content: ' (column 9).',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'high quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as high quality, with no contradicting call from same type of analysis (across anatomy/across life stages), for same gene, in same anatomical entity and developmental stage, (call generated either from multiple congruent analyses, or from a single analysis).',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'poor quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is ',
+          },
+          {
+            type: 'code',
+            content: 'under-expression low quality',
+          },
+          {
+            type: 'text',
+            content: '.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no data',
+          },
+          {
+            type: 'text',
+            content: ': no data associated with ',
+          },
+          {
+            type: 'code',
+            content: 'Affymetrix data',
+          },
+          {
+            type: 'text',
+            content: ' (column 9).',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col13`,
+    classNames: 'mt-2',
+    content: 'Affymetrix best supporting p-value (column 13)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Best p-value from the Affymetrix analyses supporting the Affymetrix call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'Affymetrix data',
+      },
+      {
+        type: 'text',
+        content: ' (column 11). Set to 1.0 if no data available by Affymetrix.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col14`,
+    classNames: 'mt-2',
+    content: 'Affymetrix analysis count supporting Affymetrix call (column 14)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of Affymetrix analyses supporting the Affymetrix call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'Affymetrix data',
+      },
+      {
+        type: 'text',
+        content: ' (column 11). Set to 1.0 if no data available by Affymetrix.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col15`,
+    classNames: 'mt-2',
+    content:
+      'Affymetrix analysis count in conflict with Affymetrix call (column 15)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of Affymetrix analyses in conflict, generating a call different from the call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'Affymetrix data',
+      },
+      {
+        type: 'text',
+        content: ' (column 11). Set to 0 if no data available by Affymetrix.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col16`,
+    classNames: 'mt-2',
+    content: 'RNA-Seq data (column 16)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Call generated from RNA-Seq data for ',
+      },
+      {
+        type: 'code',
+        content: 'Gene ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 2), in ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content: ' (column 4), at ',
+      },
+      {
+        type: 'code',
+        content: 'Developmental stage ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 6). ',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'over-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant over-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'under-expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was shown in one or more analyses to have a significant under-expression in this condition, as compared to the expression levels in other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no diff expression',
+          },
+          {
+            type: 'text',
+            content:
+              ': the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no data',
+          },
+          {
+            type: 'text',
+            content:
+              ': no analyses of this data type compared expression level of this gene in this condition.',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col17`,
+    classNames: 'mt-2',
+    content: 'RNA-Seq call quality (column 17)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Confidence in the differential expression call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'RNA-Seq data',
+      },
+      {
+        type: 'text',
+        content: ' (column 16).',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    content: 'Permitted values:',
+  },
+  {
+    type: 'unordered_list',
+    children: [
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'high quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as high quality, with no contradicting call from same type of analysis (across anatomy/across life stages), for same gene, in same anatomical entity and developmental stage, (call generated either from multiple congruent analyses, or from a single analysis).',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'poor quality',
+          },
+          {
+            type: 'text',
+            content:
+              ': differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is ',
+          },
+          {
+            type: 'code',
+            content: 'under-expression low quality',
+          },
+          {
+            type: 'text',
+            content: '.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'underline',
+            content: 'no data',
+          },
+          {
+            type: 'text',
+            content: ': no data associated with ',
+          },
+          {
+            type: 'code',
+            content: 'RNA-Seq data',
+          },
+          {
+            type: 'text',
+            content: ' (column 16).',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_co18l`,
+    classNames: 'mt-2',
+    content: 'RNA-Seq best supporting p-value (column 18)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Best p-value from the RNA-Seq analyses supporting the RNA-Seq call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'RNA-Seq data',
+      },
+      {
+        type: 'text',
+        content: ' (column 16). Set to 1.0 if no data available by RNA-Seq.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col19`,
+    classNames: 'mt-2',
+    content: 'RNA-Seq analysis count supporting RNA-Seq call (column 19)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of RNA-Seq analyses supporting the RNA-Seq call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'RNA-Seq data',
+      },
+      {
+        type: 'text',
+        content: ' (column 16). Set to 0 if no data available by RNA-Seq.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col20`,
+    classNames: 'mt-2',
+    content: 'RNA-Seq analysis count in conflict with RNA-Seq call (column 20)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content:
+          'Number of RNA-Seq analyses in conflict, generating a call different from the call provided in ',
+      },
+      {
+        type: 'code',
+        content: 'RNA-Seq data',
+      },
+      {
+        type: 'text',
+        content: ' (column 16). Set to 0 if no data available by RNA-Seq.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col21`,
+    classNames: 'mt-2',
+    content: 'Anatomy homology CIO ID (column 21)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Unique identifier from the ',
+      },
+      {
+        type: 'link_external',
+        path: 'https://github.com/BgeeDB/confidence-information-ontology/blob/master/src/ontology/cio-simple.obo',
+        text: 'Confidence Information Ontology',
+      },
+      {
+        type: 'text',
+        content:
+          ', providing the confidence in the annotation of homology of anatomical entities defined in ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomical entity IDs',
+      },
+      {
+        type: 'text',
+        content:
+          ' (column 4). This ontology is an attempt to provide a mean to capture the confidence in annotations. See ',
+      },
+      {
+        type: 'link_external',
+        path: 'https://github.com/BgeeDB/confidence-information-ontology',
+        text: 'project home',
+      },
+      {
+        type: 'text',
+        content: ' for more details.',
+      },
+    ],
+  },
+
+  {
+    type: 'bold',
+    id: `${LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID}_col22`,
+    classNames: 'mt-2',
+    content: 'Anatomy homology CIO name (column 22)',
+  },
+  {
+    type: 'rich_text',
+    content: [
+      {
+        type: 'text',
+        content: 'Name of the CIO term defined by ',
+      },
+      {
+        type: 'code',
+        content: 'Anatomy homology CIO ID',
+      },
+      {
+        type: 'text',
+        content: ' (column 21).',
+      },
+    ],
+  },
+
+  {
+    type: 'link_anchor',
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_ID,
+    text: 'Back to over-/under-expression menu',
+  },
 ];
 const multiDiff = [
   {
@@ -5455,7 +7095,7 @@ const multiDiff = [
     classNames: 'has-text-weight-semibold is-size-6',
     content:
       'Over-/under-expression across anatomy or life stages in multiple species',
-    id: MULTI_DIFF_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_ID,
   },
   {
     type: 'notification',
@@ -5496,7 +7136,7 @@ const multiDiff = [
       },
       {
         type: 'link_anchor',
-        path: MULTI_SPECIES_DL_FILES_ID,
+        path: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_SPECIES_DL_FILES_ID,
         text: 'use of homology in multi-species files',
       },
       { type: 'text', content: ').' },
@@ -5537,10 +7177,14 @@ const multiDiff = [
   {
     type: 'unordered_list',
     children: [
-      { type: 'link_anchor', path: MULTI_DIFF_SIMPLE_ID, text: 'simple file' },
       {
         type: 'link_anchor',
-        path: MULTI_DIFF_COMPLETE_ID,
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_SIMPLE_ID,
+        text: 'simple file',
+      },
+      {
+        type: 'link_anchor',
+        selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_COMPLETE_ID,
         text: 'complete file',
       },
     ],
@@ -5587,19 +7231,19 @@ const geneExpCalls = [
   },
   {
     type: 'link_anchor',
-    selector: MULTI_SPECIES_DL_FILES_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_SPECIES_DL_FILES_ID,
     text: 'Multi-species download files',
   },
   {
     type: 'link_anchor',
     classNames: 'ml-6',
-    selector: OMA_HOG_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
     text: 'OMA Hierarchical orthologous groups',
   },
   {
     type: 'link_anchor',
     classNames: 'ml-6',
-    selector: MULTI_DIFF_ID,
+    selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_ID,
     text: 'Over-/under-expression across anatomy or life stages',
   },
 
@@ -5634,7 +7278,7 @@ const geneExpCalls = [
   {
     type: 'section',
     title: 'Multi-species download files',
-    id: MULTI_SPECIES_DL_FILES_ID,
+    id: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_SPECIES_DL_FILES_ID,
     children: [
       {
         type: 'text',
@@ -5705,7 +7349,7 @@ const geneExpCalls = [
               },
               {
                 type: 'link_anchor',
-                selector: OMA_HOG_ID,
+                selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
                 text: 'hierarchical orthologous groups files',
               },
               { type: 'text', content: '.' },
@@ -5722,12 +7366,12 @@ const geneExpCalls = [
         children: [
           {
             type: 'link_anchor',
-            selector: OMA_HOG_ID,
+            selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.OMA_HOG_ID,
             text: 'OMA Hierarchical orthologous groups',
           },
           {
             type: 'link_anchor',
-            selector: MULTI_DIFF_ID,
+            selector: LINK_ANCHOR.GENE_EXPRESSION_CALLS.MULTI_DIFF_ID,
             text: 'Over-/under-expression across anatomy or life stages',
           },
         ],
