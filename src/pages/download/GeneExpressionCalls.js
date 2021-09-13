@@ -1,13 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
-import LINK_ANCHOR from '../../routes/linkAnchor';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
+import Bulma from '../../components/Bulma';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/Custom/DlGeneExpressionCallsSpeciesModal';
 
 const GeneExpressionCalls = () => {
@@ -126,17 +125,15 @@ const GeneExpressionCalls = () => {
           </div>
         </div>
       </div>
-      <Modal
-        isActive={Boolean(selectedSpecies)}
-        closeModal={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
-        content={
-          <DlGeneExpressionCallsSpeciesModal species={selectedSpecies} />
-        }
-      />
+      <Bulma.Modal
+        show={Boolean(selectedSpecies)}
+        onClose={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
+      >
+        <DlGeneExpressionCallsSpeciesModal selectedSpecies={selectedSpecies} />
+      </Bulma.Modal>
     </div>
   );
 };
-
 /*
 {i18n.t('download.gene-exp-calls.')}
  */
