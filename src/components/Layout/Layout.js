@@ -1,24 +1,16 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-import { useLocation } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import styles from './layout.module.scss';
 import Alert from '../Alert';
-import i18n from '../../i18n';
 /*
 <button class="delete"></button>
  */
 const Layout = ({ children }) => {
-  const loc = useLocation();
   const [betaNotif, setBetaNotif] = React.useState(true);
-  console.log(loc);
 
   return (
     <div className={styles.layout}>
-      <Helmet>
-        <title>{i18n.t('')}</title>
-      </Helmet>
       <Header />
       {betaNotif && (
         <Alert type="warning" light>
