@@ -7,7 +7,7 @@ import speciesList from '../search/species.json';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
-import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/Custom/DlGeneExpressionCallsSpeciesModal';
+import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpressionCallsSpeciesModal';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();

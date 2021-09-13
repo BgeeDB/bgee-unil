@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PATHS from '../../../routes/paths';
-import i18n from '../../../i18n';
-import LINK_ANCHOR from '../../../routes/linkAnchor';
-import Bulma from '../../Bulma';
+import PATHS from '../../routes/paths';
+import i18n from '../../i18n';
+import LINK_ANCHOR from '../../routes/linkAnchor';
+import Bulma from '../Bulma';
 
 const DlGeneExpressionCallsSpeciesModal = ({ selectedSpecies }) => (
   <Bulma.Modal.Content as="div" className="box">

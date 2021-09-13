@@ -4,10 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import speciesList from '../search/species.json';
-import Modal from '../../components/Modal';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
-import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/Custom/DlProcessedExpressionValuesSpeciesModal';
+import Bulma from '../../components/Bulma';
+import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/DlProcessedExpressionValuesSpeciesModal';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -113,15 +113,14 @@ const ProcessedExpressionValues = () => {
         </div>
       </div>
 
-      <Modal
-        isActive={Boolean(selectedSpecies)}
-        closeModal={() =>
-          history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)
-        }
-        content={
-          <DlProcessedExpressionValuesSpeciesModal species={selectedSpecies} />
-        }
-      />
+      <Bulma.Modal
+        show={Boolean(selectedSpecies)}
+        onClose={() => history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)}
+      >
+        <DlProcessedExpressionValuesSpeciesModal
+          selectedSpecies={selectedSpecies}
+        />
+      </Bulma.Modal>
     </div>
   );
 };
