@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import ROUTES from './routes';
 import Home from '../pages/Home';
 import PATHS from './paths';
+import Page from '../components/Page';
+import i18n from '../i18n';
 
 const Router = () => (
   <BrowserRouter>
@@ -14,147 +16,331 @@ const Router = () => (
         <Route
           exact
           path={PATHS.ANALYSIS.TOP_ANAT}
-          component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT].i18nKey)}
+              Component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ANALYSIS.TOP_ANAT_RESULT}
-          component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT_RESULT].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT_RESULT].i18nKey
+              )}
+              Component={
+                ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT_RESULT].component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-          component={
-            ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON].component
-          }
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON].i18nKey
+              )}
+              Component={
+                ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON].component
+              }
+            />
+          )}
         />
 
         <Route
           exact
           path={PATHS.SEARCH.GENE}
-          component={ROUTES.SEARCH[PATHS.SEARCH.GENE].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE].i18nKey)}
+              Component={ROUTES.SEARCH[PATHS.SEARCH.GENE].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SEARCH.GENE_ITEM}
-          component={ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].i18nKey)}
+              Component={ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
-          component={ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].i18nKey
+              )}
+              Component={
+                ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SEARCH.SPECIES}
-          component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.SPECIES].i18nKey)}
+              Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SEARCH.SPECIES_ITEM}
-          component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].i18nKey)}
+              Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].component}
+            />
+          )}
         />
 
         <Route
           exact
           path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
-          component={
-            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS].component
-          }
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS].i18nKey
+              )}
+              Component={
+                ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS].component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
-          component={
-            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
-              .component
-          }
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
+                  .i18nKey
+              )}
+              Component={
+                ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
+                  .component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.DOWNLOAD.DATA_DUMPS}
-          component={ROUTES.DOWNLOAD[PATHS.DOWNLOAD.DATA_DUMPS].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.DOWNLOAD[PATHS.DOWNLOAD.DATA_DUMPS].i18nKey)}
+              Component={ROUTES.DOWNLOAD[PATHS.DOWNLOAD.DATA_DUMPS].component}
+            />
+          )}
         />
 
         <Route
           exact
           path={PATHS.RESOURCES.DOCS}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.DOCS].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.RESOURCES[PATHS.RESOURCES.DOCS].i18nKey)}
+              Component={ROUTES.RESOURCES[PATHS.RESOURCES.DOCS].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.RESOURCES.R_PACKAGES}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].i18nKey
+              )}
+              Component={ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].component}
+            />
+          )}
         />
-        {/* TODO issue SPARQL */}
-        {/* <Route */}
-        {/*  exact */}
-        {/*  path={PATHS.RESOURCES.SPARQL} */}
-        {/*  component={ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].component} */}
-        {/* /> */}
+        <Route
+          exact
+          path={PATHS.RESOURCES.SPARQL}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].i18nKey)}
+              Component={ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].component}
+            />
+          )}
+        />
         <Route
           exact
           path={PATHS.RESOURCES.ANNOTATIONS}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.ANNOTATIONS].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.RESOURCES[PATHS.RESOURCES.ANNOTATIONS].i18nKey
+              )}
+              Component={
+                ROUTES.RESOURCES[PATHS.RESOURCES.ANNOTATIONS].component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.RESOURCES.ONTOLOGIES}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.ONTOLOGIES].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.RESOURCES[PATHS.RESOURCES.ONTOLOGIES].i18nKey
+              )}
+              Component={ROUTES.RESOURCES[PATHS.RESOURCES.ONTOLOGIES].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.RESOURCES.SOURCE_CODE}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.SOURCE_CODE].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.RESOURCES[PATHS.RESOURCES.SOURCE_CODE].i18nKey
+              )}
+              Component={
+                ROUTES.RESOURCES[PATHS.RESOURCES.SOURCE_CODE].component
+              }
+            />
+          )}
         />
 
         <Route
           exact
           path={PATHS.SUPPORT.GTEX}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.GTEX].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SUPPORT[PATHS.SUPPORT.GTEX].i18nKey)}
+              Component={ROUTES.SUPPORT[PATHS.SUPPORT.GTEX].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SUPPORT.TOP_ANAT}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.TOP_ANAT].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SUPPORT[PATHS.SUPPORT.TOP_ANAT].i18nKey)}
+              Component={ROUTES.SUPPORT[PATHS.SUPPORT.TOP_ANAT].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-          component={
-            ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
-          }
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(
+                ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
+              )}
+              Component={
+                ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
+              }
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.SUPPORT.FAQ}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.FAQ].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.SUPPORT[PATHS.SUPPORT.FAQ].i18nKey)}
+              Component={ROUTES.SUPPORT[PATHS.SUPPORT.FAQ].component}
+            />
+          )}
         />
 
         <Route
           exact
           path={PATHS.ABOUT.ABOUT}
-          component={ROUTES.ABOUT[PATHS.ABOUT.ABOUT].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ABOUT[PATHS.ABOUT.ABOUT].i18nKey)}
+              Component={ROUTES.ABOUT[PATHS.ABOUT.ABOUT].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ABOUT.COLLABORATIONS}
-          component={ROUTES.ABOUT[PATHS.ABOUT.COLLABORATIONS].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ABOUT[PATHS.ABOUT.COLLABORATIONS].i18nKey)}
+              Component={ROUTES.ABOUT[PATHS.ABOUT.COLLABORATIONS].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ABOUT.PUBLICATION}
-          component={ROUTES.ABOUT[PATHS.ABOUT.PUBLICATION].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ABOUT[PATHS.ABOUT.PUBLICATION].i18nKey)}
+              Component={ROUTES.ABOUT[PATHS.ABOUT.PUBLICATION].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ABOUT.SOURCES}
-          component={ROUTES.ABOUT[PATHS.ABOUT.SOURCES].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ABOUT[PATHS.ABOUT.SOURCES].i18nKey)}
+              Component={ROUTES.ABOUT[PATHS.ABOUT.SOURCES].component}
+            />
+          )}
         />
         <Route
           exact
           path={PATHS.ABOUT.PRIVACY_POLICY}
-          component={ROUTES.ABOUT[PATHS.ABOUT.PRIVACY_POLICY].component}
+          render={(props) => (
+            <Page
+              {...props}
+              title={i18n.t(ROUTES.ABOUT[PATHS.ABOUT.PRIVACY_POLICY].i18nKey)}
+              Component={ROUTES.ABOUT[PATHS.ABOUT.PRIVACY_POLICY].component}
+            />
+          )}
         />
 
         {/* <Route path={PATHS.ERROR} component={Error} /> */}
