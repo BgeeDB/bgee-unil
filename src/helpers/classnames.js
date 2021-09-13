@@ -2,9 +2,10 @@ const hasOwn = {}.hasOwnProperty;
 /**
  * JavaScript utility for conditionally joining classNames together
  * Copy of https://www.npmjs.com/package/classnames
- * @param {(string | {[key: string]: boolean})[]} args
  * @return {string} css classes concatenated.
+ * @param args
  */
+
 const classnames = (...args) => {
   const classes = [];
 
