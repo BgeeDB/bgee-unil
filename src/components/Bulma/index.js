@@ -5,6 +5,7 @@ import Card from './Card/Card';
 import Column from './Columns/Column';
 import Columns from './Columns/Columns';
 import Container from './Container/Container';
+import Content from './Content/Content';
 import Element from './Element/Element';
 import Footer from './Footer/Footer';
 import Icon from './Icon/Icon';
@@ -29,6 +30,7 @@ const Bulma = {
   Column,
   Columns,
   Container,
+  Content,
   Element,
   Footer,
   Icon,
