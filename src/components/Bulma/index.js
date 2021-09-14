@@ -4,9 +4,20 @@ import Button from './Button/Button';
 import Container from './Container/Container';
 import Element from './Element/Element';
 import Modal from './Modal/Modal';
+import Notification from './Notification/Notification';
 import Section from './Section/Section';
 import Tile from './Tile/Tile';
 
-const Bulma = { Block, Box, Button, Container, Element, Modal, Section, Tile };
+const Bulma = {
+  Block,
+  Box,
+  Button,
+  Container,
+  Element,
+  Modal,
+  Notification,
+  Section,
+  Tile,
+};
 
 export default Bulma;
