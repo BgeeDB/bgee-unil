@@ -8,6 +8,8 @@ import arrayHelper from './array';
 import Accordion from '../components/Accordion';
 import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';
+import Bulma from '../components/Bulma';
+import classnames from './classnames';
 
 export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, ...props }, key) => {
@@ -97,15 +99,15 @@ const gridBuilder = ({ cols, content, fillRow }) => (
         defaultItemFactory: () => ({ children: [] }),
       })
       .map((tiles) => (
-        <div className="tile is-ancestor">
+        <Bulma.Tile kind="ancestor">
           {tiles.map(({ classNames, children }) => (
-            <div className="tile is-parent">
-              <article className={`tile is-child ${classNames || ''}`}>
+            <Bulma.Tile kind="parent">
+              <Bulma.Tile kind={'child'} className={classnames(classNames)}>
                 {staticBuilder(children)}
-              </article>
-            </div>
+              </Bulma.Tile>
+            </Bulma.Bulma.Tile>
           ))}
-        </div>
+        </Bulma.Tile>
       ))}
   </>
 );
@@ -241,7 +243,6 @@ const staticBuilder = (json, prefixKey = '') =>
             {props.text}
           </Link>
         );
-
       case 'notification':
         return (
           <div
