@@ -102,10 +102,10 @@ const gridBuilder = ({ cols, content, fillRow }) => (
         <Bulma.Tile kind="ancestor">
           {tiles.map(({ classNames, children }) => (
             <Bulma.Tile kind="parent">
-              <Bulma.Tile kind={'child'} className={classnames(classNames)}>
+              <Bulma.Tile kind="child" className={classnames(classNames)}>
                 {staticBuilder(children)}
               </Bulma.Tile>
-            </Bulma.Bulma.Tile>
+            </Bulma.Tile>
           ))}
         </Bulma.Tile>
       ))}
