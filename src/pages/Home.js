@@ -18,7 +18,12 @@ const Home = () => (
           packageJson.version
         }`}</p>
         <div className="is-flex is-justify-content-center">
-          <img src={assets.bgeeLogo} alt="Bgee logo" width={248} height={100} />
+          <Bulma.Image
+            src={assets.bgeeLogo}
+            alt="Bgee logo"
+            width={248}
+            height={100}
+          />
         </div>
         <p className="subtitle has-text-uppercase has-text-centered mb-6">
           {i18n.t('global.description')}

@@ -1,5 +1,6 @@
 import React from 'react';
 import i18n from '../../../i18n';
+import Bulma from '../../Bulma';
 
 const Footer = () => (
   <footer className="footer">
@@ -18,7 +19,7 @@ const Footer = () => (
           href="https://creativecommons.org/publicdomain/zero/1.0/"
           target="_blank"
         >
-          <img
+          <Bulma.Image
             className="bgee-cc"
             src="https://bgee.org/img/cc-zero.png"
             alt="CC0"

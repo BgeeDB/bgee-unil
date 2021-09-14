@@ -18,7 +18,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
         <div>
           <figure className="image is-128x128 rounded-border">
             {selectedSpecies && (
-              <img
+              <Bulma.Image
                 src={selectedSpecies.src}
                 alt={selectedSpecies.scientificName}
               />

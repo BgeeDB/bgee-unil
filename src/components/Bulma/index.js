@@ -3,6 +3,7 @@ import Box from './Box/Box';
 import Button from './Button/Button';
 import Container from './Container/Container';
 import Element from './Element/Element';
+import Image from './Image/Image';
 import Hero from './Hero/Hero';
 import Media from './Media/Media';
 import Message from './Message/Message';
@@ -17,6 +18,7 @@ const Bulma = {
   Button,
   Container,
   Element,
+  Image,
   Hero,
   Media,
   Message,

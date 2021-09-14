@@ -56,7 +56,7 @@ const Gene = ({
         </div>
         <div className="column is-9 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
           <figure className="image is-128x128">
-            <img src="https://bulma.io/images/placeholders/128x128.png" />
+            <Bulma.Image src="https://bulma.io/images/placeholders/128x128.png" />
           </figure>
           <p className="title is-size-5 ml-4">{`${i18n.t(
             'search.gene.gene'

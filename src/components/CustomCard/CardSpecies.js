@@ -4,9 +4,7 @@ import Bulma from '../Bulma';
 const CardSpecies = ({ scientificName, name, src }) => (
   <div className="card species">
     <div className="card-image">
-      <figure className="image rounded-border">
-        <img src={src} alt={`species ${scientificName} ${name}`} />
-      </figure>
+      <Bulma.Image src={src} alt={`species ${scientificName} ${name}`} />
     </div>
     <div className="card-content py-2 px-1">
       <Bulma.Media>
