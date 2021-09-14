@@ -1,16 +1,14 @@
 import React from 'react';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import styles from './layout.module.scss';
 import Alert from '../Alert';
-/*
-<button class="delete"></button>
- */
+import Bulma from '../Bulma';
+
 const Layout = ({ children }) => {
   const [betaNotif, setBetaNotif] = React.useState(true);
 
   return (
-    <div className={styles.layout}>
+    <div className="layout">
       <Header />
       {betaNotif && (
         <Alert type="warning" light>
@@ -30,7 +28,9 @@ const Layout = ({ children }) => {
           </div>
         </Alert>
       )}
-      <div className={styles.container}>{children}</div>
+      <Bulma.Section>
+        <Bulma.Container>{children}</Bulma.Container>
+      </Bulma.Section>
       <Footer />
     </div>
   );

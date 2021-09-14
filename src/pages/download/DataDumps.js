@@ -2,8 +2,6 @@ import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
 import json from '../../static/download/dataDump';
 
-const DataDumps = () => (
-  <div className="container mt-5">{staticBuilder(json)}</div>
-);
+const DataDumps = () => <>{staticBuilder(json)}</>;
 
 export default DataDumps;

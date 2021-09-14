@@ -2,6 +2,6 @@ import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
 import json from '../../static/support/faq';
 
-const FAQ = () => <div className="container mt-5">{staticBuilder(json)}</div>;
+const FAQ = () => <>{staticBuilder(json)}</>;
 
 export default FAQ;
