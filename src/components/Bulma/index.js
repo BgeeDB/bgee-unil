@@ -16,6 +16,7 @@ import Message from './Message/Message';
 import Modal from './Modal/Modal';
 import Notification from './Notification/Notification';
 import Section from './Section/Section';
+import Tag from './Tag/Tag';
 import Tile from './Tile/Tile';
 import Title from './Title/Title';
 
@@ -39,6 +40,7 @@ const Bulma = {
   Modal,
   Notification,
   Section,
+  Tag,
   Tile,
   Title,
 };
