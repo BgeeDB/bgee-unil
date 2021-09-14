@@ -6,16 +6,16 @@ import Bulma from '../Bulma';
 
 const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
   <Bulma.Modal.Content as="div" className="box">
-    <article className="media">
-      <div className="media-content my-auto">
+    <Bulma.Media>
+      <Bulma.Media.Item className="my-auto">
         <p className="title">
           {selectedSpecies
             ? `${selectedSpecies.scientificName} (${selectedSpecies.name})`
             : null}
         </p>
-      </div>
-      <div className="media-right">
-        <div className="">
+      </Bulma.Media.Item>
+      <Bulma.Media.Item align="right">
+        <div>
           <figure className="image is-128x128 rounded-border">
             {selectedSpecies && (
               <img
@@ -25,8 +25,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
             )}
           </figure>
         </div>
-      </div>
-    </article>
+      </Bulma.Media.Item>
+    </Bulma.Media>
     <div className="mt-2">
       <div>
         <p className="mb-2">
@@ -52,7 +52,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
         </div>
         <p>
           {i18n.t('download.processed-exp-values.rna-seq-desc')}
-          <Link>
+          <Link to="">
             {i18n.t('download.processed-exp-values.rna-seq-desc-link')}
           </Link>
         </p>
@@ -83,7 +83,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
         </div>
         <p>
           {i18n.t('download.processed-exp-values.affymetrix-desc')}
-          <Link>
+          <Link to="">
             {i18n.t('download.processed-exp-values.affymetrix-desc-link')}
           </Link>
         </p>
@@ -114,7 +114,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
         </div>
         <p>
           {i18n.t('download.processed-exp-values.full-rna-seq-desc')}
-          <Link>
+          <Link to="">
             {i18n.t('download.processed-exp-values.full-rna-seq-desc-link')}
           </Link>
         </p>

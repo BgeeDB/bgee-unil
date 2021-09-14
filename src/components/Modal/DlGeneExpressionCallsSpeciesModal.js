@@ -7,16 +7,16 @@ import Bulma from '../Bulma';
 
 const DlGeneExpressionCallsSpeciesModal = ({ selectedSpecies }) => (
   <Bulma.Modal.Content as="div" className="box">
-    <article className="media">
-      <div className="media-content my-auto">
+    <Bulma.Media>
+      <Bulma.Media.Item className="my-auto">
         <p className="title">
           {selectedSpecies
             ? `${selectedSpecies.scientificName} (${selectedSpecies.name})`
             : null}
         </p>
-      </div>
-      <div className="media-right">
-        <div className="">
+      </Bulma.Media.Item>
+      <Bulma.Media.Item align="right">
+        <div>
           <figure className="image is-128x128 rounded-border">
             {selectedSpecies && (
               <img
@@ -26,8 +26,8 @@ const DlGeneExpressionCallsSpeciesModal = ({ selectedSpecies }) => (
             )}
           </figure>
         </div>
-      </div>
-    </article>
+      </Bulma.Media.Item>
+    </Bulma.Media>
     <div className="mt-3">
       <div>
         <p className="has-text-weight-semibold is-size-5">
