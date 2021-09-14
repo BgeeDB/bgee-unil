@@ -4,6 +4,7 @@ import Button from './Button/Button';
 import Container from './Container/Container';
 import Element from './Element/Element';
 import Media from './Media/Media';
+import Message from './Message/Message';
 import Modal from './Modal/Modal';
 import Notification from './Notification/Notification';
 import Section from './Section/Section';
@@ -16,6 +17,7 @@ const Bulma = {
   Container,
   Element,
   Media,
+  Message,
   Modal,
   Notification,
   Section,
