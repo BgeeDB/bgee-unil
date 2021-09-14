@@ -147,27 +147,21 @@ const TopAnat = () => {
           <div>
             <div className="buttons has-addons">
               <button className="button is-bgee-link is-outlined" type="button">
-                <span className="icon">
-                  <ion-icon name="list-outline" />
-                </span>
+                <Bulma.IonIcon name="list-outline" />
                 <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
               </button>
               <Link
                 to={PATHS.SUPPORT.TOP_ANAT}
                 className="button is-bgee-link is-outlined"
               >
-                <span className="icon">
-                  <ion-icon name="newspaper-outline" />
-                </span>
+                <Bulma.IonIcon name="newspaper-outline" />
                 <span>{i18n.t('analysis.top-anat.documentation')}</span>
               </Link>
             </div>
           </div>
           <div className="is-align-items-center is-flex">
             <span className="icon-text">
-              <span className="icon">
-                <ion-icon name="bookmarks-sharp" />
-              </span>
+              <Bulma.IonIcon name="bookmarks-sharp" />
               <span>{i18n.t('analysis.top-anat.examples')}</span>
             </span>
             <div className="ml-1 buttons has-addons">

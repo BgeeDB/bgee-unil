@@ -34,11 +34,7 @@ const Home = () => (
               className="button is-primary is-outlined"
               to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
             >
-              <span className="icon">
-                <span className="icon">
-                  <ion-icon name="list-outline" />
-                </span>
-              </span>
+              <Bulma.IonIcon name="list-outline" />
               <span>{i18n.t('home.exp-comparison')}</span>
             </Link>
           </p>
@@ -47,9 +43,7 @@ const Home = () => (
               className="button is-primary is-outlined"
               to={PATHS.ANALYSIS.TOP_ANAT}
             >
-              <span className="icon">
-                <ion-icon name="stats-chart-outline" />
-              </span>
+              <Bulma.IonIcon name="stats-chart-outline" />
               <span>{i18n.t('home.exp-enrichment-analysis')}</span>
             </Link>
           </p>
@@ -58,9 +52,7 @@ const Home = () => (
               className="button is-primary is-outlined"
               to={PATHS.SEARCH.GENE}
             >
-              <span className="icon">
-                <ion-icon name="search-outline" />
-              </span>
+              <Bulma.IonIcon name="search-outline" />
               <span>{i18n.t('home.gene-search')}</span>
             </Link>
           </p>
