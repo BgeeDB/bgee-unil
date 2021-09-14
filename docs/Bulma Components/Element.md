@@ -3,9 +3,6 @@
 All (Or almost all) helpers and modifiers of bulma are implemented as a prop inside the Element component (and on every
 component on the library), here you can find a list of all common props between all components
 
-`bool`
-`'ccccccccc'` 
-
 | Name | Description | Default |
 |------|-------------|---------|
 | renderAs | `string` `func` `object` | `'div'`  |
