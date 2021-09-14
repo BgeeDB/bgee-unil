@@ -254,9 +254,9 @@ const AnatomicalHomologySearch = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t(
+        <Bulma.Title size={4}>{`${i18n.t(
           'search.anatomical-homology.title'
-        )}`}</p>
+        )}`}</Bulma.Title>
       </div>
       <p>
         {`${i18n.t('search.anatomical-homology.description')} `}
@@ -343,9 +343,9 @@ const AnatomicalHomologySearch = () => {
       </div>
       {results && (
         <div>
-          <p className="title is-6 gradient-underline">
+          <Bulma.Title size={5} className="gradient-underline">
             {i18n.t('global.results')}
-          </p>
+          </Bulma.Title>
           <p className="my-5">{`${i18n.t(
             'search.anatomical-homology.least-common-ancestor'
           )}: Euteleostomi`}</p>

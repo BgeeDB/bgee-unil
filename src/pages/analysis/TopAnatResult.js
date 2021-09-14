@@ -85,7 +85,7 @@ const TopAnat = () => {
   }, []);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
-      <Bulma.Columns vcentered>
+      <Bulma.Columns vCentered>
         <Bulma.C size={3}>
           <div className="is-flex is-flex-direction-column">
             <p>{i18n.t('analysis.top-anat.view')}</p>
@@ -461,9 +461,9 @@ const TopAnat = () => {
       </Bulma.Section>
 
       <Bulma.Section className="pt-0">
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('global.results')}
-        </p>
+        </Bulma.Title>
         <ComplexTable
           columns={[
             {

@@ -35,7 +35,7 @@ const onRenderCell =
   };
 
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <Bulma.Columns vcentered>
+  <Bulma.Columns vCentered>
     <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
     </Bulma.C>
@@ -203,12 +203,12 @@ const GeneList = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t('search.genes.title')}`}</p>
+        <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
       </div>
       <p>{i18n.t('search.genes.description')}</p>
       <div>
         <Bulma.Card className="search-input mx-auto my-3">
-          <Bulma.Card.Body >
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
@@ -251,13 +251,13 @@ const GeneList = () => {
               </div>
             </div>
           </Bulma.Card.Body>
-        </>
+        </Bulma.Card>
       </div>
       {results && (
         <div>
-          <p className="title is-6 gradient-underline">
+          <Bulma.Title size={5} className="gradient-underline">
             {i18n.t('global.results')}
-          </p>
+          </Bulma.Title>
           <p className="has-text-centered my-5">{`${results.length} ${i18n.t(
             'search.genes.genes-found'
           )} '${search}'`}</p>

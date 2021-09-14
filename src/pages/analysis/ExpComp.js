@@ -55,7 +55,7 @@ const onRenderCell = (
   }
 };
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <Bulma.Columns is-vcentered>
+  <Bulma.Columns vCentered>
     <Bulma.C size={3}>
       <div className="is-flex is-flex-direction-column">
         <p>{i18n.t('analysis.top-anat.view')}</p>

@@ -37,9 +37,9 @@ const GeneExpressionCalls = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t(
+        <Bulma.Title size={5}>{`${i18n.t(
           'download.gene-exp-calls.title'
-        )}`}</p>
+        )}`}</Bulma.Title>
       </div>
       <p>
         {i18n.t('download.gene-exp-calls.description-1')}

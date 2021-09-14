@@ -8,11 +8,11 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
   <Bulma.Modal.Content as="div" className="box">
     <Bulma.Media>
       <Bulma.Media.Item className="my-auto">
-        <p className="title">
+        <Bulma.Title>
           {selectedSpecies
             ? `${selectedSpecies.scientificName} (${selectedSpecies.name})`
             : null}
-        </p>
+        </Bulma.Title>
       </Bulma.Media.Item>
       <Bulma.Media.Item align="right">
         <div>

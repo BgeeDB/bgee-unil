@@ -279,7 +279,9 @@ const staticBuilder = (json, prefixKey = '') =>
       case 'section':
         return (
           <div id={props.id} key={`${prefixKey}-${key}`}>
-            <p className="title is-6 gradient-underline">{props.title}</p>
+            <Bulma.Title size={5} className="gradient-underline">
+              {props.title}
+            </Bulma.Title>
             <div className="static-section">
               {staticBuilder(props.children)}
             </div>
