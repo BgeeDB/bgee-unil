@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import LinkExternal from '../../components/LinkExternal';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import PATHS from '../../routes/paths';
+import Bulma from '../../components/Bulma';
 
 const Gene = ({
   name = 'NAME',
@@ -19,7 +20,7 @@ const Gene = ({
   );
 
   return (
-    <section className="section pt-5">
+    <Bulma.Section className="pt-5">
       <div className="columns is-vcentered">
         <div className="column is-3">
           <div className="card search-input mx-auto my-3">
@@ -335,7 +336,7 @@ const Gene = ({
           </div>
         </div>
       </div>
-    </section>
+    </Bulma.Section>
   );
 };
 

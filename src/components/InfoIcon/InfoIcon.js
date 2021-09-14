@@ -23,7 +23,7 @@ const InfoIcon = ({ title, content }) => {
               <p className="modal-card-title">{title}</p>
             </header>
           )}
-          <section className="modal-card-body">{content}</section>
+          <div className="modal-card-body">{content}</div>
         </div>
       </div>
     </>

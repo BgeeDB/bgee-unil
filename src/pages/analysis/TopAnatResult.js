@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
-
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -14,6 +13,7 @@ import Toggle from '../../components/Form/Toggle';
 import Input from '../../components/Form/Input';
 import InfoIcon from '../../components/InfoIcon';
 import HelpIcon from '../../components/HelpIcon';
+import Bulma from '../../components/Bulma';
 
 const staticContent = [
   {
@@ -141,7 +141,7 @@ const TopAnat = () => {
 
   return (
     <div>
-      <section className="section pt-5">
+      <Bulma.Section className="pt-5">
         {staticBuilder(staticContent)}
         <div className="my-4 is-flex">
           <div>
@@ -466,9 +466,9 @@ const TopAnat = () => {
             </div>
           </div>
         </div>
-      </section>
+      </Bulma.Section>
 
-      <section className="section pt-0">
+      <Bulma.Section className="pt-0">
         <p className="title is-6 gradient-underline">
           {i18n.t('global.results')}
         </p>
@@ -537,7 +537,7 @@ const TopAnat = () => {
             FDR,
           ]}
         />
-      </section>
+      </Bulma.Section>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import useForm from '../../hooks/useForm';
 import TextArea from '../../components/Form/TextArea';
 import Input from '../../components/Form/Input';
 import Toggle from '../../components/Form/Toggle';
+import Bulma from '../../components/Bulma';
 
 const staticContent = [
   {
@@ -44,6 +45,7 @@ const staticContent = [
     ],
   },
 ];
+
 const TopAnat = () => {
   const [expandOpts, setExpandOpts] = React.useState(false);
   const { data, handleChange, handleSubmit, errors } = useForm({
@@ -106,7 +108,7 @@ const TopAnat = () => {
 
   return (
     <div>
-      <section className="section pt-5">
+      <Bulma.Section className="pt-5">
         {staticBuilder(staticContent)}
         <div className="my-4 is-flex">
           <div>
@@ -404,7 +406,7 @@ const TopAnat = () => {
             </button>
           </p>
         </div>
-      </section>
+      </Bulma.Section>
     </div>
   );
 };

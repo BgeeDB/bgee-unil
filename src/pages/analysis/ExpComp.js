@@ -5,6 +5,7 @@ import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
 import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
+import Bulma from '../../components/Bulma';
 
 const KEYS = {
   'anat-entities': 0,
@@ -137,11 +138,10 @@ const onSort = (sortKey, sortDirection) => (elementA, elementB) => {
 
 const ExpComp = () => {
   const data = useQuery('data');
-  console.log(data);
 
   return (
     <div>
-      <section className="section pt-5">
+      <Bulma.Section className=" pt-5">
         <div>
           {staticBuilder([
             {
@@ -263,7 +263,7 @@ const ExpComp = () => {
             />
           </div>
         )}
-      </section>
+      </Bulma.Section>
     </div>
   );
 };
