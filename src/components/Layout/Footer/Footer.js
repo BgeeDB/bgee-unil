@@ -3,7 +3,7 @@ import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
 
 const Footer = () => (
-  <footer className="footer">
+  <Bulma.Footer>
     <div className="is-flex is-justify-content-space-between">
       <div className="left-wrapper">
         <a
@@ -50,7 +50,7 @@ const Footer = () => (
         </a>
       </div>
     </div>
-  </footer>
+  </Bulma.Footer>
 );
 
 export default Footer;

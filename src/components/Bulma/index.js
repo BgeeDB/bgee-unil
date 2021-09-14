@@ -3,6 +3,7 @@ import Box from './Box/Box';
 import Button from './Button/Button';
 import Container from './Container/Container';
 import Element from './Element/Element';
+import Footer from './Footer/Footer';
 import Icon from './Icon/Icon';
 import Image from './Image/Image';
 import IonIcon from './Icon/IonIcon';
@@ -20,6 +21,7 @@ const Bulma = {
   Button,
   Container,
   Element,
+  Footer,
   Icon,
   Image,
   IonIcon,
