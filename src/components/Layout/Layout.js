@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Alert from '../Alert';
@@ -6,6 +7,18 @@ import Bulma from '../Bulma';
 
 const Layout = ({ children }) => {
   const [betaNotif, setBetaNotif] = React.useState(true);
+  const loc = useLocation();
+  const body = React.useMemo(
+    () =>
+      loc.pathname === '/' ? (
+        <>{children}</>
+      ) : (
+        <Bulma.Section>
+          <Bulma.Container>{children}</Bulma.Container>
+        </Bulma.Section>
+      ),
+    [loc]
+  );
 
   return (
     <div className="layout">
@@ -28,9 +41,7 @@ const Layout = ({ children }) => {
           </div>
         </Alert>
       )}
-      <Bulma.Section>
-        <Bulma.Container>{children}</Bulma.Container>
-      </Bulma.Section>
+      {body}
       <Footer />
     </div>
   );
