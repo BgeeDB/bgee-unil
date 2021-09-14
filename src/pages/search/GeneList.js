@@ -35,17 +35,17 @@ const onRenderCell =
   };
 
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <div className="columns is-vcentered">
-    <div className="column is-6">
+  <Bulma.Columns vcentered>
+    <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
-    </div>
-    <div className="column is-6">
+    </Bulma.C>
+    <Bulma.C size={6}>
       <div>
         {pageSizeElement}
         <div>{showEntriesText}</div>
       </div>
-    </div>
-  </div>
+    </Bulma.C>
+  </Bulma.Columns>
 );
 
 // TODO onFilter

@@ -85,8 +85,8 @@ const TopAnat = () => {
   }, []);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
-      <div className="columns is-vcentered">
-        <div className="column is-3">
+      <Bulma.Columns vcentered>
+        <Bulma.C size={3}>
           <div className="is-flex is-flex-direction-column">
             <p>{i18n.t('analysis.top-anat.view')}</p>
 
@@ -103,8 +103,8 @@ const TopAnat = () => {
               <span>{i18n.t('analysis.top-anat.download-job-archive')}</span>
             </a>
           </div>
-        </div>
-        <div className="column is-6">
+        </Bulma.C>
+        <Bulma.C size={6}>
           <div className="field has-addons">
             {searchElement}
             <div className="control">
@@ -116,20 +116,19 @@ const TopAnat = () => {
               </a>
             </div>
           </div>
-        </div>
-        <div className="column is-3">
+        </Bulma.C>
+        <Bulma.C size={3}>
           <div>
             {pageSizeElement}
             <div>{showEntriesText}</div>
           </div>
-        </div>
-      </div>
+        </Bulma.C>
+      </Bulma.Columns>
     ),
     []
   );
 
   React.useEffect(() => {
-    console.log(id);
     // axios
     //   .get(
     //     `https://bgee.org/bgee15_0/?page=top_anat&gene_info=1&display_rp=1&ajax=1&action=get_results&display_type=json&data=${id}`
@@ -198,8 +197,8 @@ const TopAnat = () => {
             </div>
           </div>
         </div>
-        <div className="columns ">
-          <div className="column is-4">
+        <Bulma.Columns>
+          <Bulma.C size={4}>
             <article className="message  is-small">
               <div className="message-header">
                 <p className="is-size-6">
@@ -240,8 +239,8 @@ const TopAnat = () => {
                 <TextArea rows={10} className="is-small" disabled />
               </div>
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <article className="message  is-small">
               <div className="message-header">
                 <p className="is-size-6">
@@ -270,8 +269,8 @@ const TopAnat = () => {
                 <TextArea rows={10} className="is-small" disabled />
               </div>
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <article className="message  is-small">
               <div className="message-header">
                 <p className="is-size-6">
@@ -279,14 +278,14 @@ const TopAnat = () => {
                 </p>
               </div>
             </article>
-            <div className="columns">
-              <div className="column is-6">
+            <Bulma.Columns>
+              <Bulma.C size={6}>
                 <p className="has-text-weight-semibold mb-2">
                   {i18n.t('analysis.top-anat.expr-types')}
                 </p>
                 <p>Present</p>
-              </div>
-              <div className="column is-6">
+              </Bulma.C>
+              <Bulma.C size={6}>
                 <p className="has-text-weight-semibold mb-2">
                   {i18n.t('analysis.top-anat.data-types')}
                 </p>
@@ -320,11 +319,11 @@ const TopAnat = () => {
                     Remember me
                   </label>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="columns is-flex-direction-column">
+              </Bulma.C>
+            </Bulma.Columns>
+          </Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="is-flex-direction-column">
           <a onClick={() => setExpandOpts(!expandOpts)}>
             <article className="message  is-small">
               <div className="message-header">
@@ -335,13 +334,12 @@ const TopAnat = () => {
               </div>
             </article>
           </a>
-
           <div
             className="mt-5"
             style={{ display: expandOpts ? 'block' : 'none' }}
           >
-            <div className="columns">
-              <div className="column is-6">
+            <Bulma.Columns>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="stages">
                     Stages
@@ -360,8 +358,8 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="column is-6">
+              </Bulma.C>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="dataQuality">
                     dataQuality
@@ -380,10 +378,10 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="columns">
-              <div className="column is-12">
+              </Bulma.C>
+            </Bulma.Columns>
+            <Bulma.Columns>
+              <Bulma.C size={12}>
                 <div className="field">
                   <label className="label" htmlFor="decorrelationType">
                     decorrelationType
@@ -402,10 +400,10 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="columns">
-              <div className="column is-6">
+              </Bulma.C>
+            </Bulma.Columns>
+            <Bulma.Columns>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="nodeSize">
                     nodeSize
@@ -418,8 +416,8 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="column is-6">
+              </Bulma.C>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="nbNode">
                     nbNode
@@ -430,10 +428,10 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="columns">
-              <div className="column is-6">
+              </Bulma.C>
+            </Bulma.Columns>
+            <Bulma.Columns>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="fdrThreshold">
                     fdrThreshold
@@ -444,8 +442,8 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="column is-6">
+              </Bulma.C>
+              <Bulma.C size={6}>
                 <div className="field">
                   <label className="label" htmlFor="pValueThreshold">
                     pValueThreshold
@@ -456,10 +454,10 @@ const TopAnat = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </Bulma.C>
+            </Bulma.Columns>
           </div>
-        </div>
+        </Bulma.Columns>
       </Bulma.Section>
 
       <Bulma.Section className="pt-0">

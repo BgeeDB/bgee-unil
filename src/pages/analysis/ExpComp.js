@@ -55,22 +55,22 @@ const onRenderCell = (
   }
 };
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <div className="columns is-vcentered">
-    <div className="column is-3">
+  <Bulma.Columns is-vcentered>
+    <Bulma.C size={3}>
       <div className="is-flex is-flex-direction-column">
         <p>{i18n.t('analysis.top-anat.view')}</p>
       </div>
-    </div>
-    <div className="column is-6">
+    </Bulma.C>
+    <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
-    </div>
-    <div className="column is-3">
+    </Bulma.C>
+    <Bulma.C size={3}>
       <div>
         {pageSizeElement}
         <div>{showEntriesText}</div>
       </div>
-    </div>
-  </div>
+    </Bulma.C>
+  </Bulma.Columns>
 );
 const onFilter = (search) => (element) => {
   const regExp = new RegExp(search, 'i');

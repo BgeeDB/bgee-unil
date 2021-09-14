@@ -1,4 +1,5 @@
 import React from 'react';
+import Bulma from '../Bulma';
 
 const divSample =
   '<div>\n' +
@@ -306,16 +307,13 @@ const divSample =
   '    </div>';
 
 const NewsItem = () => (
-  <div className="columns">
-    <div className="column is-2">
+  <Bulma.Columns>
+    <Bulma.C size={2}>
       <p className="has-text-centered">2021-06-15</p>
-    </div>
+    </Bulma.C>
     {/* eslint-disable-next-line react/no-danger-with-children */}
-    <div
-      className="column is-10"
-      dangerouslySetInnerHTML={{ __html: divSample }}
-    />
-  </div>
+    <Bulma.C size={10} dangerouslySetInnerHTML={{ __html: divSample }} />
+  </Bulma.Columns>
 );
 
 export default NewsItem;

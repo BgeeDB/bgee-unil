@@ -61,15 +61,15 @@ const Home = () => (
     </Bulma.Hero>
     <Bulma.Section>
       <Bulma.Container>
-        <div className="columns">
-          <div className="column is-12">
+        <Bulma.Columns>
+          <Bulma.C size={12}>
             <p className="has-text-centered">{i18n.t('home.description-1')}</p>
             <p className="has-text-centered">{i18n.t('home.description-2')}</p>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
         {/* <SelectCustom /> */}
-        <div className="columns">
-          <div className="column is-4">
+        <Bulma.Columns>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">GENE EXPRESSION DATA</p>
               Bgee is a database for retrieval and comparison of gene expression
@@ -85,8 +85,8 @@ const Home = () => (
               </a>
               ).
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">SIMPLY NORMAL</p>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -95,8 +95,8 @@ const Home = () => (
               disease), to provide a comparable reference of normal gene
               expression.
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">COMPARABLE BETWEEN SPECIES</p>
               Bgee produces calls of presence/absence of expression, and of
@@ -104,8 +104,8 @@ const Home = () => (
               information of gene orthology, and of homology between organs.
               This allows comparisons of expression patterns between species.
             </div>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
         <Bulma.Card className="mt-4">
           <Bulma.Card.Header>
             <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
@@ -140,11 +140,11 @@ const Home = () => (
             </div>
           </Bulma.Card.Body>
         </Bulma.Card>
-        <div className="columns mt-4">
-          <div className="column is-9">
+        <Bulma.Columns className="mt-4">
+          <Bulma.C csize={9}>
             <CreativeCommons />
-          </div>
-          <div className="column is-3">
+          </Bulma.C>
+          <Bulma.C size={3}>
             <p className="is-size-7">
               View archive sites:{' '}
               <a className="external-link" href="https://bgee.org/bgee14_2/">
@@ -160,8 +160,8 @@ const Home = () => (
                 version 13
               </a>
             </p>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
       </Bulma.Container>
     </Bulma.Section>
   </>

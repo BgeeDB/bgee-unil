@@ -180,8 +180,8 @@ const TopAnat = () => {
             </div>
           </div>
         </div>
-        <div className="columns ">
-          <div className="column is-4">
+        <Bulma.Columns>
+          <Bulma.C size={4}>
             <article className="message  is-small">
               <div className="message-header">
                 <p className="is-size-5">
@@ -200,8 +200,8 @@ const TopAnat = () => {
                 value={data.genes}
               />
             </div>
-          </div>
-          <div className="column is-8">
+          </Bulma.C>
+          <Bulma.C size={8}>
             <a onClick={() => setExpandOpts(!expandOpts)}>
               <article className="message  is-small">
                 <div className="message-header">
@@ -214,13 +214,12 @@ const TopAnat = () => {
                 </div>
               </article>
             </a>
-
             <div
               className="mt-5"
               style={{ display: expandOpts ? 'block' : 'none' }}
             >
-              <div className="columns">
-                <div className="column is-6">
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="stages">
                       Stages
@@ -241,8 +240,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="dataQuality">
                       dataQuality
@@ -263,10 +262,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-12">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={12}>
                   <div className="field">
                     <label className="label" htmlFor="decorrelationType">
                       decorrelationType
@@ -287,10 +286,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-6">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="nodeSize">
                       nodeSize
@@ -307,8 +306,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="nbNode">
                       nbNode
@@ -323,10 +322,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-6">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="fdrThreshold">
                       fdrThreshold
@@ -341,8 +340,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="pValueThreshold">
                       pValueThreshold
@@ -357,11 +356,11 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </Bulma.C>
+              </Bulma.Columns>
             </div>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
         <div className="field is-grouped">
           <Input
             controlClassName="has-icons-left"
