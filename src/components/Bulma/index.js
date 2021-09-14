@@ -1,6 +1,7 @@
 import Block from './Block/Block';
 import Box from './Box/Box';
 import Button from './Button/Button';
+import Card from './Card/Card';
 import Container from './Container/Container';
 import Element from './Element/Element';
 import Footer from './Footer/Footer';
@@ -19,6 +20,7 @@ const Bulma = {
   Block,
   Box,
   Button,
+  Card,
   Container,
   Element,
   Footer,

@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
 import PATHS from '../../routes/paths';
+import Bulma from '../../components/Bulma';
 // i18n.t('search.anatomical-homology.xxxxxxxxxxxx')
 
 const checkboxes = [
@@ -268,8 +269,8 @@ const AnatomicalHomologySearch = () => {
         .
       </p>
       <div>
-        <div className="card mx-auto my-3" style={{ maxWidth: 750 }}>
-          <div className="card-content">
+        <Bulma.Card className="mx-auto my-3" style={{ maxWidth: 750 }}>
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field is-flex is-justify-content-space-between">
                 <div>
@@ -337,8 +338,8 @@ const AnatomicalHomologySearch = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
       </div>
       {results && (
         <div>

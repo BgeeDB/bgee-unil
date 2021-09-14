@@ -23,8 +23,8 @@ const Gene = ({
     <Bulma.Section className="pt-5">
       <div className="columns is-vcentered">
         <div className="column is-3">
-          <div className="card search-input mx-auto my-3">
-            <div className="card-content py-3">
+          <Bulma.Card className="search-input mx-auto my-3">
+            <Bulma.Card.Body className=" py-3">
               <div className="content">
                 <div className="field">
                   <label className="label" htmlFor="search-species">
@@ -51,8 +51,8 @@ const Gene = ({
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
+            </Bulma.Card.Body>
+          </Bulma.Card>
         </div>
         <div className="column is-9 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
           <figure className="image is-128x128">

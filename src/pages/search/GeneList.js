@@ -5,6 +5,8 @@ import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
 import SelectCustom from '../../components/Select/SelectCustom';
+import Button from '../../components/Bulma/Button/Button';
+import Bulma from '../../components/Bulma';
 
 const onRenderCell =
   (search) =>
@@ -205,8 +207,8 @@ const GeneList = () => {
       </div>
       <p>{i18n.t('search.genes.description')}</p>
       <div>
-        <div className="card search-input mx-auto my-3">
-          <div className="card-content">
+        <Bulma.Card className="search-input mx-auto my-3">
+          <Bulma.Card.Body >
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
@@ -248,8 +250,8 @@ const GeneList = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </>
       </div>
       {results && (
         <div>

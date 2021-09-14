@@ -66,8 +66,8 @@ const GeneExpressionCalls = () => {
         {i18n.t('download.gene-exp-calls.description-4')}
       </p>
       <div>
-        <div className="card search-input mx-auto my-3">
-          <div className="card-content">
+        <Bulma.Card className="search-input mx-auto my-3">
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
@@ -87,16 +87,16 @@ const GeneExpressionCalls = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
       </div>
-      <div className="card mt-4">
-        <header className="card-header">
-          <p className="card-header-title is-size-4 has-text-primary">
+      <Bulma.Card className="mt-4">
+        <Bulma.Card.Header>
+          <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
             {i18n.t('download.gene-exp-calls.single-species')}
-          </p>
-        </header>
-        <div className="card-content">
+          </Bulma.Card.Header.Title>
+        </Bulma.Card.Header>
+        <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
@@ -111,20 +111,20 @@ const GeneExpressionCalls = () => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-      <div className="card mt-4">
-        <header className="card-header">
-          <p className="card-header-title is-size-4 has-text-primary">
+        </Bulma.Card.Body>
+      </Bulma.Card>
+      <Bulma.Card className="mt-4">
+        <Bulma.Card.Header>
+          <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
             {i18n.t('download.gene-exp-calls.multi-species')}
-          </p>
-        </header>
-        <div className="card-content">
+          </Bulma.Card.Header.Title>
+        </Bulma.Card.Header>
+        <Bulma.Card.Body>
           <div className="content">
             <p>{i18n.t('download.gene-exp-calls.available-future-release')}</p>
           </div>
-        </div>
-      </div>
+        </Bulma.Card.Body>
+      </Bulma.Card>
       <Bulma.Modal
         show={Boolean(selectedSpecies)}
         onClose={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}

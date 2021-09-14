@@ -106,16 +106,13 @@ const Home = () => (
             </div>
           </div>
         </div>
-        <div className="card mt-4">
-          <header className="card-header">
-            <p className="card-header-title is-size-4 has-text-primary">
+        <Bulma.Card className="mt-4">
+          <Bulma.Card.Header>
+            <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
               {i18n.t('home.grid-species-title')}
-            </p>
-          </header>
-          <div
-            className="card-content"
-            style={{ height: 350, overflowY: 'auto' }}
-          >
+            </Bulma.Card.Header.Title>
+          </Bulma.Card.Header>
+          <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
             <div className="content">
               <div className="grid-species">
                 {species.map((s, key) => (
@@ -126,26 +123,23 @@ const Home = () => (
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-        <div className="card mt-4">
-          <header className="card-header">
-            <p className="card-header-title is-size-4 has-text-primary">
+          </Bulma.Card.Body>
+        </Bulma.Card>
+        <Bulma.Card className="mt-4">
+          <Bulma.Card.Header>
+            <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
               {i18n.t('home.news')}
-            </p>
-          </header>
-          <div
-            className="card-content"
-            style={{ height: 350, overflowY: 'auto' }}
-          >
+            </Bulma.Card.Header.Title>
+          </Bulma.Card.Header>
+          <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
             <div className="content">
               {[0, 1, 0, 1].map((item, key) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <NewsItem key={`news-${key}`} />
               ))}
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
         <div className="columns mt-4">
           <div className="column is-9">
             <CreativeCommons />
