@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import assets from '../../../assets';
 import PATHS from '../../../routes/paths';
 import i18n from '../../../i18n';
+import Bulma from '../../Bulma';
 
 const NAVBAR_LEFT = [
   {
@@ -220,7 +221,7 @@ const Header = () => {
     >
       <div className="navbar-brand">
         <Link className="navbar-item" to={PATHS.HOME}>
-          <img alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
+          <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
         </Link>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
         <a
@@ -304,7 +305,7 @@ const Header = () => {
         <div className="navbar-end">
           {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
             <a key={href} className="navbar-item" href={href}>
-              <img alt={alt} {...imgProps} />
+              <Bulma.Image alt={alt} {...imgProps} />
             </a>
           ))}
         </div>

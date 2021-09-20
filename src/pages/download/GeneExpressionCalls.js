@@ -1,14 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import Modal from '../../components/Modal';
 import speciesList from '../search/species.json';
-import LINK_ANCHOR from '../../routes/linkAnchor';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
-import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/Custom/DlGeneExpressionCallsSpeciesModal';
+import Bulma from '../../components/Bulma';
+import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpressionCallsSpeciesModal';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -38,9 +37,9 @@ const GeneExpressionCalls = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t(
+        <Bulma.Title size={5}>{`${i18n.t(
           'download.gene-exp-calls.title'
-        )}`}</p>
+        )}`}</Bulma.Title>
       </div>
       <p>
         {i18n.t('download.gene-exp-calls.description-1')}
@@ -67,8 +66,8 @@ const GeneExpressionCalls = () => {
         {i18n.t('download.gene-exp-calls.description-4')}
       </p>
       <div>
-        <div className="card search-input mx-auto my-3">
-          <div className="card-content">
+        <Bulma.Card className="search-input mx-auto my-3">
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
@@ -88,16 +87,16 @@ const GeneExpressionCalls = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
       </div>
-      <div className="card mt-4">
-        <header className="card-header">
-          <p className="card-header-title is-size-4 has-text-primary">
+      <Bulma.Card className="mt-4">
+        <Bulma.Card.Header>
+          <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
             {i18n.t('download.gene-exp-calls.single-species')}
-          </p>
-        </header>
-        <div className="card-content">
+          </Bulma.Card.Header.Title>
+        </Bulma.Card.Header>
+        <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
@@ -112,31 +111,29 @@ const GeneExpressionCalls = () => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-      <div className="card mt-4">
-        <header className="card-header">
-          <p className="card-header-title is-size-4 has-text-primary">
+        </Bulma.Card.Body>
+      </Bulma.Card>
+      <Bulma.Card className="mt-4">
+        <Bulma.Card.Header>
+          <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
             {i18n.t('download.gene-exp-calls.multi-species')}
-          </p>
-        </header>
-        <div className="card-content">
+          </Bulma.Card.Header.Title>
+        </Bulma.Card.Header>
+        <Bulma.Card.Body>
           <div className="content">
             <p>{i18n.t('download.gene-exp-calls.available-future-release')}</p>
           </div>
-        </div>
-      </div>
-      <Modal
-        isActive={Boolean(selectedSpecies)}
-        closeModal={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
-        content={
-          <DlGeneExpressionCallsSpeciesModal species={selectedSpecies} />
-        }
-      />
+        </Bulma.Card.Body>
+      </Bulma.Card>
+      <Bulma.Modal
+        show={Boolean(selectedSpecies)}
+        onClose={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
+      >
+        <DlGeneExpressionCallsSpeciesModal selectedSpecies={selectedSpecies} />
+      </Bulma.Modal>
     </div>
   );
 };
-
 /*
 {i18n.t('download.gene-exp-calls.')}
  */

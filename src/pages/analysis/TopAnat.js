@@ -8,6 +8,7 @@ import useForm from '../../hooks/useForm';
 import TextArea from '../../components/Form/TextArea';
 import Input from '../../components/Form/Input';
 import Toggle from '../../components/Form/Toggle';
+import Bulma from '../../components/Bulma';
 
 const staticContent = [
   {
@@ -44,6 +45,7 @@ const staticContent = [
     ],
   },
 ];
+
 const TopAnat = () => {
   const [expandOpts, setExpandOpts] = React.useState(false);
   const { data, handleChange, handleSubmit, errors } = useForm({
@@ -106,33 +108,27 @@ const TopAnat = () => {
 
   return (
     <div>
-      <section className="section pt-5">
+      <Bulma.Section className="pt-5">
         {staticBuilder(staticContent)}
         <div className="my-4 is-flex">
           <div>
             <div className="buttons has-addons">
               <button className="button is-bgee-link is-outlined" type="button">
-                <span className="icon">
-                  <ion-icon name="list-outline" />
-                </span>
+                <Bulma.IonIcon name="list-outline" />
                 <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
               </button>
               <Link
                 to={PATHS.SUPPORT.TOP_ANAT}
                 className="button is-bgee-link is-outlined"
               >
-                <span className="icon">
-                  <ion-icon name="newspaper-outline" />
-                </span>
+                <Bulma.IonIcon name="newspaper-outline" />
                 <span>{i18n.t('analysis.top-anat.documentation')}</span>
               </Link>
             </div>
           </div>
           <div className="is-align-items-center is-flex">
             <span className="icon-text">
-              <span className="icon">
-                <ion-icon name="bookmarks-sharp" />
-              </span>
+              <Bulma.IonIcon name="bookmarks-sharp" />
               <span>{i18n.t('analysis.top-anat.examples')}</span>
             </span>
             <div className="ml-1 buttons has-addons">
@@ -184,8 +180,8 @@ const TopAnat = () => {
             </div>
           </div>
         </div>
-        <div className="columns ">
-          <div className="column is-4">
+        <Bulma.Columns>
+          <Bulma.C size={4}>
             <article className="message  is-small">
               <div className="message-header">
                 <p className="is-size-5">
@@ -204,8 +200,8 @@ const TopAnat = () => {
                 value={data.genes}
               />
             </div>
-          </div>
-          <div className="column is-8">
+          </Bulma.C>
+          <Bulma.C size={8}>
             <a onClick={() => setExpandOpts(!expandOpts)}>
               <article className="message  is-small">
                 <div className="message-header">
@@ -218,13 +214,12 @@ const TopAnat = () => {
                 </div>
               </article>
             </a>
-
             <div
               className="mt-5"
               style={{ display: expandOpts ? 'block' : 'none' }}
             >
-              <div className="columns">
-                <div className="column is-6">
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="stages">
                       Stages
@@ -245,8 +240,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="dataQuality">
                       dataQuality
@@ -267,10 +262,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-12">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={12}>
                   <div className="field">
                     <label className="label" htmlFor="decorrelationType">
                       decorrelationType
@@ -291,10 +286,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-6">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="nodeSize">
                       nodeSize
@@ -311,8 +306,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="nbNode">
                       nbNode
@@ -327,10 +322,10 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="columns">
-                <div className="column is-6">
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="fdrThreshold">
                       fdrThreshold
@@ -345,8 +340,8 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="column is-6">
+                </Bulma.C>
+                <Bulma.C size={6}>
                   <div className="field">
                     <label className="label" htmlFor="pValueThreshold">
                       pValueThreshold
@@ -361,11 +356,11 @@ const TopAnat = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </Bulma.C>
+              </Bulma.Columns>
             </div>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
         <div className="field is-grouped">
           <Input
             controlClassName="has-icons-left"
@@ -404,7 +399,7 @@ const TopAnat = () => {
             </button>
           </p>
         </div>
-      </section>
+      </Bulma.Section>
     </div>
   );
 };

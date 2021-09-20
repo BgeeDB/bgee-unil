@@ -6,7 +6,7 @@ import useAnchorAtMount from '../../hooks/usAnchorAtMount';
 const GeneExpressionCalls = () => {
   useAnchorAtMount();
 
-  return <div className="container my-5">{staticBuilder(json)}</div>;
+  return <>{staticBuilder(json)}</>;
 };
 
 export default GeneExpressionCalls;

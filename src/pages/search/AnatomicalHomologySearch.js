@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
 import PATHS from '../../routes/paths';
+import Bulma from '../../components/Bulma';
 // i18n.t('search.anatomical-homology.xxxxxxxxxxxx')
 
 const checkboxes = [
@@ -88,17 +89,17 @@ const onRenderCell =
     }
   };
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <div className="columns is-vcentered">
-    <div className="column is-6">
+  <Bulma.Columns>
+    <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
-    </div>
-    <div className="column is-6">
+    </Bulma.C>
+    <Bulma.C size={6}>
       <div>
         {pageSizeElement}
         <div>{showEntriesText}</div>
       </div>
-    </div>
-  </div>
+    </Bulma.C>
+  </Bulma.Columns>
 );
 
 const AnatomicalHomologySearch = () => {
@@ -253,9 +254,9 @@ const AnatomicalHomologySearch = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t(
+        <Bulma.Title size={4}>{`${i18n.t(
           'search.anatomical-homology.title'
-        )}`}</p>
+        )}`}</Bulma.Title>
       </div>
       <p>
         {`${i18n.t('search.anatomical-homology.description')} `}
@@ -268,8 +269,8 @@ const AnatomicalHomologySearch = () => {
         .
       </p>
       <div>
-        <div className="card mx-auto my-3" style={{ maxWidth: 750 }}>
-          <div className="card-content">
+        <Bulma.Card className="mx-auto my-3" style={{ maxWidth: 750 }}>
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field is-flex is-justify-content-space-between">
                 <div>
@@ -337,14 +338,14 @@ const AnatomicalHomologySearch = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
       </div>
       {results && (
         <div>
-          <p className="title is-6 gradient-underline">
+          <Bulma.Title size={5} className="gradient-underline">
             {i18n.t('global.results')}
-          </p>
+          </Bulma.Title>
           <p className="my-5">{`${i18n.t(
             'search.anatomical-homology.least-common-ancestor'
           )}: Euteleostomi`}</p>

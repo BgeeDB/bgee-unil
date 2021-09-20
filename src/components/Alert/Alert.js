@@ -1,4 +1,5 @@
 import React from 'react';
+import Bulma from '../Bulma';
 
 const Alert = ({
   type = 'warning',
@@ -10,13 +11,13 @@ const Alert = ({
 
   if (isClosed) return null;
   return (
-    <div className={`notification is-${type} ${light ? 'is-light' : ''}`}>
+    <Bulma.Notification color={type} light={light}>
       {closable && (
         // eslint-disable-next-line jsx-a11y/control-has-associated-label,react/button-has-type
         <button className="delete" onClick={() => setIsClosed(true)} />
       )}
       {children}
-    </div>
+    </Bulma.Notification>
   );
 };
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import i18n from '../../../i18n';
+import Bulma from '../../Bulma';
 
 const Footer = () => (
-  <footer className="footer">
+  <Bulma.Footer>
     <div className="is-flex is-justify-content-space-between">
       <div className="left-wrapper">
         <a
@@ -18,7 +19,7 @@ const Footer = () => (
           href="https://creativecommons.org/publicdomain/zero/1.0/"
           target="_blank"
         >
-          <img
+          <Bulma.Image
             className="bgee-cc"
             src="https://bgee.org/img/cc-zero.png"
             alt="CC0"
@@ -49,7 +50,7 @@ const Footer = () => (
         </a>
       </div>
     </div>
-  </footer>
+  </Bulma.Footer>
 );
 
 export default Footer;

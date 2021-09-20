@@ -8,77 +8,68 @@ import NewsItem from '../components/NewsItem';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';
-import SelectCustom from '../components/Select/SelectCustom';
+import Bulma from '../components/Bulma';
 
-const Home = () => {
-  const page = 'Home';
-  return (
-    <>
-      <section className="hero" style={{ backgroundColor: '#d9d9d9' }}>
-        <div className="hero-body pt-3">
-          <p className="has-text-right mb-5">{`${i18n.t('global.version')} ${
-            packageJson.version
-          }`}</p>
-          <div className="is-flex is-justify-content-center">
-            <img
-              src={assets.bgeeLogo}
-              alt="Bgee logo"
-              width={248}
-              height={100}
-            />
-          </div>
-          <p className="subtitle has-text-uppercase has-text-centered mb-6">
-            {i18n.t('global.description')}
-          </p>
-          <div className="field is-grouped is-justify-content-center">
-            <p className="control">
-              <Link
-                className="button is-primary is-outlined"
-                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-              >
-                <span className="icon">
-                  <span className="icon">
-                    <ion-icon name="list-outline" />
-                  </span>
-                </span>
-                <span>{i18n.t('home.exp-comparison')}</span>
-              </Link>
-            </p>
-            <p className="control">
-              <Link
-                className="button is-primary is-outlined"
-                to={PATHS.ANALYSIS.TOP_ANAT}
-              >
-                <span className="icon">
-                  <ion-icon name="stats-chart-outline" />
-                </span>
-                <span>{i18n.t('home.exp-enrichment-analysis')}</span>
-              </Link>
-            </p>
-            <p className="control">
-              <Link
-                className="button is-primary is-outlined"
-                to={PATHS.SEARCH.GENE}
-              >
-                <span className="icon">
-                  <ion-icon name="search-outline" />
-                </span>
-                <span>{i18n.t('home.gene-search')}</span>
-              </Link>
-            </p>
-          </div>
+const Home = () => (
+  <>
+    <Bulma.Hero style={{ backgroundColor: '#d9d9d9' }}>
+      <Bulma.Hero.Body className="pt-3">
+        <p className="has-text-right mb-5">{`${i18n.t('global.version')} ${
+          packageJson.version
+        }`}</p>
+        <div className="is-flex is-justify-content-center">
+          <Bulma.Image
+            src={assets.bgeeLogo}
+            alt="Bgee logo"
+            width={248}
+            height={100}
+          />
         </div>
-      </section>
-      <div className="section">
-        <div className="columns">
-          <div className="column is-12">
+        <p className="subtitle has-text-uppercase has-text-centered mb-6">
+          {i18n.t('global.description')}
+        </p>
+        <div className="field is-grouped is-justify-content-center">
+          <p className="control">
+            <Link
+              className="button is-primary is-outlined"
+              to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+            >
+              <Bulma.IonIcon name="list-outline" />
+              <span>{i18n.t('home.exp-comparison')}</span>
+            </Link>
+          </p>
+          <p className="control">
+            <Link
+              className="button is-primary is-outlined"
+              to={PATHS.ANALYSIS.TOP_ANAT}
+            >
+              <Bulma.IonIcon name="stats-chart-outline" />
+              <span>{i18n.t('home.exp-enrichment-analysis')}</span>
+            </Link>
+          </p>
+          <p className="control">
+            <Link
+              className="button is-primary is-outlined"
+              to={PATHS.SEARCH.GENE}
+            >
+              <Bulma.IonIcon name="search-outline" />
+              <span>{i18n.t('home.gene-search')}</span>
+            </Link>
+          </p>
+        </div>
+      </Bulma.Hero.Body>
+    </Bulma.Hero>
+    <Bulma.Section>
+      <Bulma.Container>
+        <Bulma.Columns>
+          <Bulma.C size={12}>
             <p className="has-text-centered">{i18n.t('home.description-1')}</p>
             <p className="has-text-centered">{i18n.t('home.description-2')}</p>
-          </div>
-        </div>
+          </Bulma.C>
+        </Bulma.Columns>
         {/* <SelectCustom /> */}
-        <div className="columns">
-          <div className="column is-4">
+        <Bulma.Columns>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">GENE EXPRESSION DATA</p>
               Bgee is a database for retrieval and comparison of gene expression
@@ -94,8 +85,8 @@ const Home = () => {
               </a>
               ).
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">SIMPLY NORMAL</p>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -104,8 +95,8 @@ const Home = () => {
               disease), to provide a comparable reference of normal gene
               expression.
             </div>
-          </div>
-          <div className="column is-4">
+          </Bulma.C>
+          <Bulma.C size={4}>
             <div>
               <p className="is-size-5">COMPARABLE BETWEEN SPECIES</p>
               Bgee produces calls of presence/absence of expression, and of
@@ -113,18 +104,15 @@ const Home = () => {
               information of gene orthology, and of homology between organs.
               This allows comparisons of expression patterns between species.
             </div>
-          </div>
-        </div>
-        <div className="card mt-4">
-          <header className="card-header">
-            <p className="card-header-title is-size-4 has-text-primary">
+          </Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Card className="mt-4">
+          <Bulma.Card.Header>
+            <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
               {i18n.t('home.grid-species-title')}
-            </p>
-          </header>
-          <div
-            className="card-content"
-            style={{ height: 350, overflowY: 'auto' }}
-          >
+            </Bulma.Card.Header.Title>
+          </Bulma.Card.Header>
+          <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
             <div className="content">
               <div className="grid-species">
                 {species.map((s, key) => (
@@ -135,31 +123,28 @@ const Home = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-        <div className="card mt-4">
-          <header className="card-header">
-            <p className="card-header-title is-size-4 has-text-primary">
+          </Bulma.Card.Body>
+        </Bulma.Card>
+        <Bulma.Card className="mt-4">
+          <Bulma.Card.Header>
+            <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
               {i18n.t('home.news')}
-            </p>
-          </header>
-          <div
-            className="card-content"
-            style={{ height: 350, overflowY: 'auto' }}
-          >
+            </Bulma.Card.Header.Title>
+          </Bulma.Card.Header>
+          <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
             <div className="content">
               {[0, 1, 0, 1].map((item, key) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <NewsItem key={`news-${key}`} />
               ))}
             </div>
-          </div>
-        </div>
-        <div className="columns mt-4">
-          <div className="column is-9">
+          </Bulma.Card.Body>
+        </Bulma.Card>
+        <Bulma.Columns className="mt-4">
+          <Bulma.C csize={9}>
             <CreativeCommons />
-          </div>
-          <div className="column is-3">
+          </Bulma.C>
+          <Bulma.C size={3}>
             <p className="is-size-7">
               View archive sites:{' '}
               <a className="external-link" href="https://bgee.org/bgee14_2/">
@@ -175,11 +160,11 @@ const Home = () => {
                 version 13
               </a>
             </p>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+          </Bulma.C>
+        </Bulma.Columns>
+      </Bulma.Container>
+    </Bulma.Section>
+  </>
+);
 
 export default Home;

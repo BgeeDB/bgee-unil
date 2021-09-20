@@ -1,11 +1,13 @@
 import React from 'react';
+import classnames from '../../helpers/classnames';
 
-const LinkExternal = ({ to, text, className }) => (
+const LinkExternal = ({ id, to, text, className }) => (
   <a
     href={to}
     target="_blank"
     rel="noopener noreferrer"
-    className={`external-link ${className || ''}`}
+    id={id}
+    className={classnames('external-link', className)}
   >
     {text}
   </a>

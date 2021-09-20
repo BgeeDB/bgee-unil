@@ -5,13 +5,16 @@ import species from './species.json';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import { CardSpecies } from '../../components/CustomCard';
+import Bulma from '../../components/Bulma';
 
 const SpeciesList = () => {
   const page = 'SpeciesList';
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
-        <p className="title is-5">{i18n.t('search.species.list-title')}</p>
+        <Bulma.Title size={4}>
+          {i18n.t('search.species.list-title')}
+        </Bulma.Title>
       </div>
       <div className="content">
         <div className="grid-species">
@@ -26,7 +29,7 @@ const SpeciesList = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

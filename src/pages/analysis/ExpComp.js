@@ -5,6 +5,7 @@ import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
 import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
+import Bulma from '../../components/Bulma';
 
 const KEYS = {
   'anat-entities': 0,
@@ -31,9 +32,7 @@ const onRenderCell = (
       return (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
         <a key={key} className="expand-button" onClick={expandAction}>
-          <span className="icon">
-            <ion-icon name="chevron-down-sharp" />
-          </span>
+          <Bulma.IonIcon name="chevron-down-sharp" />
         </a>
       );
     default:
@@ -56,22 +55,22 @@ const onRenderCell = (
   }
 };
 const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
-  <div className="columns is-vcentered">
-    <div className="column is-3">
+  <Bulma.Columns vCentered>
+    <Bulma.C size={3}>
       <div className="is-flex is-flex-direction-column">
         <p>{i18n.t('analysis.top-anat.view')}</p>
       </div>
-    </div>
-    <div className="column is-6">
+    </Bulma.C>
+    <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
-    </div>
-    <div className="column is-3">
+    </Bulma.C>
+    <Bulma.C size={3}>
       <div>
         {pageSizeElement}
         <div>{showEntriesText}</div>
       </div>
-    </div>
-  </div>
+    </Bulma.C>
+  </Bulma.Columns>
 );
 const onFilter = (search) => (element) => {
   const regExp = new RegExp(search, 'i');
@@ -137,11 +136,10 @@ const onSort = (sortKey, sortDirection) => (elementA, elementB) => {
 
 const ExpComp = () => {
   const data = useQuery('data');
-  console.log(data);
 
   return (
     <div>
-      <section className="section pt-5">
+      <Bulma.Section className=" pt-5">
         <div>
           {staticBuilder([
             {
@@ -263,7 +261,7 @@ const ExpComp = () => {
             />
           </div>
         )}
-      </section>
+      </Bulma.Section>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 import React from 'react';
 import bulmaCollapsible from '@creativebulma/bulma-collapsible/src/js';
 import uuid from '../../helpers/uuid';
+import Bulma from '../Bulma';
 
 class Accordion extends React.Component {
   constructor(props) {
@@ -27,22 +28,22 @@ class Accordion extends React.Component {
       >
         {elements.map(({ title, body }, key) => (
           // eslint-disable-next-line react/no-array-index-key
-          <article className="message" key={`${this.id}-${key}`}>
-            <a
-              className="message-header"
+          <Bulma.Message key={`${this.id}-${key}`}>
+            <Bulma.Message.Header
+              renderAs="a"
               href={`#collapsible-message-accordion-${key}`}
               data-action="collapse"
             >
               {title}
-            </a>
-            <div
+            </Bulma.Message.Header>
+            <Bulma.Message.Body
               id={`collapsible-message-accordion-${key}`}
-              className="message-body is-collapsible"
+              className="is-collapsible"
               data-parent={this.id}
             >
               <div className="message-body-content">{body}</div>
-            </div>
-          </article>
+            </Bulma.Message.Body>
+          </Bulma.Message>
         ))}
       </div>
     );

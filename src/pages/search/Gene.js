@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import LinkExternal from '../../components/LinkExternal';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import PATHS from '../../routes/paths';
+import Bulma from '../../components/Bulma';
 
 const Gene = ({
   name = 'NAME',
@@ -19,11 +20,11 @@ const Gene = ({
   );
 
   return (
-    <section className="section pt-5">
-      <div className="columns is-vcentered">
-        <div className="column is-3">
-          <div className="card search-input mx-auto my-3">
-            <div className="card-content py-3">
+    <>
+      <Bulma.Columns vCentered>
+        <Bulma.C size={3}>
+          <Bulma.Card className="search-input mx-auto my-3">
+            <Bulma.Card.Body className=" py-3">
               <div className="content">
                 <div className="field">
                   <label className="label" htmlFor="search-species">
@@ -50,54 +51,58 @@ const Gene = ({
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="column is-9 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
-          <figure className="image is-128x128">
-            <img src="https://bulma.io/images/placeholders/128x128.png" />
-          </figure>
-          <p className="title is-size-5 ml-4">{`${i18n.t(
+            </Bulma.Card.Body>
+          </Bulma.Card>
+        </Bulma.C>
+        <Bulma.C
+          size={9}
+          className="is-flex is-flex-direction-row is-align-items-center is-justify-content-center"
+        >
+          <Bulma.Image
+            src="https://bulma.io/images/placeholders/128x128.png"
+            size={128}
+          />
+          <Bulma.Title size={4} className="ml-4">{`${i18n.t(
             'search.gene.gene'
-          )}: ${name} - ${ensemblId} - ${speciesScientificName} (${speciesCommonName})`}</p>
-        </div>
-      </div>
+          )}: ${name} - ${ensemblId} - ${speciesScientificName} (${speciesCommonName})`}</Bulma.Title>
+        </Bulma.C>
+      </Bulma.Columns>
       <div>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.general-info')}
-        </p>
+        </Bulma.Title>
         <div className="static-section near-columns">
-          <div className="columns my-0">
-            <div className="column is-4">
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.ensembl-id')}
               </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+            <Bulma.C size={8}>Content</Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.name')}
               </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+            <Bulma.C size={8}>Content</Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.description')}
               </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+            <Bulma.C size={8}>Content</Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.organism')}
               </p>
-            </div>
-            <div className="column is-10">
+            </Bulma.C>
+            <Bulma.C size={8}>
               <p>
                 <Link
                   to={`${PATHS.SEARCH.SPECIES_ITEM}/ID`}
@@ -106,23 +111,23 @@ const Gene = ({
                   species
                 </Link>
               </p>
-            </div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.synonyms')}
               </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+            <Bulma.C size={8}>Content</Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.orthologs')}
               </p>
-            </div>
-            <div className="column is-10">
+            </Bulma.C>
+            <Bulma.C size={8}>
               <p>
                 <a
                   className="internal-link"
@@ -131,15 +136,15 @@ const Gene = ({
                   54 orthologs{' '}
                 </a>
               </p>
-            </div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-4">
+            </Bulma.C>
+          </Bulma.Columns>
+          <Bulma.Columns className="my-0">
+            <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.paralogs')}
               </p>
-            </div>
-            <div className="column is-10">
+            </Bulma.C>
+            <Bulma.C size={8}>
               <p>
                 <a
                   className="internal-link"
@@ -148,14 +153,14 @@ const Gene = ({
                   5 paralogs
                 </a>
               </p>
-            </div>
-          </div>
+            </Bulma.C>
+          </Bulma.Columns>
         </div>
       </div>
       <div>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.expression')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <p>WATING TABLE</p>
           <p className="is-size-7">
@@ -170,8 +175,8 @@ const Gene = ({
             between 0 and 100. Low score means that the gene is lowly expressed
             in the condition.
           </p>
-          <div className="columns">
-            <div className="column is-3">
+          <Bulma.Columns>
+            <Bulma.C size={3}>
               <p className="is-size-7">
                 {i18n.t('search.gene.source-anatomy-dev')}
               </p>
@@ -195,8 +200,8 @@ const Gene = ({
                   </p>
                 </li>
               </ul>
-            </div>
-            <div className="column is-3">
+            </Bulma.C>
+            <Bulma.C size={3}>
               <p className="is-size-7">
                 {i18n.t('search.gene.source-raw-data')}
               </p>
@@ -244,14 +249,14 @@ const Gene = ({
                   </p>
                 </li>
               </ul>
-            </div>
-          </div>
+            </Bulma.C>
+          </Bulma.Columns>
         </div>
       </div>
       <div id={LINK_ANCHOR.GENE.ORTHOLOGS}>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.orthologs')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <p>WAITING TABLE</p>
           <p className="is-size-7">
@@ -261,9 +266,9 @@ const Gene = ({
         </div>
       </div>
       <div id={LINK_ANCHOR.GENE.PARALOGS}>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.paralogs')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <p>WAITING TABLE</p>
           <p className="is-size-7">
@@ -272,70 +277,68 @@ const Gene = ({
           </p>
         </div>
       </div>
-      <div>
-        <p className="title is-6 gradient-underline">
-          {i18n.t('search.gene.cross-references')}
-        </p>
-        <div className="static-section near-columns">
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.ccds')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.ensembl')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.hgnc')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.embl')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.onco-mx')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.uniprot-sptrembl')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-          <div className="columns my-0">
-            <div className="column is-3">
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.uniprot-swissprot')}
-              </p>
-            </div>
-            <div className="column is-10">Content</div>
-          </div>
-        </div>
+      <Bulma.Title size={5} className="gradient-underline">
+        {i18n.t('search.gene.cross-references')}
+      </Bulma.Title>
+      <div className="static-section near-columns">
+        <Bulma.Columns>
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.ccds')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.ensembl')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.hgnc')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.embl')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.onco-mx')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <p className="has-text-weight-semibold">
+              {i18n.t('search.gene.uniprot-sptrembl')}
+            </p>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
+        <Bulma.Columns className="my-0">
+          <Bulma.C size={3}>
+            <Bulma.Element renderAs="p" textWeight="semibold">
+              {i18n.t('search.gene.uniprot-swissprot')}
+            </Bulma.Element>
+          </Bulma.C>
+          <Bulma.C size={9}>Content</Bulma.C>
+        </Bulma.Columns>
       </div>
-    </section>
+    </>
   );
 };
 

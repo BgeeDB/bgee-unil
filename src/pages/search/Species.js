@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
+import Bulma from '../../components/Bulma';
 
 const SpeciesList = () => {
   const species = {
@@ -34,16 +35,16 @@ const SpeciesList = () => {
       'ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/rna_seq/Danio_rerio/Danio_rerio_RNA-Seq_read_counts_TPM_FPKM.tar.gz',
   };
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t('search.species.species')}: ${
+        <Bulma.Title size={4}>{`${i18n.t('search.species.species')}: ${
           species.scientificName
-        } (${species.commonName})`}</p>
+        } (${species.commonName})`}</Bulma.Title>
       </div>
       <div>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.species.general-information')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <div className="is-flex">
             <div style={{ width: 150 }}>
@@ -110,9 +111,9 @@ const SpeciesList = () => {
         </div>
       </div>
       <div>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.species.gene-expr-call-files')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <p>
             {i18n.t('search.species.gene-expr-call-files-description')}
@@ -164,9 +165,9 @@ const SpeciesList = () => {
         </div>
       </div>
       <div>
-        <p className="title is-6 gradient-underline">
+        <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.species.processed-expr-value-files')}
-        </p>
+        </Bulma.Title>
         <div className="static-section">
           <p>
             {i18n.t('search.species.processed-expr-value-files-description')}
@@ -230,7 +231,7 @@ const SpeciesList = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

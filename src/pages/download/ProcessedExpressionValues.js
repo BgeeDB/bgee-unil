@@ -4,10 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import speciesList from '../search/species.json';
-import Modal from '../../components/Modal';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
-import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/Custom/DlProcessedExpressionValuesSpeciesModal';
+import Bulma from '../../components/Bulma';
+import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/DlProcessedExpressionValuesSpeciesModal';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -36,9 +36,9 @@ const ProcessedExpressionValues = () => {
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
-        <p className="title is-5">{`${i18n.t(
+        <Bulma.Title size={5}>{`${i18n.t(
           'download.processed-exp-values.title'
-        )}`}</p>
+        )}`}</Bulma.Title>
       </div>
       <p>
         {i18n.t('download.processed-exp-values.description-1')}
@@ -65,8 +65,8 @@ const ProcessedExpressionValues = () => {
         {i18n.t('download.processed-exp-values.description-4')}
       </p>
       <div>
-        <div className="card search-input mx-auto my-3">
-          <div className="card-content">
+        <Bulma.Card className="search-input mx-auto my-3">
+          <Bulma.Card.Body>
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
@@ -86,16 +86,16 @@ const ProcessedExpressionValues = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Bulma.Card.Body>
+        </Bulma.Card>
       </div>
-      <div className="card mt-4">
-        <header className="card-header">
-          <p className="card-header-title is-size-4 has-text-primary">
+      <Bulma.Card className="mt-4">
+        <Bulma.Card.Header>
+          <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
             {i18n.t('download.processed-exp-values.species')}
-          </p>
-        </header>
-        <div className="card-content">
+          </Bulma.Card.Header.Title>
+        </Bulma.Card.Header>
+        <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
@@ -110,18 +110,17 @@ const ProcessedExpressionValues = () => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
+        </Bulma.Card.Body>
+      </Bulma.Card>
 
-      <Modal
-        isActive={Boolean(selectedSpecies)}
-        closeModal={() =>
-          history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)
-        }
-        content={
-          <DlProcessedExpressionValuesSpeciesModal species={selectedSpecies} />
-        }
-      />
+      <Bulma.Modal
+        show={Boolean(selectedSpecies)}
+        onClose={() => history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)}
+      >
+        <DlProcessedExpressionValuesSpeciesModal
+          selectedSpecies={selectedSpecies}
+        />
+      </Bulma.Modal>
     </div>
   );
 };
