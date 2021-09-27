@@ -1,0 +1,19 @@
+{
+  "version": "15.0",
+  "archive": false,
+  "permanentVersionedDomain": "https://bgee.org/bgee15_0/",
+  "archivedVersion": [
+    {
+      "version": "14.1",
+      "url":"https://bgee.org/bgee14_1/"
+    },
+    {
+      "version": "14.0",
+      "url":"https://bgee.org/bgee14/"
+    },
+    {
+      "version": "13.0",
+      "url":"https://bgee.org/bgee13/"
+    }
+  ]
+}
