@@ -4,6 +4,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Alert from '../Alert';
 import Bulma from '../Bulma';
+import CookieMessage from '../CookieMessage';
 
 const Layout = ({ children }) => {
   const [betaNotif, setBetaNotif] = React.useState(true);
@@ -43,6 +44,7 @@ const Layout = ({ children }) => {
       )}
       {body}
       <Footer />
+      <CookieMessage />
     </div>
   );
 };

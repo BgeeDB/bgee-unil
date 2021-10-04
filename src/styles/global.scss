@@ -470,7 +470,29 @@ a.image.cc {
   right: 0;
   z-index: 99;
   padding: 15px;
+
   & > .notification:not(:first-child) {
     margin-top: 10px;
+  }
+}
+
+.cookie-message {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 2rem;
+  background: rgba(0, 0, 0, .9);
+  @include desktop {
+    display: flex;
+  }
+  .left {
+    margin: 5px 0;
+    flex: 1;
+  }
+  .right {
+    width: 200px;
+    margin: 5px 0;
   }
 }
