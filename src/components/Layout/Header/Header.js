@@ -164,6 +164,7 @@ const NAVBAR_RIGHT = [
     alt: 'R',
     height: '20',
     width: '20',
+    className: 'no-responsive',
   },
   {
     href: 'https://twitter.com/Bgeedb',
@@ -171,6 +172,7 @@ const NAVBAR_RIGHT = [
     alt: 'Twitter Bgee',
     height: '20',
     width: '20',
+    className: 'no-responsive',
   },
   {
     href: 'https://www.unil.ch/central/en/home.html',
@@ -178,6 +180,7 @@ const NAVBAR_RIGHT = [
     alt: 'Unil',
     height: '35',
     width: '100',
+    className: 'no-responsive',
   },
   {
     href: 'https://www.sib.swiss/',
@@ -185,6 +188,7 @@ const NAVBAR_RIGHT = [
     alt: 'Sib',
     height: '35',
     width: '46',
+    className: 'no-responsive',
   },
 ];
 
@@ -304,7 +308,13 @@ const Header = () => {
 
         <div className="navbar-end">
           {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
-            <a key={href} className="navbar-item" href={href}>
+            <a
+              key={href}
+              className="navbar-item"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Bulma.Image alt={alt} {...imgProps} />
             </a>
           ))}

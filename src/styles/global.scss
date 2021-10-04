@@ -94,6 +94,9 @@ $colors: map-merge($colors, $custom-colors);
         }
       }
     }
+    .navbar-end > a.navbar-item:hover {
+      background-color: $text !important;
+    }
   }
 }
 
@@ -403,7 +406,12 @@ figure.image {
     height: 150px !important;
     width: 150px !important;
   }
+
+  &.no-responsive > img {
+    width: unset !important;
+  }
 }
+
 
 .control.checkboxes {
   display: grid;
@@ -439,7 +447,7 @@ figure.image {
     max-width: 300px;
     background-color: #fff;
     border: 1px solid #acacac;
-    color: #626262;
+    color: $text;
     border-radius: 2px;
 
     /* Position the tooltip text - see examples below! */
