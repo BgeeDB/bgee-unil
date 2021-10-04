@@ -1,10 +1,11 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
 import config from '../../../config.json';
 import copyToClipboard from '../../../helpers/copyToClipboard';
 import Notifications from '../../Notifications';
+import PATHS from '../../../routes/paths';
 
 // todo handle set timeout
 
@@ -79,19 +80,11 @@ const Footer = () => {
           >
             {i18n.t('global.footer.copy-link')}
           </a>
-          <a
-            href="https://www.sib.swiss/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link to={PATHS.ABOUT.PUBLICATION}>
             {i18n.t('global.footer.cite-us')}
-          </a>
+          </Link>
           <Notifications content={notif} closeElement={closeElement} />
-          <a
-            href="https://www.sib.swiss/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={`mailto:${config.contactEmail}`}>
             {i18n.t('global.footer.contact-us')}
           </a>
         </div>
