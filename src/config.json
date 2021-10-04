@@ -4,6 +4,10 @@
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "archivedVersion": [
     {
+      "version": "14.2",
+      "url":"https://bgee.org/bgee14_/"
+    },
+    {
       "version": "14.1",
       "url":"https://bgee.org/bgee14_1/"
     },

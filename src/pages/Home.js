@@ -9,6 +9,7 @@ import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';
 import Bulma from '../components/Bulma';
+import config from '../config.json';
 
 const Home = () => (
   <>
@@ -145,20 +146,17 @@ const Home = () => (
             <CreativeCommons />
           </Bulma.C>
           <Bulma.C size={3}>
-            <p className="is-size-7">
-              View archive sites:{' '}
-              <a className="external-link" href="https://bgee.org/bgee14_2/">
-                version 14.2
-              </a>{' '}
-              <a className="external-link" href="https://bgee.org/bgee14_1/">
-                version 14.1
-              </a>{' '}
-              <a className="external-link" href="https://bgee.org/bgee14/">
-                version 14.0
-              </a>{' '}
-              <a className="external-link" href="https://bgee.org/bgee13/">
-                version 13
-              </a>
+            <p className="is-size-7 archived-link">
+              View archive sites:
+              {config.archivedVersion.map((archived) => (
+                <a
+                  key={archived.version}
+                  className="external-link"
+                  href={archived.url}
+                >
+                  {`version ${archived.version}`}
+                </a>
+              ))}
             </p>
           </Bulma.C>
         </Bulma.Columns>
