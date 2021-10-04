@@ -130,13 +130,6 @@ footer.footer {
         margin: 0;
         position: absolute;
         top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        &.bgee-cc {
-          height: 15px;
-          width: 80px;
-          max-width: 80px;
-        }
       }
     }
   }
@@ -464,5 +457,20 @@ figure.image {
     .tooltip-header, .tooltip-body {
       padding: 10px;
     }
+  }
+}
+a.image.cc {
+  width: 80px;
+}
+
+.notifications {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 15px;
+  & > .notification:not(:first-child) {
+    margin-top: 10px;
   }
 }
