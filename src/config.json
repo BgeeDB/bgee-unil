@@ -1,7 +1,7 @@
 {
   "version": "15.0",
   "archive": false,
-  "permanentVersionedDomain": "https://bgee.org/bgee15_0/",
+  "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "archivedVersion": [
     {
       "version": "14.1",
@@ -15,5 +15,6 @@
       "version": "13.0",
       "url":"https://bgee.org/bgee13/"
     }
-  ]
+  ],
+  "contactEmail": "Bgee@sib.swiss"
 }
