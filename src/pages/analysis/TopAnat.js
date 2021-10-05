@@ -9,6 +9,7 @@ import TextArea from '../../components/Form/TextArea';
 import Input from '../../components/Form/Input';
 import Toggle from '../../components/Form/Toggle';
 import Bulma from '../../components/Bulma';
+import Tooltip from '../../components/Tooltip';
 
 const staticContent = [
   {
@@ -157,12 +158,18 @@ const TopAnat = () => {
             </span>
             <div className="ml-1 buttons has-addons">
               {EXAMPLES.map((ex, key) => (
-                <Link
-                  to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
-                  className="button is-bgee-link is-outlined"
+                <Tooltip
+                  key={ex.id}
+                  title={`Example ${key + 1}`}
+                  content={ex.description}
                 >
-                  <span>{key + 1}</span>
-                </Link>
+                  <Link
+                    to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
+                    className="button is-bgee-link is-outlined"
+                  >
+                    <span>{key + 1}</span>
+                  </Link>
+                </Tooltip>
               ))}
             </div>
           </div>
