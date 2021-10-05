@@ -45,6 +45,30 @@ const staticContent = [
     ],
   },
 ];
+const EXAMPLES = [
+  {
+    id: '0e165086d430555eda6d6ee5693519ae6c437536',
+    description:
+      'Autism spectrum associated genes from Satterstrom et al. 2020 https://doi.org/10.1016/j.cell.2019.12.036',
+  },
+  {
+    id: 'f3fede86b7cc61a7d8239c31bac012da77ab797b',
+    description: 'Mouse genes mapped to the GO term "spermatogenesis".',
+  },
+  {
+    id: 'b7d412c35f14b5574305c078b1053b026df315eb',
+    description:
+      'Zebrafish 3R ohnologs from Roux et al. 2017 https://doi.org/10.1093/molbev/msx199 showing nervous system expression of 3R duplicates.',
+  },
+  {
+    id: '2d80cdb2fa09681389f935d71d67c327558a09a1',
+    description: 'Pigmentation genes in rabbit.',
+  },
+  {
+    id: '9bbddda9dea22c21edcada56ad552a35cb8e29a7',
+    description: 'COVID-19 related human genes.',
+  },
+];
 
 const TopAnat = () => {
   const [expandOpts, setExpandOpts] = React.useState(false);
@@ -132,51 +156,14 @@ const TopAnat = () => {
               <span>{i18n.t('analysis.top-anat.examples')}</span>
             </span>
             <div className="ml-1 buttons has-addons">
-              <Link
-                to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                  ':id',
-                  '0e165086d430555eda6d6ee5693519ae6c437536'
-                )}
-                className="button is-bgee-link is-outlined"
-              >
-                <span>1</span>
-              </Link>
-              <Link
-                to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                  ':id',
-                  'f3fede86b7cc61a7d8239c31bac012da77ab797b'
-                )}
-                className="button is-bgee-link is-outlined"
-              >
-                <span>2</span>
-              </Link>
-              <Link
-                to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                  ':id',
-                  'b7d412c35f14b5574305c078b1053b026df315eb'
-                )}
-                className="button is-bgee-link is-outlined"
-              >
-                <span>3</span>
-              </Link>
-              <Link
-                to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                  ':id',
-                  '2d80cdb2fa09681389f935d71d67c327558a09a1'
-                )}
-                className="button is-bgee-link is-outlined"
-              >
-                <span>4</span>
-              </Link>
-              <Link
-                to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                  ':id',
-                  '9bbddda9dea22c21edcada56ad552a35cb8e29a7'
-                )}
-                className="button is-bgee-link is-outlined"
-              >
-                <span>5</span>
-              </Link>
+              {EXAMPLES.map((ex, key) => (
+                <Link
+                  to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
+                  className="button is-bgee-link is-outlined"
+                >
+                  <span>{key + 1}</span>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
