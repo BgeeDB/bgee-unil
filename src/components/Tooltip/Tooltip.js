@@ -12,7 +12,7 @@ const Tooltip = ({ children, title, content, style }) => (
         </div>
       )}
       <div className="tooltip-body">
-        <p className="is-size-6 has-text-weight-normal">{content}</p>
+        <span className="is-size-6 has-text-weight-normal">{content}</span>
       </div>
     </span>
   </div>
