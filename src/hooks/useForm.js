@@ -22,10 +22,13 @@ const useForm = (opts) => {
   const [data, setData] = React.useState(opts?.initialValue || {});
   const [errors, setErrors] = React.useState({});
 
-  const handleChange = (key, sanitizeFn) => (e) => {
-    const value = sanitizeFn ? sanitizeFn(e) : e.target.value;
-    setData({ ...data, [key]: value });
-  };
+  const handleChange = React.useCallback(
+    (key, sanitizeFn) => (e) => {
+      const value = sanitizeFn ? sanitizeFn(e) : e.target.value;
+      setData((d) => ({ ...d, [key]: value }));
+    },
+    []
+  );
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validations = opts?.validations;
@@ -70,7 +73,6 @@ const useForm = (opts) => {
     setErrors({});
 
     if (opts?.onSubmit) opts.onSubmit(data);
-    console.log(data);
   };
 
   return { data, handleChange, handleSubmit, errors };
