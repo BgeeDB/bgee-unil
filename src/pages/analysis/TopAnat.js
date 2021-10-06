@@ -78,6 +78,8 @@ const EXAMPLES = [
 let timeout;
 
 const TopAnat = () => {
+  const [searchMode, { toTrue: setSearchTrue, toFalse: setSearchFalse }] =
+    useToggle(true);
   const [expandOpts, setExpandOpts] = React.useState(false);
   const [autoCompleteData, setACD] = React.useState();
   const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
@@ -85,15 +87,20 @@ const TopAnat = () => {
   const { data, handleChange, handleSubmit, errors } = useForm({
     initialValue: {
       genes: '',
+      genesBg: '',
       email: '',
       jobDescription: '',
       stages: 'all',
       dataQuality: 'all',
-      decorrelationType: 'no',
+      decorrelationType: 'classic',
       nodeSize: '20',
       nbNode: '20',
       fdrThreshold: '0.2',
       pValueThreshold: '1',
+      rnaSeq: true,
+      affymetrix: true,
+      inSitu: true,
+      est: true,
     },
     validations: {
       genes: {
@@ -103,38 +110,29 @@ const TopAnat = () => {
         },
       },
       email: {
-        required: { value: true, message: 'Please enter your email' },
-      },
-      jobDescription: {
-        required: { value: true, message: 'Enter a job description' },
-      },
-      stages: { required: { value: true, message: 'xxxxxxxxxxx' } },
-      dataQuality: { required: { value: true, message: 'xxxxxxxxxxx' } },
-      decorrelationType: {
-        required: { value: true, message: 'xxxxxxxxxxx' },
-      },
-      nodeSize: {
-        required: {
-          value: true,
-          message: 'Please choose a node size (ex: 20)',
+        nodeSize: {
+          required: {
+            value: true,
+            message: 'Please choose a node size (ex: 20)',
+          },
         },
-      },
-      nbNode: {
-        required: {
-          value: true,
-          message: 'Please choose a number of nodes (ex: 20)',
+        nbNode: {
+          required: {
+            value: true,
+            message: 'Please choose a number of nodes (ex: 20)',
+          },
         },
-      },
-      fdrThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a FDR threshold (ex: 0.2)',
+        fdrThreshold: {
+          required: {
+            value: true,
+            message: 'Please choose a FDR threshold (ex: 0.2)',
+          },
         },
-      },
-      pValueThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a p-value threshold (ex: 1)',
+        pValueThreshold: {
+          required: {
+            value: true,
+            message: 'Please choose a p-value threshold (ex: 1)',
+          },
         },
       },
     },
@@ -143,15 +141,25 @@ const TopAnat = () => {
     (e) => {
       handleChange('genes')(e);
       if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
-          console.log(r.data);
-          setSpeciesBgTrue();
-          setACD({ fg_list: r.data.fg_list, message: r.message });
-        });
-      }, 1000);
+      if (e.target.value !== '')
+        timeout = setTimeout(() => {
+          api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
+            setSpeciesBgTrue();
+            handleChange('genesBg', () => '')();
+            handleChange('rnaSeq', () => true)();
+            handleChange('affymetrix', () => true)();
+            handleChange('inSitu', () => true)();
+            handleChange('est', () => true)();
+            setACD({ fg_list: r.data.fg_list, message: r.message });
+          });
+        }, 1000);
+      else setACD(undefined);
     },
     [data]
+  );
+  const checkBoxHandler = React.useCallback(
+    (key) => (e) => handleChange(key, (event) => event.target.checked)(e),
+    []
   );
   React.useEffect(
     () => () => {
@@ -305,9 +313,9 @@ const TopAnat = () => {
                           autoCompleteData.fg_list.selectedSpecies
                         ].name
                       } genome, one ID per line (no quotes, no comma).`}
-                      // onChange={foregroundHandler}
+                      onChange={handleChange('genesBg')}
                       error={errors.genes}
-                      // value={data.genes}
+                      value={data.genesBg}
                     />
                   </div>
                 )}
@@ -316,10 +324,67 @@ const TopAnat = () => {
                 <article className="message is-small">
                   <div className="message-header">
                     <p className="is-size-6">
-                      {i18n.t('analysis.top-anat.gene-list')}
+                      {i18n.t('analysis.top-anat.analysis-opts')}
                     </p>
                   </div>
                 </article>
+                <div>
+                  <p className="has-text-weight-semibold mb-2">
+                    {i18n.t('analysis.top-anat.expr-types')}
+                  </p>
+                  <p>Present</p>
+                  <p className="has-text-weight-semibold my-2">
+                    {i18n.t('analysis.top-anat.data-types')}
+                  </p>
+                  <div className="control">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        disabled={!searchMode}
+                        onChange={checkBoxHandler('rnaSeq')}
+                        checked={data.rnaSeq}
+                      />
+                      RNA-Seq
+                    </label>
+                  </div>
+                  <div className="control">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        disabled={!searchMode}
+                        onChange={checkBoxHandler('affymetrix')}
+                        checked={data.affymetrix}
+                      />
+                      Affymetrix data
+                    </label>
+                  </div>
+                  <div className="control">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        disabled={!searchMode}
+                        onChange={checkBoxHandler('inSitu')}
+                        checked={data.inSitu}
+                      />
+                      In situ hybridization
+                    </label>
+                  </div>
+                  <div className="control">
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        disabled={!searchMode}
+                        onChange={checkBoxHandler('est')}
+                        checked={data.est}
+                      />
+                      EST
+                    </label>
+                  </div>
+                </div>
               </Bulma.C>
             </>
           )}
