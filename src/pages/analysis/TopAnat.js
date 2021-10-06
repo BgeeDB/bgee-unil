@@ -10,6 +10,10 @@ import Input from '../../components/Form/Input';
 import Toggle from '../../components/Form/Toggle';
 import Bulma from '../../components/Bulma';
 import Tooltip from '../../components/Tooltip';
+import api from '../../api';
+import InfoIcon from '../../components/InfoIcon';
+import HelpIcon from '../../components/HelpIcon';
+import useToggle from '../../hooks/useToggle';
 
 const staticContent = [
   {
@@ -71,8 +75,13 @@ const EXAMPLES = [
   },
 ];
 
+let timeout;
+
 const TopAnat = () => {
   const [expandOpts, setExpandOpts] = React.useState(false);
+  const [autoCompleteData, setACD] = React.useState();
+  const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
+    useToggle(true);
   const { data, handleChange, handleSubmit, errors } = useForm({
     initialValue: {
       genes: '',
@@ -130,6 +139,26 @@ const TopAnat = () => {
       },
     },
   });
+  const foregroundHandler = React.useCallback(
+    (e) => {
+      handleChange('genes')(e);
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
+          console.log(r.data);
+          setSpeciesBgTrue();
+          setACD({ fg_list: r.data.fg_list, message: r.message });
+        });
+      }, 1000);
+    },
+    [data]
+  );
+  React.useEffect(
+    () => () => {
+      if (timeout) clearTimeout(timeout);
+    },
+    []
+  );
 
   return (
     <div>
@@ -176,12 +205,25 @@ const TopAnat = () => {
         </div>
         <Bulma.Columns>
           <Bulma.C size={4}>
-            <article className="message  is-small">
+            <article className="message is-small">
               <div className="message-header">
-                <p className="is-size-5">
+                <p className="is-size-6">
                   {i18n.t('analysis.top-anat.gene-list')}
                 </p>
               </div>
+              {autoCompleteData && (
+                <div className="message-body">
+                  <div className="is-flex is-align-items-center">
+                    <p className="mr-1">{autoCompleteData.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      content={
+                        <ForegroundModal data={autoCompleteData.fg_list} />
+                      }
+                    />
+                  </div>
+                </div>
+              )}
             </article>
             <div className="field">
               <TextArea
@@ -189,13 +231,101 @@ const TopAnat = () => {
                 placeholder={i18n.t(
                   'analysis.top-anat.textarea-placeholder-gene-list'
                 )}
-                onChange={handleChange('genes')}
+                onChange={foregroundHandler}
                 error={errors.genes}
                 value={data.genes}
               />
             </div>
           </Bulma.C>
-          <Bulma.C size={8}>
+          {autoCompleteData && (
+            <>
+              <Bulma.C size={4}>
+                <article className="message is-small">
+                  <div className="message-header">
+                    <p className="is-size-6">
+                      {i18n.t('analysis.top-anat.background')}
+                    </p>
+                    <HelpIcon
+                      title="Custom background"
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '7px',
+                      }}
+                      content={
+                        <p>
+                          By default, the gene universe considered for the
+                          enrichment analysis is all genes with data in Bgee for
+                          the selected species. It is possible to provide a
+                          custom gene universe, as a list of Ensembl gene IDs.
+                          All gene IDs present in the foreground must be present
+                          in the background.
+                        </p>
+                      }
+                    />
+                  </div>
+                  <div
+                    className="message-body is-flex is-align-items-end is-justify-content-end"
+                    style={{ height: 70 }}
+                  >
+                    <div className="field has-addons">
+                      <p className="control">
+                        <Bulma.Button
+                          size="small"
+                          className="toggle-button"
+                          color={speciesBg && 'danger'}
+                          onClick={setSpeciesBgTrue}
+                          disabled={speciesBg}
+                        >{`Bgee data for ${
+                          autoCompleteData.fg_list.detectedSpecies[
+                            autoCompleteData.fg_list.selectedSpecies
+                          ].name
+                        }`}</Bulma.Button>
+                      </p>
+                      <p className="control">
+                        <Bulma.Button
+                          size="small"
+                          className="toggle-button"
+                          color={!speciesBg && 'danger'}
+                          onClick={setSpeciesBgFalse}
+                          disabled={!speciesBg}
+                        >
+                          Custom data
+                        </Bulma.Button>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+                {!speciesBg && (
+                  <div className="field">
+                    <TextArea
+                      rows={10}
+                      placeholder={`Ensembl identifiers from ${
+                        autoCompleteData.fg_list.detectedSpecies[
+                          autoCompleteData.fg_list.selectedSpecies
+                        ].name
+                      } genome, one ID per line (no quotes, no comma).`}
+                      // onChange={foregroundHandler}
+                      error={errors.genes}
+                      // value={data.genes}
+                    />
+                  </div>
+                )}
+              </Bulma.C>
+              <Bulma.C size={4}>
+                <article className="message is-small">
+                  <div className="message-header">
+                    <p className="is-size-6">
+                      {i18n.t('analysis.top-anat.gene-list')}
+                    </p>
+                  </div>
+                </article>
+              </Bulma.C>
+            </>
+          )}
+        </Bulma.Columns>
+        <Bulma.Columns>
+          <Bulma.C size={12}>
             <a onClick={() => setExpandOpts(!expandOpts)}>
               <article className="message  is-small">
                 <div className="message-header">
@@ -355,6 +485,7 @@ const TopAnat = () => {
             </div>
           </Bulma.C>
         </Bulma.Columns>
+
         <div className="field is-grouped">
           <Input
             controlClassName="has-icons-left"
@@ -398,4 +529,66 @@ const TopAnat = () => {
   );
 };
 
+const ForegroundModal = ({ data }) => {
+  const { selectedSpecies } = data;
+
+  if (!data) return null;
+  return (
+    <div className="content">
+      <p>
+        {`Selected species: `}
+        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
+        {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
+      </p>
+      {Object.keys(data.detectedSpecies).length > 1 && (
+        <>
+          <p>Other species detected in ID list: </p>
+          <ul className="unordered">
+            {Object.entries(data.detectedSpecies).map(([key, value]) =>
+              key === selectedSpecies.toString() ? null : (
+                <li key={key}>
+                  <p>
+                    <i>{`${value.genus} ${value.speciesName}`}</i>
+                    {`: ${data.geneCount[key]} gene${
+                      data.geneCount[key] > 1 ? 's' : ''
+                    } identified`}
+                  </p>
+                </li>
+              )
+            )}
+          </ul>
+        </>
+      )}
+      {data.undeterminedGeneIds.length > 0 && (
+        <p>IDs not identified: {data.undeterminedGeneIds.length}</p>
+      )}
+      {data.notInSelectedSpeciesGeneIds.length > 0 && (
+        <>
+          <p>ID in other species: </p>
+
+          <ul className="unordered">
+            {data.notInSelectedSpeciesGeneIds.map((v) => (
+              <li key={v}>
+                <p>{v}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {data.undeterminedGeneIds.length > 0 && (
+        <>
+          <p>IDs not identified:</p>
+          <ul className="unordered">
+            {data.undeterminedGeneIds.map((v) => (
+              <li key={v}>
+                <p>{v}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+};
 export default TopAnat;

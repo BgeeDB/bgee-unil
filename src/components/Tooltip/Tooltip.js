@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Tooltip = ({ children, title, content }) => (
-  <div className="tooltip">
+const Tooltip = ({ children, title, content, style }) => (
+  <div className="tooltip" style={style}>
     {children}
     <span className="tooltip-content">
       {title && (
