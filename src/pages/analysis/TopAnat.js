@@ -178,15 +178,17 @@ const TopAnat = () => {
       if (timeout) clearTimeout(timeout);
       if (e.target.value !== '')
         timeout = setTimeout(() => {
-          api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
-            setSpeciesBgTrue();
-            handleChange('genesBg', () => '')();
-            handleChange('rnaSeq', () => true)();
-            handleChange('affymetrix', () => true)();
-            handleChange('inSitu', () => true)();
-            handleChange('est', () => true)();
-            setFgData({ fg_list: r.data.fg_list, message: r.message });
-          });
+          api.topAnat
+            .autoCompleteForegroundGenes(e.target.value, 'fg')
+            .then((r) => {
+              setSpeciesBgTrue();
+              handleChange('genesBg', () => '')();
+              handleChange('rnaSeq', () => true)();
+              handleChange('affymetrix', () => true)();
+              handleChange('inSitu', () => true)();
+              handleChange('est', () => true)();
+              setFgData({ fg_list: r.data.fg_list, message: r.message });
+            });
         }, 1000);
       else setFgData(undefined);
     },
@@ -223,30 +225,33 @@ const TopAnat = () => {
 
       if (e.target.value !== '' && array.equals(fg, bg)) {
         timeout = setTimeout(() => {
-          api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
-            if (
-              r.data.fg_list.selectedSpecies !== fgData.fg_list.selectedSpecies
-            ) {
-              setNotif((prev) => {
-                const curr = [...prev];
-                curr.push({
-                  id: uuid,
-                  children: (
-                    <p>
-                      Foreground and background species differ. You can either
-                      change your background or the default one will be used.
-                    </p>
-                  ),
-                  className: `is-danger`,
+          api.topAnat
+            .autoCompleteForegroundGenes(e.target.value, 'bg')
+            .then((r) => {
+              if (
+                r.data.fg_list.selectedSpecies !==
+                fgData.fg_list.selectedSpecies
+              ) {
+                setNotif((prev) => {
+                  const curr = [...prev];
+                  curr.push({
+                    id: uuid,
+                    children: (
+                      <p>
+                        Foreground and background species differ. You can either
+                        change your background or the default one will be used.
+                      </p>
+                    ),
+                    className: `is-danger`,
+                  });
+                  return curr;
                 });
-                return curr;
-              });
-              setTimeout(() => {
-                closeNotif(uuid)();
-              }, TIMEOUT_NOTIF);
-            }
-            setBgData({ bg_list: r.data.fg_list, message: r.message });
-          });
+                setTimeout(() => {
+                  closeNotif(uuid)();
+                }, TIMEOUT_NOTIF);
+              }
+              setBgData({ bg_list: r.data.fg_list, message: r.message });
+            });
         }, 1000);
       }
     },

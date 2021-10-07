@@ -1,6 +1,6 @@
 let RUN_JOB_INCREMENTAL = -1;
 const topAnat = {
-  autoCompleteForegroundGenes: () =>
+  autoCompleteForegroundGenes: (val, type) =>
     new Promise((res) =>
       res({
         code: 200,
