@@ -33,9 +33,21 @@ const chunkArray = (arr, chunkSize, customOpts) => {
 
   return results;
 };
+const equalsIgnoreOrder = (a, b) => {
+  if (a.length !== b.length) return false;
+  const uniqueValues = new Set([...a, ...b]);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const v of uniqueValues) {
+    const aCount = a.filter((e) => e === v).length;
+    const bCount = b.filter((e) => e === v).length;
+    if (aCount !== bCount) return false;
+  }
+  return true;
+};
 
 const arrayHelper = {
   chunked: chunkArray,
+  equals: equalsIgnoreOrder,
 };
 
 export default arrayHelper;

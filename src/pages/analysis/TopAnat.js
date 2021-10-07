@@ -14,6 +14,8 @@ import api from '../../api';
 import InfoIcon from '../../components/InfoIcon';
 import HelpIcon from '../../components/HelpIcon';
 import useToggle from '../../hooks/useToggle';
+import array from '../../helpers/array';
+import Notifications from '../../components/Notifications';
 
 const staticContent = [
   {
@@ -76,14 +78,46 @@ const EXAMPLES = [
 ];
 
 let timeout;
+const TIMEOUT_NOTIF = 3000;
 
 const TopAnat = () => {
+  const [notif, setNotif] = React.useState([]);
+  const closeNotif = React.useCallback(
+    (id) => () => {
+      setNotif((prev) => {
+        const current = [...prev];
+        if (Array.isArray(current)) {
+          const pos = current.findIndex((o) => o.id === id);
+          if (pos > -1) current.splice(pos, 1);
+        }
+        return current;
+      });
+    },
+    []
+  );
   const [searchMode, { toTrue: setSearchTrue, toFalse: setSearchFalse }] =
     useToggle(true);
+  const [canSearch, { toTrue: canSearchTrue, toFalse: canSearchFalse }] =
+    useToggle(true);
+  const [searchIds, setSearchIds] = React.useState();
   const [expandOpts, setExpandOpts] = React.useState(false);
-  const [autoCompleteData, setACD] = React.useState();
+  const [fgData, setFgData] = React.useState();
+  const [bgData, setBgData] = React.useState();
   const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
     useToggle(true);
+  const onSubmit = React.useCallback((data) => {
+    const formattedData = data; // to format for api
+    api.topAnat.runJob(formattedData).then((res) => {
+      if (res.data.jobResponse.jobId !== 0) {
+        setSearchIds({
+          jobId: res.data.jobResponse.jobId,
+          searchId: res.data.jobResponse.data,
+        });
+      } else {
+        setSearchIds(res.data.jobResponse.data);
+      }
+    });
+  }, []);
   const { data, handleChange, handleSubmit, errors } = useForm({
     initialValue: {
       genes: '',
@@ -136,6 +170,7 @@ const TopAnat = () => {
         },
       },
     },
+    onSubmit,
   });
   const foregroundHandler = React.useCallback(
     (e) => {
@@ -150,12 +185,72 @@ const TopAnat = () => {
             handleChange('affymetrix', () => true)();
             handleChange('inSitu', () => true)();
             handleChange('est', () => true)();
-            setACD({ fg_list: r.data.fg_list, message: r.message });
+            setFgData({ fg_list: r.data.fg_list, message: r.message });
           });
         }, 1000);
-      else setACD(undefined);
+      else setFgData(undefined);
     },
     [data]
+  );
+  const backgroundHandler = React.useCallback(
+    (e) => {
+      handleChange('genesBg')(e);
+      const bg = e.target.value.split('\n');
+      const fg = data.genes.split('\n');
+      if (timeout) clearTimeout(timeout);
+
+      const uuid = Math.random().toString(10);
+      if (!array.equals(fg, bg)) {
+        canSearchFalse();
+        const message =
+          'Gene list contains genes not found in background genes.';
+        const status = 'danger';
+        setNotif((prev) => {
+          const curr = [...prev];
+          curr.push({
+            id: uuid,
+            children: <p>{message}</p>,
+            className: `is-${status}`,
+          });
+          return curr;
+        });
+        setTimeout(() => {
+          closeNotif(uuid)();
+        }, TIMEOUT_NOTIF);
+      } else {
+        canSearchTrue();
+      }
+
+      if (e.target.value !== '' && array.equals(fg, bg)) {
+        timeout = setTimeout(() => {
+          api.topAnat.autoCompleteForegroundGenes(e.target.value).then((r) => {
+            if (
+              r.data.fg_list.selectedSpecies !== fgData.fg_list.selectedSpecies
+            ) {
+              setNotif((prev) => {
+                const curr = [...prev];
+                curr.push({
+                  id: uuid,
+                  children: (
+                    <p>
+                      Foreground and background species differ. You can either
+                      change your background or the default one will be used.
+                    </p>
+                  ),
+                  className: `is-danger`,
+                });
+                return curr;
+              });
+              setTimeout(() => {
+                closeNotif(uuid)();
+              }, TIMEOUT_NOTIF);
+            }
+            setBgData({ bg_list: r.data.fg_list, message: r.message });
+          });
+        }, 1000);
+      }
+    },
+    [data, fgData]
   );
   const checkBoxHandler = React.useCallback(
     (key) => (e) => handleChange(key, (event) => event.target.checked)(e),
@@ -167,10 +262,39 @@ const TopAnat = () => {
     },
     []
   );
+  React.useEffect(() => {
+    let timeoutPointer;
+    if (bgData) {
+      const uuid = Math.random().toString(10);
+      const message =
+        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+          ? 'Foreground/background species are identical.'
+          : 'Foreground and background species differ. You can either change your background or the default one will be used.';
+      const status =
+        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+          ? 'success'
+          : 'danger';
+      setNotif((prev) => {
+        const curr = [...prev];
+        curr.push({
+          id: uuid,
+          children: <p>{message}</p>,
+          className: `is-${status}`,
+        });
+        return curr;
+      });
+      timeoutPointer = setTimeout(() => {
+        closeNotif(uuid)();
+      }, TIMEOUT_NOTIF);
+    }
+    return () => {
+      if (timeoutPointer) clearTimeout(timeoutPointer);
+    };
+  }, [fgData, bgData]);
 
   return (
     <div>
-      <Bulma.Section className="pt-5">
+      <Bulma.Section className="py-0">
         {staticBuilder(staticContent)}
         <div className="my-4 is-flex">
           <div>
@@ -219,15 +343,13 @@ const TopAnat = () => {
                   {i18n.t('analysis.top-anat.gene-list')}
                 </p>
               </div>
-              {autoCompleteData && (
+              {fgData && (
                 <div className="message-body">
                   <div className="is-flex is-align-items-center">
-                    <p className="mr-1">{autoCompleteData.message}</p>
+                    <p className="mr-1">{fgData.message}</p>
                     <InfoIcon
                       title="Gene detection details"
-                      content={
-                        <ForegroundModal data={autoCompleteData.fg_list} />
-                      }
+                      content={<ForegroundModal data={fgData.fg_list} />}
                     />
                   </div>
                 </div>
@@ -245,7 +367,7 @@ const TopAnat = () => {
               />
             </div>
           </Bulma.C>
-          {autoCompleteData && (
+          {fgData && (
             <>
               <Bulma.C size={4}>
                 <article className="message is-small">
@@ -285,8 +407,8 @@ const TopAnat = () => {
                           onClick={setSpeciesBgTrue}
                           disabled={speciesBg}
                         >{`Bgee data for ${
-                          autoCompleteData.fg_list.detectedSpecies[
-                            autoCompleteData.fg_list.selectedSpecies
+                          fgData.fg_list.detectedSpecies[
+                            fgData.fg_list.selectedSpecies
                           ].name
                         }`}</Bulma.Button>
                       </p>
@@ -309,11 +431,11 @@ const TopAnat = () => {
                     <TextArea
                       rows={10}
                       placeholder={`Ensembl identifiers from ${
-                        autoCompleteData.fg_list.detectedSpecies[
-                          autoCompleteData.fg_list.selectedSpecies
+                        fgData.fg_list.detectedSpecies[
+                          fgData.fg_list.selectedSpecies
                         ].name
                       } genome, one ID per line (no quotes, no comma).`}
-                      onChange={handleChange('genesBg')}
+                      onChange={backgroundHandler}
                       error={errors.genes}
                       value={data.genesBg}
                     />
@@ -584,12 +706,35 @@ const TopAnat = () => {
               type="button"
               className="button is-primary"
               onClick={handleSubmit}
+              disabled={!canSearch}
             >
               {i18n.t('analysis.top-anat.submit-job')}
             </button>
           </p>
         </div>
-      </Bulma.Section>
+        {searchIds && typeof searchIds === 'object' && (
+          <Bulma.Notification color="warning" className="mt-5">
+            <progress
+              className="progress is-small"
+              max="100"
+              style={{ animationDuration: '3s', marginBottom: 12 }}
+            >
+              80%
+            </progress>
+
+            <p>
+              After bookmarking this page, it is safe to close this window. Your
+              analysis is being run on our server, and the results will appear
+              as soon as available. Please note that the results can be slow to
+              compute, typically from 5 to 30 minutes, depending on the amount
+              of data to process. It is not necessary to refresh this page, it
+              will be automatically updated.
+            </p>
+            <p className="mt-2">Job is running - Job ID: {searchIds.jobId}</p>
+          </Bulma.Notification>
+        )}
+      </Bulma.Section>{' '}
+      <Notifications content={notif} closeElement={closeNotif} />
     </div>
   );
 };

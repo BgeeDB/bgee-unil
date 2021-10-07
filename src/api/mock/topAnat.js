@@ -1,3 +1,4 @@
+let RUN_JOB_INCREMENTAL = -1;
 const topAnat = {
   autoCompleteForegroundGenes: () =>
     new Promise((res) =>
@@ -97,5 +98,35 @@ const topAnat = {
         },
       })
     ),
+  runJob: () => {
+    RUN_JOB_INCREMENTAL += 1;
+    return new Promise((res) => {
+      if (RUN_JOB_INCREMENTAL % 2 === 0)
+        res({
+          code: 200,
+          status: 'SUCCESS',
+          message: 'The results already exist.',
+          data: {
+            jobResponse: {
+              jobId: 0,
+              jobStatus: 'UNDEFINED',
+              data: '69cebbbb32eb17d27f03da87ef0ebf825f681b4e',
+            },
+          },
+        });
+      res({
+        code: 200,
+        status: 'SUCCESS',
+        message: 'Job is RUNNING',
+        data: {
+          jobResponse: {
+            jobId: 1700952,
+            jobStatus: 'RUNNING',
+            data: '69cebbbb32eb17d27f03da87ef0ebf825f681b4e',
+          },
+        },
+      });
+    });
+  },
 };
 export default topAnat;
