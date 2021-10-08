@@ -16,6 +16,7 @@ import HelpIcon from '../../components/HelpIcon';
 import useToggle from '../../hooks/useToggle';
 import array from '../../helpers/array';
 import Notifications from '../../components/Notifications';
+import classnames from '../../helpers/classnames';
 
 const staticContent = [
   {
@@ -79,6 +80,18 @@ const EXAMPLES = [
 
 let timeout;
 const TIMEOUT_NOTIF = 3000;
+const DEFAULT_VALUES = {
+  stages: 'all',
+  dataQuality: 'all',
+  decorrelationType: 'classic',
+  nodeSize: '20',
+  nbNode: '20',
+  fdrThreshold: '0.2',
+  pValueThreshold: '1',
+};
+
+const labelClassNames = (key, value) =>
+  classnames('label', { 'not-default': DEFAULT_VALUES[key] !== value });
 
 const TopAnat = () => {
   const [notif, setNotif] = React.useState([]);
@@ -260,6 +273,29 @@ const TopAnat = () => {
   const checkBoxHandler = React.useCallback(
     (key) => (e) => handleChange(key, (event) => event.target.checked)(e),
     []
+  );
+  const onSelectCustomEmbryo = React.useCallback(
+    (id) => (e) => {
+      if (!fgData) return;
+      if (id) {
+        const tmp = [...data.stages];
+        if (e.target.checked) {
+          tmp.push(id);
+        } else {
+          // remove
+          tmp.splice(
+            tmp.findIndex((a) => a === id),
+            1
+          );
+        }
+        handleChange('stages', () => tmp)();
+      } else {
+        handleChange('stages', () =>
+          e === 'all' ? 'all' : fgData.fg_list.stages.map((s) => s.id)
+        )();
+      }
+    },
+    [data, fgData]
   );
   React.useEffect(
     () => () => {
@@ -537,8 +573,11 @@ const TopAnat = () => {
               <Bulma.Columns>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="stages">
-                      Stages
+                    <label
+                      className={labelClassNames('stages', data.stages)}
+                      htmlFor="stages"
+                    >
+                      {i18n.t('analysis.top-anat.stages')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -548,19 +587,47 @@ const TopAnat = () => {
                               { value: 'all', text: 'All stages' },
                               { value: 'custom', text: 'Custom stages' },
                             ]}
-                            value={data.stages}
-                            onChange={handleChange('stages', (v) => v)}
+                            value={data.stages === 'all' ? 'all' : 'custom'}
+                            onChange={onSelectCustomEmbryo()}
                             error={errors.stages}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
+                  {Array.isArray(data.stages) && (
+                    <div className="field">
+                      <div className="control">
+                        {fgData.fg_list.stages.map((s) => (
+                          <div className="control" key={s.id}>
+                            <label className="checkbox">
+                              <input
+                                type="checkbox"
+                                className="mr-2"
+                                disabled={!searchMode}
+                                onChange={onSelectCustomEmbryo(s.id)}
+                                checked={
+                                  data.stages.findIndex((a) => a === s.id) >= 0
+                                }
+                              />
+                              {s.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </Bulma.C>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="dataQuality">
-                      dataQuality
+                    <label
+                      className={labelClassNames(
+                        'dataQuality',
+                        data.dataQuality
+                      )}
+                      htmlFor="dataQuality"
+                    >
+                      {i18n.t('analysis.top-anat.data-quality')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -583,8 +650,14 @@ const TopAnat = () => {
               <Bulma.Columns>
                 <Bulma.C size={12}>
                   <div className="field">
-                    <label className="label" htmlFor="decorrelationType">
-                      decorrelationType
+                    <label
+                      className={labelClassNames(
+                        'decorrelationType',
+                        data.decorrelationType
+                      )}
+                      htmlFor="decorrelationType"
+                    >
+                      {i18n.t('analysis.top-anat.decorrelation-type')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -607,8 +680,11 @@ const TopAnat = () => {
               <Bulma.Columns>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="nodeSize">
-                      nodeSize
+                    <label
+                      className={labelClassNames('nodeSize', data.nodeSize)}
+                      htmlFor="nodeSize"
+                    >
+                      {i18n.t('analysis.top-anat.node-size')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -617,6 +693,7 @@ const TopAnat = () => {
                             value={data.nodeSize}
                             onChange={handleChange('nodeSize')}
                             error={errors.nodeSize}
+                            type="number"
                           />
                         </div>
                       </div>
@@ -625,8 +702,11 @@ const TopAnat = () => {
                 </Bulma.C>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="nbNode">
-                      nbNode
+                    <label
+                      className={labelClassNames('nbNode', data.nbNode)}
+                      htmlFor="nbNode"
+                    >
+                      {i18n.t('analysis.top-anat.nb-node')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -634,6 +714,7 @@ const TopAnat = () => {
                           value={data.nbNode}
                           onChange={handleChange('nbNode')}
                           error={errors.nbNode}
+                          type="number"
                         />
                       </div>
                     </div>
@@ -643,8 +724,14 @@ const TopAnat = () => {
               <Bulma.Columns>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="fdrThreshold">
-                      fdrThreshold
+                    <label
+                      className={labelClassNames(
+                        'fdrThreshold',
+                        data.fdrThreshold
+                      )}
+                      htmlFor="fdrThreshold"
+                    >
+                      {i18n.t('analysis.top-anat.fdr-threshold')}
                     </label>
                     <div className="field-body">
                       <div className="field">
@@ -659,8 +746,14 @@ const TopAnat = () => {
                 </Bulma.C>
                 <Bulma.C size={6}>
                   <div className="field">
-                    <label className="label" htmlFor="pValueThreshold">
-                      pValueThreshold
+                    <label
+                      className={labelClassNames(
+                        'pValueThreshold',
+                        data.pValueThreshold
+                      )}
+                      htmlFor="pValueThreshold"
+                    >
+                      {i18n.t('analysis.top-anat.p-value-threshold')}
                     </label>
                     <div className="field-body">
                       <div className="field">

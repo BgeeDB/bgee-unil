@@ -91,6 +91,13 @@
       "textarea-placeholder-gene-list": "Enter a list of Ensembl identifiers, one ID per line, no quotes, no comma.",
       "expr-types": "Expression types",
       "data-types": "Data types",
+      "stages": "Developmental and life stages",
+      "data-quality": "Data quality",
+      "decorrelation-type": "Decorrelation type (slower)",
+      "node-size": "Node size",
+      "nb-node": "Nb of nodes",
+      "fdr-threshold": "FDR threshold",
+      "p-value-threshold": "p-value threshold",
 
       "submit-job": "Submit your job",
       "email": "Email",
