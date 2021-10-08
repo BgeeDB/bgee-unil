@@ -276,7 +276,23 @@ const TopAnat = () => {
   );
   const onSelectCustomEmbryo = React.useCallback(
     (id) => (e) => {
-      if (!fgData) return;
+      if (!fgData) {
+        const uuid = Math.random().toString(10);
+        //
+        setNotif((prev) => {
+          const curr = [...prev];
+          curr.push({
+            id: uuid,
+            children: <p>No species detected from gene list</p>,
+            className: `is-warning`,
+          });
+          return curr;
+        });
+        setTimeout(() => {
+          closeNotif(uuid)();
+        }, TIMEOUT_NOTIF);
+        return;
+      }
       if (id) {
         const tmp = [...data.stages];
         if (e.target.checked) {
