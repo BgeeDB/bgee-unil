@@ -6,13 +6,13 @@ const Tooltip = ({ children, title, content, style }) => (
     <span className="tooltip-content">
       {title && (
         <div className="tooltip-header">
-          <p className="has-text-weight-semibold is-size-6 has-text-dark">
+          <p className="has-text-weight-semibold is-size-7 has-text-dark">
             {title}
           </p>
         </div>
       )}
       <div className="tooltip-body">
-        <span className="is-size-6 has-text-weight-normal">{content}</span>
+        <span className="is-size-7 has-text-weight-normal">{content}</span>
       </div>
     </span>
   </div>
