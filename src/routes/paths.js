@@ -1,8 +1,9 @@
 const PATHS = {
   HOME: '/',
   ANALYSIS: {
-    TOP_ANAT: '/analysis/top-anat',
+    TOP_ANAT: '/analysis/top-anat/',
     TOP_ANAT_RESULT: '/analysis/top-anat/:id',
+    TOP_ANAT_RESULT_JOB_ID: '/analysis/top-anat/:id/:jobId',
     EXPRESSION_COMPARISON: '/analysis/expr-comparison',
   },
   SEARCH: {

@@ -99,7 +99,8 @@
       "fdr-threshold": "FDR threshold",
       "p-value-threshold": "p-value threshold",
 
-      "submit-job": "Submit your job",
+      "submit-job": "Start a new job",
+      "cancel-job": "Cancel your job",
       "email": "Email",
       "job-description": "Job description",
       "view": "View",
