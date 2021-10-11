@@ -41,7 +41,7 @@ const ComplexTable = ({
     pagination ? 10 : internalData.length
   );
   const totalPage = React.useMemo(
-    () => Math.round(internalData.length / pageSize),
+    () => Math.round(internalData.length / pageSize) || 1,
     [internalData, pageSize]
   );
 
@@ -57,7 +57,10 @@ const ComplexTable = ({
           <Select
             defaultValue={pageSize}
             options={[10, 20, 50, { value: 100, text: 100 }]}
-            onChange={setPageSize}
+            onChange={(p) => {
+              setCurrentPage(1);
+              setPageSize(parseInt(p, 10));
+            }}
           />
         </div>
       ) : null,
@@ -68,7 +71,12 @@ const ComplexTable = ({
       <p className="has-text-right mt-2">
         {i18n
           .t('analysis.top-anat.showing-entries-on-total')
-          .replace('{START}', ((currentPage - 1) * pageSize + 1).toString(10))
+          .replace(
+            '{START}',
+            internalData.length
+              ? ((currentPage - 1) * pageSize + 1).toString(10)
+              : '0'
+          )
           .replace(
             '{END}',
             (pageSize * currentPage > internalData.length
@@ -88,11 +96,14 @@ const ComplexTable = ({
         <Input
           placeholder={i18n.t('global.search')}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            if (currentPage !== 1) setCurrentPage(1);
+            setSearch(e.target.value);
+          }}
         />
       </div>
     ),
-    [search]
+    [search, currentPage]
   );
 
   return (
@@ -103,16 +114,12 @@ const ComplexTable = ({
       <Table
         classNames={classNamesTable}
         columns={columns}
-        data={(function () {
-          let pointer = (currentPage - 1) * pageSize;
-          if (pointer > 0) pointer -= 1;
-
-          const clone = JSON.parse(JSON.stringify(internalData)).slice(
-            pointer,
-            pointer + pageSize
-          );
-          return clone.map(mappingObj);
-        })()}
+        data={internalData
+          .slice(
+            (currentPage - 1) * pageSize,
+            (currentPage - 1) * pageSize + pageSize
+          )
+          .map(mappingObj)}
         onRenderCell={onRenderCell}
         onSort={onSort ? setSort : undefined}
         {...props}

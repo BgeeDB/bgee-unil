@@ -1,22 +1,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import staticBuilder from '../../helpers/staticBuilder';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import useForm from '../../hooks/useForm';
-import TextArea from '../../components/Form/TextArea';
-import Input from '../../components/Form/Input';
-import Toggle from '../../components/Form/Toggle';
 import Bulma from '../../components/Bulma';
 import Tooltip from '../../components/Tooltip';
 import api from '../../api';
-import InfoIcon from '../../components/InfoIcon';
-import HelpIcon from '../../components/HelpIcon';
-import useToggle from '../../hooks/useToggle';
-import array from '../../helpers/array';
 import Notifications from '../../components/Notifications';
-import classnames from '../../helpers/classnames';
+import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
+import useTopAnat from '../../hooks/useTopAnat';
+import TopAnatForm from '../../components/TopAnat/TopAnatForm';
+import ComplexTable from '../../components/ComplexTable';
 
 const staticContent = [
   {
@@ -78,247 +73,43 @@ const EXAMPLES = [
   },
 ];
 
-let timeout;
+let getJobStatusTimeOut;
 const TIMEOUT_NOTIF = 3000;
-const DEFAULT_VALUES = {
-  stages: 'all',
-  dataQuality: 'all',
-  decorrelationType: 'classic',
-  nodeSize: '20',
-  nbNode: '20',
-  fdrThreshold: '0.2',
-  pValueThreshold: '1',
-};
 
-const labelClassNames = (key, value) =>
-  classnames('label', { 'not-default': DEFAULT_VALUES[key] !== value });
+const onSort =
+  (sortKey, sortDirection) =>
+  ({ [sortKey]: a }, { [sortKey]: b }) => {
+    const AFormatted = typeof a === 'string' ? a.toLowerCase() : a;
+    const bFormatted = typeof b === 'string' ? b.toLowerCase() : b;
+    if (AFormatted === bFormatted) return 0;
+    if (sortDirection === 'ascending') return AFormatted > bFormatted ? 1 : -1;
+    if (sortDirection === 'descending') return AFormatted < bFormatted ? 1 : -1;
+    return 0;
+  };
 
 const TopAnat = () => {
-  const [notif, setNotif] = React.useState([]);
-  const closeNotif = React.useCallback(
-    (id) => () => {
-      setNotif((prev) => {
-        const current = [...prev];
-        if (Array.isArray(current)) {
-          const pos = current.findIndex((o) => o.id === id);
-          if (pos > -1) current.splice(pos, 1);
-        }
-        return current;
-      });
+  const {
+    form: {
+      data,
+      handleChange,
+      handleSubmit,
+      errors,
+      edition: { isEditable, setIsEditable },
+      foregroundHandler,
+      backgroundHandler,
+      checkBoxHandler,
+      onSelectCustomStage,
+      resetForm,
     },
-    []
-  );
-  const [searchMode, { toTrue: setSearchTrue, toFalse: setSearchFalse }] =
-    useToggle(true);
-  const [canSearch, { toTrue: canSearchTrue, toFalse: canSearchFalse }] =
-    useToggle(true);
-  const [searchIds, setSearchIds] = React.useState();
-  const [expandOpts, setExpandOpts] = React.useState(false);
-  const [fgData, setFgData] = React.useState();
-  const [bgData, setBgData] = React.useState();
-  const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
-    useToggle(true);
-  const onSubmit = React.useCallback((data) => {
-    const formattedData = data; // to format for api
-    api.topAnat.runJob(formattedData).then((res) => {
-      if (res.data.jobResponse.jobId !== 0) {
-        setSearchIds({
-          jobId: res.data.jobResponse.jobId,
-          searchId: res.data.jobResponse.data,
-        });
-      } else {
-        setSearchIds(res.data.jobResponse.data);
-      }
-    });
-  }, []);
-  const { data, handleChange, handleSubmit, errors } = useForm({
-    initialValue: {
-      genes: '',
-      genesBg: '',
-      email: '',
-      jobDescription: '',
-      stages: 'all',
-      dataQuality: 'all',
-      decorrelationType: 'classic',
-      nodeSize: '20',
-      nbNode: '20',
-      fdrThreshold: '0.2',
-      pValueThreshold: '1',
-      rnaSeq: true,
-      affymetrix: true,
-      inSitu: true,
-      est: true,
-    },
-    validations: {
-      genes: {
-        required: {
-          value: true,
-          message: 'The job needs to run with some genes.',
-        },
-      },
-      email: {
-        nodeSize: {
-          required: {
-            value: true,
-            message: 'Please choose a node size (ex: 20)',
-          },
-        },
-        nbNode: {
-          required: {
-            value: true,
-            message: 'Please choose a number of nodes (ex: 20)',
-          },
-        },
-        fdrThreshold: {
-          required: {
-            value: true,
-            message: 'Please choose a FDR threshold (ex: 0.2)',
-          },
-        },
-        pValueThreshold: {
-          required: {
-            value: true,
-            message: 'Please choose a p-value threshold (ex: 1)',
-          },
-        },
-      },
-    },
-    onSubmit,
-  });
-  const foregroundHandler = React.useCallback(
-    (e) => {
-      handleChange('genes')(e);
-      if (timeout) clearTimeout(timeout);
-      if (e.target.value !== '')
-        timeout = setTimeout(() => {
-          api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'fg')
-            .then((r) => {
-              setSpeciesBgTrue();
-              handleChange('genesBg', () => '')();
-              handleChange('rnaSeq', () => true)();
-              handleChange('affymetrix', () => true)();
-              handleChange('inSitu', () => true)();
-              handleChange('est', () => true)();
-              setFgData({ fg_list: r.data.fg_list, message: r.message });
-            });
-        }, 1000);
-      else setFgData(undefined);
-    },
-    [data]
-  );
-  const backgroundHandler = React.useCallback(
-    (e) => {
-      handleChange('genesBg')(e);
-      const bg = e.target.value.split('\n');
-      const fg = data.genes.split('\n');
-      if (timeout) clearTimeout(timeout);
+    notifications: { value: notif, setNotif, closeNotif },
+    searchInfo: { value: searchInfo, setSearchInfo },
+    expandOpts: { value: expandOpts, setExpandOpts },
+    fgData: { value: fgData },
+    bgData: { value: bgData },
+    canSearch,
+    species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
+  } = useTopAnat();
 
-      const uuid = Math.random().toString(10);
-      if (!array.equals(fg, bg)) {
-        canSearchFalse();
-        const message =
-          'Gene list contains genes not found in background genes.';
-        const status = 'danger';
-        setNotif((prev) => {
-          const curr = [...prev];
-          curr.push({
-            id: uuid,
-            children: <p>{message}</p>,
-            className: `is-${status}`,
-          });
-          return curr;
-        });
-        setTimeout(() => {
-          closeNotif(uuid)();
-        }, TIMEOUT_NOTIF);
-      } else {
-        canSearchTrue();
-      }
-
-      if (e.target.value !== '' && array.equals(fg, bg)) {
-        timeout = setTimeout(() => {
-          api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'bg')
-            .then((r) => {
-              if (
-                r.data.fg_list.selectedSpecies !==
-                fgData.fg_list.selectedSpecies
-              ) {
-                setNotif((prev) => {
-                  const curr = [...prev];
-                  curr.push({
-                    id: uuid,
-                    children: (
-                      <p>
-                        Foreground and background species differ. You can either
-                        change your background or the default one will be used.
-                      </p>
-                    ),
-                    className: `is-danger`,
-                  });
-                  return curr;
-                });
-                setTimeout(() => {
-                  closeNotif(uuid)();
-                }, TIMEOUT_NOTIF);
-              }
-              setBgData({ bg_list: r.data.fg_list, message: r.message });
-            });
-        }, 1000);
-      }
-    },
-    [data, fgData]
-  );
-  const checkBoxHandler = React.useCallback(
-    (key) => (e) => handleChange(key, (event) => event.target.checked)(e),
-    []
-  );
-  const onSelectCustomEmbryo = React.useCallback(
-    (id) => (e) => {
-      if (!fgData) {
-        const uuid = Math.random().toString(10);
-        //
-        setNotif((prev) => {
-          const curr = [...prev];
-          curr.push({
-            id: uuid,
-            children: <p>No species detected from gene list</p>,
-            className: `is-warning`,
-          });
-          return curr;
-        });
-        setTimeout(() => {
-          closeNotif(uuid)();
-        }, TIMEOUT_NOTIF);
-        return;
-      }
-      if (id) {
-        const tmp = [...data.stages];
-        if (e.target.checked) {
-          tmp.push(id);
-        } else {
-          // remove
-          tmp.splice(
-            tmp.findIndex((a) => a === id),
-            1
-          );
-        }
-        handleChange('stages', () => tmp)();
-      } else {
-        handleChange('stages', () =>
-          e === 'all' ? 'all' : fgData.fg_list.stages.map((s) => s.id)
-        )();
-      }
-    },
-    [data, fgData]
-  );
-  React.useEffect(
-    () => () => {
-      if (timeout) clearTimeout(timeout);
-    },
-    []
-  );
   React.useEffect(() => {
     let timeoutPointer;
     if (bgData) {
@@ -349,570 +140,279 @@ const TopAnat = () => {
     };
   }, [fgData, bgData]);
 
+  const { id, jobId } = useParams();
+  const history = useHistory();
+
+  const getJobStatus = React.useCallback((ID, jobID) => {
+    api.topAnat.getStatus(ID, jobID).then((r) => {
+      if (r.data.jobResponse.jobStatus === 'RUNNING') {
+        getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 2000);
+        setSearchInfo({ isRunning: true, jobId: r.data.jobResponse.jobId });
+      } else {
+        history.push(
+          PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', r.data.jobResponse.data)
+        );
+      }
+    });
+  }, []);
+  const getResults = React.useCallback((ID) => {
+    api.topAnat.getResults(ID).then((r) => {
+      setSearchInfo((prev) => ({
+        ...prev,
+        isLoading: false,
+        results: r.data.topAnatResults,
+        data: r.data.topAnatResults.reduce(
+          (acc, a) => [...acc, ...a.results],
+          []
+        ),
+      }));
+      // todo set form + fg & bg data
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (getJobStatusTimeOut) clearInterval(getJobStatusTimeOut);
+    if (id && !jobId) {
+      getResults(id);
+      setSearchInfo({ isRunning: false, isLoading: true });
+      setIsEditable(false);
+    } else if (id && jobId) {
+      getJobStatus(id, jobId);
+    } else {
+      // reset fg data, bgData, etc.
+      setIsEditable(true);
+      resetForm();
+    }
+  }, [id, jobId]);
+
+  const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
+    if (key === 0)
+      return (
+        <a
+          className="external-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
+        >
+          {cell}
+        </a>
+      );
+    return defaultRender(cell, key);
+  }, []);
+  const customHeader = React.useCallback(
+    (searchElement, pageSizeElement, showEntriesText) => (
+      <Bulma.Columns vCentered>
+        <Bulma.C size={4}>
+          <div className="is-flex is-flex-direction-column">
+            <p>{i18n.t('analysis.top-anat.view')}</p>
+            {searchInfo.results.map((r, key) => (
+              <a key={r.zipFile} href={r.zipFile} className="internal-link">
+                {`result ${key}`}
+              </a>
+            ))}
+            {/* todo */}
+            {/* <a */}
+            {/*  className="button is-small mt-2" */}
+            {/*  href={initialData.result.topAnatResults[0].zipFile} */}
+            {/* > */}
+            {/*  <span className="icon is-small"> */}
+            {/*    <ion-icon name="download-outline" /> */}
+            {/*  </span> */}
+            {/*  <span>{i18n.t('analysis.top-anat.download-job-archive')}</span> */}
+            {/* </a> */}
+          </div>
+        </Bulma.C>
+        <Bulma.C size={5}>
+          <div className="field has-addons">
+            {searchElement}
+            {/* todo dl as csv */}
+            {/* <div className="control"> */}
+            {/*  <a className="button"> */}
+            {/*    <span>{searchInfo?.data.length}</span> */}
+            {/*    <span className="icon is-small"> */}
+            {/*      <ion-icon name="download-outline" /> */}
+            {/*    </span> */}
+            {/*  </a> */}
+            {/* </div> */}
+          </div>
+        </Bulma.C>
+        <Bulma.C size={3}>
+          <div>
+            {pageSizeElement}
+            <div>{showEntriesText}</div>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+    ),
+    [searchInfo]
+  );
+
+  const isLoading =
+    searchInfo && !searchInfo?.isRunning && searchInfo?.isLoading;
   return (
     <div>
       <Bulma.Section className="py-0">
         {staticBuilder(staticContent)}
-        <div className="my-4 is-flex">
-          <div>
-            <div className="buttons has-addons">
-              <button className="button is-bgee-link is-outlined" type="button">
-                <Bulma.IonIcon name="list-outline" />
-                <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
-              </button>
-              <Link
-                to={PATHS.SUPPORT.TOP_ANAT}
-                className="button is-bgee-link is-outlined"
-              >
-                <Bulma.IonIcon name="newspaper-outline" />
-                <span>{i18n.t('analysis.top-anat.documentation')}</span>
-              </Link>
-            </div>
-          </div>
-          <div className="is-align-items-center is-flex">
-            <span className="icon-text">
-              <Bulma.IonIcon name="bookmarks-sharp" />
-              <span>{i18n.t('analysis.top-anat.examples')}</span>
-            </span>
-            <div className="ml-1 buttons has-addons">
-              {EXAMPLES.map((ex, key) => (
-                <Tooltip
-                  key={ex.id}
-                  title={`Example ${key + 1}`}
-                  content={ex.description}
-                >
+        {!isLoading && (
+          <>
+            <div className="my-4 is-flex">
+              <div>
+                <div className="buttons has-addons">
+                  <button
+                    className="button is-bgee-link is-outlined"
+                    type="button"
+                  >
+                    <Bulma.IonIcon name="list-outline" />
+                    <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
+                  </button>
                   <Link
-                    to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
+                    to={PATHS.SUPPORT.TOP_ANAT}
                     className="button is-bgee-link is-outlined"
                   >
-                    <span>{key + 1}</span>
+                    <Bulma.IonIcon name="newspaper-outline" />
+                    <span>{i18n.t('analysis.top-anat.documentation')}</span>
                   </Link>
-                </Tooltip>
-              ))}
-            </div>
-          </div>
-        </div>
-        <Bulma.Columns>
-          <Bulma.C size={4}>
-            <article className="message is-small">
-              <div className="message-header">
-                <p className="is-size-6">
-                  {i18n.t('analysis.top-anat.gene-list')}
-                </p>
+                </div>
               </div>
-              {fgData && (
-                <div className="message-body">
-                  <div className="is-flex is-align-items-center">
-                    <p className="mr-1">{fgData.message}</p>
-                    <InfoIcon
-                      title="Gene detection details"
-                      content={<ForegroundModal data={fgData.fg_list} />}
-                    />
-                  </div>
+              <div className="is-align-items-center is-flex">
+                <span className="icon-text">
+                  <Bulma.IonIcon name="bookmarks-sharp" />
+                  <span>{i18n.t('analysis.top-anat.examples')}</span>
+                </span>
+                <div className="ml-1 buttons has-addons">
+                  {EXAMPLES.map((ex, key) => (
+                    <Tooltip
+                      key={ex.id}
+                      title={`Example ${key + 1}`}
+                      content={ex.description}
+                    >
+                      <Link
+                        to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+                          ':id',
+                          ex.id
+                        )}
+                        className="button is-bgee-link is-outlined"
+                      >
+                        <span>{key + 1}</span>
+                      </Link>
+                    </Tooltip>
+                  ))}
                 </div>
-              )}
-            </article>
+              </div>
+            </div>
+            <TopAnatForm
+              form={{ handleChange, data, errors, isEditable }}
+              fgData={fgData}
+              bgData={bgData}
+              handlers={{
+                foregroundHandler,
+                backgroundHandler,
+                setSpeciesBgTrue,
+                setSpeciesBgFalse,
+                onSelectCustomStage,
+                checkBoxHandler,
+                setExpandOpts,
+              }}
+              expandOpts={expandOpts}
+              speciesBg={speciesBg}
+            />
             <div className="field">
-              <TextArea
-                rows={10}
-                placeholder={i18n.t(
-                  'analysis.top-anat.textarea-placeholder-gene-list'
-                )}
-                onChange={foregroundHandler}
-                error={errors.genes}
-                value={data.genes}
-              />
-            </div>
-          </Bulma.C>
-          {fgData && (
-            <>
-              <Bulma.C size={4}>
-                <article className="message is-small">
-                  <div className="message-header">
-                    <p className="is-size-6">
-                      {i18n.t('analysis.top-anat.background')}
-                    </p>
-                    <HelpIcon
-                      title="Custom background"
-                      style={{
-                        position: 'absolute',
-                        right: '12px',
-                        top: '7px',
-                      }}
-                      content={
-                        <p>
-                          By default, the gene universe considered for the
-                          enrichment analysis is all genes with data in Bgee for
-                          the selected species. It is possible to provide a
-                          custom gene universe, as a list of Ensembl gene IDs.
-                          All gene IDs present in the foreground must be present
-                          in the background.
-                        </p>
-                      }
-                    />
-                  </div>
-                  <div
-                    className="message-body is-flex is-align-items-end is-justify-content-end"
-                    style={{ height: 70 }}
+              <p className="control">
+                <button
+                  type="button"
+                  className="button is-success"
+                  onClick={handleSubmit}
+                  disabled={!canSearch}
+                >
+                  {i18n.t('analysis.top-anat.submit-job')}
+                </button>
+                {searchInfo && searchInfo.isRunning && (
+                  <button
+                    type="button"
+                    className="button is-primary"
+                    onClick={handleSubmit}
+                    disabled={!canSearch}
                   >
-                    <div className="field has-addons">
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={speciesBg && 'danger'}
-                          onClick={setSpeciesBgTrue}
-                          disabled={speciesBg}
-                        >{`Bgee data for ${
-                          fgData.fg_list.detectedSpecies[
-                            fgData.fg_list.selectedSpecies
-                          ].name
-                        }`}</Bulma.Button>
-                      </p>
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={!speciesBg && 'danger'}
-                          onClick={setSpeciesBgFalse}
-                          disabled={!speciesBg}
-                        >
-                          Custom data
-                        </Bulma.Button>
-                      </p>
-                    </div>
-                  </div>
-                </article>
-                {!speciesBg && (
-                  <div className="field">
-                    <TextArea
-                      rows={10}
-                      placeholder={`Ensembl identifiers from ${
-                        fgData.fg_list.detectedSpecies[
-                          fgData.fg_list.selectedSpecies
-                        ].name
-                      } genome, one ID per line (no quotes, no comma).`}
-                      onChange={backgroundHandler}
-                      error={errors.genes}
-                      value={data.genesBg}
-                    />
-                  </div>
+                    {i18n.t('analysis.top-anat.cancel-job')}
+                  </button>
                 )}
-              </Bulma.C>
-              <Bulma.C size={4}>
-                <article className="message is-small">
-                  <div className="message-header">
-                    <p className="is-size-6">
-                      {i18n.t('analysis.top-anat.analysis-opts')}
-                    </p>
-                  </div>
-                </article>
-                <div>
-                  <p className="has-text-weight-semibold mb-2">
-                    {i18n.t('analysis.top-anat.expr-types')}
-                  </p>
-                  <p>Present</p>
-                  <p className="has-text-weight-semibold my-2">
-                    {i18n.t('analysis.top-anat.data-types')}
-                  </p>
-                  <div className="control">
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        disabled={!searchMode}
-                        onChange={checkBoxHandler('rnaSeq')}
-                        checked={data.rnaSeq}
-                      />
-                      RNA-Seq
-                    </label>
-                  </div>
-                  <div className="control">
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        disabled={!searchMode}
-                        onChange={checkBoxHandler('affymetrix')}
-                        checked={data.affymetrix}
-                      />
-                      Affymetrix data
-                    </label>
-                  </div>
-                  <div className="control">
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        disabled={!searchMode}
-                        onChange={checkBoxHandler('inSitu')}
-                        checked={data.inSitu}
-                      />
-                      In situ hybridization
-                    </label>
-                  </div>
-                  <div className="control">
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        disabled={!searchMode}
-                        onChange={checkBoxHandler('est')}
-                        checked={data.est}
-                      />
-                      EST
-                    </label>
-                  </div>
-                </div>
-              </Bulma.C>
-            </>
-          )}
-        </Bulma.Columns>
-        <Bulma.Columns>
-          <Bulma.C size={12}>
-            <a onClick={() => setExpandOpts(!expandOpts)}>
-              <article className="message  is-small">
-                <div className="message-header">
-                  <p className="is-size-5">Advanced Options</p>
-                  <span
-                    className={`icon is-medium ${expandOpts ? 'open' : ''}`}
-                  >
-                    <ion-icon name="chevron-up-outline" size="large" />
-                  </span>
-                </div>
-              </article>
-            </a>
-            <div
-              className="mt-5"
-              style={{ display: expandOpts ? 'block' : 'none' }}
-            >
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames('stages', data.stages)}
-                      htmlFor="stages"
-                    >
-                      {i18n.t('analysis.top-anat.stages')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Toggle
-                            elements={[
-                              { value: 'all', text: 'All stages' },
-                              { value: 'custom', text: 'Custom stages' },
-                            ]}
-                            value={data.stages === 'all' ? 'all' : 'custom'}
-                            onChange={onSelectCustomEmbryo()}
-                            error={errors.stages}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {Array.isArray(data.stages) && (
-                    <div className="field">
-                      <div className="control">
-                        {fgData.fg_list.stages.map((s) => (
-                          <div className="control" key={s.id}>
-                            <label className="checkbox">
-                              <input
-                                type="checkbox"
-                                className="mr-2"
-                                disabled={!searchMode}
-                                onChange={onSelectCustomEmbryo(s.id)}
-                                checked={
-                                  data.stages.findIndex((a) => a === s.id) >= 0
-                                }
-                              />
-                              {s.name}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames(
-                        'dataQuality',
-                        data.dataQuality
-                      )}
-                      htmlFor="dataQuality"
-                    >
-                      {i18n.t('analysis.top-anat.data-quality')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Toggle
-                            elements={[
-                              { value: 'all', text: 'All' },
-                              { value: 'gold', text: 'Gold confidence' },
-                            ]}
-                            value={data.dataQuality}
-                            onChange={handleChange('dataQuality', (v) => v)}
-                            error={errors.dataQuality}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={12}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames(
-                        'decorrelationType',
-                        data.decorrelationType
-                      )}
-                      htmlFor="decorrelationType"
-                    >
-                      {i18n.t('analysis.top-anat.decorrelation-type')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Toggle
-                          elements={[
-                            { value: 'no', text: 'No decorrelation' },
-                            { value: 'elim', text: 'Elim' },
-                            { value: 'weight', text: 'Weight' },
-                            { value: 'parent-child', text: 'Parent-child' },
-                          ]}
-                          value={data.decorrelationType}
-                          onChange={handleChange('decorrelationType', (v) => v)}
-                          error={errors.decorrelationType}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames('nodeSize', data.nodeSize)}
-                      htmlFor="nodeSize"
-                    >
-                      {i18n.t('analysis.top-anat.node-size')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Input
-                            value={data.nodeSize}
-                            onChange={handleChange('nodeSize')}
-                            error={errors.nodeSize}
-                            type="number"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames('nbNode', data.nbNode)}
-                      htmlFor="nbNode"
-                    >
-                      {i18n.t('analysis.top-anat.nb-node')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.nbNode}
-                          onChange={handleChange('nbNode')}
-                          error={errors.nbNode}
-                          type="number"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames(
-                        'fdrThreshold',
-                        data.fdrThreshold
-                      )}
-                      htmlFor="fdrThreshold"
-                    >
-                      {i18n.t('analysis.top-anat.fdr-threshold')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.fdrThreshold}
-                          onChange={handleChange('fdrThreshold')}
-                          error={errors.fdrThreshold}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label
-                      className={labelClassNames(
-                        'pValueThreshold',
-                        data.pValueThreshold
-                      )}
-                      htmlFor="pValueThreshold"
-                    >
-                      {i18n.t('analysis.top-anat.p-value-threshold')}
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.pValueThreshold}
-                          onChange={handleChange('pValueThreshold')}
-                          error={errors.pValueThreshold}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
+              </p>
             </div>
-          </Bulma.C>
-        </Bulma.Columns>
-
-        <div className="field is-grouped">
-          <Input
-            controlClassName="has-icons-left"
-            type="email"
-            value={data.email}
-            onChange={handleChange('email')}
-            placeholder={i18n.t('analysis.top-anat.email')}
-            error={errors.email}
-            icons={
-              <span className="icon is-left">
-                <ion-icon name="mail-outline" />
-              </span>
-            }
-          />
-          <Input
-            controlClassName="has-icons-left"
-            value={data.jobDescription}
-            onChange={handleChange('jobDescription')}
-            placeholder={i18n.t('analysis.top-anat.job-description')}
-            error={errors.jobDescription}
-            icons={
-              <span className="icon is-left">
-                <ion-icon name="document-outline" />
-              </span>
-            }
-          />
-        </div>
-        <div className="field">
-          <p className="control">
-            <button
-              type="button"
-              className="button is-primary"
-              onClick={handleSubmit}
-              disabled={!canSearch}
-            >
-              {i18n.t('analysis.top-anat.submit-job')}
-            </button>
-          </p>
-        </div>
-        {searchIds && typeof searchIds === 'object' && (
-          <Bulma.Notification color="warning" className="mt-5">
-            <progress
-              className="progress is-small"
-              max="100"
-              style={{ animationDuration: '3s', marginBottom: 12 }}
-            >
-              80%
-            </progress>
-
-            <p>
-              After bookmarking this page, it is safe to close this window. Your
-              analysis is being run on our server, and the results will appear
-              as soon as available. Please note that the results can be slow to
-              compute, typically from 5 to 30 minutes, depending on the amount
-              of data to process. It is not necessary to refresh this page, it
-              will be automatically updated.
-            </p>
-            <p className="mt-2">Job is running - Job ID: {searchIds.jobId}</p>
-          </Bulma.Notification>
+          </>
         )}
-      </Bulma.Section>{' '}
+        <TopAnatBanner searchInfo={searchInfo} />
+      </Bulma.Section>
       <Notifications content={notif} closeElement={closeNotif} />
+      {searchInfo && Array.isArray(searchInfo.data) && (
+        <ComplexTable
+          columns={[
+            {
+              key: 'anatEntityId',
+              text: 'Anat Entity ID',
+            },
+            {
+              key: 'anatEntityName',
+              text: 'Anat Entity Name',
+            },
+            {
+              key: 'annotated',
+              text: 'Annotated',
+            },
+            {
+              key: 'significant',
+              text: 'Significant',
+            },
+            {
+              key: 'expected',
+              text: 'Expected',
+            },
+            {
+              key: 'foldEnrichment',
+              text: 'Fold Enrichment',
+            },
+            {
+              key: 'pValue',
+              text: 'P value',
+            },
+            {
+              key: 'FDR',
+              text: 'Fdr',
+            },
+          ]}
+          key={id}
+          data={searchInfo.data}
+          onRenderCell={onRenderCell}
+          sortable
+          pagination
+          onFilter={(search) => (element) =>
+            Boolean(new RegExp(search).test(element.anatEntityId)) ||
+            Boolean(new RegExp(search).test(element.anatEntityName))}
+          onSort={onSort}
+          classNamesTable="is-striped"
+          customHeader={customHeader}
+          mappingObj={({
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          }) => [
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          ]}
+        />
+      )}
     </div>
   );
 };
 
-const ForegroundModal = ({ data }) => {
-  const { selectedSpecies } = data;
-
-  if (!data) return null;
-  return (
-    <div className="content">
-      <p>
-        {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
-        {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
-      </p>
-      {Object.keys(data.detectedSpecies).length > 1 && (
-        <>
-          <p>Other species detected in ID list: </p>
-          <ul className="unordered">
-            {Object.entries(data.detectedSpecies).map(([key, value]) =>
-              key === selectedSpecies.toString() ? null : (
-                <li key={key}>
-                  <p>
-                    <i>{`${value.genus} ${value.speciesName}`}</i>
-                    {`: ${data.geneCount[key]} gene${
-                      data.geneCount[key] > 1 ? 's' : ''
-                    } identified`}
-                  </p>
-                </li>
-              )
-            )}
-          </ul>
-        </>
-      )}
-      {data.undeterminedGeneIds.length > 0 && (
-        <p>IDs not identified: {data.undeterminedGeneIds.length}</p>
-      )}
-      {data.notInSelectedSpeciesGeneIds.length > 0 && (
-        <>
-          <p>ID in other species: </p>
-
-          <ul className="unordered">
-            {data.notInSelectedSpeciesGeneIds.map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {data.undeterminedGeneIds.length > 0 && (
-        <>
-          <p>IDs not identified:</p>
-          <ul className="unordered">
-            {data.undeterminedGeneIds.map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  );
-};
 export default TopAnat;
