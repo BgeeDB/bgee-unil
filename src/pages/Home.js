@@ -142,23 +142,25 @@ const Home = () => (
           </Bulma.Card.Body>
         </Bulma.Card>
         <Bulma.Columns className="mt-4">
-          <Bulma.C csize={9}>
+          <Bulma.C csize={config.archive ? 12 : 9}>
             <CreativeCommons />
           </Bulma.C>
-          <Bulma.C size={3}>
-            <p className="is-size-7 archived-link">
-              View archive sites:
-              {config.archivedVersion.map((archived) => (
-                <a
-                  key={archived.version}
-                  className="external-link"
-                  href={archived.url}
-                >
-                  {`version ${archived.version}`}
-                </a>
-              ))}
-            </p>
-          </Bulma.C>
+          {!config.archive && (
+            <Bulma.C size={3}>
+              <p className="is-size-7 archived-link">
+                View archive sites:
+                {config.archivedVersion.map((archived) => (
+                  <a
+                    key={archived.version}
+                    className="external-link"
+                    href={archived.url}
+                  >
+                    {`version ${archived.version}`}
+                  </a>
+                ))}
+              </p>
+            </Bulma.C>
+          )}
         </Bulma.Columns>
       </Bulma.Container>
     </Bulma.Section>

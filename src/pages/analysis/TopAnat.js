@@ -10,7 +10,6 @@ import api from '../../api';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat from '../../hooks/useTopAnat';
 import TopAnatForm from '../../components/TopAnat/TopAnatForm';
-import ComplexTable from '../../components/ComplexTable';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import TopAnatHistoryModal, {
   addTopAnatHistory,

@@ -5,6 +5,7 @@ import Footer from './Footer/Footer';
 import Alert from '../Alert';
 import Bulma from '../Bulma';
 import CookieMessage from '../CookieMessage';
+import config from '../../config.json';
 
 const Layout = ({ children }) => {
   const [betaNotif, setBetaNotif] = React.useState(true);
@@ -24,7 +25,7 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Header />
-      {betaNotif && (
+      {!config.archive && betaNotif && (
         <Alert type="warning" light>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button
@@ -39,6 +40,18 @@ const Layout = ({ children }) => {
               publications, expecting long-term retrieval. The SPARQL endpoint
               was not updated.
             </p>
+          </div>
+        </Alert>
+      )}
+      {config.archive && (
+        <Alert type="danger" light>
+          <div>
+            <span className="is-size-67">
+              {`This is an archived version of Bgee (version ${config.version})`}
+              <a className="internal-link ml-2" href={config.genericDomain}>
+                <b>Access latest version of Bgee</b>
+              </a>
+            </span>
           </div>
         </Alert>
       )}
