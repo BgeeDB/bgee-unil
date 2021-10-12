@@ -8,9 +8,11 @@ import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpressionCallsSpeciesModal';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
+  const { showModal } = React.useContext(ModalContext);
   const [selectedSpecies, setSelectedSpecies] = React.useState(null);
   const [search, setSearch] = React.useState('');
   const filteredSpecies = React.useMemo(() => {
@@ -28,7 +30,15 @@ const GeneExpressionCalls = () => {
       const species = filteredSpecies.find(
         (s) => s.scientificName === speciesID
       );
-      if (species) setSelectedSpecies(species);
+      if (species) {
+        setSelectedSpecies(species);
+        showModal(
+          <DlGeneExpressionCallsSpeciesModal
+            selectedSpecies={selectedSpecies}
+          />,
+          { onClose: () => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS) }
+        );
+      }
     } else if (selectedSpecies && !speciesID) {
       setSelectedSpecies(null);
     }
@@ -125,12 +135,6 @@ const GeneExpressionCalls = () => {
           </div>
         </Bulma.Card.Body>
       </Bulma.Card>
-      <Bulma.Modal
-        show={Boolean(selectedSpecies)}
-        onClose={() => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS)}
-      >
-        <DlGeneExpressionCallsSpeciesModal selectedSpecies={selectedSpecies} />
-      </Bulma.Modal>
     </div>
   );
 };
