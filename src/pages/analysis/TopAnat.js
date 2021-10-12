@@ -12,6 +12,7 @@ import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat from '../../hooks/useTopAnat';
 import TopAnatForm from '../../components/TopAnat/TopAnatForm';
 import ComplexTable from '../../components/ComplexTable';
+import { NotificationContext } from '../../contexts/NotificationsContext';
 
 const staticContent = [
   {
@@ -74,7 +75,6 @@ const EXAMPLES = [
 ];
 
 let getJobStatusTimeOut;
-const TIMEOUT_NOTIF = 3000;
 
 const onSort =
   (sortKey, sortDirection) =>
@@ -88,6 +88,8 @@ const onSort =
   };
 
 const TopAnat = () => {
+  const { addNotification, cleanNotifications } =
+    React.useContext(NotificationContext);
   const {
     form: {
       data,
@@ -102,7 +104,6 @@ const TopAnat = () => {
       onSelectCustomStage,
       resetForm,
     },
-    notifications: { value: notif, setNotif, closeNotif },
     searchInfo: { value: searchInfo, setSearchInfo },
     expandOpts: { value: expandOpts, setExpandOpts },
     fgData: { value: fgData, setFgData },
@@ -113,27 +114,21 @@ const TopAnat = () => {
   React.useEffect(() => {
     let timeoutPointer;
     if (bgData) {
-      const uuid = Math.random().toString(10);
-      const message =
-        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
-          ? 'Foreground/background species are identical.'
-          : 'Foreground and background species differ. You can either change your background or the default one will be used.';
-      const status =
-        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
-          ? 'success'
-          : 'danger';
-      setNotif((prev) => {
-        const curr = [...prev];
-        curr.push({
-          id: uuid,
-          children: <p>{message}</p>,
-          className: `is-${status}`,
-        });
-        return curr;
+      addNotification({
+        id: Math.random().toString(10),
+        children: (
+          <p>
+            {fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+              ? 'Foreground/background species are identical.'
+              : 'Foreground and background species differ. You can either change your background or the default one will be used.'}
+          </p>
+        ),
+        className: `is-${
+          fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+            ? 'success'
+            : 'danger'
+        }`,
       });
-      timeoutPointer = setTimeout(() => {
-        closeNotif(uuid)();
-      }, TIMEOUT_NOTIF);
     }
     return () => {
       if (timeoutPointer) clearTimeout(timeoutPointer);
@@ -239,7 +234,7 @@ const TopAnat = () => {
       setLoading(false);
       setSearchInfo();
     }
-    setNotif([]);
+    cleanNotifications();
   }, [id, jobId]);
 
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
@@ -344,24 +339,19 @@ const TopAnat = () => {
         {!isLoading && (
           <>
             <div className="my-4 is-flex">
-              <div>
-                <div className="buttons has-addons">
-                  <button
-                    className="button is-bgee-link is-outlined"
-                    type="button"
-                  >
-                    <Bulma.IonIcon name="list-outline" />
-                    <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
-                  </button>
-                  <Link
-                    to={PATHS.SUPPORT.TOP_ANAT}
-                    className="button is-bgee-link is-outlined"
-                  >
-                    <Bulma.IonIcon name="newspaper-outline" />
-                    <span>{i18n.t('analysis.top-anat.documentation')}</span>
-                  </Link>
-                </div>
-              </div>
+              <button
+                className="button is-bgee-link is-outlined mr-2"
+                type="button"
+              >
+                <Bulma.IonIcon name="list-outline" />
+              </button>
+              <Link
+                to={PATHS.SUPPORT.TOP_ANAT}
+                className="button is-bgee-link is-outlined mr-2"
+              >
+                <Bulma.IonIcon name="newspaper-outline" />
+                <span>{i18n.t('analysis.top-anat.documentation')}</span>
+              </Link>
               <div className="is-align-items-center is-flex">
                 <span className="icon-text">
                   <Bulma.IonIcon name="bookmarks-sharp" />
@@ -432,7 +422,6 @@ const TopAnat = () => {
         </div>
         <TopAnatBanner searchInfo={searchInfo} />
       </Bulma.Section>
-      <Notifications content={notif} closeElement={closeNotif} />
       {searchInfo && Array.isArray(searchInfo.data) && (
         <ComplexTable
           columns={[

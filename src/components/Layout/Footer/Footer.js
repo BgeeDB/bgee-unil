@@ -4,30 +4,17 @@ import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
 import config from '../../../config.json';
 import copyToClipboard from '../../../helpers/copyToClipboard';
-import Notifications from '../../Notifications';
 import PATHS from '../../../routes/paths';
+import { NotificationContext } from '../../../contexts/NotificationsContext';
 
 // todo handle set timeout
 
 const Footer = () => {
+  const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();
   const permanentLink = React.useMemo(
     () => config.permanentVersionedDomain + loc.pathname,
     [loc]
-  );
-  const [notif, setNotif] = React.useState([]);
-  const closeElement = React.useCallback(
-    (id) => () => {
-      setNotif((prev) => {
-        const current = [...prev];
-        if (Array.isArray(current)) {
-          const pos = current.findIndex((o) => o.id === id);
-          if (pos > -1) current.splice(pos, 1);
-        }
-        return current;
-      });
-    },
-    []
   );
 
   return (
@@ -61,10 +48,8 @@ const Footer = () => {
           <a
             onClick={() => {
               copyToClipboard(permanentLink);
-              const tmp = [...notif];
-              const uuid = Math.random().toString(10);
-              tmp.push({
-                id: uuid,
+              addNotification({
+                id: Math.random().toString(10),
                 children: (
                   <>
                     Copied link <u>{permanentLink}</u>
@@ -72,10 +57,6 @@ const Footer = () => {
                 ),
                 className: 'is-success',
               });
-              setNotif(tmp);
-              setTimeout(() => {
-                closeElement(uuid)();
-              }, 1000);
             }}
           >
             {i18n.t('global.footer.copy-link')}
@@ -83,7 +64,6 @@ const Footer = () => {
           <Link to={PATHS.ABOUT.PUBLICATION}>
             {i18n.t('global.footer.cite-us')}
           </Link>
-          <Notifications content={notif} closeElement={closeElement} />
           <a href={`mailto:${config.contactEmail}`}>
             {i18n.t('global.footer.contact-us')}
           </a>
