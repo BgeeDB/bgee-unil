@@ -7,13 +7,19 @@ const Notifications = ({ content, closeElement }) => {
 
   React.useEffect(() => {
     const doc = document;
-    const container = doc.createElement('div');
-    container.setAttribute('class', 'notifications');
-    doc.body.appendChild(container);
+    let container = doc.getElementById('notifications-wrapper');
+    let alreadyCreated = true;
+    if (!container) {
+      alreadyCreated = false;
+      container = doc.createElement('div');
+      container.setAttribute('class', 'notifications');
+      container.setAttribute('id', 'notifications-wrapper');
+      doc.body.appendChild(container);
+    }
     setPortalContainer(container);
 
     return () => {
-      container.parentNode.removeChild(container);
+      if (!alreadyCreated) container.parentNode.removeChild(container);
     };
   }, []);
 

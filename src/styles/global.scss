@@ -500,3 +500,16 @@ a.image.cc {
 .archived-link > a.external-link {
   margin-left: 0.5rem;
 }
+
+.toggle-button {
+  padding: 5px !important;
+  font-size: 0.6rem !important;
+}
+label.label.not-default {
+  width: fit-content;
+  background-color: #f0eab9;
+}
+
+.is-relative {
+  position: relative;
+}

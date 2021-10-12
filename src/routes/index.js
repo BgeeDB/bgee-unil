@@ -15,7 +15,11 @@ const Router = () => (
 
         <Route
           exact
-          path={PATHS.ANALYSIS.TOP_ANAT}
+          path={[
+            PATHS.ANALYSIS.TOP_ANAT,
+            PATHS.ANALYSIS.TOP_ANAT_RESULT,
+            PATHS.ANALYSIS.TOP_ANAT_RESULT_JOB_ID,
+          ]}
           render={(props) => (
             <Page
               {...props}

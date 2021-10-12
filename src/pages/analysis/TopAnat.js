@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import staticBuilder from '../../helpers/staticBuilder';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import useForm from '../../hooks/useForm';
-import TextArea from '../../components/Form/TextArea';
-import Input from '../../components/Form/Input';
-import Toggle from '../../components/Form/Toggle';
 import Bulma from '../../components/Bulma';
 import Tooltip from '../../components/Tooltip';
+import api from '../../api';
+import Notifications from '../../components/Notifications';
+import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
+import useTopAnat from '../../hooks/useTopAnat';
+import TopAnatForm from '../../components/TopAnat/TopAnatForm';
+import ComplexTable from '../../components/ComplexTable';
 
 const staticContent = [
   {
@@ -71,329 +73,434 @@ const EXAMPLES = [
   },
 ];
 
+let getJobStatusTimeOut;
+const TIMEOUT_NOTIF = 3000;
+
+const onSort =
+  (sortKey, sortDirection) =>
+  ({ [sortKey]: a }, { [sortKey]: b }) => {
+    const AFormatted = typeof a === 'string' ? a.toLowerCase() : a;
+    const bFormatted = typeof b === 'string' ? b.toLowerCase() : b;
+    if (AFormatted === bFormatted) return 0;
+    if (sortDirection === 'ascending') return AFormatted > bFormatted ? 1 : -1;
+    if (sortDirection === 'descending') return AFormatted < bFormatted ? 1 : -1;
+    return 0;
+  };
+
 const TopAnat = () => {
-  const [expandOpts, setExpandOpts] = React.useState(false);
-  const { data, handleChange, handleSubmit, errors } = useForm({
-    initialValue: {
-      genes: '',
-      email: '',
-      jobDescription: '',
-      stages: 'all',
-      dataQuality: 'all',
-      decorrelationType: 'no',
-      nodeSize: '20',
-      nbNode: '20',
-      fdrThreshold: '0.2',
-      pValueThreshold: '1',
+  const {
+    form: {
+      data,
+      setData,
+      handleChange,
+      handleSubmit,
+      errors,
+      edition: { isEditable, setIsEditable },
+      foregroundHandler,
+      backgroundHandler,
+      checkBoxHandler,
+      onSelectCustomStage,
+      resetForm,
     },
-    validations: {
-      genes: {
-        required: {
-          value: true,
-          message: 'The job needs to run with some genes.',
-        },
-      },
-      email: {
-        required: { value: true, message: 'Please enter your email' },
-      },
-      jobDescription: {
-        required: { value: true, message: 'Enter a job description' },
-      },
-      stages: { required: { value: true, message: 'xxxxxxxxxxx' } },
-      dataQuality: { required: { value: true, message: 'xxxxxxxxxxx' } },
-      decorrelationType: {
-        required: { value: true, message: 'xxxxxxxxxxx' },
-      },
-      nodeSize: {
-        required: {
-          value: true,
-          message: 'Please choose a node size (ex: 20)',
-        },
-      },
-      nbNode: {
-        required: {
-          value: true,
-          message: 'Please choose a number of nodes (ex: 20)',
-        },
-      },
-      fdrThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a FDR threshold (ex: 0.2)',
-        },
-      },
-      pValueThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a p-value threshold (ex: 1)',
-        },
-      },
+    notifications: { value: notif, setNotif, closeNotif },
+    searchInfo: { value: searchInfo, setSearchInfo },
+    expandOpts: { value: expandOpts, setExpandOpts },
+    fgData: { value: fgData, setFgData },
+    bgData: { value: bgData, setBgData },
+    species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
+  } = useTopAnat();
+
+  React.useEffect(() => {
+    let timeoutPointer;
+    if (bgData) {
+      const uuid = Math.random().toString(10);
+      const message =
+        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+          ? 'Foreground/background species are identical.'
+          : 'Foreground and background species differ. You can either change your background or the default one will be used.';
+      const status =
+        fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+          ? 'success'
+          : 'danger';
+      setNotif((prev) => {
+        const curr = [...prev];
+        curr.push({
+          id: uuid,
+          children: <p>{message}</p>,
+          className: `is-${status}`,
+        });
+        return curr;
+      });
+      timeoutPointer = setTimeout(() => {
+        closeNotif(uuid)();
+      }, TIMEOUT_NOTIF);
+    }
+    return () => {
+      if (timeoutPointer) clearTimeout(timeoutPointer);
+    };
+  }, [fgData, bgData]);
+
+  const [isLoading, setLoading] = React.useState(false);
+  const { id, jobId } = useParams();
+  const history = useHistory();
+
+  const getJobStatus = React.useCallback(
+    (ID, jobID) => {
+      if (!(fgData && bgData)) setLoading(true);
+      api.topAnat.getStatus(ID, jobID).then((r) => {
+        if (r.data.jobResponse.jobStatus === 'RUNNING') {
+          getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 2000);
+          setSearchInfo({ isRunning: true, jobId: r.data.jobResponse.jobId });
+        } else {
+          history.push(
+            PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              r.data.jobResponse.data
+            )
+          );
+        }
+      });
     },
-  });
+    [fgData, bgData]
+  );
+  const getResults = React.useCallback((ID) => {
+    api.topAnat.getResults(ID).then((r) => {
+      const formData = r.requestParameters;
+      setData((prev) => ({
+        ...prev,
+        genes: formData.fg_list.join('\n'),
+        genesBg: formData.bg_list.join('\n'),
+        email: '',
+        jobDescription: formData.job_title || '',
+        stages: 'all',
+        dataQuality: formData.data_qual,
+        decorrelationType: formData.decorr_type,
+        nodeSize: formData.node_size || '',
+        nbNode: formData.nb_node || '',
+        fdrThreshold: formData.fdr_thr || '',
+        pValueThreshold: formData.p_value_thr || '',
+        rnaSeq: formData.data_type.find((f) => f === 'RNA_SEQ'),
+        affymetrix: formData.data_type.find((f) => f === 'AFFYMETRIX'),
+        inSitu: formData.data_type.find((f) => f === 'IN_SITU'),
+        est: formData.data_type.find((f) => f === 'EST'),
+      }));
+      setFgData({
+        fg_list: r.data.fg_list,
+        message: `${formData.fg_list.length} IDs provided, ${
+          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies]
+        } unique gene${
+          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies] > 0
+            ? 's'
+            : ''
+        } found in ${
+          r.data.fg_list.detectedSpecies[r.data.fg_list.selectedSpecies].name
+        }`,
+      });
+      setBgData({
+        bg_list: r.data.bg_list,
+        message: `${formData.bg_list.length} IDs provided, ${
+          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies]
+        } unique gene${
+          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies] > 0
+            ? 's'
+            : ''
+        } found in ${
+          r.data.bg_list.detectedSpecies[r.data.bg_list.selectedSpecies].name
+        }`,
+      });
+      if (r.data.bg_list) setSpeciesBgTrue();
+      setSearchInfo((prev) => ({
+        ...prev,
+        isLoading: false,
+        results: r.data.topAnatResults,
+        data: r.data.topAnatResults.reduce(
+          (acc, a) => [...acc, ...a.results],
+          []
+        ),
+      }));
+      // todo set form + fg & bg data
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (getJobStatusTimeOut) clearInterval(getJobStatusTimeOut);
+
+    if (id && !jobId) {
+      getResults(id);
+      setSearchInfo({ isRunning: false, isLoading: true });
+      setIsEditable(false);
+      setLoading(false);
+    } else if (id && jobId) {
+      getJobStatus(id, jobId);
+    } else {
+      // reset fg data, bgData, etc.
+      setIsEditable(true);
+      resetForm();
+      setLoading(false);
+      setSearchInfo();
+    }
+    setNotif([]);
+  }, [id, jobId]);
+
+  const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
+    if (key === 0)
+      return (
+        <a
+          className="external-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
+        >
+          {cell}
+        </a>
+      );
+    return defaultRender(cell, key);
+  }, []);
+  const dataCsvHref = React.useMemo(() => {
+    let csvContent =
+      'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
+    if (searchInfo?.data)
+      searchInfo?.data.forEach((row) => {
+        csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
+      });
+
+    return csvContent;
+  }, [searchInfo]);
+  const customHeader = React.useCallback(
+    (searchElement, pageSizeElement, showEntriesText) => (
+      <Bulma.Columns vCentered>
+        <Bulma.C size={4}>
+          <div className="is-flex is-flex-direction-column">
+            <p>Archive(s)</p>
+            <a
+              href={`https://bgee.org/?page=top_anat&action=download&data=${id}`}
+              className="external-link"
+              style={{ width: 'fit-content' }}
+              rel="noreferrer"
+            >
+              All stages, expression type &quot;Present&quot;
+            </a>
+            {searchInfo.results.length > 1 &&
+              searchInfo.results.map((r, key) => (
+                <a
+                  key={r.zipFile}
+                  href={r.zipFile}
+                  className="external-link"
+                  style={{ width: 'fit-content' }}
+                >
+                  {`${
+                    fgData.fg_list.stages.find((s) => s.id === r.devStageId)
+                      ?.name
+                  }, expression type "Present" (${r.results.length})`}
+                </a>
+              ))}
+            {/* todo */}
+            {/* <a */}
+            {/*  className="button is-small mt-2" */}
+            {/*  href={initialData.result.topAnatResults[0].zipFile} */}
+            {/* > */}
+            {/*  <span className="icon is-small"> */}
+            {/*    <ion-icon name="download-outline" /> */}
+            {/*  </span> */}
+            {/*  <span>{i18n.t('analysis.top-anat.download-job-archive')}</span> */}
+            {/* </a> */}
+          </div>
+        </Bulma.C>
+        <Bulma.C size={5}>
+          <div className="field has-addons">
+            {searchElement}
+            {/* todo dl as csv */}
+            <div className="control">
+              <a
+                className="button"
+                href={dataCsvHref}
+                download="data.csv"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>CSV</span>
+                <span className="icon is-small">
+                  <ion-icon name="download-outline" />
+                </span>
+              </a>
+            </div>
+          </div>
+        </Bulma.C>
+        <Bulma.C size={3}>
+          <div>
+            {pageSizeElement}
+            <div>{showEntriesText}</div>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+    ),
+    [fgData, searchInfo]
+  );
 
   return (
     <div>
-      <Bulma.Section className="pt-5">
+      <Bulma.Section className="py-0">
         {staticBuilder(staticContent)}
-        <div className="my-4 is-flex">
-          <div>
-            <div className="buttons has-addons">
-              <button className="button is-bgee-link is-outlined" type="button">
-                <Bulma.IonIcon name="list-outline" />
-                <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
-              </button>
-              <Link
-                to={PATHS.SUPPORT.TOP_ANAT}
-                className="button is-bgee-link is-outlined"
-              >
-                <Bulma.IonIcon name="newspaper-outline" />
-                <span>{i18n.t('analysis.top-anat.documentation')}</span>
-              </Link>
-            </div>
-          </div>
-          <div className="is-align-items-center is-flex">
-            <span className="icon-text">
-              <Bulma.IonIcon name="bookmarks-sharp" />
-              <span>{i18n.t('analysis.top-anat.examples')}</span>
-            </span>
-            <div className="ml-1 buttons has-addons">
-              {EXAMPLES.map((ex, key) => (
-                <Tooltip
-                  key={ex.id}
-                  title={`Example ${key + 1}`}
-                  content={ex.description}
-                >
+        {!isLoading && (
+          <>
+            <div className="my-4 is-flex">
+              <div>
+                <div className="buttons has-addons">
+                  <button
+                    className="button is-bgee-link is-outlined"
+                    type="button"
+                  >
+                    <Bulma.IonIcon name="list-outline" />
+                    <span>{i18n.t('analysis.top-anat.recent-jobs')}</span>
+                  </button>
                   <Link
-                    to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
+                    to={PATHS.SUPPORT.TOP_ANAT}
                     className="button is-bgee-link is-outlined"
                   >
-                    <span>{key + 1}</span>
+                    <Bulma.IonIcon name="newspaper-outline" />
+                    <span>{i18n.t('analysis.top-anat.documentation')}</span>
                   </Link>
-                </Tooltip>
-              ))}
-            </div>
-          </div>
-        </div>
-        <Bulma.Columns>
-          <Bulma.C size={4}>
-            <article className="message  is-small">
-              <div className="message-header">
-                <p className="is-size-5">
-                  {i18n.t('analysis.top-anat.gene-list')}
-                </p>
-              </div>
-            </article>
-            <div className="field">
-              <TextArea
-                rows={10}
-                placeholder={i18n.t(
-                  'analysis.top-anat.textarea-placeholder-gene-list'
-                )}
-                onChange={handleChange('genes')}
-                error={errors.genes}
-                value={data.genes}
-              />
-            </div>
-          </Bulma.C>
-          <Bulma.C size={8}>
-            <a onClick={() => setExpandOpts(!expandOpts)}>
-              <article className="message  is-small">
-                <div className="message-header">
-                  <p className="is-size-5">Advanced Options</p>
-                  <span
-                    className={`icon is-medium ${expandOpts ? 'open' : ''}`}
-                  >
-                    <ion-icon name="chevron-up-outline" size="large" />
-                  </span>
                 </div>
-              </article>
-            </a>
-            <div
-              className="mt-5"
-              style={{ display: expandOpts ? 'block' : 'none' }}
-            >
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="stages">
-                      Stages
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Toggle
-                            elements={[
-                              { value: 'all', text: 'All stages' },
-                              { value: 'custom', text: 'Custom stages' },
-                            ]}
-                            value={data.stages}
-                            onChange={handleChange('stages', (v) => v)}
-                            error={errors.stages}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="dataQuality">
-                      dataQuality
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Toggle
-                            elements={[
-                              { value: 'all', text: 'All' },
-                              { value: 'gold', text: 'Gold confidence' },
-                            ]}
-                            value={data.dataQuality}
-                            onChange={handleChange('dataQuality', (v) => v)}
-                            error={errors.dataQuality}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={12}>
-                  <div className="field">
-                    <label className="label" htmlFor="decorrelationType">
-                      decorrelationType
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Toggle
-                          elements={[
-                            { value: 'no', text: 'No decorrelation' },
-                            { value: 'elim', text: 'Elim' },
-                            { value: 'weight', text: 'Weight' },
-                            { value: 'parent-child', text: 'Parent-child' },
-                          ]}
-                          value={data.decorrelationType}
-                          onChange={handleChange('decorrelationType', (v) => v)}
-                          error={errors.decorrelationType}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="nodeSize">
-                      nodeSize
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <div className="control">
-                          <Input
-                            value={data.nodeSize}
-                            onChange={handleChange('nodeSize')}
-                            error={errors.nodeSize}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="nbNode">
-                      nbNode
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.nbNode}
-                          onChange={handleChange('nbNode')}
-                          error={errors.nbNode}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="fdrThreshold">
-                      fdrThreshold
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.fdrThreshold}
-                          onChange={handleChange('fdrThreshold')}
-                          error={errors.fdrThreshold}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-                <Bulma.C size={6}>
-                  <div className="field">
-                    <label className="label" htmlFor="pValueThreshold">
-                      pValueThreshold
-                    </label>
-                    <div className="field-body">
-                      <div className="field">
-                        <Input
-                          value={data.pValueThreshold}
-                          onChange={handleChange('pValueThreshold')}
-                          error={errors.pValueThreshold}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Bulma.C>
-              </Bulma.Columns>
+              </div>
+              <div className="is-align-items-center is-flex">
+                <span className="icon-text">
+                  <Bulma.IonIcon name="bookmarks-sharp" />
+                  <span>{i18n.t('analysis.top-anat.examples')}</span>
+                </span>
+                <div className="ml-1 buttons has-addons">
+                  {EXAMPLES.map((ex, key) => (
+                    <Tooltip
+                      key={ex.id}
+                      title={`Example ${key + 1}`}
+                      content={ex.description}
+                    >
+                      <Link
+                        to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+                          ':id',
+                          ex.id
+                        )}
+                        className="button is-bgee-link is-outlined"
+                      >
+                        <span>{key + 1}</span>
+                      </Link>
+                    </Tooltip>
+                  ))}
+                </div>
+              </div>
             </div>
-          </Bulma.C>
-        </Bulma.Columns>
-        <div className="field is-grouped">
-          <Input
-            controlClassName="has-icons-left"
-            type="email"
-            value={data.email}
-            onChange={handleChange('email')}
-            placeholder={i18n.t('analysis.top-anat.email')}
-            error={errors.email}
-            icons={
-              <span className="icon is-left">
-                <ion-icon name="mail-outline" />
-              </span>
-            }
-          />
-          <Input
-            controlClassName="has-icons-left"
-            value={data.jobDescription}
-            onChange={handleChange('jobDescription')}
-            placeholder={i18n.t('analysis.top-anat.job-description')}
-            error={errors.jobDescription}
-            icons={
-              <span className="icon is-left">
-                <ion-icon name="document-outline" />
-              </span>
-            }
-          />
-        </div>
+            <TopAnatForm
+              form={{ handleChange, data, errors, isEditable }}
+              fgData={fgData}
+              bgData={bgData}
+              handlers={{
+                foregroundHandler,
+                backgroundHandler,
+                setSpeciesBgTrue,
+                setSpeciesBgFalse,
+                onSelectCustomStage,
+                checkBoxHandler,
+                setExpandOpts,
+              }}
+              expandOpts={expandOpts}
+              speciesBg={speciesBg}
+            />
+          </>
+        )}
         <div className="field">
           <p className="control">
-            <button
-              type="button"
-              className="button is-primary"
-              onClick={handleSubmit}
-            >
-              {i18n.t('analysis.top-anat.submit-job')}
-            </button>
+            {!isLoading && (
+              <button
+                type="button"
+                className="button is-success"
+                onClick={handleSubmit}
+                disabled={!isEditable}
+              >
+                {i18n.t('analysis.top-anat.submit-job')}
+              </button>
+            )}
+            {searchInfo && searchInfo.isRunning && (
+              <button
+                type="button"
+                className="button is-primary"
+                onClick={handleSubmit}
+                disabled={!isEditable}
+              >
+                {i18n.t('analysis.top-anat.cancel-job')}
+              </button>
+            )}
           </p>
         </div>
+        <TopAnatBanner searchInfo={searchInfo} />
       </Bulma.Section>
+      <Notifications content={notif} closeElement={closeNotif} />
+      {searchInfo && Array.isArray(searchInfo.data) && (
+        <ComplexTable
+          columns={[
+            {
+              key: 'anatEntityId',
+              text: 'Anat Entity ID',
+            },
+            {
+              key: 'anatEntityName',
+              text: 'Anat Entity Name',
+            },
+            {
+              key: 'annotated',
+              text: 'Annotated',
+            },
+            {
+              key: 'significant',
+              text: 'Significant',
+            },
+            {
+              key: 'expected',
+              text: 'Expected',
+            },
+            {
+              key: 'foldEnrichment',
+              text: 'Fold Enrichment',
+            },
+            {
+              key: 'pValue',
+              text: 'P value',
+            },
+            {
+              key: 'FDR',
+              text: 'Fdr',
+            },
+          ]}
+          key={id}
+          data={searchInfo.data}
+          onRenderCell={onRenderCell}
+          sortable
+          pagination
+          onFilter={(search) => (element) =>
+            Boolean(new RegExp(search).test(element.anatEntityId)) ||
+            Boolean(new RegExp(search).test(element.anatEntityName))}
+          onSort={onSort}
+          classNamesTable="is-striped"
+          customHeader={customHeader}
+          mappingObj={({
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          }) => [
+            anatEntityId,
+            anatEntityName,
+            annotated,
+            significant,
+            expected,
+            foldEnrichment,
+            pValue,
+            FDR,
+          ]}
+        />
+      )}
     </div>
   );
 };
