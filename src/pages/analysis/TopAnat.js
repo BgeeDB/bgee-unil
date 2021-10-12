@@ -7,7 +7,6 @@ import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
 import Tooltip from '../../components/Tooltip';
 import api from '../../api';
-import Notifications from '../../components/Notifications';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat from '../../hooks/useTopAnat';
 import TopAnatForm from '../../components/TopAnat/TopAnatForm';
