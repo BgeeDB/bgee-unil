@@ -107,7 +107,8 @@
       "all-stage-present": "all stages, expression type \"Present\" ",
       "download-job-archive": "Download job archive",
       "show-entries": "Show entries",
-      "showing-entries-on-total": "Showing {START} to {END} of {TOTAL} entries"
+      "showing-entries-on-total": "Showing {START} to {END} of {TOTAL} entries",
+      "history": "History"
     },
     "expression-comparison": {
       "title": "Expression comparison",
