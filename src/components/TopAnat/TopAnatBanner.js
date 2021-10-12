@@ -2,6 +2,26 @@ import React from 'react';
 import Bulma from '../Bulma';
 
 const TopAnatBanner = ({ searchInfo }) => {
+  if (searchInfo && searchInfo.waitingResponse) {
+    return (
+      <Bulma.Notification color="warning" className="mt-5">
+        <progress
+          className="progress is-small"
+          max="100"
+          style={{ animationDuration: '3s', marginBottom: 12 }}
+        >
+          80%
+        </progress>
+
+        <p>
+          Processing job, waiting for a job id. Please stand by until the job is
+          started, or until results are retrieved, if they already exist on our
+          server (in that case, we won&apos;t send you a notification email, if
+          you provided your address)
+        </p>
+      </Bulma.Notification>
+    );
+  }
   if (searchInfo && searchInfo.isRunning) {
     return (
       <Bulma.Notification color="warning" className="mt-5">

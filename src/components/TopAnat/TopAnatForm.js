@@ -110,14 +110,31 @@ const TopAnatForm = ({
             <p className="is-size-6">{i18n.t('analysis.top-anat.gene-list')}</p>
           </div>
           {fgData && (
-            <div className="message-body">
-              <div className="is-flex is-align-items-center">
+            <div className="message-body" style={{ position: 'relative' }}>
+              <div
+                className="is-flex is-align-items-center"
+                style={{ marginRight: 50 }}
+              >
                 <p className="mr-1">{fgData.message}</p>
                 <InfoIcon
                   title="Gene detection details"
                   content={<ForegroundModal data={fgData.fg_list} />}
                 />
               </div>
+              <Bulma.Image
+                className="no-responsive"
+                style={{
+                  height: 60,
+                  width: 70,
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                }}
+                src={`https://bgee.org/img/species/${fgData.fg_list.selectedSpecies}_light.jpg`}
+                alt="species image"
+                height={60}
+                width={70}
+              />
             </div>
           )}
         </article>
@@ -130,6 +147,7 @@ const TopAnatForm = ({
             onChange={foregroundHandler}
             error={errors.genes}
             value={data.genes}
+            disabled={!isEditable}
           />
         </div>
       </Bulma.C>
@@ -161,39 +179,49 @@ const TopAnatForm = ({
                 />
               </div>
               <div
-                className="message-body is-flex is-align-items-end is-justify-content-end"
-                style={{ height: 70 }}
+                className="message-body is-flex is-flex-direction-column"
+                style={{ minHeight: 70 }}
               >
-                {/* todo display info bg data */}
-                <div className="field has-addons">
-                  <p className="control">
-                    <Bulma.Button
-                      size="small"
-                      className="toggle-button"
-                      color={speciesBg && 'danger'}
-                      onClick={setSpeciesBgTrue}
-                      disabled={speciesBg}
-                    >{`Bgee data for ${
-                      fgData.fg_list.detectedSpecies[
-                        fgData.fg_list.selectedSpecies
-                      ].name
-                    }`}</Bulma.Button>
-                  </p>
-                  <p className="control">
-                    <Bulma.Button
-                      size="small"
-                      className="toggle-button"
-                      color={!speciesBg && 'danger'}
-                      onClick={setSpeciesBgFalse}
-                      disabled={!speciesBg}
-                    >
-                      Custom data
-                    </Bulma.Button>
-                  </p>
+                {bgData && (
+                  <div className="is-flex is-align-items-center">
+                    <p className="mr-1">{bgData?.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      content={<ForegroundModal data={bgData?.bg_list} />}
+                    />
+                  </div>
+                )}
+                <div className="is-flex is-align-items-end is-justify-content-end">
+                  <div className="field has-addons">
+                    <p className="control">
+                      <Bulma.Button
+                        size="small"
+                        className="toggle-button"
+                        color={!speciesBg && 'danger'}
+                        onClick={setSpeciesBgFalse}
+                        disabled={!isEditable || (isEditable && !speciesBg)}
+                      >{`Bgee data for ${
+                        fgData.fg_list.detectedSpecies[
+                          fgData.fg_list.selectedSpecies
+                        ].name
+                      }`}</Bulma.Button>
+                    </p>
+                    <p className="control">
+                      <Bulma.Button
+                        size="small"
+                        className="toggle-button"
+                        color={speciesBg && 'danger'}
+                        onClick={setSpeciesBgTrue}
+                        disabled={!isEditable || (isEditable && speciesBg)}
+                      >
+                        Custom data
+                      </Bulma.Button>
+                    </p>
+                  </div>
                 </div>
               </div>
             </article>
-            {!speciesBg && (
+            {speciesBg && (
               <div className="field">
                 <TextArea
                   rows={10}
@@ -205,6 +233,7 @@ const TopAnatForm = ({
                   onChange={backgroundHandler}
                   error={errors.genes}
                   value={data.genesBg}
+                  disabled={!isEditable}
                 />
               </div>
             )}
@@ -329,6 +358,7 @@ const TopAnatForm = ({
                         value={data.stages === 'all' ? 'all' : 'custom'}
                         onChange={onSelectCustomStage()}
                         error={errors.stages}
+                        disabled={!isEditable}
                       />
                     </div>
                   </div>
@@ -393,6 +423,7 @@ const TopAnatForm = ({
                         value={data.dataQuality}
                         onChange={handleChange('dataQuality', (v) => v)}
                         error={errors.dataQuality}
+                        disabled={!isEditable}
                       />
                     </div>
                   </div>
@@ -432,6 +463,7 @@ const TopAnatForm = ({
                 <div className="field-body">
                   <div className="field">
                     <Toggle
+                      disabled={!isEditable}
                       elements={[
                         {
                           value: 'classic',
@@ -476,6 +508,7 @@ const TopAnatForm = ({
                   <div className="field">
                     <div className="control">
                       <Input
+                        disabled={!isEditable}
                         value={data.nodeSize}
                         onChange={handleChange('nodeSize')}
                         error={errors.nodeSize}
@@ -510,6 +543,7 @@ const TopAnatForm = ({
                 <div className="field-body">
                   <div className="field">
                     <Input
+                      disabled={!isEditable}
                       value={data.nbNode}
                       onChange={handleChange('nbNode')}
                       error={errors.nbNode}
@@ -544,6 +578,7 @@ const TopAnatForm = ({
                 <div className="field-body">
                   <div className="field">
                     <Input
+                      disabled={!isEditable}
                       value={data.fdrThreshold}
                       onChange={handleChange('fdrThreshold')}
                       error={errors.fdrThreshold}
@@ -578,6 +613,7 @@ const TopAnatForm = ({
                 <div className="field-body">
                   <div className="field">
                     <Input
+                      disabled={!isEditable}
                       value={data.pValueThreshold}
                       onChange={handleChange('pValueThreshold')}
                       error={errors.pValueThreshold}
@@ -595,6 +631,7 @@ const TopAnatForm = ({
       <Input
         controlClassName="has-icons-left"
         type="email"
+        disabled={!isEditable}
         value={data.email}
         onChange={handleChange('email')}
         placeholder={i18n.t('analysis.top-anat.email')}
@@ -611,6 +648,7 @@ const TopAnatForm = ({
         onChange={handleChange('jobDescription')}
         placeholder={i18n.t('analysis.top-anat.job-description')}
         error={errors.jobDescription}
+        disabled={!isEditable}
         icons={
           <span className="icon is-left">
             <ion-icon name="document-outline" />

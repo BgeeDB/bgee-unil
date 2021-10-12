@@ -79,6 +79,7 @@ const useForm = (opts) => {
 
   return {
     data,
+    setData,
     handleChange,
     handleSubmit,
     errors,

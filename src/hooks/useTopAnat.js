@@ -1,8 +1,10 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import api from '../api';
 import useForm from './useForm';
 import array from '../helpers/array';
 import useToggle from './useToggle';
+import PATHS from '../routes/paths';
 
 export const TOP_ANAT_FORM_CONFIG = {
   initialValue: {
@@ -81,23 +83,30 @@ const useTopAnat = () => {
   const [fgData, setFgData] = React.useState();
   const [bgData, setBgData] = React.useState();
   const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
-    useToggle(true);
-  const [canSearch, { toTrue: canSearchTrue, toFalse: canSearchFalse }] =
-    useToggle(true);
+    useToggle(false);
 
+  const history = useHistory();
   const onSubmit = React.useCallback((data) => {
     const formattedData = data; // to format for api
-    api.topAnat.runJob(formattedData).then((res) => {
-      setSearchInfo({
-        isRunning: res.data.jobResponse.jobStatus === 'RUNNING',
-        job: res.data.jobResponse.jobId,
-        id: res.data.jobResponse.data,
+    setSearchInfo({ waitingResponse: true });
+    setTimeout(() => {
+      api.topAnat.runJob(formattedData).then((res) => {
+        history.push(
+          PATHS.ANALYSIS[
+            res.data.jobResponse.jobStatus === 'RUNNING'
+              ? 'TOP_ANAT_RESULT_JOB_ID'
+              : 'TOP_ANAT_RESULT'
+          ]
+            .replace(':id', res.data.jobResponse.data)
+            .replace(':jobId', res.data.jobResponse.jobId)
+        );
       });
-    });
+    }, 2000);
   }, []);
 
   const {
     data,
+    setData,
     handleChange,
     handleSubmit,
     errors,
@@ -116,7 +125,7 @@ const useTopAnat = () => {
           api.topAnat
             .autoCompleteForegroundGenes(e.target.value, 'fg')
             .then((r) => {
-              setSpeciesBgTrue();
+              setSpeciesBgFalse();
               handleChange('genesBg', () => '')();
               handleChange('rnaSeq', () => true)();
               handleChange('affymetrix', () => true)();
@@ -138,7 +147,6 @@ const useTopAnat = () => {
 
       const uuid = Math.random().toString(10);
       if (!array.equals(fg, bg)) {
-        canSearchFalse();
         const message =
           'Gene list contains genes not found in background genes.';
         const status = 'danger';
@@ -154,8 +162,6 @@ const useTopAnat = () => {
         setTimeout(() => {
           closeNotif(uuid)();
         }, TIMEOUT_NOTIF);
-      } else {
-        canSearchTrue();
       }
 
       if (e.target.value !== '' && array.equals(fg, bg)) {
@@ -185,7 +191,7 @@ const useTopAnat = () => {
                   closeNotif(uuid)();
                 }, TIMEOUT_NOTIF);
               }
-              setBgData({ bg_list: r.data.fg_list, message: r.message });
+              setBgData({ bg_list: r.data.bg_list, message: r.message });
             });
         }, 1000);
       }
@@ -246,6 +252,7 @@ const useTopAnat = () => {
   return {
     form: {
       data,
+      setData,
       handleChange,
       handleSubmit,
       errors,
@@ -277,7 +284,6 @@ const useTopAnat = () => {
       value: bgData,
       setBgData,
     },
-    canSearch,
     species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
   };
 };

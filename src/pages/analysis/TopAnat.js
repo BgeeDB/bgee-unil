@@ -91,6 +91,7 @@ const TopAnat = () => {
   const {
     form: {
       data,
+      setData,
       handleChange,
       handleSubmit,
       errors,
@@ -104,9 +105,8 @@ const TopAnat = () => {
     notifications: { value: notif, setNotif, closeNotif },
     searchInfo: { value: searchInfo, setSearchInfo },
     expandOpts: { value: expandOpts, setExpandOpts },
-    fgData: { value: fgData },
-    bgData: { value: bgData },
-    canSearch,
+    fgData: { value: fgData, setFgData },
+    bgData: { value: bgData, setBgData },
     species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
   } = useTopAnat();
 
@@ -140,23 +140,75 @@ const TopAnat = () => {
     };
   }, [fgData, bgData]);
 
+  const [isLoading, setLoading] = React.useState(false);
   const { id, jobId } = useParams();
   const history = useHistory();
 
-  const getJobStatus = React.useCallback((ID, jobID) => {
-    api.topAnat.getStatus(ID, jobID).then((r) => {
-      if (r.data.jobResponse.jobStatus === 'RUNNING') {
-        getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 2000);
-        setSearchInfo({ isRunning: true, jobId: r.data.jobResponse.jobId });
-      } else {
-        history.push(
-          PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', r.data.jobResponse.data)
-        );
-      }
-    });
-  }, []);
+  const getJobStatus = React.useCallback(
+    (ID, jobID) => {
+      if (!(fgData && bgData)) setLoading(true);
+      api.topAnat.getStatus(ID, jobID).then((r) => {
+        if (r.data.jobResponse.jobStatus === 'RUNNING') {
+          getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 2000);
+          setSearchInfo({ isRunning: true, jobId: r.data.jobResponse.jobId });
+        } else {
+          history.push(
+            PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              r.data.jobResponse.data
+            )
+          );
+        }
+      });
+    },
+    [fgData, bgData]
+  );
   const getResults = React.useCallback((ID) => {
     api.topAnat.getResults(ID).then((r) => {
+      const formData = r.requestParameters;
+      setData((prev) => ({
+        ...prev,
+        genes: formData.fg_list.join('\n'),
+        genesBg: formData.bg_list.join('\n'),
+        email: '',
+        jobDescription: formData.job_title || '',
+        stages: 'all',
+        dataQuality: formData.data_qual,
+        decorrelationType: formData.decorr_type,
+        nodeSize: formData.node_size || '',
+        nbNode: formData.nb_node || '',
+        fdrThreshold: formData.fdr_thr || '',
+        pValueThreshold: formData.p_value_thr || '',
+        rnaSeq: formData.data_type.find((f) => f === 'RNA_SEQ'),
+        affymetrix: formData.data_type.find((f) => f === 'AFFYMETRIX'),
+        inSitu: formData.data_type.find((f) => f === 'IN_SITU'),
+        est: formData.data_type.find((f) => f === 'EST'),
+      }));
+      setFgData({
+        fg_list: r.data.fg_list,
+        message: `${formData.fg_list.length} IDs provided, ${
+          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies]
+        } unique gene${
+          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies] > 0
+            ? 's'
+            : ''
+        } found in ${
+          r.data.fg_list.detectedSpecies[r.data.fg_list.selectedSpecies].name
+        }`,
+      });
+      setBgData({
+        bg_list: r.data.bg_list,
+        message: `${formData.bg_list.length} IDs provided, ${
+          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies]
+        } unique gene${
+          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies] > 0
+            ? 's'
+            : ''
+        } found in ${
+          r.data.bg_list.detectedSpecies[r.data.bg_list.selectedSpecies].name
+        }`,
+      });
+      if (r.data.bg_list) setSpeciesBgTrue();
       setSearchInfo((prev) => ({
         ...prev,
         isLoading: false,
@@ -172,17 +224,22 @@ const TopAnat = () => {
 
   React.useEffect(() => {
     if (getJobStatusTimeOut) clearInterval(getJobStatusTimeOut);
+
     if (id && !jobId) {
       getResults(id);
       setSearchInfo({ isRunning: false, isLoading: true });
       setIsEditable(false);
+      setLoading(false);
     } else if (id && jobId) {
       getJobStatus(id, jobId);
     } else {
       // reset fg data, bgData, etc.
       setIsEditable(true);
       resetForm();
+      setLoading(false);
+      setSearchInfo();
     }
+    setNotif([]);
   }, [id, jobId]);
 
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
@@ -199,17 +256,44 @@ const TopAnat = () => {
       );
     return defaultRender(cell, key);
   }, []);
+  const dataCsvHref = React.useMemo(() => {
+    let csvContent =
+      'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
+    if (searchInfo?.data)
+      searchInfo?.data.forEach((row) => {
+        csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
+      });
+
+    return csvContent;
+  }, [searchInfo]);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
       <Bulma.Columns vCentered>
         <Bulma.C size={4}>
           <div className="is-flex is-flex-direction-column">
-            <p>{i18n.t('analysis.top-anat.view')}</p>
-            {searchInfo.results.map((r, key) => (
-              <a key={r.zipFile} href={r.zipFile} className="internal-link">
-                {`result ${key}`}
-              </a>
-            ))}
+            <p>Archive(s)</p>
+            <a
+              href={`https://bgee.org/?page=top_anat&action=download&data=${id}`}
+              className="external-link"
+              style={{ width: 'fit-content' }}
+              rel="noreferrer"
+            >
+              All stages, expression type &quot;Present&quot;
+            </a>
+            {searchInfo.results.length > 1 &&
+              searchInfo.results.map((r, key) => (
+                <a
+                  key={r.zipFile}
+                  href={r.zipFile}
+                  className="external-link"
+                  style={{ width: 'fit-content' }}
+                >
+                  {`${
+                    fgData.fg_list.stages.find((s) => s.id === r.devStageId)
+                      ?.name
+                  }, expression type "Present" (${r.results.length})`}
+                </a>
+              ))}
             {/* todo */}
             {/* <a */}
             {/*  className="button is-small mt-2" */}
@@ -226,14 +310,20 @@ const TopAnat = () => {
           <div className="field has-addons">
             {searchElement}
             {/* todo dl as csv */}
-            {/* <div className="control"> */}
-            {/*  <a className="button"> */}
-            {/*    <span>{searchInfo?.data.length}</span> */}
-            {/*    <span className="icon is-small"> */}
-            {/*      <ion-icon name="download-outline" /> */}
-            {/*    </span> */}
-            {/*  </a> */}
-            {/* </div> */}
+            <div className="control">
+              <a
+                className="button"
+                href={dataCsvHref}
+                download="data.csv"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>CSV</span>
+                <span className="icon is-small">
+                  <ion-icon name="download-outline" />
+                </span>
+              </a>
+            </div>
           </div>
         </Bulma.C>
         <Bulma.C size={3}>
@@ -244,11 +334,9 @@ const TopAnat = () => {
         </Bulma.C>
       </Bulma.Columns>
     ),
-    [searchInfo]
+    [fgData, searchInfo]
   );
 
-  const isLoading =
-    searchInfo && !searchInfo?.isRunning && searchInfo?.isLoading;
   return (
     <div>
       <Bulma.Section className="py-0">
@@ -316,30 +404,32 @@ const TopAnat = () => {
               expandOpts={expandOpts}
               speciesBg={speciesBg}
             />
-            <div className="field">
-              <p className="control">
-                <button
-                  type="button"
-                  className="button is-success"
-                  onClick={handleSubmit}
-                  disabled={!canSearch}
-                >
-                  {i18n.t('analysis.top-anat.submit-job')}
-                </button>
-                {searchInfo && searchInfo.isRunning && (
-                  <button
-                    type="button"
-                    className="button is-primary"
-                    onClick={handleSubmit}
-                    disabled={!canSearch}
-                  >
-                    {i18n.t('analysis.top-anat.cancel-job')}
-                  </button>
-                )}
-              </p>
-            </div>
           </>
         )}
+        <div className="field">
+          <p className="control">
+            {!isLoading && (
+              <button
+                type="button"
+                className="button is-success"
+                onClick={handleSubmit}
+                disabled={!isEditable}
+              >
+                {i18n.t('analysis.top-anat.submit-job')}
+              </button>
+            )}
+            {searchInfo && searchInfo.isRunning && (
+              <button
+                type="button"
+                className="button is-primary"
+                onClick={handleSubmit}
+                disabled={!isEditable}
+              >
+                {i18n.t('analysis.top-anat.cancel-job')}
+              </button>
+            )}
+          </p>
+        </div>
         <TopAnatBanner searchInfo={searchInfo} />
       </Bulma.Section>
       <Notifications content={notif} closeElement={closeNotif} />
