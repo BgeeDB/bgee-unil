@@ -8,9 +8,11 @@ import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
 import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/DlProcessedExpressionValuesSpeciesModal';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
+  const { showModal } = React.useContext(ModalContext);
   const [selectedSpecies, setSelectedSpecies] = React.useState(null);
   const [search, setSearch] = React.useState('');
   const filteredSpecies = React.useMemo(() => {
@@ -28,7 +30,18 @@ const ProcessedExpressionValues = () => {
       const species = filteredSpecies.find(
         (s) => s.scientificName === speciesID
       );
-      if (species) setSelectedSpecies(species);
+      if (species) {
+        setSelectedSpecies(species);
+        showModal(
+          <DlProcessedExpressionValuesSpeciesModal
+            selectedSpecies={selectedSpecies}
+          />,
+          {
+            onClose: () =>
+              history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES),
+          }
+        );
+      }
     } else if (selectedSpecies && !speciesID) {
       setSelectedSpecies(null);
     }
@@ -112,15 +125,6 @@ const ProcessedExpressionValues = () => {
           </div>
         </Bulma.Card.Body>
       </Bulma.Card>
-
-      <Bulma.Modal
-        show={Boolean(selectedSpecies)}
-        onClose={() => history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES)}
-      >
-        <DlProcessedExpressionValuesSpeciesModal
-          selectedSpecies={selectedSpecies}
-        />
-      </Bulma.Modal>
     </div>
   );
 };

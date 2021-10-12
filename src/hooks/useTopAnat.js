@@ -5,6 +5,7 @@ import useForm from './useForm';
 import array from '../helpers/array';
 import useToggle from './useToggle';
 import PATHS from '../routes/paths';
+import { NotificationContext } from '../contexts/NotificationsContext';
 
 export const TOP_ANAT_FORM_CONFIG = {
   initialValue: {
@@ -60,24 +61,11 @@ export const TOP_ANAT_FORM_CONFIG = {
   },
 };
 
-const TIMEOUT_NOTIF = 3000;
-let timeout;
+let timeoutFg;
+let timeoutBg;
 
 const useTopAnat = () => {
-  const [notif, setNotif] = React.useState([]);
-  const closeNotif = React.useCallback(
-    (id) => () => {
-      setNotif((prev) => {
-        const current = [...prev];
-        if (Array.isArray(current)) {
-          const pos = current.findIndex((o) => o.id === id);
-          if (pos > -1) current.splice(pos, 1);
-        }
-        return current;
-      });
-    },
-    []
-  );
+  const { addNotification } = React.useContext(NotificationContext);
   const [searchInfo, setSearchInfo] = React.useState();
   const [expandOpts, setExpandOpts] = React.useState(false);
   const [fgData, setFgData] = React.useState();
@@ -119,9 +107,9 @@ const useTopAnat = () => {
   const foregroundHandler = React.useCallback(
     (e) => {
       handleChange('genes')(e);
-      if (timeout) clearTimeout(timeout);
+      if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
-        timeout = setTimeout(() => {
+        timeoutFg = setTimeout(() => {
           api.topAnat
             .autoCompleteForegroundGenes(e.target.value, 'fg')
             .then((r) => {
@@ -143,29 +131,23 @@ const useTopAnat = () => {
       handleChange('genesBg')(e);
       const bg = e.target.value.split('\n');
       const fg = data.genes.split('\n');
-      if (timeout) clearTimeout(timeout);
 
-      const uuid = Math.random().toString(10);
+      if (timeoutBg) clearTimeout(timeoutBg);
       if (!array.equals(fg, bg)) {
-        const message =
-          'Gene list contains genes not found in background genes.';
-        const status = 'danger';
-        setNotif((prev) => {
-          const curr = [...prev];
-          curr.push({
-            id: uuid,
-            children: <p>{message}</p>,
-            className: `is-${status}`,
-          });
-          return curr;
-        });
-        setTimeout(() => {
-          closeNotif(uuid)();
-        }, TIMEOUT_NOTIF);
+        timeoutBg = setTimeout(
+          () =>
+            addNotification({
+              id: Math.random().toString(10),
+              children: (
+                <p>Gene list contains genes not found in background genes.</p>
+              ),
+              className: `is-danger`,
+            }),
+          2000
+        );
       }
-
       if (e.target.value !== '' && array.equals(fg, bg)) {
-        timeout = setTimeout(() => {
+        timeoutBg = setTimeout(() => {
           api.topAnat
             .autoCompleteForegroundGenes(e.target.value, 'bg')
             .then((r) => {
@@ -173,23 +155,16 @@ const useTopAnat = () => {
                 r.data.fg_list.selectedSpecies !==
                 fgData.fg_list.selectedSpecies
               ) {
-                setNotif((prev) => {
-                  const curr = [...prev];
-                  curr.push({
-                    id: uuid,
-                    children: (
-                      <p>
-                        Foreground and background species differ. You can either
-                        change your background or the default one will be used.
-                      </p>
-                    ),
-                    className: `is-danger`,
-                  });
-                  return curr;
+                addNotification({
+                  id: Math.random().toString(10),
+                  children: (
+                    <p>
+                      Foreground and background species differ. You can either
+                      change your background or the default one will be used.
+                    </p>
+                  ),
+                  className: `is-danger`,
                 });
-                setTimeout(() => {
-                  closeNotif(uuid)();
-                }, TIMEOUT_NOTIF);
               }
               setBgData({ bg_list: r.data.bg_list, message: r.message });
             });
@@ -205,20 +180,11 @@ const useTopAnat = () => {
   const onSelectCustomStage = React.useCallback(
     (id) => (e) => {
       if (!fgData) {
-        const uuid = Math.random().toString(10);
-        //
-        setNotif((prev) => {
-          const curr = [...prev];
-          curr.push({
-            id: uuid,
-            children: <p>No species detected from gene list</p>,
-            className: `is-warning`,
-          });
-          return curr;
+        addNotification({
+          id: Math.random().toString(10),
+          children: <p>No species detected from gene list</p>,
+          className: `is-warning`,
         });
-        setTimeout(() => {
-          closeNotif(uuid)();
-        }, TIMEOUT_NOTIF);
         return;
       }
       if (id) {
@@ -242,13 +208,6 @@ const useTopAnat = () => {
     [data, fgData]
   );
 
-  React.useEffect(
-    () => () => {
-      if (timeout) clearTimeout(timeout);
-    },
-    []
-  );
-
   return {
     form: {
       data,
@@ -262,11 +221,6 @@ const useTopAnat = () => {
       checkBoxHandler,
       onSelectCustomStage,
       resetForm: reset,
-    },
-    notifications: {
-      value: notif,
-      setNotif,
-      closeNotif,
     },
     searchInfo: {
       value: searchInfo,
