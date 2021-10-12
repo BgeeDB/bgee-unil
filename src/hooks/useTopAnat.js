@@ -6,6 +6,7 @@ import array from '../helpers/array';
 import useToggle from './useToggle';
 import PATHS from '../routes/paths';
 import { NotificationContext } from '../contexts/NotificationsContext';
+import { addTopAnatHistory } from '../components/TopAnat/TopAnatHistoryModal';
 
 export const TOP_ANAT_FORM_CONFIG = {
   initialValue: {
@@ -77,19 +78,17 @@ const useTopAnat = () => {
   const onSubmit = React.useCallback((data) => {
     const formattedData = data; // to format for api
     setSearchInfo({ waitingResponse: true });
-    setTimeout(() => {
-      api.topAnat.runJob(formattedData).then((res) => {
-        history.push(
-          PATHS.ANALYSIS[
-            res.data.jobResponse.jobStatus === 'RUNNING'
-              ? 'TOP_ANAT_RESULT_JOB_ID'
-              : 'TOP_ANAT_RESULT'
-          ]
-            .replace(':id', res.data.jobResponse.data)
-            .replace(':jobId', res.data.jobResponse.jobId)
-        );
-      });
-    }, 2000);
+    api.topAnat.runJob(formattedData).then((res) => {
+      history.push(
+        PATHS.ANALYSIS[
+          res.data.jobResponse.jobStatus === 'RUNNING'
+            ? 'TOP_ANAT_RESULT_JOB_ID'
+            : 'TOP_ANAT_RESULT'
+        ]
+          .replace(':id', res.data.jobResponse.data)
+          .replace(':jobId', res.data.jobResponse.jobId)
+      );
+    });
   }, []);
 
   const {
@@ -107,6 +106,7 @@ const useTopAnat = () => {
   const foregroundHandler = React.useCallback(
     (e) => {
       handleChange('genes')(e);
+      if (!isEditable) return;
       if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
         timeoutFg = setTimeout(() => {
@@ -124,11 +124,12 @@ const useTopAnat = () => {
         }, 1000);
       } else setFgData(undefined);
     },
-    [data]
+    [data, isEditable]
   );
   const backgroundHandler = React.useCallback(
     (e) => {
       handleChange('genesBg')(e);
+      if (!isEditable) return;
       const bg = e.target.value.split('\n');
       const fg = data.genes.split('\n');
 
@@ -171,7 +172,7 @@ const useTopAnat = () => {
         }, 1000);
       }
     },
-    [data, fgData]
+    [data, fgData, isEditable]
   );
   const checkBoxHandler = React.useCallback(
     (key) => (e) => handleChange(key, (event) => event.target.checked)(e),

@@ -12,6 +12,10 @@ import useTopAnat from '../../hooks/useTopAnat';
 import TopAnatForm from '../../components/TopAnat/TopAnatForm';
 import ComplexTable from '../../components/ComplexTable';
 import { NotificationContext } from '../../contexts/NotificationsContext';
+import TopAnatHistoryModal, {
+  addTopAnatHistory,
+} from '../../components/TopAnat/TopAnatHistoryModal';
+import TopAnatResult from '../../components/TopAnat/TopAnatResult';
 
 const staticContent = [
   {
@@ -75,17 +79,6 @@ const EXAMPLES = [
 
 let getJobStatusTimeOut;
 
-const onSort =
-  (sortKey, sortDirection) =>
-  ({ [sortKey]: a }, { [sortKey]: b }) => {
-    const AFormatted = typeof a === 'string' ? a.toLowerCase() : a;
-    const bFormatted = typeof b === 'string' ? b.toLowerCase() : b;
-    if (AFormatted === bFormatted) return 0;
-    if (sortDirection === 'ascending') return AFormatted > bFormatted ? 1 : -1;
-    if (sortDirection === 'descending') return AFormatted < bFormatted ? 1 : -1;
-    return 0;
-  };
-
 const TopAnat = () => {
   const { addNotification, cleanNotifications } =
     React.useContext(NotificationContext);
@@ -111,8 +104,7 @@ const TopAnat = () => {
   } = useTopAnat();
 
   React.useEffect(() => {
-    let timeoutPointer;
-    if (bgData) {
+    if (isEditable && bgData) {
       addNotification({
         id: Math.random().toString(10),
         children: (
@@ -129,10 +121,7 @@ const TopAnat = () => {
         }`,
       });
     }
-    return () => {
-      if (timeoutPointer) clearTimeout(timeoutPointer);
-    };
-  }, [fgData, bgData]);
+  }, [fgData, bgData, isEditable]);
 
   const [isLoading, setLoading] = React.useState(false);
   const { id, jobId } = useParams();
@@ -158,8 +147,15 @@ const TopAnat = () => {
     [fgData, bgData]
   );
   const getResults = React.useCallback((ID) => {
+    // use display_rp=1 in params to get requestParameters
     api.topAnat.getResults(ID).then((r) => {
       const formData = r.requestParameters;
+      addTopAnatHistory(
+        ID,
+        r.data.fg_list.selectedSpecies,
+        r.data.fg_list.detectedSpecies[r.data.fg_list.selectedSpecies].name,
+        r.requestParameters.job_title
+      );
       setData((prev) => ({
         ...prev,
         genes: formData.fg_list.join('\n'),
@@ -236,101 +232,6 @@ const TopAnat = () => {
     cleanNotifications();
   }, [id, jobId]);
 
-  const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
-    if (key === 0)
-      return (
-        <a
-          className="external-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
-        >
-          {cell}
-        </a>
-      );
-    return defaultRender(cell, key);
-  }, []);
-  const dataCsvHref = React.useMemo(() => {
-    let csvContent =
-      'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
-    if (searchInfo?.data)
-      searchInfo?.data.forEach((row) => {
-        csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
-      });
-
-    return csvContent;
-  }, [searchInfo]);
-  const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
-      <Bulma.Columns vCentered>
-        <Bulma.C size={4}>
-          <div className="is-flex is-flex-direction-column">
-            <p>Archive(s)</p>
-            <a
-              href={`https://bgee.org/?page=top_anat&action=download&data=${id}`}
-              className="external-link"
-              style={{ width: 'fit-content' }}
-              rel="noreferrer"
-            >
-              All stages, expression type &quot;Present&quot;
-            </a>
-            {searchInfo.results.length > 1 &&
-              searchInfo.results.map((r, key) => (
-                <a
-                  key={r.zipFile}
-                  href={r.zipFile}
-                  className="external-link"
-                  style={{ width: 'fit-content' }}
-                >
-                  {`${
-                    fgData.fg_list.stages.find((s) => s.id === r.devStageId)
-                      ?.name
-                  }, expression type "Present" (${r.results.length})`}
-                </a>
-              ))}
-            {/* todo */}
-            {/* <a */}
-            {/*  className="button is-small mt-2" */}
-            {/*  href={initialData.result.topAnatResults[0].zipFile} */}
-            {/* > */}
-            {/*  <span className="icon is-small"> */}
-            {/*    <ion-icon name="download-outline" /> */}
-            {/*  </span> */}
-            {/*  <span>{i18n.t('analysis.top-anat.download-job-archive')}</span> */}
-            {/* </a> */}
-          </div>
-        </Bulma.C>
-        <Bulma.C size={5}>
-          <div className="field has-addons">
-            {searchElement}
-            {/* todo dl as csv */}
-            <div className="control">
-              <a
-                className="button"
-                href={dataCsvHref}
-                download="data.csv"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>CSV</span>
-                <span className="icon is-small">
-                  <ion-icon name="download-outline" />
-                </span>
-              </a>
-            </div>
-          </div>
-        </Bulma.C>
-        <Bulma.C size={3}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
-        </Bulma.C>
-      </Bulma.Columns>
-    ),
-    [fgData, searchInfo]
-  );
-
   return (
     <div>
       <Bulma.Section className="py-0">
@@ -338,12 +239,7 @@ const TopAnat = () => {
         {!isLoading && (
           <>
             <div className="my-4 is-flex">
-              <button
-                className="button is-bgee-link is-outlined mr-2"
-                type="button"
-              >
-                <Bulma.IonIcon name="list-outline" />
-              </button>
+              <TopAnatHistoryModal />
               <Link
                 to={PATHS.SUPPORT.TOP_ANAT}
                 className="button is-bgee-link is-outlined mr-2"
@@ -421,74 +317,7 @@ const TopAnat = () => {
         </div>
         <TopAnatBanner searchInfo={searchInfo} />
       </Bulma.Section>
-      {searchInfo && Array.isArray(searchInfo.data) && (
-        <ComplexTable
-          columns={[
-            {
-              key: 'anatEntityId',
-              text: 'Anat Entity ID',
-            },
-            {
-              key: 'anatEntityName',
-              text: 'Anat Entity Name',
-            },
-            {
-              key: 'annotated',
-              text: 'Annotated',
-            },
-            {
-              key: 'significant',
-              text: 'Significant',
-            },
-            {
-              key: 'expected',
-              text: 'Expected',
-            },
-            {
-              key: 'foldEnrichment',
-              text: 'Fold Enrichment',
-            },
-            {
-              key: 'pValue',
-              text: 'P value',
-            },
-            {
-              key: 'FDR',
-              text: 'Fdr',
-            },
-          ]}
-          key={id}
-          data={searchInfo.data}
-          onRenderCell={onRenderCell}
-          sortable
-          pagination
-          onFilter={(search) => (element) =>
-            Boolean(new RegExp(search).test(element.anatEntityId)) ||
-            Boolean(new RegExp(search).test(element.anatEntityName))}
-          onSort={onSort}
-          classNamesTable="is-striped"
-          customHeader={customHeader}
-          mappingObj={({
-            anatEntityId,
-            anatEntityName,
-            annotated,
-            significant,
-            expected,
-            foldEnrichment,
-            pValue,
-            FDR,
-          }) => [
-            anatEntityId,
-            anatEntityName,
-            annotated,
-            significant,
-            expected,
-            foldEnrichment,
-            pValue,
-            FDR,
-          ]}
-        />
-      )}
+      <TopAnatResult searchInfo={searchInfo} searchId={id} fgData={fgData} />
     </div>
   );
 };
