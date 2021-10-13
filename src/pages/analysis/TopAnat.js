@@ -1,93 +1,28 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import staticBuilder from '../../helpers/staticBuilder';
-import i18n from '../../i18n';
+import { useHistory, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
-import Tooltip from '../../components/Tooltip';
 import api from '../../api';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat from '../../hooks/useTopAnat';
 import TopAnatForm from '../../components/TopAnat/TopAnatForm';
-import ComplexTable from '../../components/ComplexTable';
 import { NotificationContext } from '../../contexts/NotificationsContext';
-import TopAnatHistoryModal, {
-  addTopAnatHistory,
-} from '../../components/TopAnat/TopAnatHistoryModal';
+import { addTopAnatHistory } from '../../components/TopAnat/TopAnatHistoryModal';
 import TopAnatResult from '../../components/TopAnat/TopAnatResult';
-
-const staticContent = [
-  {
-    type: 'title',
-    content: 'TopAnat - Gene Expression Enrichment',
-  },
-  {
-    type: 'rich_text',
-    content: [
-      {
-        type: 'text',
-        content:
-          'GO-like enrichment of anatomical terms, mapped to genes by expression patterns. It is possible to run TopAnat using our ',
-      },
-      {
-        type: 'link_external',
-        path: 'https://bioconductor.org/packages/BgeeDB/',
-        text: 'BgeeDB R package',
-      },
-      {
-        type: 'text',
-        content:
-          '. This is the same as this web-service, but with more flexibility in the choice of parameters and developmental stages, and is based on the ',
-      },
-      {
-        type: 'link_external',
-        path: 'https://bioconductor.org/packages/topGO/',
-        text: 'topGO package',
-      },
-      {
-        type: 'text',
-        content: '.',
-      },
-    ],
-  },
-];
-const EXAMPLES = [
-  {
-    id: '0e165086d430555eda6d6ee5693519ae6c437536',
-    description:
-      'Autism spectrum associated genes from Satterstrom et al. 2020 https://doi.org/10.1016/j.cell.2019.12.036',
-  },
-  {
-    id: 'f3fede86b7cc61a7d8239c31bac012da77ab797b',
-    description: 'Mouse genes mapped to the GO term "spermatogenesis".',
-  },
-  {
-    id: 'b7d412c35f14b5574305c078b1053b026df315eb',
-    description:
-      'Zebrafish 3R ohnologs from Roux et al. 2017 https://doi.org/10.1093/molbev/msx199 showing nervous system expression of 3R duplicates.',
-  },
-  {
-    id: '2d80cdb2fa09681389f935d71d67c327558a09a1',
-    description: 'Pigmentation genes in rabbit.',
-  },
-  {
-    id: '9bbddda9dea22c21edcada56ad552a35cb8e29a7',
-    description: 'COVID-19 related human genes.',
-  },
-];
+import TopAnatHead from '../../components/TopAnat/TopAnatHead';
+import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons';
+import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 
 let getJobStatusTimeOut;
 
 const TopAnat = () => {
-  const { addNotification, cleanNotifications } =
-    React.useContext(NotificationContext);
+  const { addNotification } = React.useContext(NotificationContext);
   const {
     form: {
       data,
       setData,
       handleChange,
-      handleSubmit,
       errors,
       edition: { isEditable, setIsEditable },
       foregroundHandler,
@@ -96,229 +31,181 @@ const TopAnat = () => {
       onSelectCustomStage,
       resetForm,
     },
-    searchInfo: { value: searchInfo, setSearchInfo },
-    expandOpts: { value: expandOpts, setExpandOpts },
-    fgData: { value: fgData, setFgData },
-    bgData: { value: bgData, setBgData },
-    species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
+    job,
+    requestParameters,
+    results,
+    setResults,
   } = useTopAnat();
 
   React.useEffect(() => {
-    if (isEditable && bgData) {
+    if (isEditable && requestParameters.bg) {
       addNotification({
         id: Math.random().toString(10),
         children: (
           <p>
-            {fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+            {requestParameters.fg.list.selectedSpecies ===
+            requestParameters.bg.list.selectedSpecies
               ? 'Foreground/background species are identical.'
               : 'Foreground and background species differ. You can either change your background or the default one will be used.'}
           </p>
         ),
         className: `is-${
-          fgData.fg_list.selectedSpecies === bgData.bg_list.selectedSpecies
+          requestParameters.fg.list.selectedSpecies ===
+          requestParameters.bg.list.selectedSpecies
             ? 'success'
             : 'danger'
         }`,
       });
     }
-  }, [fgData, bgData, isEditable]);
+  }, [requestParameters, isEditable]);
 
-  const [isLoading, setLoading] = React.useState(false);
   const { id, jobId } = useParams();
   const history = useHistory();
 
-  const getJobStatus = React.useCallback(
-    (ID, jobID) => {
-      if (!(fgData && bgData)) setLoading(true);
-      api.topAnat.getStatus(ID, jobID).then((r) => {
-        if (r.data.jobResponse.jobStatus === 'RUNNING') {
-          getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 2000);
-          setSearchInfo({ isRunning: true, jobId: r.data.jobResponse.jobId });
-        } else {
-          history.push(
-            PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-              ':id',
-              r.data.jobResponse.data
-            )
-          );
-        }
-      });
-    },
-    [fgData, bgData]
-  );
+  const getJobStatus = React.useCallback((ID, jobID) => {
+    api.topAnat.getStatus(ID, jobID).then((r) => {
+      if (r.data.jobResponse.jobStatus === 'RUNNING') {
+        getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 3000);
+        setResults({ jobId: r.data.jobResponse.jobId });
+      } else {
+        history.push(
+          PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', r.data.jobResponse.data)
+        );
+      }
+    });
+  }, []);
   const getResults = React.useCallback((ID) => {
     // use display_rp=1 in params to get requestParameters
-    api.topAnat.getResults(ID).then((r) => {
-      const formData = r.requestParameters;
+    api.topAnat.getResults(ID).then((res) => {
+      const rp = res.requestParameters;
       addTopAnatHistory(
         ID,
-        r.data.fg_list.selectedSpecies,
-        r.data.fg_list.detectedSpecies[r.data.fg_list.selectedSpecies].name,
-        r.requestParameters.job_title
+        res.data.fg_list.selectedSpecies,
+        res.data.fg_list.detectedSpecies[res.data.fg_list.selectedSpecies].name,
+        res.requestParameters.job_title
       );
       setData((prev) => ({
         ...prev,
-        genes: formData.fg_list.join('\n'),
-        genesBg: formData.bg_list.join('\n'),
+        genes: rp.fg_list.join('\n'),
+        genesBg: rp.bg_list.join('\n'),
         email: '',
-        jobDescription: formData.job_title || '',
+        jobDescription: rp.job_title || '',
         stages: 'all',
-        dataQuality: formData.data_qual,
-        decorrelationType: formData.decorr_type,
-        nodeSize: formData.node_size || '',
-        nbNode: formData.nb_node || '',
-        fdrThreshold: formData.fdr_thr || '',
-        pValueThreshold: formData.p_value_thr || '',
-        rnaSeq: formData.data_type.find((f) => f === 'RNA_SEQ'),
-        affymetrix: formData.data_type.find((f) => f === 'AFFYMETRIX'),
-        inSitu: formData.data_type.find((f) => f === 'IN_SITU'),
-        est: formData.data_type.find((f) => f === 'EST'),
+        dataQuality: rp.data_qual,
+        decorrelationType: rp.decorr_type,
+        nodeSize: rp.node_size || '',
+        nbNode: rp.nb_node || '',
+        fdrThreshold: rp.fdr_thr || '',
+        pValueThreshold: rp.p_value_thr || '',
+        rnaSeq: rp.data_type.find((f) => f === 'RNA_SEQ'),
+        affymetrix: rp.data_type.find((f) => f === 'AFFYMETRIX'),
+        inSitu: rp.data_type.find((f) => f === 'IN_SITU'),
+        est: rp.data_type.find((f) => f === 'EST'),
       }));
-      setFgData({
-        fg_list: r.data.fg_list,
-        message: `${formData.fg_list.length} IDs provided, ${
-          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies]
-        } unique gene${
-          r.data.fg_list.geneCount[r.data.fg_list.selectedSpecies] > 0
-            ? 's'
-            : ''
-        } found in ${
-          r.data.fg_list.detectedSpecies[r.data.fg_list.selectedSpecies].name
-        }`,
+      requestParameters.set((prev) => {
+        const curr = JSON.parse(JSON.stringify(prev));
+
+        curr.fg = {
+          list: res.data.fg_list,
+          message: `${rp.fg_list.length} IDs provided, ${
+            res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
+          } unique gene${
+            res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies] > 0
+              ? 's'
+              : ''
+          } found in ${
+            res.data.fg_list.detectedSpecies[res.data.fg_list.selectedSpecies]
+              .name
+          }`,
+        };
+        if (rp.bg_list) curr.customBg = true;
+        if (res.data.bg_list)
+          curr.bg = res.data.bg_list
+            ? {
+                list: res.data.bg_list,
+                message: `${rp.bg_list.length} IDs provided, ${
+                  res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies]
+                } unique gene${
+                  res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies] >
+                  0
+                    ? 's'
+                    : ''
+                } found in ${
+                  res.data.bg_list.detectedSpecies[
+                    res.data.bg_list.selectedSpecies
+                  ].name
+                }`,
+              }
+            : null;
+        return curr;
       });
-      setBgData({
-        bg_list: r.data.bg_list,
-        message: `${formData.bg_list.length} IDs provided, ${
-          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies]
-        } unique gene${
-          r.data.bg_list.geneCount[r.data.bg_list.selectedSpecies] > 0
-            ? 's'
-            : ''
-        } found in ${
-          r.data.bg_list.detectedSpecies[r.data.bg_list.selectedSpecies].name
-        }`,
-      });
-      if (r.data.bg_list) setSpeciesBgTrue();
-      setSearchInfo((prev) => ({
-        ...prev,
-        isLoading: false,
-        results: r.data.topAnatResults,
-        data: r.data.topAnatResults.reduce(
+
+      setResults({
+        analysis: res.data.topAnatResults,
+        data: res.data.topAnatResults.reduce(
           (acc, a) => [...acc, ...a.results],
           []
         ),
-      }));
+      });
       // todo set form + fg & bg data
     });
   }, []);
 
   React.useEffect(() => {
-    if (getJobStatusTimeOut) clearInterval(getJobStatusTimeOut);
+    if (getJobStatusTimeOut) clearTimeout(getJobStatusTimeOut);
 
     if (id && !jobId) {
       getResults(id);
-      setSearchInfo({ isRunning: false, isLoading: true });
+      setResults({ loading: true });
       setIsEditable(false);
-      setLoading(false);
     } else if (id && jobId) {
+      setResults({ loading: true });
       getJobStatus(id, jobId);
     } else {
-      // reset fg data, bgData, etc.
-      setIsEditable(true);
+      setResults();
       resetForm();
-      setLoading(false);
-      setSearchInfo();
+      setResults();
     }
-    cleanNotifications();
+  }, [id, jobId]);
+
+  const PAGE_STATE = React.useMemo(() => {
+    if (id && jobId) return TOP_ANAT_STATUS.LOADING;
+    if (id) return TOP_ANAT_STATUS.RESULTS;
+    return TOP_ANAT_STATUS.NEW_SEARCH;
   }, [id, jobId]);
 
   return (
-    <div>
+    <>
       <Bulma.Section className="py-0">
-        {staticBuilder(staticContent)}
-        {!isLoading && (
-          <>
-            <div className="my-4 is-flex">
-              <TopAnatHistoryModal />
-              <Link
-                to={PATHS.SUPPORT.TOP_ANAT}
-                className="button is-bgee-link is-outlined mr-2"
-              >
-                <Bulma.IonIcon name="newspaper-outline" />
-                <span>{i18n.t('analysis.top-anat.documentation')}</span>
-              </Link>
-              <div className="is-align-items-center is-flex">
-                <span className="icon-text">
-                  <Bulma.IonIcon name="bookmarks-sharp" />
-                  <span>{i18n.t('analysis.top-anat.examples')}</span>
-                </span>
-                <div className="ml-1 buttons has-addons">
-                  {EXAMPLES.map((ex, key) => (
-                    <Tooltip
-                      key={ex.id}
-                      title={`Example ${key + 1}`}
-                      content={ex.description}
-                    >
-                      <Link
-                        to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
-                          ':id',
-                          ex.id
-                        )}
-                        className="button is-bgee-link is-outlined"
-                      >
-                        <span>{key + 1}</span>
-                      </Link>
-                    </Tooltip>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <TopAnatForm
-              form={{ handleChange, data, errors, isEditable }}
-              fgData={fgData}
-              bgData={bgData}
-              handlers={{
-                foregroundHandler,
-                backgroundHandler,
-                setSpeciesBgTrue,
-                setSpeciesBgFalse,
-                onSelectCustomStage,
-                checkBoxHandler,
-                setExpandOpts,
-              }}
-              expandOpts={expandOpts}
-              speciesBg={speciesBg}
-            />
-          </>
+        <TopAnatHead />
+        {!PAGE_STATE && (
+          <TopAnatForm
+            form={{ handleChange, data, errors, isEditable }}
+            requestParameters={requestParameters.value}
+            handlers={{
+              foregroundHandler,
+              backgroundHandler,
+              setRP: requestParameters.set,
+              onSelectCustomStage,
+              checkBoxHandler,
+            }}
+          />
         )}
-        <div className="field">
-          <p className="control">
-            {!isLoading && (
-              <button
-                type="button"
-                className="button is-success"
-                onClick={handleSubmit}
-                disabled={!isEditable}
-              >
-                {i18n.t('analysis.top-anat.submit-job')}
-              </button>
-            )}
-            {searchInfo && searchInfo.isRunning && (
-              <button
-                type="button"
-                className="button is-primary"
-                onClick={handleSubmit}
-                disabled={!isEditable}
-              >
-                {i18n.t('analysis.top-anat.cancel-job')}
-              </button>
-            )}
-          </p>
-        </div>
-        <TopAnatBanner searchInfo={searchInfo} />
+        <TopAnatActionButtons
+          status={PAGE_STATE}
+          handleSubmit={job.submit}
+          cancelJob={job.cancel}
+          startNewJob={job.startNew}
+        />
+        <TopAnatBanner results={results} status={PAGE_STATE} />
       </Bulma.Section>
-      <TopAnatResult searchInfo={searchInfo} searchId={id} fgData={fgData} />
-    </div>
+      <TopAnatResult
+        status={PAGE_STATE}
+        results={results}
+        searchId={id}
+        fg={requestParameters.fg}
+      />
+    </>
   );
 };
 

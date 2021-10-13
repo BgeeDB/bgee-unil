@@ -3,81 +3,25 @@ import { useHistory } from 'react-router-dom';
 import api from '../api';
 import useForm from './useForm';
 import array from '../helpers/array';
-import useToggle from './useToggle';
 import PATHS from '../routes/paths';
 import { NotificationContext } from '../contexts/NotificationsContext';
-import { addTopAnatHistory } from '../components/TopAnat/TopAnatHistoryModal';
-
-export const TOP_ANAT_FORM_CONFIG = {
-  initialValue: {
-    genes: '',
-    genesBg: '',
-    email: '',
-    jobDescription: '',
-    stages: 'all',
-    dataQuality: 'all',
-    decorrelationType: 'classic',
-    nodeSize: '20',
-    nbNode: '20',
-    fdrThreshold: '0.2',
-    pValueThreshold: '1',
-    rnaSeq: true,
-    affymetrix: true,
-    inSitu: true,
-    est: true,
-  },
-  validations: {
-    genes: {
-      required: {
-        value: true,
-        message: 'The job needs to run with some genes.',
-      },
-    },
-    email: {
-      nodeSize: {
-        required: {
-          value: true,
-          message: 'Please choose a node size (ex: 20)',
-        },
-      },
-      nbNode: {
-        required: {
-          value: true,
-          message: 'Please choose a number of nodes (ex: 20)',
-        },
-      },
-      fdrThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a FDR threshold (ex: 0.2)',
-        },
-      },
-      pValueThreshold: {
-        required: {
-          value: true,
-          message: 'Please choose a p-value threshold (ex: 1)',
-        },
-      },
-    },
-  },
-};
+import {
+  TOP_ANAT_DEFAULT_RP,
+  TOP_ANAT_FORM_CONFIG,
+} from '../helpers/constants/topAnat';
 
 let timeoutFg;
 let timeoutBg;
 
 const useTopAnat = () => {
   const { addNotification } = React.useContext(NotificationContext);
-  const [searchInfo, setSearchInfo] = React.useState();
-  const [expandOpts, setExpandOpts] = React.useState(false);
-  const [fgData, setFgData] = React.useState();
-  const [bgData, setBgData] = React.useState();
-  const [speciesBg, { toTrue: setSpeciesBgTrue, toFalse: setSpeciesBgFalse }] =
-    useToggle(false);
+  const [requestParameters, setRP] = React.useState(TOP_ANAT_DEFAULT_RP);
+  const [results, setResults] = React.useState();
 
   const history = useHistory();
   const onSubmit = React.useCallback((data) => {
     const formattedData = data; // to format for api
-    setSearchInfo({ waitingResponse: true });
+    setResults({ loading: true });
     api.topAnat.runJob(formattedData).then((res) => {
       history.push(
         PATHS.ANALYSIS[
@@ -92,20 +36,20 @@ const useTopAnat = () => {
   }, []);
 
   const {
-    data,
-    setData,
-    handleChange,
-    handleSubmit,
-    errors,
-    edition: { isEditable, setIsEditable },
+    data: dataForm,
+
+    handleSubmit: submitJob,
     reset,
+    edition: { isEditable, setIsEditable },
+    ...propsForm
   } = useForm({
     ...TOP_ANAT_FORM_CONFIG,
     onSubmit,
   });
+
   const foregroundHandler = React.useCallback(
     (e) => {
-      handleChange('genes')(e);
+      propsForm.handleChange('genes')(e);
       if (!isEditable) return;
       if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
@@ -113,25 +57,33 @@ const useTopAnat = () => {
           api.topAnat
             .autoCompleteForegroundGenes(e.target.value, 'fg')
             .then((r) => {
-              setSpeciesBgFalse();
-              handleChange('genesBg', () => '')();
-              handleChange('rnaSeq', () => true)();
-              handleChange('affymetrix', () => true)();
-              handleChange('inSitu', () => true)();
-              handleChange('est', () => true)();
-              setFgData({ fg_list: r.data.fg_list, message: r.message });
+              propsForm.handleChange('genesBg', () => '')();
+              propsForm.handleChange('rnaSeq', () => true)();
+              propsForm.handleChange('affymetrix', () => true)();
+              propsForm.handleChange('inSitu', () => true)();
+              propsForm.handleChange('est', () => true)();
+              setRP((prev) => ({
+                ...prev,
+                fg: {
+                  list: r.data.fg_list,
+                  message: r.message,
+                },
+                bg: null,
+                customBg: false,
+              }));
             });
         }, 1000);
-      } else setFgData(undefined);
+      } else
+        setRP((prev) => ({ ...prev, fg: null, bg: null, customBg: false }));
     },
-    [data, isEditable]
+    [dataForm, propsForm]
   );
   const backgroundHandler = React.useCallback(
     (e) => {
-      handleChange('genesBg')(e);
+      propsForm.handleChange('genesBg')(e);
       if (!isEditable) return;
       const bg = e.target.value.split('\n');
-      const fg = data.genes.split('\n');
+      const fg = dataForm.genes.split('\n');
 
       if (timeoutBg) clearTimeout(timeoutBg);
       if (!array.equals(fg, bg)) {
@@ -154,7 +106,7 @@ const useTopAnat = () => {
             .then((r) => {
               if (
                 r.data.fg_list.selectedSpecies !==
-                fgData.fg_list.selectedSpecies
+                requestParameters.fg.list.selectedSpecies
               ) {
                 addNotification({
                   id: Math.random().toString(10),
@@ -167,20 +119,27 @@ const useTopAnat = () => {
                   className: `is-danger`,
                 });
               }
-              setBgData({ bg_list: r.data.bg_list, message: r.message });
+              setRP((prev) => ({
+                ...prev,
+                bg: {
+                  list: r.data.bg_list,
+                  message: r.message,
+                },
+              }));
             });
         }, 1000);
       }
     },
-    [data, fgData, isEditable]
+    [dataForm, requestParameters, isEditable]
   );
   const checkBoxHandler = React.useCallback(
-    (key) => (e) => handleChange(key, (event) => event.target.checked)(e),
+    (key) => (e) =>
+      propsForm.handleChange(key, (event) => event.target.checked)(e),
     []
   );
   const onSelectCustomStage = React.useCallback(
     (id) => (e) => {
-      if (!fgData) {
+      if (!requestParameters) {
         addNotification({
           id: Math.random().toString(10),
           children: <p>No species detected from gene list</p>,
@@ -189,7 +148,7 @@ const useTopAnat = () => {
         return;
       }
       if (id) {
-        const tmp = [...data.stages];
+        const tmp = [...dataForm.stages];
         if (e.target.checked) {
           tmp.push(id);
         } else {
@@ -199,47 +158,52 @@ const useTopAnat = () => {
             1
           );
         }
-        handleChange('stages', () => tmp)();
+        propsForm.handleChange('stages', () => tmp)();
       } else {
-        handleChange('stages', () =>
-          e === 'all' ? 'all' : fgData.fg_list.stages.map((s) => s.id)
+        propsForm.handleChange('stages', () =>
+          e === 'all'
+            ? 'all'
+            : requestParameters.fg.list.stages.map((s) => s.id)
         )();
       }
     },
-    [data, fgData]
+    [dataForm, requestParameters]
   );
+
+  const cancelJob = React.useCallback(() =>
+    // todo api cancel job
+    // todo go back to new form with rp as data
+    {}, []);
+  const startNewJob = React.useCallback(() => {}, []);
+  const resetForm = React.useCallback(() => {
+    // todo reset fg data, bgData, etc.
+    setRP(TOP_ANAT_DEFAULT_RP);
+    reset();
+    setIsEditable(true);
+  }, []);
 
   return {
     form: {
-      data,
-      setData,
-      handleChange,
-      handleSubmit,
-      errors,
+      ...propsForm,
+      data: dataForm,
       edition: { isEditable, setIsEditable },
       foregroundHandler,
       backgroundHandler,
       checkBoxHandler,
       onSelectCustomStage,
-      resetForm: reset,
+      resetForm,
     },
-    searchInfo: {
-      value: searchInfo,
-      setSearchInfo,
+    job: {
+      submit: submitJob,
+      cancel: cancelJob,
+      startNew: startNewJob,
     },
-    expandOpts: {
-      value: expandOpts,
-      setExpandOpts,
+    results,
+    setResults,
+    requestParameters: {
+      value: requestParameters,
+      set: setRP,
     },
-    fgData: {
-      value: fgData,
-      setFgData,
-    },
-    bgData: {
-      value: bgData,
-      setBgData,
-    },
-    species: { speciesBg, setSpeciesBgTrue, setSpeciesBgFalse },
   };
 };
 

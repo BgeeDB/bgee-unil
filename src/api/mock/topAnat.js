@@ -221,8 +221,9 @@ const topAnat = {
   getStatus: (id, jobId) =>
     new Promise((res) => {
       GET_STATUS_INCREMENTAL += 1;
+      console.log('INCREMENT', GET_STATUS_INCREMENTAL);
       res(
-        GET_STATUS_INCREMENTAL % 3 !== 0
+        GET_STATUS_INCREMENTAL % 5 !== 0
           ? {
               code: 200,
               status: 'SUCCESS',
