@@ -485,10 +485,9 @@ a.image.cc {
   left: 0;
   right: 0;
   z-index: 99;
-  padding: 15px;
 
-  & > .notification:not(:first-child) {
-    margin-top: 10px;
+  & > .notification {
+    margin-top: 15px;
   }
 }
 

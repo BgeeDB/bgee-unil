@@ -1,10 +1,32 @@
 import React from 'react';
 import Bulma from '../Bulma';
+import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 
-const TopAnatBanner = ({ searchInfo }) => {
-  if (searchInfo && searchInfo.waitingResponse) {
+const TopAnatBanner = ({ results, status }) => {
+  if (results && results.loading) {
+    if (status === TOP_ANAT_STATUS.NEW_SEARCH)
+      return (
+        <Bulma.Notification color="warning" className="mt-5">
+          <progress
+            className="progress is-small"
+            max="100"
+            style={{ animationDuration: '3s', marginBottom: 12 }}
+          >
+            80%
+          </progress>
+
+          <p>
+            Processing job, waiting for a job id. Please stand by until the job
+            is started, or until results are retrieved, if they already exist on
+            our server (in that case, we won&apos;t send you a notification
+            email, if you provided your address)
+          </p>
+        </Bulma.Notification>
+      );
+
     return (
-      <Bulma.Notification color="warning" className="mt-5">
+      <Bulma.Notification color="info" className="mt-5">
+        <p className="has-text-centered">Loading</p>
         <progress
           className="progress is-small"
           max="100"
@@ -12,17 +34,10 @@ const TopAnatBanner = ({ searchInfo }) => {
         >
           80%
         </progress>
-
-        <p>
-          Processing job, waiting for a job id. Please stand by until the job is
-          started, or until results are retrieved, if they already exist on our
-          server (in that case, we won&apos;t send you a notification email, if
-          you provided your address)
-        </p>
       </Bulma.Notification>
     );
   }
-  if (searchInfo && searchInfo.isRunning) {
+  if (status === TOP_ANAT_STATUS.LOADING && results.jobId) {
     return (
       <Bulma.Notification color="warning" className="mt-5">
         <progress
@@ -41,29 +56,16 @@ const TopAnatBanner = ({ searchInfo }) => {
           data to process. It is not necessary to refresh this page, it will be
           automatically updated.
         </p>
-        <p className="mt-2">Job is running - Job ID: {searchInfo.jobId}</p>
+        <p className="mt-2">Job is running - Job ID: {results.jobId}</p>
       </Bulma.Notification>
     );
   }
-  if (searchInfo && !searchInfo.isRunning) {
-    if (searchInfo.isLoading)
-      return (
-        <Bulma.Notification color="info" className="mt-5">
-          <p className="has-text-centered">Loading</p>
-          <progress
-            className="progress is-small"
-            max="100"
-            style={{ animationDuration: '3s', marginBottom: 12 }}
-          >
-            80%
-          </progress>
-        </Bulma.Notification>
-      );
-    const nbRecords = searchInfo.results.reduce(
+  if (status === TOP_ANAT_STATUS.RESULTS && results) {
+    const nbRecords = results.analysis.reduce(
       (acc, analysis) => acc + analysis.results.length,
       0
     );
-    const nbAnalysis = searchInfo.results.length + 1;
+    const nbAnalysis = results.analysis.length + 1;
     const nbAnalysisSuccess = 0;
     return (
       <Bulma.Notification color="info" className="my-5">

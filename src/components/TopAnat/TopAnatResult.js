@@ -1,6 +1,7 @@
 import React from 'react';
 import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
+import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 
 const COLUMNS = [
   {
@@ -36,7 +37,8 @@ const COLUMNS = [
     text: 'Fdr',
   },
 ];
-const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
+
+const TopAnatResult = ({ results, searchId, fg, status }) => {
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
@@ -74,13 +76,13 @@ const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
   const dataCsvHref = React.useMemo(() => {
     let csvContent =
       'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
-    if (searchInfo?.data)
-      searchInfo?.data.forEach((row) => {
+    if (results?.data)
+      results?.data.forEach((row) => {
         csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
       });
 
     return csvContent;
-  }, [searchInfo]);
+  }, [results]);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
       <Bulma.Columns vCentered>
@@ -95,8 +97,8 @@ const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
             >
               All stages, expression type &quot;Present&quot;
             </a>
-            {searchInfo.results.length > 1 &&
-              searchInfo.results.map((r, key) => (
+            {results.analysis.length > 1 &&
+              results.analysis.map((r) => (
                 <a
                   key={r.zipFile}
                   href={r.zipFile}
@@ -104,21 +106,11 @@ const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
                   style={{ width: 'fit-content' }}
                 >
                   {`${
-                    fgData.fg_list.stages.find((s) => s.id === r.devStageId)
-                      ?.name
-                  }, expression type "Present" (${r.results.length})`}
+                    fg.list.stages.find((s) => s.id === r.devStageId)?.name
+                  }, expression type "Present" (${r.analysis.length})`}
                 </a>
               ))}
-            {/* todo */}
-            {/* <a */}
-            {/*  className="button is-small mt-2" */}
-            {/*  href={initialData.result.topAnatResults[0].zipFile} */}
-            {/* > */}
-            {/*  <span className="icon is-small"> */}
-            {/*    <ion-icon name="download-outline" /> */}
-            {/*  </span> */}
-            {/*  <span>{i18n.t('analysis.top-anat.download-job-archive')}</span> */}
-            {/* </a> */}
+            @
           </div>
         </Bulma.C>
         <Bulma.C size={5}>
@@ -149,7 +141,7 @@ const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
         </Bulma.C>
       </Bulma.Columns>
     ),
-    [fgData, searchInfo, dataCsvHref]
+    [fg, results, dataCsvHref]
   );
   const mappingObj = React.useCallback(
     ({
@@ -174,12 +166,16 @@ const TopAnatResult = ({ searchInfo, searchId, fgData }) => {
     []
   );
 
-  if (searchInfo && Array.isArray(searchInfo.data))
+  if (
+    status === TOP_ANAT_STATUS.RESULTS &&
+    results &&
+    Array.isArray(results.data)
+  )
     return (
       <ComplexTable
         columns={COLUMNS}
         key={searchId}
-        data={searchInfo.data}
+        data={results.data}
         onRenderCell={onRenderCell}
         sortable
         pagination
