@@ -8,6 +8,7 @@ import HelpIcon from '../HelpIcon';
 import Toggle from '../Form/Toggle';
 import Input from '../Form/Input';
 import classnames from '../../helpers/classnames';
+import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 
 const ForegroundModal = ({ data }) => {
   const { selectedSpecies } = data;
@@ -87,7 +88,7 @@ const labelClassNames = (key, value) =>
   });
 
 const TopAnatForm = ({
-  form: { handleChange, data: formData, errors, isEditable },
+  form: { handleChange, data: formData, errors },
   requestParameters: rp,
   handlers: {
     foregroundHandler,
@@ -96,7 +97,12 @@ const TopAnatForm = ({
     onSelectCustomStage,
     checkBoxHandler,
   },
+  status,
 }) => {
+  const formDisabled = React.useMemo(
+    () => status !== TOP_ANAT_STATUS.NEW_SEARCH,
+    [status]
+  );
   const [expandOpts, setExpandOpts] = React.useState(false);
   return (
     <>
@@ -146,7 +152,7 @@ const TopAnatForm = ({
               onChange={foregroundHandler}
               error={errors.genes}
               value={formData.genes}
-              disabled={!isEditable}
+              disabled={formDisabled}
             />
           </div>
         </Bulma.C>
@@ -200,7 +206,9 @@ const TopAnatForm = ({
                           onClick={() =>
                             setRP((prev) => ({ ...prev, customBg: false }))
                           }
-                          disabled={!isEditable || (isEditable && !rp.customBg)}
+                          disabled={
+                            formDisabled || (!formDisabled && !rp.customBg)
+                          }
                         >{`Bgee data for ${
                           rp.fg.list.detectedSpecies[rp.fg.list.selectedSpecies]
                             .name
@@ -214,7 +222,9 @@ const TopAnatForm = ({
                           onClick={() =>
                             setRP((prev) => ({ ...prev, customBg: true }))
                           }
-                          disabled={!isEditable || (isEditable && rp.customBg)}
+                          disabled={
+                            formDisabled || (!formDisabled && rp.customBg)
+                          }
                         >
                           Custom data
                         </Bulma.Button>
@@ -234,7 +244,7 @@ const TopAnatForm = ({
                     onChange={backgroundHandler}
                     error={errors.genes}
                     value={formData.genesBg}
-                    disabled={!isEditable}
+                    disabled={formDisabled}
                   />
                 </div>
               )}
@@ -260,7 +270,7 @@ const TopAnatForm = ({
                     <input
                       type="checkbox"
                       className="mr-2"
-                      disabled={!isEditable}
+                      disabled={formDisabled}
                       onChange={checkBoxHandler('rnaSeq')}
                       checked={formData.rnaSeq}
                     />
@@ -272,7 +282,7 @@ const TopAnatForm = ({
                     <input
                       type="checkbox"
                       className="mr-2"
-                      disabled={!isEditable}
+                      disabled={formDisabled}
                       onChange={checkBoxHandler('affymetrix')}
                       checked={formData.affymetrix}
                     />
@@ -284,7 +294,7 @@ const TopAnatForm = ({
                     <input
                       type="checkbox"
                       className="mr-2"
-                      disabled={!isEditable}
+                      disabled={formDisabled}
                       onChange={checkBoxHandler('inSitu')}
                       checked={formData.inSitu}
                     />
@@ -296,7 +306,7 @@ const TopAnatForm = ({
                     <input
                       type="checkbox"
                       className="mr-2"
-                      disabled={!isEditable}
+                      disabled={formDisabled}
                       onChange={checkBoxHandler('est')}
                       checked={formData.est}
                     />
@@ -359,7 +369,7 @@ const TopAnatForm = ({
                           value={formData.stages === 'all' ? 'all' : 'custom'}
                           onChange={onSelectCustomStage()}
                           error={errors.stages}
-                          disabled={!isEditable}
+                          disabled={formDisabled}
                         />
                       </div>
                     </div>
@@ -374,7 +384,7 @@ const TopAnatForm = ({
                             <input
                               type="checkbox"
                               className="mr-2"
-                              disabled={!isEditable}
+                              disabled={formDisabled}
                               onChange={onSelectCustomStage(s.id)}
                               checked={
                                 formData.stages.findIndex((a) => a === s.id) >=
@@ -428,7 +438,7 @@ const TopAnatForm = ({
                           value={formData.dataQuality}
                           onChange={handleChange('dataQuality', (v) => v)}
                           error={errors.dataQuality}
-                          disabled={!isEditable}
+                          disabled={formDisabled}
                         />
                       </div>
                     </div>
@@ -468,7 +478,7 @@ const TopAnatForm = ({
                   <div className="field-body">
                     <div className="field">
                       <Toggle
-                        disabled={!isEditable}
+                        disabled={formDisabled}
                         elements={[
                           {
                             value: 'classic',
@@ -513,7 +523,7 @@ const TopAnatForm = ({
                     <div className="field">
                       <div className="control">
                         <Input
-                          disabled={!isEditable}
+                          disabled={formDisabled}
                           value={formData.nodeSize}
                           onChange={handleChange('nodeSize')}
                           error={errors.nodeSize}
@@ -548,7 +558,7 @@ const TopAnatForm = ({
                   <div className="field-body">
                     <div className="field">
                       <Input
-                        disabled={!isEditable}
+                        disabled={formDisabled}
                         value={formData.nbNode}
                         onChange={handleChange('nbNode')}
                         error={errors.nbNode}
@@ -586,7 +596,7 @@ const TopAnatForm = ({
                   <div className="field-body">
                     <div className="field">
                       <Input
-                        disabled={!isEditable}
+                        disabled={formDisabled}
                         value={formData.fdrThreshold}
                         onChange={handleChange('fdrThreshold')}
                         error={errors.fdrThreshold}
@@ -621,7 +631,7 @@ const TopAnatForm = ({
                   <div className="field-body">
                     <div className="field">
                       <Input
-                        disabled={!isEditable}
+                        disabled={formDisabled}
                         value={formData.pValueThreshold}
                         onChange={handleChange('pValueThreshold')}
                         error={errors.pValueThreshold}
@@ -639,7 +649,7 @@ const TopAnatForm = ({
         <Input
           controlClassName="has-icons-left"
           type="email"
-          disabled={!isEditable}
+          disabled={formDisabled}
           value={formData.email}
           onChange={handleChange('email')}
           placeholder={i18n.t('analysis.top-anat.email')}
@@ -656,7 +666,7 @@ const TopAnatForm = ({
           onChange={handleChange('jobDescription')}
           placeholder={i18n.t('analysis.top-anat.job-description')}
           error={errors.jobDescription}
-          disabled={!isEditable}
+          disabled={formDisabled}
           icons={
             <span className="icon is-left">
               <ion-icon name="document-outline" />

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
@@ -17,6 +17,14 @@ import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 let getJobStatusTimeOut;
 
 const TopAnat = () => {
+  const { state: pageState } = useLocation();
+  const { id, jobId } = useParams();
+  const PAGE_STATE = React.useMemo(() => {
+    if (id && jobId) return TOP_ANAT_STATUS.LOADING;
+    if (id) return TOP_ANAT_STATUS.RESULTS;
+    return TOP_ANAT_STATUS.NEW_SEARCH;
+  }, [id, jobId]);
+  const history = useHistory();
   const { addNotification } = React.useContext(NotificationContext);
   const {
     form: {
@@ -24,7 +32,6 @@ const TopAnat = () => {
       setData,
       handleChange,
       errors,
-      edition: { isEditable, setIsEditable },
       foregroundHandler,
       backgroundHandler,
       checkBoxHandler,
@@ -35,10 +42,10 @@ const TopAnat = () => {
     requestParameters,
     results,
     setResults,
-  } = useTopAnat();
+  } = useTopAnat(PAGE_STATE);
 
   React.useEffect(() => {
-    if (isEditable && requestParameters.bg) {
+    if (PAGE_STATE === TOP_ANAT_STATUS.NEW_SEARCH && requestParameters.bg) {
       addNotification({
         id: Math.random().toString(10),
         children: (
@@ -57,10 +64,7 @@ const TopAnat = () => {
         }`,
       });
     }
-  }, [requestParameters, isEditable]);
-
-  const { id, jobId } = useParams();
-  const history = useHistory();
+  }, [requestParameters, PAGE_STATE]);
 
   const getJobStatus = React.useCallback((ID, jobID) => {
     api.topAnat.getStatus(ID, jobID).then((r) => {
@@ -154,43 +158,37 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (getJobStatusTimeOut) clearTimeout(getJobStatusTimeOut);
 
+    resetForm();
+    if (!id && !jobId && pageState?.form && pageState?.requestParameters) {
+      setData(pageState.form);
+      requestParameters.set(pageState.requestParameters);
+    }
+
     if (id && !jobId) {
       getResults(id);
       setResults({ loading: true });
-      setIsEditable(false);
     } else if (id && jobId) {
       setResults({ loading: true });
       getJobStatus(id, jobId);
-    } else {
-      setResults();
-      resetForm();
-      setResults();
     }
-  }, [id, jobId]);
-
-  const PAGE_STATE = React.useMemo(() => {
-    if (id && jobId) return TOP_ANAT_STATUS.LOADING;
-    if (id) return TOP_ANAT_STATUS.RESULTS;
-    return TOP_ANAT_STATUS.NEW_SEARCH;
-  }, [id, jobId]);
+  }, [id, jobId, pageState]);
 
   return (
     <>
       <Bulma.Section className="py-0">
         <TopAnatHead />
-        {!PAGE_STATE && (
-          <TopAnatForm
-            form={{ handleChange, data, errors, isEditable }}
-            requestParameters={requestParameters.value}
-            handlers={{
-              foregroundHandler,
-              backgroundHandler,
-              setRP: requestParameters.set,
-              onSelectCustomStage,
-              checkBoxHandler,
-            }}
-          />
-        )}
+        <TopAnatForm
+          status={PAGE_STATE}
+          form={{ handleChange, data, errors }}
+          requestParameters={requestParameters.value}
+          handlers={{
+            foregroundHandler,
+            backgroundHandler,
+            setRP: requestParameters.set,
+            onSelectCustomStage,
+            checkBoxHandler,
+          }}
+        />
         <TopAnatActionButtons
           status={PAGE_STATE}
           handleSubmit={job.submit}

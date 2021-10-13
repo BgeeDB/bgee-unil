@@ -8,12 +8,13 @@ import { NotificationContext } from '../contexts/NotificationsContext';
 import {
   TOP_ANAT_DEFAULT_RP,
   TOP_ANAT_FORM_CONFIG,
+  TOP_ANAT_STATUS,
 } from '../helpers/constants/topAnat';
 
 let timeoutFg;
 let timeoutBg;
 
-const useTopAnat = () => {
+const useTopAnat = (status) => {
   const { addNotification } = React.useContext(NotificationContext);
   const [requestParameters, setRP] = React.useState(TOP_ANAT_DEFAULT_RP);
   const [results, setResults] = React.useState();
@@ -40,7 +41,6 @@ const useTopAnat = () => {
 
     handleSubmit: submitJob,
     reset,
-    edition: { isEditable, setIsEditable },
     ...propsForm
   } = useForm({
     ...TOP_ANAT_FORM_CONFIG,
@@ -50,7 +50,7 @@ const useTopAnat = () => {
   const foregroundHandler = React.useCallback(
     (e) => {
       propsForm.handleChange('genes')(e);
-      if (!isEditable) return;
+      if (status !== TOP_ANAT_STATUS.NEW_SEARCH) return;
       if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
         timeoutFg = setTimeout(() => {
@@ -76,12 +76,12 @@ const useTopAnat = () => {
       } else
         setRP((prev) => ({ ...prev, fg: null, bg: null, customBg: false }));
     },
-    [dataForm, propsForm]
+    [dataForm, propsForm, status]
   );
   const backgroundHandler = React.useCallback(
     (e) => {
       propsForm.handleChange('genesBg')(e);
-      if (!isEditable) return;
+      if (status !== TOP_ANAT_STATUS.NEW_SEARCH) return;
       const bg = e.target.value.split('\n');
       const fg = dataForm.genes.split('\n');
 
@@ -130,7 +130,7 @@ const useTopAnat = () => {
         }, 1000);
       }
     },
-    [dataForm, requestParameters, isEditable]
+    [dataForm, requestParameters, status]
   );
   const checkBoxHandler = React.useCallback(
     (key) => (e) =>
@@ -174,19 +174,22 @@ const useTopAnat = () => {
     // todo api cancel job
     // todo go back to new form with rp as data
     {}, []);
-  const startNewJob = React.useCallback(() => {}, []);
+  const startNewJob = React.useCallback(() => {
+    history.push(PATHS.ANALYSIS.TOP_ANAT, {
+      form: dataForm,
+      requestParameters,
+    });
+  }, [dataForm, requestParameters]);
   const resetForm = React.useCallback(() => {
-    // todo reset fg data, bgData, etc.
     setRP(TOP_ANAT_DEFAULT_RP);
+    setResults();
     reset();
-    setIsEditable(true);
   }, []);
 
   return {
     form: {
       ...propsForm,
       data: dataForm,
-      edition: { isEditable, setIsEditable },
       foregroundHandler,
       backgroundHandler,
       checkBoxHandler,
