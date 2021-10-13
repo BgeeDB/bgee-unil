@@ -2,7 +2,7 @@
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 @import "../../node_modules/bulma/sass/utilities/functions";
 
-$archive: true;
+$archive: false;
 
 body {
   margin: 0;
@@ -201,7 +201,7 @@ a.internal-link, a.external-link, a.mail-link {
 a.external-link {
   background-position: right center;
   background-repeat: no-repeat;
-  background-image: linear-gradient(transparent,transparent),url(../assets/img/external_link.png);
+  background-image: linear-gradient(transparent,transparent), url(../assets/img/external_link.png);
   background-size: 9px;
   padding-right: 13px;
 }
