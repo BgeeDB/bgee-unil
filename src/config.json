@@ -1,23 +1,24 @@
 {
   "version": "15.0",
   "archive": false,
+  "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "archivedVersion": [
     {
       "version": "14.2",
-      "url":"https://bgee.org/bgee14_/"
+      "url": "https://bgee.org/bgee14_/"
     },
     {
       "version": "14.1",
-      "url":"https://bgee.org/bgee14_1/"
+      "url": "https://bgee.org/bgee14_1/"
     },
     {
       "version": "14.0",
-      "url":"https://bgee.org/bgee14/"
+      "url": "https://bgee.org/bgee14/"
     },
     {
       "version": "13.0",
-      "url":"https://bgee.org/bgee13/"
+      "url": "https://bgee.org/bgee13/"
     }
   ],
   "contactEmail": "Bgee@sib.swiss"

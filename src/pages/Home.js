@@ -13,11 +13,11 @@ import config from '../config.json';
 
 const Home = () => (
   <>
-    <Bulma.Hero style={{ backgroundColor: '#d9d9d9' }}>
+    <Bulma.Hero className="home-hero-banner">
       <Bulma.Hero.Body className="pt-3">
-        <p className="has-text-right mb-5">{`${i18n.t('global.version')} ${
-          packageJson.version
-        }`}</p>
+        <p className="has-text-right mb-5">{`${i18n.t(
+          config.archive ? 'global.archived-version' : 'global.version'
+        )} ${packageJson.version}`}</p>
         <div className="is-flex is-justify-content-center">
           <Bulma.Image
             src={assets.bgeeLogo}
@@ -142,23 +142,25 @@ const Home = () => (
           </Bulma.Card.Body>
         </Bulma.Card>
         <Bulma.Columns className="mt-4">
-          <Bulma.C csize={9}>
+          <Bulma.C csize={config.archive ? 12 : 9}>
             <CreativeCommons />
           </Bulma.C>
-          <Bulma.C size={3}>
-            <p className="is-size-7 archived-link">
-              View archive sites:
-              {config.archivedVersion.map((archived) => (
-                <a
-                  key={archived.version}
-                  className="external-link"
-                  href={archived.url}
-                >
-                  {`version ${archived.version}`}
-                </a>
-              ))}
-            </p>
-          </Bulma.C>
+          {!config.archive && (
+            <Bulma.C size={3}>
+              <p className="is-size-7 archived-link">
+                View archive sites:
+                {config.archivedVersion.map((archived) => (
+                  <a
+                    key={archived.version}
+                    className="external-link"
+                    href={archived.url}
+                  >
+                    {`version ${archived.version}`}
+                  </a>
+                ))}
+              </p>
+            </Bulma.C>
+          )}
         </Bulma.Columns>
       </Bulma.Container>
     </Bulma.Section>

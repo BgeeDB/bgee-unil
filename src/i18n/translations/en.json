@@ -2,6 +2,7 @@
   "global": {
     "app-name": "Bgee",
     "description": "Gene expression data in animals",
+    "archived-version": "Archived version",
     "version": "Version",
     "search": "Search",
     "download": "download",
