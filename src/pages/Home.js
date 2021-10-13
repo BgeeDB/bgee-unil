@@ -13,11 +13,11 @@ import config from '../config.json';
 
 const Home = () => (
   <>
-    <Bulma.Hero style={{ backgroundColor: '#d9d9d9' }}>
+    <Bulma.Hero className="home-hero-banner">
       <Bulma.Hero.Body className="pt-3">
-        <p className="has-text-right mb-5">{`${i18n.t('global.version')} ${
-          packageJson.version
-        }`}</p>
+        <p className="has-text-right mb-5">{`${i18n.t(
+          config.archive ? 'global.archived-version' : 'global.version'
+        )} ${packageJson.version}`}</p>
         <div className="is-flex is-justify-content-center">
           <Bulma.Image
             src={assets.bgeeLogo}

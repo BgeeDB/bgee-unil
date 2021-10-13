@@ -2,6 +2,8 @@
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 @import "../../node_modules/bulma/sass/utilities/functions";
 
+$archive: true;
+
 body {
   margin: 0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
@@ -27,11 +29,25 @@ $text: #626262;
 $code: $primary;
 $title-color: $primary;
 $dark-color: #ffffff;
+
 $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
+$dark-font-color: $dark-color;
+$hero-banner-bg: #d9d9d9;
+
+@if $archive {
+  $dark-bg-color: #a8a088;
+  $dark-bg-hover-color: #d0cbbf;
+  $dark-font-color: #626262;
+  $hero-banner-bg: #d0cbbf;
+}
+
 
 $desktop: 1090px;
 
+.home-hero-banner {
+  background-color: $hero-banner-bg;
+}
 /*
  * navbar style
  */
@@ -73,10 +89,10 @@ $colors: map-merge($colors, $custom-colors);
       .navbar-dropdown {
         display: none;
         .custom.navbar-item {
-          color: #aaaaaa !important;
+          color: $dark-font-color !important;
           &:hover {
             background-color: $dark-bg-hover-color;
-            color: $dark-color;
+            color: $dark-color !important;
           }
         }
       }
