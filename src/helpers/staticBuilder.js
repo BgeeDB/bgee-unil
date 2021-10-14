@@ -321,7 +321,7 @@ const staticBuilder = (json, prefixKey = '') =>
         return (
           <p
             id={props.id}
-            className={classnames(props.classNames)}
+            className={classnames(classNames)}
             key={`${prefixKey}-${key}`}
           >
             {richTextBuilder(props.content, `${prefixKey}-${key}`)}
