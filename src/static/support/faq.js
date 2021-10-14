@@ -306,7 +306,33 @@ const faq = [
       },
       {
         title: 'Do you have protein expression?',
-        body: 'No, Bgee only includes RNA level expression data. In situ means in situ hybridization of RNA only.',
+        body: [
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'No, Bgee only includes RNA level expression data. ',
+              },
+              {
+                type: 'italic',
+                content: 'In situ',
+              },
+              {
+                type: 'text',
+                content: ' means ',
+              },
+              {
+                type: 'italic',
+                content: 'in situ',
+              },
+              {
+                type: 'text',
+                content: ' hybridization of RNA only.',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
