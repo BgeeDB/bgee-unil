@@ -4,6 +4,7 @@ import assets from '../../../assets';
 import PATHS from '../../../routes/paths';
 import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
+import config from '../../../config.json';
 
 const NAVBAR_LEFT = [
   {
@@ -117,7 +118,7 @@ const NAVBAR_LEFT = [
       {
         key: 'page.support.contact-us',
         type: 'mail',
-        mail: 'Bgee@sib.swiss',
+        mail: config.contactEmail,
       },
     ],
   },

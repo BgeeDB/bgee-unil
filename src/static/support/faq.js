@@ -1,4 +1,5 @@
 import PATHS from '../../routes/paths';
+import config from '../../config.json';
 
 const faq = [
   {
@@ -16,7 +17,7 @@ const faq = [
       },
       {
         type: 'link_mail',
-        email: 'Bgee@sib.swiss',
+        email: config.contactEmail,
         text: 'Bgee e-mail',
       },
       {
