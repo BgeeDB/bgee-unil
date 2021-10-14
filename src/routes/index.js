@@ -49,120 +49,120 @@ const Router = () => (
                 />
               )}
             />
-            <Route
-              exact
-              path={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON]
-                      .i18nKey
-                  )}
-                  Component={
-                    ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON]
-                      .component
-                  }
-                />
-              )}
-            />
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.ANALYSIS.EXPRESSION_COMPARISON} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON] */}
+            {/*          .i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON] */}
+            {/*          .component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
 
-            <Route
-              exact
-              path={PATHS.SEARCH.GENE}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE].i18nKey)}
-                  Component={ROUTES.SEARCH[PATHS.SEARCH.GENE].component}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHS.SEARCH.GENE_ITEM}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].i18nKey)}
-                  Component={ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].component}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].i18nKey
-                  )}
-                  Component={
-                    ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component
-                  }
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHS.SEARCH.SPECIES}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.SPECIES].i18nKey)}
-                  Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component}
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHS.SEARCH.SPECIES_ITEM}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].i18nKey
-                  )}
-                  Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].component}
-                />
-              )}
-            />
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SEARCH.GENE} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE].i18nKey)} */}
+            {/*      Component={ROUTES.SEARCH[PATHS.SEARCH.GENE].component} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SEARCH.GENE_ITEM} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].i18nKey)} */}
+            {/*      Component={ROUTES.SEARCH[PATHS.SEARCH.GENE_ITEM].component} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SEARCH.SPECIES} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t(ROUTES.SEARCH[PATHS.SEARCH.SPECIES].i18nKey)} */}
+            {/*      Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SEARCH.SPECIES_ITEM} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].i18nKey */}
+            {/*      )} */}
+            {/*      Component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES_ITEM].component} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
 
-            <Route
-              exact
-              path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]
-                      .i18nKey
-                  )}
-                  Component={
-                    ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]
-                      .component
-                  }
-                />
-              )}
-            />
-            <Route
-              exact
-              path={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
-                      .i18nKey
-                  )}
-                  Component={
-                    ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
-                      .component
-                  }
-                />
-              )}
-            />
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS] */}
+            {/*          .i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS] */}
+            {/*          .component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES] */}
+            {/*          .i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES] */}
+            {/*          .component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
             <Route
               exact
               path={PATHS.DOWNLOAD.DATA_DUMPS}
@@ -286,22 +286,23 @@ const Router = () => (
                 />
               )}
             />
-            <Route
-              exact
-              path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
-                  )}
-                  Component={
-                    ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS]
-                      .component
-                  }
-                />
-              )}
-            />
+            {/* TODO REWORK DESIGN */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS] */}
+            {/*          .component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
             <Route
               exact
               path={PATHS.SUPPORT.FAQ}
