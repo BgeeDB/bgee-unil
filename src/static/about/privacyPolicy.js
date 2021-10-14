@@ -135,10 +135,6 @@ const privacyPolicy = [
                 phoneNumber: '+41216924050',
                 text: '+41 21 692 40 50',
               },
-              {
-                type: 'text',
-                content: ')',
-              },
             ],
           },
           {
