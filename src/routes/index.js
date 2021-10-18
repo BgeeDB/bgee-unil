@@ -15,8 +15,6 @@ const Router = () => (
       <NotificationProvider>
         <Layout>
           <Switch>
-            {/* <Route exact path={PATHS.HOME} component={Home} /> */}
-
             <Route
               exact
               path={[
