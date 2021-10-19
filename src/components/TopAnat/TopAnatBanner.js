@@ -1,6 +1,7 @@
 import React from 'react';
 import Bulma from '../Bulma';
 import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
+import isPlural from '../../helpers/isPlural';
 
 const TopAnatBanner = ({ results, status }) => {
   if (results && results.loading) {
@@ -73,13 +74,16 @@ const TopAnatBanner = ({ results, status }) => {
     return (
       <Bulma.Notification color="info" className="my-5">
         <p>
-          {`TopAnat request successful. Found ${nbRecords} record${
-            nbRecords > 1 ? 's' : ''
-          }, from ${nbAnalysisSuccess} analyse${
-            nbAnalysisSuccess > 1 ? 's' : ''
-          } with results, over ${nbAnalysis} analyse${
-            nbAnalysis > 1 ? 's' : ''
-          } launched.`}
+          {`TopAnat request successful. Found ${nbRecords} ${isPlural(
+            'record',
+            nbRecords
+          )}, from ${nbAnalysisSuccess} ${isPlural(
+            'analyse',
+            nbAnalysisSuccess
+          )} with results, over ${nbAnalysis} ${isPlural(
+            'analyse',
+            nbAnalysis
+          )} launched.`}
         </p>
       </Bulma.Notification>
     );

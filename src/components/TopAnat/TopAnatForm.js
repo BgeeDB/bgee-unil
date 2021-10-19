@@ -9,6 +9,7 @@ import Toggle from '../Form/Toggle';
 import Input from '../Form/Input';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
+import isPlural from '../../helpers/isPlural';
 
 const ForegroundModal = ({ data }) => {
   const { selectedSpecies } = data;
@@ -30,9 +31,10 @@ const ForegroundModal = ({ data }) => {
                 <li key={key}>
                   <p>
                     <i>{`${value.genus} ${value.speciesName}`}</i>
-                    {`: ${data.geneCount[key]} gene${
-                      data.geneCount[key] > 1 ? 's' : ''
-                    } identified`}
+                    {`: ${data.geneCount[key]} ${isPlural(
+                      'gene',
+                      data.geneCount[key]
+                    )} identified`}
                   </p>
                 </li>
               )
