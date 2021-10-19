@@ -6,6 +6,7 @@ import config from '../../../config.json';
 import copyToClipboard from '../../../helpers/copyToClipboard';
 import PATHS from '../../../routes/paths';
 import { NotificationContext } from '../../../contexts/NotificationsContext';
+import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 
 // todo handle set timeout
 
@@ -64,7 +65,8 @@ const Footer = () => {
           <Link to={PATHS.ABOUT.PUBLICATION}>
             {i18n.t('global.footer.cite-us')}
           </Link>
-          <a href={`mailto:${config.contactEmail}`}>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a onClick={obfuscateMailLink(config.contactEmail)}>
             {i18n.t('global.footer.contact-us')}
           </a>
         </div>

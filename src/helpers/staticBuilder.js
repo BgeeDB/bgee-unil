@@ -10,6 +10,7 @@ import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';
 import Bulma from '../components/Bulma';
 import classnames from './classnames';
+import obfuscateMailLink from './obfuscateMailLink';
 
 export const richTextBuilder = (elements, prefixKey = '') =>
   elements.map(({ type, id, classNames, ...props }, key) => {
@@ -71,9 +72,10 @@ export const richTextBuilder = (elements, prefixKey = '') =>
         );
       case 'link_mail':
         return (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
           <a
             key={`${prefixKey}-${key}`}
-            href={`mailto:${props.email}`}
+            onClick={obfuscateMailLink(props.email)}
             id={id}
             className={classnames('mail-link', classNames)}
           >
