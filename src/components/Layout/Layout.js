@@ -6,6 +6,7 @@ import Alert from '../Alert';
 import Bulma from '../Bulma';
 import CookieMessage from '../CookieMessage';
 import config from '../../config.json';
+import { APP_VERSION } from '../../helpers/constants';
 
 const Layout = ({ children }) => {
   const [betaNotif, setBetaNotif] = React.useState(true);
@@ -47,7 +48,7 @@ const Layout = ({ children }) => {
         <Alert type="danger" light>
           <div>
             <span className="is-size-67">
-              {`This is an archived version of Bgee (version ${config.version})`}
+              {`This is an archived version of Bgee (version ${APP_VERSION})`}
               <a className="internal-link ml-2" href={config.genericDomain}>
                 <b>Access latest version of Bgee</b>
               </a>

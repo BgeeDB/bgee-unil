@@ -2,18 +2,18 @@
 const fs = require('fs/promises');
 const fsStd = require('fs');
 const { execSync } = require('child_process');
-const { APP_VERSION } = require('./src/helpers/constants');
+const { APP_VERSION_URL, APP_VERSION } = require('./src/helpers/constants');
 
 const main = async () => {
   try {
     let config = await fs.readFile('./src/config.json', 'utf8');
     config = JSON.parse(config);
-    const websiteUrl = `${config.genericDomain}/bgee${APP_VERSION}`;
-    const buildDirectory = `./archives/${config.version}-archived`;
+    const websiteUrl = `${config.genericDomain}/bgee${APP_VERSION_URL}`;
+    const buildDirectory = `./archives/${APP_VERSION}-archived`;
     if (fsStd.existsSync(buildDirectory)) {
       console.log(
         '\x1b[31m%s\x1b[0m',
-        `[ABORT] An archive already exists for the version ${config.version}`
+        `[ABORT] An archive already exists for the version ${APP_VERSION}`
       );
       return;
     }

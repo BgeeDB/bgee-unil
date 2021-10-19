@@ -1,5 +1,5 @@
 import PATHS from '../../routes/paths';
-import { APP_VERSION } from '../../helpers/constants';
+import { APP_VERSION_URL } from '../../helpers/constants';
 
 const sparql = [
   {
@@ -184,14 +184,14 @@ SELECT DISTINCT ?anatEntity ?anatName {
         content: [
           {
             type: 'link_external',
-            path: `https://bgee.org/sparql${APP_VERSION}/`,
-            text: `https://bgee.org/sparql${APP_VERSION}/`,
+            path: `https://bgee.org/sparql${APP_VERSION_URL}/`,
+            text: `https://bgee.org/sparql${APP_VERSION_URL}/`,
           },
         ],
       },
       {
         type: 'text',
-        content: `In the SELECT section of your query, it is essential to specify the URL of the graph you want to query (https://bgee.org/rdf_v${APP_VERSION}), otherwise you won't be using the data for this version. For example, to retrieve all anatomic entities in Rattus norvegicus where the APOC1 gene is expressed, the query is:`,
+        content: `In the SELECT section of your query, it is essential to specify the URL of the graph you want to query (https://bgee.org/rdf_v${APP_VERSION_URL}), otherwise you won't be using the data for this version. For example, to retrieve all anatomic entities in Rattus norvegicus where the APOC1 gene is expressed, the query is:`,
       },
       {
         type: 'pre_code',
@@ -199,7 +199,7 @@ SELECT DISTINCT ?anatEntity ?anatName {
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
-SELECT DISTINCT ?anatEntity ?anatName  FROM <https://bgee.org/rdf_v${APP_VERSION}> {
+SELECT DISTINCT ?anatEntity ?anatName  FROM <https://bgee.org/rdf_v${APP_VERSION_URL}> {
     ?seq a orth:Gene .
     ?seq rdfs:label ?geneName .
     ?seq genex:isExpressedIn ?cond .
@@ -223,7 +223,7 @@ SELECT DISTINCT ?anatEntity ?anatName  FROM <https://bgee.org/rdf_v${APP_VERSION
           },
           {
             type: 'text',
-            content: ` (in the example above, https://bgee.org/rdf_v${APP_VERSION}); otherwise, results will be incorrect.`,
+            content: ` (in the example above, https://bgee.org/rdf_v${APP_VERSION_URL}); otherwise, results will be incorrect.`,
           },
         ],
       },
