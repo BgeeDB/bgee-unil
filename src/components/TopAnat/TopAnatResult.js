@@ -181,6 +181,7 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
         onRenderCell={onRenderCell}
         sortable
         pagination
+        defaultPaginationSize={20}
         onFilter={onFilter}
         onSort={onSort}
         classNamesTable="is-striped"

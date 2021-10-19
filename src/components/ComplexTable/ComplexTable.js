@@ -20,6 +20,7 @@ const ComplexTable = ({
   onRenderCell,
   classNamesTable = '',
   pagination = false,
+  defaultPaginationSize,
   customHeader,
   mappingObj = (arr) => arr,
   ...props
@@ -38,7 +39,7 @@ const ComplexTable = ({
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(
-    pagination ? 10 : internalData.length
+    pagination ? defaultPaginationSize || 10 : internalData.length
   );
   const totalPage = React.useMemo(
     () => Math.round(internalData.length / pageSize) || 1,
