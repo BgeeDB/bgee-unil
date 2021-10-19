@@ -110,7 +110,6 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
                   }, expression type "Present" (${r.analysis.length})`}
                 </a>
               ))}
-            @
           </div>
         </Bulma.C>
         <Bulma.C size={5}>
