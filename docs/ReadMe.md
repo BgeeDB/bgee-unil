@@ -37,6 +37,12 @@
 
 ### Libraries used
 
+- CRACO
+
+Create React App Configuration Override is an easy and comprehensible configuration layer for create-react-app.
+We are using CRACO because all the images assets should be in the public directory. (we override the webpack public that resolves the image path)
+[Apache license] (https://github.com/gsoft-inc/gsoft-license/blob/master/LICENSE)
+
 - Axios
 
 Promised based HTTP client
