@@ -65,8 +65,11 @@ const TopAnatBanner = ({ results, status }) => {
       (acc, analysis) => acc + analysis.results.length,
       0
     );
-    const nbAnalysis = results.analysis.length + 1;
-    const nbAnalysisSuccess = 0;
+    const nbAnalysis = results.analysis.length;
+    const nbAnalysisSuccess = results.analysis.reduce(
+      (acc, analysis) => acc + (analysis.results.length > 0 ? 1 : 0),
+      0
+    );
     return (
       <Bulma.Notification color="info" className="my-5">
         <p>
