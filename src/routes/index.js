@@ -286,22 +286,23 @@ const Router = () => (
                 />
               )}
             />
-            <Route
-              exact
-              path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-              render={(props) => (
-                <Page
-                  {...props}
-                  title={i18n.t(
-                    ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
-                  )}
-                  Component={
-                    ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS]
-                      .component
-                  }
-                />
-              )}
-            />
+            {/* TODO REWORK DESIGN */}
+            {/* <Route */}
+            {/*  exact */}
+            {/*  path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS} */}
+            {/*  render={(props) => ( */}
+            {/*    <Page */}
+            {/*      {...props} */}
+            {/*      title={i18n.t( */}
+            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey */}
+            {/*      )} */}
+            {/*      Component={ */}
+            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS] */}
+            {/*          .component */}
+            {/*      } */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* /> */}
             <Route
               exact
               path={PATHS.SUPPORT.FAQ}

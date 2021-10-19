@@ -12,10 +12,16 @@ const topAnat = [
       'TopAnat is a tool to identify and visualize enriched anatomical terms, from the expression patterns of a list of genes.',
   },
   {
+    type: 'break_line',
+  },
+  {
     type: 'text',
     classNames: 'mb-2',
     content:
       'It allows to discover where genes from a set are preferentially expressed, as compared to a background, represented by default by all expression data in Bgee for the requested species. It is is similar to a Gene Ontology enrichment test, except that it analyzes the anatomical structures where genes are expressed, rather than their GO functional annotations.',
+  },
+  {
+    type: 'break_line',
   },
   {
     type: 'rich_text',
@@ -90,27 +96,42 @@ const topAnat = [
         children: [
           {
             type: 'link_internal',
-            path: `${PATHS.ANALYSIS.TOP_ANAT}?result=00fecfca04bf1b2cf88ced9b0a937d68f0eea6cb`,
+            path: PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              '00fecfca04bf1b2cf88ced9b0a937d68f0eea6cb'
+            ),
             text: 'Mouse genes mapped to the GO term "spermatogenesis".',
           },
           {
             type: 'link_internal',
-            path: `${PATHS.ANALYSIS.TOP_ANAT}?result=8fce889da7b4519c5792573ed3933032c8122819`,
+            path: PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              '8fce889da7b4519c5792573ed3933032c8122819'
+            ),
             text: 'Human genes involved in autism and epilepsy, with decorrelation.',
           },
           {
             type: 'link_internal',
-            path: `${PATHS.ANALYSIS.TOP_ANAT}?result=84856e72021dfc1f6823951e5bace0b34fdc9382`,
+            path: PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              '84856e72021dfc1f6823951e5bace0b34fdc9382'
+            ),
             text: 'Mouse genes mapped to the GO term "neurological system process", with decorrelation and high quality data only.',
           },
           {
             type: 'link_internal',
-            path: `${PATHS.ANALYSIS.TOP_ANAT}?result=7e8c74c073be03be4c40810c16c6be06c0bef1be`,
+            path: PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              '7e8c74c073be03be4c40810c16c6be06c0bef1be'
+            ),
             text: "Cow genes with the keyword 'muscle' in their UniProtKB/Swiss-Prot description.",
           },
           {
             type: 'link_internal',
-            path: `${PATHS.ANALYSIS.TOP_ANAT}?result=5fc8ff1fcfed7cfba0f82f82a67b418ce8a709b6`,
+            path: PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+              ':id',
+              '5fc8ff1fcfed7cfba0f82f82a67b418ce8a709b6'
+            ),
             text: 'Platypus genes located on X chromosome.',
           },
         ],
