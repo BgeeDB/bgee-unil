@@ -218,8 +218,6 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
 
   const dataDisplay = React.useMemo(() => {
     if (!results || !results.analysis) return null;
-    console.log(selectedStage, results);
-
     if (selectedStage === MERGE_KEY) return results.data;
 
     return (
