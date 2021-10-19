@@ -88,15 +88,18 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
       <Bulma.Columns vCentered>
         <Bulma.C size={4}>
           <div className="is-flex is-flex-direction-column">
-            <p>Archive(s)</p>
-            <a
+            <p>Download R scripts and data</p>
+            <Bulma.Button
               href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
-              className="external-link"
+              // className="external-link"
+              color="danger"
+              light
               style={{ width: 'fit-content' }}
               rel="noreferrer"
+              renderAs="a"
             >
               All stages, expression type &quot;Present&quot;
-            </a>
+            </Bulma.Button>
             {results.analysis.length > 1 &&
               results.analysis.map((r) => (
                 <a

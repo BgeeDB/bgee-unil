@@ -23,6 +23,7 @@ const Button = ({
   isStatic,
   rounded,
   onClick,
+  light,
   text,
   ...props
 }) => {
@@ -59,6 +60,7 @@ const Button = ({
         [`is-${size}`]: size,
         'is-selected': isSelected,
         'is-static': isStatic,
+        'is-light': light,
         'is-rounded': rounded,
         'is-outlined': outlined,
         'is-inverted': inverted,
