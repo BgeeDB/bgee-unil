@@ -14,6 +14,7 @@ import TopAnatResult from '../../components/TopAnat/TopAnatResult';
 import TopAnatHead from '../../components/TopAnat/TopAnatHead';
 import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons';
 import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
+import isPlural from '../../helpers/isPlural';
 
 let getJobStatusTimeOut;
 
@@ -73,6 +74,7 @@ const TopAnat = () => {
         getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 3000);
         setResults({ jobId: r.data.jobResponse.jobId });
       } else {
+        setResults({ loading: true });
         history.push(
           PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', r.data.jobResponse.data)
         );
@@ -92,7 +94,7 @@ const TopAnat = () => {
       setData((prev) => ({
         ...prev,
         genes: rp.fg_list.join('\n'),
-        genesBg: rp.bg_list.join('\n'),
+        genesBg: (rp.bg_list || []).join('\n'),
         email: '',
         jobDescription: rp.job_title || '',
         stages: 'all',
@@ -114,11 +116,10 @@ const TopAnat = () => {
           list: res.data.fg_list,
           message: `${rp.fg_list.length} IDs provided, ${
             res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
-          } unique gene${
-            res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies] > 0
-              ? 's'
-              : ''
-          } found in ${
+          } unique gene${isPlural(
+            'gene',
+            res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
+          )} found in ${
             res.data.fg_list.detectedSpecies[res.data.fg_list.selectedSpecies]
               .name
           }`,
@@ -130,12 +131,10 @@ const TopAnat = () => {
                 list: res.data.bg_list,
                 message: `${rp.bg_list.length} IDs provided, ${
                   res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies]
-                } unique gene${
-                  res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies] >
-                  0
-                    ? 's'
-                    : ''
-                } found in ${
+                } unique ${isPlural(
+                  'gene',
+                  res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies]
+                )} found in ${
                   res.data.bg_list.detectedSpecies[
                     res.data.bg_list.selectedSpecies
                   ].name
@@ -166,8 +165,8 @@ const TopAnat = () => {
     }
 
     if (id && !jobId) {
-      getResults(id);
       setResults({ loading: true });
+      getResults(id);
     } else if (id && jobId) {
       setResults({ loading: true });
       getJobStatus(id, jobId);
@@ -178,33 +177,6 @@ const TopAnat = () => {
     <>
       <Bulma.Section className="py-0">
         <TopAnatHead />
-        <Bulma.Button
-          onClick={() => {
-            console.log('test');
-            axios
-              .get('https://bgee.org/bgee_test/')
-              .then((t) => console.log('TEST', t));
-            axios
-              .post(
-                'https://bgee.org/bgee_test/',
-                {
-                  action: 'gene_validation',
-                  ajax: 1,
-                  display_type: 'json',
-                  fg_list: 'aze',
-                  page: 'top_anat',
-                },
-                {
-                  headers: {
-                    Origin: 'http://localhost:3000',
-                  },
-                }
-              )
-              .then((t) => console.log('VALIDATION', t));
-          }}
-        >
-          test
-        </Bulma.Button>
         <TopAnatForm
           status={PAGE_STATE}
           form={{ handleChange, data, errors }}

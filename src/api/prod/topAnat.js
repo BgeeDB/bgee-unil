@@ -1,44 +1,131 @@
+import axiosInstance from './constant';
+
+const DEFAULT_PARAMETERS = (params) => {
+  params.append('ajax', 1);
+  params.append('display_type', 'json');
+  params.append('page', 'top_anat');
+};
 const topAnat = {
-  runJob: () => {
-    /*
-     * https://bgee.org/?
-     * page=top_anat&
-     * action=submit_job&
-     * ajax=1&
+  autoCompleteGenes: (genes, isFg = true) => {
+    const params = new URLSearchParams();
+    DEFAULT_PARAMETERS(params);
+    params.append('action', 'gene_validation');
+    params.append(isFg ? 'fg_list' : 'bg_list', genes);
+    return new Promise((resolve, reject) => {
+      axiosInstance
+        .post('/', params)
+        .then(({ data }) => resolve(data))
+        .catch((err) => {
+          // TODO
+          reject();
+        });
+    });
+  },
+  getStatus: (searchId, jobId) => {
+    const params = new URLSearchParams();
+    DEFAULT_PARAMETERS(params);
+    params.append('action', 'tracking_job');
+    params.append('display_rp', 1);
+    params.append('data', searchId);
+    params.append('job_id', jobId);
+    return new Promise((resolve, reject) => {
+      axiosInstance
+        .get(`/?${params.toString()}`)
+        .then(({ data }) => resolve(data))
+        .catch((err) => {
+          console.log(err);
+          reject();
+          // TODO handle error
+        });
+    });
+  },
+  getResults: (searchId) => {
+    const params = new URLSearchParams();
+    DEFAULT_PARAMETERS(params);
+    params.append('action', 'get_results');
+    params.append('gene_info', 1);
+    params.append('display_rp', 1);
+    params.append('data', searchId);
+    return new Promise((resolve, reject) => {
+      axiosInstance
+        .get(`/?${params.toString()}`)
+        .then(({ data }) => resolve(data))
+        .catch(
+          ({
+            response: {
+              data: {
+                code,
+                message,
+                data: { exceptionType, invalidKey },
+              },
+            },
+          }) => {
+            // TODO handle error
+            reject();
+          }
+        );
+    });
+  },
+  runJob: (form) => {
+    const t = new Date();
+    const paddedValue = (v) => String(v).padStart(2, '0');
 
-     *
-     * display_type=json
-     *
-     * data_type=RNA_SEQ
-     * &data_type=AFFYMETRIX&
-     * data_type=IN_SITU&
-     * data_type=EST&
-     *
-     * expr_type=EXPRESSED&
-     * fg_list=ENSG00000100888%0AENSG00000136531%0AENSG00000197283%0AFAKE_GENE_ID%0AENSMUSG00000023010&
-     * bg_list=ENSG00000100888%0AENSG00000136531%0AENSG00000197283%0AFAKE_GENE_ID%0AENSMUSG00000023010%0AENSG00000101126%0AENSG00000114861%0AENSG00000143442&
-
-     *
-     * stage_id=&
-     *
-     * data_qual=all& // or gold
-     *
-     * decorr_type=classic&
-     *
-     * nb_node=20&
-     * node_size=3&
-     * p_value_thr=1&
-     * fdr_thr=0.2&
-     *
-     * submitted=true
-     * &email=&
-     * job_creation_date=22.09.2021,+17:23:27&
-     * job_title=&
-     */
-    const body = {
-      page: 'top_anat',
-      action: 'submit_job',
-    };
+    const params = new URLSearchParams();
+    DEFAULT_PARAMETERS(params);
+    params.append('action', 'submit_job');
+    params.append('display_rp', 1);
+    params.append('fg_list', form.genes);
+    params.append('bg_list', form.genesBg);
+    params.append('data_type', 'FULL_LENGTH');
+    params.append('data_type', form.affymetrix && 'AFFYMETRIX');
+    params.append('data_type', form.est && 'EST');
+    params.append('data_type', form.inSitu && 'IN_SITU');
+    params.append('data_type', form.rnaSeq && 'RNA_SEQ');
+    if (form.stages === 'all') {
+      params.append('stage_id', '');
+    } else {
+      form.stages.forEach((s) => params.append('stage_id', s));
+    }
+    params.append('data_qual', form.dataQuality);
+    params.append('decorr_type', form.decorrelationType);
+    params.append('node_size', form.nodeSize);
+    params.append('nb_node', form.nbNode);
+    params.append('fdr_thr', form.fdrThreshold);
+    params.append('p_value_thr', form.pValueThreshold);
+    params.append(
+      'job_creation_date',
+      `${paddedValue(t.getDate())}/${paddedValue(
+        t.getMonth()
+      )}/${t.getFullYear()}, ${paddedValue(t.getHours())}:${paddedValue(
+        t.getMinutes()
+      )}:${paddedValue(t.getSeconds())}`
+    );
+    params.append('job_title', form.jobDescription);
+    params.append('email', form.email);
+    params.append('submitted', 'true');
+    params.append('expr_type', 'EXPRESSED');
+    return new Promise((resolve, reject) => {
+      axiosInstance
+        .post(`/`, params)
+        .then(({ data }) => {
+          console.log(data);
+          resolve(data);
+        })
+        .catch(
+          ({
+            response: {
+              data: {
+                code,
+                message,
+                data: { exceptionType, invalidKey },
+              },
+            },
+          }) => {
+            // TODO handle error
+            reject();
+          }
+        );
+    });
   },
 };
 export default topAnat;

@@ -14,12 +14,13 @@ import isPlural from '../../helpers/isPlural';
 const ForegroundModal = ({ data }) => {
   const { selectedSpecies } = data;
 
-  if (!data) return null;
+  // todo notify error 'No species associated to your gene list. Please check your data.'
+  if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
   return (
     <div className="content">
       <p>
         {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
+        <i>{`${data.detectedSpecies[selectedSpecies].genes} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
         {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
       </p>
       {Object.keys(data.detectedSpecies).length > 1 && (
@@ -116,7 +117,7 @@ const TopAnatForm = ({
                 {i18n.t('analysis.top-anat.gene-list')}
               </p>
             </div>
-            {rp.fg && (
+            {rp.fg && rp.fg.list.selectedSpecies && (
               <div className="message-body" style={{ position: 'relative' }}>
                 <div
                   className="is-flex is-align-items-center"
@@ -158,7 +159,7 @@ const TopAnatForm = ({
             />
           </div>
         </Bulma.C>
-        {rp.fg && (
+        {rp.fg && rp.fg.list.selectedSpecies && (
           <>
             <Bulma.C size={4}>
               <article className="message is-small">
@@ -371,7 +372,7 @@ const TopAnatForm = ({
                           value={formData.stages === 'all' ? 'all' : 'custom'}
                           onChange={onSelectCustomStage()}
                           error={errors.stages}
-                          disabled={formDisabled}
+                          disabled={formDisabled || !rp.fg?.list?.stages}
                         />
                       </div>
                     </div>

@@ -54,24 +54,22 @@ const useTopAnat = (status) => {
       if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
         timeoutFg = setTimeout(() => {
-          api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'fg')
-            .then((r) => {
-              propsForm.handleChange('genesBg', () => '')();
-              propsForm.handleChange('rnaSeq', () => true)();
-              propsForm.handleChange('affymetrix', () => true)();
-              propsForm.handleChange('inSitu', () => true)();
-              propsForm.handleChange('est', () => true)();
-              setRP((prev) => ({
-                ...prev,
-                fg: {
-                  list: r.data.fg_list,
-                  message: r.message,
-                },
-                bg: null,
-                customBg: false,
-              }));
-            });
+          api.topAnat.autoCompleteGenes(e.target.value).then((r) => {
+            propsForm.handleChange('genesBg', () => '')();
+            propsForm.handleChange('rnaSeq', () => true)();
+            propsForm.handleChange('affymetrix', () => true)();
+            propsForm.handleChange('inSitu', () => true)();
+            propsForm.handleChange('est', () => true)();
+            setRP((prev) => ({
+              ...(prev || {}),
+              fg: {
+                list: r.data.fg_list,
+                message: r.message,
+              },
+              bg: null,
+              customBg: false,
+            }));
+          });
         }, 1000);
       } else
         setRP((prev) => ({ ...prev, fg: null, bg: null, customBg: false }));
@@ -101,32 +99,30 @@ const useTopAnat = (status) => {
       }
       if (e.target.value !== '' && array.equals(fg, bg)) {
         timeoutBg = setTimeout(() => {
-          api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'bg')
-            .then((r) => {
-              if (
-                r.data.fg_list.selectedSpecies !==
-                requestParameters.fg.list.selectedSpecies
-              ) {
-                addNotification({
-                  id: Math.random().toString(10),
-                  children: (
-                    <p>
-                      Foreground and background species differ. You can either
-                      change your background or the default one will be used.
-                    </p>
-                  ),
-                  className: `is-danger`,
-                });
-              }
-              setRP((prev) => ({
-                ...prev,
-                bg: {
-                  list: r.data.bg_list,
-                  message: r.message,
-                },
-              }));
-            });
+          api.topAnat.autoCompleteGenes(e.target.value, false).then((r) => {
+            if (
+              r.data.fg_list.selectedSpecies !==
+              requestParameters.fg.list.selectedSpecies
+            ) {
+              addNotification({
+                id: Math.random().toString(10),
+                children: (
+                  <p>
+                    Foreground and background species differ. You can either
+                    change your background or the default one will be used.
+                  </p>
+                ),
+                className: `is-danger`,
+              });
+            }
+            setRP((prev) => ({
+              ...prev,
+              bg: {
+                list: r.data.bg_list,
+                message: r.message,
+              },
+            }));
+          });
         }, 1000);
       }
     },

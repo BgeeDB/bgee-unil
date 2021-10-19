@@ -62,7 +62,7 @@ export const addTopAnatHistory = (id, speciesId, speciesName, title = '') => {
   const h = JSON.parse(window.localStorage.getItem(HISTORY_KEY) || '[]');
   if (h.find((e) => e.id === id)) return;
   const t = new Date();
-  const paddedValue = (v) => String(v).padStart(2, 0);
+  const paddedValue = (v) => String(v).padStart(2, '0');
   h.push({
     id,
     speciesId,
