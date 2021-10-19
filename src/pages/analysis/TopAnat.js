@@ -225,11 +225,12 @@ const TopAnat = () => {
         />
         <TopAnatBanner results={results} status={PAGE_STATE} />
       </Bulma.Section>
+      {}
       <TopAnatResult
         status={PAGE_STATE}
         results={results}
         searchId={id}
-        fg={requestParameters.fg}
+        fg={requestParameters.value.fg}
       />
     </>
   );
