@@ -165,7 +165,7 @@ const faq = [
                 content:
                   '. You can find an overview of the resulting merge for ',
               },
-              { type: 'italic', content: 'C. elegans' },
+              { type: 'italic', content: 'C. elegans ' },
               {
                 type: 'link_external',
                 path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/report.md#caenorhabditis-elegans',
