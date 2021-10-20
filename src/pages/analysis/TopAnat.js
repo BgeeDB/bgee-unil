@@ -55,7 +55,7 @@ const TopAnat = () => {
             genesBg: (r.requestParameters.bg_list || []).join('\n'),
             email: '',
             jobDescription: r.requestParameters.job_title || '',
-            stages: r.requestParameters.stage_id || 'all', // todo set correct
+            stages: r.requestParameters.stage_id || 'all',
             dataQuality: r.requestParameters.data_qual,
             decorrelationType: r.requestParameters.decorr_type,
             nodeSize: r.requestParameters.node_size || '',
@@ -105,7 +105,7 @@ const TopAnat = () => {
           genesBg: (rp.bg_list || []).join('\n'),
           email: '',
           jobDescription: rp.job_title || '',
-          stages: rp.stage_Id || 'all', // todo set correct
+          stages: rp.stage_Id || 'all',
           dataQuality: rp.data_qual,
           decorrelationType: rp.decorr_type,
           nodeSize: rp.node_size || '',

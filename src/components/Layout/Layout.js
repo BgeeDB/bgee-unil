@@ -35,14 +35,15 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Header />
-      {!config.archive && betaNotif && (
+      {!config.archive && (
+        // betaNotif &&
         <Alert type="warning" light>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button
-            className="delete"
-            type="button"
-            onClick={() => setBetaNotif(false)}
-          />
+          {/* <button */}
+          {/*  className="delete" */}
+          {/*  type="button" */}
+          {/*  onClick={() => setBetaNotif(false)} */}
+          {/* /> */}
           <div>
             <p className="is-size-7">
               This release is a <b>beta</b> version. Please be aware that the

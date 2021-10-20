@@ -7,7 +7,6 @@ import classnames from '../helpers/classnames';
 const ModalContext = React.createContext();
 const { Provider } = ModalContext;
 
-// TODO
 const Modal = () => {
   const { modalContent, hideModal, modal, customClose } =
     React.useContext(ModalContext);

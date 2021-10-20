@@ -204,20 +204,6 @@ const Header = () => {
   );
 
   const [hamburgerActive, setHamburgerActive] = React.useState(false);
-  const [hamburgerVisible, setHamburgerVisible] = React.useState(
-    window.innerWidth < 1090
-  );
-
-  React.useEffect(() => {
-    function handleResize() {
-      setHamburgerVisible(window.innerWidth < 1090);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <nav

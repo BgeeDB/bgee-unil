@@ -129,7 +129,6 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
             <Bulma.C size={5}>
               <div className="field has-addons">
                 {searchElement}
-                {/* todo dl as csv */}
                 <div className="control">
                   <a
                     className="button"

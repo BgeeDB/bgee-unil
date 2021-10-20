@@ -65,7 +65,7 @@ const checkboxes = [
 
 const onRenderCell =
   (search) =>
-  ({ cell, key, keyRow }, defaultRender, { expandAction }) => {
+  ({ cell, key }, defaultRender) => {
     switch (key) {
       case 'id':
       case 'name':
