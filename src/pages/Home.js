@@ -10,6 +10,7 @@ import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
+import HomeNewsList from '../components/Home/HomeNewsList';
 
 const Home = () => (
   <>
@@ -127,19 +128,7 @@ const Home = () => (
           </Bulma.Card.Body>
         </Bulma.Card>
         <Bulma.Card className="mt-4">
-          <Bulma.Card.Header>
-            <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
-              {i18n.t('home.news')}
-            </Bulma.Card.Header.Title>
-          </Bulma.Card.Header>
-          <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
-            <div className="content">
-              {[0, 1, 0, 1].map((item, key) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <NewsItem key={`news-${key}`} />
-              ))}
-            </div>
-          </Bulma.Card.Body>
+          <HomeNewsList />
         </Bulma.Card>
         <Bulma.Columns className="mt-4">
           <Bulma.C csize={config.archive ? 12 : 9}>
