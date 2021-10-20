@@ -12,7 +12,6 @@ import { NotificationContext } from '../../contexts/NotificationsContext';
 
 const Layout = ({ children }) => {
   const { addNotification } = React.useContext(NotificationContext);
-  const [betaNotif, setBetaNotif] = React.useState(true);
   const loc = useLocation();
   const body = React.useMemo(
     () =>
@@ -36,14 +35,7 @@ const Layout = ({ children }) => {
     <div className="layout">
       <Header />
       {!config.archive && (
-        // betaNotif &&
         <Alert type="warning" light>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          {/* <button */}
-          {/*  className="delete" */}
-          {/*  type="button" */}
-          {/*  onClick={() => setBetaNotif(false)} */}
-          {/* /> */}
           <div>
             <p className="is-size-7">
               This release is a <b>beta</b> version. Please be aware that the
