@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
-import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
+import classnames from '../../helpers/classnames';
+import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 
 const COLUMNS = [
   {
@@ -37,8 +39,10 @@ const COLUMNS = [
     text: 'Fdr',
   },
 ];
+const MERGE_KEY = 'merge';
 
 const TopAnatResult = ({ results, searchId, fg, status }) => {
+  const [selectedStage, setSelectedStage] = React.useState(MERGE_KEY);
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
@@ -84,65 +88,111 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
     return csvContent;
   }, [results]);
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
-      <Bulma.Columns vCentered>
-        <Bulma.C size={4}>
-          <div className="is-flex is-flex-direction-column">
-            <p>Archive(s)</p>
-            <a
-              href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
-              className="external-link"
-              style={{ width: 'fit-content' }}
-              rel="noreferrer"
-            >
-              All stages, expression type &quot;Present&quot;
-            </a>
-            {results.analysis.length > 1 &&
-              results.analysis.map((r) => (
-                <a
-                  key={r.zipFile}
-                  href={r.zipFile}
-                  className="external-link"
+    (searchElement, pageSizeElement, showEntriesText) =>
+      results?.analysis ? (
+        <>
+          <Bulma.Columns vCentered>
+            <Bulma.C size={4}>
+              <div className="is-flex is-flex-direction-column">
+                <p>Download R scripts and data</p>
+                <Bulma.Button
+                  href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
+                  color="danger"
+                  light
                   style={{ width: 'fit-content' }}
+                  rel="noreferrer"
+                  renderAs="a"
+                  size="small"
                 >
-                  {`${
-                    fg.list.stages.find((s) => s.id === r.devStageId)?.name
-                  }, expression type "Present" (${r.analysis.length})`}
-                </a>
-              ))}
-            @
-          </div>
-        </Bulma.C>
-        <Bulma.C size={5}>
-          <div className="field has-addons">
-            {searchElement}
-            {/* todo dl as csv */}
-            <div className="control">
-              <a
-                className="button"
-                href={dataCsvHref}
-                download="data.csv"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>CSV</span>
-                <span className="icon is-small">
-                  <ion-icon name="download-outline" />
-                </span>
-              </a>
+                  All stages, expression type &quot;Present&quot;
+                </Bulma.Button>
+                {results.analysis.length > 1 &&
+                  results.analysis.map((r) => (
+                    <Bulma.Button
+                      key={r.zipFile}
+                      href={r.zipFile}
+                      color="danger"
+                      light
+                      style={{ width: 'fit-content' }}
+                      rel="noreferrer"
+                      renderAs="a"
+                      size="small"
+                      className="mt-1"
+                    >
+                      {`${
+                        fg.list.stages.find((s) => s.id === r.devStageId)?.name
+                      }, expression type "Present" (${r.results.length})`}
+                    </Bulma.Button>
+                  ))}
+              </div>
+            </Bulma.C>
+            <Bulma.C size={5}>
+              <div className="field has-addons">
+                {searchElement}
+                <div className="control">
+                  <a
+                    className="button"
+                    href={dataCsvHref}
+                    download="data.csv"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span>CSV</span>
+                    <span className="icon is-small">
+                      <ion-icon name="download-outline" />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </Bulma.C>
+            <Bulma.C size={3}>
+              <div>
+                {pageSizeElement}
+                <div>{showEntriesText}</div>
+              </div>
+            </Bulma.C>
+          </Bulma.Columns>
+          {results.analysis.length > 1 && (
+            <div className="tabs">
+              <ul>
+                <li
+                  className={classnames({
+                    'is-active': selectedStage === MERGE_KEY,
+                  })}
+                  onClick={() => {
+                    if (selectedStage !== MERGE_KEY)
+                      setSelectedStage(MERGE_KEY);
+                  }}
+                >
+                  <a>All stages</a>
+                </li>
+                {results.analysis.map((analysis) => (
+                  <li
+                    key={analysis.devStageId}
+                    className={classnames({
+                      'is-active': selectedStage === analysis.devStageId,
+                    })}
+                    onClick={() => {
+                      if (selectedStage !== analysis.devStageId)
+                        setSelectedStage(analysis.devStageId);
+                    }}
+                  >
+                    <a>
+                      {
+                        fg.list.stages.find((s) => s.id === analysis.devStageId)
+                          ?.name
+                      }
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </Bulma.C>
-        <Bulma.C size={3}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
-        </Bulma.C>
-      </Bulma.Columns>
-    ),
-    [fg, results, dataCsvHref]
+          )}
+        </>
+      ) : null,
+    [fg, results, dataCsvHref, selectedStage]
   );
+
   const mappingObj = React.useCallback(
     ({
       anatEntityId,
@@ -166,19 +216,27 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
     []
   );
 
-  if (
-    status === TOP_ANAT_STATUS.RESULTS &&
-    results &&
-    Array.isArray(results.data)
-  )
+  const dataDisplay = React.useMemo(() => {
+    if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
+    if (!results || !results.analysis) return null;
+    if (selectedStage === MERGE_KEY) return results.data;
+
+    return (
+      results.analysis.find((a) => a.devStageId === selectedStage)?.results ||
+      null
+    );
+  }, [status, results, selectedStage]);
+
+  if (status === TOP_ANAT_FLOW.GOT_RESULTS && dataDisplay)
     return (
       <ComplexTable
         columns={COLUMNS}
-        key={searchId}
-        data={results.data}
+        key={searchId + selectedStage}
+        data={dataDisplay}
         onRenderCell={onRenderCell}
         sortable
         pagination
+        defaultPaginationSize={20}
         onFilter={onFilter}
         onSort={onSort}
         classNamesTable="is-striped"

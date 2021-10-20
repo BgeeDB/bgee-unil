@@ -1,9 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const TOP_ANAT_STATUS = {
-  LOADING: -1,
-  NEW_SEARCH: 0,
-  RESULTS: 1,
-};
+import classnames from '../classnames';
 
 export const TOP_ANAT_DEFAULT_RP = {
   fg: null,
@@ -63,3 +59,18 @@ export const TOP_ANAT_FORM_CONFIG = {
     },
   },
 };
+
+export const TOP_ANAT_DEFAULT_VALUES = {
+  stages: 'all',
+  dataQuality: 'all',
+  decorrelationType: 'classic',
+  nodeSize: '20',
+  nbNode: '20',
+  fdrThreshold: '0.2',
+  pValueThreshold: '1',
+};
+
+export const topAnatLabelClassNames = (key, value) =>
+  classnames('label', 'is-relative', {
+    'not-default': TOP_ANAT_DEFAULT_VALUES[key] !== value,
+  });

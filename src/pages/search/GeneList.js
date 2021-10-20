@@ -4,13 +4,11 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
-import SelectCustom from '../../components/Select/SelectCustom';
-import Button from '../../components/Bulma/Button/Button';
 import Bulma from '../../components/Bulma';
 
 const onRenderCell =
   (search) =>
-  ({ cell, key, keyRow }, defaultRender, { expandAction }) => {
+  ({ cell, key }, defaultRender) => {
     switch (key) {
       case 'id':
       case 'name':
@@ -48,13 +46,10 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
   </Bulma.Columns>
 );
 
-// TODO onFilter
-// TODO onSort
 const GeneList = () => {
   const [search, setSearch] = React.useState('');
   const query = useQuery('search');
   const [results, setResults] = React.useState(undefined);
-  const [v, setV] = React.useState([]);
 
   React.useEffect(() => {
     setSearch(query);

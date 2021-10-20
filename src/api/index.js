@@ -1,8 +1,20 @@
-import prod from './prod';
-import mock from './mock';
-import config from '../config.json';
+import topAnat from './prod/topAnat';
 
-const api =
-  process.env.NODE_ENV === 'production' || config.production ? prod : mock;
+/*
+ * ERROR RESPONSE FORMAT
+ * {
+ *    response: {
+ *        data: {
+ *            code,
+ *            message,
+ *            data: { exceptionType, invalidKey },
+ *        },
+ *    },
+ * }
+ */
+
+const api = {
+  topAnat,
+};
 
 export default api;

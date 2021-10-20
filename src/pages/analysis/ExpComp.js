@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ComplexTable from '../../components/ComplexTable';
 import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
@@ -17,11 +17,7 @@ const KEYS = {
   'species-present': 6,
   'species-absent': 7,
 };
-const onRenderCell = (
-  { cell, key, keyRow },
-  defaultRender,
-  { expandAction }
-) => {
+const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
   switch (key) {
     case 0:
     case 1:

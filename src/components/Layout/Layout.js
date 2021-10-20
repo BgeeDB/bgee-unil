@@ -6,9 +6,12 @@ import Alert from '../Alert';
 import Bulma from '../Bulma';
 import CookieMessage from '../CookieMessage';
 import config from '../../config.json';
+import { APP_VERSION } from '../../helpers/constants';
+import { setAxiosAddNotif } from '../../api/prod/constant';
+import { NotificationContext } from '../../contexts/NotificationsContext';
 
 const Layout = ({ children }) => {
-  const [betaNotif, setBetaNotif] = React.useState(true);
+  const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();
   const body = React.useMemo(
     () =>
@@ -22,17 +25,17 @@ const Layout = ({ children }) => {
     [loc]
   );
 
+  React.useEffect(() => {
+    setAxiosAddNotif(addNotification);
+    return () => {
+      setAxiosAddNotif(null);
+    };
+  }, []);
   return (
     <div className="layout">
       <Header />
-      {!config.archive && betaNotif && (
+      {!config.archive && (
         <Alert type="warning" light>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button
-            className="delete"
-            type="button"
-            onClick={() => setBetaNotif(false)}
-          />
           <div>
             <p className="is-size-7">
               This release is a <b>beta</b> version. Please be aware that the
@@ -47,7 +50,7 @@ const Layout = ({ children }) => {
         <Alert type="danger" light>
           <div>
             <span className="is-size-67">
-              {`This is an archived version of Bgee (version ${config.version})`}
+              {`This is an archived version of Bgee (version ${APP_VERSION})`}
               <a className="internal-link ml-2" href={config.genericDomain}>
                 <b>Access latest version of Bgee</b>
               </a>

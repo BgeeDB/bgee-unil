@@ -1,47 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import staticBuilder from '../../helpers/staticBuilder';
 import TopAnatHistoryModal from './TopAnatHistoryModal';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import Tooltip from '../Tooltip';
 
-const staticContent = [
-  {
-    type: 'title',
-    content: 'TopAnat - Gene Expression Enrichment',
-  },
-  {
-    type: 'rich_text',
-    content: [
-      {
-        type: 'text',
-        content:
-          'GO-like enrichment of anatomical terms, mapped to genes by expression patterns. It is possible to run TopAnat using our ',
-      },
-      {
-        type: 'link_external',
-        path: 'https://bioconductor.org/packages/BgeeDB/',
-        text: 'BgeeDB R package',
-      },
-      {
-        type: 'text',
-        content:
-          '. This is the same as this web-service, but with more flexibility in the choice of parameters and developmental stages, and is based on the ',
-      },
-      {
-        type: 'link_external',
-        path: 'https://bioconductor.org/packages/topGO/',
-        text: 'topGO package',
-      },
-      {
-        type: 'text',
-        content: '.',
-      },
-    ],
-  },
-];
 const EXAMPLES = [
   {
     id: '0e165086d430555eda6d6ee5693519ae6c437536',
@@ -69,7 +33,32 @@ const EXAMPLES = [
 
 const TopAnatHead = () => (
   <>
-    {staticBuilder(staticContent)}
+    <div className="content has-text-centered">
+      <p className="title is-5">TopAnat - Gene Expression Enrichment</p>
+    </div>
+    <p>
+      GO-like enrichment of anatomical terms, mapped to genes by expression
+      patterns. It is possible to run TopAnat using our{' '}
+      <a
+        href="https://bioconductor.org/packages/BgeeDB/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="external-link"
+      >
+        BgeeDB R package
+      </a>
+      . This is the same as this web-service, but with more flexibility in the
+      choice of parameters and developmental stages, and is based on the{' '}
+      <a
+        href="https://bioconductor.org/packages/topGO/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="external-link"
+      >
+        topGO package
+      </a>
+      .
+    </p>
     <div className="my-4 is-flex">
       <TopAnatHistoryModal />
       <Link
@@ -84,7 +73,7 @@ const TopAnatHead = () => (
           <Bulma.IonIcon name="bookmarks-sharp" />
           <span>{i18n.t('analysis.top-anat.examples')}</span>
         </span>
-        <div className="ml-1 buttons has-addons">
+        <div className="ml-1 buttons">
           {EXAMPLES.map((ex, key) => (
             <Tooltip
               key={ex.id}
@@ -93,7 +82,7 @@ const TopAnatHead = () => (
             >
               <Link
                 to={PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(':id', ex.id)}
-                className="button is-bgee-link is-outlined"
+                className="button is-bgee-link is-outlined m-0"
               >
                 <span>{key + 1}</span>
               </Link>

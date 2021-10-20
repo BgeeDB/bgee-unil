@@ -3,6 +3,7 @@
   "version": "15.beta",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.3.0",
     "@creativebulma/bulma-collapsible": "^1.0.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -18,11 +19,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "craco start",
     "archive": "node archiveCreation.js",
-    "build:cra": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build:cra": "set \"GENERATE_SOURCEMAP=false\" && craco build",
     "build": "node productionCreation.js",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

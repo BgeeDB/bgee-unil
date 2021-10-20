@@ -5,6 +5,7 @@ import PATHS from '../../../routes/paths';
 import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
 import config from '../../../config.json';
+import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 
 const NAVBAR_LEFT = [
   {
@@ -203,20 +204,6 @@ const Header = () => {
   );
 
   const [hamburgerActive, setHamburgerActive] = React.useState(false);
-  const [hamburgerVisible, setHamburgerVisible] = React.useState(
-    window.innerWidth < 1090
-  );
-
-  React.useEffect(() => {
-    function handleResize() {
-      setHamburgerVisible(window.innerWidth < 1090);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <nav
@@ -265,10 +252,11 @@ const Header = () => {
                   switch (type) {
                     case 'mail':
                       return (
+                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
                         <a
                           key={keyChild}
                           className="navbar-item custom"
-                          href={`mailto:${childProps.mail}`}
+                          onClick={obfuscateMailLink(childProps.email)}
                         >
                           {i18n.t(keyChild)}
                         </a>

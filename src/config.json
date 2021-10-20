@@ -1,7 +1,6 @@
 {
   "version": "15.0",
   "archive": false,
-  "production": true,
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "archivedVersion": [

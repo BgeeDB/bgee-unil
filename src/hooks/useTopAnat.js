@@ -8,37 +8,55 @@ import { NotificationContext } from '../contexts/NotificationsContext';
 import {
   TOP_ANAT_DEFAULT_RP,
   TOP_ANAT_FORM_CONFIG,
-  TOP_ANAT_STATUS,
 } from '../helpers/constants/topAnat';
 
 let timeoutFg;
 let timeoutBg;
+// todo handle timeout + api cancel
 
-const useTopAnat = (status) => {
+export const TOP_ANAT_FLOW = {
+  LOADING: 'loading',
+  NEW_JOB: 'newJob',
+  LAUNCHING_JOB: 'launchingJob',
+  ERROR_LAUNCH_JOB: 'errorLaunchJob',
+  GETTING_JOB: 'gettingJob',
+  ERROR_GET_JOB: 'errorGetJob',
+  GOT_JOB: 'gotJob',
+  GETTING_RESULTS: 'gettingResults',
+  ERROR_GET_RESULTS: 'errorGetResults',
+  GOT_RESULTS: 'gotResults',
+};
+
+// todo improve with context usage
+const useTopAnat = (flowState, setFlowState) => {
   const { addNotification } = React.useContext(NotificationContext);
   const [requestParameters, setRP] = React.useState(TOP_ANAT_DEFAULT_RP);
   const [results, setResults] = React.useState();
 
   const history = useHistory();
   const onSubmit = React.useCallback((data) => {
-    const formattedData = data; // to format for api
-    setResults({ loading: true });
-    api.topAnat.runJob(formattedData).then((res) => {
-      history.push(
-        PATHS.ANALYSIS[
-          res.data.jobResponse.jobStatus === 'RUNNING'
-            ? 'TOP_ANAT_RESULT_JOB_ID'
-            : 'TOP_ANAT_RESULT'
-        ]
-          .replace(':id', res.data.jobResponse.data)
-          .replace(':jobId', res.data.jobResponse.jobId)
-      );
-    });
+    setFlowState(TOP_ANAT_FLOW.LAUNCHING_JOB);
+    api.topAnat
+      .runJob(data)
+      .then((res) => {
+        history.push(
+          PATHS.ANALYSIS[
+            res.data.jobResponse.jobStatus === 'RUNNING'
+              ? 'TOP_ANAT_RESULT_JOB_ID'
+              : 'TOP_ANAT_RESULT'
+          ]
+            .replace(':id', res.data.jobResponse.data)
+            .replace(':jobId', res.data.jobResponse.jobId)
+        );
+      })
+      .catch((err) => {
+        console.debug('[ERROR] api.topAnat.runJob', data, err);
+        setFlowState(TOP_ANAT_FLOW.ERROR_LAUNCH_JOB);
+      });
   }, []);
 
   const {
     data: dataForm,
-
     handleSubmit: submitJob,
     reset,
     ...propsForm
@@ -50,12 +68,12 @@ const useTopAnat = (status) => {
   const foregroundHandler = React.useCallback(
     (e) => {
       propsForm.handleChange('genes')(e);
-      if (status !== TOP_ANAT_STATUS.NEW_SEARCH) return;
+      if (flowState !== TOP_ANAT_FLOW.NEW_JOB) return;
       if (timeoutFg) clearTimeout(timeoutFg);
       if (e.target.value !== '') {
         timeoutFg = setTimeout(() => {
           api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'fg')
+            .autoCompleteGenes(e.target.value)
             .then((r) => {
               propsForm.handleChange('genesBg', () => '')();
               propsForm.handleChange('rnaSeq', () => true)();
@@ -63,7 +81,7 @@ const useTopAnat = (status) => {
               propsForm.handleChange('inSitu', () => true)();
               propsForm.handleChange('est', () => true)();
               setRP((prev) => ({
-                ...prev,
+                ...(prev || {}),
                 fg: {
                   list: r.data.fg_list,
                   message: r.message,
@@ -71,17 +89,20 @@ const useTopAnat = (status) => {
                 bg: null,
                 customBg: false,
               }));
+            })
+            .catch((err) => {
+              console.debug('[ERROR] api.topAnat.autoComplete', err);
             });
         }, 1000);
       } else
         setRP((prev) => ({ ...prev, fg: null, bg: null, customBg: false }));
     },
-    [dataForm, propsForm, status]
+    [dataForm, propsForm, flowState]
   );
   const backgroundHandler = React.useCallback(
     (e) => {
       propsForm.handleChange('genesBg')(e);
-      if (status !== TOP_ANAT_STATUS.NEW_SEARCH) return;
+      if (flowState !== TOP_ANAT_FLOW.NEW_JOB) return;
       const bg = e.target.value.split('\n');
       const fg = dataForm.genes.split('\n');
 
@@ -102,7 +123,7 @@ const useTopAnat = (status) => {
       if (e.target.value !== '' && array.equals(fg, bg)) {
         timeoutBg = setTimeout(() => {
           api.topAnat
-            .autoCompleteForegroundGenes(e.target.value, 'bg')
+            .autoCompleteGenes(e.target.value, false)
             .then((r) => {
               if (
                 r.data.fg_list.selectedSpecies !==
@@ -126,11 +147,14 @@ const useTopAnat = (status) => {
                   message: r.message,
                 },
               }));
+            })
+            .catch((err) => {
+              console.debug('[ERROR] api.topAnat.autoComplete', err);
             });
         }, 1000);
       }
     },
-    [dataForm, requestParameters, status]
+    [dataForm, requestParameters, flowState]
   );
   const checkBoxHandler = React.useCallback(
     (key) => (e) =>
@@ -170,16 +194,39 @@ const useTopAnat = (status) => {
     [dataForm, requestParameters]
   );
 
-  const cancelJob = React.useCallback(() =>
-    // todo api cancel job
-    // todo go back to new form with rp as data
-    {}, []);
-  const startNewJob = React.useCallback(() => {
-    history.push(PATHS.ANALYSIS.TOP_ANAT, {
-      form: dataForm,
-      requestParameters,
-    });
-  }, [dataForm, requestParameters]);
+  const cancelJob = React.useCallback(
+    (jobId) => () => {
+      if (jobId) {
+        api.topAnat
+          .cancelJob(jobId)
+          .then((res) => {
+            addNotification({
+              id: Math.random().toString(10),
+              children: res.message,
+              className: 'is-success',
+            });
+            history.push(PATHS.ANALYSIS.TOP_ANAT, {
+              form: dataForm,
+              requestParameters,
+            });
+          })
+          .catch((err) => {
+            console.debug('[ERROR] api.topAnat.cancelJob(%s)', jobId, err);
+            history.push(PATHS.ANALYSIS.TOP_ANAT);
+          });
+      }
+    },
+    [dataForm, requestParameters]
+  );
+  const startNewJob = React.useCallback(
+    (newJob) => () => {
+      history.push(PATHS.ANALYSIS.TOP_ANAT, {
+        form: newJob ? undefined : dataForm,
+        requestParameters,
+      });
+    },
+    [dataForm, requestParameters]
+  );
   const resetForm = React.useCallback(() => {
     setRP(TOP_ANAT_DEFAULT_RP);
     setResults();
