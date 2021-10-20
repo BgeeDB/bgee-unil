@@ -2,8 +2,8 @@
 import React from 'react';
 import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
-import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 import classnames from '../../helpers/classnames';
+import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 
 const COLUMNS = [
   {
@@ -193,6 +193,7 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
       ) : null,
     [fg, results, dataCsvHref, selectedStage]
   );
+
   const mappingObj = React.useCallback(
     ({
       anatEntityId,
@@ -217,6 +218,7 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
   );
 
   const dataDisplay = React.useMemo(() => {
+    if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
     if (!results || !results.analysis) return null;
     if (selectedStage === MERGE_KEY) return results.data;
 
@@ -224,9 +226,9 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
       results.analysis.find((a) => a.devStageId === selectedStage)?.results ||
       null
     );
-  }, [results, selectedStage]);
+  }, [status, results, selectedStage]);
 
-  if (status === TOP_ANAT_STATUS.RESULTS && dataDisplay)
+  if (status === TOP_ANAT_FLOW.GOT_RESULTS && dataDisplay)
     return (
       <ComplexTable
         columns={COLUMNS}

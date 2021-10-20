@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '../../i18n';
-import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
+import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 
 const TopAnatActionButtons = ({
   status,
@@ -8,49 +8,55 @@ const TopAnatActionButtons = ({
   cancelJob,
   startNewJob,
 }) => {
-  if (status === TOP_ANAT_STATUS.LOADING)
-    return (
-      <div className="field">
-        <p className="control">
-          <button
-            type="button"
-            className="button is-danger"
-            onClick={cancelJob}
-          >
-            {i18n.t('analysis.top-anat.cancel-job')}
-          </button>
-        </p>
-      </div>
-    );
-  if (status === TOP_ANAT_STATUS.RESULTS)
-    return (
-      <div className="field">
-        <p className="control">
-          <button
-            type="button"
-            className="button is-info"
-            onClick={startNewJob}
-          >
-            {i18n.t('analysis.top-anat.start-new-job')}
-          </button>
-        </p>
-      </div>
-    );
-  if (status === TOP_ANAT_STATUS.NEW_SEARCH)
-    return (
-      <div className="field">
-        <p className="control">
-          <button
-            type="button"
-            className="button is-success"
-            onClick={handleSubmit}
-          >
-            {i18n.t('analysis.top-anat.submit-job')}
-          </button>
-        </p>
-      </div>
-    );
-  return null;
+  switch (status) {
+    case TOP_ANAT_FLOW.NEW_JOB:
+      return (
+        <div className="field">
+          <p className="control">
+            <button
+              type="button"
+              className="button is-success"
+              onClick={handleSubmit}
+            >
+              {i18n.t('analysis.top-anat.submit-job')}
+            </button>
+          </p>
+        </div>
+      );
+    case TOP_ANAT_FLOW.GOT_JOB:
+      return (
+        <div className="field">
+          <p className="control">
+            <button
+              type="button"
+              className="button is-danger"
+              onClick={cancelJob}
+            >
+              {i18n.t('analysis.top-anat.cancel-job')}
+            </button>
+          </p>
+        </div>
+      );
+    case TOP_ANAT_FLOW.ERROR_LAUNCH_JOB:
+    case TOP_ANAT_FLOW.ERROR_GET_JOB:
+    case TOP_ANAT_FLOW.ERROR_GET_RESULTS:
+    case TOP_ANAT_FLOW.GOT_RESULTS:
+      return (
+        <div className="field">
+          <p className="control">
+            <button
+              type="button"
+              className="button is-info"
+              onClick={startNewJob(false)}
+            >
+              {i18n.t('analysis.top-anat.start-new-job')}
+            </button>
+          </p>
+        </div>
+      );
+    default:
+      return null;
+  }
 };
 
 export default TopAnatActionButtons;

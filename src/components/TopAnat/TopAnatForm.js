@@ -7,88 +7,9 @@ import TextArea from '../Form/TextArea';
 import HelpIcon from '../HelpIcon';
 import Toggle from '../Form/Toggle';
 import Input from '../Form/Input';
-import classnames from '../../helpers/classnames';
-import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
-import isPlural from '../../helpers/isPlural';
-
-const ForegroundModal = ({ data }) => {
-  const { selectedSpecies } = data;
-
-  // todo notify error 'No species associated to your gene list. Please check your data.'
-  if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
-  return (
-    <div className="content">
-      <p>
-        {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genes} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
-        {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
-      </p>
-      {Object.keys(data.detectedSpecies).length > 1 && (
-        <>
-          <p>Other species detected in ID list: </p>
-          <ul className="unordered">
-            {Object.entries(data.detectedSpecies).map(([key, value]) =>
-              key === selectedSpecies.toString() ? null : (
-                <li key={key}>
-                  <p>
-                    <i>{`${value.genus} ${value.speciesName}`}</i>
-                    {`: ${data.geneCount[key]} ${isPlural(
-                      'gene',
-                      data.geneCount[key]
-                    )} identified`}
-                  </p>
-                </li>
-              )
-            )}
-          </ul>
-        </>
-      )}
-      {data.undeterminedGeneIds.length > 0 && (
-        <p>IDs not identified: {data.undeterminedGeneIds.length}</p>
-      )}
-      {data.notInSelectedSpeciesGeneIds.length > 0 && (
-        <>
-          <p>ID in other species: </p>
-
-          <ul className="unordered">
-            {data.notInSelectedSpeciesGeneIds.map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {data.undeterminedGeneIds.length > 0 && (
-        <>
-          <p>IDs not identified:</p>
-          <ul className="unordered">
-            {data.undeterminedGeneIds.map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  );
-};
-
-const DEFAULT_VALUES = {
-  stages: 'all',
-  dataQuality: 'all',
-  decorrelationType: 'classic',
-  nodeSize: '20',
-  nbNode: '20',
-  fdrThreshold: '0.2',
-  pValueThreshold: '1',
-};
-const labelClassNames = (key, value) =>
-  classnames('label', 'is-relative', {
-    'not-default': DEFAULT_VALUES[key] !== value,
-  });
+import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
+import { topAnatLabelClassNames } from '../../helpers/constants/topAnat';
+import GenesDetailsModal from './GenesDetailsModal';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -102,11 +23,24 @@ const TopAnatForm = ({
   },
   status,
 }) => {
+  const formAvailable = React.useMemo(() => {
+    switch (status) {
+      case TOP_ANAT_FLOW.NEW_JOB:
+      case TOP_ANAT_FLOW.LAUNCHING_JOB:
+      case TOP_ANAT_FLOW.GOT_JOB:
+      case TOP_ANAT_FLOW.GOT_RESULTS:
+        return true;
+      default:
+        return false;
+    }
+  }, [status]);
   const formDisabled = React.useMemo(
-    () => status !== TOP_ANAT_STATUS.NEW_SEARCH,
+    () => status !== TOP_ANAT_FLOW.NEW_JOB,
     [status]
   );
   const [expandOpts, setExpandOpts] = React.useState(false);
+  if (!formAvailable) return null;
+
   return (
     <>
       <Bulma.Columns>
@@ -126,7 +60,7 @@ const TopAnatForm = ({
                   <p className="mr-1">{rp.fg.message}</p>
                   <InfoIcon
                     title="Gene detection details"
-                    content={<ForegroundModal data={rp.fg.list} />}
+                    content={<GenesDetailsModal data={rp.fg.list} />}
                   />
                 </div>
                 <Bulma.Image
@@ -195,7 +129,7 @@ const TopAnatForm = ({
                       <p className="mr-1">{rp.bg?.message}</p>
                       <InfoIcon
                         title="Gene detection details"
-                        content={<ForegroundModal data={rp.bg?.list} />}
+                        content={<GenesDetailsModal data={rp.bg?.list} />}
                       />
                     </div>
                   )}
@@ -341,7 +275,10 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames('stages', formData.stages)}
+                    className={topAnatLabelClassNames(
+                      'stages',
+                      formData.stages
+                    )}
                     htmlFor="stages"
                   >
                     {i18n.t('analysis.top-anat.stages')}
@@ -405,7 +342,7 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames(
+                    className={topAnatLabelClassNames(
                       'dataQuality',
                       formData.dataQuality
                     )}
@@ -453,7 +390,7 @@ const TopAnatForm = ({
               <Bulma.C size={12}>
                 <div className="field">
                   <label
-                    className={labelClassNames(
+                    className={topAnatLabelClassNames(
                       'decorrelationType',
                       formData.decorrelationType
                     )}
@@ -504,7 +441,10 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames('nodeSize', formData.nodeSize)}
+                    className={topAnatLabelClassNames(
+                      'nodeSize',
+                      formData.nodeSize
+                    )}
                     htmlFor="nodeSize"
                   >
                     {i18n.t('analysis.top-anat.node-size')}
@@ -540,7 +480,10 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames('nbNode', formData.nbNode)}
+                    className={topAnatLabelClassNames(
+                      'nbNode',
+                      formData.nbNode
+                    )}
                     htmlFor="nbNode"
                   >
                     {i18n.t('analysis.top-anat.nb-node')}
@@ -576,7 +519,7 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames(
+                    className={topAnatLabelClassNames(
                       'fdrThreshold',
                       formData.fdrThreshold
                     )}
@@ -611,7 +554,7 @@ const TopAnatForm = ({
               <Bulma.C size={6}>
                 <div className="field">
                   <label
-                    className={labelClassNames(
+                    className={topAnatLabelClassNames(
                       'pValueThreshold',
                       formData.pValueThreshold
                     )}

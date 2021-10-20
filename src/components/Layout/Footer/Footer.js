@@ -8,8 +8,6 @@ import PATHS from '../../../routes/paths';
 import { NotificationContext } from '../../../contexts/NotificationsContext';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 
-// todo handle set timeout
-
 const Footer = () => {
   const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();

@@ -1,7 +1,8 @@
 import React from 'react';
+import classnames from '../../helpers/classnames';
 
-const Tooltip = ({ children, title, content, style }) => (
-  <div className="tooltip" style={style}>
+const Tooltip = ({ children, title, content, style, className }) => (
+  <div className={classnames('tooltip', className)} style={style}>
     {children}
     <span className="tooltip-content">
       {title && (
