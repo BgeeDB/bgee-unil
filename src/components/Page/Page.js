@@ -1,14 +1,18 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import ROUTES from '../../routes/routes';
+import i18n from '../../i18n';
 
-const Page = ({ Component, title }) => (
+const Page = ({ Component, title, ...props }) => (
   <>
-    {title && (
+    {(title || ROUTES[props.location.pathname].i18nKey) && (
       <Helmet>
-        <title>{title}</title>
+        <title>
+          {title || i18n.t(ROUTES[props.location.pathname].i18nKey)}
+        </title>
       </Helmet>
     )}
-    <Component />
+    <Component {...props} />
   </>
 );
 

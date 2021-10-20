@@ -6,34 +6,34 @@ import TopAnatAnalysis from '../pages/analysis/TopAnat';
 import ExpComp from '../pages/analysis/ExpComp';
 
 import GeneList from '../pages/search/GeneList';
+import Gene from '../pages/search/Gene';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
+import Species from '../pages/search/Species';
 
-import DataDumps from '../pages/download/DataDumps';
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
+import DataDumpFile from '../static/download/dataDump';
 
-import Docs from '../pages/resources/Docs';
-import RPackages from '../pages/resources/RPackages';
-import Sparql from '../pages/resources/Sparql';
-import Annotations from '../pages/resources/Annotations';
-import Ontologies from '../pages/resources/Ontologies';
-import SourceCode from '../pages/resources/SourceCode';
+import ResourcesFile from '../static/resources/docs';
+import RPackageFile from '../static/resources/rPackage';
+import SparqlFile from '../static/resources/sparql';
+import AnnotationsFile from '../static/resources/annotations';
+import OntologiesFile from '../static/resources/ontologies';
+import ResourceSourceFile from '../static/resources/source';
 
-import GTEx from '../pages/support/GTEx';
-import TopAnatSupport from '../pages/support/TopAnat';
+import GtexFile from '../static/support/gtex';
+import TopAnatFile from '../static/support/topAnat';
 import GeneExpressionCallsSupport from '../pages/support/GeneExpressionCalls';
-import FAQ from '../pages/support/FAQ';
+import FaqFile from '../static/support/faq';
 
-import About from '../pages/about/About';
-import Collaborations from '../pages/about/Collaborations';
-import Publications from '../pages/about/Publications';
-import Sources from '../pages/about/Sources';
-import PrivacyPolicy from '../pages/about/PrivacyPolicy';
+import AboutFile from '../static/about/about';
+import CollaborationsFile from '../static/about/collaborations';
+import PublicationsFile from '../static/about/publications';
+import AboutSourceFile from '../static/about/sources';
+import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
-import Species from '../pages/search/Species';
-import Gene from '../pages/search/Gene';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -78,43 +78,43 @@ const DOWNLOAD = {
   },
   [PATHS.DOWNLOAD.DATA_DUMPS]: {
     i18nKey: 'page.download.data-dumps',
-    component: DataDumps,
+    source: DataDumpFile,
   },
 };
 const RESOURCES = {
   [PATHS.RESOURCES.DOCS]: {
     i18nKey: 'page.resources.docs',
-    component: Docs,
+    source: ResourcesFile,
   },
   [PATHS.RESOURCES.R_PACKAGES]: {
     i18nKey: 'page.resources.r-packages',
-    component: RPackages,
+    source: RPackageFile,
   },
   [PATHS.RESOURCES.SPARQL]: {
     i18nKey: 'page.resources.sparql',
-    component: Sparql,
+    source: SparqlFile,
   },
   [PATHS.RESOURCES.ANNOTATIONS]: {
     i18nKey: 'page.resources.annotations',
-    component: Annotations,
+    source: AnnotationsFile,
   },
   [PATHS.RESOURCES.ONTOLOGIES]: {
     i18nKey: 'page.resources.ontologies',
-    component: Ontologies,
+    source: OntologiesFile,
   },
   [PATHS.RESOURCES.SOURCE_CODE]: {
     i18nKey: 'page.resources.source-code',
-    component: SourceCode,
+    source: ResourceSourceFile,
   },
 };
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
     i18nKey: 'page.support.gtex',
-    component: GTEx,
+    source: GtexFile,
   },
   [PATHS.SUPPORT.TOP_ANAT]: {
     i18nKey: 'page.support.top-anat',
-    component: TopAnatSupport,
+    source: TopAnatFile,
   },
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
     i18nKey: 'page.support.gene-expression-calls',
@@ -122,29 +122,29 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.FAQ]: {
     i18nKey: 'page.support.faq',
-    component: FAQ,
+    source: FaqFile,
   },
 };
 const ABOUT = {
   [PATHS.ABOUT.ABOUT]: {
     i18nKey: 'page.about.about',
-    component: About,
+    source: AboutFile,
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
     i18nKey: 'page.about.collaborations',
-    component: Collaborations,
+    source: CollaborationsFile,
   },
   [PATHS.ABOUT.PUBLICATION]: {
     i18nKey: 'page.about.publications',
-    component: Publications,
+    source: PublicationsFile,
   },
   [PATHS.ABOUT.SOURCES]: {
     i18nKey: 'page.about.sources',
-    component: Sources,
+    source: AboutSourceFile,
   },
   [PATHS.ABOUT.PRIVACY_POLICY]: {
     i18nKey: 'page.about.privacy-policy',
-    component: PrivacyPolicy,
+    source: PrivacyPolicyFile,
   },
 };
 
@@ -153,12 +153,12 @@ const ROUTES = {
     i18nKey: 'page.home',
     component: Home,
   },
-  ANALYSIS,
-  SEARCH,
-  DOWNLOAD,
-  RESOURCES,
-  SUPPORT,
-  ABOUT,
+  ...ANALYSIS,
+  ...SEARCH,
+  ...DOWNLOAD,
+  ...RESOURCES,
+  ...SUPPORT,
+  ...ABOUT,
   [PATHS.ERROR]: {
     i18nKey: 'page.error',
     component: Error,
