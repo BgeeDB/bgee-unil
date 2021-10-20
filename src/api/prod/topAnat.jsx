@@ -1,4 +1,5 @@
-import axiosInstance from './constant';
+import React from 'react';
+import axiosInstance, { getAxiosAddNotif } from './constant';
 
 const DEFAULT_PARAMETERS = (params) => {
   params.append('ajax', 1);
@@ -15,10 +16,27 @@ const topAnat = {
       axiosInstance
         .post('/', params)
         .then(({ data }) => resolve(data))
-        .catch((err) => {
-          // TODO
-          reject();
-        });
+        .catch(
+          ({
+            response: {
+              data,
+              data: {
+                code,
+                message,
+                data: { exceptionType, invalidKey },
+              },
+            },
+          }) => {
+            console.log(data);
+            getAxiosAddNotif()({
+              id: Math.random().toString(10),
+              children: <p>{message}</p>,
+              className: `is-danger`,
+            });
+            reject();
+            // TODO handle error
+          }
+        );
     });
   },
   getStatus: (searchId, jobId) => {
@@ -32,11 +50,27 @@ const topAnat = {
       axiosInstance
         .get(`/?${params.toString()}`)
         .then(({ data }) => resolve(data))
-        .catch((err) => {
-          console.log(err);
-          reject();
-          // TODO handle error
-        });
+        .catch(
+          ({
+            response: {
+              data,
+              data: {
+                code,
+                message,
+                data: { exceptionType, invalidKey },
+              },
+            },
+          }) => {
+            console.log(data);
+            getAxiosAddNotif()({
+              id: Math.random().toString(10),
+              children: <p>{message}</p>,
+              className: `is-danger`,
+            });
+            reject();
+            // TODO handle error
+          }
+        );
     });
   },
   getResults: (searchId) => {
@@ -53,6 +87,7 @@ const topAnat = {
         .catch(
           ({
             response: {
+              data,
               data: {
                 code,
                 message,
@@ -60,8 +95,14 @@ const topAnat = {
               },
             },
           }) => {
-            // TODO handle error
+            console.log(data);
+            getAxiosAddNotif()({
+              id: Math.random().toString(10),
+              children: <p>{message}</p>,
+              className: `is-danger`,
+            });
             reject();
+            // TODO handle error
           }
         );
     });
@@ -114,6 +155,7 @@ const topAnat = {
         .catch(
           ({
             response: {
+              data,
               data: {
                 code,
                 message,
@@ -121,8 +163,14 @@ const topAnat = {
               },
             },
           }) => {
-            // TODO handle error
+            console.log(data);
+            getAxiosAddNotif()({
+              id: Math.random().toString(10),
+              children: <p>{message}</p>,
+              className: `is-danger`,
+            });
             reject();
+            // TODO handle error
           }
         );
     });

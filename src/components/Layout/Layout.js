@@ -7,8 +7,11 @@ import Bulma from '../Bulma';
 import CookieMessage from '../CookieMessage';
 import config from '../../config.json';
 import { APP_VERSION } from '../../helpers/constants';
+import { setAxiosAddNotif } from '../../api/prod/constant';
+import { NotificationContext } from '../../contexts/NotificationsContext';
 
 const Layout = ({ children }) => {
+  const { addNotification } = React.useContext(NotificationContext);
   const [betaNotif, setBetaNotif] = React.useState(true);
   const loc = useLocation();
   const body = React.useMemo(
@@ -23,6 +26,12 @@ const Layout = ({ children }) => {
     [loc]
   );
 
+  React.useEffect(() => {
+    setAxiosAddNotif(addNotification);
+    return () => {
+      setAxiosAddNotif(null);
+    };
+  }, []);
   return (
     <div className="layout">
       <Header />

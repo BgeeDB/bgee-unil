@@ -4,7 +4,7 @@ import { TOP_ANAT_STATUS } from '../../helpers/constants/topAnat';
 import isPlural from '../../helpers/isPlural';
 
 const TopAnatBanner = ({ results, status }) => {
-  if (results && results.loading) {
+  if ((results && results.loading) || !results) {
     if (status === TOP_ANAT_STATUS.NEW_SEARCH)
       return (
         <Bulma.Notification color="warning" className="mt-5">

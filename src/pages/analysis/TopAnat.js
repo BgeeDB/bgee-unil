@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
