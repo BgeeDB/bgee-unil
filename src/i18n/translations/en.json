@@ -44,6 +44,7 @@
       "data-dumps": "Data dumps"
     },
     "resources": {
+      "docs": "Bgee documentation",
       "r-packages": "R packages",
       "sparql": "SPARQL endpoint",
       "annotations": "Annotations",
