@@ -9,6 +9,7 @@ const PATHS = {
   SEARCH: {
     GENE: '/search/genes',
     GENE_ITEM: '/search/genes/:id',
+    GENE_ITEM_BY_SPECIES: '/search/genes/:id/:species',
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homology',
     SPECIES: '/search/species',
     SPECIES_ITEM: '/search/species/:id',
