@@ -5,6 +5,7 @@ import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
+import useGeneSearch from '../../hooks/useGeneSearch';
 
 const onRenderCell =
   (search) =>
@@ -50,6 +51,7 @@ const GeneList = () => {
   const [search, setSearch] = React.useState('');
   const query = useQuery('search');
   const [results, setResults] = React.useState(undefined);
+  const { resListeGenes, SearchHandler } = useGeneSearch(search);
 
   React.useEffect(() => {
     setSearch(query);
@@ -195,6 +197,16 @@ const GeneList = () => {
     ]);
   }, [query]);
 
+  const handlerGeneSearch = (val) => {
+    setSearch(val);
+    SearchHandler(val);
+  };
+
+  const renderGeneList = () => {
+    const res = resListeGenes.map((val) => <tr>{val.name}</tr>);
+    return res;
+  };
+
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
@@ -215,10 +227,15 @@ const GeneList = () => {
                     type="text"
                     name="search-species"
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => handlerGeneSearch(e.target.value)}
                   />
                 </div>
               </div>
+              {resListeGenes && (
+                <table className="table  is-primary">
+                  <tbody>{renderGeneList()}</tbody>
+                </table>
+              )}
               <div className="field">
                 <div className="control is-flex is-align-items-center">
                   <button className="button mr-2" type="button">

@@ -1,4 +1,5 @@
 import topAnat from './prod/topAnat';
+import geneSearch from './prod/geneSearch';
 
 /*
  * ERROR RESPONSE FORMAT
@@ -15,6 +16,7 @@ import topAnat from './prod/topAnat';
 
 const api = {
   topAnat,
+  geneSearch,
 };
 
 export default api;
