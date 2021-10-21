@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import NewsItem from '../NewsItem';
+import config from '../../config.json';
+import PATHS from '../../routes/paths';
 
-// todo check internal links
 const HomeNewsList = () => (
   <>
     <Bulma.Card.Header>
@@ -19,7 +21,7 @@ const HomeNewsList = () => (
             This is a major update of Bgee, with 28 new species; integration of
             single-cell RNA-Seq full-length data; improved treatment of bulk
             RNA-Seq, and addition of new libraries; and improved statistical
-            treatment to control for False Discovery Rate. All <i>in situ</i>{' '}
+            treatment to control for False Discovery Rate. All <i>in situ</i>
             hybridization data retrieved from Model Organism Databases, and all
             genomes and underlying ontologies, have been updated.
           </p>
@@ -44,7 +46,7 @@ const HomeNewsList = () => (
               with a high precision the cell types studied and their anatomical
               origin (post-composition of ontology terms). It is
               straightforwardly integrated in all our tools, along with all
-              other data (bulk RNA-Seq, Affymetrix, <i>in situ</i>{' '}
+              other data (bulk RNA-Seq, Affymetrix, <i>in situ</i>
               hybridization, Expressed Sequence Tags). For this release, we have
               integrated 1 481 libraries in human and mouse.
             </li>
@@ -95,7 +97,7 @@ const HomeNewsList = () => (
                       14 for <i>Danio rerio</i> (total: 161)
                     </li>
                     <li>
-                      4 added, 35 removed, for <i>Drosophila melanogaster</i>{' '}
+                      4 added, 35 removed, for <i>Drosophila melanogaster</i>
                       (total: 257)
                     </li>
                   </ul>
@@ -328,22 +330,22 @@ const HomeNewsList = () => (
             <li>
               On all gene pages you will now find links to ortholog and paralog
               gene pages, and links to directly run an{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=expression_comparison"
+              <Link
+                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                 title="Expression comparison"
               >
                 expression comparison analysis
-              </a>{' '}
+              </Link>
               on them.
             </li>
             <li>
               We have made{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=top_anat"
+              <Link
+                to={PATHS.ANALYSIS.TOP_ANAT}
                 title="Perform gene expression enrichment tests with TopAnat"
               >
                 TopAnat
-              </a>{' '}
+              </Link>
               faster when used with no decorrelation method.
             </li>
           </ul>
@@ -419,12 +421,12 @@ const HomeNewsList = () => (
           <ul>
             <li>
               Update of{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=top_anat"
+              <Link
+                to={PATHS.ANALYSIS.TOP_ANAT}
                 title="Perform gene expression enrichment tests with TopAnat"
               >
                 TopAnat
-              </a>
+              </Link>
               :{' '}
               <ul>
                 <li>
@@ -446,12 +448,9 @@ const HomeNewsList = () => (
             </li>
             <li>
               New{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=publication"
-                title="Bgee publications"
-              >
+              <Link to={PATHS.ABOUT.PUBLICATION} title="Bgee publications">
                 publication page
-              </a>{' '}
+              </Link>
               listing the publications related to Bgee, and describing how to
               cite us.
             </li>
@@ -476,16 +475,16 @@ const HomeNewsList = () => (
             domestic animals, this represents a major improvement of the anatomy
             and life stage coverage of the data, making all Bgee tools much more
             useful, notably{' '}
-            <a
-              href="https://bgee.org/bgee15_0/?page=top_anat"
+            <Link
+              to={PATHS.ANALYSIS.TOP_ANAT}
               title="Perform gene expression enrichment tests with TopAnat"
             >
               TopAnat
-            </a>{' '}
+            </Link>
             and the{' '}
-            <a href="https://bgee.org/bgee15_0/?page=gene" title="Gene page">
+            <Link to={PATHS.SEARCH.GENE} title="Gene page">
               gene pages
-            </a>
+            </Link>
             .
           </p>
           <ul>
@@ -520,7 +519,7 @@ const HomeNewsList = () => (
                   41), following improvements of quality controls; 745
                   conditions annotated in Bgee, in 360 anatomical entities.
                 </li>
-              </ul>{' '}
+              </ul>
             </li>
             <li>
               Addition of data also in non-human primates:{' '}
@@ -531,7 +530,7 @@ const HomeNewsList = () => (
                   Bgee, in 26 anatomical entities.
                 </li>
                 <li>
-                  196 libraries added, 48 removed for <i>Macaca mulatta</i>{' '}
+                  196 libraries added, 48 removed for <i>Macaca mulatta</i>
                   (total 238); 50 conditions annotated in Bgee, in 25 anatomical
                   entities.
                 </li>
@@ -539,7 +538,7 @@ const HomeNewsList = () => (
                   1 library added for <i>Pan paniscus</i> (total 13); 12
                   conditions annotated in Bgee, in 7 anatomical entities.
                 </li>
-              </ul>{' '}
+              </ul>
             </li>
             <li>
               For farm and domestic animals:{' '}
@@ -577,7 +576,7 @@ const HomeNewsList = () => (
                   19 added for <i>Cavia porcellus</i> (total 28); 6 conditions
                   annotated in Bgee, in 5 anatomical entities.
                 </li>
-              </ul>{' '}
+              </ul>
             </li>
             <li>
               Other species with changes:{' '}
@@ -607,24 +606,20 @@ const HomeNewsList = () => (
                   4 removed for <i>Drosophila pseudoobscura</i> (total 10); 6
                   conditions annotated in Bgee, in 4 anatomical entities.
                 </li>
-              </ul>{' '}
+              </ul>
             </li>
             <li>
               Update of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=expression_comparison">
+              <Link to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}>
                 Expression Comparison page
-              </a>{' '}
-              to display expression scores rather than expression ranks.{' '}
+              </Link>
+              to display expression scores rather than expression ranks.
             </li>
             <li>
               Update of the menu, of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=collaborations">
-                collaboration page
-              </a>
-              , of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=sparql">
-                SPARQL documentation page
-              </a>{' '}
+              <Link to={PATHS.ABOUT.COLLABORATIONS}>collaboration page</Link>,
+              of the{' '}
+              <Link to={PATHS.RESOURCES.SPARQL}>SPARQL documentation page</Link>
               (notably to access archived version of Bgee, starting with Bgee
               14.0).{' '}
             </li>
@@ -633,12 +628,14 @@ const HomeNewsList = () => (
             You can still access Bgee version 14.0 at{' '}
             <a
               title="Archive site Bgee version 14"
-              href="https://bgee.org/bgee15_0/bgee14"
+              href={
+                config.archivedVersion.find((a) => a.version === '14.0').url
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="external_link"
             >
-              https://bgee.org/bgee15_0/bgee14
+              {config.archivedVersion.find((a) => a.version === '14.0').url}
             </a>
             .
           </p>
@@ -647,26 +644,26 @@ const HomeNewsList = () => (
           <ul>
             <li>
               New score on{' '}
-              <a href="https://bgee.org/bgee15_0/?page=gene" title="Gene page">
+              <Link to={PATHS.SEARCH.GENE} title="Gene page">
                 gene pages
-              </a>
+              </Link>
               .
             </li>
             <li>
               New{' '}
-              <a href="https://bgee.org/bgee15_0/?page=species" title="Species">
+              <Link to={PATHS.SEARCH.SPECIES} title="Species">
                 species
-              </a>{' '}
+              </Link>
               page.
             </li>
             <li>
               Update of the{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=expression_comparison"
+              <Link
+                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                 title="Expression comparison"
               >
                 expression comparison
-              </a>
+              </Link>
               .{' '}
               <ul>
                 <li>Better sorting approach.</li>
@@ -679,7 +676,7 @@ const HomeNewsList = () => (
               Improve findability of data by adding{' '}
               <a href="https://bioschemas.org" title="Bioschemas">
                 Bioschemas
-              </a>{' '}
+              </a>
               markup.
             </li>
           </ul>
@@ -688,80 +685,59 @@ const HomeNewsList = () => (
           <ul>
             <li>
               New{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=expression_comparison"
+              <Link
+                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                 title="Expression comparison"
               >
                 expression comparison
-              </a>{' '}
+              </Link>
               page.
             </li>
             <li>
               New{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=anat_similarities"
+              <Link
+                to={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
                 title="Anatomical homology"
               >
                 anatomical homology
-              </a>{' '}
+              </Link>
               page.
             </li>
             <li>
               New resource pages:{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=resources&amp;action=r_packages"
-                title="R packages"
-              >
+              <Link to={PATHS.RESOURCES.R_PACKAGES} title="R packages">
                 R packages
-              </a>
+              </Link>
               ,{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=resources&amp;action=annotations"
-                title="Annotations"
-              >
+              <Link to={PATHS.RESOURCES.ANNOTATIONS} title="Annotations">
                 Annotations
-              </a>
+              </Link>
               ,{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=resources&amp;action=ontologies"
-                title="Ontologies"
-              >
+              <Link to={PATHS.RESOURCES.ONTOLOGIES} title="Ontologies">
                 Ontologies
-              </a>{' '}
+              </Link>
               and{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=resources&amp;action=source_code"
-                title="Source code"
-              >
+              <Link to={PATHS.RESOURCES.SOURCE_CODE} title="Source code">
                 Source code
-              </a>{' '}
+              </Link>
               pages.
             </li>
             <li>
               New{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=download&amp;action=dumps"
-                title="MySQL dumps"
-              >
+              <Link to={PATHS.DOWNLOAD.DATA_DUMPS} title="MySQL dumps">
                 Data dumps
-              </a>{' '}
+              </Link>
               and{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=sparql"
-                title="Bgee SPARQL endpoint"
-              >
+              <Link to={PATHS.RESOURCES.SPARQL} title="Bgee SPARQL endpoint">
                 SPARQL endpoint
-              </a>{' '}
+              </Link>
               pages.
             </li>
             <li>
               New{' '}
-              <a
-                href="https://bgee.org/bgee15_0/?page=collaborations"
-                title="Bgee collaborations"
-              >
+              <Link to={PATHS.ABOUT.COLLABORATIONS} title="Bgee collaborations">
                 Bgee collaborations
-              </a>{' '}
+              </Link>
               page.
             </li>
             <li>Update of the menu</li>
@@ -769,28 +745,23 @@ const HomeNewsList = () => (
         </NewsItem>
         <NewsItem date="2019-05-12">
           <ul>
-            {' '}
             <li>
-              Update of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=gene">
-                gene search page
-              </a>
+              Update of the <Link to={PATHS.SEARCH.GENE}>gene search page</Link>
               :{' '}
               <ul>
-                {' '}
                 <li>
                   Addition of a gene search result page (i.e.{' '}
-                  <a
-                    href="https://bgee.org/bgee15_0/?page=gene&amp;query=HBB"
+                  <Link
+                    to={`${PATHS.SEARCH.GENE}?query=HBB`}
                     title='Search genes with "HBB"'
                   >
                     search with &quot;HBB&quot;
-                  </a>
+                  </Link>
                   )
-                </li>{' '}
-                <li>Improvement of the speed of autocompletion</li>{' '}
+                </li>
+                <li>Improvement of the speed of autocompletion</li>
               </ul>
-            </li>{' '}
+            </li>
             <li>
               Modification of gene pages to display gene name synoyms, and
               cross-references to other resources
@@ -799,131 +770,118 @@ const HomeNewsList = () => (
         </NewsItem>
         <NewsItem date="2019-04-05">
           <ul>
-            {' '}
             <li>
               New{' '}
-              <a href="https://bgee.org/bgee15_0/?page=privacy_policy">
-                privacy policy page
-              </a>
-            </li>{' '}
+              <Link to={PATHS.ABOUT.PRIVACY_POLICY}>privacy policy page</Link>
+            </li>
             <li>
-              New{' '}
-              <a href="https://bgee.org/bgee15_0/?page=doc&amp;action=faq">
-                FAQ page
-              </a>{' '}
+              New <Link to={PATHS.SUPPORT.FAQ}>FAQ page</Link>
               where we address common user queries
-            </li>{' '}
+            </li>
             <li>
-              New{' '}
-              <a href="https://bgee.org/bgee15_0/?page=doc&amp;action=data_sets">
-                documentation page
-              </a>{' '}
+              New <Link to={PATHS.RESOURCES.DOCS}>documentation page</Link>
               specific to GTEx project to learn how we integrated these data
               into Bgee
-            </li>{' '}
+            </li>
             <li>
               Update to Bgee 14.0 of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=doc&amp;action=call_files">
+              <Link to={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}>
                 gene expression call documentation
-              </a>{' '}
-            </li>{' '}
+              </Link>
+            </li>
             <li>
               Update of the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=source">
-                data source page
-              </a>{' '}
+              <Link to={PATHS.ABOUT.SOURCES}>data source page</Link>
               to provide version information
-            </li>{' '}
-            <li>We have clarified our license; we have chosen CC0.</li>{' '}
+            </li>
+            <li>We have clarified our license; we have chosen CC0.</li>
             <li>Update of the menu</li>
           </ul>
         </NewsItem>
         <NewsItem date="2018-02-14">
           Release of Bgee version 14.0:
           <ul>
-            {' '}
             <li>
               Release of the production version of Bgee release 14:{' '}
               <ul>
-                {' '}
                 <li>
-                  <a
-                    href="https://bgee.org/bgee15_0/?page=top_anat"
+                  <Link
+                    to={PATHS.ANALYSIS.TOP_ANAT}
                     title="Perform gene expression enrichment tests with TopAnat"
                   >
                     TopAnat
-                  </a>{' '}
+                  </Link>
                   can now be used based on Bgee 14 data.
-                </li>{' '}
+                </li>
                 <li>
-                  <a
-                    href="https://bgee.org/bgee15_0/?page=gene"
+                  <Link
+                    to={PATHS.SEARCH.GENE}
                     title="Search expression call for a gene"
                   >
                     Gene expression calls
-                  </a>{' '}
+                  </Link>
                   should now be properly retrieved for all genes.
-                </li>{' '}
-              </ul>{' '}
+                </li>
+              </ul>
             </li>
           </ul>
           You can still access Bgee 13 at{' '}
           <a
             title="Archive site Bgee version 13"
-            href="https://bgee.org/bgee15_0/bgee13"
+            href={config.archivedVersion.find((a) => a.version === '13.0').url}
             target="_blank"
             rel="noopener noreferrer"
             className="external_link"
           >
-            https://bgee.org/bgee15_0/bgee13
+            {config.archivedVersion.find((a) => a.version === '13.0').url}
           </a>
           .
         </NewsItem>
         <NewsItem date="2017-05-16">
           Release of Bgee version 14-beta:
           <ul>
-            {' '}
             <li>
               12 new species, bringing the total to 29:{' '}
               <ul>
-                {' '}
                 <li>
                   new mammal species: horse, rabbit, dog, cat, guinea pig,
                   hedgehog;
-                </li>{' '}
+                </li>
                 <li>
                   new Drosophila species: D. ananassae, D. mojavensis, D.
                   pseudoobscura, D. simulans, D. virilis, D. yakuba.
-                </li>{' '}
-              </ul>{' '}
-            </li>{' '}
-            <li>All species now have RNA-Seq data.</li>{' '}
+                </li>
+              </ul>
+            </li>
+            <li>All species now have RNA-Seq data.</li>
             <li>
               Addition of curated human RNA-Seq data from GTEx, removing
-              unhealthy samples; see{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id1">
+              unhealthy samples; see
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#1`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id1" {/* TODO replace with correct PATH */}
+              >
                 human data
-              </a>
+              </Link>
               .
-            </li>{' '}
+            </li>
             <li>
               Improved quality annotation of calls: replacement of &quot;low
               quality&quot; / &quot;high quality&quot; by:
               <ul>
-                {' '}
                 <li>
                   &quot;Gold&quot;: ≥2 experiments with a high confidence calls;
-                </li>{' '}
+                </li>
                 <li>
                   &quot;Silver&quot;: 1 experiment with a high confidence call,
                   or ≥2 experiments with low confidence calls;
-                </li>{' '}
+                </li>
                 <li>
                   &quot;Bronze&quot;: 1 experiment with a low confidence call;
                   these are not shown by default.
-                </li>{' '}
-              </ul>{' '}
-            </li>{' '}
+                </li>
+              </ul>
+            </li>
             <li>
               Update of download pages to make it easier to chose files to
               retrieve; inclusion of gene ranks (as used in gene pages) in call
@@ -933,12 +891,12 @@ const HomeNewsList = () => (
           You can still access Bgee 13 at{' '}
           <a
             title="Archive site Bgee version 13"
-            href="https://bgee.org/bgee15_0/bgee13"
+            href={config.archivedVersion.find((a) => a.version === '13.0').url}
             target="_blank"
             rel="noopener noreferrer"
             className="external_link"
           >
-            https://bgee.org/bgee15_0/bgee13
+            {config.archivedVersion.find((a) => a.version === '13.0').url}
           </a>
           .
         </NewsItem>
@@ -962,18 +920,13 @@ const HomeNewsList = () => (
               </ul>
               Give a try to this updated ranking by searching for your favorite
               gene, or by using the example links, on the{' '}
-              <a href="https://bgee.org/bgee15_0/?page=gene">
-                gene search page
-              </a>
-              .
+              <Link to={PATHS.SEARCH.GENE}>gene search page</Link>.
             </li>
             <li>
               We now display more information about the sources of data used in
               Bgee, see the new{' '}
-              <a href="https://bgee.org/bgee15_0/?page=source">
-                data source page
-              </a>
-              , and new information added to the gene pages.
+              <Link to={PATHS.ABOUT.SOURCES}>data source page</Link>, and new
+              information added to the gene pages.
             </li>
           </ul>
         </NewsItem>
@@ -1003,30 +956,30 @@ const HomeNewsList = () => (
           Various improvements of our new interface.
         </NewsItem>
         <NewsItem date="2016-03-09">
-          Release of our new{' '}
-          <a href="https://bgee.org/bgee15_0/?page=gene">gene page</a>, allowing
-          to discover the most relevant conditions where a gene is expressed.
-          This update also includes an important revamping of our interfaces.
+          Release of our new <Link to={PATHS.SEARCH.GENE}>gene page</Link>,
+          allowing to discover the most relevant conditions where a gene is
+          expressed. This update also includes an important revamping of our
+          interfaces.
         </NewsItem>
         <NewsItem date="2015-12-24">
           Major update of{' '}
-          <a
-            href="https://bgee.org/bgee15_0/?page=top_anat"
+          <Link
+            to={PATHS.ANALYSIS.TOP_ANAT}
             title="Perform gene expression enrichment tests with TopAnat"
           >
             TopAnat
-          </a>
+          </Link>
           . Happy Christmas!
         </NewsItem>
         <NewsItem date="2015-11-24">
           We are happy to release of our new exclusive tool for gene expression
           enrichment analyses:{' '}
-          <a
-            href="https://bgee.org/bgee15_0/?page=top_anat"
+          <Link
+            to={PATHS.ANALYSIS.TOP_ANAT}
             title="Perform gene expression enrichment tests with TopAnat"
           >
             TopAnat
-          </a>
+          </Link>
           . This is a tool with absolutely no equivalent, developped in
           collaboration with the Web-Team of the SIB Swiss Institute of
           Bioinformatics. Check it out!
@@ -1037,59 +990,83 @@ const HomeNewsList = () => (
           <ul>
             <li>Update of the website interfaces.</li>
             <li>
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=proc_values">
+              <Link to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}>
                 New download page
-              </a>{' '}
+              </Link>
               providing processed expression values.
             </li>
             <li>
               Addition of mouse <i>in situ</i> data from MGI, see{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id2">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id2`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id2" TODO check it's matching
+              >
                 mouse data
-              </a>
+              </Link>
               .
             </li>
             <li>
               Differential expression data have been added for{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id3">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id3`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id3" TODO check it's matching
+              >
                 zebrafish
-              </a>
+              </Link>
               ,{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id6">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id6`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id6" TODO check it's matching
+              >
                 chimpanzee
-              </a>
+              </Link>
               ,{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id8">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id8`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id8" TODO check it's matching
+              >
                 gorilla
-              </a>
+              </Link>
               , and{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id19">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id19`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id19" TODO check it's matching
+              >
                 opossum
-              </a>
+              </Link>
               .
             </li>
             <li>
               Addition of new multi-species differential expression data, see
               for instance{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id9598_9544">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#9598_9544`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id9598_9544" TODO check it's matching
+              >
                 chimpanzee/macaque comparison
-              </a>
+              </Link>
               .
             </li>
             <li>
               New format to provide gene orthology information in multi-species
               files, see for instance{' '}
-              <a href="https://bgee.org/bgee15_0/?page=doc&amp;action=call_files#oma_hog">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#oma_hog`}
+                // href="https://bgee.org/bgee15_0/?page=doc&amp;action=call_files#oma_hog" TODO check it's matching
+              >
                 OMA Hierarchical orthologous groups documentation
-              </a>
+              </Link>
               .
             </li>
             <li>
               Removal of data incorrectly considered as normal in{' '}
               <i>C. elegans</i>, see{' '}
-              <a href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id5">
+              <Link
+                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id5`}
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id5" TODO check it's matching
+              >
                 worm data
-              </a>
+              </Link>
               .
             </li>
             <li>
@@ -1106,29 +1083,32 @@ const HomeNewsList = () => (
         <NewsItem date="2015-04-16">
           Release of the multi-species differential expression data (across
           anatomy) for 6 groups, see{' '}
-          <a
-            href="https://bgee.org/bgee15_0/?page=download&amp;action=proc_values"
+          <Link
+            to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
             title="Download overview"
           >
             download overview
-          </a>
+          </Link>
           .
         </NewsItem>
         <NewsItem date="2015-03-03">
           Release of the single-species differential expression data for 11
           species, see{' '}
-          <a
-            href="https://bgee.org/bgee15_0/?page=download&amp;action=proc_values"
+          <Link
+            to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
             title="Download overview"
           >
             download overview
-          </a>
+          </Link>
           .
         </NewsItem>
         <NewsItem date="2014-12-19">
           Release of the single-species expression data for 17 species, see{' '}
           <a
-            href="https://bgee.org/bgee15_0/?page=download&amp;action=proc_values"
+            href={
+              config.permanentVersionedDomain +
+              PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES
+            }
             title="Download overview"
           >
             download overview
