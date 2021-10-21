@@ -125,6 +125,13 @@ const useTopAnat = (flowState, setFlowState) => {
           api.topAnat
             .autoCompleteGenes(e.target.value, false)
             .then((r) => {
+              setRP((prev) => ({
+                ...prev,
+                bg: {
+                  list: r.data.bg_list,
+                  message: r.message,
+                },
+              }));
               if (
                 r.data.fg_list.selectedSpecies !==
                 requestParameters.fg.list.selectedSpecies
@@ -140,13 +147,6 @@ const useTopAnat = (flowState, setFlowState) => {
                   className: `is-danger`,
                 });
               }
-              setRP((prev) => ({
-                ...prev,
-                bg: {
-                  list: r.data.bg_list,
-                  message: r.message,
-                },
-              }));
             })
             .catch((err) => {
               console.debug('[ERROR] api.topAnat.autoComplete', err);

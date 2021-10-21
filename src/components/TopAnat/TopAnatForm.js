@@ -10,6 +10,7 @@ import Input from '../Form/Input';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import { topAnatLabelClassNames } from '../../helpers/constants/topAnat';
 import GenesDetailsModal from './GenesDetailsModal';
+import classnames from '../../helpers/classnames';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -52,7 +53,10 @@ const TopAnatForm = ({
               </p>
             </div>
             {rp.fg && rp.fg.list.selectedSpecies && (
-              <div className="message-body" style={{ position: 'relative' }}>
+              <div
+                className="message-body is-flex"
+                style={{ position: 'relative', height: '100px' }}
+              >
                 <div
                   className="is-flex is-align-items-center"
                   style={{ marginRight: 50 }}
@@ -69,13 +73,12 @@ const TopAnatForm = ({
                     height: 60,
                     width: 70,
                     position: 'absolute',
-                    top: 0,
+                    top: 20,
                     right: 0,
                   }}
                   src={`https://bgee.org/img/species/${rp.fg.list.selectedSpecies}_light.jpg`}
                   alt="species image"
-                  height={60}
-                  width={70}
+                  imgClassnames="top-anat-species"
                 />
               </div>
             )}
@@ -121,18 +124,14 @@ const TopAnatForm = ({
                   />
                 </div>
                 <div
-                  className="message-body is-flex is-flex-direction-column"
-                  style={{ minHeight: 70 }}
-                >
-                  {rp.bg && (
-                    <div className="is-flex is-align-items-center">
-                      <p className="mr-1">{rp.bg?.message}</p>
-                      <InfoIcon
-                        title="Gene detection details"
-                        content={<GenesDetailsModal data={rp.bg?.list} />}
-                      />
-                    </div>
+                  className={classnames(
+                    'message-body',
+                    'is-flex',
+                    'is-flex-direction-column-reverse',
+                    'is-justify-content-space-between'
                   )}
+                  style={{ height: '100px' }}
+                >
                   <div className="is-flex is-align-items-end is-justify-content-end">
                     <div className="field has-addons">
                       <p className="control">
@@ -168,6 +167,15 @@ const TopAnatForm = ({
                       </p>
                     </div>
                   </div>
+                  {rp.bg && (
+                    <div className="is-flex is-align-items-center">
+                      <p className="mr-1">{rp.bg?.message}</p>
+                      <InfoIcon
+                        title="Gene detection details"
+                        content={<GenesDetailsModal data={rp.bg?.list} />}
+                      />
+                    </div>
+                  )}
                 </div>
               </article>
               {rp.customBg && (
