@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ROUTES from './routes';
-import Home from '../pages/Home';
 import PATHS from './paths';
 import Page from '../components/Page';
 import i18n from '../i18n';
@@ -19,7 +18,9 @@ const Router = () => (
             <Route
               exact
               path={PATHS.HOME}
-              render={(props) => <Page {...props} Component={Home} />}
+              render={(props) => (
+                <Page {...props} Component={ROUTES[PATHS.HOME].component} />
+              )}
             />
 
             <Route
