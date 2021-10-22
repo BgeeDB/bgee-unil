@@ -37,7 +37,7 @@ const Image = ({
           {
             'is-rounded': rounded,
           },
-          'top-anat-species'
+          imgClassnames
         )}
         onError={() => state.src !== fallback && setState({ src: fallback })}
         src={state.src}
