@@ -5,7 +5,7 @@ import i18n from '../../i18n';
 
 const Page = ({ Component, title, ...props }) => (
   <>
-    {(title || ROUTES[props.location.pathname].i18nKey) && (
+    {(title || ROUTES[props.location.pathname]?.i18nKey) && (
       <Helmet>
         <title>
           {title || i18n.t(ROUTES[props.location.pathname].i18nKey)}

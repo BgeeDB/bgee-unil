@@ -8,7 +8,8 @@ const PATHS = {
   },
   SEARCH: {
     GENE: '/search/genes',
-    GENE_ITEM: '/search/genes/:id',
+    GENE_ITEM: '/search/gene/:geneId',
+    GENE_ITEM_BY_SPECIES: '/search/gene/:geneId/:speciesId',
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homology',
     SPECIES: '/search/species',
     SPECIES_ITEM: '/search/species/:id',

@@ -51,7 +51,7 @@ const SEARCH = {
     component: GeneList,
   },
   [PATHS.SEARCH.GENE_ITEM]: {
-    i18nKey: 'page.search.gene-search',
+    // i18nKey: 'page.search.gene-search',
     component: Gene,
   },
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {

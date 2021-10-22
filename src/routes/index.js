@@ -73,7 +73,7 @@ const Router = () => (
             />
             <Route
               exact
-              path={PATHS.SEARCH.GENE_ITEM}
+              path={[PATHS.SEARCH.GENE_ITEM, PATHS.SEARCH.GENE_ITEM_BY_SPECIES]}
               render={(props) => (
                 <Page
                   {...props}
