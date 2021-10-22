@@ -6,7 +6,7 @@ export const GENE_SEARCH_CANCEL_API = {
   autoCompleteSearchGenes: null,
 };
 
-const DEFAULT_PARAMETERS = (page = 'gene') => {
+const DEFAULT_PARAMETERS = (page = 'search') => {
   const params = new URLSearchParams();
 
   params.append('ajax', 1);

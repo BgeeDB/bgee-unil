@@ -9,7 +9,7 @@ const useGeneSearch = (searchText) => {
       if (val !== '') {
         api.geneSearch.autoCompleteSearchGenes(val).then((resp) => {
           if (resp.code === 200) {
-            setResListeGenes(resp.data);
+            setResListeGenes(resp.data.match);
           }
         });
       } else {

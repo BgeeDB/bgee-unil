@@ -203,7 +203,16 @@ const GeneList = () => {
   };
 
   const renderGeneList = () => {
-    const res = resListeGenes.map((val) => <tr>{val.name}</tr>);
+    const res = resListeGenes.map((val, index) => (
+      <div
+        onClick={() => console.log(val)}
+        onKeyPress={() => console.log(val)}
+        role="button"
+        tabIndex={index}
+      >
+        <strong className="has-text-primary">{val}</strong>
+      </div>
+    ));
     return res;
   };
 
@@ -232,9 +241,15 @@ const GeneList = () => {
                 </div>
               </div>
               {resListeGenes && (
-                <table className="table  is-primary">
-                  <tbody>{renderGeneList()}</tbody>
-                </table>
+                <div
+                  style={{
+                    overflowY: 'scroll',
+                    border: '1px solid lightgrey',
+                    padding: 5,
+                  }}
+                >
+                  {renderGeneList()}
+                </div>
               )}
               <div className="field">
                 <div className="control is-flex is-align-items-center">
