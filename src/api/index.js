@@ -1,4 +1,5 @@
 import topAnat from './prod/topAnat';
+import search from './prod/search';
 
 /*
  * ERROR RESPONSE FORMAT
@@ -14,6 +15,7 @@ import topAnat from './prod/topAnat';
  */
 
 const api = {
+  search,
   topAnat,
 };
 
