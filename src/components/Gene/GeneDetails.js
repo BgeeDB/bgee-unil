@@ -12,7 +12,6 @@ const MAX_ELEMENTS = 8;
 const XRef = ({ xRefs }) => {
   const [expand, setExpand] = React.useState(false);
 
-  console.log(xRefs.length > MAX_ELEMENTS, xRefs.length, xRefs);
   const elements = React.useMemo(() => {
     if (expand || xRefs.length <= MAX_ELEMENTS) return xRefs;
     return xRefs.slice(0, MAX_ELEMENTS);
