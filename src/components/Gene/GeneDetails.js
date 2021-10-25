@@ -28,33 +28,25 @@ const GeneDetails = ({
         <div className="static-section near-columns">
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.ensembl-id')}
-              </p>
+              <p className="has-text-weight-semibold">Gene identifier</p>
             </Bulma.C>
             <Bulma.C size={8}>{geneId}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.name')}
-              </p>
+              <p className="has-text-weight-semibold">Name</p>
             </Bulma.C>
             <Bulma.C size={8}>{name}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.description')}
-              </p>
+              <p className="has-text-weight-semibold">Description</p>
             </Bulma.C>
             <Bulma.C size={8}>{description}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.organism')}
-              </p>
+              <p className="has-text-weight-semibold">Organism</p>
             </Bulma.C>
             <Bulma.C size={8}>
               <p>
