@@ -8,7 +8,7 @@ import GeneExpressionCallsTabMulti from './GeneExpressionCallsTabMulti';
 // todo which link do we need ? anchor? needed for sharing?
 
 const GeneExpressionCallsTabs = () => {
-  const [active, setActive] = React.useState('multi');
+  const [active, setActive] = React.useState('single');
 
   return (
     <>

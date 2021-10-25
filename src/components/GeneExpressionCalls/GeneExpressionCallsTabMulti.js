@@ -5,7 +5,7 @@ import GECOmaHog from './GECOmaHog';
 import GECMultiDiff from './GECMultiDiff';
 
 const GeneExpressionCallsTabMulti = () => {
-  const [active, setActive] = React.useState('multi_diff');
+  const [active, setActive] = React.useState('oma_hog');
   return (
     <>
       <div className="static-section">
