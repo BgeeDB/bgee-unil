@@ -159,23 +159,21 @@ const Router = () => (
               render={(props) => <Page {...props} Component={StaticPage} />}
             />
 
-            {/* TODO REWORK DESIGN */}
-            {/* <Route */}
-            {/*  exact */}
-            {/*  path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS} */}
-            {/*  render={(props) => ( */}
-            {/*    <Page */}
-            {/*      {...props} */}
-            {/*      title={i18n.t( */}
-            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey */}
-            {/*      )} */}
-            {/*      Component={ */}
-            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS] */}
-            {/*          .component */}
-            {/*      } */}
-            {/*    /> */}
-            {/*  )} */}
-            {/* /> */}
+            <Route
+              exact
+              path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
+              render={(props) => (
+                <Page
+                  {...props}
+                  title={i18n.t(
+                    ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
+                  )}
+                  Component={
+                    ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
+                  }
+                />
+              )}
+            />
 
             {/* <Route path={PATHS.ERROR} component={Error} /> */}
 

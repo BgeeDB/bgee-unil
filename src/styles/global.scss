@@ -542,3 +542,14 @@ label.label.not-default {
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.2);
   }
 }
+
+.go-top {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  background-color: #fff !important;
+  border-width: 3px;
+  &:hover, &:active, &:focus {
+    color: $primary !important;
+  }
+}
