@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ReactGA from 'react-ga';
 import axiosInstance, { getAxiosAddNotif } from './constant';
 
 export const SEARCH_CANCEL_API = {
@@ -40,6 +41,7 @@ const search = {
                 data: { message },
               },
             }) => {
+              ReactGA.exception({ description: message });
               console.log(data);
               getAxiosAddNotif()({
                 id: Math.random().toString(10),
