@@ -4,6 +4,7 @@ import axiosInstance, { getAxiosAddNotif } from './constant';
 
 export const GENE_SEARCH_CANCEL_API = {
   autoCompleteSearchGenes: null,
+  geneSearchResult: null,
 };
 
 const DEFAULT_PARAMETERS = (page = 'search') => {
@@ -26,6 +27,34 @@ const geneSearch = {
         .get(`/?${params.toString()}`, {
           cancelToken: new axios.CancelToken((c) => {
             GENE_SEARCH_CANCEL_API.autoCompleteSearchGenes = c;
+          }),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(
+          ({
+            response: {
+              data,
+              data: { message },
+            },
+          }) => {
+            console.log(data);
+            getAxiosAddNotif()({
+              id: Math.random().toString(10),
+              children: <p>{message}</p>,
+              className: `is-danger`,
+            });
+            reject();
+          }
+        );
+    }),
+  geneSearchResult: (val) =>
+    new Promise((resolve, reject) => {
+      const params = DEFAULT_PARAMETERS('gene');
+      params.append('query', `${val}`);
+      axiosInstance
+        .get(`/?${params.toString()}`, {
+          cancelToken: new axios.CancelToken((c) => {
+            GENE_SEARCH_CANCEL_API.geneSearchResult = c;
           }),
         })
         .then(({ data }) => resolve(data))
