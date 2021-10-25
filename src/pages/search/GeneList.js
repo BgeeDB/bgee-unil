@@ -13,11 +13,22 @@ const onRenderCell =
     switch (key) {
       case 'id':
       case 'name':
+        return (
+          <Link
+            className="internal-link"
+            to={PATHS.SEARCH.GENE_ITEM.replace(':geneId', cell.id)}
+          >
+            {cell[key]}
+          </Link>
+        );
       case 'organism':
         return (
           <Link
             className="internal-link"
-            to={PATHS.SEARCH.GENE_ITEM.replace(':id', cell.id)}
+            to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+              ':geneId',
+              cell.id
+            ).replace(':speciesId', cell.speciesId)}
           >
             {cell[key]}
           </Link>
@@ -64,6 +75,7 @@ const GeneList = () => {
       const orga = `${elem.gene.species.genus} ${elem.gene.species.speciesName} (${elem.gene.species.name})`;
       return {
         id: elem.gene.geneId,
+        speciesId: elem.gene.species.id,
         name: elem.gene.name,
         description: elem.gene.description,
         organism: orga,
@@ -143,6 +155,7 @@ const GeneList = () => {
                     name="search-species"
                     value={search}
                     onChange={(e) => handlerGeneSearch(e.target.value)}
+                    onBlur={() => searchHandler('')}
                   />
                 </div>
               </div>
