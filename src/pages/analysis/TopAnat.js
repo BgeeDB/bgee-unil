@@ -69,7 +69,6 @@ const TopAnat = () => {
             inSitu: r.requestParameters.data_type.find((f) => f === 'IN_SITU'),
             est: r.requestParameters.data_type.find((f) => f === 'EST'),
           }));
-          console.log(r.requestParameters);
           // requestParameters.set(r.requestParameters)
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
         } else {

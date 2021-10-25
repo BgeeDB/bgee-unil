@@ -12,6 +12,7 @@ const Image = ({
   fullwidth,
   width,
   height,
+  imgClassnames,
   ...props
 }) => {
   const [state, setState] = useState({ src });
@@ -32,14 +33,16 @@ const Image = ({
       })}
     >
       <img
-        className={classnames({
-          'is-rounded': rounded,
-        })}
+        className={classnames(
+          {
+            'is-rounded': rounded,
+          },
+          imgClassnames
+        )}
         onError={() => state.src !== fallback && setState({ src: fallback })}
         src={state.src}
         alt={alt}
-        width={width}
-        height={height}
+        style={{ width, height }}
       />
     </Element>
   );

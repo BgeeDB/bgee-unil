@@ -1,9 +1,10 @@
 import PATHS from '../../routes/paths';
+import config from '../../config.json';
 
 const docs = [
   {
     type: 'title',
-    content: 'Bgee release 14.2 documentation',
+    content: `Bgee release ${config.version} documentation`,
   },
   {
     type: 'grid',

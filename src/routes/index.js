@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ROUTES from './routes';
-import Home from '../pages/Home';
 import PATHS from './paths';
 import Page from '../components/Page';
 import i18n from '../i18n';
@@ -19,7 +18,9 @@ const Router = () => (
             <Route
               exact
               path={PATHS.HOME}
-              render={(props) => <Page {...props} Component={Home} />}
+              render={(props) => (
+                <Page {...props} Component={ROUTES[PATHS.HOME].component} />
+              )}
             />
 
             <Route
@@ -72,7 +73,7 @@ const Router = () => (
             />
             <Route
               exact
-              path={PATHS.SEARCH.GENE_ITEM}
+              path={[PATHS.SEARCH.GENE_ITEM, PATHS.SEARCH.GENE_ITEM_BY_SPECIES]}
               render={(props) => (
                 <Page
                   {...props}
@@ -158,23 +159,21 @@ const Router = () => (
               render={(props) => <Page {...props} Component={StaticPage} />}
             />
 
-            {/* TODO REWORK DESIGN */}
-            {/* <Route */}
-            {/*  exact */}
-            {/*  path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS} */}
-            {/*  render={(props) => ( */}
-            {/*    <Page */}
-            {/*      {...props} */}
-            {/*      title={i18n.t( */}
-            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey */}
-            {/*      )} */}
-            {/*      Component={ */}
-            {/*        ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS] */}
-            {/*          .component */}
-            {/*      } */}
-            {/*    /> */}
-            {/*  )} */}
-            {/* /> */}
+            <Route
+              exact
+              path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
+              render={(props) => (
+                <Page
+                  {...props}
+                  title={i18n.t(
+                    ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
+                  )}
+                  Component={
+                    ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
+                  }
+                />
+              )}
+            />
 
             {/* <Route path={PATHS.ERROR} component={Error} /> */}
 
