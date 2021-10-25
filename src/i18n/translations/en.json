@@ -148,14 +148,7 @@
       "orthology-info": "Orthology information comes from OMA",
       "paralogs": "Paralogs (same species)",
       "paralogy-info": "Paralogy information comes from OMA",
-      "cross-references": "Cross-references",
-      "ccds": "CCSD",
-      "ensembl": "Ensembl",
-      "hgnc": "HGNC",
-      "embl": "EMBL",
-      "onco-mx": "OncoMX",
-      "uniprot-sptrembl": "Uniprot / SPTREMBL",
-      "uniprot-swissprot": "Uniprot / SWISSPROT"
+      "cross-references": "Cross-references"
     },
     "anatomical-homology": {
       "title": "Anatomical homology",

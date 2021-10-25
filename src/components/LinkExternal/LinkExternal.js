@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from '../../helpers/classnames';
 
-const LinkExternal = ({ id, to, text, className }) => (
+const LinkExternal = ({ id, to, text, className, children }) => (
   <a
     href={to}
     target="_blank"
@@ -9,7 +9,7 @@ const LinkExternal = ({ id, to, text, className }) => (
     id={id}
     className={classnames('external-link', className)}
   >
-    {text}
+    {text || children}
   </a>
 );
 export default LinkExternal;
