@@ -1,12 +1,14 @@
 import React from 'react';
 import i18n from '../../i18n';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
+import GaEvent from '../GaEvent/GaEvent';
 
 const TopAnatActionButtons = ({
   status,
   handleSubmit,
   cancelJob,
   startNewJob,
+  jobId,
 }) => {
   switch (status) {
     case TOP_ANAT_FLOW.NEW_JOB:
@@ -27,13 +29,15 @@ const TopAnatActionButtons = ({
       return (
         <div className="field">
           <p className="control">
-            <button
-              type="button"
-              className="button is-danger"
-              onClick={cancelJob}
-            >
-              {i18n.t('analysis.top-anat.cancel-job')}
-            </button>
+            <GaEvent category="Top Anat" action="Cancel Job" label={jobId}>
+              <button
+                type="button"
+                className="button is-danger"
+                onClick={cancelJob}
+              >
+                {i18n.t('analysis.top-anat.cancel-job')}
+              </button>
+            </GaEvent>
           </p>
         </div>
       );
