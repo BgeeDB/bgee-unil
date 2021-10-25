@@ -4,6 +4,7 @@ import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
+import GaEvent from '../GaEvent/GaEvent';
 
 const COLUMNS = [
   {
@@ -95,34 +96,55 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
             <Bulma.C size={4}>
               <div className="is-flex is-flex-direction-column">
                 <p>Download R scripts and data</p>
-                <Bulma.Button
-                  href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
-                  color="danger"
-                  light
-                  style={{ width: 'fit-content' }}
-                  rel="noreferrer"
-                  renderAs="a"
-                  size="small"
+                <GaEvent
+                  category="Top Anat"
+                  action="Download R scripts and data"
+                  label={`All - https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
                 >
-                  All stages, expression type &quot;Present&quot;
-                </Bulma.Button>
+                  <Bulma.Button
+                    href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
+                    color="danger"
+                    light
+                    style={{ width: 'fit-content' }}
+                    rel="noreferrer"
+                    renderAs="a"
+                    size="small"
+                  >
+                    All stages, expression type &quot;Present&quot;
+                    <span className="icon ml-1">
+                      <ion-icon name="download-outline" size="large" />
+                    </span>
+                  </Bulma.Button>
+                </GaEvent>
                 {results.analysis.length > 1 &&
                   results.analysis.map((r) => (
-                    <Bulma.Button
+                    <GaEvent
                       key={r.zipFile}
-                      href={r.zipFile}
-                      color="danger"
-                      light
-                      style={{ width: 'fit-content' }}
-                      rel="noreferrer"
-                      renderAs="a"
-                      size="small"
-                      className="mt-1"
-                    >
-                      {`${
+                      category="Top Anat"
+                      action="Download R scripts and data"
+                      label={`${
                         fg.list.stages.find((s) => s.id === r.devStageId)?.name
-                      }, expression type "Present" (${r.results.length})`}
-                    </Bulma.Button>
+                      } - ${r.zipFile}`}
+                    >
+                      <Bulma.Button
+                        href={r.zipFile}
+                        color="danger"
+                        light
+                        style={{ width: 'fit-content' }}
+                        rel="noreferrer"
+                        renderAs="a"
+                        size="small"
+                        className="mt-1"
+                      >
+                        {`${
+                          fg.list.stages.find((s) => s.id === r.devStageId)
+                            ?.name
+                        }, expression type "Present" (${r.results.length})`}
+                        <span className="icon is-small">
+                          <ion-icon name="download-outline" size="large" />
+                        </span>
+                      </Bulma.Button>
+                    </GaEvent>
                   ))}
               </div>
             </Bulma.C>

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ReactGA from 'react-ga';
 import axiosInstance, { getAxiosAddNotif } from './constant';
 
 export const TOP_ANAT_CANCEL_API = {
@@ -45,6 +46,7 @@ const topAnat = {
               data: { message },
             },
           }) => {
+            ReactGA.exception({ description: message });
             console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),
@@ -115,6 +117,7 @@ const topAnat = {
               data: { message },
             },
           }) => {
+            ReactGA.exception({ description: message });
             console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),
@@ -151,6 +154,7 @@ const topAnat = {
               data: { message },
             },
           }) => {
+            ReactGA.exception({ description: message });
             console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),
@@ -187,6 +191,7 @@ const topAnat = {
               data: { message },
             },
           }) => {
+            ReactGA.exception({ description: message });
             console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),
@@ -223,6 +228,7 @@ const topAnat = {
               data: { message },
             },
           }) => {
+            ReactGA.exception({ description: message });
             console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),

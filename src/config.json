@@ -21,5 +21,7 @@
       "url": "https://bgee.org/bgee13/"
     }
   ],
-  "contactEmail": "Bgee@sib.swiss"
+  "contactEmail": "Bgee@sib.swiss",
+  "googleAnalyticsIdDev": "291016193",
+  "googleAnalyticsIdProd": "UA-18281910-2"
 }

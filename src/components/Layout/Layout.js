@@ -1,5 +1,6 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Alert from '../Alert';
@@ -13,6 +14,7 @@ import { NotificationContext } from '../../contexts/NotificationsContext';
 const Layout = ({ children }) => {
   const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();
+  const { listen } = useHistory();
   const body = React.useMemo(
     () =>
       loc.pathname === '/' ? (
@@ -25,6 +27,14 @@ const Layout = ({ children }) => {
     [loc]
   );
 
+  React.useEffect(
+    () =>
+      listen((location) => {
+        console.log(location);
+        ReactGA.pageview(location.pathname);
+      }),
+    [listen]
+  );
   React.useEffect(() => {
     setAxiosAddNotif(addNotification);
     return () => {
