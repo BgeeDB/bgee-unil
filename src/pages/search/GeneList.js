@@ -70,19 +70,14 @@ const GeneList = () => {
     searchHandler,
     searchResultHandler,
     setResults,
+    setResListGenes,
   } = useGeneSearch(search);
   const [openModal, setOpenModal] = React.useState(false);
 
-  const isDisplayDropDownlist = resListGenes.length > 0 && search.length > 0;
-  React.useEffect(() => {
-    const params = new URLSearchParams(queryParams);
-
-    if (params.get('search')) {
-      setSearch(params.get('search'));
-      setResults();
-      searchResultHandler(params.get('search'));
-    }
-  }, [queryParams]);
+  const isDisplayDropDownList = React.useMemo(
+    () => resListGenes.length > 0 && search.length > 0,
+    [resListGenes, search]
+  );
 
   const objMapping = React.useCallback(
     (element) => ({
@@ -103,6 +98,22 @@ const GeneList = () => {
     }
   }, []);
 
+  const onFilter = React.useCallback(
+    (searchReg) => (element) => {
+      const regExp = new RegExp(searchReg, 'gi');
+      return (
+        Boolean(regExp.test(element.gene.geneId)) ||
+        Boolean(
+          regExp.test(
+            `${element.gene.species.genus} ${element.gene.species.speciesName} (${element.gene.species.name})`
+          )
+        ) ||
+        Boolean(regExp.test(element.gene.description)) ||
+        Boolean(regExp.test(element.gene.name))
+      );
+    },
+    []
+  );
   const renderGeneList = () => {
     let redPart;
     let firstPart;
@@ -123,6 +134,7 @@ const GeneList = () => {
       return (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
         <div
+          key={val}
           onClick={() => {
             if (val !== '') history.push(`?search=${val}`);
             setOpenModal(false);
@@ -139,6 +151,35 @@ const GeneList = () => {
     });
   };
 
+  React.useEffect(() => {
+    const params = new URLSearchParams(queryParams);
+
+    if (params.get('search')) {
+      setSearch(params.get('search'));
+      setResults();
+      searchResultHandler(params.get('search'));
+    }
+  }, [queryParams]);
+
+  React.useEffect(() => {
+    const onClick = () => {
+      setOpenModal(false);
+    };
+    document.getElementById('root').addEventListener('click', onClick);
+    const onClickInput = (e) => {
+      e.stopPropagation();
+    };
+    document
+      .getElementById('gene-input')
+      .addEventListener('click', onClickInput);
+    return () => {
+      document.getElementById('root').removeEventListener('click', onClick);
+      document
+        .getElementById('gene-input')
+        .removeEventListener('click', onClickInput);
+    };
+  }, []);
+
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
@@ -149,12 +190,14 @@ const GeneList = () => {
         <Bulma.Card className="search-input mx-auto my-3">
           <Bulma.Card.Body>
             <div className="content">
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
               <div className="field">
                 <label className="label" htmlFor="search-species">
                   {i18n.t('search.genes.search-gene')}
                 </label>
                 <div className="control">
                   <input
+                    id="gene-input"
                     className="input"
                     type="text"
                     name="search-species"
@@ -163,7 +206,7 @@ const GeneList = () => {
                   />
                 </div>
               </div>
-              {isDisplayDropDownlist && openModal && (
+              {isDisplayDropDownList && openModal && (
                 <div className="dropDownSearchForm">{renderGeneList()}</div>
               )}
               <div className="field">
@@ -220,6 +263,7 @@ const GeneList = () => {
               { text: 'Match', key: 'match' },
             ]}
             data={results}
+            onFilter={onFilter}
             customHeader={customHeader}
             onRenderCell={onRenderCell(search)}
             mappingObj={objMapping}

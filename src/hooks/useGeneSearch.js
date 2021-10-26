@@ -50,6 +50,7 @@ const useGeneSearch = (searchText) => {
     searchHandler,
     searchResultHandler,
     setResults: setResResultListGenes,
+    setResListGenes,
   };
 };
 
