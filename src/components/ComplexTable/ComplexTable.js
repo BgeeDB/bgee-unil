@@ -123,6 +123,7 @@ const ComplexTable = ({
           .map(mappingObj)}
         onRenderCell={onRenderCell}
         onSort={onSort ? setSort : undefined}
+        striped
         {...props}
       />
       {pagination && (

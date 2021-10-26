@@ -2,6 +2,7 @@
 /* eslint-disable import/no-cycle */
 import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
+import classnames from '../../helpers/classnames';
 
 const defaultRender = (cell, key) => {
   if (typeof cell === 'string' || typeof cell === 'number')
@@ -21,6 +22,7 @@ const Table = ({
   sortable = false,
   onSort,
   onRenderCell,
+  striped,
 }) => {
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
@@ -43,9 +45,11 @@ const Table = ({
   );
   let TableObject = (
     <table
-      className={`table ${sortable ? 'sortable' : ''} ${classNames} ${
-        fullwidth ? 'is-fullwidth' : ''
-      }`}
+      className={classnames(
+        'table',
+        { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+        classNames
+      )}
     >
       <thead>
         <tr>

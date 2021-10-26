@@ -44,7 +44,7 @@ const Gene = () => {
           setFlowState(FLOW.LOADED);
         }
       })
-      .then((err) => console.error(err));
+      .catch((err) => console.error(err));
   }, [geneId, urlSpeciesId]);
 
   if (flowState === FLOW.LOADING) return null;

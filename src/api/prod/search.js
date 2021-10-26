@@ -6,6 +6,7 @@ export const SEARCH_CANCEL_API = {
   genes: {
     getGeneralInformation: null,
     xrefs: null,
+    homologs: null,
   },
 };
 
@@ -47,7 +48,7 @@ const search = {
                 children: <p>{message}</p>,
                 className: `is-danger`,
               });
-              reject();
+              reject(data);
             }
           );
       }),
@@ -61,6 +62,36 @@ const search = {
             cancelToken: new axios.CancelToken((c) => {
               // An executor function receives a cancel function as a parameter
               SEARCH_CANCEL_API.genes.xrefs = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch(
+            ({
+              response: {
+                data,
+                data: { message },
+              },
+            }) => {
+              console.log(data);
+              getAxiosAddNotif()({
+                id: Math.random().toString(10),
+                children: <p>{message}</p>,
+                className: `is-danger`,
+              });
+              reject();
+            }
+          );
+      }),
+    homologs: (geneId, speciesId) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('gene', 'homologs');
+        params.append('gene_id', geneId);
+        params.append('species_id', speciesId);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              // An executor function receives a cancel function as a parameter
+              SEARCH_CANCEL_API.genes.homologs = c;
             }),
           })
           .then(({ data }) => resolve(data))
