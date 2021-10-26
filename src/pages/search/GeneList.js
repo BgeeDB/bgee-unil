@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import ComplexTable from '../../components/ComplexTable';
@@ -61,6 +61,7 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
 );
 
 const GeneList = () => {
+  const history = useHistory();
   const [search, setSearch] = React.useState('');
   const [results, setResults] = React.useState(undefined);
   const {
@@ -69,6 +70,13 @@ const GeneList = () => {
     searchHandler,
     searchResultHandler,
   } = useGeneSearch(search);
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const isDisplayDropDownlist = resListeGenes.length > 0 && search.length > 0;
+
+  React.useEffect(() => {
+    history.push(`?search=${search}`);
+  }, [search]);
 
   const formatResultForTable = (initTable) => {
     const res = initTable.map((elem) => {
@@ -92,6 +100,10 @@ const GeneList = () => {
   const handlerGeneSearch = (val) => {
     setSearch(val);
     searchHandler(val);
+    searchResultHandler(val);
+    if (val) {
+      setOpenModal(true);
+    }
   };
 
   const renderGeneList = () => {
@@ -114,12 +126,14 @@ const GeneList = () => {
       return (
         <div
           onClick={() => {
+            setSearch(val);
             searchResultHandler(val);
-            setSearch('');
+            setOpenModal(false);
           }}
           onKeyPress={() => {
+            setSearch(val);
             searchResultHandler(val);
-            setSearch('');
+            setOpenModal(false);
           }}
           role="button"
           tabIndex={index}
@@ -155,11 +169,10 @@ const GeneList = () => {
                     name="search-species"
                     value={search}
                     onChange={(e) => handlerGeneSearch(e.target.value)}
-                    onBlur={() => searchHandler('')}
                   />
                 </div>
               </div>
-              {resListeGenes.length > 0 && search.length > 0 && (
+              {isDisplayDropDownlist && openModal && (
                 <div className="dropDownSearchForm">{renderGeneList()}</div>
               )}
               <div className="field">
