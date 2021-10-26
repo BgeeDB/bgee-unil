@@ -1,6 +1,7 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
+/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
@@ -44,25 +45,261 @@ const ExpandableList = ({ items, renderElement }) => {
   );
 };
 
+const CUSTOM_FIELDS = [
+  {
+    key: 'anat',
+    text: 'Anat. entity and cell types',
+  },
+  {
+    key: 'devStage',
+    text: 'Dev. stage',
+  },
+  {
+    key: 'sex',
+    text: 'Sex',
+  },
+  {
+    key: 'strain',
+    text: 'Strain',
+  },
+];
 const GeneExpression = ({ geneId, speciesId }) => {
+  const [data, setData] = React.useState();
+  const [cFields, setCFields] = React.useState({ anat: true });
+
+  const columns = React.useMemo(() => {
+    let c = [];
+
+    if (cFields.anat)
+      c.push({
+        key: 'anatEntity',
+        text: 'Anatomical entity',
+      });
+    if (cFields.devStage)
+      c.push({
+        key: 'devStage',
+        text: 'Dev. stage',
+      });
+    if (cFields.sex)
+      c.push({
+        key: 'sex',
+        text: 'Sex',
+      });
+    if (cFields.strain)
+      c.push({
+        key: 'strain',
+        text: 'Strain',
+        style: { minWidth: 100 },
+      });
+    c = [
+      ...c,
+      {
+        key: 'expScore',
+        text: 'Expression score',
+      },
+      {
+        key: 'fdr',
+        text: 'FDR',
+        style: { minWidth: 100 },
+      },
+      {
+        key: 'sources',
+        text: 'Sources',
+        style: {
+          maxWidth: 350,
+        },
+      },
+    ];
+    return c;
+  }, [cFields]);
+  const customHeader = React.useCallback(
+    (searchElement, pageSizeElement, showEntriesText) => (
+      <Bulma.Columns vCentered>
+        <Bulma.C size={8}>
+          <div className="field">{searchElement}</div>
+          <div className="is-flex">
+            Fields:
+            {CUSTOM_FIELDS.map((c) => (
+              <label
+                className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+                key={c.key}
+              >
+                <input
+                  type="checkbox"
+                  checked={cFields[c.key]}
+                  onChange={(e) => {
+                    console.log(cFields[c.key], e.target.checked);
+                    setCFields((prev) => ({
+                      ...prev,
+                      [c.key]: e.target.checked,
+                    }));
+                  }}
+                />
+                <b className="mx-1">{c.text}</b>
+              </label>
+            ))}
+          </div>
+        </Bulma.C>
+        <Bulma.C size={4}>
+          <div>
+            {pageSizeElement}
+            <div>{showEntriesText}</div>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+    ),
+    [cFields]
+  );
+  const onRenderCell = React.useCallback(
+    ({ cell, key }, defaultRender) => {
+      switch (key) {
+        case 'anatEntity':
+          return (
+            <>
+              <span className="is-size-7">
+                <LinkExternal
+                  to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
+                    ':',
+                    '_'
+                  )}`}
+                  className="mr-1"
+                >
+                  {cell.condition.anatEntity.id}
+                </LinkExternal>
+                {cell.condition.anatEntity.name}
+              </span>
+            </>
+          );
+        case 'expScore':
+          return (
+            <span
+              key={key}
+              style={
+                cell.expressionScore.expressionScoreConfidence !== 'high'
+                  ? {
+                      color: 'lightgrey',
+                    }
+                  : {}
+              }
+            >
+              {cell.expressionScore.expressionScore}
+            </span>
+          );
+        case 'fdr':
+          return defaultRender(cell.fdr, key);
+        case 'strain':
+          return defaultRender(cell.condition.strain, key);
+        case 'sources':
+          return (
+            <div className="tags">
+              {cell.dataTypesWithData.map((d) => (
+                <span key={d} className="tag is-size-7 is-primary">
+                  {d}
+                </span>
+              ))}
+            </div>
+          );
+        default:
+          return defaultRender(key, key);
+      }
+    },
+    [columns]
+  );
+  const onFilter = React.useCallback(
+    (search) => (element) => {
+      const regExp = new RegExp(search, 'gi');
+      return (
+        regExp.test(element?.condition?.anatEntity?.id) ||
+        regExp.test(element?.condition?.anatEntity?.name) ||
+        regExp.test(element?.condition?.strain)
+      );
+    },
+    []
+  );
+
   React.useEffect(() => {
     api.search.genes
       .expression(geneId, speciesId)
       .then((res) => {
-        console.log(res);
+        setData(res.data);
+        console.log(res.data);
       })
-      .catch((err) => console.err(err));
+      .catch((err) => console.error(err));
   }, []);
+
   return (
     <>
       <Bulma.Title size={5} className="gradient-underline">
         Expression
       </Bulma.Title>
-      <div className="static-section near-columns" />
+      <div className="static-section near-columns">
+        {data && (
+          <>
+            <ComplexTable
+              columns={columns}
+              data={data.calls}
+              onRenderCell={onRenderCell}
+              pagination
+              onFilter={onFilter}
+              customHeader={customHeader}
+            />
+            {/* todo add legends */}
+            <p>
+              <b>Expression scores</b> of expression calls is based on the rank
+              of a gene in a condition according to its expression levels
+              (non-parametric statistics), normalized using the minimum and
+              maximum Rank of the species. Values of Expression scores are
+              between 0 and 100. Low score means that the gene is lowly
+              expressed in the condition compared to other genes. Scores are
+              normalized and comparable across genes, conditions and species.
+            </p>
+            <Bulma.Columns className="mb-6">
+              <Bulma.Column size={4}>
+                <p>Sources of annotations to anatomy and development:</p>
+                <ul className="unordered">
+                  {data.gene.species.sourcesOfAnnotationsPerDataType.map(
+                    (d, key) => (
+                      <li key={key}>
+                        {`${d.dataType} data: `}
+                        {d.sources.map((s, sKey) => (
+                          <LinkExternal key={sKey} to={s.baseUrl}>
+                            {s.name}
+                          </LinkExternal>
+                        ))}
+                      </li>
+                    )
+                  )}
+                </ul>
+              </Bulma.Column>
+              <Bulma.Column size={4}>
+                <p>Sources of raw data:</p>
+                <ul className="unordered">
+                  {data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
+                    <li key={key}>
+                      {`${d.dataType} data: `}
+                      {d.sources.reduce((acc, s, sKey) => {
+                        if (sKey !== 0)
+                          acc.push(<span key={`comma-${sKey}`}>, </span>);
+                        acc.push(
+                          <LinkExternal key={sKey} to={s.baseUrl}>
+                            {s.name}
+                          </LinkExternal>
+                        );
+                        return acc;
+                      }, [])}
+                    </li>
+                  ))}
+                </ul>
+              </Bulma.Column>
+            </Bulma.Columns>
+          </>
+        )}
+      </div>
     </>
   );
 };
 
+// todo filter + pagination + header
 const GeneHomologs = ({ homologs, geneId }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
@@ -241,13 +478,12 @@ const GeneHomologs = ({ homologs, geneId }) => {
     },
     [geneId]
   );
-
   return (
     <>
       <Bulma.Title size={5} className="gradient-underline">
         Orthologs
       </Bulma.Title>
-      <div id="orthologs" className="static-section near-columns">
+      <div id="orthologs" className="static-section near-columns mb-6">
         {homologs?.orthologyXRef && (
           <>
             <div className="table-container">
@@ -291,7 +527,7 @@ const GeneHomologs = ({ homologs, geneId }) => {
       <Bulma.Title size={5} className="gradient-underline">
         Paralogs (same species)
       </Bulma.Title>
-      <div id="paralogs" className="static-section near-columns">
+      <div id="paralogs" className="static-section near-columns mb-6">
         {homologs?.paralogyXRef && (
           <>
             <ComplexTable
@@ -316,8 +552,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
               data={homologs?.paralogsByTaxon}
               pagination
               onRenderCell={onRenderCellParalogs}
-              // onFilter={onFilter}
-              // customHeader={customHeader}
             />
             <span>
               {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
@@ -332,7 +566,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
     </>
   );
 };
-
 const GeneXRefs = ({ geneId, speciesId }) => {
   const [data, setData] = React.useState();
   React.useEffect(() => {
@@ -356,10 +589,10 @@ const GeneXRefs = ({ geneId, speciesId }) => {
         <div className="static-section near-columns">
           {data.data.gene.xRefs.map((xref) => (
             <Bulma.Columns key={xref.source.name} className="my-0">
-              <Bulma.C size={4}>
+              <Bulma.C size={3}>
                 <p className="has-text-weight-semibold">{xref.source.name}</p>
               </Bulma.C>
-              <Bulma.C size={8}>
+              <Bulma.C size={9}>
                 <ExpandableList
                   items={xref.xRefs}
                   renderElement={(ref, key, elements) => (
@@ -408,6 +641,9 @@ const GeneDetails = ({
 
   return (
     <>
+      <Helmet>
+        <title>{`Gene : ${name} - ${geneId} - `}</title>
+      </Helmet>
       <div className="content has-text-centered mb-6">
         {/* tod add image species */}
         <p className="title is-5">
@@ -418,42 +654,42 @@ const GeneDetails = ({
           {` (${species.name})`}
         </p>
       </div>
-      <>
+      <div className="mb-6">
         <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.general-info')}
         </Bulma.Title>
         <div className="static-section near-columns">
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.ensembl-id')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>{geneId}</Bulma.C>
+            <Bulma.C size={9}>{geneId}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.name')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>{name}</Bulma.C>
+            <Bulma.C size={9}>{name}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.description')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>{description}</Bulma.C>
+            <Bulma.C size={9}>{description}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.organism')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>
+            <Bulma.C size={9}>
               <p>
                 <Link
                   to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)}
@@ -466,12 +702,12 @@ const GeneDetails = ({
             </Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.synonyms')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>
+            <Bulma.C size={9}>
               <ExpandableList
                 items={synonyms}
                 renderElement={(ref, key, elements) => (
@@ -488,10 +724,10 @@ const GeneDetails = ({
             </Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Orthologs</p>
             </Bulma.C>
-            <Bulma.C size={8}>
+            <Bulma.C size={9}>
               <p>
                 <a className="internal-link" href="#orthologs">
                   {homologs ? `${homologs.orthologs} orthologs` : ''}
@@ -500,10 +736,10 @@ const GeneDetails = ({
             </Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Paralogs</p>
             </Bulma.C>
-            <Bulma.C size={8}>
+            <Bulma.C size={9}>
               <p>
                 <a className="internal-link" href="#paralogs">
                   {homologs ? `${homologs.paralogs} paralogs` : ''}
@@ -512,7 +748,7 @@ const GeneDetails = ({
             </Bulma.C>
           </Bulma.Columns>
         </div>
-      </>
+      </div>
       <GeneExpression geneId={geneId} speciesId={species.id} />
       <GeneHomologs homologs={homologs} geneId={geneId} />
       <GeneXRefs geneId={geneId} speciesId={species.id} />

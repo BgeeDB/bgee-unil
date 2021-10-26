@@ -4,14 +4,6 @@ import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
 import classnames from '../../helpers/classnames';
 
-const defaultRender = (cell, key) => {
-  if (typeof cell === 'string' || typeof cell === 'number')
-    return <p key={key}>{cell}</p>;
-  return Array.isArray(cell) ? (
-    <div key={key}>{staticBuilder(cell)}</div>
-  ) : null;
-};
-
 const Table = ({
   scrollable = false,
   fullwidth = true,
@@ -43,6 +35,29 @@ const Table = ({
     (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
     [isExpanded]
   );
+  const defaultRender = React.useCallback(
+    (cell, key) => {
+      let style;
+
+      if (columns.find((c) => c?.key === key && c?.style)) {
+        style = columns.find((c) => c?.key === key).style;
+      }
+      if (typeof cell === 'string' || typeof cell === 'number')
+        return (
+          <p key={key} style={style}>
+            {cell}
+          </p>
+        );
+
+      return Array.isArray(cell) ? (
+        <div key={key} style={style}>
+          {staticBuilder(cell)}
+        </div>
+      ) : null;
+    },
+    [columns]
+  );
+
   let TableObject = (
     <table
       className={classnames(
@@ -56,7 +71,11 @@ const Table = ({
           {columns.map((item, key) => {
             if (typeof item === 'object')
               return (
-                <th key={item.key} onClick={defineSortOption(item.key)}>
+                <th
+                  key={item.key}
+                  onClick={defineSortOption(item.key)}
+                  style={item.style}
+                >
                   {item.abbr && <abbr title={item.abbr} />}
                   {item.text}
                   {sortOption &&

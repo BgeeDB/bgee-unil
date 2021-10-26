@@ -58,6 +58,11 @@ const search = {
         const params = DEFAULT_PARAMETERS('gene', 'expression');
         params.append('gene_id', geneId);
         params.append('species_id', speciesId);
+        params.append('cond_param', 'anat_entity');
+        params.append('cond_param', 'cell_type');
+        params.append('cond_param', 'strain');
+        // params.append('cond_param', 'dev_stage');
+        // params.append('cond_param', 'sex');
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
