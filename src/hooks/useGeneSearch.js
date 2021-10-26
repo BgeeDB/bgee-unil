@@ -2,21 +2,21 @@ import React from 'react';
 import api from '../api';
 
 const useGeneSearch = (searchText) => {
-  const [resListeGenes, setResListeGenes] = React.useState([]);
-  const [resResultListeGenes, setResResultListeGenes] = React.useState([]);
+  const [resListGenes, setResListGenes] = React.useState([]);
+  const [resResultListGenes, setResResultListGenes] = React.useState([]);
 
   const searchHandler = React.useCallback(
     (val) => {
       if (val !== '') {
         api.geneSearch.autoCompleteSearchGenes(val).then((resp) => {
           if (resp.code === 200 && resp.data.matchCount !== 0) {
-            setResListeGenes(resp.data.match);
+            setResListGenes(resp.data.match);
           } else {
-            setResListeGenes([]);
+            setResListGenes([]);
           }
         });
       } else {
-        setResListeGenes([]);
+        setResListGenes([]);
       }
     },
     [searchText]
@@ -25,25 +25,31 @@ const useGeneSearch = (searchText) => {
   const searchResultHandler = React.useCallback(
     (val) => {
       if (val !== '') {
-        api.geneSearch.geneSearchResult(val).then((resp) => {
-          if (resp.code === 200) {
-            setResResultListeGenes(resp.data.result.geneMatches);
-          } else {
-            setResResultListeGenes([]);
-          }
-        });
+        api.geneSearch
+          .geneSearchResult(val)
+          .then((resp) => {
+            if (resp.code === 200) {
+              setResResultListGenes(resp.data.result.geneMatches);
+            } else {
+              setResResultListGenes();
+            }
+          })
+          .catch((err) => {
+            setResResultListGenes();
+          });
       } else {
-        setResResultListeGenes([]);
+        setResResultListGenes(null);
       }
     },
     [searchText]
   );
 
   return {
-    resListeGenes,
-    resResultListeGenes,
+    resListGenes,
+    resResultListGenes,
     searchHandler,
     searchResultHandler,
+    setResults: setResResultListGenes,
   };
 };
 

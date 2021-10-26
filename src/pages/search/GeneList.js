@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import ComplexTable from '../../components/ComplexTable';
@@ -16,7 +16,10 @@ const onRenderCell =
         return (
           <Link
             className="internal-link"
-            to={PATHS.SEARCH.GENE_ITEM.replace(':geneId', cell.id)}
+            to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+              ':geneId',
+              cell.id
+            ).replace(':speciesId', cell.speciesId)}
           >
             {cell[key]}
           </Link>
@@ -25,10 +28,7 @@ const onRenderCell =
         return (
           <Link
             className="internal-link"
-            to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
-              ':geneId',
-              cell.id
-            ).replace(':speciesId', cell.speciesId)}
+            to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', cell.speciesId)}
           >
             {cell[key]}
           </Link>
@@ -62,77 +62,69 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
 
 const GeneList = () => {
   const history = useHistory();
+  const { search: queryParams } = useLocation();
   const [search, setSearch] = React.useState('');
-  const [results, setResults] = React.useState(undefined);
   const {
-    resListeGenes,
-    resResultListeGenes,
+    resListGenes,
+    resResultListGenes: results,
     searchHandler,
     searchResultHandler,
+    setResults,
   } = useGeneSearch(search);
   const [openModal, setOpenModal] = React.useState(false);
 
-  const isDisplayDropDownlist = resListeGenes.length > 0 && search.length > 0;
-
+  const isDisplayDropDownlist = resListGenes.length > 0 && search.length > 0;
   React.useEffect(() => {
-    history.push(`?search=${search}`);
-  }, [search]);
+    const params = new URLSearchParams(queryParams);
 
-  const formatResultForTable = (initTable) => {
-    const res = initTable.map((elem) => {
-      const orga = `${elem.gene.species.genus} ${elem.gene.species.speciesName} (${elem.gene.species.name})`;
-      return {
-        id: elem.gene.geneId,
-        speciesId: elem.gene.species.id,
-        name: elem.gene.name,
-        description: elem.gene.description,
-        organism: orga,
-        match: elem.match,
-      };
-    });
-    return res;
-  };
+    if (params.get('search')) {
+      setSearch(params.get('search'));
+      setResults();
+      searchResultHandler(params.get('search'));
+    }
+  }, [queryParams]);
 
-  React.useEffect(() => {
-    setResults(formatResultForTable(resResultListeGenes));
-  }, [resResultListeGenes]);
-
-  const handlerGeneSearch = (val) => {
+  const objMapping = React.useCallback(
+    (element) => ({
+      id: element.gene.geneId,
+      speciesId: element.gene.species.id,
+      name: element.gene.name,
+      description: element.gene.description,
+      organism: `${element.gene.species.genus} ${element.gene.species.speciesName} (${element.gene.species.name})`,
+      match: element.match,
+    }),
+    []
+  );
+  const handlerGeneSearch = React.useCallback((val) => {
     setSearch(val);
     searchHandler(val);
-    searchResultHandler(val);
     if (val) {
       setOpenModal(true);
     }
-  };
+  }, []);
 
   const renderGeneList = () => {
-    let redpart = '';
-    let firstPart = '';
-    let lastPart = '';
+    let redPart;
+    let firstPart;
+    let lastPart;
 
-    const res = resListeGenes.map((val, index) => {
+    return resListGenes.map((val, index) => {
       if (search) {
         const firstIndex = val.indexOf(search);
         if (firstIndex === 0) {
-          redpart = val.substring(firstIndex, search.length);
+          redPart = val.substring(firstIndex, search.length);
           lastPart = val.substring(search.length, val.length);
         } else {
           firstPart = val.substring(0, firstIndex);
-          redpart = val.substring(firstIndex, search.length + 1);
+          redPart = val.substring(firstIndex, search.length + 1);
           lastPart = val.substring(search.length + 1, val.length);
         }
       }
       return (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
         <div
           onClick={() => {
-            setSearch(val);
-            searchResultHandler(val);
-            setOpenModal(false);
-          }}
-          onKeyPress={() => {
-            setSearch(val);
-            searchResultHandler(val);
+            if (val !== '') history.push(`?search=${val}`);
             setOpenModal(false);
           }}
           role="button"
@@ -140,12 +132,11 @@ const GeneList = () => {
           className="rowSearch"
         >
           {firstPart}
-          <strong className="has-text-primary">{redpart}</strong>
+          <strong className="has-text-primary">{redPart}</strong>
           {lastPart}
         </div>
       );
     });
-    return res;
   };
 
   return (
@@ -180,7 +171,7 @@ const GeneList = () => {
                   <button
                     className="button mr-2"
                     type="button"
-                    onClick={() => searchResultHandler(search)}
+                    onClick={() => history.push(`?search=${search}`)}
                   >
                     {i18n.t('global.search')}
                   </button>
@@ -231,6 +222,7 @@ const GeneList = () => {
             data={results}
             customHeader={customHeader}
             onRenderCell={onRenderCell(search)}
+            mappingObj={objMapping}
           />
         </div>
       )}
