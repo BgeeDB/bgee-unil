@@ -13,25 +13,19 @@ import classnames from '../../helpers/classnames';
 
 const MAX_ELEMENTS = 8;
 
-const XRef = ({ xRefs }) => {
+const ExpandableList = ({ items, renderElement }) => {
   const [expand, setExpand] = React.useState(false);
 
   const elements = React.useMemo(() => {
-    if (expand || xRefs.length <= MAX_ELEMENTS) return xRefs;
-    return xRefs.slice(0, MAX_ELEMENTS);
-  }, [xRefs, expand]);
+    if (expand || items.length <= MAX_ELEMENTS) return items;
+    return items.slice(0, MAX_ELEMENTS);
+  }, [items, expand]);
 
   return (
     <>
       <div className="tags">
-        {elements.map((ref, key) => (
-          <span key={ref.xRefId}>
-            <LinkExternal to={ref.xRefURL}>{ref.xRefId}</LinkExternal>
-            {ref.xRefName && <>{` (${ref.xRefName})`}</>}
-            {key !== elements.length - 1 ? <span className="mr-1">,</span> : ''}
-          </span>
-        ))}
-        {xRefs.length > MAX_ELEMENTS && (
+        {elements.map((ref, key) => renderElement(ref, key, elements))}
+        {items.length > MAX_ELEMENTS && (
           <Bulma.Button
             size="small"
             className="ml-3"
@@ -39,7 +33,7 @@ const XRef = ({ xRefs }) => {
           >
             <span className="icon">
               <ion-icon
-                name={expand ? 'add-outline' : 'remove-outline'}
+                name={expand ? 'remove-outline' : 'add-outline'}
                 size="large"
               />
             </span>
@@ -347,7 +341,20 @@ const GeneXRefs = ({ geneId, speciesId }) => {
                 <p className="has-text-weight-semibold">{xref.source.name}</p>
               </Bulma.C>
               <Bulma.C size={8}>
-                <XRef xRefs={xref.xRefs} />
+                <ExpandableList
+                  items={xref.xRefs}
+                  renderElement={(ref, key, elements) => (
+                    <span key={ref.xRefId}>
+                      <LinkExternal to={ref.xRefURL}>{ref.xRefId}</LinkExternal>
+                      {ref.xRefName && <>{` (${ref.xRefName})`}</>}
+                      {key !== elements.length - 1 ? (
+                        <span className="mr-1">,</span>
+                      ) : (
+                        ''
+                      )}
+                    </span>
+                  )}
+                />
               </Bulma.C>
             </Bulma.Columns>
           ))}
@@ -357,7 +364,10 @@ const GeneXRefs = ({ geneId, speciesId }) => {
   return null;
 };
 
-const GeneDetails = ({ details: { name, geneId, description, species } }) => {
+const GeneDetails = ({
+  details,
+  details: { name, geneId, description, species, synonyms },
+}) => {
   const [homologs, setHomologs] = React.useState();
   React.useEffect(() => {
     api.search.genes
@@ -436,14 +446,27 @@ const GeneDetails = ({ details: { name, geneId, description, species } }) => {
               </p>
             </Bulma.C>
           </Bulma.Columns>
-          {/* todo add synonyms */}
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
               <p className="has-text-weight-semibold">
                 {i18n.t('search.gene.synonyms')}
               </p>
             </Bulma.C>
-            <Bulma.C size={8}>Content</Bulma.C>
+            <Bulma.C size={8}>
+              <ExpandableList
+                items={synonyms}
+                renderElement={(ref, key, elements) => (
+                  <span key={ref}>
+                    {ref}
+                    {key !== elements.length - 1 ? (
+                      <span className="mr-1">,</span>
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                )}
+              />
+            </Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
             <Bulma.C size={4}>
