@@ -44,6 +44,25 @@ const ExpandableList = ({ items, renderElement }) => {
   );
 };
 
+const GeneExpression = ({ geneId, speciesId }) => {
+  React.useEffect(() => {
+    api.search.genes
+      .expression(geneId, speciesId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.err(err));
+  }, []);
+  return (
+    <>
+      <Bulma.Title size={5} className="gradient-underline">
+        Expression
+      </Bulma.Title>
+      <div className="static-section near-columns" />
+    </>
+  );
+};
+
 const GeneHomologs = ({ homologs, geneId }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
@@ -365,7 +384,6 @@ const GeneXRefs = ({ geneId, speciesId }) => {
 };
 
 const GeneDetails = ({
-  details,
   details: { name, geneId, description, species, synonyms },
 }) => {
   const [homologs, setHomologs] = React.useState();
@@ -391,6 +409,7 @@ const GeneDetails = ({
   return (
     <>
       <div className="content has-text-centered mb-6">
+        {/* tod add image species */}
         <p className="title is-5">
           {`Gene : ${name} - ${geneId} - `}
           <i>
@@ -494,6 +513,7 @@ const GeneDetails = ({
           </Bulma.Columns>
         </div>
       </>
+      <GeneExpression geneId={geneId} speciesId={species.id} />
       <GeneHomologs homologs={homologs} geneId={geneId} />
       <GeneXRefs geneId={geneId} speciesId={species.id} />
     </>
