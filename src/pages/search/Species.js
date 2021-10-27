@@ -91,7 +91,12 @@ const SpeciesList = () => {
               </p>
             </div>
             <div>
-              <a className="external-link" href={species.genomeSource}>
+              <a
+                className="external-link"
+                href={species.genomeSource}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {i18n.t('search.species.genome-source-provider')}
               </a>
             </div>
