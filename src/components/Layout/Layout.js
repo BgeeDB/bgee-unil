@@ -27,10 +27,10 @@ const Layout = ({ children }) => {
     [loc]
   );
 
+  // todo improve, it's trigger when query is pass as parameter
   React.useEffect(
     () =>
       listen((location) => {
-        console.log(location);
         ReactGA.pageview(location.pathname);
       }),
     [listen]

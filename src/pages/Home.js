@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import species from './search/species.json';
+
 import i18n from '../i18n';
 import assets from '../assets';
 import packageJson from '../../package.json';
@@ -11,6 +11,7 @@ import Bulma from '../components/Bulma';
 import config from '../config.json';
 import HomeNewsList from '../components/Home/HomeNewsList';
 
+const species = [];
 const Home = () => (
   <>
     <Bulma.Hero className="home-hero-banner">
@@ -130,7 +131,7 @@ const Home = () => (
           <HomeNewsList />
         </Bulma.Card>
         <Bulma.Columns className="mt-4">
-          <Bulma.C csize={config.archive ? 12 : 9}>
+          <Bulma.C size={config.archive ? 12 : 9}>
             <CreativeCommons />
           </Bulma.C>
           {!config.archive && (

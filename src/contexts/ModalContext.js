@@ -8,7 +8,7 @@ const ModalContext = React.createContext();
 const { Provider } = ModalContext;
 
 const Modal = () => {
-  const { modalContent, hideModal, modal, customClose } =
+  const { modalContent, hideModal, modal, customOnClose } =
     React.useContext(ModalContext);
 
   if (modal)
@@ -18,7 +18,9 @@ const Modal = () => {
           role="presentation"
           className="modal-background"
           onClick={() => {
-            if (customClose) customClose();
+            if (customOnClose) {
+              customOnClose();
+            }
             hideModal();
           }}
         />

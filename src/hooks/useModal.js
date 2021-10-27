@@ -13,7 +13,9 @@ const useModal = () => {
   }, []);
 
   const showModal = React.useCallback((content, opts) => {
-    if (opts?.onClose) setCustomOnClose(opts.onClose);
+    if (opts?.onClose) {
+      setCustomOnClose(opts.onClose);
+    }
     setModal(true);
     setModalContent(content);
   }, []);
