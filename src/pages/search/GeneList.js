@@ -70,7 +70,6 @@ const GeneList = () => {
     searchHandler,
     searchResultHandler,
     setResults,
-    setResListGenes,
   } = useGeneSearch(search);
   const [openModal, setOpenModal] = React.useState(false);
 

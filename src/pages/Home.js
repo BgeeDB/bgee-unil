@@ -4,7 +4,6 @@ import species from './search/species.json';
 import i18n from '../i18n';
 import assets from '../assets';
 import packageJson from '../../package.json';
-import NewsItem from '../components/NewsItem';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';

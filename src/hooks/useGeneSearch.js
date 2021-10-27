@@ -34,7 +34,7 @@ const useGeneSearch = (searchText) => {
               setResResultListGenes();
             }
           })
-          .catch((err) => {
+          .catch(() => {
             setResResultListGenes();
           });
       } else {
