@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import i18n from '../i18n';
@@ -10,8 +10,8 @@ import { CardSpecies } from '../components/CustomCard';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
 import HomeNewsList from '../components/Home/HomeNewsList';
+import api from '../api';
 
-const species = [];
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -134,9 +134,11 @@ const Home = () => {
             <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
               <div className="content">
                 <div className="grid-species">
-                  {species.map((s, key) => (
-                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/no-array-index-key
-                    <Link key={key} className="center-in-grid" to="">
+                  {speciesList.map((s, key) => (
+                    <Link
+                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
+                      className="center-in-grid"
+                    >
                       <CardSpecies {...s} />
                     </Link>
                   ))}
