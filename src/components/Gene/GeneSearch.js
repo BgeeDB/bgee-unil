@@ -90,7 +90,7 @@ const GeneSearch = ({ classNames, children, title = true }) => {
       document.getElementById('root').removeEventListener('click', onClick);
       document
         .getElementById('gene-input')
-        .removeEventListener('click', onClickInput);
+        ?.removeEventListener('click', onClickInput);
     };
   }, []);
 
