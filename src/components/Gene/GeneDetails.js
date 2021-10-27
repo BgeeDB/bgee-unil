@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { isDate } from '@creativebulma/bulma-collapsible/src/js/utils/type';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
@@ -300,7 +301,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
   );
 };
 
-// todo filter + pagination + header
 const GeneHomologs = ({ homologs, geneId }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
@@ -479,6 +479,40 @@ const GeneHomologs = ({ homologs, geneId }) => {
     },
     [geneId]
   );
+
+  const customHeader = React.useCallback(
+    (searchElement, pageSizeElement, showEntriesText) => (
+      <Bulma.Columns vCentered>
+        <Bulma.C size={8}>
+          <div className="field">{searchElement}</div>
+        </Bulma.C>
+        <Bulma.C size={4}>
+          <div>
+            {pageSizeElement}
+            <div>{showEntriesText}</div>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+    ),
+    []
+  );
+  const onFilter = React.useCallback(
+    (search) => (element) => {
+      const regExp = new RegExp(search, 'gi');
+      let isFound = regExp.test(element.taxon.scientificName);
+      for (let i = 0; !isFound && i < element.genes.length; i += 1) {
+        isFound =
+          regExp.test(element.genes[i].geneId) ||
+          regExp.test(element.genes[i].name) ||
+          regExp.test(element.genes[i]?.species.name) ||
+          regExp.test(element.genes[i]?.species.genus) ||
+          regExp.test(element.genes[i]?.species.speciesName);
+      }
+      return isFound;
+    },
+    []
+  );
+
   return (
     <>
       <Bulma.Title size={5} className="gradient-underline">
@@ -509,10 +543,11 @@ const GeneHomologs = ({ homologs, geneId }) => {
                   'See details',
                 ]}
                 data={homologs?.orthologsByTaxon}
-                pagination
                 fullwidth
                 onRenderCell={onRenderCell}
-                // customHeader={customHeader}
+                pagination
+                onFilter={onFilter}
+                customHeader={customHeader}
               />
             </div>
             <span>
@@ -551,8 +586,11 @@ const GeneHomologs = ({ homologs, geneId }) => {
                 },
               ]}
               data={homologs?.paralogsByTaxon}
-              pagination
+              fullwidth
               onRenderCell={onRenderCellParalogs}
+              pagination
+              onFilter={onFilter}
+              customHeader={customHeader}
             />
             <span>
               {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
