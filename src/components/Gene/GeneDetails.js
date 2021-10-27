@@ -185,6 +185,23 @@ const GeneExpression = ({ geneId, speciesId }) => {
               </span>
             </>
           );
+        case 'devStage':
+          return (
+            <>
+              <span className="is-size-7">
+                <LinkExternal
+                  to={`http://purl.obolibrary.org/obo/${cell.condition.devStage.id.replace(
+                    ':',
+                    '_'
+                  )}`}
+                  className="mr-1"
+                >
+                  {cell.condition.devStage.id}
+                </LinkExternal>
+                {cell.condition.devStage.name}
+              </span>
+            </>
+          );
         case 'expScore':
           return (
             <span
@@ -204,6 +221,8 @@ const GeneExpression = ({ geneId, speciesId }) => {
           return defaultRender(cell.fdr, key);
         case 'strain':
           return defaultRender(cell.condition.strain, key);
+        case 'sex':
+          return defaultRender(cell.condition.sex, key);
         case 'sources':
           return (
             <div className="tags">
@@ -250,7 +269,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
       <div className="static-section near-columns">
         {data && (
           <>
-            {/* todo separate line when huge variation */}
+            {console.log(data.calls)}
             <ComplexTable
               columns={columns}
               data={data.calls}
@@ -258,6 +277,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
               pagination
               onFilter={onFilter}
               customHeader={customHeader}
+              onRenderRow={(row, prev) => {
+                if (prev && row.clusterIndex > prev.clusterIndex) {
+                  return 'gap-cluster';
+                }
+                return '';
+              }}
             />
             <p>
               <b>Expression scores</b> of expression calls is based on the rank
