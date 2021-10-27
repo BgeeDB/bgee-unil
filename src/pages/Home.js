@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+
 import i18n from '../i18n';
 import assets from '../assets';
 import packageJson from '../../package.json';
-import NewsItem from '../components/NewsItem';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import { CardSpecies } from '../components/CustomCard';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
 import HomeNewsList from '../components/Home/HomeNewsList';
-import api from '../api';
 
+const species = [];
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
 
@@ -134,12 +134,9 @@ const Home = () => {
             <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
               <div className="content">
                 <div className="grid-species">
-                  {speciesList.map((s, key) => (
+                  {species.map((s, key) => (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/no-array-index-key
-                    <Link
-                      className="center-in-grid"
-                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
-                    >
+                    <Link key={key} className="center-in-grid" to="">
                       <CardSpecies {...s} />
                     </Link>
                   ))}
@@ -151,7 +148,7 @@ const Home = () => {
             <HomeNewsList />
           </Bulma.Card>
           <Bulma.Columns className="mt-4">
-            <Bulma.C csize={config.archive ? 12 : 9}>
+            <Bulma.C size={config.archive ? 12 : 9}>
               <CreativeCommons />
             </Bulma.C>
             {!config.archive && (

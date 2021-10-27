@@ -14,18 +14,21 @@ const Table = ({
   sortable = false,
   onSort,
   onRenderCell,
+  onRenderRow, // function that generate custom css classes depending of
   striped,
 }) => {
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
     (key) => () => {
-      let newSortOpt;
-      if (!sortOption || sortOption.key !== key) {
-        newSortOpt = { key, sort: 'ascending' };
-      } else if (sortOption.sort === 'ascending')
-        newSortOpt = { key, sort: 'descending' };
-      setSortOption(newSortOpt);
-      if (onSort) onSort(newSortOpt);
+      if (onSort) {
+        let newSortOpt;
+        if (!sortOption || sortOption.key !== key) {
+          newSortOpt = { key, sort: 'ascending' };
+        } else if (sortOption.sort === 'ascending')
+          newSortOpt = { key, sort: 'descending' };
+        setSortOption(newSortOpt);
+        onSort(newSortOpt);
+      }
     },
     [sortOption, onSort]
   );
@@ -110,7 +113,12 @@ const Table = ({
         {data.map((row, key) => (
           <tr
             key={key}
-            className={`${isExpanded === key ? 'is-expanded' : ''}`}
+            className={classnames(
+              { 'is-expanded': isExpanded === key },
+              onRenderRow
+                ? onRenderRow(row, key > 0 ? data[key - 1] : null)
+                : undefined
+            )}
           >
             {Array.isArray(row) &&
               row.map((cell, cellKey) => (

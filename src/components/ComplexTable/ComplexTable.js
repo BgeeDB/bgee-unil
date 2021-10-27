@@ -18,6 +18,7 @@ const ComplexTable = ({
   onSort,
   onFilter,
   onRenderCell,
+  onRenderRow,
   classNamesTable = '',
   pagination = false,
   defaultPaginationSize,
@@ -122,6 +123,7 @@ const ComplexTable = ({
           )
           .map(mappingObj)}
         onRenderCell={onRenderCell}
+        onRenderRow={onRenderRow}
         onSort={onSort ? setSort : undefined}
         striped
         {...props}

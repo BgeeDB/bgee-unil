@@ -1,51 +1,61 @@
-/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/no-array-index-key,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import speciesList from '../search/species.json';
 import { CardSpecies } from '../../components/CustomCard';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpressionCallsSpeciesModal';
 import { ModalContext } from '../../contexts/ModalContext';
+import api from '../../api';
+import config from '../../config.json';
+import CreativeCommons from '../../components/CreativeCommons';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
   const { showModal } = React.useContext(ModalContext);
-  const [selectedSpecies, setSelectedSpecies] = React.useState(null);
+  const [singleSpeciesList, setSingleSpeciesList] = React.useState([]);
+  const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
-  const filteredSpecies = React.useMemo(() => {
-    const tmp = JSON.parse(JSON.stringify(speciesList));
+  const filteredSingleSpecies = React.useMemo(() => {
+    const tmp = JSON.parse(JSON.stringify(singleSpeciesList));
     if (search === '') return tmp;
     const regExp = new RegExp(search, 'i');
-    return tmp.filter(
-      (s) => regExp.test(s.scientificName) || regExp.test(s.name)
+    return tmp.filter(({ id }) =>
+      !kwList[id] ? false : Boolean(kwList[id].find((a) => regExp.test(a)))
     );
-  }, [search]);
+  }, [singleSpeciesList, search, kwList]);
 
   const speciesID = useQuery('id');
   React.useEffect(() => {
-    if (!selectedSpecies && speciesID) {
-      const species = filteredSpecies.find(
-        (s) => s.scientificName === speciesID
+    if (speciesID) {
+      const species = singleSpeciesList.find(
+        (s) => s.id.toString() === speciesID
       );
-      if (species) {
-        setSelectedSpecies(species);
-        showModal(
-          <DlGeneExpressionCallsSpeciesModal
-            selectedSpecies={selectedSpecies}
-          />,
-          { onClose: () => history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS) }
-        );
-      }
-    } else if (selectedSpecies && !speciesID) {
-      setSelectedSpecies(null);
+      showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
+        onClose: () => () => {
+          history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
+        },
+      });
+      // }
     }
-  }, [speciesID, filteredSpecies, selectedSpecies]);
+  }, [speciesID, singleSpeciesList]);
+  React.useEffect(() => {
+    api.search.species.exprCalls().then((res) => {
+      setSingleSpeciesList(
+        res.data.downloadFilesGroups.map((o) => ({
+          ...o,
+          ...o.members[0],
+          name: o.members[0].name === '' ? o.name : o.members[0].name,
+        }))
+      );
+      setKwList(res.data.speciesIdToKeywords);
+    });
+  }, []);
 
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>{`${i18n.t(
           'download.gene-exp-calls.title'
@@ -103,19 +113,17 @@ const GeneExpressionCalls = () => {
       <Bulma.Card className="mt-4">
         <Bulma.Card.Header>
           <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
-            {i18n.t('download.gene-exp-calls.single-species')}
+            Single-species{' '}
+            <span className="ml-2 has-text-grey is-size-7">
+              (click on species to see more details)
+            </span>
           </Bulma.Card.Header.Title>
         </Bulma.Card.Header>
         <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
-              {filteredSpecies.map((s, key) => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <Link
-                  key={key}
-                  className="center-in-grid"
-                  to={`?id=${s.scientificName}`}
-                >
+              {filteredSingleSpecies.map((s, key) => (
+                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
                   <CardSpecies {...s} />
                 </Link>
               ))}
@@ -126,19 +134,24 @@ const GeneExpressionCalls = () => {
       <Bulma.Card className="mt-4">
         <Bulma.Card.Header>
           <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
-            {i18n.t('download.gene-exp-calls.multi-species')}
+            Multi-species{' '}
+            <span className="ml-2 has-text-grey is-size-7">
+              (orthologous genes in homologous anatomical structures)
+            </span>
           </Bulma.Card.Header.Title>
         </Bulma.Card.Header>
         <Bulma.Card.Body>
           <div className="content">
-            <p>{i18n.t('download.gene-exp-calls.available-future-release')}</p>
+            <p>These files will be available in a future release.</p>
           </div>
         </Bulma.Card.Body>
       </Bulma.Card>
-    </div>
+      <Bulma.Columns className="mt-4">
+        <Bulma.C size={12}>
+          <CreativeCommons />
+        </Bulma.C>
+      </Bulma.Columns>
+    </>
   );
 };
-/*
-{i18n.t('download.gene-exp-calls.')}
- */
 export default GeneExpressionCalls;

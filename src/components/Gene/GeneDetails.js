@@ -11,6 +11,7 @@ import { SEARCH_CANCEL_API } from '../../api/prod/search';
 import ComplexTable from '../ComplexTable';
 import isPlural from '../../helpers/isPlural';
 import classnames from '../../helpers/classnames';
+import GeneSearch from './GeneSearch';
 
 const MAX_ELEMENTS = 8;
 
@@ -114,39 +115,53 @@ const GeneExpression = ({ geneId, speciesId }) => {
   }, [cFields]);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
-      <Bulma.Columns vCentered>
-        <Bulma.C size={8}>
-          <div className="field">{searchElement}</div>
-          <div className="is-flex">
-            Fields:
-            {CUSTOM_FIELDS.map((c) => (
-              <label
-                className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                key={c.key}
-              >
-                <input
-                  type="checkbox"
-                  checked={cFields[c.key]}
-                  onChange={(e) => {
-                    console.log(cFields[c.key], e.target.checked);
-                    setCFields((prev) => ({
-                      ...prev,
-                      [c.key]: e.target.checked,
-                    }));
-                  }}
-                />
-                <b className="mx-1">{c.text}</b>
-              </label>
-            ))}
-          </div>
-        </Bulma.C>
-        <Bulma.C size={4}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
-        </Bulma.C>
-      </Bulma.Columns>
+      <>
+        <Bulma.Columns vCentered>
+          <Bulma.C size={8}>
+            <div className="field">{searchElement}</div>
+            <div className="is-flex">
+              Fields:
+              {CUSTOM_FIELDS.map((c) => (
+                <label
+                  className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+                  key={c.key}
+                >
+                  <input
+                    type="checkbox"
+                    checked={cFields[c.key]}
+                    onChange={(e) => {
+                      console.log(cFields[c.key], e.target.checked);
+                      setCFields((prev) => ({
+                        ...prev,
+                        [c.key]: e.target.checked,
+                      }));
+                    }}
+                  />
+                  <b className="mx-1">{c.text}</b>
+                </label>
+              ))}
+            </div>
+          </Bulma.C>
+          <Bulma.C size={4}>
+            <div>
+              {pageSizeElement}
+              <div>{showEntriesText}</div>
+            </div>
+          </Bulma.C>
+        </Bulma.Columns>
+        <p className="has-text-weight-semibold">Expression scores</p>
+        <Bulma.Columns vCentered className="mt-0">
+          <Bulma.C>
+            <span>
+              <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey: low
+              confidence scores
+            </span>
+          </Bulma.C>
+          <Bulma.C className="is-flex is-align-items-center">
+            <hr className="dot-line m-0 mr-2" /> important score variation
+          </Bulma.C>
+        </Bulma.Columns>
+      </>
     ),
     [cFields]
   );
@@ -170,6 +185,23 @@ const GeneExpression = ({ geneId, speciesId }) => {
               </span>
             </>
           );
+        case 'devStage':
+          return (
+            <>
+              <span className="is-size-7">
+                <LinkExternal
+                  to={`http://purl.obolibrary.org/obo/${cell.condition.devStage.id.replace(
+                    ':',
+                    '_'
+                  )}`}
+                  className="mr-1"
+                >
+                  {cell.condition.devStage.id}
+                </LinkExternal>
+                {cell.condition.devStage.name}
+              </span>
+            </>
+          );
         case 'expScore':
           return (
             <span
@@ -189,6 +221,8 @@ const GeneExpression = ({ geneId, speciesId }) => {
           return defaultRender(cell.fdr, key);
         case 'strain':
           return defaultRender(cell.condition.strain, key);
+        case 'sex':
+          return defaultRender(cell.condition.sex, key);
         case 'sources':
           return (
             <div className="tags">
@@ -235,6 +269,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
       <div className="static-section near-columns">
         {data && (
           <>
+            {console.log(data.calls)}
             <ComplexTable
               columns={columns}
               data={data.calls}
@@ -242,8 +277,13 @@ const GeneExpression = ({ geneId, speciesId }) => {
               pagination
               onFilter={onFilter}
               customHeader={customHeader}
+              onRenderRow={(row, prev) => {
+                if (prev && row.clusterIndex > prev.clusterIndex) {
+                  return 'gap-cluster';
+                }
+                return '';
+              }}
             />
-            {/* todo add legends */}
             <p>
               <b>Expression scores</b> of expression calls is based on the rank
               of a gene in a condition according to its expression levels
@@ -299,7 +339,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
   );
 };
 
-// todo filter + pagination + header
 const GeneHomologs = ({ homologs, geneId }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
@@ -478,6 +517,40 @@ const GeneHomologs = ({ homologs, geneId }) => {
     },
     [geneId]
   );
+
+  const customHeader = React.useCallback(
+    (searchElement, pageSizeElement, showEntriesText) => (
+      <Bulma.Columns vCentered>
+        <Bulma.C size={8}>
+          <div className="field">{searchElement}</div>
+        </Bulma.C>
+        <Bulma.C size={4}>
+          <div>
+            {pageSizeElement}
+            <div>{showEntriesText}</div>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+    ),
+    []
+  );
+  const onFilter = React.useCallback(
+    (search) => (element) => {
+      const regExp = new RegExp(search, 'gi');
+      let isFound = regExp.test(element.taxon.scientificName);
+      for (let i = 0; !isFound && i < element.genes.length; i += 1) {
+        isFound =
+          regExp.test(element.genes[i].geneId) ||
+          regExp.test(element.genes[i].name) ||
+          regExp.test(element.genes[i]?.species.name) ||
+          regExp.test(element.genes[i]?.species.genus) ||
+          regExp.test(element.genes[i]?.species.speciesName);
+      }
+      return isFound;
+    },
+    []
+  );
+
   return (
     <>
       <Bulma.Title size={5} className="gradient-underline">
@@ -508,10 +581,11 @@ const GeneHomologs = ({ homologs, geneId }) => {
                   'See details',
                 ]}
                 data={homologs?.orthologsByTaxon}
-                pagination
                 fullwidth
                 onRenderCell={onRenderCell}
-                // customHeader={customHeader}
+                pagination
+                onFilter={onFilter}
+                customHeader={customHeader}
               />
             </div>
             <span>
@@ -550,8 +624,11 @@ const GeneHomologs = ({ homologs, geneId }) => {
                 },
               ]}
               data={homologs?.paralogsByTaxon}
-              pagination
+              fullwidth
               onRenderCell={onRenderCellParalogs}
+              pagination
+              onFilter={onFilter}
+              customHeader={customHeader}
             />
             <span>
               {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
@@ -644,41 +721,56 @@ const GeneDetails = ({
       <Helmet>
         <title>{`Gene : ${name} - ${geneId} - `}</title>
       </Helmet>
-      <div className="content has-text-centered mb-6">
-        {/* tod add image species */}
-        <p className="title is-5">
-          {`Gene : ${name} - ${geneId} - `}
-          <i>
-            {species.genus} {species.speciesName}
-          </i>
-          {` (${species.name})`}
-        </p>
-      </div>
+      <Bulma.Columns className="my-0">
+        <Bulma.C size={3}>
+          <GeneSearch title={false} />
+        </Bulma.C>
+        <Bulma.C
+          size={9}
+          className="is-flex is-justify-content-center is-align-items-center"
+        >
+          <div className="content is-align-items-center is-flex">
+            <Bulma.Image
+              className="m-0 mr-2"
+              src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+              height={50}
+              width={50}
+            />
+            <p className="title is-5 has-text-centered">
+              {`Gene : ${name} - ${geneId} - `}
+              <i>
+                {species.genus} {species.speciesName}
+              </i>
+              {` (${species.name})`}
+            </p>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
       <div className="mb-6">
         <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.general-info')}
         </Bulma.Title>
         <div className="static-section near-columns">
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Gene identifier</p>
             </Bulma.C>
             <Bulma.C size={9}>{geneId}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Name</p>
             </Bulma.C>
             <Bulma.C size={9}>{name}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Description</p>
             </Bulma.C>
             <Bulma.C size={9}>{description}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Organism</p>
             </Bulma.C>
             <Bulma.C size={9}>
