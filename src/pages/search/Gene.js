@@ -1,10 +1,6 @@
 import React from 'react';
-import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
-import i18n from '../../i18n';
-import LinkExternal from '../../components/LinkExternal';
-import LINK_ANCHOR from '../../routes/linkAnchor';
+import { useHistory, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import Bulma from '../../components/Bulma';
 import api from '../../api';
 import GeneDetails from '../../components/Gene/GeneDetails';
 import GeneList from '../../components/Gene/GeneList';
@@ -16,21 +12,9 @@ const FLOW = {
 const Gene = () => {
   const history = useHistory();
   const { geneId, speciesId: urlSpeciesId } = useParams();
-  const [search, setSearch] = React.useState('');
-  const onClickSearch = React.useCallback(
-    () => history.push(`${PATHS.SEARCH.GENE}?search=${search}`),
-    [search, history]
-  );
 
   const [flowState, setFlowState] = React.useState(FLOW.LOADING);
   const [geneDetails, setGeneDetails] = React.useState();
-
-  const speciesId = React.useMemo(() => {
-    if (urlSpeciesId) return urlSpeciesId;
-    if (Array.isArray(geneDetails) && geneDetails.length === 1)
-      return geneDetails[0].species.id;
-    return null;
-  }, [urlSpeciesId, geneDetails]);
 
   React.useEffect(() => {
     setFlowState(FLOW.LOADING);
