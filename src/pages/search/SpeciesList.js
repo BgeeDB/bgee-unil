@@ -1,14 +1,27 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import species from './species.json';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import { CardSpecies } from '../../components/CustomCard';
 import Bulma from '../../components/Bulma';
+import api from '../../api';
 
 const SpeciesList = () => {
   const page = 'SpeciesList';
+
+  const [speciesList, setSpeciesList] = useState([]);
+
+  React.useEffect(() => {
+    api.home.speciesList().then((resp) => {
+      if (resp.code === 200) {
+        setSpeciesList(resp.data.species);
+      } else {
+        setSpeciesList([]);
+      }
+    });
+  }, []);
+
   return (
     <>
       <div className="content has-text-centered">
@@ -18,10 +31,9 @@ const SpeciesList = () => {
       </div>
       <div className="content">
         <div className="grid-species">
-          {species.map((s, key) => (
+          {speciesList.map((s, key) => (
             <Link
-              key={key}
-              to={`${PATHS.SEARCH.SPECIES}/165198498498789789`}
+              to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
               className="center-in-grid"
             >
               <CardSpecies {...s} />

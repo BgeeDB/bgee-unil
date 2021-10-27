@@ -1,6 +1,7 @@
 import topAnat from './prod/topAnat';
 import geneSearch from './prod/geneSearch';
 import search from './prod/search';
+import home from './prod/home';
 
 /*
  * ERROR RESPONSE FORMAT
@@ -19,6 +20,7 @@ const api = {
   search,
   topAnat,
   geneSearch,
+  home,
 };
 
 export default api;
