@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
 import useGeneSearch from '../../hooks/useGeneSearch';
 import './GeneList.css';
+import GeneSearch from '../../components/Gene/GeneSearch';
 
 const onRenderCell =
   (search) =>
@@ -61,22 +62,13 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
 );
 
 const GeneList = () => {
-  const history = useHistory();
   const { search: queryParams } = useLocation();
   const [search, setSearch] = React.useState('');
   const {
-    resListGenes,
     resResultListGenes: results,
-    searchHandler,
     searchResultHandler,
     setResults,
   } = useGeneSearch(search);
-  const [openModal, setOpenModal] = React.useState(false);
-
-  const isDisplayDropDownList = React.useMemo(
-    () => resListGenes.length > 0 && search.length > 0,
-    [resListGenes, search]
-  );
 
   const objMapping = React.useCallback(
     (element) => ({
@@ -89,13 +81,6 @@ const GeneList = () => {
     }),
     []
   );
-  const handlerGeneSearch = React.useCallback((val) => {
-    setSearch(val);
-    searchHandler(val);
-    if (val) {
-      setOpenModal(true);
-    }
-  }, []);
 
   const onFilter = React.useCallback(
     (searchReg) => (element) => {
@@ -113,42 +98,6 @@ const GeneList = () => {
     },
     []
   );
-  const renderGeneList = () => {
-    let redPart;
-    let firstPart;
-    let lastPart;
-
-    return resListGenes.map((val, index) => {
-      if (search) {
-        const firstIndex = val.indexOf(search);
-        if (firstIndex === 0) {
-          redPart = val.substring(firstIndex, search.length);
-          lastPart = val.substring(search.length, val.length);
-        } else {
-          firstPart = val.substring(0, firstIndex);
-          redPart = val.substring(firstIndex, search.length + 1);
-          lastPart = val.substring(search.length + 1, val.length);
-        }
-      }
-      return (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        <div
-          key={val}
-          onClick={() => {
-            if (val !== '') history.push(`?search=${val}`);
-            setOpenModal(false);
-          }}
-          role="button"
-          tabIndex={index}
-          className="rowSearch"
-        >
-          {firstPart}
-          <strong className="has-text-primary">{redPart}</strong>
-          {lastPart}
-        </div>
-      );
-    });
-  };
 
   React.useEffect(() => {
     const params = new URLSearchParams(queryParams);
@@ -160,25 +109,6 @@ const GeneList = () => {
     }
   }, [queryParams]);
 
-  React.useEffect(() => {
-    const onClick = () => {
-      setOpenModal(false);
-    };
-    document.getElementById('root').addEventListener('click', onClick);
-    const onClickInput = (e) => {
-      e.stopPropagation();
-    };
-    document
-      .getElementById('gene-input')
-      .addEventListener('click', onClickInput);
-    return () => {
-      document.getElementById('root').removeEventListener('click', onClick);
-      document
-        .getElementById('gene-input')
-        .removeEventListener('click', onClickInput);
-    };
-  }, []);
-
   return (
     <div className="section pt-5">
       <div className="content has-text-centered">
@@ -186,60 +116,26 @@ const GeneList = () => {
       </div>
       <p>{i18n.t('search.genes.description')}</p>
       <div>
-        <Bulma.Card className="search-input mx-auto my-3">
-          <Bulma.Card.Body>
-            <div className="content">
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-              <div className="field">
-                <label className="label" htmlFor="search-species">
-                  {i18n.t('search.genes.search-gene')}
-                </label>
-                <div className="control">
-                  <input
-                    id="gene-input"
-                    className="input"
-                    type="text"
-                    name="search-species"
-                    value={search}
-                    onChange={(e) => handlerGeneSearch(e.target.value)}
-                  />
-                </div>
-              </div>
-              {isDisplayDropDownList && openModal && (
-                <div className="dropDownSearchForm">{renderGeneList()}</div>
-              )}
-              <div className="field">
-                <div className="control is-flex is-align-items-center">
-                  <button
-                    className="button mr-2"
-                    type="button"
-                    onClick={() => history.push(`?search=${search}`)}
-                  >
-                    {i18n.t('global.search')}
-                  </button>
-                  <p>
-                    {`${i18n.t('global.example')}: `}
-                    <Link className="internal-link" to="?search=HBB">
-                      HBB
-                    </Link>
-                    {', '}
-                    <Link className="internal-link" to="?search=Apoc1">
-                      Apoc1
-                    </Link>
-                    {', '}
-                    <Link className="internal-link" to="?search=PDE4DIP">
-                      PDE4DIP
-                    </Link>
-                    {', '}
-                    <Link className="internal-link" to="?search=insulin">
-                      insulin
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Bulma.Card.Body>
-        </Bulma.Card>
+        <GeneSearch classNames="search-input mx-auto my-3">
+          <p>
+            {`Example: `}
+            <Link className="internal-link" to="?search=HBB">
+              HBB
+            </Link>
+            {', '}
+            <Link className="internal-link" to="?search=Apoc1">
+              Apoc1
+            </Link>
+            {', '}
+            <Link className="internal-link" to="?search=PDE4DIP">
+              PDE4DIP
+            </Link>
+            {', '}
+            <Link className="internal-link" to="?search=insulin">
+              insulin
+            </Link>
+          </p>
+        </GeneSearch>
       </div>
       {results && (
         <div>

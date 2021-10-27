@@ -11,6 +11,7 @@ import { SEARCH_CANCEL_API } from '../../api/prod/search';
 import ComplexTable from '../ComplexTable';
 import isPlural from '../../helpers/isPlural';
 import classnames from '../../helpers/classnames';
+import GeneSearch from './GeneSearch';
 
 const MAX_ELEMENTS = 8;
 
@@ -644,41 +645,56 @@ const GeneDetails = ({
       <Helmet>
         <title>{`Gene : ${name} - ${geneId} - `}</title>
       </Helmet>
-      <div className="content has-text-centered mb-6">
-        {/* tod add image species */}
-        <p className="title is-5">
-          {`Gene : ${name} - ${geneId} - `}
-          <i>
-            {species.genus} {species.speciesName}
-          </i>
-          {` (${species.name})`}
-        </p>
-      </div>
+      <Bulma.Columns className="my-0">
+        <Bulma.C size={3}>
+          <GeneSearch title={false} />
+        </Bulma.C>
+        <Bulma.C
+          size={9}
+          className="is-flex is-justify-content-center is-align-items-center"
+        >
+          <div className="content is-align-items-center is-flex">
+            <Bulma.Image
+              className="m-0 mr-2"
+              src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+              height={50}
+              width={50}
+            />
+            <p className="title is-5 has-text-centered">
+              {`Gene : ${name} - ${geneId} - `}
+              <i>
+                {species.genus} {species.speciesName}
+              </i>
+              {` (${species.name})`}
+            </p>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
       <div className="mb-6">
         <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.general-info')}
         </Bulma.Title>
         <div className="static-section near-columns">
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Gene identifier</p>
             </Bulma.C>
             <Bulma.C size={9}>{geneId}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Name</p>
             </Bulma.C>
             <Bulma.C size={9}>{name}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Description</p>
             </Bulma.C>
             <Bulma.C size={9}>{description}</Bulma.C>
           </Bulma.Columns>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={4}>
+            <Bulma.C size={3}>
               <p className="has-text-weight-semibold">Organism</p>
             </Bulma.C>
             <Bulma.C size={9}>
