@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { isDate } from '@creativebulma/bulma-collapsible/src/js/utils/type';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
@@ -116,39 +115,53 @@ const GeneExpression = ({ geneId, speciesId }) => {
   }, [cFields]);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
-      <Bulma.Columns vCentered>
-        <Bulma.C size={8}>
-          <div className="field">{searchElement}</div>
-          <div className="is-flex">
-            Fields:
-            {CUSTOM_FIELDS.map((c) => (
-              <label
-                className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                key={c.key}
-              >
-                <input
-                  type="checkbox"
-                  checked={cFields[c.key]}
-                  onChange={(e) => {
-                    console.log(cFields[c.key], e.target.checked);
-                    setCFields((prev) => ({
-                      ...prev,
-                      [c.key]: e.target.checked,
-                    }));
-                  }}
-                />
-                <b className="mx-1">{c.text}</b>
-              </label>
-            ))}
-          </div>
-        </Bulma.C>
-        <Bulma.C size={4}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
-        </Bulma.C>
-      </Bulma.Columns>
+      <>
+        <Bulma.Columns vCentered>
+          <Bulma.C size={8}>
+            <div className="field">{searchElement}</div>
+            <div className="is-flex">
+              Fields:
+              {CUSTOM_FIELDS.map((c) => (
+                <label
+                  className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+                  key={c.key}
+                >
+                  <input
+                    type="checkbox"
+                    checked={cFields[c.key]}
+                    onChange={(e) => {
+                      console.log(cFields[c.key], e.target.checked);
+                      setCFields((prev) => ({
+                        ...prev,
+                        [c.key]: e.target.checked,
+                      }));
+                    }}
+                  />
+                  <b className="mx-1">{c.text}</b>
+                </label>
+              ))}
+            </div>
+          </Bulma.C>
+          <Bulma.C size={4}>
+            <div>
+              {pageSizeElement}
+              <div>{showEntriesText}</div>
+            </div>
+          </Bulma.C>
+        </Bulma.Columns>
+        <p className="has-text-weight-semibold">Expression scores</p>
+        <Bulma.Columns vCentered className="mt-0">
+          <Bulma.C>
+            <span>
+              <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey: low
+              confidence scores
+            </span>
+          </Bulma.C>
+          <Bulma.C className="is-flex is-align-items-center">
+            <hr className="dot-line m-0 mr-2" /> important score variation
+          </Bulma.C>
+        </Bulma.Columns>
+      </>
     ),
     [cFields]
   );
@@ -237,6 +250,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
       <div className="static-section near-columns">
         {data && (
           <>
+            {/* todo separate line when huge variation */}
             <ComplexTable
               columns={columns}
               data={data.calls}
@@ -245,7 +259,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
               onFilter={onFilter}
               customHeader={customHeader}
             />
-            {/* todo add legends */}
             <p>
               <b>Expression scores</b> of expression calls is based on the rank
               of a gene in a condition according to its expression levels

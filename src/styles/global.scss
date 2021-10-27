@@ -553,3 +553,7 @@ label.label.not-default {
     color: $primary !important;
   }
 }
+.dot-line {
+  border-top: 2px dotted $primary;
+  width: 2rem;
+}
