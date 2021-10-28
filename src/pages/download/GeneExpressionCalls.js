@@ -37,7 +37,6 @@ const GeneExpressionCalls = () => {
           history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
         },
       });
-      // }
     }
   }, [speciesID, singleSpeciesList]);
   React.useEffect(() => {

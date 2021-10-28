@@ -1,26 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import i18n from '../../i18n';
 
 import Bulma from '../Bulma';
+import readableFileSize from '../../helpers/readableFileSize';
 
-const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
+// todo add size file
+const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => (
   <Bulma.Modal.Content as="div" className="box">
     <Bulma.Media>
       <Bulma.Media.Item className="my-auto">
-        <Bulma.Title>
-          {selectedSpecies
-            ? `${selectedSpecies.scientificName} (${selectedSpecies.name})`
+        <Bulma.Title className="is-size-4">
+          {species
+            ? `${species.genus} ${species.speciesName} (${species.name})`
             : null}
         </Bulma.Title>
       </Bulma.Media.Item>
       <Bulma.Media.Item align="right">
         <div>
           <figure className="image is-128x128 rounded-border">
-            {selectedSpecies && (
+            {species && (
               <Bulma.Image
-                src={selectedSpecies.src}
-                alt={selectedSpecies.scientificName}
+                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                alt={`${species.genus} ${species.speciesName} (${species.name})`}
+                fallback="https://via.placeholder.com/128"
               />
             )}
           </figure>
@@ -30,94 +31,85 @@ const DlProcessedExpressionValuesSpeciesModal = ({ selectedSpecies }) => (
     <div className="mt-2">
       <div>
         <p className="mb-2">
-          <b>{i18n.t('download.processed-exp-values.rna-seq')}</b>
+          <b>RNA-Seq data</b>
         </p>
         <div className="field has-addons">
           <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t(
-                  'download.processed-exp-values.rna-seq-button-experiments'
-                )}
+            <a
+              className="button is-primary is-outlined is-light"
+              href={files.rnaSeqAnnot.path}
+            >
+              <span className="is-size-7">
+                Download experiments/libraries info
+                {` (${readableFileSize(files.rnaSeqAnnot.size)})`}
               </span>
-            </button>
+            </a>
           </p>
           <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t('download.processed-exp-values.rna-seq-button-count')}
+            <a
+              className="button is-primary is-outlined is-light"
+              href={files.rnaSeqData.path}
+            >
+              <span className="is-size-7">
+                Download read count, TPMs and FPKMs
+                {` (${readableFileSize(files.rnaSeqData.size)})`}
               </span>
-            </button>
+            </a>
           </p>
         </div>
-        <p>
-          {i18n.t('download.processed-exp-values.rna-seq-desc')}
-          <Link to="">
-            {i18n.t('download.processed-exp-values.rna-seq-desc-link')}
-          </Link>
+        <p className="is-size-7 has-text-grey">
+          Files can also be retrieved per experiment, see{' '}
+          <a
+            className="internal-link"
+            href={`https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
+          >
+            RNA-Seq data directory
+          </a>
         </p>
       </div>
       <div className="mt-4">
         <p className="mb-2">
-          <b>{i18n.t('download.processed-exp-values.affymetrix')}</b>
+          <b>Affymetrix data</b>
         </p>
         <div className="field has-addons">
           <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t(
-                  'download.processed-exp-values.affymetrix-button-experiments'
-                )}
+            <a
+              className="button is-primary is-outlined is-light"
+              href={files.affymetrixAnnot.path}
+            >
+              <span className="is-size-7">
+                Download experiments/chips info
+                {` (${readableFileSize(files.rnaSeqData.size)})`}
               </span>
-            </button>
+            </a>
           </p>
           <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t(
-                  'download.processed-exp-values.affymetrix-button-signal'
-                )}
+            <a
+              className="button is-primary is-outlined is-light"
+              href={files.affymetrixData.path}
+            >
+              <span className="is-size-7">
+                Download signal intensities
+                {` (${readableFileSize(files.affymetrixData.size)})`}
               </span>
-            </button>
+            </a>
           </p>
         </div>
-        <p>
-          {i18n.t('download.processed-exp-values.affymetrix-desc')}
-          <Link to="">
-            {i18n.t('download.processed-exp-values.affymetrix-desc-link')}
-          </Link>
+        <p className="is-size-7 has-text-grey">
+          Files can also be retrieved per experiment, see{' '}
+          <a
+            className="internal-link"
+            href={`https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
+          >
+            Affymetrix data directory
+          </a>
         </p>
       </div>
       <div className="mt-4">
         <p className="mb-2">
-          <b>{i18n.t('download.processed-exp-values.full-rna-seq')}</b>
+          <b>Single cell full length RNA-Seq data</b>
         </p>
-        <div className="field has-addons">
-          <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t(
-                  'download.processed-exp-values.full-rna-seq-button-experiments'
-                )}
-              </span>
-            </button>
-          </p>
-          <p className="control">
-            <button className="button is-primary is-outlined" type="button">
-              <span>
-                {i18n.t(
-                  'download.processed-exp-values.full-rna-seq-button-count'
-                )}
-              </span>
-            </button>
-          </p>
-        </div>
-        <p>
-          {i18n.t('download.processed-exp-values.full-rna-seq-desc')}
-          <Link to="">
-            {i18n.t('download.processed-exp-values.full-rna-seq-desc-link')}
-          </Link>
-        </p>
+        <p className="is-size-7 has-text-grey">No data</p>
       </div>
     </div>
   </Bulma.Modal.Content>
