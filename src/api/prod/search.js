@@ -23,7 +23,7 @@ const DEFAULT_PARAMETERS = (page, action) => {
 
   params.append('display_type', 'json');
   params.append('page', page);
-  params.append('action', action);
+  if (action) params.append('action', action);
 
   return params;
 };
@@ -140,6 +140,30 @@ const search = {
     exprCalls: () =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('download', 'expr_calls');
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              // An executor function receives a cancel function as a parameter
+              SEARCH_CANCEL_API.species.exprCalls = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((err) => {
+            if (!axios.isCancel(err)) {
+              ReactGA.exception({ description: err.response?.data?.message });
+              getAxiosAddNotif()({
+                id: Math.random().toString(10),
+                children: <p>{err.response?.data?.message}</p>,
+                className: `is-danger`,
+              });
+            }
+            reject();
+          });
+      }),
+    species: (speciesId) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('species');
+        params.append('species_id', speciesId);
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
