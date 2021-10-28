@@ -1,11 +1,31 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/control-has-associated-label */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import classnames from '../../helpers/classnames';
+import useQuery from '../../hooks/useQuery';
+import GEC_TABS from '../../helpers/constants/GecTabs';
 
 // <h1 className="gradient-underline title is-5 has-text-primary">
 
 const GECMultiDiff = () => {
-  const [active, setActive] = React.useState('simple');
+  const file = useQuery('file');
+  const history = useHistory();
+
+  const onClick = React.useCallback(
+    (key) => () => {
+      history.push(
+        `?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.DIFF}&file=${key}`
+      );
+    },
+    []
+  );
+  React.useEffect(() => {
+    if (!file)
+      history.push(
+        `?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.DIFF}&file=${GEC_TABS.MULTI.FILES.DIFF.SIMPLE}`
+      );
+  }, [file]);
+
   return (
     <div id="multi_diff">
       <div className="static-section">
@@ -45,7 +65,10 @@ const GECMultiDiff = () => {
           only in anatomical entities sharing a homology relation between all
           species compared, with data mapped to broad developmental stages
           shared across animal kingdom (see{' '}
-          <a href="#undefined" className="internal-link">
+          <a
+            href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.DIFF}`}
+            className="internal-link"
+          >
             use of homology in multi-species files
           </a>
           ).
@@ -71,16 +94,28 @@ const GECMultiDiff = () => {
         </p>
         <div className="tabs is-toggle is-toggle-rounded is-small">
           <ul>
-            <li className={classnames({ 'is-active': active === 'simple' })}>
-              <a onClick={() => setActive('simple')}>simple file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.MULTI.FILES.DIFF.SIMPLE,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.MULTI.FILES.DIFF.SIMPLE)}>
+                simple file
+              </a>
             </li>
-            <li className={classnames({ 'is-active': active === 'complete' })}>
-              <a onClick={() => setActive('complete')}>complete file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.MULTI.FILES.DIFF.COMPLETE,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.MULTI.FILES.DIFF.COMPLETE)}>
+                complete file
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      {active === 'simple' && (
+      {file === GEC_TABS.MULTI.FILES.DIFF.SIMPLE && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Simple file
@@ -103,7 +138,10 @@ const GECMultiDiff = () => {
           <p>
             Relations of orthology between genes member of a same orthology gene
             group are provided through the associated{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -715,7 +753,10 @@ const GECMultiDiff = () => {
             . They are provided solely to group data from orthologous genes
             belonging to the same orthology group. Genes member of an OMA gene
             orthology group can be retrieved through the associated{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -781,7 +822,10 @@ const GECMultiDiff = () => {
             Please note that the list of all genes member of the OMA orthologous
             gene group with ID provided in <code>OMA ID</code> (column 1) is
             provided through the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -809,7 +853,10 @@ const GECMultiDiff = () => {
             Please note that the list of all genes member of the OMA orthologous
             gene group with ID provided in <code>OMA ID</code> (column 1) is
             provided through the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -831,7 +878,10 @@ const GECMultiDiff = () => {
             Please note that the list of all genes member of the OMA orthologous
             gene group with ID provided in <code>OMA ID</code> (column 1) is
             provided through the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -850,7 +900,10 @@ const GECMultiDiff = () => {
             Please note that the list of all genes member of the OMA orthologous
             gene group with ID provided in <code>OMA ID</code> (column 1) is
             provided through the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -866,7 +919,10 @@ const GECMultiDiff = () => {
           <p>
             This column is provided as additional information, members of OMA
             orthologous gene groups can be retrieved through the use of the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -882,14 +938,17 @@ const GECMultiDiff = () => {
           <p>
             This column is provided as additional information, members of OMA
             orthologous gene groups can be retrieved through the use of the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
           </p>
         </div>
       )}
-      {active === 'complete' && (
+      {file === GEC_TABS.MULTI.FILES.DIFF.COMPLETE && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Complete file
@@ -908,7 +967,10 @@ const GECMultiDiff = () => {
           <p>
             Relations of orthology between genes can be retrieved through the
             use of the{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             . This allows notably to detect genes with no data for a condition:
@@ -1707,7 +1769,10 @@ const GECMultiDiff = () => {
             . They are provided solely to group data from orthologous genes
             belonging to the same orthology group. Genes member of an OMA gene
             orthology group can be retrieved through the associated{' '}
-            <a href="#oma_hog" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             .
@@ -1731,7 +1796,10 @@ const GECMultiDiff = () => {
             Please note that the list of all genes member of the OMA orthologous
             gene group with ID provided in <code>OMA ID</code> (column 1) is
             provided through the{' '}
-            <a href="#undefined" className="internal-link">
+            <a
+              href={`?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
+              className="internal-link"
+            >
               hierarchical orthologous groups file
             </a>
             . If a gene listed in this file has no call for the condition{' '}

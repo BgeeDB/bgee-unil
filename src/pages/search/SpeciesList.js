@@ -8,8 +8,6 @@ import Bulma from '../../components/Bulma';
 import api from '../../api';
 
 const SpeciesList = () => {
-  const page = 'SpeciesList';
-
   const [speciesList, setSpeciesList] = useState([]);
 
   React.useEffect(() => {
@@ -31,7 +29,7 @@ const SpeciesList = () => {
       </div>
       <div className="content">
         <div className="grid-species">
-          {speciesList.map((s, key) => (
+          {speciesList.map((s) => (
             <Link
               to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
               className="center-in-grid"

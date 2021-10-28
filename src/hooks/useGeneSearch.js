@@ -7,7 +7,7 @@ const useGeneSearch = (searchText) => {
   const searchResultHandler = React.useCallback(
     (val) => {
       if (val !== '') {
-        api.geneSearch
+        api.search.genes
           .geneSearchResult(val)
           .then((resp) => {
             if (resp.code === 200) {

@@ -9,7 +9,6 @@ import Bulma from '../../components/Bulma';
 import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpressionCallsSpeciesModal';
 import { ModalContext } from '../../contexts/ModalContext';
 import api from '../../api';
-import config from '../../config.json';
 import CreativeCommons from '../../components/CreativeCommons';
 
 const GeneExpressionCalls = () => {
@@ -38,7 +37,6 @@ const GeneExpressionCalls = () => {
           history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
         },
       });
-      // }
     }
   }, [speciesID, singleSpeciesList]);
   React.useEffect(() => {
