@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,10 +13,20 @@ import Bulma from '../components/Bulma';
 import config from '../config.json';
 import HomeNewsList from '../components/Home/HomeNewsList';
 import api from '../api';
+import { ModalContext } from '../contexts/ModalContext';
+import HomeSpeciesModal from '../components/Modal/HomeSpeciesModal';
 
 const Home = () => {
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [speciesList, setSpeciesList] = useState([]);
 
+  const openSpeciesModal = React.useCallback(
+    (species) => () => {
+      console.log(species);
+      showModal(<HomeSpeciesModal species={species} hide={hideModal} />);
+    },
+    []
+  );
   React.useEffect(() => {
     api.home.speciesList().then((resp) => {
       if (resp.code === 200) {
@@ -86,7 +98,6 @@ const Home = () => {
               </p>
             </Bulma.C>
           </Bulma.Columns>
-          {/* <SelectCustom /> */}
           <Bulma.Columns>
             <Bulma.C size={4}>
               <div>
@@ -127,20 +138,20 @@ const Home = () => {
           </Bulma.Columns>
           <Bulma.Card className="mt-4">
             <Bulma.Card.Header>
-              <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
-                {i18n.t('home.grid-species-title')}
+              <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
+                Species with data in Bgee
               </Bulma.Card.Header.Title>
             </Bulma.Card.Header>
             <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
               <div className="content">
                 <div className="grid-species">
                   {speciesList.map((s) => (
-                    <Link
-                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
+                    <div
+                      onClick={openSpeciesModal(s)}
                       className="center-in-grid"
                     >
                       <CardSpecies {...s} />
-                    </Link>
+                    </div>
                   ))}
                 </div>
               </div>

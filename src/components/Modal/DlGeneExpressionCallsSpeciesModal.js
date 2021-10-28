@@ -7,7 +7,7 @@ import Bulma from '../Bulma';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
   const AnatSimple = React.useMemo(() => {
-    const obj = species.downloadFiles.find(
+    const obj = species?.downloadFiles.find(
       (f) =>
         f.category === 'expr_simple' &&
         f.conditionParameters.length === 1 &&
@@ -17,7 +17,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
     return null;
   }, [species]);
   const AnatAdvanced = React.useMemo(() => {
-    const obj = species.downloadFiles.find(
+    const obj = species?.downloadFiles.find(
       (f) =>
         f.category === 'expr_advanced' &&
         f.conditionParameters.length === 1 &&
@@ -27,14 +27,14 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
     return null;
   }, [species]);
   const FullSimple = React.useMemo(() => {
-    const obj = species.downloadFiles.find(
+    const obj = species?.downloadFiles.find(
       (f) => f.category === 'expr_simple' && f.conditionParameters.length > 1
     );
     if (obj) return obj;
     return null;
   }, [species]);
   const FullAdvanced = React.useMemo(() => {
-    const obj = species.downloadFiles.find(
+    const obj = species?.downloadFiles.find(
       (f) => f.category === 'expr_advanced' && f.conditionParameters.length > 1
     );
     if (obj) return obj;

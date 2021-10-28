@@ -14,7 +14,6 @@ const readableFileSize = (size) => {
 
   while (unit <= 4) {
     // 4 is the higher unit used as map
-    console.log(tmpSize, tmpSize / DIVISOR);
     tmpSize /= DIVISOR;
     unit += 1;
     if (tmpSize < DIVISOR) break;

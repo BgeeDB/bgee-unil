@@ -561,3 +561,18 @@ label.label.not-default {
 .gap-cluster {
   border-top: 2px dotted $primary;
 }
+.button-species-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.button-species {
+  max-width: 180px;
+  border-radius: 15px;
+  border: 1px solid $primary;
+  flex: 1;
+  height: 100%;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+}

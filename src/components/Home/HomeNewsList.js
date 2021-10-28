@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import NewsItem from '../NewsItem';
 import config from '../../config.json';
 import PATHS from '../../routes/paths';
@@ -10,8 +9,8 @@ import GEC_TABS from '../../helpers/constants/GecTabs';
 const HomeNewsList = () => (
   <>
     <Bulma.Card.Header>
-      <Bulma.Card.Header.Title className="is-size-4 has-text-primary">
-        {i18n.t('home.news')}
+      <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
+        News
       </Bulma.Card.Header.Title>
     </Bulma.Card.Header>
     <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
