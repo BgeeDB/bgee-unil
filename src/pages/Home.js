@@ -134,7 +134,7 @@ const Home = () => {
             <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
               <div className="content">
                 <div className="grid-species">
-                  {speciesList.map((s, key) => (
+                  {speciesList.map((s) => (
                     <Link
                       to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
                       className="center-in-grid"
