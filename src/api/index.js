@@ -1,5 +1,4 @@
 import topAnat from './prod/topAnat';
-import geneSearch from './prod/geneSearch';
 import search from './prod/search';
 import home from './prod/home';
 
@@ -19,7 +18,6 @@ import home from './prod/home';
 const api = {
   search,
   topAnat,
-  geneSearch,
   home,
 };
 

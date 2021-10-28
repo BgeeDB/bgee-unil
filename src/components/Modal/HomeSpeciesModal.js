@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import i18n from '../../i18n';
-import LINK_ANCHOR from '../../routes/linkAnchor';
 import Bulma from '../Bulma';
 
 const HomeSpeciesModal = ({ species, hide }) => (

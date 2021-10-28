@@ -59,7 +59,7 @@ const GeneSearch = ({ classNames, children, title = true }) => {
   );
   const searchHandler = React.useCallback((val) => {
     if (val !== '') {
-      api.geneSearch.autoCompleteSearchGenes(val).then((resp) => {
+      api.search.genes.autoComplete(val).then((resp) => {
         if (resp.code === 200 && resp.data.matchCount !== 0) {
           setAutocompleteList(resp.data.match);
         } else {
