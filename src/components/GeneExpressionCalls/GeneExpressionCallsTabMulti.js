@@ -1,11 +1,29 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import classnames from '../../helpers/classnames';
 import GECOmaHog from './GECOmaHog';
 import GECMultiDiff from './GECMultiDiff';
+import useQuery from '../../hooks/useQuery';
+import GEC_TABS from '../../helpers/constants/GecTabs';
 
 const GeneExpressionCallsTabMulti = () => {
-  const [active, setActive] = React.useState('oma_hog');
+  const section = useQuery('section');
+  const history = useHistory();
+
+  const onClick = React.useCallback(
+    (key) => () => {
+      history.push(`?cat=${GEC_TABS.CAT.MULTI}&section=${key}`);
+    },
+    []
+  );
+  React.useEffect(() => {
+    if (!section)
+      history.push(
+        `?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`
+      );
+  }, [section]);
+
   return (
     <>
       <div className="static-section">
@@ -77,20 +95,28 @@ const GeneExpressionCallsTabMulti = () => {
       </div>
       <div className="tabs is-centered is-toggle is-toggle-rounded is-small">
         <ul>
-          <li className={classnames({ 'is-active': active === 'oma_hog' })}>
-            <a onClick={() => setActive('oma_hog')}>
+          <li
+            className={classnames({
+              'is-active': section === GEC_TABS.MULTI.OMA_HOG,
+            })}
+          >
+            <a onClick={onClick(GEC_TABS.MULTI.OMA_HOG)}>
               OMA Hierarchical orthologous groups
             </a>
           </li>
-          <li className={classnames({ 'is-active': active === 'multi_diff' })}>
-            <a onClick={() => setActive('multi_diff')}>
+          <li
+            className={classnames({
+              'is-active': section === GEC_TABS.MULTI.DIFF,
+            })}
+          >
+            <a onClick={onClick(GEC_TABS.MULTI.DIFF)}>
               Over-/under-expression across anatomy or life stages
             </a>
           </li>
         </ul>
       </div>
-      {active === 'oma_hog' && <GECOmaHog />}
-      {active === 'multi_diff' && <GECMultiDiff />}
+      {section === GEC_TABS.MULTI.OMA_HOG && <GECOmaHog />}
+      {section === GEC_TABS.MULTI.DIFF && <GECMultiDiff />}
     </>
   );
 };

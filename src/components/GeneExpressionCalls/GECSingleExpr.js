@@ -1,9 +1,29 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/control-has-associated-label */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import classnames from '../../helpers/classnames';
+import useQuery from '../../hooks/useQuery';
+import GEC_TABS from '../../helpers/constants/GecTabs';
 
 const GECSingleExpr = () => {
-  const [active, setActive] = React.useState('simple');
+  const file = useQuery('file');
+  const history = useHistory();
+
+  const onClick = React.useCallback(
+    (key) => () => {
+      history.push(
+        `?cat=${GEC_TABS.CAT.SINGLE}&section=${GEC_TABS.SINGLE.EXPR}&file=${key}`
+      );
+    },
+    []
+  );
+  React.useEffect(() => {
+    if (!file)
+      history.push(
+        `?cat=${GEC_TABS.CAT.SINGLE}&section=${GEC_TABS.SINGLE.EXPR}&file=${GEC_TABS.SINGLE.FILES.EXPR.SIMPLE}`
+      );
+  }, [file]);
+
   return (
     <div id="single_expr">
       <div className="static-section">
@@ -106,16 +126,28 @@ const GECSingleExpr = () => {
         </p>
         <div className="tabs is-toggle is-toggle-rounded is-small">
           <ul>
-            <li className={classnames({ 'is-active': active === 'simple' })}>
-              <a onClick={() => setActive('simple')}>simple file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.SINGLE.FILES.EXPR.SIMPLE,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.SINGLE.FILES.EXPR.SIMPLE)}>
+                simple file
+              </a>
             </li>
-            <li className={classnames({ 'is-active': active === 'advanced' })}>
-              <a onClick={() => setActive('advanced')}>advanced file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.SINGLE.FILES.EXPR.ADVANCED,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.SINGLE.FILES.EXPR.ADVANCED)}>
+                advanced file
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      {active === 'simple' && (
+      {file === GEC_TABS.SINGLE.FILES.EXPR.SIMPLE && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Simple file
@@ -580,7 +612,7 @@ const GECSingleExpr = () => {
           </p>
         </div>
       )}
-      {active === 'advanced' && (
+      {file === GEC_TABS.SINGLE.FILES.EXPR.ADVANCED && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Advanced file

@@ -1,9 +1,29 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/control-has-associated-label */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import classnames from '../../helpers/classnames';
+import useQuery from '../../hooks/useQuery';
+import GEC_TABS from '../../helpers/constants/GecTabs';
 
 const GECSingleDiff = () => {
-  const [active, setActive] = React.useState('simple');
+  const file = useQuery('file');
+  const history = useHistory();
+
+  const onClick = React.useCallback(
+    (key) => () => {
+      history.push(
+        `?cat=${GEC_TABS.CAT.SINGLE}&section=${GEC_TABS.SINGLE.DIFF}&file=${key}`
+      );
+    },
+    []
+  );
+  React.useEffect(() => {
+    if (!file)
+      history.push(
+        `?cat=${GEC_TABS.CAT.SINGLE}&section=${GEC_TABS.SINGLE.DIFF}&file=${GEC_TABS.SINGLE.FILES.DIFF.SIMPLE}`
+      );
+  }, [file]);
+
   return (
     <div id="single_diff">
       <div className="static-section">
@@ -52,16 +72,28 @@ const GECSingleDiff = () => {
         </p>
         <div className="tabs is-toggle is-toggle-rounded is-small">
           <ul>
-            <li className={classnames({ 'is-active': active === 'simple' })}>
-              <a onClick={() => setActive('simple')}>simple file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.SINGLE.FILES.DIFF.SIMPLE,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.SINGLE.FILES.DIFF.SIMPLE)}>
+                simple file
+              </a>
             </li>
-            <li className={classnames({ 'is-active': active === 'complete' })}>
-              <a onClick={() => setActive('complete')}>complete file</a>
+            <li
+              className={classnames({
+                'is-active': file === GEC_TABS.SINGLE.FILES.DIFF.COMPLETE,
+              })}
+            >
+              <a onClick={onClick(GEC_TABS.SINGLE.FILES.DIFF.COMPLETE)}>
+                complete file
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      {active === 'simple' && (
+      {file === GEC_TABS.SINGLE.FILES.DIFF.SIMPLE && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Simple file
@@ -502,14 +534,9 @@ const GECSingleDiff = () => {
               </p>
             </li>
           </ul>
-          <p>
-            <a href="#single_diff" className="internal-link">
-              Back to over-/under-expression menu
-            </a>
-          </p>
         </div>
       )}
-      {active === 'complete' && (
+      {file === GEC_TABS.SINGLE.FILES.DIFF.COMPLETE && (
         <div className="static-section">
           <h1 className="gradient-underline title is-5 has-text-primary">
             Complete file
@@ -1500,11 +1527,6 @@ const GECSingleDiff = () => {
             Number of RNA-Seq analyses in conflict, generating a call different
             from the call provided in <code>RNA-Seq data</code> (column 14). Set
             to 0 if no data available by RNA-Seq.
-          </p>
-          <p>
-            <a href="#single_diff" className="internal-link">
-              Back to over-/under-expression menu
-            </a>
           </p>
         </div>
       )}

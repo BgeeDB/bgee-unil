@@ -5,6 +5,7 @@ import i18n from '../../i18n';
 import NewsItem from '../NewsItem';
 import config from '../../config.json';
 import PATHS from '../../routes/paths';
+import GEC_TABS from '../../helpers/constants/GecTabs';
 
 const HomeNewsList = () => (
   <>
@@ -752,7 +753,7 @@ const HomeNewsList = () => (
                 <li>
                   Addition of a gene search result page (i.e.{' '}
                   <Link
-                    to={`${PATHS.SEARCH.GENE}?query=HBB`}
+                    to={`${PATHS.SEARCH.GENE}?search=HBB`}
                     title='Search genes with "HBB"'
                   >
                     search with &quot;HBB&quot;
@@ -857,10 +858,7 @@ const HomeNewsList = () => (
             <li>
               Addition of curated human RNA-Seq data from GTEx, removing
               unhealthy samples; see
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#1`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id1" {/* TODO replace with correct PATH */}
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=9606`}>
                 human data
               </Link>
               .
@@ -997,41 +995,26 @@ const HomeNewsList = () => (
             </li>
             <li>
               Addition of mouse <i>in situ</i> data from MGI, see{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id2`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id2" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=10090`}>
                 mouse data
               </Link>
               .
             </li>
             <li>
               Differential expression data have been added for{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id3`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id3" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=7955`}>
                 zebrafish
               </Link>
               ,{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id6`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id6" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=9598`}>
                 chimpanzee
               </Link>
               ,{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id8`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id8" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=9593`}>
                 gorilla
               </Link>
               , and{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id19`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id19" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=13616`}>
                 opossum
               </Link>
               .
@@ -1051,8 +1034,7 @@ const HomeNewsList = () => (
               New format to provide gene orthology information in multi-species
               files, see for instance{' '}
               <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#oma_hog`}
-                // href="https://bgee.org/bgee15_0/?page=doc&amp;action=call_files#oma_hog" TODO check it's matching
+                to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}?cat=${GEC_TABS.CAT.MULTI}&section=${GEC_TABS.MULTI.OMA_HOG}`}
               >
                 OMA Hierarchical orthologous groups documentation
               </Link>
@@ -1061,10 +1043,7 @@ const HomeNewsList = () => (
             <li>
               Removal of data incorrectly considered as normal in{' '}
               <i>C. elegans</i>, see{' '}
-              <Link
-                to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#id5`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id5" TODO check it's matching
-              >
+              <Link to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=6239`}>
                 worm data
               </Link>
               .
