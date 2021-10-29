@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../api';
 
 const useGeneSearch = (searchText) => {
-  const [resResultListGenes, setResResultListGenes] = React.useState([]);
+  const [resResultListGenes, setResResultListGenes] = React.useState();
 
   const searchResultHandler = React.useCallback(
     (val) => {
@@ -11,9 +11,9 @@ const useGeneSearch = (searchText) => {
           .geneSearchResult(val)
           .then((resp) => {
             if (resp.code === 200) {
-              setResResultListGenes(resp.data.result.geneMatches);
+              setResResultListGenes(resp.data.result.geneMatches || []);
             } else {
-              setResResultListGenes();
+              setResResultListGenes(null);
             }
           })
           .catch(() => {

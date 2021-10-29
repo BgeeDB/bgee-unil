@@ -33,8 +33,10 @@ const search = {
   genes: {
     autoComplete: (val) =>
       new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS();
-        params.append('action', 'auto_complete_gene_search');
+        const params = DEFAULT_PARAMETERS(
+          'search',
+          'auto_complete_gene_search'
+        );
         params.append('query', `${val}`);
         axiosInstance
           .get(`/?${params.toString()}`, {
