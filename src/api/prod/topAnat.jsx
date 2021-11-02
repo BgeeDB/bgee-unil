@@ -127,7 +127,7 @@ const topAnat = {
           }
         );
     }),
-  getJob: (searchId, jobId) =>
+  getJob: (searchId, jobId, requestParams) =>
     new Promise((resolve, reject) => {
       if (TOP_ANAT_CANCEL_API.getJob) {
         TOP_ANAT_CANCEL_API.getJob();
@@ -135,7 +135,7 @@ const topAnat = {
       }
       const params = DEFAULT_PARAMETERS();
       params.append('action', 'tracking_job');
-      params.append('display_rp', 1);
+      if (requestParams) params.append('display_rp', 1);
       params.append('data', searchId);
       params.append('job_id', jobId);
       axiosInstance
