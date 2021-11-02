@@ -144,9 +144,9 @@ const GeneList = () => {
           <Bulma.Title size={5} className="gradient-underline">
             {i18n.t('global.results')}
           </Bulma.Title>
-          <p className="has-text-centered my-5">{`${results.length} ${i18n.t(
-            'search.genes.genes-found'
-          )} '${search}'`}</p>
+          <p className="has-text-centered my-5">{`${
+            results.totalMatchCount
+          } ${i18n.t('search.genes.genes-found')} '${search}'`}</p>
           <ComplexTable
             pagination
             scrollable
@@ -159,7 +159,7 @@ const GeneList = () => {
               { text: 'Organism', key: 'organism' },
               { text: 'Match', key: 'match' },
             ]}
-            data={results}
+            data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}
             onRenderCell={onRenderCell(search)}
