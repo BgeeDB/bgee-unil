@@ -35,10 +35,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => (
         </p>
         <div className="field has-addons">
           <p className="control">
-            <a
-              className="button is-primary is-outlined is-light"
-              href={files.rnaSeqAnnot.path}
-            >
+            <a className="button" href={files.rnaSeqAnnot.path}>
               <span className="is-size-7">
                 Download experiments/libraries info
                 {` (${readableFileSize(files.rnaSeqAnnot.size)})`}
@@ -46,10 +43,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => (
             </a>
           </p>
           <p className="control">
-            <a
-              className="button is-primary is-outlined is-light"
-              href={files.rnaSeqData.path}
-            >
+            <a className="button" href={files.rnaSeqData.path}>
               <span className="is-size-7">
                 Download read count, TPMs and FPKMs
                 {` (${readableFileSize(files.rnaSeqData.size)})`}
@@ -73,10 +67,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => (
         </p>
         <div className="field has-addons">
           <p className="control">
-            <a
-              className="button is-primary is-outlined is-light"
-              href={files.affymetrixAnnot.path}
-            >
+            <a className="button " href={files.affymetrixAnnot.path}>
               <span className="is-size-7">
                 Download experiments/chips info
                 {` (${readableFileSize(files.rnaSeqData.size)})`}
@@ -84,10 +75,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => (
             </a>
           </p>
           <p className="control">
-            <a
-              className="button is-primary is-outlined is-light"
-              href={files.affymetrixData.path}
-            >
+            <a className="button t" href={files.affymetrixData.path}>
               <span className="is-size-7">
                 Download signal intensities
                 {` (${readableFileSize(files.affymetrixData.size)})`}
