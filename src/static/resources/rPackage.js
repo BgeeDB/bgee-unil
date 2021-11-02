@@ -30,7 +30,7 @@ const docs = [
         children: [
           {
             type: 'card',
-            title: 'BgeeDB R package',
+            title: 'BgeeCall R package',
             image: {
               src: '/static/img/r_logo_color.png',
             },
