@@ -4,8 +4,10 @@ import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import Bulma from '../Bulma';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
+  const { hideModal, customOnClose } = React.useContext(ModalContext);
   const AnatSimple = React.useMemo(() => {
     const obj = species?.downloadFiles.find(
       (f) =>
@@ -146,6 +148,17 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
           <p>{i18n.t('download.gene-exp-calls.improvement-in-progress')}</p>
         </div>
       </div>
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        type="button"
+        onClick={() => {
+          if (customOnClose) {
+            customOnClose();
+          }
+          hideModal();
+        }}
+      />
     </Bulma.Modal.Content>
   );
 };
