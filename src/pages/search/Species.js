@@ -140,11 +140,7 @@ const SpeciesList = () => {
               </p>
             </div>
             <div>
-              <LinkExternal
-                to={`${
-                  data.species.genomeSource.baseUrl + data.species.genus
-                }_${data.species.speciesName}`}
-              >
+              <LinkExternal to={`${data.species.genomeSource.baseUrl}`}>
                 {data.species.genomeSource.name}
               </LinkExternal>
             </div>
