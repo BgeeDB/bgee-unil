@@ -47,7 +47,6 @@ const topAnat = {
             },
           }) => {
             ReactGA.exception({ description: message });
-            console.log(data);
             getAxiosAddNotif()({
               id: Math.random().toString(10),
               children: <p>{message}</p>,
@@ -173,6 +172,7 @@ const topAnat = {
       }
       const params = DEFAULT_PARAMETERS('job');
       params.append('job_id', jobId);
+      params.append('action', 'cancel');
       axiosInstance
         .post(`/`, params, {
           cancelToken: new axios.CancelToken((c) => {
