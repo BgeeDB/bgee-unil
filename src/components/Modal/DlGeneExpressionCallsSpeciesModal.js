@@ -79,20 +79,20 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
           <div>
             <div>
               <p className="has-text-weight-semibold mt-3">
-                {i18n.t('download.gene-exp-calls.anat-entities-only')}
+                Anatomical entities only
               </p>
               <div className="field has-addons">
                 {AnatSimple && (
                   <p className="control">
                     <a className="button" href={AnatSimple.path}>
-                      <span>{i18n.t('global.simple-file')}</span>
+                      <span>Simple file</span>
                     </a>
                   </p>
                 )}
                 {AnatAdvanced && (
                   <p className="control">
                     <a className="button" href={AnatAdvanced.path}>
-                      <span>{i18n.t('global.advanced-file')}</span>
+                      <span>Advanced File</span>
                     </a>
                   </p>
                 )}
@@ -100,20 +100,20 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
             </div>
             <div>
               <p className="has-text-weight-semibold mt-3">
-                {i18n.t('download.gene-exp-calls.anat-entities-and-dev')}
+                All conditions parameters
               </p>
               <div className="field has-addons">
                 {FullSimple && (
                   <p className="control">
                     <a className="button" href={FullSimple.path}>
-                      <span>{i18n.t('global.simple-file')}</span>
+                      <span>Simple file</span>
                     </a>
                   </p>
                 )}
                 {FullAdvanced && (
                   <p className="control">
                     <a className="button" href={FullAdvanced.path}>
-                      <span>{i18n.t('global.advanced-file')}</span>
+                      <span>Advanced File</span>
                     </a>
                   </p>
                 )}
