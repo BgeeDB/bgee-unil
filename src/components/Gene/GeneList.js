@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import PATHS from '../../routes/paths';
 import classnames from '../../helpers/classnames';
 
-const GeneList = ({ details }) => (
+const GeneList = ({ details, history }) => (
   <>
     <Helmet>
       <title>{`Gene ${details[0].name} ${details[0].geneId}`}</title>
@@ -18,12 +17,17 @@ const GeneList = ({ details }) => (
     </p>
     <div className="is-flex is-justify-content-center">
       {details.map((e) => (
-        <Link
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+        <div
           key={e.species.id}
-          to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
-            ':geneId',
-            e.geneId
-          ).replace(':speciesId', e.species.id)}
+          onClick={() => {
+            history.push(
+              PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+                ':geneId',
+                e.geneId
+              ).replace(':speciesId', e.species.id)
+            );
+          }}
         >
           <Bulma.Card
             className={classnames(
@@ -45,7 +49,7 @@ const GeneList = ({ details }) => (
               {` (${e.species.name})`}
             </p>
           </Bulma.Card>
-        </Link>
+        </div>
       ))}
     </div>
   </>

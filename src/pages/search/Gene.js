@@ -22,7 +22,7 @@ const Gene = () => {
       .getGeneralInformation(geneId)
       .then(({ data }) => {
         if (data.genes.length === 1 && urlSpeciesId) {
-          history.push(PATHS.SEARCH.GENE_ITEM.replace(':geneId', geneId));
+          history.replace(PATHS.SEARCH.GENE_ITEM.replace(':geneId', geneId));
         } else {
           setGeneDetails(data.genes);
           setFlowState(FLOW.LOADED);
@@ -50,7 +50,7 @@ const Gene = () => {
     );
   }
   if (!urlSpeciesId && geneDetails?.length > 1) {
-    return <GeneList details={geneDetails} />;
+    return <GeneList details={geneDetails} history={history} />;
   }
   return null;
 };

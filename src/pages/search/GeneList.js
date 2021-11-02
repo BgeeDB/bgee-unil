@@ -14,13 +14,14 @@ const onRenderCell =
     switch (key) {
       case 'id':
       case 'name':
+        console.log(cell);
         return (
           <Link
             className="internal-link"
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
               cell.id
-            ).replace(':speciesId', cell.speciesId)}
+            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
           >
             {cell[key]}
           </Link>
@@ -78,6 +79,7 @@ const GeneList = () => {
       description: element.gene.description,
       organism: `${element.gene.species.genus} ${element.gene.species.speciesName} (${element.gene.species.name})`,
       match: element.match,
+      onlySpecies: element.gene.geneMappedToSameGeneIdCount === 1,
     }),
     []
   );
