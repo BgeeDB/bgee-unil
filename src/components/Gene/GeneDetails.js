@@ -71,11 +71,16 @@ const GeneExpression = ({ geneId, speciesId }) => {
   const columns = React.useMemo(() => {
     let c = [];
 
-    if (cFields.anat)
+    if (cFields.anat) {
       c.push({
         key: 'anatEntity',
         text: 'Anatomical entity',
       });
+      c.push({
+        key: 'cellType',
+        text: 'Cell type',
+      });
+    }
     if (cFields.devStage)
       c.push({
         key: 'devStage',
@@ -185,6 +190,19 @@ const GeneExpression = ({ geneId, speciesId }) => {
               </span>
             </>
           );
+        case 'cellType':
+          return (
+            <>
+              {cell.condition.cellType && (
+                <span className="is-size-7">
+                  <LinkExternal className="mr-1">
+                    {cell.condition.cellType?.id}
+                  </LinkExternal>
+                  {cell.condition.cellType?.name}
+                </span>
+              )}
+            </>
+          );
         case 'devStage':
           return (
             <>
@@ -245,7 +263,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
       return (
         regExp.test(element?.condition?.anatEntity?.id) ||
         regExp.test(element?.condition?.anatEntity?.name) ||
-        regExp.test(element?.condition?.strain)
+        regExp.test(element?.condition?.devStage?.id) ||
+        regExp.test(element?.condition?.devStage?.name) ||
+        regExp.test(element?.condition?.cellType?.id) ||
+        regExp.test(element?.condition?.cellType?.name) ||
+        regExp.test(element?.condition?.strain) ||
+        regExp.test(element?.condition?.sex)
       );
     },
     []
