@@ -9,7 +9,7 @@ import './GeneList.css';
 import GeneSearch from '../../components/Gene/GeneSearch';
 
 const onRenderCell =
-  (search) =>
+  () =>
   ({ cell, key }, defaultRender) => {
     switch (key) {
       case 'id':

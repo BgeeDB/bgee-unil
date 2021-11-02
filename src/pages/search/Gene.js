@@ -9,6 +9,7 @@ const FLOW = {
   LOADING: 'loading',
   LOADED: 'loaded',
 };
+
 const Gene = () => {
   const history = useHistory();
   const { geneId, speciesId: urlSpeciesId } = useParams();

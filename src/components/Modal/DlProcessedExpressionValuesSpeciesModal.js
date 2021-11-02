@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import readableFileSize from '../../helpers/readableFileSize';
 import { ModalContext } from '../../contexts/ModalContext';
