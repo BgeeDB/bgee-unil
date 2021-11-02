@@ -59,7 +59,7 @@ const TopAnatHead = () => (
       </a>
       .
     </p>
-    <div className="my-4 is-flex">
+    <div id="helpers-top-anat" className="my-4 is-flex">
       <TopAnatHistoryModal />
       <Link
         to={PATHS.SUPPORT.TOP_ANAT}

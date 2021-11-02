@@ -57,6 +57,7 @@ $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 //$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
+
 @media only screen and (max-width: $desktop) {
   $navbar-background-color: $dark-bg-color;
   $navbar-item-color: $dark-color;
@@ -579,4 +580,13 @@ label.label.not-default {
 .card-image.auto-center-100 figure.image {
   margin-left: 0;
   margin-right: 0;
+}
+
+@media only screen and (max-width: $tablet) {
+  #helpers-top-anat {
+    flex-direction: column;
+    & > *:not(:first-child) {
+      margin-top: .5rem
+    }
+  }
 }
