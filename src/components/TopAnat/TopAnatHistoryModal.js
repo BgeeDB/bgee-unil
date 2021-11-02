@@ -131,7 +131,7 @@ const TopAnatHistoryModal = () => {
         ))
       }
     >
-      <Bulma.IonIcon name="list-outline" />
+      <Bulma.IonIcon className="mr-1" name="list-outline" /> Recent jobs
     </button>
   );
 };
