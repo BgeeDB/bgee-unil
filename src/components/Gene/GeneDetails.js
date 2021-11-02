@@ -889,7 +889,7 @@ const GeneDetails = ({
       </Helmet>
       <Bulma.Columns className="my-0">
         <Bulma.C size={3}>
-          <GeneSearch title={false} />
+          <GeneSearch />
         </Bulma.C>
         <Bulma.C
           size={9}
