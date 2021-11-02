@@ -250,7 +250,11 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
     );
   }, [status, results, selectedStage]);
 
-  if (status === TOP_ANAT_FLOW.GOT_RESULTS && dataDisplay)
+  if (
+    status === TOP_ANAT_FLOW.GOT_RESULTS &&
+    dataDisplay &&
+    dataDisplay.length > 0
+  )
     return (
       <ComplexTable
         columns={COLUMNS}
