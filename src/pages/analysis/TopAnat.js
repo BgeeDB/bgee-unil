@@ -47,7 +47,7 @@ const TopAnat = () => {
       .getJob(ID, jobID)
       .then((r) => {
         if (r.data.jobResponse.jobStatus === 'RUNNING') {
-          getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 3000);
+          getJobStatusTimeOut = setTimeout(() => getJobStatus(ID, jobID), 7000);
           setResults({ jobId: r.data.jobResponse.jobId });
           setData((prev) => ({
             ...prev,
@@ -62,12 +62,21 @@ const TopAnat = () => {
             nbNode: r.requestParameters.nb_node || '',
             fdrThreshold: r.requestParameters.fdr_thr || '',
             pValueThreshold: r.requestParameters.p_value_thr || '',
-            rnaSeq: r.requestParameters.data_type.find((f) => f === 'RNA_SEQ'),
-            affymetrix: r.requestParameters.data_type.find(
-              (f) => f === 'AFFYMETRIX'
+            rnaSeq: Boolean(
+              r.requestParameters.data_type.find((f) => f === 'RNA_SEQ')
             ),
-            inSitu: r.requestParameters.data_type.find((f) => f === 'IN_SITU'),
-            est: r.requestParameters.data_type.find((f) => f === 'EST'),
+            affymetrix: Boolean(
+              r.requestParameters.data_type.find((f) => f === 'AFFYMETRIX')
+            ),
+            inSitu: Boolean(
+              r.requestParameters.data_type.find((f) => f === 'IN_SITU')
+            ),
+            full: Boolean(
+              r.requestParameters.data_type.find((f) => f === 'FULL_LENGTH')
+            ),
+            est: Boolean(
+              r.requestParameters.data_type.find((f) => f === 'EST')
+            ),
           }));
           // requestParameters.set(r.requestParameters)
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
@@ -111,10 +120,11 @@ const TopAnat = () => {
           nbNode: rp.nb_node || '',
           fdrThreshold: rp.fdr_thr || '',
           pValueThreshold: rp.p_value_thr || '',
-          rnaSeq: rp.data_type.find((f) => f === 'RNA_SEQ'),
-          affymetrix: rp.data_type.find((f) => f === 'AFFYMETRIX'),
-          inSitu: rp.data_type.find((f) => f === 'IN_SITU'),
-          est: rp.data_type.find((f) => f === 'EST'),
+          rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
+          full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
+          affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
+          inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
+          est: Boolean(rp.data_type.find((f) => f === 'EST')),
         }));
         requestParameters.set((prev) => {
           const curr = JSON.parse(JSON.stringify(prev));

@@ -70,11 +70,11 @@ const topAnat = {
       params.append('display_rp', 1);
       params.append('fg_list', form.genes);
       params.append('bg_list', form.genesBg);
-      params.append('data_type', 'FULL_LENGTH');
-      params.append('data_type', form.affymetrix && 'AFFYMETRIX');
-      params.append('data_type', form.est && 'EST');
-      params.append('data_type', form.inSitu && 'IN_SITU');
-      params.append('data_type', form.rnaSeq && 'RNA_SEQ');
+      if (form.rnaSeq) params.append('data_type', 'RNA_SEQ');
+      if (form.full) params.append('data_type', 'FULL_LENGTH');
+      if (form.affymetrix) params.append('data_type', 'AFFYMETRIX');
+      if (form.inSitu) params.append('data_type', 'IN_SITU');
+      if (form.est) params.append('data_type', 'EST');
       if (form.stages === 'all') {
         params.append('stage_id', '');
       } else {

@@ -219,7 +219,29 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('rnaSeq')}
                       checked={formData.rnaSeq}
                     />
-                    RNA-Seq
+                    <span
+                      className={classnames({
+                        'not-default': !formData.rnaSeq,
+                      })}
+                    >
+                      RNA-Seq
+                    </span>
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      disabled={formDisabled}
+                      onChange={checkBoxHandler('full')}
+                      checked={formData.full}
+                    />
+                    <span
+                      className={classnames({ 'not-default': !formData.full })}
+                    >
+                      scRNA-Seq full-length
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -231,7 +253,13 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('affymetrix')}
                       checked={formData.affymetrix}
                     />
-                    Affymetrix data
+                    <span
+                      className={classnames({
+                        'not-default': !formData.affymetrix,
+                      })}
+                    >
+                      Affymetrix data
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -243,7 +271,13 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('inSitu')}
                       checked={formData.inSitu}
                     />
-                    In situ hybridization
+                    <span
+                      className={classnames({
+                        'not-default': !formData.inSitu,
+                      })}
+                    >
+                      In situ hybridization
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -255,7 +289,11 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('est')}
                       checked={formData.est}
                     />
-                    EST
+                    <span
+                      className={classnames({ 'not-default': !formData.est })}
+                    >
+                      EST
+                    </span>
                   </label>
                 </div>
               </div>

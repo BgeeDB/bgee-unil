@@ -20,6 +20,7 @@ export const TOP_ANAT_FORM_CONFIG = {
     fdrThreshold: '0.2',
     pValueThreshold: '1',
     rnaSeq: true,
+    full: true,
     affymetrix: true,
     inSitu: true,
     est: true,
