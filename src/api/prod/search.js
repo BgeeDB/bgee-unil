@@ -115,16 +115,19 @@ const search = {
             reject();
           });
       }),
-    expression: (geneId, speciesId) =>
+    expression: (geneId, speciesId, fields) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('gene', 'expression');
         params.append('gene_id', geneId);
         params.append('species_id', speciesId);
-        params.append('cond_param', 'anat_entity');
-        params.append('cond_param', 'cell_type');
-        params.append('cond_param', 'strain');
-        params.append('cond_param', 'dev_stage');
-        params.append('cond_param', 'sex');
+
+        if (fields.anat) {
+          params.append('cond_param', 'anat_entity');
+          params.append('cond_param', 'cell_type');
+        }
+        if (fields.strain) params.append('cond_param', 'strain');
+        if (fields.devStage) params.append('cond_param', 'dev_stage');
+        if (fields.sex) params.append('cond_param', 'sex');
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
