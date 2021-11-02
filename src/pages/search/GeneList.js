@@ -14,7 +14,6 @@ const onRenderCell =
     switch (key) {
       case 'id':
       case 'name':
-        console.log(cell);
         return (
           <Link
             className="internal-link"
@@ -35,16 +34,19 @@ const onRenderCell =
             {cell[key]}
           </Link>
         );
-      case 'description':
-        return defaultRender(cell[key]);
       case 'match':
-        return defaultRender(cell[key]);
-      default:
+        console.log(cell);
         return (
-          <p>
-            Match: <b>{search}</b>
-          </p>
+          <span>
+            <span className="has-text-primary has-text-weight-semibold">
+              {cell.match}
+            </span>{' '}
+            ({cell.matchSource})
+          </span>
         );
+      case 'description':
+      default:
+        return defaultRender(cell[key]);
     }
   };
 
@@ -79,6 +81,7 @@ const GeneList = () => {
       description: element.gene.description,
       organism: `${element.gene.species.genus} ${element.gene.species.speciesName} (${element.gene.species.name})`,
       match: element.match,
+      matchSource: element.matchSource,
       onlySpecies: element.gene.geneMappedToSameGeneIdCount === 1,
     }),
     []
