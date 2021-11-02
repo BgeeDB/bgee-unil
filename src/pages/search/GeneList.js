@@ -155,7 +155,7 @@ const GeneList = () => {
             sortable
             classNamesTable="is-striped"
             columns={[
-              { text: 'Ensembl ID', key: 'id' },
+              { text: 'Gene ID', key: 'id' },
               { text: 'Name', key: 'name' },
               { text: 'Description', key: 'description' },
               { text: 'Organism', key: 'organism' },

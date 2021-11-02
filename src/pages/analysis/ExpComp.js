@@ -192,9 +192,7 @@ const ExpComp = () => {
         </div>
         {data && (
           <div>
-            <p>
-              {i18n.t('analysis.expression-comparison.unknown-ensembl-ids')}
-            </p>
+            <p>Unknown Ensembl IDs:</p>
             {staticBuilder([
               {
                 type: 'section',

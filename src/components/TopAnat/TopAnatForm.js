@@ -116,8 +116,8 @@ const TopAnatForm = ({
                         By default, the gene universe considered for the
                         enrichment analysis is all genes with data in Bgee for
                         the selected species. It is possible to provide a custom
-                        gene universe, as a list of Ensembl gene IDs. All gene
-                        IDs present in the foreground must be present in the
+                        gene universe, as a list of gene IDs. All gene IDs
+                        present in the foreground must be present in the
                         background.
                       </>
                     }
@@ -182,7 +182,7 @@ const TopAnatForm = ({
                 <div className="field">
                   <TextArea
                     rows={10}
-                    placeholder={`Ensembl identifiers from ${
+                    placeholder={`Gene identifiers from ${
                       rp.fg.list.detectedSpecies[rp.fg.list.selectedSpecies]
                         .name
                     } genome, one ID per line (no quotes, no comma).`}
