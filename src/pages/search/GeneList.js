@@ -35,7 +35,6 @@ const onRenderCell =
           </Link>
         );
       case 'match':
-        console.log(cell);
         return (
           <span>
             <span className="has-text-primary has-text-weight-semibold">
