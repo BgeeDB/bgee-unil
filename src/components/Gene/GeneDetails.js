@@ -112,7 +112,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
         key: 'sources',
         text: 'Sources',
         style: {
-          maxWidth: 350,
+          width: 165,
         },
       },
     ];
@@ -135,7 +135,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
                     type="checkbox"
                     checked={cFields[c.key]}
                     onChange={(e) => {
-                      console.log(cFields[c.key], e.target.checked);
                       setCFields((prev) => ({
                         ...prev,
                         [c.key]: e.target.checked,
@@ -154,7 +153,53 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </div>
           </Bulma.C>
         </Bulma.Columns>
-        <p className="has-text-weight-semibold">Expression scores</p>
+        <p className="has-text-weight-semibold is-underlined">Sources</p>
+        <Bulma.Columns vCentered className="mt-0">
+          <Bulma.C>
+            <span>
+              <b>A</b> Affimetrix
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>ES</b> EST
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>I</b> In Situ
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>R</b> RNA-Seq
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>FL</b> scRNA-Seq Full Length
+            </span>
+          </Bulma.C>
+          <Bulma.C className="is-flex is-align-items-center">
+            <span
+              className={classnames('tag is-size-7', {
+                'is-primary': true,
+              })}
+            >
+              data
+            </span>
+            <span
+              className={classnames('ml-1 tag is-size-7', {
+                'is-primary': false,
+              })}
+            >
+              no data
+            </span>
+          </Bulma.C>
+        </Bulma.Columns>
+        <p className="has-text-weight-semibold is-underlined">
+          Expression scores
+        </p>
         <Bulma.Columns vCentered className="mt-0">
           <Bulma.C>
             <span>
@@ -171,7 +216,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
     [cFields]
   );
   const onRenderCell = React.useCallback(
-    ({ cell, key }, defaultRender) => {
+    ({ cell, key, keyRow }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
           return (
@@ -242,13 +287,52 @@ const GeneExpression = ({ geneId, speciesId }) => {
         case 'sex':
           return defaultRender(cell.condition.sex, key);
         case 'sources':
+          const col = columns.find((c) => c.key === key);
           return (
-            <div className="tags">
-              {cell.dataTypesWithData.map((d) => (
-                <span key={d} className="tag is-size-7 is-primary">
-                  {d}
-                </span>
-              ))}
+            <div className="tags" style={col?.style}>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === '"Affymetrix"'
+                  ),
+                })}
+              >
+                A
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find((d) => d === 'EST'),
+                })}
+              >
+                E
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'in situ hybridization'
+                  ),
+                })}
+              >
+                I
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'RNA-Seq'
+                  ),
+                })}
+              >
+                R
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'full length single cell RNA-Seq'
+                  ),
+                })}
+              >
+                FL
+              </span>
             </div>
           );
         default:
@@ -279,7 +363,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
       .expression(geneId, speciesId)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -292,7 +375,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
       <div className="static-section near-columns">
         {data && (
           <>
-            {console.log(data.calls)}
             <ComplexTable
               columns={columns}
               data={data.calls}
@@ -365,7 +447,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
 const GeneHomologs = ({ homologs, geneId }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
-      // console.log(key);
       switch (key) {
         case 'taxonName':
           return (
