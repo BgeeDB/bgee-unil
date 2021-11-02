@@ -90,21 +90,21 @@ const ProcessedExpressionValues = () => {
         counts, TPM and FPKM values, log values of Affymetrix probeset
         normalized signal intensities). Click on a species to browse files
         available for download. It is possible to download these data directly
-        into R using our
+        into R using our{' '}
         <a
           className="external-link"
           href="https://bioconductor.org/packages/BgeeDB/"
         >
           R package
         </a>
-        . See also
+        . See also{' '}
         <Link
           to={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
           className="internal-link"
         >
           gene expression calls
         </Link>
-        . All data are available under the
+        . All data are available under the{' '}
         <a
           className="external-link"
           href="https://creativecommons.org/publicdomain/zero/1.0/"
