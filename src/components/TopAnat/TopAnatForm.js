@@ -364,7 +364,7 @@ const TopAnatForm = ({
                 {Array.isArray(formData.stages) && (
                   <div className="field">
                     <div className="control">
-                      {rp.fg.list.stages.map((s) => (
+                      {rp?.fg?.list?.stages.map((s) => (
                         <div className="control" key={s.id}>
                           <label className="checkbox">
                             <input
