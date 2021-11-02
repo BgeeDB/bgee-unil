@@ -68,12 +68,12 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
       <div className="mt-3">
         <div>
           <p className="has-text-weight-semibold is-size-5">
-            {i18n.t('download.gene-exp-calls.presence-absence-exp')}
+            Presence/Absence of expression
             <Link
               className="is-size-6 internal-link ml-2"
               to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
             >
-              {i18n.t('global.see-documentation')}
+              See documentation
             </Link>
           </p>
           <div>
@@ -119,8 +119,17 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                 )}
               </div>
             </div>
-            <p className="mt-2 is-italic">
-              {i18n.t('download.gene-exp-calls.advanced-file-description')}
+            <p className=" is-size-7 mt-2">
+              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                All conditions
+              </span>
+              : combinations anatomy-development
+            </p>
+            <p className=" is-size-7">
+              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                Advanced file
+              </span>
+              : includes information by data types
             </p>
           </div>
         </div>
