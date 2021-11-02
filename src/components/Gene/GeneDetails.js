@@ -730,7 +730,7 @@ const GeneDetails = ({
           <div className="content is-align-items-center is-flex">
             <Bulma.Image
               className="m-0 mr-2"
-              src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+              src={`/static/img/species/${species.id}_light.jpg`}
               height={50}
               width={50}
             />

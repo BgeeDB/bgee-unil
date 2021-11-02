@@ -39,7 +39,7 @@ const GeneList = ({ details, history }) => (
           >
             <Bulma.Image
               className="mr-2"
-              src={`https://bgee.org/img/species/${e.species.id}_light.jpg`}
+              src={`/static/img/species/${e.species.id}_light.jpg`}
               height={100}
               width={100}
             />

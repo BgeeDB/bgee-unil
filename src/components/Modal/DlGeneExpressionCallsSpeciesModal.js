@@ -72,7 +72,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
             <figure className="image is-128x128 rounded-border">
               {species && (
                 <Bulma.Image
-                  src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                  src={`/static/img/species/${species.id}_light.jpg`}
                   alt={`${species.genus} ${species.speciesName} (${species.name})`}
                   fallback="https://via.placeholder.com/128"
                 />

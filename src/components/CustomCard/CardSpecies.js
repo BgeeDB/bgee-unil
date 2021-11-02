@@ -5,7 +5,7 @@ const CardSpecies = ({ genus, speciesName, name, id }) => (
   <Bulma.Card className="species">
     <Bulma.Card.Image
       className="auto-center-100"
-      src={`https://bgee.org/img/species/${id}_light.jpg`}
+      src={`/static/img/species/${id}_light.jpg`}
       alt={`species ${genus} ${speciesName}- ${name}`}
       fallback="https://via.placeholder.com/126"
       height={126}

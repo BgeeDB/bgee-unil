@@ -23,7 +23,7 @@ const ModalContent = ({ history, onRemove, onLoad }) => (
         >
           <div className="is-flex is-flex-grow-1 is-align-items-center mr-3">
             <img
-              src={`https://bgee.org/img/species/${h.speciesId}_light.jpg`}
+              src={`/static/img/species/${h.speciesId}_light.jpg`}
               style={{ height: 30, width: 30, marginRight: 10 }}
               title={`Species: ${h.speciesName}`}
             />

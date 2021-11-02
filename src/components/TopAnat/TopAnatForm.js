@@ -76,7 +76,7 @@ const TopAnatForm = ({
                     top: 20,
                     right: 0,
                   }}
-                  src={`https://bgee.org/img/species/${rp.fg.list.selectedSpecies}_light.jpg`}
+                  src={`/static/img/species/${rp.fg.list.selectedSpecies}_light.jpg`}
                   alt="species image"
                   imgClassnames="top-anat-species"
                 />

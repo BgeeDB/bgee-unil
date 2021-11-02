@@ -45,7 +45,6 @@ const GeneExpressionCalls = () => {
         res.data.downloadFilesGroups.map((o) => ({
           ...o,
           ...o.members[0],
-          name: o.members[0].name === '' ? o.name : o.members[0].name,
         }))
       );
       setKwList(res.data.speciesIdToKeywords);
