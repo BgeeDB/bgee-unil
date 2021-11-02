@@ -170,7 +170,7 @@ const SpeciesList = () => {
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
             a life stage, a sex, and a strain, with reported presence or absence
-            of expression. More information in our
+            of expression. More information in our{' '}
             <Link
               to={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
               className="internal-link"
