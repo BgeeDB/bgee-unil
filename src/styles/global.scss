@@ -244,10 +244,10 @@ div.card.custom-card {
 }
 div.card.species {
   cursor: pointer;
-  padding: .5rem 0 0;
+  padding: 0;
   width: 126px;
   &:hover {
-    box-shadow: 0 0 1em -0.125em rgba(146, 2, 9, .75)
+    box-shadow: 0 0 1em -0.125em rgba(226, 1, 27, .9)
   }
   .card-image {
     display: flex;
@@ -575,4 +575,8 @@ label.label.not-default {
   padding: 15px;
   text-align: center;
   cursor: pointer;
+}
+.card-image.auto-center-100 figure.image {
+  margin-left: 0;
+  margin-right: 0;
 }
