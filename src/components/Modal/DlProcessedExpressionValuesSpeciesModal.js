@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { Link, useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import readableFileSize from '../../helpers/readableFileSize';
 import { ModalContext } from '../../contexts/ModalContext';
+import PATHS from '../../routes/paths';
 
 const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
+  const history = useHistory();
 
   return (
     <Bulma.Modal.Content as="div" className="box">
@@ -16,6 +19,18 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
               ? `${species.genus} ${species.speciesName} (${species.name})`
               : null}
           </Bulma.Title>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a
+            className="internal-link"
+            onClick={() => {
+              // hideModal();
+              history.push(
+                `${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`
+              );
+            }}
+          >
+            See gene expression calls <ion-icon name="arrow-redo-outline" />
+          </a>
         </Bulma.Media.Item>
         <Bulma.Media.Item align="right">
           <div>

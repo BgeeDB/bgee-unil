@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import LINK_ANCHOR from '../../routes/linkAnchor';
@@ -8,6 +8,7 @@ import { ModalContext } from '../../contexts/ModalContext';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
+  const history = useHistory();
   const AnatSimple = React.useMemo(() => {
     const obj = species?.downloadFiles.find(
       (f) =>
@@ -52,6 +53,19 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
               ? `${species.genus} ${species.speciesName} (${species.name})`
               : null}
           </Bulma.Title>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a
+            className="internal-link"
+            onClick={() => {
+              // hideModal();
+              history.push(
+                `${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`
+              );
+            }}
+          >
+            See processed Expression values{' '}
+            <ion-icon name="arrow-redo-outline" />
+          </a>
         </Bulma.Media.Item>
         <Bulma.Media.Item align="right">
           <div>
