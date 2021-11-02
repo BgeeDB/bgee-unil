@@ -71,7 +71,7 @@ const topAnat = {
       params.append('display_rp', 1);
       params.append('fg_list', form.genes);
       params.append('bg_list', form.genesBg);
-      params.append('data_type', 'FULL_LENGTH');
+      params.append('data_type', form.scRnaSeq && 'FULL_LENGTH');
       params.append('data_type', form.affymetrix && 'AFFYMETRIX');
       params.append('data_type', form.est && 'EST');
       params.append('data_type', form.inSitu && 'IN_SITU');

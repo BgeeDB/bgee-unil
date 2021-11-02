@@ -228,6 +228,18 @@ const TopAnatForm = ({
                       type="checkbox"
                       className="mr-2"
                       disabled={formDisabled}
+                      onChange={checkBoxHandler('scRnaSeq')}
+                      checked={formData.scRnaSeq}
+                    />
+                    scRNA-Seq full-length
+                  </label>
+                </div>
+                <div className="control">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      disabled={formDisabled}
                       onChange={checkBoxHandler('affymetrix')}
                       checked={formData.affymetrix}
                     />
