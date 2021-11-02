@@ -35,6 +35,7 @@ const TopAnat = () => {
       checkBoxHandler,
       onSelectCustomStage,
       resetForm,
+      resetError,
     },
     job,
     requestParameters,
@@ -250,9 +251,11 @@ const TopAnat = () => {
     }
 
     if (id && !jobId) {
+      resetError();
       setFlowState(TOP_ANAT_FLOW.GETTING_RESULTS);
       getResults(id);
     } else if (id && jobId) {
+      resetError();
       setFlowState(TOP_ANAT_FLOW.GETTING_JOB);
       getJobStatus(id, jobId);
     } else {
