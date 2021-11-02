@@ -583,7 +583,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
                 data={homologs?.orthologsByTaxon}
                 fullwidth
                 onRenderCell={onRenderCell}
-                pagination
                 onFilter={onFilter}
                 customHeader={customHeader}
               />
@@ -626,7 +625,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
               data={homologs?.paralogsByTaxon}
               fullwidth
               onRenderCell={onRenderCellParalogs}
-              pagination
               onFilter={onFilter}
               customHeader={customHeader}
             />
