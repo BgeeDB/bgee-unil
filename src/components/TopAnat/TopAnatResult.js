@@ -5,6 +5,7 @@ import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
+import { API_DOMAIN } from '../../api/prod/constant';
 
 const COLUMNS = [
   {
@@ -99,10 +100,10 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
                 <GaEvent
                   category="Top Anat"
                   action="Download R scripts and data"
-                  label={`All - https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
+                  label={`All - ${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
                 >
                   <Bulma.Button
-                    href={`https://bgee.org/?page=top_anat&action=download&data=${searchId}`}
+                    href={`${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
                     color="danger"
                     light
                     style={{ width: 'fit-content' }}
