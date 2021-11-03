@@ -52,36 +52,38 @@ const TopAnatForm = ({
                 {i18n.t('analysis.top-anat.gene-list')}
               </p>
             </div>
-            {rp.fg && rp.fg.list.selectedSpecies && (
-              <div
-                className="message-body is-flex"
-                style={{ position: 'relative', height: '100px' }}
-              >
+            {rp.fg &&
+              rp?.fg?.list?.selectedSpecies &&
+              rp?.fg?.list?.detectedSpecies && (
                 <div
-                  className="is-flex is-align-items-center"
-                  style={{ marginRight: 50 }}
+                  className="message-body is-flex"
+                  style={{ position: 'relative', height: '100px' }}
                 >
-                  <p className="mr-1">{rp.fg.message}</p>
-                  <InfoIcon
-                    title="Gene detection details"
-                    content={<GenesDetailsModal data={rp.fg.list} />}
+                  <div
+                    className="is-flex is-align-items-center"
+                    style={{ marginRight: 50 }}
+                  >
+                    <p className="mr-1">{rp.fg.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      content={<GenesDetailsModal data={rp.fg.list} />}
+                    />
+                  </div>
+                  <Bulma.Image
+                    className="no-responsive"
+                    style={{
+                      height: 60,
+                      width: 70,
+                      position: 'absolute',
+                      top: 20,
+                      right: 0,
+                    }}
+                    src={`/static/img/species/${rp?.fg?.list?.selectedSpecies}_light.jpg`}
+                    alt="species image"
+                    imgClassnames="top-anat-species"
                   />
                 </div>
-                <Bulma.Image
-                  className="no-responsive"
-                  style={{
-                    height: 60,
-                    width: 70,
-                    position: 'absolute',
-                    top: 20,
-                    right: 0,
-                  }}
-                  src={`/static/img/species/${rp.fg.list.selectedSpecies}_light.jpg`}
-                  alt="species image"
-                  imgClassnames="top-anat-species"
-                />
-              </div>
-            )}
+              )}
           </article>
           <div className="field">
             <TextArea
@@ -96,7 +98,7 @@ const TopAnatForm = ({
             />
           </div>
         </Bulma.C>
-        {rp.fg && rp.fg.list.selectedSpecies && (
+        {rp.fg && rp?.fg?.list?.selectedSpecies && (
           <>
             <Bulma.C size={4}>
               <article className="message is-small">
@@ -123,60 +125,63 @@ const TopAnatForm = ({
                     }
                   />
                 </div>
-                <div
-                  className={classnames(
-                    'message-body',
-                    'is-flex',
-                    'is-flex-direction-column-reverse',
-                    'is-justify-content-space-between'
-                  )}
-                  style={{ height: '100px' }}
-                >
-                  <div className="is-flex is-align-items-end is-justify-content-end">
-                    <div className="field has-addons">
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={!rp.customBg && 'danger'}
-                          onClick={() =>
-                            setRP((prev) => ({ ...prev, customBg: false }))
-                          }
-                          disabled={
-                            formDisabled || (!formDisabled && !rp.customBg)
-                          }
-                        >{`Bgee data for ${
-                          rp.fg.list.detectedSpecies[rp.fg.list.selectedSpecies]
-                            .name
-                        }`}</Bulma.Button>
-                      </p>
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={rp.customBg && 'danger'}
-                          onClick={() =>
-                            setRP((prev) => ({ ...prev, customBg: true }))
-                          }
-                          disabled={
-                            formDisabled || (!formDisabled && rp.customBg)
-                          }
-                        >
-                          Custom data
-                        </Bulma.Button>
-                      </p>
+                {rp.fg?.list?.detectedSpecies && (
+                  <div
+                    className={classnames(
+                      'message-body',
+                      'is-flex',
+                      'is-flex-direction-column-reverse',
+                      'is-justify-content-space-between'
+                    )}
+                    style={{ height: '100px' }}
+                  >
+                    <div className="is-flex is-align-items-end is-justify-content-end">
+                      <div className="field has-addons">
+                        <p className="control">
+                          <Bulma.Button
+                            size="small"
+                            className="toggle-button"
+                            color={!rp.customBg && 'danger'}
+                            onClick={() =>
+                              setRP((prev) => ({ ...prev, customBg: false }))
+                            }
+                            disabled={
+                              formDisabled || (!formDisabled && !rp.customBg)
+                            }
+                          >{`Bgee data for ${
+                            rp.fg.list.detectedSpecies[
+                              rp.fg.list.selectedSpecies
+                            ].name
+                          }`}</Bulma.Button>
+                        </p>
+                        <p className="control">
+                          <Bulma.Button
+                            size="small"
+                            className="toggle-button"
+                            color={rp.customBg && 'danger'}
+                            onClick={() =>
+                              setRP((prev) => ({ ...prev, customBg: true }))
+                            }
+                            disabled={
+                              formDisabled || (!formDisabled && rp.customBg)
+                            }
+                          >
+                            Custom data
+                          </Bulma.Button>
+                        </p>
+                      </div>
                     </div>
+                    {rp.bg && (
+                      <div className="is-flex is-align-items-center">
+                        <p className="mr-1">{rp.bg?.message}</p>
+                        <InfoIcon
+                          title="Gene detection details"
+                          content={<GenesDetailsModal data={rp.bg?.list} />}
+                        />
+                      </div>
+                    )}
                   </div>
-                  {rp.bg && (
-                    <div className="is-flex is-align-items-center">
-                      <p className="mr-1">{rp.bg?.message}</p>
-                      <InfoIcon
-                        title="Gene detection details"
-                        content={<GenesDetailsModal data={rp.bg?.list} />}
-                      />
-                    </div>
-                  )}
-                </div>
+                )}
               </article>
               {rp.customBg && (
                 <div className="field">
@@ -238,7 +243,9 @@ const TopAnatForm = ({
                       checked={formData.full}
                     />
                     <span
-                      className={classnames({ 'not-default': !formData.full })}
+                      className={classnames({
+                        'not-default': !formData.full,
+                      })}
                     >
                       scRNA-Seq full-length
                     </span>

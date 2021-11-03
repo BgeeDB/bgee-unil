@@ -46,87 +46,73 @@ const TopAnat = () => {
   const getJobStatus = React.useCallback((ID, jobID, requestParams = true) => {
     api.topAnat
       .getJob(ID, jobID, requestParams)
-      .then((r) => {
-        if (r.data.jobResponse.jobStatus === 'RUNNING') {
+      .then((res) => {
+        if (res.data.jobResponse.jobStatus === 'RUNNING') {
           getJobStatusTimeOut = setTimeout(
             () => getJobStatus(ID, jobID, false),
             7000
           );
-          setResults({ jobId: r.data.jobResponse.jobId });
-          setData((prev) => {
-            let current = { ...prev };
-            if (r.requestParameters) {
-              current = {
-                ...{
-                  ...prev,
-                  genes: r.requestParameters.fg_list.join('\n'),
-                  genesBg: (r.requestParameters.bg_list || []).join('\n'),
-                  email: '',
-                  jobDescription: r.requestParameters.job_title || '',
-                  stages: r.requestParameters.stage_id || 'all',
-                  dataQuality: r.requestParameters.data_qual,
-                  decorrelationType: r.requestParameters.decorr_type,
-                  nodeSize: r.requestParameters.node_size || '',
-                  nbNode: r.requestParameters.nb_node || '',
-                  fdrThreshold: r.requestParameters.fdr_thr || '',
-                  pValueThreshold: r.requestParameters.p_value_thr || '',
-                  rnaSeq: Boolean(
-                    r.requestParameters.data_type.find((f) => f === 'RNA_SEQ')
-                  ),
-                  affymetrix: Boolean(
-                    r.requestParameters.data_type.find(
-                      (f) => f === 'AFFYMETRIX'
-                    )
-                  ),
-                  inSitu: Boolean(
-                    r.requestParameters.data_type.find((f) => f === 'IN_SITU')
-                  ),
-                  full: Boolean(
-                    r.requestParameters.data_type.find(
-                      (f) => f === 'FULL_LENGTH'
-                    )
-                  ),
-                  est: Boolean(
-                    r.requestParameters.data_type.find((f) => f === 'EST')
-                  ),
-                },
-                genes: r.requestParameters.fg_list.join('\n'),
-                genesBg: (r.requestParameters.bg_list || []).join('\n'),
-                email: '',
-                jobDescription: r.requestParameters.job_title || '',
-                stages: r.requestParameters.stage_id || 'all',
-                dataQuality: r.requestParameters.data_qual,
-                decorrelationType: r.requestParameters.decorr_type,
-                nodeSize: r.requestParameters.node_size || '',
-                nbNode: r.requestParameters.nb_node || '',
-                fdrThreshold: r.requestParameters.fdr_thr || '',
-                pValueThreshold: r.requestParameters.p_value_thr || '',
-                rnaSeq: Boolean(
-                  r.requestParameters.data_type.find((f) => f === 'RNA_SEQ')
-                ),
-                affymetrix: Boolean(
-                  r.requestParameters.data_type.find((f) => f === 'AFFYMETRIX')
-                ),
-                inSitu: Boolean(
-                  r.requestParameters.data_type.find((f) => f === 'IN_SITU')
-                ),
-                full: Boolean(
-                  r.requestParameters.data_type.find((f) => f === 'FULL_LENGTH')
-                ),
-                est: Boolean(
-                  r.requestParameters.data_type.find((f) => f === 'EST')
-                ),
-              };
-            }
-            return current;
-          });
-          // requestParameters.set(r.requestParameters)
+          setResults({ jobId: res.data.jobResponse.jobId });
+          console.log(requestParams, res);
+          if (requestParams) {
+            setData((prev) => ({
+              ...prev,
+              genes: res.requestParameters.fg_list.join('\n'),
+              genesBg: (res.requestParameters.bg_list || []).join('\n'),
+              email: '',
+              jobDescription: res.requestParameters.job_title || '',
+              stages: res.requestParameters.stage_id || 'all',
+              dataQuality: res.requestParameters.data_qual,
+              decorrelationType: res.requestParameters.decorr_type,
+              nodeSize: res.requestParameters.node_size || '',
+              nbNode: res.requestParameters.nb_node || '',
+              fdrThreshold: res.requestParameters.fdr_thr || '',
+              pValueThreshold: res.requestParameters.p_value_thr || '',
+              rnaSeq: Boolean(
+                res.requestParameters.data_type.find((f) => f === 'RNA_SEQ')
+              ),
+              affymetrix: Boolean(
+                res.requestParameters.data_type.find((f) => f === 'AFFYMETRIX')
+              ),
+              inSitu: Boolean(
+                res.requestParameters.data_type.find((f) => f === 'IN_SITU')
+              ),
+              full: Boolean(
+                res.requestParameters.data_type.find((f) => f === 'FULL_LENGTH')
+              ),
+              est: Boolean(
+                res.requestParameters.data_type.find((f) => f === 'EST')
+              ),
+            }));
+            requestParameters.set((prev) => ({
+              ...prev,
+              fg: { list: { selectedSpecies: true } },
+            }));
+
+            api.topAnat
+              .autoCompleteGenes(res.requestParameters.fg_list.join('\n'))
+              .then((r) => {
+                requestParameters.set((prev) => ({
+                  ...(prev || {}),
+                  fg: {
+                    list: r.data.fg_list,
+                    message: r.message,
+                  },
+                  bg: null,
+                  customBg: false,
+                }));
+              })
+              .catch((err) => {
+                console.debug('[ERROR] api.topAnat.autoComplete', err);
+              });
+            // foregroundHandler(res.requestParameters.fg_list.join('\n'));
+          }
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
         } else {
           history.push(
             PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
               ':id',
-              r.data.jobResponse.data
+              res.data.jobResponse.data
             )
           );
         }
