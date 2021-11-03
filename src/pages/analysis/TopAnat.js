@@ -13,6 +13,7 @@ import TopAnatResult from '../../components/TopAnat/TopAnatResult';
 import TopAnatHead from '../../components/TopAnat/TopAnatHead';
 import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons';
 import isPlural from '../../helpers/isPlural';
+import { getAxiosAddNotif } from '../../api/prod/constant';
 
 // todo clean timeout and cancel api call @ event
 let getJobStatusTimeOut;
@@ -44,16 +45,30 @@ const TopAnat = () => {
   } = useTopAnat(flowState, setFlowState);
 
   const getJobStatus = React.useCallback((ID, jobID, requestParams = true) => {
+    console.log('à');
     api.topAnat
       .getJob(ID, jobID, requestParams)
       .then((res) => {
-        if (res.data.jobResponse.jobStatus === 'RUNNING') {
+        console.log('zer', res);
+        if (res.data.jobResponse.jobStatus === 'UNDEFINED') {
+          setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
+
+          getAxiosAddNotif()({
+            id: Math.random().toString(10),
+            children: (
+              <p>
+                The job is undefined. Please contact the administrator and give
+                the current url.
+              </p>
+            ),
+            className: `is-danger`,
+          });
+        } else if (res.data.jobResponse.jobStatus === 'RUNNING') {
           getJobStatusTimeOut = setTimeout(
             () => getJobStatus(ID, jobID, false),
             7000
           );
           setResults({ jobId: res.data.jobResponse.jobId });
-          console.log(requestParams, res);
           if (requestParams) {
             setData((prev) => ({
               ...prev,
@@ -123,7 +138,6 @@ const TopAnat = () => {
       });
   }, []);
   const getResults = React.useCallback((ID) => {
-    // use display_rp=1 in params to get requestParameters
     api.topAnat
       .getResults(ID)
       .then((res) => {
@@ -198,7 +212,113 @@ const TopAnat = () => {
         setFlowState(TOP_ANAT_FLOW.GOT_RESULTS);
       })
       .catch((err) => {
-        console.debug('[ERROR] api.topAnat.getResults(%s)', ID, err);
+        if (
+          err?.data?.data.exceptionType === 'JobResultNotFoundException' &&
+          err.data.code === 400
+        ) {
+          const rp = err.data.requestParameters;
+          const formData = {
+            genes: rp.fg_list.join('\n'),
+            genesBg: (rp.bg_list || []).join('\n'),
+            email: '',
+            jobDescription: rp.job_title || '',
+            stages: rp.stage_Id || 'all',
+            dataQuality: rp.data_qual,
+            decorrelationType: rp.decorr_type,
+            nodeSize: rp.node_size || '',
+            nbNode: rp.nb_node || '',
+            fdrThreshold: rp.fdr_thr || '',
+            pValueThreshold: rp.p_value_thr || '',
+            rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
+            full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
+            affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
+            inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
+            est: Boolean(rp.data_type.find((f) => f === 'EST')),
+          };
+          setData((prev) => ({
+            ...prev,
+            genes: rp.fg_list.join('\n'),
+            genesBg: (rp.bg_list || []).join('\n'),
+            email: '',
+            jobDescription: rp.job_title || '',
+            stages: rp.stage_Id || 'all',
+            dataQuality: rp.data_qual,
+            decorrelationType: rp.decorr_type,
+            nodeSize: rp.node_size || '',
+            nbNode: rp.nb_node || '',
+            fdrThreshold: rp.fdr_thr || '',
+            pValueThreshold: rp.p_value_thr || '',
+            rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
+            full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
+            affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
+            inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
+            est: Boolean(rp.data_type.find((f) => f === 'EST')),
+          }));
+          requestParameters.set((prev) => {
+            const curr = JSON.parse(JSON.stringify(prev));
+
+            curr.fg = {
+              list: err.data.data.fg_list,
+              message: `${rp.fg_list.length} IDs provided, ${
+                err.data.data.fg_list.geneCount[
+                  err.data.data.fg_list.selectedSpecies
+                ]
+              } unique gene${isPlural(
+                'gene',
+                err.data.data.fg_list.geneCount[
+                  err.data.data.fg_list.selectedSpecies
+                ]
+              )} found in ${
+                err.data.data.fg_list.detectedSpecies[
+                  err.data.data.fg_list.selectedSpecies
+                ].name
+              }`,
+            };
+            if (rp.bg_list) curr.customBg = true;
+            if (err.data.data.bg_list)
+              curr.bg = err.data.data.bg_list
+                ? {
+                    list: err.data.data.bg_list,
+                    message: `${rp.bg_list.length} IDs provided, ${
+                      err.data.data.bg_list.geneCount[
+                        err.data.data.bg_list.selectedSpecies
+                      ]
+                    } unique ${isPlural(
+                      'gene',
+                      err.data.data.bg_list.geneCount[
+                        err.data.data.bg_list.selectedSpecies
+                      ]
+                    )} found in ${
+                      err.data.data.bg_list.detectedSpecies[
+                        err.data.data.bg_list.selectedSpecies
+                      ].name
+                    }`,
+                  }
+                : null;
+            return curr;
+          });
+
+          setFlowState(TOP_ANAT_FLOW.LAUNCHING_JOB);
+          api.topAnat
+            .runJob(formData)
+            .then((res) => {
+              history.push(
+                PATHS.ANALYSIS[
+                  res.data.jobResponse.jobStatus === 'RUNNING'
+                    ? 'TOP_ANAT_RESULT_JOB_ID'
+                    : 'TOP_ANAT_RESULT'
+                ]
+                  .replace(':id', res.data.jobResponse.data)
+                  .replace(':jobId', res.data.jobResponse.jobId)
+              );
+            })
+            .catch((error) => {
+              console.debug('[ERROR] api.topAnat.runJob', data, error);
+              setFlowState(TOP_ANAT_FLOW.ERROR_LAUNCH_JOB);
+            });
+          return;
+        }
+        // console.debug('[ERROR] api.topAnat.getResults(%s)', ID, err);
         setFlowState(TOP_ANAT_FLOW.ERROR_GET_RESULTS);
       });
   }, []);
@@ -230,11 +350,13 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (getJobStatusTimeOut) clearTimeout(getJobStatusTimeOut);
 
-    resetForm();
+    // resetForm();
     if (!id && !jobId && pageState?.form && pageState?.requestParameters) {
       setData(pageState.form);
       requestParameters.set(pageState.requestParameters);
     }
+    if (!id && !jobId && !pageState?.form && !pageState?.requestParameters)
+      resetForm();
 
     if (id && !jobId) {
       resetError();
@@ -273,15 +395,13 @@ const TopAnat = () => {
           startNewJob={job.startNew}
         />
         <TopAnatBanner results={results} status={flowState} />
-        <div className="content has-text-centered">
-          <p className="title is-6">{data.jobDescription}</p>
-        </div>
       </Bulma.Section>
 
       <TopAnatResult
         status={flowState}
         results={results}
         searchId={id}
+        title={data?.jobDescription}
         fg={requestParameters.value.fg}
       />
     </>

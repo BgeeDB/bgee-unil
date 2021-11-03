@@ -6,23 +6,20 @@ import { getAxiosAddNotif } from './prod/constant';
 const errorHandler = (error) => {
   if (axios.isCancel(error)) return;
   if (error.response) {
+    const {
+      response: {
+        data: { data },
+      },
+    } = error;
     // response falls out of the range of 2xx
     ReactGA.exception({
-      description: `${error.response.status}_${
-        error.response.data.exceptionType
-      }${
-        error.response.data.incorrectParameters
-          ? `_${error.response.data.incorrectParameters}`
-          : ''
-      }${
-        error.response.data.invalidKey
-          ? `_${error.response.data.invalidKey}`
-          : ''
-      }`,
+      description: `${error.response.status}_${data.exceptionType}${
+        data.incorrectParameters ? `_${data.incorrectParameters}` : ''
+      }${data.invalidKey ? `_${data.invalidKey}` : ''}`,
     });
     getAxiosAddNotif()({
       id: Math.random().toString(10),
-      children: <p>{error?.response?.data?.message || error.message}</p>,
+      children: <p>{error.message}</p>,
       className: `is-danger`,
     });
   } else if (error.request) {

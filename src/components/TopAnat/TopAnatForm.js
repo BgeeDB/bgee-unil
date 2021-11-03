@@ -26,15 +26,15 @@ const TopAnatForm = ({
 }) => {
   const formAvailable = React.useMemo(() => {
     switch (status) {
-      case TOP_ANAT_FLOW.NEW_JOB:
-      case TOP_ANAT_FLOW.LAUNCHING_JOB:
-      case TOP_ANAT_FLOW.GOT_JOB:
-      case TOP_ANAT_FLOW.GOT_RESULTS:
-        return true;
-      default:
+      case TOP_ANAT_FLOW.LOADING:
         return false;
+      case TOP_ANAT_FLOW.GETTING_RESULTS:
+      case TOP_ANAT_FLOW.GETTING_JOB:
+        return formData.genes !== '';
+      default:
+        return true;
     }
-  }, [status]);
+  }, [status, formData]);
   const formDisabled = React.useMemo(
     () => status !== TOP_ANAT_FLOW.NEW_JOB,
     [status]

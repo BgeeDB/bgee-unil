@@ -1,7 +1,5 @@
-import React from 'react';
 import axios from 'axios';
-import ReactGA from 'react-ga';
-import axiosInstance, { getAxiosAddNotif } from './constant';
+import axiosInstance from './constant';
 import errorHandler from '../errorHandler';
 
 export const TOP_ANAT_CANCEL_API = {
@@ -95,7 +93,6 @@ const topAnat = {
           }),
         })
         .then(({ data }) => {
-          console.log(data);
           resolve(data);
         })
         .catch((error) => {
@@ -124,7 +121,7 @@ const topAnat = {
         .then(({ data }) => resolve(data))
         .catch((error) => {
           errorHandler(error);
-          reject(error?.response);
+          reject(error);
         });
     }),
   cancelJob: (jobId) =>

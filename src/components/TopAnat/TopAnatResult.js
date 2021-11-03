@@ -43,7 +43,7 @@ const COLUMNS = [
 ];
 const MERGE_KEY = 'merge';
 
-const TopAnatResult = ({ results, searchId, fg, status }) => {
+const TopAnatResult = ({ results, searchId, fg, status, title }) => {
   const [selectedStage, setSelectedStage] = React.useState(MERGE_KEY);
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
@@ -256,20 +256,25 @@ const TopAnatResult = ({ results, searchId, fg, status }) => {
     dataDisplay.length > 0
   )
     return (
-      <ComplexTable
-        columns={COLUMNS}
-        key={searchId + selectedStage}
-        data={dataDisplay}
-        onRenderCell={onRenderCell}
-        sortable
-        pagination
-        defaultPaginationSize={20}
-        onFilter={onFilter}
-        onSort={onSort}
-        classNamesTable="is-striped"
-        customHeader={customHeader}
-        mappingObj={mappingObj}
-      />
+      <>
+        <div className="content has-text-centered">
+          <p className="title is-6">{title}</p>
+        </div>
+        <ComplexTable
+          columns={COLUMNS}
+          key={searchId + selectedStage}
+          data={dataDisplay}
+          onRenderCell={onRenderCell}
+          sortable
+          pagination
+          defaultPaginationSize={20}
+          onFilter={onFilter}
+          onSort={onSort}
+          classNamesTable="is-striped"
+          customHeader={customHeader}
+          mappingObj={mappingObj}
+        />
+      </>
     );
   return null;
 };

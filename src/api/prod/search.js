@@ -1,7 +1,5 @@
-import React from 'react';
 import axios from 'axios';
-import ReactGA from 'react-ga';
-import axiosInstance, { getAxiosAddNotif } from './constant';
+import axiosInstance from './constant';
 import errorHandler from '../errorHandler';
 
 export const SEARCH_CANCEL_API = {
