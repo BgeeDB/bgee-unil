@@ -66,6 +66,7 @@ const TopAnatForm = ({
                     <p className="mr-1">{rp.fg.message}</p>
                     <InfoIcon
                       title="Gene detection details"
+                      tooltip="See gene list details"
                       content={<GenesDetailsModal data={rp.fg.list} />}
                     />
                   </div>
@@ -176,6 +177,7 @@ const TopAnatForm = ({
                         <p className="mr-1">{rp.bg?.message}</p>
                         <InfoIcon
                           title="Gene detection details"
+                          tooltip="See gene list details"
                           content={<GenesDetailsModal data={rp.bg?.list} />}
                         />
                       </div>
