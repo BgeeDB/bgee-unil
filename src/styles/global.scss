@@ -589,6 +589,13 @@ label.label.not-default,span.not-default {
       margin-top: .5rem
     }
   }
+  .home-hero-banner .field.is-grouped {
+    flex-direction: column;
+    align-items: center;
+    & > *:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
 }
 
 ion-icon {
