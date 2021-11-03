@@ -107,7 +107,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={AnatSimple.path}
                     >
                       <a className="button" href={AnatSimple.path}>
-                        <span>Simple file</span>
+                        <span className="is-size-7">Simple file</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -120,7 +120,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={AnatAdvanced.path}
                     >
                       <a className="button" href={AnatAdvanced.path}>
-                        <span>Advanced File</span>
+                        <span className="is-size-7">Advanced File</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -140,7 +140,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={FullSimple.path}
                     >
                       <a className="button" href={FullSimple.path}>
-                        <span>Simple file</span>
+                        <span className="is-size-7">Simple file</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -153,7 +153,7 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={FullAdvanced.path}
                     >
                       <a className="button" href={FullAdvanced.path}>
-                        <span>Advanced File</span>
+                        <span className="is-size-7">Advanced File</span>
                       </a>
                     </GaEvent>
                   </p>
