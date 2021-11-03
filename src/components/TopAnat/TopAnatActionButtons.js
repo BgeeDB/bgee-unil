@@ -26,6 +26,7 @@ const TopAnatActionButtons = ({
           </p>
         </div>
       );
+    case TOP_ANAT_FLOW.GETTING_JOB:
     case TOP_ANAT_FLOW.GOT_JOB:
       return (
         <>
