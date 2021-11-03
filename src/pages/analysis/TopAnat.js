@@ -358,8 +358,8 @@ const TopAnat = () => {
     if (!id && !jobId && !pageState?.form && !pageState?.requestParameters)
       resetForm();
 
+    resetError();
     if (id && !jobId) {
-      resetError();
       setFlowState(TOP_ANAT_FLOW.GETTING_RESULTS);
       getResults(id);
     } else if (id && jobId) {
