@@ -273,6 +273,9 @@ const TopAnat = () => {
           startNewJob={job.startNew}
         />
         <TopAnatBanner results={results} status={flowState} />
+        <div className="content has-text-centered">
+          <p className="title is-6">{data.jobDescription}</p>
+        </div>
       </Bulma.Section>
 
       <TopAnatResult
