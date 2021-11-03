@@ -57,6 +57,7 @@ $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 //$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
+
 @media only screen and (max-width: $desktop) {
   $navbar-background-color: $dark-bg-color;
   $navbar-item-color: $dark-color;
@@ -244,10 +245,10 @@ div.card.custom-card {
 }
 div.card.species {
   cursor: pointer;
-  padding: .5rem 0 0;
+  padding: 0;
   width: 126px;
   &:hover {
-    box-shadow: 0 0 1em -0.125em rgba(146, 2, 9, .75)
+    box-shadow: 0 0 1em -0.125em rgba(226, 1, 27, .9)
   }
   .card-image {
     display: flex;
@@ -520,7 +521,7 @@ a.image.cc {
   padding: 5px !important;
   font-size: 0.6rem !important;
 }
-label.label.not-default {
+label.label.not-default,span.not-default {
   width: fit-content;
   background-color: #f0eab9;
 }
@@ -575,4 +576,21 @@ label.label.not-default {
   padding: 15px;
   text-align: center;
   cursor: pointer;
+}
+.card-image.auto-center-100 figure.image {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media only screen and (max-width: $tablet) {
+  #helpers-top-anat {
+    flex-direction: column;
+    & > *:not(:first-child) {
+      margin-top: .5rem
+    }
+  }
+}
+
+ion-icon {
+  pointer-events: none;
 }

@@ -7,7 +7,7 @@ import classnames from '../../helpers/classnames';
 import api from '../../api';
 import PATHS from '../../routes/paths';
 
-const GeneSearch = ({ classNames, children, title = true }) => {
+const GeneSearch = ({ classNames, children }) => {
   const history = useHistory();
   const [search, setSearch] = React.useState('');
   const [autocompleteList, setAutocompleteList] = React.useState([]);
@@ -100,11 +100,9 @@ const GeneSearch = ({ classNames, children, title = true }) => {
         <div className="content">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <div className="field">
-            {title && (
-              <label className="label" htmlFor="search-species">
-                {i18n.t('search.genes.search-gene')}
-              </label>
-            )}
+            <label className="label" htmlFor="search-species">
+              {i18n.t('search.genes.search-gene')}
+            </label>
             <div className="control">
               <input
                 id="gene-input"

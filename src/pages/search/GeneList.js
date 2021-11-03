@@ -9,7 +9,7 @@ import './GeneList.css';
 import GeneSearch from '../../components/Gene/GeneSearch';
 
 const onRenderCell =
-  (search) =>
+  () =>
   ({ cell, key }, defaultRender) => {
     switch (key) {
       case 'id':
@@ -20,7 +20,7 @@ const onRenderCell =
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
               cell.id
-            ).replace(':speciesId', cell.speciesId)}
+            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
           >
             {cell[key]}
           </Link>
@@ -34,16 +34,18 @@ const onRenderCell =
             {cell[key]}
           </Link>
         );
-      case 'description':
-        return defaultRender(cell[key]);
       case 'match':
-        return defaultRender(cell[key]);
-      default:
         return (
-          <p>
-            Match: <b>{search}</b>
-          </p>
+          <span>
+            <span className="has-text-primary has-text-weight-semibold">
+              {cell.match}
+            </span>{' '}
+            ({cell.matchSource})
+          </span>
         );
+      case 'description':
+      default:
+        return defaultRender(cell[key]);
     }
   };
 
@@ -78,6 +80,8 @@ const GeneList = () => {
       description: element.gene.description,
       organism: `${element.gene.species.genus} ${element.gene.species.speciesName} (${element.gene.species.name})`,
       match: element.match,
+      matchSource: element.matchSource,
+      onlySpecies: element.gene.geneMappedToSameGeneIdCount === 1,
     }),
     []
   );
@@ -142,22 +146,22 @@ const GeneList = () => {
           <Bulma.Title size={5} className="gradient-underline">
             {i18n.t('global.results')}
           </Bulma.Title>
-          <p className="has-text-centered my-5">{`${results.length} ${i18n.t(
-            'search.genes.genes-found'
-          )} '${search}'`}</p>
+          <p className="has-text-centered my-5">{`${
+            results.totalMatchCount
+          } ${i18n.t('search.genes.genes-found')} '${search}'`}</p>
           <ComplexTable
             pagination
             scrollable
             sortable
             classNamesTable="is-striped"
             columns={[
-              { text: 'Ensembl ID', key: 'id' },
+              { text: 'Gene ID', key: 'id' },
               { text: 'Name', key: 'name' },
               { text: 'Description', key: 'description' },
               { text: 'Organism', key: 'organism' },
               { text: 'Match', key: 'match' },
             ]}
-            data={results}
+            data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}
             onRenderCell={onRenderCell(search)}

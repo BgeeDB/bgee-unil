@@ -52,36 +52,39 @@ const TopAnatForm = ({
                 {i18n.t('analysis.top-anat.gene-list')}
               </p>
             </div>
-            {rp.fg && rp.fg.list.selectedSpecies && (
-              <div
-                className="message-body is-flex"
-                style={{ position: 'relative', height: '100px' }}
-              >
+            {rp.fg &&
+              rp?.fg?.list?.selectedSpecies &&
+              rp?.fg?.list?.detectedSpecies && (
                 <div
-                  className="is-flex is-align-items-center"
-                  style={{ marginRight: 50 }}
+                  className="message-body is-flex"
+                  style={{ position: 'relative', height: '100px' }}
                 >
-                  <p className="mr-1">{rp.fg.message}</p>
-                  <InfoIcon
-                    title="Gene detection details"
-                    content={<GenesDetailsModal data={rp.fg.list} />}
+                  <div
+                    className="is-flex is-align-items-center"
+                    style={{ marginRight: 50 }}
+                  >
+                    <p className="mr-1">{rp.fg.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      tooltip="See gene list details"
+                      content={<GenesDetailsModal data={rp.fg.list} />}
+                    />
+                  </div>
+                  <Bulma.Image
+                    className="no-responsive"
+                    style={{
+                      height: 60,
+                      width: 70,
+                      position: 'absolute',
+                      top: 20,
+                      right: 0,
+                    }}
+                    src={`/static/img/species/${rp?.fg?.list?.selectedSpecies}_light.jpg`}
+                    alt="species image"
+                    imgClassnames="top-anat-species"
                   />
                 </div>
-                <Bulma.Image
-                  className="no-responsive"
-                  style={{
-                    height: 60,
-                    width: 70,
-                    position: 'absolute',
-                    top: 20,
-                    right: 0,
-                  }}
-                  src={`https://bgee.org/img/species/${rp.fg.list.selectedSpecies}_light.jpg`}
-                  alt="species image"
-                  imgClassnames="top-anat-species"
-                />
-              </div>
-            )}
+              )}
           </article>
           <div className="field">
             <TextArea
@@ -96,7 +99,7 @@ const TopAnatForm = ({
             />
           </div>
         </Bulma.C>
-        {rp.fg && rp.fg.list.selectedSpecies && (
+        {rp.fg && rp?.fg?.list?.selectedSpecies && (
           <>
             <Bulma.C size={4}>
               <article className="message is-small">
@@ -116,73 +119,77 @@ const TopAnatForm = ({
                         By default, the gene universe considered for the
                         enrichment analysis is all genes with data in Bgee for
                         the selected species. It is possible to provide a custom
-                        gene universe, as a list of Ensembl gene IDs. All gene
-                        IDs present in the foreground must be present in the
+                        gene universe, as a list of gene IDs. All gene IDs
+                        present in the foreground must be present in the
                         background.
                       </>
                     }
                   />
                 </div>
-                <div
-                  className={classnames(
-                    'message-body',
-                    'is-flex',
-                    'is-flex-direction-column-reverse',
-                    'is-justify-content-space-between'
-                  )}
-                  style={{ height: '100px' }}
-                >
-                  <div className="is-flex is-align-items-end is-justify-content-end">
-                    <div className="field has-addons">
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={!rp.customBg && 'danger'}
-                          onClick={() =>
-                            setRP((prev) => ({ ...prev, customBg: false }))
-                          }
-                          disabled={
-                            formDisabled || (!formDisabled && !rp.customBg)
-                          }
-                        >{`Bgee data for ${
-                          rp.fg.list.detectedSpecies[rp.fg.list.selectedSpecies]
-                            .name
-                        }`}</Bulma.Button>
-                      </p>
-                      <p className="control">
-                        <Bulma.Button
-                          size="small"
-                          className="toggle-button"
-                          color={rp.customBg && 'danger'}
-                          onClick={() =>
-                            setRP((prev) => ({ ...prev, customBg: true }))
-                          }
-                          disabled={
-                            formDisabled || (!formDisabled && rp.customBg)
-                          }
-                        >
-                          Custom data
-                        </Bulma.Button>
-                      </p>
+                {rp.fg?.list?.detectedSpecies && (
+                  <div
+                    className={classnames(
+                      'message-body',
+                      'is-flex',
+                      'is-flex-direction-column-reverse',
+                      'is-justify-content-space-between'
+                    )}
+                    style={{ height: '100px' }}
+                  >
+                    <div className="is-flex is-align-items-end is-justify-content-end">
+                      <div className="field has-addons">
+                        <p className="control">
+                          <Bulma.Button
+                            size="small"
+                            className="toggle-button"
+                            color={!rp.customBg && 'danger'}
+                            onClick={() =>
+                              setRP((prev) => ({ ...prev, customBg: false }))
+                            }
+                            disabled={
+                              formDisabled || (!formDisabled && !rp.customBg)
+                            }
+                          >{`Bgee data for ${
+                            rp.fg.list.detectedSpecies[
+                              rp.fg.list.selectedSpecies
+                            ].name
+                          }`}</Bulma.Button>
+                        </p>
+                        <p className="control">
+                          <Bulma.Button
+                            size="small"
+                            className="toggle-button"
+                            color={rp.customBg && 'danger'}
+                            onClick={() =>
+                              setRP((prev) => ({ ...prev, customBg: true }))
+                            }
+                            disabled={
+                              formDisabled || (!formDisabled && rp.customBg)
+                            }
+                          >
+                            Custom data
+                          </Bulma.Button>
+                        </p>
+                      </div>
                     </div>
+                    {rp.bg && (
+                      <div className="is-flex is-align-items-center">
+                        <p className="mr-1">{rp.bg?.message}</p>
+                        <InfoIcon
+                          title="Gene detection details"
+                          tooltip="See gene list details"
+                          content={<GenesDetailsModal data={rp.bg?.list} />}
+                        />
+                      </div>
+                    )}
                   </div>
-                  {rp.bg && (
-                    <div className="is-flex is-align-items-center">
-                      <p className="mr-1">{rp.bg?.message}</p>
-                      <InfoIcon
-                        title="Gene detection details"
-                        content={<GenesDetailsModal data={rp.bg?.list} />}
-                      />
-                    </div>
-                  )}
-                </div>
+                )}
               </article>
               {rp.customBg && (
                 <div className="field">
                   <TextArea
                     rows={10}
-                    placeholder={`Ensembl identifiers from ${
+                    placeholder={`Gene identifiers from ${
                       rp.fg.list.detectedSpecies[rp.fg.list.selectedSpecies]
                         .name
                     } genome, one ID per line (no quotes, no comma).`}
@@ -219,7 +226,13 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('rnaSeq')}
                       checked={formData.rnaSeq}
                     />
-                    RNA-Seq
+                    <span
+                      className={classnames({
+                        'not-default': !formData.rnaSeq,
+                      })}
+                    >
+                      RNA-Seq
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -228,10 +241,16 @@ const TopAnatForm = ({
                       type="checkbox"
                       className="mr-2"
                       disabled={formDisabled}
-                      onChange={checkBoxHandler('scRnaSeq')}
-                      checked={formData.scRnaSeq}
+                      onChange={checkBoxHandler('full')}
+                      checked={formData.full}
                     />
-                    scRNA-Seq full-length
+                    <span
+                      className={classnames({
+                        'not-default': !formData.full,
+                      })}
+                    >
+                      scRNA-Seq full-length
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -243,7 +262,13 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('affymetrix')}
                       checked={formData.affymetrix}
                     />
-                    Affymetrix data
+                    <span
+                      className={classnames({
+                        'not-default': !formData.affymetrix,
+                      })}
+                    >
+                      Affymetrix data
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -255,7 +280,13 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('inSitu')}
                       checked={formData.inSitu}
                     />
-                    In situ hybridization
+                    <span
+                      className={classnames({
+                        'not-default': !formData.inSitu,
+                      })}
+                    >
+                      In situ hybridization
+                    </span>
                   </label>
                 </div>
                 <div className="control">
@@ -267,7 +298,11 @@ const TopAnatForm = ({
                       onChange={checkBoxHandler('est')}
                       checked={formData.est}
                     />
-                    EST
+                    <span
+                      className={classnames({ 'not-default': !formData.est })}
+                    >
+                      EST
+                    </span>
                   </label>
                 </div>
               </div>
@@ -338,7 +373,7 @@ const TopAnatForm = ({
                 {Array.isArray(formData.stages) && (
                   <div className="field">
                     <div className="control">
-                      {rp.fg.list.stages.map((s) => (
+                      {rp?.fg?.list?.stages.map((s) => (
                         <div className="control" key={s.id}>
                           <label className="checkbox">
                             <input

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import Bulma from '../Bulma';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
+  const { hideModal, customOnClose } = React.useContext(ModalContext);
+  const history = useHistory();
   const AnatSimple = React.useMemo(() => {
     const obj = species?.downloadFiles.find(
       (f) =>
@@ -50,13 +53,26 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
               ? `${species.genus} ${species.speciesName} (${species.name})`
               : null}
           </Bulma.Title>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <a
+            className="internal-link"
+            onClick={() => {
+              // hideModal();
+              history.push(
+                `${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`
+              );
+            }}
+          >
+            See processed Expression values{' '}
+            <ion-icon name="arrow-redo-outline" />
+          </a>
         </Bulma.Media.Item>
         <Bulma.Media.Item align="right">
           <div>
             <figure className="image is-128x128 rounded-border">
               {species && (
                 <Bulma.Image
-                  src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                  src={`/static/img/species/${species.id}_light.jpg`}
                   alt={`${species.genus} ${species.speciesName} (${species.name})`}
                   fallback="https://via.placeholder.com/128"
                 />
@@ -68,31 +84,31 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
       <div className="mt-3">
         <div>
           <p className="has-text-weight-semibold is-size-5">
-            {i18n.t('download.gene-exp-calls.presence-absence-exp')}
+            Presence/Absence of expression
             <Link
               className="is-size-6 internal-link ml-2"
               to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
             >
-              {i18n.t('global.see-documentation')}
+              See documentation
             </Link>
           </p>
           <div>
             <div>
               <p className="has-text-weight-semibold mt-3">
-                {i18n.t('download.gene-exp-calls.anat-entities-only')}
+                Anatomical entities only
               </p>
               <div className="field has-addons">
                 {AnatSimple && (
                   <p className="control">
                     <a className="button" href={AnatSimple.path}>
-                      <span>{i18n.t('global.simple-file')}</span>
+                      <span>Simple file</span>
                     </a>
                   </p>
                 )}
                 {AnatAdvanced && (
                   <p className="control">
                     <a className="button" href={AnatAdvanced.path}>
-                      <span>{i18n.t('global.advanced-file')}</span>
+                      <span>Advanced File</span>
                     </a>
                   </p>
                 )}
@@ -100,27 +116,36 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
             </div>
             <div>
               <p className="has-text-weight-semibold mt-3">
-                {i18n.t('download.gene-exp-calls.anat-entities-and-dev')}
+                All conditions parameters
               </p>
               <div className="field has-addons">
                 {FullSimple && (
                   <p className="control">
                     <a className="button" href={FullSimple.path}>
-                      <span>{i18n.t('global.simple-file')}</span>
+                      <span>Simple file</span>
                     </a>
                   </p>
                 )}
                 {FullAdvanced && (
                   <p className="control">
                     <a className="button" href={FullAdvanced.path}>
-                      <span>{i18n.t('global.advanced-file')}</span>
+                      <span>Advanced File</span>
                     </a>
                   </p>
                 )}
               </div>
             </div>
-            <p className="mt-2 is-italic">
-              {i18n.t('download.gene-exp-calls.advanced-file-description')}
+            <p className=" is-size-7 mt-2">
+              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                All conditions
+              </span>
+              : combinations anatomy-development
+            </p>
+            <p className=" is-size-7">
+              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                Advanced file
+              </span>
+              : includes information by data types
             </p>
           </div>
         </div>
@@ -137,6 +162,17 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
           <p>{i18n.t('download.gene-exp-calls.improvement-in-progress')}</p>
         </div>
       </div>
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        type="button"
+        onClick={() => {
+          if (customOnClose) {
+            customOnClose();
+          }
+          hideModal();
+        }}
+      />
     </Bulma.Modal.Content>
   );
 };

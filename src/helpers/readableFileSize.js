@@ -18,7 +18,8 @@ const readableFileSize = (size) => {
     unit += 1;
     if (tmpSize < DIVISOR) break;
   }
-  return `${Math.trunc(tmpSize)} ${UNIT_MAPPING[unit]}`;
+
+  return `${tmpSize.toFixed(1)} ${UNIT_MAPPING[unit]}`;
 };
 
 export default readableFileSize;

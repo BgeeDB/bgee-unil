@@ -1,7 +1,7 @@
 import React from 'react';
 import Bulma from '../Bulma';
 
-const InfoIcon = ({ title, content }) => {
+const InfoIcon = ({ title, content, tooltip }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -11,7 +11,9 @@ const InfoIcon = ({ title, content }) => {
         className="button is-ghost"
         onClick={() => setIsOpen(true)}
       >
-        <Bulma.IonIcon name="information-circle" size="large" />
+        <span title={tooltip}>
+          <Bulma.IonIcon name="information-circle" size="large" />
+        </span>
       </button>
       <div className={`modal ${isOpen ? 'is-active' : ''}`}>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}

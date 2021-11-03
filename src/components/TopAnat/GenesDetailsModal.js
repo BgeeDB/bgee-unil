@@ -41,11 +41,16 @@ const GenesDetailsModal = ({ data }) => {
           <p>ID in other species: </p>
 
           <ul className="unordered">
-            {data.notInSelectedSpeciesGeneIds.map((v) => (
+            {data.notInSelectedSpeciesGeneIds.slice(0, 10).map((v) => (
               <li key={v}>
                 <p>{v}</p>
               </li>
             ))}
+            {data.notInSelectedSpeciesGeneIds.length > 10 && (
+              <li>
+                <p>...</p>
+              </li>
+            )}
           </ul>
         </>
       )}
@@ -54,11 +59,16 @@ const GenesDetailsModal = ({ data }) => {
         <>
           <p>IDs not identified:</p>
           <ul className="unordered">
-            {data.undeterminedGeneIds.map((v) => (
+            {data.undeterminedGeneIds.slice(0, 10).map((v) => (
               <li key={v}>
                 <p>{v}</p>
               </li>
             ))}
+            {data.undeterminedGeneIds.length > 10 && (
+              <li>
+                <p>...</p>
+              </li>
+            )}
           </ul>
         </>
       )}

@@ -70,7 +70,7 @@ const topAnat = [
           {
             type: 'text',
             content:
-              'Enter a list of Ensembl identifiers into the first form field,',
+              'Enter a list of gene identifiers into the first form field,',
           },
           {
             type: 'text',

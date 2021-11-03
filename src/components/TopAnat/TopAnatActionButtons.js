@@ -2,6 +2,7 @@ import React from 'react';
 import i18n from '../../i18n';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
+import PATHS from '../../routes/paths';
 
 const TopAnatActionButtons = ({
   status,
@@ -27,19 +28,31 @@ const TopAnatActionButtons = ({
       );
     case TOP_ANAT_FLOW.GOT_JOB:
       return (
-        <div className="field">
-          <p className="control">
-            <GaEvent category="Top Anat" action="Cancel Job" label={jobId}>
-              <button
-                type="button"
-                className="button is-danger"
-                onClick={cancelJob}
+        <>
+          <div className="field is-grouped">
+            <p className="control">
+              <GaEvent category="Top Anat" action="Cancel Job" label={jobId}>
+                <button
+                  type="button"
+                  className="button is-danger"
+                  onClick={cancelJob}
+                >
+                  {i18n.t('analysis.top-anat.cancel-job')}
+                </button>
+              </GaEvent>
+            </p>
+            <p className="control">
+              <a
+                className="button is-info"
+                href={PATHS.ANALYSIS.TOP_ANAT}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {i18n.t('analysis.top-anat.cancel-job')}
-              </button>
-            </GaEvent>
-          </p>
-        </div>
+                {i18n.t('analysis.top-anat.start-new-job')}
+              </a>
+            </p>
+          </div>
+        </>
       );
     case TOP_ANAT_FLOW.ERROR_LAUNCH_JOB:
     case TOP_ANAT_FLOW.ERROR_GET_JOB:

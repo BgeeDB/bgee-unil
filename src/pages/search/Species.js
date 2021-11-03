@@ -140,11 +140,7 @@ const SpeciesList = () => {
               </p>
             </div>
             <div>
-              <LinkExternal
-                to={`${
-                  data.species.genomeSource.baseUrl + data.species.genus
-                }_${data.species.speciesName}`}
-              >
+              <LinkExternal to={`${data.species.genomeSource.baseUrl}`}>
                 {data.species.genomeSource.name}
               </LinkExternal>
             </div>
@@ -170,7 +166,7 @@ const SpeciesList = () => {
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
             a life stage, a sex, and a strain, with reported presence or absence
-            of expression. More information in our
+            of expression. More information in our{' '}
             <Link
               to={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
               className="internal-link"
@@ -251,86 +247,98 @@ const SpeciesList = () => {
           </p>
           <div className="mt-2">
             <p className="is-6 has-text-weight-semibold">Affymetrix</p>
-            <ul className="unordered">
-              {files.affymetrix.annot && (
-                <li>
-                  Experiments/chips annotations and meta data:{' '}
-                  <a
-                    className="internal-link"
-                    href={files.affymetrix.annot.path}
-                  >
-                    <code>{files.affymetrix.annot.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.affymetrix.annot.size)})`}
-                </li>
-              )}
-              {files.affymetrix.data && (
-                <li>
-                  Data (signal intensities):{' '}
-                  <a
-                    className="internal-link"
-                    href={files.affymetrix.data.path}
-                  >
-                    <code>{files.affymetrix.data.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.affymetrix.data.size)})`}
-                </li>
-              )}
-            </ul>
+            {files.affymetrix.annot || files.affymetrix.data ? (
+              <ul className="unordered">
+                {files.affymetrix.annot && (
+                  <li>
+                    Experiments/chips annotations and meta data:{' '}
+                    <a
+                      className="internal-link"
+                      href={files.affymetrix.annot.path}
+                    >
+                      <code>{files.affymetrix.annot.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.affymetrix.annot.size)})`}
+                  </li>
+                )}
+                {files.affymetrix.data && (
+                  <li>
+                    Data (signal intensities):{' '}
+                    <a
+                      className="internal-link"
+                      href={files.affymetrix.data.path}
+                    >
+                      <code>{files.affymetrix.data.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.affymetrix.data.size)})`}
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="mt-2 mb-4">No data</p>
+            )}
           </div>
           <div className="mt-2">
             <p className="is-6 has-text-weight-semibold">RNA-Seq</p>
-            <ul className="unordered">
-              {files.rnaSeq.annot && (
-                <li>
-                  Experiments/libraries annotations and meta data:{' '}
-                  <a className="internal-link" href={files.rnaSeq.annot.path}>
-                    <code>{files.rnaSeq.annot.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.rnaSeq.annot.size)})`}
-                </li>
-              )}
-              {files.rnaSeq.data && (
-                <li>
-                  Data (read counts, TPMs, and FPKMs):{' '}
-                  <a className="internal-link" href={files.rnaSeq.data.path}>
-                    <code>{files.rnaSeq.data.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.rnaSeq.data.size)})`}
-                </li>
-              )}
-            </ul>
+            {files.rnaSeq.annot || files.rnaSeq.data ? (
+              <ul className="unordered">
+                {files.rnaSeq.annot && (
+                  <li>
+                    Experiments/libraries annotations and meta data:{' '}
+                    <a className="internal-link" href={files.rnaSeq.annot.path}>
+                      <code>{files.rnaSeq.annot.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.rnaSeq.annot.size)})`}
+                  </li>
+                )}
+                {files.rnaSeq.data && (
+                  <li>
+                    Data (read counts, TPMs, and FPKMs):{' '}
+                    <a className="internal-link" href={files.rnaSeq.data.path}>
+                      <code>{files.rnaSeq.data.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.rnaSeq.data.size)})`}
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="mt-2 mb-4">No data</p>
+            )}
           </div>
           <div className="mt-2">
             <p className="is-6 has-text-weight-semibold">
               {i18n.t('search.species.full-rna-seq')}
             </p>
-            <ul className="unordered">
-              {files.fullLength.annot && (
-                <li>
-                  Experiments/libraries annotations and meta data:{' '}
-                  <a
-                    className="internal-link"
-                    href={files.fullLength.annot.path}
-                  >
-                    <code>{files.fullLength.annot.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.fullLength.annot.size)})`}
-                </li>
-              )}
-              {files.fullLength.data && (
-                <li>
-                  Data (read counts, TPMs, and FPKMs){' '}
-                  <a
-                    className="internal-link"
-                    href={files.fullLength.data.path}
-                  >
-                    <code>{files.fullLength.data.name}</code>
-                  </a>
-                  {` (${readableFileSize(files.fullLength.data.size)})`}
-                </li>
-              )}
-            </ul>
+            {files.fullLength.annot || files.fullLength.data ? (
+              <ul className="unordered">
+                {files.fullLength.annot && (
+                  <li>
+                    Experiments/libraries annotations and meta data:{' '}
+                    <a
+                      className="internal-link"
+                      href={files.fullLength.annot.path}
+                    >
+                      <code>{files.fullLength.annot.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.fullLength.annot.size)})`}
+                  </li>
+                )}
+                {files.fullLength.data && (
+                  <li>
+                    Data (read counts, TPMs, and FPKMs){' '}
+                    <a
+                      className="internal-link"
+                      href={files.fullLength.data.path}
+                    >
+                      <code>{files.fullLength.data.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.fullLength.data.size)})`}
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="mt-2 mb-4">No data</p>
+            )}
           </div>
         </div>
       </div>

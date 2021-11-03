@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
+/* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -65,28 +65,37 @@ const CUSTOM_FIELDS = [
   },
 ];
 const GeneExpression = ({ geneId, speciesId }) => {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
 
   const columns = React.useMemo(() => {
     let c = [];
+    console.log(data);
+    if (!data) return null;
 
-    if (cFields.anat)
+    if (data.requestedConditionParameters.find((r) => r === 'Anat. entity')) {
       c.push({
         key: 'anatEntity',
         text: 'Anatomical entity',
       });
-    if (cFields.devStage)
+    }
+    if (data.requestedConditionParameters.find((r) => r === 'Cell type'))
+      c.push({
+        key: 'cellType',
+        text: 'Cell type',
+      });
+    if (data.requestedConditionParameters.find((r) => r === 'Dev. stage'))
       c.push({
         key: 'devStage',
         text: 'Dev. stage',
       });
-    if (cFields.sex)
+    if (data.requestedConditionParameters.find((r) => r === 'Sex'))
       c.push({
         key: 'sex',
         text: 'Sex',
       });
-    if (cFields.strain)
+    if (data.requestedConditionParameters.find((r) => r === 'Strain'))
       c.push({
         key: 'strain',
         text: 'Strain',
@@ -107,12 +116,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
         key: 'sources',
         text: 'Sources',
         style: {
-          maxWidth: 350,
+          width: 165,
         },
       },
     ];
     return c;
-  }, [cFields]);
+  }, [cFields, data]);
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) => (
       <>
@@ -120,7 +129,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
           <Bulma.C size={8}>
             <div className="field">{searchElement}</div>
             <div className="is-flex">
-              Fields:
               {CUSTOM_FIELDS.map((c) => (
                 <label
                   className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
@@ -130,7 +138,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
                     type="checkbox"
                     checked={cFields[c.key]}
                     onChange={(e) => {
-                      console.log(cFields[c.key], e.target.checked);
                       setCFields((prev) => ({
                         ...prev,
                         [c.key]: e.target.checked,
@@ -140,6 +147,20 @@ const GeneExpression = ({ geneId, speciesId }) => {
                   <b className="mx-1">{c.text}</b>
                 </label>
               ))}
+              <Bulma.Button
+                onClick={() => {
+                  setIsLoading(true);
+                  api.search.genes
+                    .expression(geneId, speciesId, cFields)
+                    .then((res) => {
+                      setData(res.data);
+                    })
+                    .catch((err) => setData())
+                    .finally(() => setIsLoading(false));
+                }}
+              >
+                Search
+              </Bulma.Button>
             </div>
           </Bulma.C>
           <Bulma.C size={4}>
@@ -149,7 +170,53 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </div>
           </Bulma.C>
         </Bulma.Columns>
-        <p className="has-text-weight-semibold">Expression scores</p>
+        <p className="has-text-weight-semibold is-underlined">Sources</p>
+        <Bulma.Columns vCentered className="mt-0">
+          <Bulma.C>
+            <span>
+              <b>A</b> Affimetrix
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>ES</b> EST
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>I</b> In Situ
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>R</b> RNA-Seq
+            </span>
+          </Bulma.C>
+          <Bulma.C>
+            <span>
+              <b>FL</b> scRNA-Seq Full Length
+            </span>
+          </Bulma.C>
+          <Bulma.C className="is-flex is-align-items-center">
+            <span
+              className={classnames('tag is-size-7', {
+                'is-primary': true,
+              })}
+            >
+              data
+            </span>
+            <span
+              className={classnames('ml-1 tag is-size-7', {
+                'is-primary': false,
+              })}
+            >
+              no data
+            </span>
+          </Bulma.C>
+        </Bulma.Columns>
+        <p className="has-text-weight-semibold is-underlined">
+          Expression scores
+        </p>
         <Bulma.Columns vCentered className="mt-0">
           <Bulma.C>
             <span>
@@ -163,10 +230,10 @@ const GeneExpression = ({ geneId, speciesId }) => {
         </Bulma.Columns>
       </>
     ),
-    [cFields]
+    [isLoading, cFields]
   );
   const onRenderCell = React.useCallback(
-    ({ cell, key }, defaultRender) => {
+    ({ cell, key, keyRow }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
           return (
@@ -183,6 +250,19 @@ const GeneExpression = ({ geneId, speciesId }) => {
                 </LinkExternal>
                 {cell.condition.anatEntity.name}
               </span>
+            </>
+          );
+        case 'cellType':
+          return (
+            <>
+              {cell.condition.cellType && (
+                <span className="is-size-7">
+                  <LinkExternal className="mr-1">
+                    {cell.condition.cellType?.id}
+                  </LinkExternal>
+                  {cell.condition.cellType?.name}
+                </span>
+              )}
             </>
           );
         case 'devStage':
@@ -224,13 +304,52 @@ const GeneExpression = ({ geneId, speciesId }) => {
         case 'sex':
           return defaultRender(cell.condition.sex, key);
         case 'sources':
+          const col = columns.find((c) => c.key === key);
           return (
-            <div className="tags">
-              {cell.dataTypesWithData.map((d) => (
-                <span key={d} className="tag is-size-7 is-primary">
-                  {d}
-                </span>
-              ))}
+            <div className="tags" style={col?.style}>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === '"Affymetrix"'
+                  ),
+                })}
+              >
+                A
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find((d) => d === 'EST'),
+                })}
+              >
+                E
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'in situ hybridization'
+                  ),
+                })}
+              >
+                I
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'RNA-Seq'
+                  ),
+                })}
+              >
+                R
+              </span>
+              <span
+                className={classnames('tag is-size-7', {
+                  'is-primary': cell.dataTypesWithData.find(
+                    (d) => d === 'full length single cell RNA-Seq'
+                  ),
+                })}
+              >
+                FL
+              </span>
             </div>
           );
         default:
@@ -245,7 +364,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
       return (
         regExp.test(element?.condition?.anatEntity?.id) ||
         regExp.test(element?.condition?.anatEntity?.name) ||
-        regExp.test(element?.condition?.strain)
+        regExp.test(element?.condition?.devStage?.id) ||
+        regExp.test(element?.condition?.devStage?.name) ||
+        regExp.test(element?.condition?.cellType?.id) ||
+        regExp.test(element?.condition?.cellType?.name) ||
+        regExp.test(element?.condition?.strain) ||
+        regExp.test(element?.condition?.sex)
       );
     },
     []
@@ -253,12 +377,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
 
   React.useEffect(() => {
     api.search.genes
-      .expression(geneId, speciesId)
+      .expression(geneId, speciesId, cFields)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
@@ -267,9 +391,16 @@ const GeneExpression = ({ geneId, speciesId }) => {
         Expression
       </Bulma.Title>
       <div className="static-section near-columns">
-        {data && (
+        {isLoading ? (
+          <progress
+            className="progress is-small"
+            max="100"
+            style={{ animationDuration: '4s' }}
+          >
+            80%
+          </progress>
+        ) : data ? (
           <>
-            {console.log(data.calls)}
             <ComplexTable
               columns={columns}
               data={data.calls}
@@ -333,16 +464,17 @@ const GeneExpression = ({ geneId, speciesId }) => {
               </Bulma.Column>
             </Bulma.Columns>
           </>
+        ) : (
+          <span>No data</span>
         )}
       </div>
     </>
   );
 };
 
-const GeneHomologs = ({ homologs, geneId }) => {
+const GeneHomologs = ({ homologs, geneId, isLoading }) => {
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender, { expandAction }) => {
-      // console.log(key);
       switch (key) {
         case 'taxonName':
           return (
@@ -557,7 +689,15 @@ const GeneHomologs = ({ homologs, geneId }) => {
         Orthologs
       </Bulma.Title>
       <div id="orthologs" className="static-section near-columns mb-6">
-        {homologs?.orthologyXRef && (
+        {isLoading ? (
+          <progress
+            className="progress is-small mt-6"
+            max="100"
+            style={{ animationDuration: '4s' }}
+          >
+            80%
+          </progress>
+        ) : homologs?.orthologyXRef ? (
           <>
             <div className="table-container">
               <ComplexTable
@@ -583,7 +723,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
                 data={homologs?.orthologsByTaxon}
                 fullwidth
                 onRenderCell={onRenderCell}
-                pagination
                 onFilter={onFilter}
                 customHeader={customHeader}
               />
@@ -596,13 +735,23 @@ const GeneHomologs = ({ homologs, geneId }) => {
               .
             </span>
           </>
+        ) : (
+          <span>No data</span>
         )}
       </div>
       <Bulma.Title size={5} className="gradient-underline">
         Paralogs (same species)
       </Bulma.Title>
       <div id="paralogs" className="static-section near-columns mb-6">
-        {homologs?.paralogyXRef && (
+        {isLoading ? (
+          <progress
+            className="progress is-small mt-6"
+            max="100"
+            style={{ animationDuration: '4s' }}
+          >
+            80%
+          </progress>
+        ) : homologs?.orthologyXRef ? (
           <>
             <ComplexTable
               columns={[
@@ -626,7 +775,6 @@ const GeneHomologs = ({ homologs, geneId }) => {
               data={homologs?.paralogsByTaxon}
               fullwidth
               onRenderCell={onRenderCellParalogs}
-              pagination
               onFilter={onFilter}
               customHeader={customHeader}
             />
@@ -638,12 +786,15 @@ const GeneHomologs = ({ homologs, geneId }) => {
               .
             </span>
           </>
+        ) : (
+          <span>No data</span>
         )}
       </div>
     </>
   );
 };
 const GeneXRefs = ({ geneId, speciesId }) => {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   React.useEffect(() => {
     api.search.genes
@@ -654,7 +805,8 @@ const GeneXRefs = ({ geneId, speciesId }) => {
       .catch((err) => {
         console.debug(err);
         setData();
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [geneId, speciesId]);
 
   if (data)
@@ -664,29 +816,41 @@ const GeneXRefs = ({ geneId, speciesId }) => {
           {i18n.t('search.gene.cross-references')}
         </Bulma.Title>
         <div className="static-section near-columns">
-          {data.data.gene.xRefs.map((xref) => (
-            <Bulma.Columns key={xref.source.name} className="my-0">
-              <Bulma.C size={3}>
-                <p className="has-text-weight-semibold">{xref.source.name}</p>
-              </Bulma.C>
-              <Bulma.C size={9}>
-                <ExpandableList
-                  items={xref.xRefs}
-                  renderElement={(ref, key, elements) => (
-                    <span key={ref.xRefId}>
-                      <LinkExternal to={ref.xRefURL}>{ref.xRefId}</LinkExternal>
-                      {ref.xRefName && <>{` (${ref.xRefName})`}</>}
-                      {key !== elements.length - 1 ? (
-                        <span className="mr-1">,</span>
-                      ) : (
-                        ''
-                      )}
-                    </span>
-                  )}
-                />
-              </Bulma.C>
-            </Bulma.Columns>
-          ))}
+          {isLoading ? (
+            <progress
+              className="progress is-small"
+              max="100"
+              style={{ animationDuration: '4s' }}
+            >
+              80%
+            </progress>
+          ) : (
+            data.data.gene.xRefs.map((xref) => (
+              <Bulma.Columns key={xref.source.name} className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">{xref.source.name}</p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <ExpandableList
+                    items={xref.xRefs}
+                    renderElement={(ref, key, elements) => (
+                      <span key={ref.xRefId}>
+                        <LinkExternal to={ref.xRefURL}>
+                          {ref.xRefId}
+                        </LinkExternal>
+                        {ref.xRefName && <>{` (${ref.xRefName})`}</>}
+                        {key !== elements.length - 1 ? (
+                          <span className="mr-1">,</span>
+                        ) : (
+                          ''
+                        )}
+                      </span>
+                    )}
+                  />
+                </Bulma.C>
+              </Bulma.Columns>
+            ))
+          )}
         </div>
       </>
     );
@@ -696,6 +860,7 @@ const GeneXRefs = ({ geneId, speciesId }) => {
 const GeneDetails = ({
   details: { name, geneId, description, species, synonyms },
 }) => {
+  const [homologsIsLoading, setHomologsIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
   React.useEffect(() => {
     api.search.genes
@@ -710,7 +875,8 @@ const GeneDetails = ({
         });
         setHomologs(homo);
       })
-      .catch(() => setHomologs());
+      .catch(() => setHomologs())
+      .finally(() => setTimeout(() => setHomologsIsLoading(false), 500));
     return () => {
       if (SEARCH_CANCEL_API.genes.homologs) SEARCH_CANCEL_API.genes.homologs();
     };
@@ -723,7 +889,7 @@ const GeneDetails = ({
       </Helmet>
       <Bulma.Columns className="my-0">
         <Bulma.C size={3}>
-          <GeneSearch title={false} />
+          <GeneSearch />
         </Bulma.C>
         <Bulma.C
           size={9}
@@ -732,7 +898,7 @@ const GeneDetails = ({
           <div className="content is-align-items-center is-flex">
             <Bulma.Image
               className="m-0 mr-2"
-              src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+              src={`/static/img/species/${species.id}_light.jpg`}
               height={50}
               width={50}
             />
@@ -834,7 +1000,11 @@ const GeneDetails = ({
         </div>
       </div>
       <GeneExpression geneId={geneId} speciesId={species.id} />
-      <GeneHomologs homologs={homologs} geneId={geneId} />
+      <GeneHomologs
+        homologs={homologs}
+        geneId={geneId}
+        isLoading={homologsIsLoading}
+      />
       <GeneXRefs geneId={geneId} speciesId={species.id} />
     </>
   );

@@ -24,6 +24,7 @@ const useForm = (opts) => {
   const [isEditable, setIsEditable] = React.useState(true);
 
   const reset = React.useCallback(() => setData(opts?.initialValue || {}), []);
+  const resetError = React.useCallback(() => setErrors({}), []);
   const handleChange = React.useCallback(
     (key, sanitizeFn) => (e) => {
       const value = sanitizeFn ? sanitizeFn(e) : e.target.value;
@@ -83,6 +84,7 @@ const useForm = (opts) => {
     handleChange,
     handleSubmit,
     errors,
+    resetError,
     reset,
     edition: { isEditable, setIsEditable },
   };

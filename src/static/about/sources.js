@@ -1623,7 +1623,7 @@ const sources = [
                   {
                     type: 'link_external',
                     path: 'http://metazoa.ensembl.org/',
-                    text: 'EnsemblMetazoa',
+                    text: 'Ensembl Metazoa',
                   },
                 ],
               },

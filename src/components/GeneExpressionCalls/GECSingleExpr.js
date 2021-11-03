@@ -1742,9 +1742,9 @@ const GECSingleExpr = () => {
             genome (Sumatran orangutan). Only for those species (bonobo and
             Bornean orangutan), we modify the Ensembl gene IDs, to ensure that
             we provide unique gene identifiers over all species. It is therefore
-            necessary, to obtain correct Ensembl gene IDs for those species, to
-            replace gene ID prefix &apos;PPAG&apos; with &apos;ENSPTRG&apos;,
-            and &apos;PPYG&apos; prefix with &apos;ENSPPYG&apos;.
+            necessary, to obtain correct gene IDs for those species, to replace
+            gene ID prefix &apos;PPAG&apos; with &apos;ENSPTRG&apos;, and
+            &apos;PPYG&apos; prefix with &apos;ENSPPYG&apos;.
           </p>
           <p id="single_expr_advanced_col2" className="mt-2">
             <b>Gene name (column 2)</b>
