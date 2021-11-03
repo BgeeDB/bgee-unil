@@ -1,13 +1,26 @@
 import React from 'react';
 import isPlural from '../../helpers/isPlural';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const GenesDetailsModal = ({ data }) => {
+  const { hideModal, customOnClose } = React.useContext(ModalContext);
   const { selectedSpecies } = data;
 
   // todo notify error 'No species associated to your gene list. Please check your data.'
   if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
   return (
     <div className="content">
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        type="button"
+        onClick={() => {
+          if (customOnClose) {
+            customOnClose();
+          }
+          hideModal();
+        }}
+      />
       <p>
         {`Selected species: `}
         <i>{`${data.detectedSpecies[selectedSpecies].genes} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
