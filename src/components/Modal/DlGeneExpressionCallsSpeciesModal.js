@@ -5,6 +5,7 @@ import i18n from '../../i18n';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
+import GaEvent from '../GaEvent/GaEvent';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
@@ -100,16 +101,28 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
               <div className="field has-addons">
                 {AnatSimple && (
                   <p className="control">
-                    <a className="button" href={AnatSimple.path}>
-                      <span>Simple file</span>
-                    </a>
+                    <GaEvent
+                      category="Gene Expression Calls"
+                      action="download_anat-only_simple-file"
+                      label={AnatSimple.path}
+                    >
+                      <a className="button" href={AnatSimple.path}>
+                        <span>Simple file</span>
+                      </a>
+                    </GaEvent>
                   </p>
                 )}
                 {AnatAdvanced && (
                   <p className="control">
-                    <a className="button" href={AnatAdvanced.path}>
-                      <span>Advanced File</span>
-                    </a>
+                    <GaEvent
+                      category="Gene Expression Calls"
+                      action="download_anat-only_advanced-file"
+                      label={AnatAdvanced.path}
+                    >
+                      <a className="button" href={AnatAdvanced.path}>
+                        <span>Advanced File</span>
+                      </a>
+                    </GaEvent>
                   </p>
                 )}
               </div>
@@ -121,16 +134,28 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
               <div className="field has-addons">
                 {FullSimple && (
                   <p className="control">
-                    <a className="button" href={FullSimple.path}>
-                      <span>Simple file</span>
-                    </a>
+                    <GaEvent
+                      category="Gene Expression Calls"
+                      action="download_all-conditions-parameters_simple-file"
+                      label={FullSimple.path}
+                    >
+                      <a className="button" href={FullSimple.path}>
+                        <span>Simple file</span>
+                      </a>
+                    </GaEvent>
                   </p>
                 )}
                 {FullAdvanced && (
                   <p className="control">
-                    <a className="button" href={FullAdvanced.path}>
-                      <span>Advanced File</span>
-                    </a>
+                    <GaEvent
+                      category="Gene Expression Calls"
+                      action="download_all-conditions-parameters_advanced-file"
+                      label={FullAdvanced.path}
+                    >
+                      <a className="button" href={FullAdvanced.path}>
+                        <span>Advanced File</span>
+                      </a>
+                    </GaEvent>
                   </p>
                 )}
               </div>

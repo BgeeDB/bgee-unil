@@ -6,13 +6,15 @@ const GaEvent = ({ category, action, label, value, children }) => (
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
   <span
     onClick={() => {
-      if (category && action)
+      if (category && action) {
+        console.debug('Trigger ga');
         ReactGA.event({
           category: `${category}_${config.version}`,
           action,
           label,
           value,
         });
+      }
     }}
   >
     {children}
