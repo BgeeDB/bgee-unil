@@ -42,7 +42,6 @@ const topAnat = {
         .catch(
           ({
             response: {
-              data,
               data: { message },
             },
           }) => {
