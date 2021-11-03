@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactGA from 'react-ga';
 import axiosInstance, { getAxiosAddNotif } from './constant';
+import errorHandler from '../errorHandler';
 
 export const SEARCH_CANCEL_API = {
   genes: {
@@ -45,22 +46,10 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch(
-            ({
-              response: {
-                data,
-                data: { message },
-              },
-            }) => {
-              console.log(data);
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{message}</p>,
-                className: `is-danger`,
-              });
-              reject();
-            }
-          );
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
       }),
     geneSearchResult: (val) =>
       new Promise((resolve, reject) => {
@@ -73,22 +62,10 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch(
-            ({
-              response: {
-                data,
-                data: { message },
-              },
-            }) => {
-              console.log(data);
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{message}</p>,
-                className: `is-danger`,
-              });
-              reject();
-            }
-          );
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
       }),
     getGeneralInformation: (geneId) =>
       new Promise((resolve, reject) => {
@@ -103,16 +80,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     expression: (geneId, speciesId, fields) =>
@@ -136,16 +106,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     homologs: (geneId, speciesId) =>
@@ -161,16 +124,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     xrefs: (geneId, speciesId) =>
@@ -186,16 +142,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
   },
@@ -211,16 +160,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     processedValues: () =>
@@ -234,16 +176,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     species: (speciesId) =>
@@ -258,16 +193,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
     list: () =>
@@ -281,16 +209,9 @@ const search = {
             }),
           })
           .then(({ data }) => resolve(data))
-          .catch((err) => {
-            if (!axios.isCancel(err)) {
-              ReactGA.exception({ description: err.response?.data?.message });
-              getAxiosAddNotif()({
-                id: Math.random().toString(10),
-                children: <p>{err.response?.data?.message}</p>,
-                className: `is-danger`,
-              });
-            }
-            reject();
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
           });
       }),
   },
