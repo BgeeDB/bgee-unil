@@ -89,9 +89,43 @@ const TopAnatResult = ({ results, searchId, fg, status, title }) => {
 
     return csvContent;
   }, [results]);
+  const mappingObj = React.useCallback(
+    ({
+      anatEntityId,
+      anatEntityName,
+      annotated,
+      significant,
+      expected,
+      foldEnrichment,
+      pValue,
+      FDR,
+    }) => [
+      anatEntityId,
+      anatEntityName,
+      annotated,
+      significant,
+      expected,
+      foldEnrichment,
+      pValue,
+      FDR,
+    ],
+    []
+  );
+
+  const dataDisplay = React.useMemo(() => {
+    if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
+    if (!results || !results.analysis) return null;
+    if (selectedStage === MERGE_KEY) return results.data;
+
+    return (
+      results.analysis.find((a) => a.devStageId === selectedStage)?.results ||
+      null
+    );
+  }, [status, results, selectedStage]);
+
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement, showEntriesText) =>
-      results?.analysis ? (
+      dataDisplay.length > 0 ? (
         <>
           <Bulma.Columns vCentered>
             <Bulma.C size={4}>
@@ -213,42 +247,8 @@ const TopAnatResult = ({ results, searchId, fg, status, title }) => {
           )}
         </>
       ) : null,
-    [fg, results, dataCsvHref, selectedStage]
+    [fg, results, dataCsvHref, selectedStage, dataDisplay]
   );
-
-  const mappingObj = React.useCallback(
-    ({
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    }) => [
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    ],
-    []
-  );
-
-  const dataDisplay = React.useMemo(() => {
-    if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
-    if (!results || !results.analysis) return null;
-    if (selectedStage === MERGE_KEY) return results.data;
-
-    return (
-      results.analysis.find((a) => a.devStageId === selectedStage)?.results ||
-      null
-    );
-  }, [status, results, selectedStage]);
 
   if (
     status === TOP_ANAT_FLOW.GOT_RESULTS &&
