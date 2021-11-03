@@ -15,6 +15,16 @@ import GeneSearch from './GeneSearch';
 
 const MAX_ELEMENTS = 8;
 
+const styles = {
+  sideMenuPosition: {
+    position: 'fixed',
+  },
+  sideMenuText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+};
+
 const ExpandableList = ({ items, renderElement }) => {
   const [expand, setExpand] = React.useState(false);
 
@@ -64,7 +74,7 @@ const CUSTOM_FIELDS = [
     text: 'Strain',
   },
 ];
-const GeneExpression = ({ geneId, speciesId }) => {
+const GeneExpression = ({ geneId, speciesId, id }) => {
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
 
@@ -262,7 +272,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
   }, []);
 
   return (
-    <>
+    <div id={id}>
       <Bulma.Title size={5} className="gradient-underline">
         Expression
       </Bulma.Title>
@@ -335,7 +345,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -553,22 +563,65 @@ const GeneHomologs = ({ homologs, geneId }) => {
 
   return (
     <>
-      <Bulma.Title size={5} className="gradient-underline">
-        Orthologs
-      </Bulma.Title>
-      <div id="orthologs" className="static-section near-columns mb-6">
-        {homologs?.orthologyXRef && (
-          <>
-            <div className="table-container">
+      <div id="geneOrthologs">
+        <Bulma.Title size={5} className="gradient-underline">
+          Orthologs
+        </Bulma.Title>
+        <div id="orthologs" className="static-section near-columns mb-6">
+          {homologs?.orthologyXRef && (
+            <>
+              <div className="table-container">
+                <ComplexTable
+                  columns={[
+                    {
+                      key: 'taxonName',
+                      text: 'Taxon Name',
+                    },
+                    {
+                      key: 'species',
+                      text: 'Species with orthologs',
+                    },
+                    {
+                      key: 'genes',
+                      text: 'Gene(s)',
+                    },
+                    {
+                      key: 'expressionComparison',
+                      text: 'Expression comparison',
+                    },
+                    'See details',
+                  ]}
+                  data={homologs?.orthologsByTaxon}
+                  fullwidth
+                  onRenderCell={onRenderCell}
+                  pagination
+                  onFilter={onFilter}
+                  customHeader={customHeader}
+                />
+              </div>
+              <span>
+                {`Orthology information comes from ${homologs.orthologyXRef.source.name} : `}
+                <LinkExternal to={homologs.orthologyXRef.xRefURL}>
+                  {homologs.orthologyXRef.xRefId}
+                </LinkExternal>
+                .
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+      <div id="geneParalogs">
+        <Bulma.Title size={5} className="gradient-underline">
+          Paralogs (same species)
+        </Bulma.Title>
+        <div id="paralogs" className="static-section near-columns mb-6">
+          {homologs?.paralogyXRef && (
+            <>
               <ComplexTable
                 columns={[
                   {
                     key: 'taxonName',
                     text: 'Taxon Name',
-                  },
-                  {
-                    key: 'species',
-                    text: 'Species with orthologs',
                   },
                   {
                     key: 'genes',
@@ -578,67 +631,28 @@ const GeneHomologs = ({ homologs, geneId }) => {
                     key: 'expressionComparison',
                     text: 'Expression comparison',
                   },
-                  'See details',
+                  {
+                    key: 'details',
+                    text: 'See details',
+                  },
                 ]}
-                data={homologs?.orthologsByTaxon}
+                data={homologs?.paralogsByTaxon}
                 fullwidth
-                onRenderCell={onRenderCell}
+                onRenderCell={onRenderCellParalogs}
                 pagination
                 onFilter={onFilter}
                 customHeader={customHeader}
               />
-            </div>
-            <span>
-              {`Orthology information comes from ${homologs.orthologyXRef.source.name} : `}
-              <LinkExternal to={homologs.orthologyXRef.xRefURL}>
-                {homologs.orthologyXRef.xRefId}
-              </LinkExternal>
-              .
-            </span>
-          </>
-        )}
-      </div>
-      <Bulma.Title size={5} className="gradient-underline">
-        Paralogs (same species)
-      </Bulma.Title>
-      <div id="paralogs" className="static-section near-columns mb-6">
-        {homologs?.paralogyXRef && (
-          <>
-            <ComplexTable
-              columns={[
-                {
-                  key: 'taxonName',
-                  text: 'Taxon Name',
-                },
-                {
-                  key: 'genes',
-                  text: 'Gene(s)',
-                },
-                {
-                  key: 'expressionComparison',
-                  text: 'Expression comparison',
-                },
-                {
-                  key: 'details',
-                  text: 'See details',
-                },
-              ]}
-              data={homologs?.paralogsByTaxon}
-              fullwidth
-              onRenderCell={onRenderCellParalogs}
-              pagination
-              onFilter={onFilter}
-              customHeader={customHeader}
-            />
-            <span>
-              {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
-              <LinkExternal to={homologs.paralogyXRef.xRefURL}>
-                {homologs.paralogyXRef.xRefId}
-              </LinkExternal>
-              .
-            </span>
-          </>
-        )}
+              <span>
+                {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
+                <LinkExternal to={homologs.paralogyXRef.xRefURL}>
+                  {homologs.paralogyXRef.xRefId}
+                </LinkExternal>
+                .
+              </span>
+            </>
+          )}
+        </div>
       </div>
     </>
   );
@@ -659,7 +673,7 @@ const GeneXRefs = ({ geneId, speciesId }) => {
 
   if (data)
     return (
-      <>
+      <div id="geneXRefs">
         <Bulma.Title size={5} className="gradient-underline">
           {i18n.t('search.gene.cross-references')}
         </Bulma.Title>
@@ -688,7 +702,7 @@ const GeneXRefs = ({ geneId, speciesId }) => {
             </Bulma.Columns>
           ))}
         </div>
-      </>
+      </div>
     );
   return null;
 };
@@ -716,127 +730,166 @@ const GeneDetails = ({
     };
   }, []);
 
+  const handlerMenuClick = (id) => {
+    document.getElementById(id).scrollIntoView();
+  };
+
+  const sideMenu = () => {
+    const sideMenuElem = [
+      { domId: 'geneInfos', name: 'General information' },
+      { domId: 'geneExpression', name: 'Expression' },
+      { domId: 'geneOrthologs', name: 'Orthologs' },
+      { domId: 'geneParalogs', name: 'Paralogs' },
+      { domId: 'geneXRefs', name: 'Cross-references' },
+    ];
+
+    return (
+      <aside className="menu" style={styles.sideMenuPosition}>
+        <ul className="menu-list">
+          {sideMenuElem.map((elem) => (
+            <li>
+              <a style={styles.sideMenuText}>
+                <div onClick={() => handlerMenuClick(elem.domId)}>
+                  {elem.name}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    );
+  };
+
   return (
-    <>
-      <Helmet>
-        <title>{`Gene : ${name} - ${geneId} - `}</title>
-      </Helmet>
-      <Bulma.Columns className="my-0">
-        <Bulma.C size={3}>
-          <GeneSearch title={false} />
-        </Bulma.C>
-        <Bulma.C
-          size={9}
-          className="is-flex is-justify-content-center is-align-items-center"
-        >
-          <div className="content is-align-items-center is-flex">
-            <Bulma.Image
-              className="m-0 mr-2"
-              src={`https://bgee.org/img/species/${species.id}_light.jpg`}
-              height={50}
-              width={50}
-            />
-            <p className="title is-5 has-text-centered">
-              {`Gene : ${name} - ${geneId} - `}
-              <i>
-                {species.genus} {species.speciesName}
-              </i>
-              {` (${species.name})`}
-            </p>
-          </div>
-        </Bulma.C>
-      </Bulma.Columns>
-      <div className="mb-6">
-        <Bulma.Title size={5} className="gradient-underline">
-          {i18n.t('search.gene.general-info')}
-        </Bulma.Title>
-        <div className="static-section near-columns">
+    <div className="is-widescreen">
+      <div className="columns">
+        <div className="column is-one-fifth">{sideMenu()}</div>
+        <div className="column is-four-fifths">
+          <Helmet>
+            <title>{`Gene : ${name} - ${geneId} - `}</title>
+          </Helmet>
           <Bulma.Columns className="my-0">
             <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Gene identifier</p>
+              <GeneSearch title={false} />
             </Bulma.C>
-            <Bulma.C size={9}>{geneId}</Bulma.C>
-          </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Name</p>
-            </Bulma.C>
-            <Bulma.C size={9}>{name}</Bulma.C>
-          </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Description</p>
-            </Bulma.C>
-            <Bulma.C size={9}>{description}</Bulma.C>
-          </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Organism</p>
-            </Bulma.C>
-            <Bulma.C size={9}>
-              <p>
-                <Link
-                  to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)}
-                  className="internal-link"
-                >
-                  <i>{`${species.genus} ${species.speciesName}`}</i>
+            <Bulma.C
+              size={9}
+              className="is-flex is-justify-content-center is-align-items-center"
+            >
+              <div className="content is-align-items-center is-flex">
+                <Bulma.Image
+                  className="m-0 mr-2"
+                  src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                  height={50}
+                  width={50}
+                />
+                <p className="title is-5 has-text-centered">
+                  {`Gene : ${name} - ${geneId} - `}
+                  <i>
+                    {species.genus} {species.speciesName}
+                  </i>
                   {` (${species.name})`}
-                </Link>
-              </p>
+                </p>
+              </div>
             </Bulma.C>
           </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">
-                {i18n.t('search.gene.synonyms')}
-              </p>
-            </Bulma.C>
-            <Bulma.C size={9}>
-              <ExpandableList
-                items={synonyms}
-                renderElement={(ref, key, elements) => (
-                  <span key={ref}>
-                    {ref}
-                    {key !== elements.length - 1 ? (
-                      <span className="mr-1">,</span>
-                    ) : (
-                      ''
+          <div className="mb-6" id="geneInfos">
+            <Bulma.Title size={5} className="gradient-underline">
+              {i18n.t('search.gene.general-info')}
+            </Bulma.Title>
+            <div className="static-section near-columns">
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Gene identifier</p>
+                </Bulma.C>
+                <Bulma.C size={9}>{geneId}</Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Name</p>
+                </Bulma.C>
+                <Bulma.C size={9}>{name}</Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Description</p>
+                </Bulma.C>
+                <Bulma.C size={9}>{description}</Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Organism</p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <p>
+                    <Link
+                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)}
+                      className="internal-link"
+                    >
+                      <i>{`${species.genus} ${species.speciesName}`}</i>
+                      {` (${species.name})`}
+                    </Link>
+                  </p>
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">
+                    {i18n.t('search.gene.synonyms')}
+                  </p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <ExpandableList
+                    items={synonyms}
+                    renderElement={(ref, key, elements) => (
+                      <span key={ref}>
+                        {ref}
+                        {key !== elements.length - 1 ? (
+                          <span className="mr-1">,</span>
+                        ) : (
+                          ''
+                        )}
+                      </span>
                     )}
-                  </span>
-                )}
-              />
-            </Bulma.C>
-          </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Orthologs</p>
-            </Bulma.C>
-            <Bulma.C size={9}>
-              <p>
-                <a className="internal-link" href="#orthologs">
-                  {homologs ? `${homologs.orthologs} orthologs` : ''}
-                </a>
-              </p>
-            </Bulma.C>
-          </Bulma.Columns>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <p className="has-text-weight-semibold">Paralogs</p>
-            </Bulma.C>
-            <Bulma.C size={9}>
-              <p>
-                <a className="internal-link" href="#paralogs">
-                  {homologs ? `${homologs.paralogs} paralogs` : ''}
-                </a>
-              </p>
-            </Bulma.C>
-          </Bulma.Columns>
+                  />
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Orthologs</p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <p>
+                    <a className="internal-link" href="#orthologs">
+                      {homologs ? `${homologs.orthologs} orthologs` : ''}
+                    </a>
+                  </p>
+                </Bulma.C>
+              </Bulma.Columns>
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Paralogs</p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <p>
+                    <a className="internal-link" href="#paralogs">
+                      {homologs ? `${homologs.paralogs} paralogs` : ''}
+                    </a>
+                  </p>
+                </Bulma.C>
+              </Bulma.Columns>
+            </div>
+          </div>
+          <GeneExpression
+            geneId={geneId}
+            speciesId={species.id}
+            id="geneExpression"
+          />
+          <GeneHomologs homologs={homologs} geneId={geneId} />
+          <GeneXRefs geneId={geneId} speciesId={species.id} id="geneXRefs" />
         </div>
       </div>
-      <GeneExpression geneId={geneId} speciesId={species.id} />
-      <GeneHomologs homologs={homologs} geneId={geneId} />
-      <GeneXRefs geneId={geneId} speciesId={species.id} />
-    </>
+    </div>
   );
 };
 
