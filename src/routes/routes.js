@@ -13,7 +13,6 @@ import Species from '../pages/search/Species';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
-import DataDumpFile from '../static/download/dataDump';
 
 import ResourcesFile from '../static/resources/docs';
 import RPackageFile from '../static/resources/rPackage';
@@ -34,6 +33,7 @@ import AboutSourceFile from '../static/about/sources';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
+import DataDumps from '../pages/download/DataDumps';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -78,7 +78,7 @@ const DOWNLOAD = {
   },
   [PATHS.DOWNLOAD.DATA_DUMPS]: {
     i18nKey: 'page.download.data-dumps',
-    source: DataDumpFile,
+    component: DataDumps,
   },
 };
 const RESOURCES = {

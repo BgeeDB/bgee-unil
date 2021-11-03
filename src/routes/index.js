@@ -136,11 +136,20 @@ const Router = () => (
                 />
               )}
             />
+            <Route
+              exact
+              path={PATHS.DOWNLOAD.DATA_DUMPS}
+              render={(props) => (
+                <Page
+                  {...props}
+                  Component={ROUTES[PATHS.DOWNLOAD.DATA_DUMPS].component}
+                />
+              )}
+            />
 
             <Route
               exact
               path={[
-                PATHS.DOWNLOAD.DATA_DUMPS,
                 PATHS.RESOURCES.DOCS,
                 PATHS.RESOURCES.R_PACKAGES,
                 PATHS.RESOURCES.SPARQL,

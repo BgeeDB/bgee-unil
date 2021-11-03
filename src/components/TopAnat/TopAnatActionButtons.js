@@ -31,7 +31,7 @@ const TopAnatActionButtons = ({
         <>
           <div className="field is-grouped">
             <p className="control">
-              <GaEvent category="Top Anat" action="Cancel Job" label={jobId}>
+              <GaEvent category="Top Anat" action="cancelJob" label={jobId}>
                 <button
                   type="button"
                   className="button is-danger"

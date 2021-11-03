@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import ReactGA from 'react-ga';
 import axiosInstance, { getAxiosAddNotif } from './constant';
+import errorHandler from '../errorHandler';
 
 export const TOP_ANAT_CANCEL_API = {
   autoCompleteGenes: null,
@@ -39,22 +40,10 @@ const topAnat = {
           }),
         })
         .then(({ data }) => resolve(data))
-        .catch(
-          ({
-            response: {
-              data,
-              data: { message },
-            },
-          }) => {
-            ReactGA.exception({ description: message });
-            getAxiosAddNotif()({
-              id: Math.random().toString(10),
-              children: <p>{message}</p>,
-              className: `is-danger`,
-            });
-            reject();
-          }
-        );
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
     }),
   runJob: (form) =>
     new Promise((resolve, reject) => {
@@ -109,23 +98,10 @@ const topAnat = {
           console.log(data);
           resolve(data);
         })
-        .catch(
-          ({
-            response: {
-              data,
-              data: { message },
-            },
-          }) => {
-            ReactGA.exception({ description: message });
-            console.log(data);
-            getAxiosAddNotif()({
-              id: Math.random().toString(10),
-              children: <p>{message}</p>,
-              className: `is-danger`,
-            });
-            reject();
-          }
-        );
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
     }),
   getJob: (searchId, jobId, requestParams) =>
     new Promise((resolve, reject) => {
@@ -146,23 +122,10 @@ const topAnat = {
           }),
         })
         .then(({ data }) => resolve(data))
-        .catch(
-          ({
-            response: {
-              data,
-              data: { message },
-            },
-          }) => {
-            ReactGA.exception({ description: message });
-            console.log(data);
-            getAxiosAddNotif()({
-              id: Math.random().toString(10),
-              children: <p>{message}</p>,
-              className: `is-danger`,
-            });
-            reject();
-          }
-        );
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
     }),
   cancelJob: (jobId) =>
     new Promise((resolve, reject) => {
@@ -184,23 +147,10 @@ const topAnat = {
           console.log(data);
           resolve(data);
         })
-        .catch(
-          ({
-            response: {
-              data,
-              data: { message },
-            },
-          }) => {
-            ReactGA.exception({ description: message });
-            console.log(data);
-            getAxiosAddNotif()({
-              id: Math.random().toString(10),
-              children: <p>{message}</p>,
-              className: `is-danger`,
-            });
-            reject();
-          }
-        );
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
     }),
   getResults: (searchId) =>
     new Promise((resolve, reject) => {
@@ -221,23 +171,10 @@ const topAnat = {
           }),
         })
         .then(({ data }) => resolve(data))
-        .catch(
-          ({
-            response: {
-              data,
-              data: { message },
-            },
-          }) => {
-            ReactGA.exception({ description: message });
-            console.log(data);
-            getAxiosAddNotif()({
-              id: Math.random().toString(10),
-              children: <p>{message}</p>,
-              className: `is-danger`,
-            });
-            reject();
-          }
-        );
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
     }),
 };
 

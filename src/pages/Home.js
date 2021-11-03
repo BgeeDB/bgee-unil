@@ -28,7 +28,7 @@ const Home = () => {
     []
   );
   React.useEffect(() => {
-    api.home.speciesList().then((resp) => {
+    api.search.species.list().then((resp) => {
       if (resp.code === 200) {
         setSpeciesList(resp.data.species);
       } else {

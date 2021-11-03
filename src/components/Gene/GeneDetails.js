@@ -155,7 +155,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
                     .then((res) => {
                       setData(res.data);
                     })
-                    .catch((err) => setData())
+                    .catch(() => setData())
                     .finally(() => setIsLoading(false));
                 }}
               >
@@ -233,7 +233,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
     [isLoading, cFields]
   );
   const onRenderCell = React.useCallback(
-    ({ cell, key, keyRow }, defaultRender) => {
+    ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
           return (
