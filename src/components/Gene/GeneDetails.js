@@ -432,11 +432,17 @@ const GeneExpression = ({ geneId, speciesId }) => {
                     (d, key) => (
                       <li key={key}>
                         {`${d.dataType} data: `}
-                        {d.sources.map((s, sKey) => (
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
-                        ))}
+                        {d.sources.map((s, sKey) =>
+                          /bgee\.org/gi.test(s.baseUrl) ? (
+                            <a key={sKey} href={s.baseUrl}>
+                              {s.name}
+                            </a>
+                          ) : (
+                            <LinkExternal key={sKey} to={s.baseUrl}>
+                              {s.name}
+                            </LinkExternal>
+                          )
+                        )}
                       </li>
                     )
                   )}
@@ -452,9 +458,15 @@ const GeneExpression = ({ geneId, speciesId }) => {
                         if (sKey !== 0)
                           acc.push(<span key={`comma-${sKey}`}>, </span>);
                         acc.push(
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
+                          /bgee\.org/gi.test(s.baseUrl) ? (
+                            <a key={sKey} href={s.baseUrl}>
+                              {s.name}
+                            </a>
+                          ) : (
+                            <LinkExternal key={sKey} to={s.baseUrl}>
+                              {s.name}
+                            </LinkExternal>
+                          )
                         );
                         return acc;
                       }, [])}
