@@ -74,7 +74,7 @@ const CUSTOM_FIELDS = [
     text: 'Strain',
   },
 ];
-const GeneExpression = ({ geneId, speciesId }) => {
+const GeneExpression = ({ geneId, speciesId, id }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
