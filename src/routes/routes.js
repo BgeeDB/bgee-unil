@@ -21,7 +21,7 @@ import AnnotationsFile from '../static/resources/annotations';
 import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
-import GtexFile from '../static/support/gtex';
+import GtexFile from '../markdown/support/gtex.md';
 import TopAnatFile from '../static/support/topAnat';
 import GeneExpressionCallsSupport from '../pages/support/GeneExpressionCalls';
 import FaqFile from '../static/support/faq';
