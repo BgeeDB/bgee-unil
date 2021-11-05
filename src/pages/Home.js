@@ -15,6 +15,7 @@ import HomeNewsList from '../components/Home/HomeNewsList';
 import api from '../api';
 import { ModalContext } from '../contexts/ModalContext';
 import HomeSpeciesModal from '../components/Modal/HomeSpeciesModal';
+import LinkExternal from '../components/LinkExternal';
 
 const Home = () => {
   const { showModal, hideModal } = React.useContext(ModalContext);
@@ -35,6 +36,9 @@ const Home = () => {
         setSpeciesList([]);
       }
     });
+    return () => {
+      if (hideModal) hideModal();
+    };
   }, []);
 
   return (
@@ -169,13 +173,9 @@ const Home = () => {
                 <p className="is-size-7 archived-link">
                   View archive sites:
                   {config.archivedVersion.map((archived) => (
-                    <a
-                      key={archived.version}
-                      className="external-link"
-                      href={archived.url}
-                    >
+                    <LinkExternal key={archived.version} to={archived.url}>
                       {`version ${archived.version}`}
-                    </a>
+                    </LinkExternal>
                   ))}
                 </p>
               </Bulma.C>
