@@ -111,12 +111,9 @@ const Home = () => {
                 from multiple data types (bulk RNA-Seq, single-cell RNA-Seq,
                 Affymetrix, in situ hybridization, and EST data) and from
                 multiple data sets (including{' '}
-                <a
-                  href="https://www.gtexportal.org/home/"
-                  className="external-link"
-                >
+                <LinkExternal to="https://www.gtexportal.org/home/">
                   GTEx data
-                </a>
+                </LinkExternal>
                 ).
               </div>
             </Bulma.C>
