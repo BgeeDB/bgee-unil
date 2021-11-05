@@ -90,9 +90,9 @@ const SpeciesList = () => {
   return !data ? null : (
     <>
       <div className="content has-text-centered">
-        <Bulma.Title
-          size={4}
-        >{`Species: ${data.species.genus} ${data.species.speciesName} (${data.species.name})`}</Bulma.Title>
+        <Bulma.Title size={4}>{`Species: ${data.species.genus} ${
+          data.species.speciesName
+        }${data.species.name ? ` (${data.species.name})` : ''}`}</Bulma.Title>
       </div>
       <div>
         <Bulma.Title size={5} className="gradient-underline">
