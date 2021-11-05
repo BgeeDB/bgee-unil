@@ -137,7 +137,7 @@ const Home = () => {
                 Species with data in Bgee
               </Bulma.Card.Header.Title>
             </Bulma.Card.Header>
-            <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
+            <Bulma.Card.Body className="species">
               <div className="content">
                 <div className="grid-species">
                   {speciesList.map((s) => (

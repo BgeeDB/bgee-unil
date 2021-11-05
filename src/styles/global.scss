@@ -246,7 +246,7 @@ div.card.custom-card {
 div.card.species {
   cursor: pointer;
   padding: 0;
-  width: 126px;
+  width: 100px;
   &:hover {
     box-shadow: 0 0 1em -0.125em rgba(226, 1, 27, .9)
   }
@@ -261,8 +261,22 @@ div.card.species {
   grid-row-gap: 10px;
   grid-column-gap: 5px;
   .center-in-grid {
+    height: 100%;
     align-self: center;
     justify-self: center;
+    & > .card {
+      height: 100%;
+      &.species {
+        display: flex;
+        flex-direction: column;
+        .card-content {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
   }
 }
 
@@ -600,4 +614,7 @@ label.label.not-default,span.not-default {
 
 ion-icon {
   pointer-events: none;
+}
+.card-content.species {
+  padding: 1rem;
 }

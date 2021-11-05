@@ -7,9 +7,9 @@ const CardSpecies = ({ genus, speciesName, name, id }) => (
       className="auto-center-100"
       src={`/static/img/species/${id}_light.jpg`}
       alt={`species ${genus} ${speciesName}- ${name}`}
-      fallback="https://via.placeholder.com/126"
-      height={126}
-      width={126}
+      fallback="https://via.placeholder.com/100"
+      height={100}
+      width={100}
     />
     <Bulma.Card.Body className="py-2 px-1">
       <Bulma.Media>
