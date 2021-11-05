@@ -310,7 +310,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
               <span
                 className={classnames('tag is-size-7', {
                   'is-primary': cell.dataTypesWithData.find(
-                    (d) => d === '"Affymetrix"'
+                    (d) => d === 'Affymetrix'
                   ),
                 })}
               >
