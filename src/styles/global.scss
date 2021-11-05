@@ -597,6 +597,9 @@ label.label.not-default,span.not-default {
 }
 
 @media only screen and (max-width: $tablet) {
+  .section {
+    padding: 1rem 0rem;
+  }
   #helpers-top-anat {
     flex-direction: column;
     & > *:not(:first-child) {
@@ -617,4 +620,8 @@ ion-icon {
 }
 .card-content.species {
   padding: 1rem;
+}
+
+.section {
+  padding: 1rem 3rem;
 }
