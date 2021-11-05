@@ -56,13 +56,13 @@ const Home = () => {
               height={100}
             />
           </div>
-          <p className="subtitle has-text-uppercase has-text-centered mb-6">
+          <p className="subtitle has-text-uppercase has-text-centered has-text-white mb-6">
             {i18n.t('global.description')}
           </p>
           <div className="field is-grouped is-justify-content-center">
             <p className="control">
               <Link
-                className="button is-primary is-outlined"
+                className="button is-primary"
                 to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
               >
                 <Bulma.IonIcon name="list-outline" />
@@ -70,19 +70,13 @@ const Home = () => {
               </Link>
             </p>
             <p className="control">
-              <Link
-                className="button is-primary is-outlined"
-                to={PATHS.ANALYSIS.TOP_ANAT}
-              >
+              <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
                 <Bulma.IonIcon name="stats-chart-outline" />
                 <span>{i18n.t('home.exp-enrichment-analysis')}</span>
               </Link>
             </p>
             <p className="control">
-              <Link
-                className="button is-primary is-outlined"
-                to={PATHS.SEARCH.GENE}
-              >
+              <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
                 <Bulma.IonIcon name="search-outline" />
                 <span>{i18n.t('home.gene-search')}</span>
               </Link>
@@ -161,7 +155,30 @@ const Home = () => {
           <Bulma.Card className="mt-4">
             <HomeNewsList />
           </Bulma.Card>
-          <Bulma.Columns className="mt-4">
+          <div className="my-6 field is-grouped is-justify-content-center">
+            <p className="control">
+              <Link
+                className="button is-primary"
+                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+              >
+                <Bulma.IonIcon name="list-outline" />
+                <span>{i18n.t('home.exp-comparison')}</span>
+              </Link>
+            </p>
+            <p className="control">
+              <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
+                <Bulma.IonIcon name="stats-chart-outline" />
+                <span>{i18n.t('home.exp-enrichment-analysis')}</span>
+              </Link>
+            </p>
+            <p className="control">
+              <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
+                <Bulma.IonIcon name="search-outline" />
+                <span>{i18n.t('home.gene-search')}</span>
+              </Link>
+            </p>
+          </div>
+          <Bulma.Columns>
             <Bulma.C size={config.archive ? 12 : 9}>
               <CreativeCommons />
             </Bulma.C>
