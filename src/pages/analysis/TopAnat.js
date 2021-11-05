@@ -175,7 +175,7 @@ const TopAnat = () => {
             list: res.data.fg_list,
             message: `${rp.fg_list.length} IDs provided, ${
               res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
-            } unique gene${isPlural(
+            } unique ${isPlural(
               'gene',
               res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
             )} found in ${
@@ -263,7 +263,7 @@ const TopAnat = () => {
                 err.data.data.fg_list.geneCount[
                   err.data.data.fg_list.selectedSpecies
                 ]
-              } unique gene${isPlural(
+              } unique ${isPlural(
                 'gene',
                 err.data.data.fg_list.geneCount[
                   err.data.data.fg_list.selectedSpecies
