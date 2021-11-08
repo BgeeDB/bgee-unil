@@ -35,11 +35,6 @@ const columnsGenerator = (cFields, data) => () => {
       text: 'Anatomical entity',
     });
   }
-  if (data.requestedConditionParameters.find((r) => r === 'Cell type'))
-    c.push({
-      key: 'cellType',
-      text: 'Cell type',
-    });
   if (data.requestedConditionParameters.find((r) => r === 'Dev. stage'))
     c.push({
       key: 'devStage',
@@ -77,7 +72,7 @@ const columnsGenerator = (cFields, data) => () => {
   ];
   return c;
 };
-const GeneExpression = ({ geneId, speciesId, id }) => {
+const GeneExpression = ({ geneId, speciesId }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
@@ -144,7 +139,7 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
           </Bulma.C>
           <Bulma.C>
             <span>
-              <b>ES</b> EST
+              <b>E</b> EST
             </span>
           </Bulma.C>
           <Bulma.C>
@@ -201,33 +196,41 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
     ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
+          console.log(cell.condition);
+          const cellInfo = [
+            <LinkExternal
+              to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
+                ':',
+                '_'
+              )}`}
+              className="mr-1"
+            >
+              {cell.condition.anatEntity.id}
+            </LinkExternal>,
+          ];
+          if (cell.condition.cellType) {
+            cellInfo.push(<i> in </i>);
+            cellInfo.push(
+              <LinkExternal
+                to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
+                  ':',
+                  '_'
+                )}`}
+                className="mr-1"
+              >
+                {cell.condition.cellType.id}
+              </LinkExternal>
+            );
+          }
+
+          if (cell.condition.cellType) {
+            cellInfo.push(cell.condition.cellType.name);
+            cellInfo.push(<i> in </i>);
+          }
+          cellInfo.push(cell.condition.anatEntity.name);
           return (
             <>
-              <span className="is-size-7">
-                <LinkExternal
-                  to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
-                    ':',
-                    '_'
-                  )}`}
-                  className="mr-1"
-                >
-                  {cell.condition.anatEntity.id}
-                </LinkExternal>
-                {cell.condition.anatEntity.name}
-              </span>
-            </>
-          );
-        case 'cellType':
-          return (
-            <>
-              {cell.condition.cellType && (
-                <span className="is-size-7">
-                  <LinkExternal className="mr-1">
-                    {cell.condition.cellType?.id}
-                  </LinkExternal>
-                  {cell.condition.cellType?.name}
-                </span>
-              )}
+              <span className="is-size-7">{cellInfo}</span>
             </>
           );
         case 'devStage':
