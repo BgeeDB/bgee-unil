@@ -12,7 +12,7 @@ import api from '../../api';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
-  const { showModal } = React.useContext(ModalContext);
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [speciesList, setSpeciesList] = React.useState([]);
   const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
@@ -28,7 +28,7 @@ const ProcessedExpressionValues = () => {
   React.useEffect(() => {
     if (speciesID) {
       const species = speciesList.find((s) => s.id.toString() === speciesID);
-      console.log(species);
+      console.log('SPECIES', species);
       if (species) {
         const files = {
           affymetrixData: species.downloadFiles.find(
@@ -50,7 +50,7 @@ const ProcessedExpressionValues = () => {
             (d) => d.category === 'full_length_data'
           ),
         };
-        console.log(files);
+
         showModal(
           <DlProcessedExpressionValuesSpeciesModal
             species={species}
@@ -75,6 +75,9 @@ const ProcessedExpressionValues = () => {
       );
       setKwList(res.data.speciesIdToKeywords);
     });
+    return () => {
+      hideModal();
+    };
   }, []);
 
   return (

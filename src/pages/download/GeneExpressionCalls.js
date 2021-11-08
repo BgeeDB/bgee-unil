@@ -13,7 +13,7 @@ import CreativeCommons from '../../components/CreativeCommons';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
-  const { showModal } = React.useContext(ModalContext);
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [singleSpeciesList, setSingleSpeciesList] = React.useState([]);
   const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
@@ -32,11 +32,13 @@ const GeneExpressionCalls = () => {
       const species = singleSpeciesList.find(
         (s) => s.id.toString() === speciesID
       );
-      showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
-        onClose: () => () => {
-          history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
-        },
-      });
+      if (species) {
+        showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
+          onClose: () => () => {
+            history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
+          },
+        });
+      }
     }
   }, [speciesID, singleSpeciesList]);
   React.useEffect(() => {
@@ -49,6 +51,9 @@ const GeneExpressionCalls = () => {
       );
       setKwList(res.data.speciesIdToKeywords);
     });
+    return () => {
+      hideModal();
+    };
   }, []);
 
   return (
