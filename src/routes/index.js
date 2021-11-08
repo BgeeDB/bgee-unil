@@ -8,12 +8,14 @@ import i18n from '../i18n';
 import { ModalProvider } from '../contexts/ModalContext';
 import { NotificationProvider } from '../contexts/NotificationsContext';
 import StaticPage from '../pages/StaticPage';
+import genericHelmetProvider from '../helpers/genericHelmetProvider';
 
 const Router = () => (
   <BrowserRouter>
     <ModalProvider>
       <NotificationProvider>
         <Layout>
+          <genericHelmetProvider />
           <Switch>
             <Route
               exact
