@@ -31,33 +31,6 @@ Hero.Header = HeroHeader;
 Hero.Body = HeroBody;
 Hero.Footer = HeroFooter;
 
-// Hero.propTypes = {
-//   color: PropTypes.oneOfType([
-//     PropTypes.oneOf([
-//       'primary',
-//       'link',
-//       'info',
-//       'success',
-//       'warning',
-//       'danger',
-//       'dark',
-//       'text',
-//     ]),
-//     PropTypes.string,
-//   ]),
-//   gradient: PropTypes.bool,
-//   size: PropTypes.oneOfType([
-//     PropTypes.oneOf(['small', 'medium', 'large', 'halfheight', 'fullheight']),
-//     PropTypes.string,
-//   ]),
-//   hasNavbar: PropTypes.bool,
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 Hero.defaultProps = {
   renderAs: 'section',
 };

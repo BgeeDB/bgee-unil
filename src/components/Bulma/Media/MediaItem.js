@@ -16,10 +16,6 @@ const MediaItem = ({ children, className, align, ...props }) => {
   );
 };
 
-// MediaItem.propTypes = {
-//   align: PropTypes.oneOf(['center', 'right', 'left']),
-// };
-
 MediaItem.defaultProps = {
   align: 'center',
 };

@@ -6,6 +6,7 @@ import readableFileSize from '../../helpers/readableFileSize';
 import { ModalContext } from '../../contexts/ModalContext';
 import PATHS from '../../routes/paths';
 import GaEvent from '../GaEvent/GaEvent';
+import SpeciesImageDownloadModal from './SpeciesImageDownloadModal';
 
 const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
@@ -25,7 +26,6 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
           <a
             className="internal-link"
             onClick={() => {
-              // hideModal();
               history.push(
                 `${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`
               );
@@ -34,19 +34,7 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
             See gene expression calls <ion-icon name="arrow-redo-outline" />
           </a>
         </Bulma.Media.Item>
-        <Bulma.Media.Item align="right">
-          <div>
-            <figure className="image is-128x128 rounded-border">
-              {species && (
-                <Bulma.Image
-                  src={`/static/img/species/${species.id}_light.jpg`}
-                  alt={`${species.genus} ${species.speciesName} (${species.name})`}
-                  fallback="https://via.placeholder.com/128"
-                />
-              )}
-            </figure>
-          </div>
-        </Bulma.Media.Item>
+        <SpeciesImageDownloadModal species={species} />
       </Bulma.Media>
       <div className="mt-2">
         <div>

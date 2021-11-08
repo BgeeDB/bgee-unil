@@ -25,7 +25,12 @@ const Layout = ({ children }) => {
     [loc]
   );
 
-  // todo improve, it's trigger when query is pass as parameter
+  React.useEffect(() => {
+    if (loc.hash !== '') {
+      console.log(loc.hash);
+      document.getElementById(loc.hash.replace('#', ''))?.scrollIntoView();
+    }
+  }, [loc.hash]);
   React.useEffect(
     () =>
       listen((location) => {

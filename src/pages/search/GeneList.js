@@ -167,7 +167,7 @@ const GeneList = () => {
             data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}
-            onRenderCell={onRenderCell(search)}
+            onRenderCell={onRenderCell()}
             mappingObj={objMapping}
           />
         </div>

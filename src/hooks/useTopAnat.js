@@ -2,17 +2,17 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../api';
 import useForm from './useForm';
-import array from '../helpers/array';
+import array from '../helpers/arrayHelper';
 import PATHS from '../routes/paths';
 import { NotificationContext } from '../contexts/NotificationsContext';
 import {
   TOP_ANAT_DEFAULT_RP,
   TOP_ANAT_FORM_CONFIG,
 } from '../helpers/constants/topAnat';
+import random from '../helpers/random';
 
 let timeoutFg;
 let timeoutBg;
-// todo handle timeout + api cancel
 
 export const TOP_ANAT_FLOW = {
   LOADING: 'loading',
@@ -27,7 +27,6 @@ export const TOP_ANAT_FLOW = {
   GOT_RESULTS: 'gotResults',
 };
 
-// todo improve with context usage
 const useTopAnat = (flowState, setFlowState) => {
   const { addNotification } = React.useContext(NotificationContext);
   const [requestParameters, setRP] = React.useState(TOP_ANAT_DEFAULT_RP);
@@ -111,7 +110,7 @@ const useTopAnat = (flowState, setFlowState) => {
         timeoutBg = setTimeout(
           () =>
             addNotification({
-              id: Math.random().toString(10),
+              id: random().toString(),
               children: (
                 <p>Gene list contains genes not found in background genes.</p>
               ),
@@ -137,7 +136,7 @@ const useTopAnat = (flowState, setFlowState) => {
                 requestParameters.fg.list.selectedSpecies
               ) {
                 addNotification({
-                  id: Math.random().toString(10),
+                  id: random().toString(),
                   children: (
                     <p>
                       Foreground and background species differ. You can either
@@ -165,7 +164,7 @@ const useTopAnat = (flowState, setFlowState) => {
     (id) => (e) => {
       if (!requestParameters) {
         addNotification({
-          id: Math.random().toString(10),
+          id: random().toString(),
           children: <p>No species detected from gene list</p>,
           className: `is-warning`,
         });
@@ -201,7 +200,7 @@ const useTopAnat = (flowState, setFlowState) => {
           .cancelJob(jobId)
           .then((res) => {
             addNotification({
-              id: Math.random().toString(10),
+              id: random().toString(),
               children: res.message,
               className: 'is-success',
             });

@@ -13,15 +13,6 @@ const TagGroup = ({ children, className, hasAddons, ...props }) => (
   </Element>
 );
 
-// TagGroup.propTypes = {
-//   hasAddons: PropTypes.bool,
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 TagGroup.defaultProps = {
   renderAs: 'span',
 };

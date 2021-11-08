@@ -8,7 +8,7 @@ import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 
-const SpeciesList = () => {
+const Species = () => {
   const [data, setData] = React.useState();
 
   const { id } = useParams();
@@ -346,4 +346,4 @@ const SpeciesList = () => {
   );
 };
 
-export default SpeciesList;
+export default Species;

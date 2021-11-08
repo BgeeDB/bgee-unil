@@ -24,8 +24,9 @@ const Table = ({
         let newSortOpt;
         if (!sortOption || sortOption.key !== key) {
           newSortOpt = { key, sort: 'ascending' };
-        } else if (sortOption.sort === 'ascending')
+        } else if (sortOption.sort === 'ascending') {
           newSortOpt = { key, sort: 'descending' };
+        }
         setSortOption(newSortOpt);
         onSort(newSortOpt);
       }

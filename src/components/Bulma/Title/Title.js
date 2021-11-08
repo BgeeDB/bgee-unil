@@ -31,25 +31,6 @@ const Title = ({
   </Element>
 );
 
-/*
-Title.propTypes = {
-  size: PropTypes.oneOfType([
-    PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  weight: PropTypes.oneOf(['light', 'normal', 'semibold', 'bold']),
-  subtitle: PropTypes.bool,
-  heading: PropTypes.bool,
-  spaced: PropTypes.bool,
-  renderAs: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-    PropTypes.object,
-  ]),
-};
- */
-
 Title.defaultProps = {
   renderAs: 'h1',
 };

@@ -16,21 +16,4 @@ const Notification = ({ className, color, light, ...props }) => (
   />
 );
 
-// Notification.propTypes = {
-//   color: PropTypes.oneOfType([
-//     PropTypes.oneOf([
-//       'primary',
-//       'link',
-//       'info',
-//       'success',
-//       'warning',
-//       'danger',
-//       'dark',
-//       'text',
-//     ]),
-//     PropTypes.string,
-//   ]),
-//   light: PropTypes.bool,
-// };
-
 export default Notification;

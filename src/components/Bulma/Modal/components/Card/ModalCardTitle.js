@@ -8,14 +8,6 @@ const ModalCardTitle = ({ children, className, ...props }) => (
   </Element>
 );
 
-// ModalCardTitle.propTypes = {
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 ModalCardTitle.defaultProps = {
   renderAs: 'p',
 };

@@ -7,6 +7,7 @@ import copyToClipboard from '../../../helpers/copyToClipboard';
 import PATHS from '../../../routes/paths';
 import { NotificationContext } from '../../../contexts/NotificationsContext';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
+import random from '../../../helpers/random';
 
 const Footer = () => {
   const { addNotification } = React.useContext(NotificationContext);
@@ -48,7 +49,7 @@ const Footer = () => {
             onClick={() => {
               copyToClipboard(permanentLink);
               addNotification({
-                id: Math.random().toString(10),
+                id: random.toString(),
                 children: (
                   <>
                     Copied link <u>{permanentLink}</u>

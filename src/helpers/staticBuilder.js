@@ -4,7 +4,7 @@
 /* eslint-disable import/no-cycle */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import arrayHelper from './array';
+import arrayHelper from './arrayHelper';
 import Accordion from '../components/Accordion';
 import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';

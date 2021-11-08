@@ -1,4 +1,4 @@
-const docs = [
+const annotations = [
   {
     type: 'title',
     content: 'Annotation resources',
@@ -112,4 +112,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default annotations;
