@@ -1,4 +1,4 @@
-const docs = [
+const source = [
   {
     type: 'title',
     content: 'Source code',
@@ -92,4 +92,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default source;

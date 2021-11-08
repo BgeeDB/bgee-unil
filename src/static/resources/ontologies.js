@@ -1,4 +1,4 @@
-const docs = [
+const ontologies = [
   {
     type: 'title',
     content: 'Ontology resources',
@@ -174,4 +174,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default ontologies;

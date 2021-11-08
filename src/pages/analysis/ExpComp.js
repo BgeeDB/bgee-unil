@@ -22,7 +22,6 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
     case 0:
     case 1:
     case 2:
-      // return defaultRender(cell, key);
       return defaultRender(cell, key);
     case 8:
       return (
@@ -68,37 +67,35 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
     </Bulma.C>
   </Bulma.Columns>
 );
+
+const reduceGeneFct = (regExp) => (a, c) =>
+  a ||
+  Boolean(regExp.test(c.content[0].text)) ||
+  Boolean(regExp.test(c.content[1].content));
+const reduceSpeciesFct = (regExp) => (a, c) =>
+  a || Boolean(regExp.test(c.text));
 const onFilter = (search) => (element) => {
   const regExp = new RegExp(search, 'i');
   return (
     Boolean(regExp.test(element[KEYS['anat-entities']][0].text)) ||
     element[KEYS['gene-present']].elements.reduce(
-      (a, c) =>
-        a ||
-        Boolean(regExp.test(c.content[0].text)) ||
-        Boolean(regExp.test(c.content[1].content)),
+      reduceGeneFct(regExp),
       false
     ) ||
     element[KEYS['gene-absent']].elements.reduce(
-      (a, c) =>
-        a ||
-        Boolean(regExp.test(c.content[0].text)) ||
-        Boolean(regExp.test(c.content[1].content)),
+      reduceGeneFct(regExp),
       false
     ) ||
     element[KEYS['gene-no-data']].elements.reduce(
-      (a, c) =>
-        a ||
-        Boolean(regExp.test(c.content[0].text)) ||
-        Boolean(regExp.test(c.content[1].content)),
+      reduceGeneFct(regExp),
       false
     ) ||
     element[KEYS['species-present']].elements.reduce(
-      (a, c) => a || Boolean(regExp.test(c.text)),
+      reduceSpeciesFct(regExp),
       false
     ) ||
     element[KEYS['species-absent']].elements.reduce(
-      (a, c) => a || Boolean(regExp.test(c.text)),
+      reduceSpeciesFct(regExp),
       false
     )
   );

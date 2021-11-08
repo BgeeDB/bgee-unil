@@ -10,12 +10,4 @@ HeroBody.defaultProps = {
   renderAs: 'div',
 };
 
-// HeroBody.propTypes = {
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 export default HeroBody;

@@ -2,6 +2,7 @@ import ReactGA from 'react-ga';
 import React from 'react';
 import axios from 'axios';
 import { getAxiosAddNotif } from './prod/constant';
+import random from '../helpers/random';
 
 const errorHandler = (error) => {
   if (axios.isCancel(error)) return;
@@ -11,14 +12,16 @@ const errorHandler = (error) => {
         data: { data },
       },
     } = error;
+    const incorrectParameters = data.incorrectParameters
+      ? `_${data.incorrectParameters}`
+      : '';
+    const invalidKey = data.invalidKey ? `_${data.invalidKey}` : '';
     // response falls out of the range of 2xx
     ReactGA.exception({
-      description: `${error.response.status}_${data.exceptionType}${
-        data.incorrectParameters ? `_${data.incorrectParameters}` : ''
-      }${data.invalidKey ? `_${data.invalidKey}` : ''}`,
+      description: `${error.response.status}_${data.exceptionType}${incorrectParameters}${invalidKey}`,
     });
     getAxiosAddNotif()({
-      id: Math.random().toString(10),
+      id: random.toString(),
       children: <p>{error.message}</p>,
       className: `is-danger`,
     });

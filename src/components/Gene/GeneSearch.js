@@ -27,7 +27,6 @@ const GeneSearch = ({ classNames, children }) => {
 
     return autocompleteList.map((val, index) => {
       if (search) {
-        // todo improve split
         const firstIndex = val.indexOf(search);
         if (firstIndex === 0) {
           redPart = val.substring(firstIndex, search.length);
