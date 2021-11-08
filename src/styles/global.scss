@@ -57,7 +57,9 @@ $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 //$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
-
+.navbar-dropdown.open {
+  display: block;
+}
 @media only screen and (max-width: $desktop) {
   $navbar-background-color: $dark-bg-color;
   $navbar-item-color: $dark-color;
