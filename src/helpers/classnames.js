@@ -9,11 +9,7 @@ const hasOwn = {}.hasOwnProperty;
 const classnames = (...args) => {
   const classes = [];
 
-  for (let i = 0; i < args.length; i += 1) {
-    const arg = args[i];
-    // eslint-disable-next-line no-continue
-    if (!arg) continue;
-
+  args.forEach((arg) => {
     const argType = typeof arg;
 
     if (argType === 'string' || argType === 'number') {
@@ -38,7 +34,7 @@ const classnames = (...args) => {
         classes.push(arg.toString());
       }
     }
-  }
+  });
 
   return classes.join(' ');
 };
