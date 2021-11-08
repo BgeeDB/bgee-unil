@@ -16,6 +16,7 @@ import api from '../api';
 import { ModalContext } from '../contexts/ModalContext';
 import HomeSpeciesModal from '../components/Modal/HomeSpeciesModal';
 import LinkExternal from '../components/LinkExternal';
+import classnames from '../helpers/classnames';
 
 const Home = () => {
   const { showModal, hideModal } = React.useContext(ModalContext);
@@ -59,29 +60,7 @@ const Home = () => {
           <p className="subtitle has-text-uppercase has-text-centered has-text-white mb-6">
             {i18n.t('global.description')}
           </p>
-          <div className="field is-grouped is-justify-content-center">
-            <p className="control">
-              <Link
-                className="button is-primary"
-                to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-              >
-                <Bulma.IonIcon name="list-outline" />
-                <span>{i18n.t('home.exp-comparison')}</span>
-              </Link>
-            </p>
-            <p className="control">
-              <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
-                <Bulma.IonIcon name="stats-chart-outline" />
-                <span>{i18n.t('home.exp-enrichment-analysis')}</span>
-              </Link>
-            </p>
-            <p className="control">
-              <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
-                <Bulma.IonIcon name="search-outline" />
-                <span>{i18n.t('home.gene-search')}</span>
-              </Link>
-            </p>
-          </div>
+          <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
       <Bulma.Section>
@@ -147,29 +126,7 @@ const Home = () => {
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
-        <div className="my-6 field is-grouped is-justify-content-center">
-          <p className="control">
-            <Link
-              className="button is-primary"
-              to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-            >
-              <Bulma.IonIcon name="list-outline" />
-              <span>{i18n.t('home.exp-comparison')}</span>
-            </Link>
-          </p>
-          <p className="control">
-            <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
-              <Bulma.IonIcon name="stats-chart-outline" />
-              <span>{i18n.t('home.exp-enrichment-analysis')}</span>
-            </Link>
-          </p>
-          <p className="control">
-            <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
-              <Bulma.IonIcon name="search-outline" />
-              <span>{i18n.t('home.gene-search')}</span>
-            </Link>
-          </p>
-        </div>
+        <NavButtons className="my-6 " />
         <Bulma.Columns>
           <Bulma.C size={config.archive ? 12 : 9}>
             <CreativeCommons />
@@ -191,5 +148,35 @@ const Home = () => {
     </>
   );
 };
+const NavButtons = ({ className }) => (
+  <div
+    className={classnames(
+      'field is-grouped is-justify-content-center',
+      className
+    )}
+  >
+    <p className="control">
+      <Link
+        className="button is-primary"
+        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+      >
+        <Bulma.IonIcon name="list-outline" />
+        <span>{i18n.t('home.exp-comparison')}</span>
+      </Link>
+    </p>
+    <p className="control">
+      <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
+        <Bulma.IonIcon name="stats-chart-outline" />
+        <span>{i18n.t('home.exp-enrichment-analysis')}</span>
+      </Link>
+    </p>
+    <p className="control">
+      <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
+        <Bulma.IonIcon name="search-outline" />
+        <span>{i18n.t('home.gene-search')}</span>
+      </Link>
+    </p>
+  </div>
+);
 
 export default Home;
