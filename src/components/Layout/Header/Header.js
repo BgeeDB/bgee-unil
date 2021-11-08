@@ -211,7 +211,7 @@ const Header = () => {
 
   const [hamburgerActive, setHamburgerActive] = React.useState(false);
   React.useEffect(() => {
-    const closeMenu = (e) => {
+    const closeMenu = () => {
       setOpenMenuId(false);
     };
     document.getElementById('root').addEventListener('click', closeMenu);
