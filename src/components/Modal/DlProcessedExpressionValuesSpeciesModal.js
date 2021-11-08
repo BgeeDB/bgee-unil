@@ -63,7 +63,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.rnaSeqAnnot.path}
                   >
                     <a className="button" href={files.rnaSeqAnnot.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download experiments/libraries info
                         {` (${readableFileSize(files.rnaSeqAnnot.size)})`}
                       </span>
@@ -79,7 +80,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.rnaSeqData.path}
                   >
                     <a className="button" href={files.rnaSeqData.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download read count, TPMs and FPKMs
                         {` (${readableFileSize(files.rnaSeqData.size)})`}
                       </span>
@@ -115,7 +117,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.affymetrixAnnot.path}
                   >
                     <a className="button " href={files.affymetrixAnnot.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download experiments/chips info
                         {` (${readableFileSize(files.rnaSeqData.size)})`}
                       </span>
@@ -131,7 +134,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.affymetrixData.path}
                   >
                     <a className="button t" href={files.affymetrixData.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download signal intensities
                         {` (${readableFileSize(files.affymetrixData.size)})`}
                       </span>
@@ -167,7 +171,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.fullLengthAnnot.path}
                   >
                     <a className="button" href={files.fullLengthAnnot.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download experiments/libraries info
                         {` (${readableFileSize(files.fullLengthAnnot.size)})`}
                       </span>
@@ -183,7 +188,8 @@ const DlProcessedExpressionValuesSpeciesModal = ({ species, files }) => {
                     label={files.fullLengthData.path}
                   >
                     <a className="button" href={files.fullLengthData.path}>
-                      <span className="is-size-7">
+                      <ion-icon name="download-outline" />
+                      <span className="is-size-7 ml-2">
                         Download read count, TPMs and FPKMs
                         {` (${readableFileSize(files.fullLengthData.size)})`}
                       </span>
