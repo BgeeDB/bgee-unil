@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useAnchorAtMount from '../../hooks/usAnchorAtMount';
-import GeneExpressionCallsTabs from '../../components/GeneExpressionCalls/GeneExpressionCallsTabs';
+import useAnchorAtMount from '../../hooks/useAnchorAtMount';
 import PATHS from '../../routes/paths';
 import GoTop from '../../components/GoTop';
 
@@ -28,7 +27,6 @@ const GeneExpressionCalls = () => {
         </Link>
         .
       </p>
-      <GeneExpressionCallsTabs />
       <GoTop />
     </>
   );

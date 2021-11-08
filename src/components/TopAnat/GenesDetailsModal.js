@@ -6,7 +6,6 @@ const GenesDetailsModal = ({ data }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
   const { selectedSpecies } = data;
 
-  // todo notify error 'No species associated to your gene list. Please check your data.'
   if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
   return (
     <div className="content">
@@ -55,9 +54,7 @@ const GenesDetailsModal = ({ data }) => {
 
           <ul className="unordered">
             {data.notInSelectedSpeciesGeneIds.slice(0, 10).map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
+              <TextGene key={v} gene={v} />
             ))}
             {data.notInSelectedSpeciesGeneIds.length > 10 && (
               <li>
@@ -73,9 +70,7 @@ const GenesDetailsModal = ({ data }) => {
           <p>IDs not identified:</p>
           <ul className="unordered">
             {data.undeterminedGeneIds.slice(0, 10).map((v) => (
-              <li key={v}>
-                <p>{v}</p>
-              </li>
+              <TextGene key={v} gene={v} />
             ))}
             {data.undeterminedGeneIds.length > 10 && (
               <li>
@@ -89,4 +84,9 @@ const GenesDetailsModal = ({ data }) => {
   );
 };
 
+const TextGene = ({ gene }) => (
+  <li>
+    <p>{gene}</p>
+  </li>
+);
 export default GenesDetailsModal;

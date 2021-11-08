@@ -11,14 +11,6 @@ const Media = ({ children, className, ...props }) => (
 
 Media.Item = MediaItem;
 
-// Media.propTypes = {
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 Media.defaultProps = {
   renderAs: 'article',
 };

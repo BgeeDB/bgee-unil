@@ -6,14 +6,6 @@ const Footer = ({ className, ...props }) => (
   <Element {...props} className={classnames('footer', className)} />
 );
 
-// Footer.propTypes = {
-//   renderAs: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.string,
-//     PropTypes.object,
-//   ]),
-// };
-
 Footer.defaultProps = {
   renderAs: 'footer',
 };

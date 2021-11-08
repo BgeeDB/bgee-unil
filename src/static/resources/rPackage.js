@@ -1,4 +1,4 @@
-const docs = [
+const rPackage = [
   {
     type: 'title',
     content: 'R packages',
@@ -71,4 +71,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default rPackage;

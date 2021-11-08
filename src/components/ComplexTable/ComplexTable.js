@@ -47,10 +47,6 @@ const ComplexTable = ({
     [internalData, pageSize]
   );
 
-  // React.useEffect(() => {
-  //   set()
-  // }, [internalData]);
-
   const pageSizeSelector = React.useMemo(
     () =>
       pagination ? (

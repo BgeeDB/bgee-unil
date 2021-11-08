@@ -12,10 +12,10 @@ import { addTopAnatHistory } from '../../components/TopAnat/TopAnatHistoryModal'
 import TopAnatResult from '../../components/TopAnat/TopAnatResult';
 import TopAnatHead from '../../components/TopAnat/TopAnatHead';
 import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons';
-import isPlural from '../../helpers/isPlural';
 import { getAxiosAddNotif } from '../../api/prod/constant';
+import random from '../../helpers/random';
+import ApiReducer from '../../helpers/ApiReducer';
 
-// todo clean timeout and cancel api call @ event
 let getJobStatusTimeOut;
 
 const TopAnat = () => {
@@ -54,7 +54,7 @@ const TopAnat = () => {
           setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
           getAxiosAddNotif()({
-            id: Math.random().toString(10),
+            id: random.toString(),
             children: (
               <p>
                 The job is undefined. Please contact the administrator and give
@@ -120,7 +120,6 @@ const TopAnat = () => {
               .catch((err) => {
                 console.debug('[ERROR] api.topAnat.autoComplete', err);
               });
-            // foregroundHandler(res.requestParameters.fg_list.join('\n'));
           }
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
         } else {
@@ -149,59 +148,8 @@ const TopAnat = () => {
             .name,
           res.requestParameters.job_title
         );
-        setData((prev) => ({
-          ...prev,
-          genes: rp.fg_list.join('\n'),
-          genesBg: (rp.bg_list || []).join('\n'),
-          email: '',
-          jobDescription: rp.job_title || '',
-          stages: rp.stage_Id || 'all',
-          dataQuality: rp.data_qual,
-          decorrelationType: rp.decorr_type,
-          nodeSize: rp.node_size || '',
-          nbNode: rp.nb_node || '',
-          fdrThreshold: rp.fdr_thr || '',
-          pValueThreshold: rp.p_value_thr || '',
-          rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
-          full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
-          affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
-          inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
-          est: Boolean(rp.data_type.find((f) => f === 'EST')),
-        }));
-        requestParameters.set((prev) => {
-          const curr = JSON.parse(JSON.stringify(prev));
-
-          curr.fg = {
-            list: res.data.fg_list,
-            message: `${rp.fg_list.length} IDs provided, ${
-              res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
-            } unique gene${isPlural(
-              'gene',
-              res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
-            )} found in ${
-              res.data.fg_list.detectedSpecies[res.data.fg_list.selectedSpecies]
-                .name
-            }`,
-          };
-          if (rp.bg_list) curr.customBg = true;
-          if (res.data.bg_list)
-            curr.bg = res.data.bg_list
-              ? {
-                  list: res.data.bg_list,
-                  message: `${rp.bg_list.length} IDs provided, ${
-                    res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies]
-                  } unique ${isPlural(
-                    'gene',
-                    res.data.bg_list.geneCount[res.data.bg_list.selectedSpecies]
-                  )} found in ${
-                    res.data.bg_list.detectedSpecies[
-                      res.data.bg_list.selectedSpecies
-                    ].name
-                  }`,
-                }
-              : null;
-          return curr;
-        });
+        setData(ApiReducer.topAnatForm(rp));
+        requestParameters.set(ApiReducer.topAnatRequestParameters(res, rp));
         setResults({
           analysis: res.data.topAnatResults,
           data: res.data.topAnatResults.reduce(
@@ -217,86 +165,11 @@ const TopAnat = () => {
           err.data.code === 400
         ) {
           const rp = err.data.requestParameters;
-          const formData = {
-            genes: rp.fg_list.join('\n'),
-            genesBg: (rp.bg_list || []).join('\n'),
-            email: '',
-            jobDescription: rp.job_title || '',
-            stages: rp.stage_Id || 'all',
-            dataQuality: rp.data_qual,
-            decorrelationType: rp.decorr_type,
-            nodeSize: rp.node_size || '',
-            nbNode: rp.nb_node || '',
-            fdrThreshold: rp.fdr_thr || '',
-            pValueThreshold: rp.p_value_thr || '',
-            rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
-            full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
-            affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
-            inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
-            est: Boolean(rp.data_type.find((f) => f === 'EST')),
-          };
-          setData((prev) => ({
-            ...prev,
-            genes: rp.fg_list.join('\n'),
-            genesBg: (rp.bg_list || []).join('\n'),
-            email: '',
-            jobDescription: rp.job_title || '',
-            stages: rp.stage_Id || 'all',
-            dataQuality: rp.data_qual,
-            decorrelationType: rp.decorr_type,
-            nodeSize: rp.node_size || '',
-            nbNode: rp.nb_node || '',
-            fdrThreshold: rp.fdr_thr || '',
-            pValueThreshold: rp.p_value_thr || '',
-            rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
-            full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
-            affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
-            inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
-            est: Boolean(rp.data_type.find((f) => f === 'EST')),
-          }));
-          requestParameters.set((prev) => {
-            const curr = JSON.parse(JSON.stringify(prev));
-
-            curr.fg = {
-              list: err.data.data.fg_list,
-              message: `${rp.fg_list.length} IDs provided, ${
-                err.data.data.fg_list.geneCount[
-                  err.data.data.fg_list.selectedSpecies
-                ]
-              } unique gene${isPlural(
-                'gene',
-                err.data.data.fg_list.geneCount[
-                  err.data.data.fg_list.selectedSpecies
-                ]
-              )} found in ${
-                err.data.data.fg_list.detectedSpecies[
-                  err.data.data.fg_list.selectedSpecies
-                ].name
-              }`,
-            };
-            if (rp.bg_list) curr.customBg = true;
-            if (err.data.data.bg_list)
-              curr.bg = err.data.data.bg_list
-                ? {
-                    list: err.data.data.bg_list,
-                    message: `${rp.bg_list.length} IDs provided, ${
-                      err.data.data.bg_list.geneCount[
-                        err.data.data.bg_list.selectedSpecies
-                      ]
-                    } unique ${isPlural(
-                      'gene',
-                      err.data.data.bg_list.geneCount[
-                        err.data.data.bg_list.selectedSpecies
-                      ]
-                    )} found in ${
-                      err.data.data.bg_list.detectedSpecies[
-                        err.data.data.bg_list.selectedSpecies
-                      ].name
-                    }`,
-                  }
-                : null;
-            return curr;
-          });
+          const formData = ApiReducer.topAnatForm(rp)({});
+          setData(ApiReducer.topAnatForm(rp));
+          requestParameters.set(
+            ApiReducer.topAnatRequestParameters(err.data, rp)
+          );
 
           setFlowState(TOP_ANAT_FLOW.LAUNCHING_JOB);
           api.topAnat
@@ -318,7 +191,6 @@ const TopAnat = () => {
             });
           return;
         }
-        // console.debug('[ERROR] api.topAnat.getResults(%s)', ID, err);
         setFlowState(TOP_ANAT_FLOW.ERROR_GET_RESULTS);
       });
   }, []);
@@ -326,7 +198,7 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (flowState === TOP_ANAT_FLOW.NEW_JOB && requestParameters.bg) {
       addNotification({
-        id: Math.random().toString(10),
+        id: random.toString(),
         children: (
           <p>
             {requestParameters.fg.list.selectedSpecies ===
@@ -350,7 +222,6 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (getJobStatusTimeOut) clearTimeout(getJobStatusTimeOut);
 
-    // resetForm();
     if (!id && !jobId && pageState?.form && pageState?.requestParameters) {
       setData(pageState.form);
       requestParameters.set(pageState.requestParameters);

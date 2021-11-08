@@ -1023,7 +1023,7 @@ const HomeNewsList = () => (
               for instance{' '}
               <Link
                 to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}#9598_9544`}
-                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id9598_9544" TODO check it's matching
+                // href="https://bgee.org/bgee15_0/?page=download&amp;action=expr_calls#id9598_9544"
               >
                 chimpanzee/macaque comparison
               </Link>
