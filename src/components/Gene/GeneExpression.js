@@ -1,10 +1,12 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
 import ComplexTable from '../ComplexTable';
+import useQuery from '../../hooks/useQuery';
 
 const CUSTOM_FIELDS = [
   {
@@ -73,6 +75,8 @@ const columnsGenerator = (cFields, data) => () => {
   return c;
 };
 const GeneExpression = ({ geneId, speciesId }) => {
+  const history = useHistory();
+  const hashExpr = useQuery('expression');
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
@@ -96,11 +100,11 @@ const GeneExpression = ({ geneId, speciesId }) => {
                 >
                   <input
                     type="checkbox"
-                    checked={cFields[c.key]}
+                    checked={cFields[c.key] || false}
                     onChange={(e) => {
                       setCFields((prev) => ({
                         ...prev,
-                        [c.key]: e.target.checked,
+                        [c.key]: e.target.checked || undefined,
                       }));
                     }}
                   />
@@ -109,14 +113,11 @@ const GeneExpression = ({ geneId, speciesId }) => {
               ))}
               <Bulma.Button
                 onClick={() => {
-                  setIsLoading(true);
-                  api.search.genes
-                    .expression(geneId, speciesId, cFields)
-                    .then((res) => {
-                      setData(res.data);
-                    })
-                    .catch(() => setData())
-                    .finally(() => setIsLoading(false));
+                  const query = Object.entries(cFields).reduce(
+                    (acc, [key, value]) => (value ? [...acc, key] : acc),
+                    []
+                  );
+                  history.replace(`?expression=${query.join(',')}`);
                 }}
               >
                 Search
@@ -196,9 +197,9 @@ const GeneExpression = ({ geneId, speciesId }) => {
     ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
-          console.log(cell.condition);
           const cellInfo = [
             <LinkExternal
+              key={`link-${cell.condition.anatEntity.id}`}
               to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
                 ':',
                 '_'
@@ -209,9 +210,10 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </LinkExternal>,
           ];
           if (cell.condition.cellType) {
-            cellInfo.push(<i> in </i>);
+            cellInfo.push(<i key="link-in"> in </i>);
             cellInfo.push(
               <LinkExternal
+                key={`link-${cell.condition.cellType.id}`}
                 to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
                   ':',
                   '_'
@@ -224,10 +226,18 @@ const GeneExpression = ({ geneId, speciesId }) => {
           }
 
           if (cell.condition.cellType) {
-            cellInfo.push(cell.condition.cellType.name);
-            cellInfo.push(<i> in </i>);
+            cellInfo.push(
+              <span key={`name-${cell.condition.cellType.name}`}>
+                {cell.condition.cellType.name}
+              </span>
+            );
+            cellInfo.push(<i key="name-in"> in </i>);
           }
-          cellInfo.push(cell.condition.anatEntity.name);
+          cellInfo.push(
+            <span key={`name-${cell.condition.anatEntity.name}`}>
+              {cell.condition.anatEntity.name}
+            </span>
+          );
           return (
             <>
               <span className="is-size-7">{cellInfo}</span>
@@ -343,15 +353,28 @@ const GeneExpression = ({ geneId, speciesId }) => {
     []
   );
 
+  // React.useEffect(() => {
+  //   console.log('fields', cFields);
+  // }, [cFields]);
+
   React.useEffect(() => {
+    setIsLoading(true);
+    const fields = {};
+    hashExpr.split(',').forEach((key) => {
+      fields[key] = true;
+    });
+    setCFields(fields);
     api.search.genes
-      .expression(geneId, speciesId, cFields)
+      .expression(geneId, speciesId, fields)
       .then((res) => {
         setData(res.data);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err);
+        setData();
+      })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [hashExpr]);
 
   return (
     <div id="expression">
