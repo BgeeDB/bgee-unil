@@ -48,9 +48,7 @@ const TopAnatForm = ({
         <Bulma.C size={4}>
           <article className="message is-small">
             <div className="message-header">
-              <p className="is-size-6">
-                {i18n.t('analysis.top-anat.gene-list')}
-              </p>
+              <p className="is-size-6">Gene list</p>
             </div>
             {rp.fg &&
               rp?.fg?.list?.selectedSpecies &&

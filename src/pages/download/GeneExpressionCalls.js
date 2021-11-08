@@ -13,7 +13,7 @@ import CreativeCommons from '../../components/CreativeCommons';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
-  const { showModal } = React.useContext(ModalContext);
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [singleSpeciesList, setSingleSpeciesList] = React.useState([]);
   const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
@@ -34,7 +34,7 @@ const GeneExpressionCalls = () => {
       );
       showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
         onClose: () => () => {
-          history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
+          history.replace(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
         },
       });
     }
@@ -49,6 +49,9 @@ const GeneExpressionCalls = () => {
       );
       setKwList(res.data.speciesIdToKeywords);
     });
+    return () => {
+      if (hideModal) hideModal();
+    };
   }, []);
 
   return (
@@ -120,9 +123,13 @@ const GeneExpressionCalls = () => {
           <div className="content">
             <div className="grid-species">
               {filteredSingleSpecies.map((s, key) => (
-                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
+                <div
+                  key={key}
+                  className="center-in-grid"
+                  onClick={() => history.replace(`?id=${s.id}`)}
+                >
                   <CardSpecies {...s} />
-                </Link>
+                </div>
               ))}
             </div>
           </div>

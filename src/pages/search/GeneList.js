@@ -106,10 +106,13 @@ const GeneList = () => {
   React.useEffect(() => {
     const params = new URLSearchParams(queryParams);
 
+    console.log(params.get('search'));
     if (params.get('search')) {
       setSearch(params.get('search'));
       setResults();
       searchResultHandler(params.get('search'));
+    } else {
+      setResults();
     }
   }, [queryParams]);
 
