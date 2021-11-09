@@ -85,9 +85,7 @@ const GeneDetails = ({
             <title>{`Gene : ${name} - ${geneId} - `}</title>
           </Helmet>
           <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <GeneSearch title={false} />
-            </Bulma.C>
+            <Bulma.C size={3} />
             <Bulma.C
               size={9}
               className="is-flex is-justify-content-center is-align-items-center"

@@ -4,24 +4,6 @@
 
 $archive: false;
 
-body {
-  margin: 0;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: .9rem !important;
-  .layout {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 
 $primary: #e2011b;
 $link: #920209;
@@ -44,6 +26,25 @@ $hero-banner-bg: #d9d9d9;
 
 
 $desktop: 1090px;
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px !important;
+  color: $text;
+  .layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
 .home-hero-banner {
   background-color: $hero-banner-bg;
@@ -332,6 +333,8 @@ table.table {
 
 div.separator {
   border-top: 1px solid $text;
+  width: 70%;
+  margin: auto;
 }
 
 span.icon {
@@ -600,4 +603,41 @@ label.label.not-default,span.not-default {
 
 ion-icon {
   pointer-events: none;
+}
+
+.tags-source {
+  .tag.tag-source:not(:last-child) {
+    margin-right: 0.15rem;
+  }
+}
+.tag-source {
+  padding: .2em .5em;
+  margin: 0 .15em 0 0 !important;
+  border-radius: .4em;
+  width: 1em;
+  line-height: 1em;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+  font-size: .8em;
+  font-family: monospace;
+  text-align: center;
+  background: #dedede !important;
+  color: #b8b8b8 !important;
+  border-color: #b8b8b8 !important;
+  &.legend {
+    width: auto;
+  }
+  &.present {
+    background: #9efa9e !important;
+    border-color: #0df20d !important;
+    color: #067906 !important;
+
+  }
+}
+
+.table td, .table th {
+  padding: 4px !important;
+  font-size: 14px;
+  color: $text;
 }
