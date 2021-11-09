@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
@@ -53,6 +54,19 @@ const GeneExpressionCalls = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Gene expression calls download page</title>
+        <meta
+          name="description"
+          content="Download TSV files containing present/absent
+     gene expression calls from Bgee"
+        />
+        <meta
+          name="keywords"
+          content="dataset, data download, gene expression calls,
+     present/absent expression calls"
+        />
+      </Helmet>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>{`${i18n.t(
           'download.gene-exp-calls.title'

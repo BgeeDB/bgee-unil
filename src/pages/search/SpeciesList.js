@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
@@ -20,8 +21,20 @@ const SpeciesList = () => {
     });
   }, []);
 
+  const metaKeywords = speciesList
+    .map((s) => `${s.genus} ${s.speciesName} ${s.name ? `, ${s.name}` : ''}`)
+    .join(', ');
+
   return (
     <>
+      <Helmet>
+        <title>Species list</title>
+        <meta
+          name="description"
+          content="List of species with expression data available in Bgee"
+        />
+        <meta name="keywords" content={metaKeywords} />
+      </Helmet>
       <div className="content has-text-centered">
         <Bulma.Title size={4}>
           {i18n.t('search.species.list-title')}

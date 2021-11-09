@@ -76,14 +76,37 @@ const GeneDetails = ({
     );
   };
 
+  const todo = 'TODO !!!';
+
   return (
     <div className="is-widescreen">
+      <Helmet>
+        <title>
+          {todo}
+          expression in
+          {todo}
+        </title>
+        <meta
+          name="description"
+          content="Bgee gene expression data for 
+     {(data.genes[INDEX].name? data.genes[INDEX].name + ' (': '')
+     + data.genes[INDEX].geneId + (data.genes[INDEX].name? ')': '')}
+     in 
+     {data.genes[INDEX].species.genus + ' ' + data.genes[INDEX].species.speciesName
+     + (data.genes[INDEX].species.name? ' (' + data.genes[INDEX].species.name + ')': '')}"
+        />
+        <meta
+          name="keywords"
+          content="gene expression,
+     {data.genes[INDEX].name? data.genes[INDEX].name
+         + ', ' data.genes[INDEX].name + ' expression, ': ''}
+     {data.genes[INDEX].geneId}, {data.genes[INDEX].geneId} expression
+     {data.genes[INDEX].synonyms? ', ' + data.genes[INDEX].synonyms.join(', '): ''}"
+        />
+      </Helmet>
       <div className="columns">
         <div className="column is-one-fifth">{sideMenu()}</div>
         <div className="column is-four-fifths">
-          <Helmet>
-            <title>{`Gene : ${name} - ${geneId} - `}</title>
-          </Helmet>
           <Bulma.Columns className="my-0">
             <Bulma.C size={3}>
               <GeneSearch title={false} />

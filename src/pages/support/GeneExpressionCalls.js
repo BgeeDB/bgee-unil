@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import useAnchorAtMount from '../../hooks/useAnchorAtMount';
 import PATHS from '../../routes/paths';
@@ -9,6 +10,19 @@ const GeneExpressionCalls = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Gene expression calls documentation</title>
+        <meta
+          name="description"
+          content="Documentation about the TSV download files
+     containing present/absent gene expression calls."
+        />
+        <meta
+          name="keywords"
+          content="SAME AS FOR Gene expression calls download page
+     WITHOUT THE SPECIES NAMES"
+        />
+      </Helmet>
       <div className="content has-text-centered">
         <p className="title is-5">
           Expression call download file documentation

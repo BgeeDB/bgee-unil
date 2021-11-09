@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import { CardSpecies } from '../../components/CustomCard';
@@ -79,6 +80,20 @@ const ProcessedExpressionValues = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Processed expression values download page</title>
+        <meta
+          name="description"
+          content="Download TSV files containing sample annotations,
+     experiment information, and processed expression values"
+        />
+        <meta
+          name="keywords"
+          content="dataset, data download, gene expression,
+     RNA-Seq, Affymetrix, full-length single-cell RNA-Seq, full-length scRNA-Seq, scRNA-Seq,
+     expression data annotations"
+        />
+      </Helmet>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>Processed expression values</Bulma.Title>
       </div>
