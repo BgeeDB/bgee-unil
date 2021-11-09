@@ -78,6 +78,10 @@ const ProcessedExpressionValues = () => {
     });
   }, []);
 
+  const allSpeciesName = `${speciesList
+    .map((s) => ` ${s.name} ${s.speciesName}`)
+    .join(', ')}`;
+
   return (
     <>
       <Helmet>
@@ -89,9 +93,9 @@ const ProcessedExpressionValues = () => {
         />
         <meta
           name="keywords"
-          content="dataset, data download, gene expression,
+          content={`dataset, data download, gene expression,
      RNA-Seq, Affymetrix, full-length single-cell RNA-Seq, full-length scRNA-Seq, scRNA-Seq,
-     expression data annotations"
+     expression data annotations, ${allSpeciesName}`}
         />
       </Helmet>
       <div className="content has-text-centered">

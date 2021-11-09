@@ -76,33 +76,26 @@ const GeneDetails = ({
     );
   };
 
-  const todo = 'TODO !!!';
+  const metaTitle = `${name} 
+       expression in
+       ${
+         species.name ? species.name : `${species.genus} ${species.speciesName}`
+       }`;
+  const metaDescription = `Bgee gene expression data for ${
+    name ? `${name} (` : ''
+  }
+   ${geneId}  ${name ? ')' : ''}`;
+  const metaKeywords = `gene expression,
+  ${name ? `${name} , ${name} expression, ` : ''}
+  ${geneId}, ${geneId} expression
+  ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
 
   return (
     <div className="is-widescreen">
       <Helmet>
-        <title>
-          {todo}
-          expression in
-          {todo}
-        </title>
-        <meta
-          name="description"
-          content="Bgee gene expression data for 
-     {(data.genes[INDEX].name? data.genes[INDEX].name + ' (': '')
-     + data.genes[INDEX].geneId + (data.genes[INDEX].name? ')': '')}
-     in 
-     {data.genes[INDEX].species.genus + ' ' + data.genes[INDEX].species.speciesName
-     + (data.genes[INDEX].species.name? ' (' + data.genes[INDEX].species.name + ')': '')}"
-        />
-        <meta
-          name="keywords"
-          content="gene expression,
-     {data.genes[INDEX].name? data.genes[INDEX].name
-         + ', ' data.genes[INDEX].name + ' expression, ': ''}
-     {data.genes[INDEX].geneId}, {data.genes[INDEX].geneId} expression
-     {data.genes[INDEX].synonyms? ', ' + data.genes[INDEX].synonyms.join(', '): ''}"
-        />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
       </Helmet>
       <div className="columns">
         <div className="column is-one-fifth">{sideMenu()}</div>

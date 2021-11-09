@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
@@ -43,8 +44,38 @@ const COLUMNS = [
 ];
 const MERGE_KEY = 'merge';
 
-const TopAnatResult = ({ results, searchId, fg, status, title }) => {
+const TopAnatResult = ({
+  results,
+  searchId,
+  fg,
+  status,
+  title,
+  jobId,
+  data,
+}) => {
   const [selectedStage, setSelectedStage] = React.useState(MERGE_KEY);
+  const topAnatResults = results?.analysis;
+  const analysisName = data?.jobDescription;
+  const metaTitle = `${
+    jobId
+      ? `analysis ${jobId} running`
+      : `${
+          topAnatResults
+            ? `analysis results ${analysisName}`
+            : ' - Gene expression enrichment analysis'
+        }`
+  }`;
+  const metaDescription = `${
+    jobId
+      ? `A TopAnat analysis is running, this page will be updated when the results are available.`
+      : `${
+          topAnatResults
+            ? `TopAnat analysis results ${
+                analysisName ? `for analysis: ${analysisName}` : ''
+              }`
+            : 'TopAnat: perform GO-like enrichment of anatomical terms, mapped to genes by expression patterns.'
+        }`
+  }`;
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
@@ -257,6 +288,16 @@ const TopAnatResult = ({ results, searchId, fg, status, title }) => {
   )
     return (
       <>
+        <Helmet>
+          <title>TopAnat {metaTitle}</title>
+          <meta name="description" content={metaDescription} />
+          <meta
+            name="keywords"
+            content="TopAnat, gene set enrichment analysis,
+     gene expression enrichment analysis, GO-like enrichment analysis,
+     gene expression patterns, topGO, BgeeDB"
+          />
+        </Helmet>
         <div className="content has-text-centered">
           <p className="title is-6">{title}</p>
         </div>

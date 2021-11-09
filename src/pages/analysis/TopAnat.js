@@ -259,16 +259,6 @@ const TopAnat = () => {
 
   return (
     <>
-      <Helmet>
-        <title>TopAnat {metaTitle}</title>
-        <meta name="description" content={metaContent} />
-        <meta
-          name="keywords"
-          content="TopAnat, gene set enrichment analysis,
-     gene expression enrichment analysis, GO-like enrichment analysis,
-     gene expression patterns, topGO, BgeeDB"
-        />
-      </Helmet>
       <Bulma.Section className="py-0">
         <TopAnatHead />
         <TopAnatForm
@@ -299,6 +289,8 @@ const TopAnat = () => {
         searchId={id}
         title={data?.jobDescription}
         fg={requestParameters.value.fg}
+        jobId={jobId}
+        data={data}
       />
     </>
   );

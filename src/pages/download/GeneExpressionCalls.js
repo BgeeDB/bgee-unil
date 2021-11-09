@@ -52,6 +52,10 @@ const GeneExpressionCalls = () => {
     });
   }, []);
 
+  const allSpeciesName = `${singleSpeciesList
+    .map((s) => ` ${s.name} ${s.speciesName}`)
+    .join(', ')}`;
+
   return (
     <>
       <Helmet>
@@ -63,8 +67,8 @@ const GeneExpressionCalls = () => {
         />
         <meta
           name="keywords"
-          content="dataset, data download, gene expression calls,
-     present/absent expression calls"
+          content={`dataset, data download, gene expression calls,
+     present/absent expression calls, ${allSpeciesName}`}
         />
       </Helmet>
       <div className="content has-text-centered">
