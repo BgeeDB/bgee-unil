@@ -748,3 +748,23 @@ label.label {
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
   }
 }
+.side-menu {
+  width: 300px;
+  .side-menu-wrapper {
+    position: fixed;
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: $tablet) {
+  .side-menu {
+    width: auto;
+    .side-menu-wrapper {
+      position: relative;
+      width: auto;
+      .menu {
+        display: none;
+      }
+    }
+  }
+}
