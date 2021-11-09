@@ -94,7 +94,7 @@ const GeneSearch = ({ classNames, children }) => {
   }, []);
 
   return (
-    <Bulma.Card className={classnames(classNames)}>
+    <Bulma.Card className={classnames(classNames, 'form')}>
       <Bulma.Card.Body>
         <div className="content">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}

@@ -87,16 +87,13 @@ const onRenderCell =
         );
     }
   };
-const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
+const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns>
     <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
     </Bulma.C>
     <Bulma.C size={6}>
-      <div>
-        {pageSizeElement}
-        <div>{showEntriesText}</div>
-      </div>
+      <div>{pageSizeElement}</div>
     </Bulma.C>
   </Bulma.Columns>
 );

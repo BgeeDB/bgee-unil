@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
@@ -87,48 +87,45 @@ const GeneExpression = ({ geneId, speciesId }) => {
   ]);
 
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
+    (searchElement, pageSizeElement) => (
       <>
-        <Bulma.Columns vCentered>
+        <div className="is-flex">
+          {CUSTOM_FIELDS.map((c) => (
+            <label
+              className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+              key={c.key}
+            >
+              <input
+                type="checkbox"
+                checked={cFields[c.key] || false}
+                onChange={(e) => {
+                  setCFields((prev) => ({
+                    ...prev,
+                    [c.key]: e.target.checked || undefined,
+                  }));
+                }}
+              />
+              <b className="mx-1">{c.text}</b>
+            </label>
+          ))}
+          <Bulma.Button
+            onClick={() => {
+              const query = Object.entries(cFields).reduce(
+                (acc, [key, value]) => (value ? [...acc, key] : acc),
+                []
+              );
+              history.replace(`?expression=${query.join(',')}`);
+            }}
+          >
+            Search
+          </Bulma.Button>
+        </div>
+        <Bulma.Columns vCentered className="mt-0">
           <Bulma.C size={8}>
             <div className="field">{searchElement}</div>
-            <div className="is-flex">
-              {CUSTOM_FIELDS.map((c) => (
-                <label
-                  className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                  key={c.key}
-                >
-                  <input
-                    type="checkbox"
-                    checked={cFields[c.key] || false}
-                    onChange={(e) => {
-                      setCFields((prev) => ({
-                        ...prev,
-                        [c.key]: e.target.checked || undefined,
-                      }));
-                    }}
-                  />
-                  <b className="mx-1">{c.text}</b>
-                </label>
-              ))}
-              <Bulma.Button
-                onClick={() => {
-                  const query = Object.entries(cFields).reduce(
-                    (acc, [key, value]) => (value ? [...acc, key] : acc),
-                    []
-                  );
-                  history.replace(`?expression=${query.join(',')}`);
-                }}
-              >
-                Search
-              </Bulma.Button>
-            </div>
           </Bulma.C>
           <Bulma.C size={4}>
-            <div>
-              {pageSizeElement}
-              <div>{showEntriesText}</div>
-            </div>
+            <div>{pageSizeElement}</div>
           </Bulma.C>
         </Bulma.Columns>
       </>

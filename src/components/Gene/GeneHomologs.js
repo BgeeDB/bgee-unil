@@ -129,16 +129,13 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
   );
 
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
+    (searchElement, pageSizeElement) => (
       <Bulma.Columns vCentered>
         <Bulma.C size={8}>
           <div className="field">{searchElement}</div>
         </Bulma.C>
         <Bulma.C size={4}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
+          <div>{pageSizeElement}</div>
         </Bulma.C>
       </Bulma.Columns>
     ),

@@ -49,7 +49,7 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
       );
   }
 };
-const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
+const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns vCentered>
     <Bulma.C size={3}>
       <div className="is-flex is-flex-direction-column">
@@ -60,10 +60,7 @@ const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
       <div className="field has-addons">{searchElement}</div>
     </Bulma.C>
     <Bulma.C size={3}>
-      <div>
-        {pageSizeElement}
-        <div>{showEntriesText}</div>
-      </div>
+      <div>{pageSizeElement}</div>
     </Bulma.C>
   </Bulma.Columns>
 );
