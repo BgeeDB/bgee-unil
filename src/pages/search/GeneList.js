@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations,react/no-array-index-key */
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import i18n from '../../i18n';
@@ -5,11 +6,11 @@ import PATHS from '../../routes/paths';
 import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
 import useGeneSearch from '../../hooks/useGeneSearch';
-import './GeneList.css';
 import GeneSearch from '../../components/Gene/GeneSearch';
+import splitWithOccurrences from '../../helpers/splitWithOccurrences';
 
 const onRenderCell =
-  () =>
+  (search) =>
   ({ cell, key }, defaultRender) => {
     switch (key) {
       case 'id':
@@ -35,11 +36,18 @@ const onRenderCell =
           </Link>
         );
       case 'match':
+        const match = splitWithOccurrences(cell.match, search);
         return (
           <span>
-            <span className="has-text-primary has-text-weight-semibold">
-              {cell.match}
-            </span>{' '}
+            {match.map((v, keyMatch) =>
+              typeof v === 'string' ? (
+                <React.Fragment key={keyMatch}>{v}</React.Fragment>
+              ) : (
+                <strong key={v.key} className="has-text-primary">
+                  {v.text}
+                </strong>
+              )
+            )}{' '}
             ({cell.matchSource})
           </span>
         );
@@ -49,16 +57,13 @@ const onRenderCell =
     }
   };
 
-const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
+const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns vCentered>
     <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
     </Bulma.C>
     <Bulma.C size={6}>
-      <div>
-        {pageSizeElement}
-        <div>{showEntriesText}</div>
-      </div>
+      <div>{pageSizeElement}</div>
     </Bulma.C>
   </Bulma.Columns>
 );
@@ -117,7 +122,7 @@ const GeneList = () => {
   }, [queryParams]);
 
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
       </div>
@@ -146,12 +151,13 @@ const GeneList = () => {
       </div>
       {results && (
         <div>
-          <Bulma.Title size={5} className="gradient-underline">
-            {i18n.t('global.results')}
-          </Bulma.Title>
-          <p className="has-text-centered my-5">{`${
-            results.totalMatchCount
-          } ${i18n.t('search.genes.genes-found')} '${search}'`}</p>
+          <p className="has-text-centered my-5 has-text-weight-semibold">
+            {results.totalMatchCount > 10000
+              ? `About ${results.totalMatchCount} gene(s) found for '${search}' (only the first 10000 genes are displayed)`
+              : `${results.totalMatchCount} ${i18n.t(
+                  'search.genes.genes-found'
+                )} '${search}'`}
+          </p>
           <ComplexTable
             pagination
             scrollable
@@ -167,12 +173,12 @@ const GeneList = () => {
             data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}
-            onRenderCell={onRenderCell()}
+            onRenderCell={onRenderCell(search)}
             mappingObj={objMapping}
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

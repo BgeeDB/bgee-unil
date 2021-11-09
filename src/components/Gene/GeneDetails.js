@@ -84,32 +84,24 @@ const GeneDetails = ({
           <Helmet>
             <title>{`Gene : ${name} - ${geneId} - `}</title>
           </Helmet>
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <GeneSearch title={false} />
-            </Bulma.C>
-            <Bulma.C
-              size={9}
-              className="is-flex is-justify-content-center is-align-items-center"
-            >
-              <div className="content is-align-items-center is-flex">
-                <Bulma.Image
-                  className="m-0 mr-2"
-                  src={`https://bgee.org/img/species/${species.id}_light.jpg`}
-                  height={50}
-                  width={50}
-                />
-                <p className="title is-5 has-text-centered">
-                  {`Gene : ${name} - ${geneId} - `}
-                  <i>
-                    {species.genus} {species.speciesName}
-                  </i>
-                  {` (${species.name})`}
-                </p>
-              </div>
-            </Bulma.C>
-          </Bulma.Columns>
-          <div className="mb-6" id="general-infos">
+          <div className="is-flex is-justify-content-center is-align-items-center">
+            <div className="content is-align-items-center is-flex">
+              <Bulma.Image
+                className="m-0 mr-2"
+                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                height={50}
+                width={50}
+              />
+              <p className="title is-5 has-text-centered">
+                {`Gene : ${name} - ${geneId} - `}
+                <i>
+                  {species.genus} {species.speciesName}
+                </i>
+                {` (${species.name})`}
+              </p>
+            </div>
+          </div>
+          <div id="general-infos">
             <Bulma.Title size={5} className="gradient-underline">
               {i18n.t('search.gene.general-info')}
             </Bulma.Title>

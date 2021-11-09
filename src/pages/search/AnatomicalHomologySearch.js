@@ -87,16 +87,13 @@ const onRenderCell =
         );
     }
   };
-const customHeader = (searchElement, pageSizeElement, showEntriesText) => (
+const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns>
     <Bulma.C size={6}>
       <div className="field has-addons">{searchElement}</div>
     </Bulma.C>
     <Bulma.C size={6}>
-      <div>
-        {pageSizeElement}
-        <div>{showEntriesText}</div>
-      </div>
+      <div>{pageSizeElement}</div>
     </Bulma.C>
   </Bulma.Columns>
 );
@@ -112,7 +109,7 @@ const AnatomicalHomologySearch = () => {
   }, [query]);
 
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
         <Bulma.Title size={4}>{`${i18n.t(
           'search.anatomical-homology.title'
@@ -236,7 +233,7 @@ const AnatomicalHomologySearch = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

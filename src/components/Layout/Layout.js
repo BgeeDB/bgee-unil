@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       loc.pathname === '/' ? (
         <>{children}</>
       ) : (
-        <Bulma.Section className=" is-flex-grow-1">{children}</Bulma.Section>
+        <Bulma.Section className="is-flex-grow-1">{children}</Bulma.Section>
       ),
     [loc]
   );

@@ -51,7 +51,7 @@ const ComplexTable = ({
     () =>
       pagination ? (
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
-          <p className="mr-2">{i18n.t('analysis.top-anat.show-entries')}</p>
+          <p className="mr-2">Show</p>
           <Select
             defaultValue={pageSize}
             options={[10, 20, 50, { value: 100, text: 100 }]}
@@ -60,13 +60,14 @@ const ComplexTable = ({
               setPageSize(parseInt(p, 10));
             }}
           />
+          <p className="ml-2">entries</p>
         </div>
       ) : null,
     [pageSize, currentPage, internalData, pagination]
   );
   const showEntriesText = React.useMemo(
     () => (
-      <p className="has-text-right mt-2">
+      <p className="has-text-right">
         {i18n
           .t('analysis.top-anat.showing-entries-on-total')
           .replace(
@@ -90,9 +91,10 @@ const ComplexTable = ({
 
   const searchInput = React.useMemo(
     () => (
-      <div className="control is-flex-grow-1 is-flex-shrink-1">
+      <div className="control table-search is-flex is-flex-direction-row is-align-items-center">
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <p className="mr-1">Filter:</p>
         <Input
-          placeholder={i18n.t('global.search')}
           value={search}
           onChange={(e) => {
             if (currentPage !== 1) setCurrentPage(1);
@@ -106,9 +108,7 @@ const ComplexTable = ({
 
   return (
     <>
-      {customHeader
-        ? customHeader(searchInput, pageSizeSelector, showEntriesText)
-        : null}
+      {customHeader ? customHeader(searchInput, pageSizeSelector) : null}
       <Table
         classNames={classNamesTable}
         columns={columns}
@@ -124,13 +124,16 @@ const ComplexTable = ({
         striped
         {...props}
       />
-      {pagination && (
-        <Pagination
-          current={currentPage}
-          total={totalPage}
-          setPage={setCurrentPage}
-        />
-      )}
+      <div className="is-flex is-justify-content-space-between">
+        <div>{showEntriesText}</div>
+        {pagination && (
+          <Pagination
+            current={currentPage}
+            total={totalPage}
+            setPage={setCurrentPage}
+          />
+        )}
+      </div>
     </>
   );
 };

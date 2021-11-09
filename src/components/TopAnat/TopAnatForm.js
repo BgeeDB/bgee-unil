@@ -368,7 +368,7 @@ const TopAnatForm = ({
                     </div>
                   </div>
                 </div>
-                {Array.isArray(formData.stages) && (
+                {rp?.fg?.list?.stages && Array.isArray(formData.stages) && (
                   <div className="field">
                     <div className="control">
                       {rp?.fg?.list?.stages.map((s) => (

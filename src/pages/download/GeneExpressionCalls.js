@@ -32,11 +32,13 @@ const GeneExpressionCalls = () => {
       const species = singleSpeciesList.find(
         (s) => s.id.toString() === speciesID
       );
-      showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
-        onClose: () => () => {
-          history.replace(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
-        },
-      });
+      if (species) {
+        showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
+          onClose: () => () => {
+            history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
+          },
+        });
+      }
     }
   }, [speciesID, singleSpeciesList]);
   React.useEffect(() => {

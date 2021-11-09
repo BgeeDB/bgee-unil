@@ -1,10 +1,12 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
 import ComplexTable from '../ComplexTable';
+import useQuery from '../../hooks/useQuery';
 
 const CUSTOM_FIELDS = [
   {
@@ -35,11 +37,6 @@ const columnsGenerator = (cFields, data) => () => {
       text: 'Anatomical entity',
     });
   }
-  if (data.requestedConditionParameters.find((r) => r === 'Cell type'))
-    c.push({
-      key: 'cellType',
-      text: 'Cell type',
-    });
   if (data.requestedConditionParameters.find((r) => r === 'Dev. stage'))
     c.push({
       key: 'devStage',
@@ -71,13 +68,15 @@ const columnsGenerator = (cFields, data) => () => {
       key: 'sources',
       text: 'Sources',
       style: {
-        width: 165,
+        width: 110,
       },
     },
   ];
   return c;
 };
-const GeneExpression = ({ geneId, speciesId, id }) => {
+const GeneExpression = ({ geneId, speciesId }) => {
+  const history = useHistory();
+  const hashExpr = useQuery('expression');
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
@@ -88,109 +87,46 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
   ]);
 
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
+    (searchElement, pageSizeElement) => (
       <>
-        <Bulma.Columns vCentered>
+        <div className="is-flex">
+          {CUSTOM_FIELDS.map((c) => (
+            <label
+              className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+              key={c.key}
+            >
+              <input
+                type="checkbox"
+                checked={cFields[c.key] || false}
+                onChange={(e) => {
+                  setCFields((prev) => ({
+                    ...prev,
+                    [c.key]: e.target.checked || undefined,
+                  }));
+                }}
+              />
+              <b className="mx-1">{c.text}</b>
+            </label>
+          ))}
+          <Bulma.Button
+            className="search-form"
+            onClick={() => {
+              const query = Object.entries(cFields).reduce(
+                (acc, [key, value]) => (value ? [...acc, key] : acc),
+                []
+              );
+              history.replace(`?expression=${query.join(',')}`);
+            }}
+          >
+            Search
+          </Bulma.Button>
+        </div>
+        <Bulma.Columns vCentered className="mt-0">
           <Bulma.C size={8}>
             <div className="field">{searchElement}</div>
-            <div className="is-flex">
-              {CUSTOM_FIELDS.map((c) => (
-                <label
-                  className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                  key={c.key}
-                >
-                  <input
-                    type="checkbox"
-                    checked={cFields[c.key]}
-                    onChange={(e) => {
-                      setCFields((prev) => ({
-                        ...prev,
-                        [c.key]: e.target.checked,
-                      }));
-                    }}
-                  />
-                  <b className="mx-1">{c.text}</b>
-                </label>
-              ))}
-              <Bulma.Button
-                onClick={() => {
-                  setIsLoading(true);
-                  api.search.genes
-                    .expression(geneId, speciesId, cFields)
-                    .then((res) => {
-                      setData(res.data);
-                    })
-                    .catch(() => setData())
-                    .finally(() => setIsLoading(false));
-                }}
-              >
-                Search
-              </Bulma.Button>
-            </div>
           </Bulma.C>
           <Bulma.C size={4}>
-            <div>
-              {pageSizeElement}
-              <div>{showEntriesText}</div>
-            </div>
-          </Bulma.C>
-        </Bulma.Columns>
-        <p className="has-text-weight-semibold is-underlined">Sources</p>
-        <Bulma.Columns vCentered className="mt-0">
-          <Bulma.C>
-            <span>
-              <b>A</b> Affimetrix
-            </span>
-          </Bulma.C>
-          <Bulma.C>
-            <span>
-              <b>ES</b> EST
-            </span>
-          </Bulma.C>
-          <Bulma.C>
-            <span>
-              <b>I</b> In Situ
-            </span>
-          </Bulma.C>
-          <Bulma.C>
-            <span>
-              <b>R</b> RNA-Seq
-            </span>
-          </Bulma.C>
-          <Bulma.C>
-            <span>
-              <b>FL</b> scRNA-Seq Full Length
-            </span>
-          </Bulma.C>
-          <Bulma.C className="is-flex is-align-items-center">
-            <span
-              className={classnames('tag is-size-7', {
-                'is-primary': true,
-              })}
-            >
-              data
-            </span>
-            <span
-              className={classnames('ml-1 tag is-size-7', {
-                'is-primary': false,
-              })}
-            >
-              no data
-            </span>
-          </Bulma.C>
-        </Bulma.Columns>
-        <p className="has-text-weight-semibold is-underlined">
-          Expression scores
-        </p>
-        <Bulma.Columns vCentered className="mt-0">
-          <Bulma.C>
-            <span>
-              <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey: low
-              confidence scores
-            </span>
-          </Bulma.C>
-          <Bulma.C className="is-flex is-align-items-center">
-            <hr className="dot-line m-0 mr-2" /> important score variation
+            <div>{pageSizeElement}</div>
           </Bulma.C>
         </Bulma.Columns>
       </>
@@ -201,35 +137,48 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
     ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
-          return (
-            <>
-              <span className="is-size-7">
-                <LinkExternal
-                  to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
-                    ':',
-                    '_'
-                  )}`}
-                  className="mr-1"
-                >
-                  {cell.condition.anatEntity.id}
-                </LinkExternal>
-                {cell.condition.anatEntity.name}
+          const cellInfo = [
+            <LinkExternal
+              key={`link-${cell.condition.anatEntity.id}`}
+              to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
+                ':',
+                '_'
+              )}`}
+              className="mr-1"
+            >
+              {cell.condition.anatEntity.id}
+            </LinkExternal>,
+          ];
+          if (cell.condition.cellType) {
+            cellInfo.push(<i key="link-in"> in </i>);
+            cellInfo.push(
+              <LinkExternal
+                key={`link-${cell.condition.cellType.id}`}
+                to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
+                  ':',
+                  '_'
+                )}`}
+                className="mr-1"
+              >
+                {cell.condition.cellType.id}
+              </LinkExternal>
+            );
+          }
+
+          if (cell.condition.cellType) {
+            cellInfo.push(
+              <span key={`name-${cell.condition.cellType.name}`}>
+                {cell.condition.cellType.name}
               </span>
-            </>
+            );
+            cellInfo.push(<i key="name-in"> in </i>);
+          }
+          cellInfo.push(
+            <span key={`name-${cell.condition.anatEntity.name}`}>
+              {cell.condition.anatEntity.name}
+            </span>
           );
-        case 'cellType':
-          return (
-            <>
-              {cell.condition.cellType && (
-                <span className="is-size-7">
-                  <LinkExternal className="mr-1">
-                    {cell.condition.cellType?.id}
-                  </LinkExternal>
-                  {cell.condition.cellType?.name}
-                </span>
-              )}
-            </>
-          );
+          return <>{cellInfo}</>;
         case 'devStage':
           return (
             <>
@@ -271,26 +220,43 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
         case 'sources':
           const col = columns.find((c) => c.key === key);
           return (
-            <div className="tags" style={col?.style}>
+            <div className="tags tags-source" style={col?.style}>
               <span
-                className={classnames('tag is-size-7', {
-                  'is-primary': cell.dataTypesWithData.find(
-                    (d) => d === '"Affymetrix"'
+                title={`Affymetrix: ${
+                  cell.dataTypesWithData.find((d) => d === 'Affymetrix')
+                    ? 'presence'
+                    : 'absence'
+                }`}
+                className={classnames('tag tag-source', {
+                  present: cell.dataTypesWithData.find(
+                    (d) => d === 'Affymetrix'
                   ),
                 })}
               >
                 A
               </span>
               <span
-                className={classnames('tag is-size-7', {
-                  'is-primary': cell.dataTypesWithData.find((d) => d === 'EST'),
+                title={`EST: ${
+                  cell.dataTypesWithData.find((d) => d === 'EST')
+                    ? 'presence'
+                    : 'absence'
+                }`}
+                className={classnames('tag tag-source', {
+                  present: cell.dataTypesWithData.find((d) => d === 'EST'),
                 })}
               >
                 E
               </span>
               <span
-                className={classnames('tag is-size-7', {
-                  'is-primary': cell.dataTypesWithData.find(
+                title={`In Situ: ${
+                  cell.dataTypesWithData.find(
+                    (d) => d === 'in situ hybridization'
+                  )
+                    ? 'presence'
+                    : 'absence'
+                }`}
+                className={classnames('tag tag-source', {
+                  present: cell.dataTypesWithData.find(
                     (d) => d === 'in situ hybridization'
                   ),
                 })}
@@ -298,17 +264,27 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
                 I
               </span>
               <span
-                className={classnames('tag is-size-7', {
-                  'is-primary': cell.dataTypesWithData.find(
-                    (d) => d === 'RNA-Seq'
-                  ),
+                title={`RNA-Seq: ${
+                  cell.dataTypesWithData.find((d) => d === 'RNA-Seq')
+                    ? 'presence'
+                    : 'absence'
+                }`}
+                className={classnames('tag tag-source', {
+                  present: cell.dataTypesWithData.find((d) => d === 'RNA-Seq'),
                 })}
               >
                 R
               </span>
               <span
-                className={classnames('tag is-size-7', {
-                  'is-primary': cell.dataTypesWithData.find(
+                title={`full length single cell RNA-Seq: ${
+                  cell.dataTypesWithData.find(
+                    (d) => d === 'full length single cell RNA-Seq'
+                  )
+                    ? 'presence'
+                    : 'absence'
+                }`}
+                className={classnames('tag tag-source', {
+                  present: cell.dataTypesWithData.find(
                     (d) => d === 'full length single cell RNA-Seq'
                   ),
                 })}
@@ -341,14 +317,25 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
   );
 
   React.useEffect(() => {
+    setIsLoading(true);
+    const fields = {};
+    if (hashExpr) {
+      hashExpr.split(',').forEach((key) => {
+        fields[key] = true;
+      });
+    } else fields.anat = true;
+    setCFields(fields);
     api.search.genes
-      .expression(geneId, speciesId, cFields)
+      .expression(geneId, speciesId, fields)
       .then((res) => {
         setData(res.data);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err);
+        setData();
+      })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [hashExpr]);
 
   return (
     <div id="expression">
@@ -381,6 +368,68 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
                 return '';
               }}
             />
+
+            <p className="has-text-weight-semibold is-underlined mt-0">
+              Sources
+            </p>
+            <Bulma.Columns vCentered className="my-0">
+              <Bulma.C>
+                <span>
+                  <b>A</b> Affimetrix
+                </span>
+              </Bulma.C>
+              <Bulma.C>
+                <span>
+                  <b>E</b> EST
+                </span>
+              </Bulma.C>
+              <Bulma.C>
+                <span>
+                  <b>I</b> In Situ
+                </span>
+              </Bulma.C>
+              <Bulma.C>
+                <span>
+                  <b>R</b> RNA-Seq
+                </span>
+              </Bulma.C>
+              <Bulma.C>
+                <span>
+                  <b>FL</b> scRNA-Seq Full Length
+                </span>
+              </Bulma.C>
+              <Bulma.C className="is-flex is-align-items-center">
+                <span
+                  className={classnames('tag tag-source present legend', {
+                    'is-primary': true,
+                  })}
+                >
+                  data
+                </span>
+                <span
+                  className={classnames('ml-1 tag tag-source legend', {
+                    'is-primary': false,
+                  })}
+                >
+                  no data
+                </span>
+              </Bulma.C>
+            </Bulma.Columns>
+            <p className="has-text-weight-semibold is-underlined mt-0">
+              Expression scores
+            </p>
+            <Bulma.Columns vCentered className="mt-0">
+              <Bulma.C>
+                <span>
+                  <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey:
+                  low confidence scores
+                </span>
+              </Bulma.C>
+              <Bulma.C className="is-flex is-align-items-center">
+                <hr className="dot-line m-0 mr-2" /> important score variation
+              </Bulma.C>
+            </Bulma.Columns>
+            <div className="separator my-5" />
             <p>
               <b>Expression scores</b> of expression calls is based on the rank
               of a gene in a condition according to its expression levels
@@ -390,7 +439,7 @@ const GeneExpression = ({ geneId, speciesId, id }) => {
               expressed in the condition compared to other genes. Scores are
               normalized and comparable across genes, conditions and species.
             </p>
-            <Bulma.Columns className="mb-6">
+            <Bulma.Columns>
               <Bulma.Column size={4}>
                 <p>Sources of annotations to anatomy and development:</p>
                 <ul className="unordered">

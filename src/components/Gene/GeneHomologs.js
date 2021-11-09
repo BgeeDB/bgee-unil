@@ -129,16 +129,13 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
   );
 
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) => (
+    (searchElement, pageSizeElement) => (
       <Bulma.Columns vCentered>
         <Bulma.C size={8}>
           <div className="field">{searchElement}</div>
         </Bulma.C>
         <Bulma.C size={4}>
-          <div>
-            {pageSizeElement}
-            <div>{showEntriesText}</div>
-          </div>
+          <div>{pageSizeElement}</div>
         </Bulma.C>
       </Bulma.Columns>
     ),
@@ -166,7 +163,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
       <Bulma.Title size={5} className="gradient-underline" id="orthologs">
         Orthologs
       </Bulma.Title>
-      <div className="static-section near-columns mb-6">
+      <div className="static-section near-columns">
         {isLoading && (
           <progress
             className="progress is-small mt-6"
@@ -176,7 +173,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             80%
           </progress>
         )}
-        {!isLoading && homologs?.orthologyXRef && (
+        {!isLoading && homologs?.orthologsByTaxon.length > 0 && (
           <>
             <div className="table-container">
               <ComplexTable
@@ -209,21 +206,25 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                 customHeader={customHeader}
               />
             </div>
-            <span>
-              {`Orthology information comes from ${homologs.orthologyXRef.source.name} : `}
-              <LinkExternal to={homologs.orthologyXRef.xRefURL}>
-                {homologs.orthologyXRef.xRefId}
-              </LinkExternal>
-              .
-            </span>
+            {homologs.orthologyXRef && (
+              <span>
+                {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
+                <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
+                  {homologs.orthologyXRef?.xRefId}
+                </LinkExternal>
+                .
+              </span>
+            )}
           </>
         )}
-        {isLoading && !homologs?.orthologyXRef && <span>No data</span>}
+        {!isLoading && homologs?.orthologsByTaxon.length === 0 && (
+          <span>No data</span>
+        )}
       </div>
       <Bulma.Title size={5} className="gradient-underline" id="paralogs">
         Paralogs (same species)
       </Bulma.Title>
-      <div className="static-section near-columns mb-6">
+      <div className="static-section near-columns">
         {isLoading && (
           <progress
             className="progress is-small mt-6"
@@ -233,7 +234,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             80%
           </progress>
         )}
-        {!isLoading && homologs?.orthologyXRef && (
+        {!isLoading && homologs?.paralogsByTaxon.length > 0 && (
           <>
             <ComplexTable
               columns={[
@@ -260,16 +261,20 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
               onFilter={onFilter}
               customHeader={customHeader}
             />
-            <span>
-              {`Paralogy information comes from ${homologs.paralogyXRef.source.name} : `}
-              <LinkExternal to={homologs.paralogyXRef.xRefURL}>
-                {homologs.paralogyXRef.xRefId}
-              </LinkExternal>
-              .
-            </span>
+            {homologs.paralogyXRef && (
+              <span>
+                {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
+                <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
+                  {homologs.paralogyXRef?.xRefId}
+                </LinkExternal>
+                .
+              </span>
+            )}
           </>
         )}
-        {!isLoading && !homologs?.orthologyXRef && <span>No data</span>}
+        {!isLoading && homologs?.paralogsByTaxon.length === 0 && (
+          <span>No data</span>
+        )}
       </div>
     </>
   );
