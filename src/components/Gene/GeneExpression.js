@@ -441,7 +441,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
               expressed in the condition compared to other genes. Scores are
               normalized and comparable across genes, conditions and species.
             </p>
-            <Bulma.Columns className="mb-6">
+            <Bulma.Columns>
               <Bulma.Column size={4}>
                 <p>Sources of annotations to anatomy and development:</p>
                 <ul className="unordered">
