@@ -118,7 +118,7 @@ const GeneSearch = ({ classNames, children }) => {
           <div className="field">
             <div className="control is-flex is-align-items-center">
               <button
-                className="button mr-2"
+                className="button mr-2 search-form"
                 type="button"
                 onClick={onSubmitGene(search)}
               >

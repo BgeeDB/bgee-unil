@@ -4,7 +4,6 @@
 
 $archive: false;
 
-
 $primary: #e2011b;
 $link: #920209;
 $text: #626262;
@@ -16,6 +15,18 @@ $dark-bg-color: #333333;
 $dark-bg-hover-color: #555555;
 $dark-font-color: $dark-color;
 $hero-banner-bg: #d9d9d9;
+$body-size: 14px;
+
+/* Button customization*/
+.button.search-form {
+  line-height: 20px;
+  word-spacing: 0;
+  height: auto;
+  padding: 2px 6px;
+  border-color: #767676;
+  border-width: 1px;
+  background-color: #efefef;
+}
 
 @if $archive {
   $dark-bg-color: #a8a088;
@@ -32,7 +43,6 @@ body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 14px !important;
   color: $text;
   .layout {
     min-height: 100vh;
@@ -686,5 +696,11 @@ label.label {
   border: 1px solid #e3e3e3;
   .card-content {
     padding: 9px !important;
+  }
+}
+
+#general-infos, #cross-references {
+  .column {
+    padding-top: 7px;
   }
 }

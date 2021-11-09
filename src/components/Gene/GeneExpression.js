@@ -109,6 +109,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </label>
           ))}
           <Bulma.Button
+            className="search-form"
             onClick={() => {
               const query = Object.entries(cFields).reduce(
                 (acc, [key, value]) => (value ? [...acc, key] : acc),
