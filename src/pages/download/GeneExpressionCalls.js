@@ -52,7 +52,7 @@ const GeneExpressionCalls = () => {
       setKwList(res.data.speciesIdToKeywords);
     });
     return () => {
-      hideModal();
+      if (hideModal) hideModal();
     };
   }, []);
 
@@ -125,9 +125,13 @@ const GeneExpressionCalls = () => {
           <div className="content">
             <div className="grid-species">
               {filteredSingleSpecies.map((s, key) => (
-                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
+                <div
+                  key={key}
+                  className="center-in-grid"
+                  onClick={() => history.replace(`?id=${s.id}`)}
+                >
                   <CardSpecies {...s} />
-                </Link>
+                </div>
               ))}
             </div>
           </div>

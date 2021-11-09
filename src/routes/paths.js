@@ -8,11 +8,11 @@ const PATHS = {
   },
   SEARCH: {
     GENE: '/search/genes',
-    GENE_ITEM: '/search/gene/:geneId',
-    GENE_ITEM_BY_SPECIES: '/search/gene/:geneId/:speciesId',
+    GENE_ITEM: '/gene/:geneId',
+    GENE_ITEM_BY_SPECIES: '/gene/:geneId/:speciesId',
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homology',
     SPECIES: '/search/species',
-    SPECIES_ITEM: '/search/species/:id',
+    SPECIES_ITEM: '/species/:id',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expression-calls',

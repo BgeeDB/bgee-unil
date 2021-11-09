@@ -95,7 +95,8 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={AnatSimple.path}
                     >
                       <a className="button" href={AnatSimple.path}>
-                        <span className="is-size-7">Simple file</span>
+                        <ion-icon name="download-outline" />
+                        <span className="is-size-7 ml-2">Simple file</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -108,7 +109,8 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={AnatAdvanced.path}
                     >
                       <a className="button" href={AnatAdvanced.path}>
-                        <span className="is-size-7">Advanced File</span>
+                        <ion-icon name="download-outline" />
+                        <span className="is-size-7 ml-2">Advanced File</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -128,7 +130,8 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={FullSimple.path}
                     >
                       <a className="button" href={FullSimple.path}>
-                        <span className="is-size-7">Simple file</span>
+                        <ion-icon name="download-outline" />
+                        <span className="is-size-7 ml-2">Simple file</span>
                       </a>
                     </GaEvent>
                   </p>
@@ -141,7 +144,8 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
                       label={FullAdvanced.path}
                     >
                       <a className="button" href={FullAdvanced.path}>
-                        <span className="is-size-7">Advanced File</span>
+                        <ion-icon name="download-outline" />
+                        <span className="is-size-7 ml-2">Advanced File</span>
                       </a>
                     </GaEvent>
                   </p>

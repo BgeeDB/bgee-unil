@@ -58,7 +58,7 @@ const ProcessedExpressionValues = () => {
           />,
           {
             onClose: () => () => {
-              history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES);
+              history.replace(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES);
             },
           }
         );
@@ -76,7 +76,7 @@ const ProcessedExpressionValues = () => {
       setKwList(res.data.speciesIdToKeywords);
     });
     return () => {
-      hideModal();
+      if (hideModal) hideModal();
     };
   }, []);
 
@@ -153,9 +153,13 @@ const ProcessedExpressionValues = () => {
             <div className="grid-species">
               {filteredSpecies.map((s, key) => (
                 // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
+                <div
+                  key={key}
+                  className="center-in-grid"
+                  onClick={() => history.replace(`?id=${s.id}`)}
+                >
                   <CardSpecies {...s} />
-                </Link>
+                </div>
               ))}
             </div>
           </div>

@@ -37,6 +37,11 @@ const NAVBAR_LEFT = [
         path: PATHS.SEARCH.ANATOMICAL_HOMOLOGY,
       },
       {
+        key: 'page.resources.sparql',
+        path: 'https://bgee.org/sparql/',
+        type: 'external',
+      },
+      {
         key: 'page.search.species',
         type: 'internal',
         path: PATHS.SEARCH.SPECIES,
@@ -197,13 +202,23 @@ const NAVBAR_RIGHT = [
 const Header = () => {
   const [openedMenuId, setOpenMenuId] = React.useState(undefined);
   const toggleOpenMenu = React.useCallback(
-    (key) => () => {
+    (key) => (e) => {
       setOpenMenuId(openedMenuId === key ? undefined : key);
+      e.nativeEvent.stopImmediatePropagation();
     },
     [openedMenuId]
   );
 
   const [hamburgerActive, setHamburgerActive] = React.useState(false);
+  React.useEffect(() => {
+    const closeMenu = () => {
+      setOpenMenuId(false);
+    };
+    document.getElementById('root').addEventListener('click', closeMenu);
+    return () => {
+      document.getElementById('root').removeEventListener('click', closeMenu);
+    };
+  }, []);
 
   return (
     <nav
@@ -236,7 +251,7 @@ const Header = () => {
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div
               key={key}
-              className={`navbar-item has-dropdown is-hoverable ${
+              className={`navbar-item has-dropdown ${
                 key === openedMenuId ? 'is-open' : ''
               }`}
               onClick={toggleOpenMenu(key)}
