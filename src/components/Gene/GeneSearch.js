@@ -111,6 +111,11 @@ const GeneSearch = ({ classNames, children }) => {
                 placeholder="Search Gene"
                 value={search}
                 onChange={handlerGeneSearch}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    onSubmitGene(search)();
+                  }
+                }}
               />
             </div>
           </div>
