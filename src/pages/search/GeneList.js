@@ -114,7 +114,7 @@ const GeneList = () => {
   }, [queryParams]);
 
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
       </div>
@@ -169,7 +169,7 @@ const GeneList = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

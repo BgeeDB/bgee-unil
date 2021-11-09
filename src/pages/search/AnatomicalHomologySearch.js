@@ -112,7 +112,7 @@ const AnatomicalHomologySearch = () => {
   }, [query]);
 
   return (
-    <div className="section pt-5">
+    <>
       <div className="content has-text-centered">
         <Bulma.Title size={4}>{`${i18n.t(
           'search.anatomical-homology.title'
@@ -236,7 +236,7 @@ const AnatomicalHomologySearch = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
