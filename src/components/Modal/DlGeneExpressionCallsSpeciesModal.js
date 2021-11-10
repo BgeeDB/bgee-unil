@@ -6,7 +6,6 @@ import LINK_ANCHOR from '../../routes/linkAnchor';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
 import GaEvent from '../GaEvent/GaEvent';
-import SpeciesImageDownloadModal from './SpeciesImageDownloadModal';
 
 const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
@@ -68,7 +67,6 @@ const DlGeneExpressionCallsSpeciesModal = ({ species }) => {
             <ion-icon name="arrow-redo-outline" />
           </a>
         </Bulma.Media.Item>
-        <SpeciesImageDownloadModal species={species} />
       </Bulma.Media>
       <div className="mt-3">
         <div>

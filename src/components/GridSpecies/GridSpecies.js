@@ -2,14 +2,29 @@
 import React from 'react';
 import classnames from '../../helpers/classnames';
 import { CardSpecies } from '../CustomCard';
+import useQuery from '../../hooks/useQuery';
 
 const GridSpecies = ({
   speciesList,
   onRenderSelection,
   onClick,
   expandable,
+  defaultSelection,
+  scrollAt = true,
 }) => {
-  const [selectedSpecies, setSelectedSpecies] = React.useState();
+  const speciesID = useQuery('id');
+  const [selectedSpecies, setSelectedSpecies] = React.useState(
+    defaultSelection ? parseInt(defaultSelection, 10) : undefined
+  );
+  React.useEffect(() => {
+    if (speciesID && scrollAt)
+      setTimeout(() => {
+        document
+          .getElementById(`species-${speciesID}`)
+          ?.scrollIntoView({ behavior: 'smooth' });
+      }, 250);
+  }, [speciesID]);
+
   return (
     <div className="species-grid">
       {speciesList.map((species) => (
