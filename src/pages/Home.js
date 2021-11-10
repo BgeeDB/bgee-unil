@@ -123,7 +123,7 @@ const Home = () => {
                     )}
                   >
                     <p className="is-size-4 m-0">
-                      {`${species.genus} ${species.speciesName}`}
+                      <i>{`${species.genus} ${species.speciesName}`}</i>
                       {species.name ? ` (${species.name})` : ''}
                     </p>
                     <Link

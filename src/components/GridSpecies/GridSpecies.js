@@ -18,7 +18,7 @@ const GridSpecies = ({
             id={`species-${species.id}`}
             onClick={(e) => {
               e.nativeEvent.preventDefault();
-              if (onClick) onClick(species);
+              if (onClick) onClick(species, selectedSpecies !== species.id);
               if (onRenderSelection)
                 setSelectedSpecies((prev) =>
                   prev === species.id ? undefined : species.id
@@ -36,7 +36,12 @@ const GridSpecies = ({
           {!expandable &&
             onRenderSelection &&
             selectedSpecies === species.id &&
-            onRenderSelection(species)}
+            onRenderSelection(species, {
+              onClose: () => {
+                if (onClick) onClick(species, false);
+                setSelectedSpecies();
+              },
+            })}
         </React.Fragment>
       ))}
     </div>

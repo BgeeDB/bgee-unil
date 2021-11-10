@@ -794,7 +794,49 @@ label.label {
   }
   .processed-exp {
     grid-column: 1 / -1;
-    height: 150px;
+    min-height: 400px;
     color: #dbdbdb !important;
+    font-size: 1rem !important;
+    .internal-link.grey {
+      color: #717177 !important;
+      &:hover {
+        color: #dbdbdb !important;
+      }
+    }
+    .close {
+      margin-left: 5px;
+      cursor: pointer;
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+    .image-container {
+      width: 260px;
+    }
+    .buttons-wrapper {
+      margin-bottom: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      & > span:not(:last-child) {
+        margin-right: .5rem;
+        margin-bottom: 5px;
+      }
+    }
   }
 }
+
+@media only screen and (max-width: $tablet) {
+  .species-grid {
+    .processed-exp {
+      .image-container {
+        display: none;
+      }
+    }
+  }
+}
+.button.is-multiline {
+   min-height: 2.25em;
+   white-space: unset;
+   height: auto;
+  flex-wrap: wrap;
+ }
