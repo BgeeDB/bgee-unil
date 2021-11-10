@@ -17,6 +17,7 @@ import { ModalContext } from '../contexts/ModalContext';
 import HomeSpeciesModal from '../components/Modal/HomeSpeciesModal';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
+import GridSpecies from '../components/GridSpecies/GridSpecies';
 
 const Home = () => {
   const { showModal, hideModal } = React.useContext(ModalContext);
@@ -112,14 +113,43 @@ const Home = () => {
             </Bulma.Card.Header.Title>
           </Bulma.Card.Header>
           <Bulma.Card.Body className="species">
-            <div className="content">
-              <div className="grid-species">
-                {speciesList.map((s) => (
-                  <div onClick={openSpeciesModal(s)} className="center-in-grid">
-                    <CardSpecies {...s} />
+            <div id="home-species-wrapper" className="content">
+              <GridSpecies
+                speciesList={speciesList}
+                onRenderSelection={(species) => (
+                  <div
+                    className={classnames(
+                      'fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
+                    )}
+                  >
+                    <p className="is-size-4 m-0">
+                      {`${species.genus} ${species.speciesName}`}
+                      {species.name ? ` (${species.name})` : ''}
+                    </p>
+                    <Link
+                      className="internal-link"
+                      to={`${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`}
+                    >
+                      <ion-icon name="arrow-forward-outline" />
+                      See RNA-Seq and Affymetrix data
+                    </Link>
+                    <Link
+                      className="internal-link"
+                      to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`}
+                    >
+                      <ion-icon name="arrow-forward-outline" />
+                      See gene expression calls
+                    </Link>
+                    <Link
+                      className="internal-link"
+                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)}
+                    >
+                      <ion-icon name="arrow-forward-outline" className="mr-2" />
+                      See species information
+                    </Link>
                   </div>
-                ))}
-              </div>
+                )}
+              />
             </div>
           </Bulma.Card.Body>
         </Bulma.Card>
@@ -148,6 +178,7 @@ const Home = () => {
     </>
   );
 };
+
 const NavButtons = ({ className }) => (
   <div
     className={classnames(

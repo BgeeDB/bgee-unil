@@ -9,6 +9,7 @@ import { ModalProvider } from '../contexts/ModalContext';
 import { NotificationProvider } from '../contexts/NotificationsContext';
 import StaticPage from '../pages/StaticPage';
 import ScrollTop from '../components/ScrollTop';
+import MarkdownReader from '../pages/MarkdownReader';
 
 const Router = () => (
   <BrowserRouter>
@@ -164,7 +165,6 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
-                  PATHS.SUPPORT.GTEX,
                   PATHS.SUPPORT.TOP_ANAT,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
@@ -174,6 +174,13 @@ const Router = () => (
                   PATHS.ABOUT.PRIVACY_POLICY,
                 ]}
                 render={(props) => <Page {...props} Component={StaticPage} />}
+              />
+              <Route
+                exact
+                path={[PATHS.SUPPORT.GTEX]}
+                render={(props) => (
+                  <Page {...props} Component={MarkdownReader} />
+                )}
               />
 
               <Route

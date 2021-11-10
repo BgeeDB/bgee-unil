@@ -13,16 +13,6 @@ import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
 
-const styles = {
-  sideMenuPosition: {
-    position: 'fixed',
-  },
-  sideMenuText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-};
-
 const GeneDetails = ({
   details: { name, geneId, description, species, synonyms },
 }) => {
@@ -53,7 +43,7 @@ const GeneDetails = ({
     history.replace(`#${id}`);
   }, []);
 
-  const sideMenu = () => {
+  const sideMenu = React.useMemo(() => {
     const sideMenuElem = [
       { domId: 'general-infos', name: 'General information' },
       { domId: 'expression', name: 'Expression' },
@@ -63,24 +53,31 @@ const GeneDetails = ({
     ];
 
     return (
-      <aside className="menu" style={styles.sideMenuPosition}>
+      <aside className="menu">
         <ul className="menu-list">
           {sideMenuElem.map((elem) => (
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
-              <a style={styles.sideMenuText}>{elem.name}</a>
+              <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
             </li>
           ))}
         </ul>
       </aside>
     );
-  };
+  }, []);
 
   return (
     <div className="is-widescreen">
       <div className="columns">
-        <div className="column is-one-fifth">{sideMenu()}</div>
-        <div className="column is-four-fifths">
+        <div className="column is-narrow-tablet is-narrow-desktop is-narrow-widescreen is-narrow-fullhd">
+          <div className="side-menu">
+            <div className="side-menu-wrapper">
+              <GeneSearch />
+              {sideMenu}
+            </div>
+          </div>
+        </div>
+        <div className="column">
           <Helmet>
             <title>{`Gene : ${name} - ${geneId} - `}</title>
           </Helmet>

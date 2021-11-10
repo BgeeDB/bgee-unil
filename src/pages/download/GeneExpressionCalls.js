@@ -10,6 +10,7 @@ import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpr
 import { ModalContext } from '../../contexts/ModalContext';
 import api from '../../api';
 import CreativeCommons from '../../components/CreativeCommons';
+import GridSpecies from '../../components/GridSpecies/GridSpecies';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -124,15 +125,11 @@ const GeneExpressionCalls = () => {
         <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
-              {filteredSingleSpecies.map((s, key) => (
-                <div
-                  key={key}
-                  className="center-in-grid"
-                  onClick={() => history.replace(`?id=${s.id}`)}
-                >
-                  <CardSpecies {...s} />
-                </div>
-              ))}
+              {/* TODO replace modal with  grid element */}
+              <GridSpecies
+                speciesList={filteredSingleSpecies}
+                onRenderSelection={(species) => null}
+              />
             </div>
           </div>
         </Bulma.Card.Body>

@@ -9,6 +9,8 @@ import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/DlPr
 import { ModalContext } from '../../contexts/ModalContext';
 import CreativeCommons from '../../components/CreativeCommons';
 import api from '../../api';
+import GridSpecies from '../../components/GridSpecies/GridSpecies';
+import classnames from '../../helpers/classnames';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -150,17 +152,20 @@ const ProcessedExpressionValues = () => {
         </Bulma.Card.Header>
         <Bulma.Card.Body>
           <div className="content">
-            <div className="grid-species">
-              {filteredSpecies.map((s, key) => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <div
-                  key={key}
-                  className="center-in-grid"
-                  onClick={() => history.replace(`?id=${s.id}`)}
-                >
-                  <CardSpecies {...s} />
-                </div>
-              ))}
+            <div className="species-grid">
+              {/* TODO replace modal with  grid element */}
+              <GridSpecies
+                speciesList={filteredSpecies}
+                onRenderSelection={(species) => (
+                  <div
+                    className={classnames(
+                      'processed-exp is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
+                    )}
+                  >
+                    species
+                  </div>
+                )}
+              />
             </div>
           </div>
         </Bulma.Card.Body>

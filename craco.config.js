@@ -1,4 +1,5 @@
 const { loaderByName, addAfterLoader, removeLoaders } = require('@craco/craco');
+const rawLoader = require('craco-raw-loader');
 
 module.exports = {
   reactScriptsVersion: 'react-scripts',
@@ -30,4 +31,12 @@ module.exports = {
       return webpackConfig;
     },
   },
+  plugins: [
+    {
+      plugin: rawLoader,
+      options: {
+        test: /\.md$/,
+      },
+    },
+  ],
 };
