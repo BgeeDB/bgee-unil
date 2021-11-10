@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key,react/button-has-type,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/interactive-supports-focus,react/no-array-index-key,react/button-has-type,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
@@ -10,6 +10,7 @@ import GridSpecies from '../../components/GridSpecies/GridSpecies';
 import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import readableFileSize from '../../helpers/readableFileSize';
+import ExpressionSearch from '../../components/Search/ExpressionSearch';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -98,23 +99,44 @@ const ProcessedExpressionValues = () => {
         .
       </p>
       <div>
-        <Bulma.Card className="search-input mx-auto my-3">
+        <Bulma.Card className="form search-input mx-auto my-3">
           <Bulma.Card.Body>
             <div className="content">
               <div className="field">
                 <label className="label" htmlFor="search-species">
                   Search species
                 </label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="text"
-                    name="search-species"
-                    placeholder="Scientific name, common name..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </div>
+                <ExpressionSearch
+                  search={search}
+                  setSearch={setSearch}
+                  elements={
+                    filteredSpecies &&
+                    kwList &&
+                    filteredSpecies
+                      ?.map((s) => ({
+                        info: s,
+                        word: kwList?.[s.id]?.find((kw) =>
+                          new RegExp(search, 'gi').test(kw)
+                        ),
+                      }))
+                      ?.sort((a, b) => a?.word?.localeCompare(b.word))
+                  }
+                  onRender={(s, closeAutoComplete) => (
+                    <div
+                      key={s.info.id}
+                      role="button"
+                      onClick={() => {
+                        setSearch(s.word);
+                        history.replace(`?id=${s.info.id}`);
+                        setTimeout(() => {
+                          closeAutoComplete();
+                        }, 100);
+                      }}
+                    >
+                      {s.word}
+                    </div>
+                  )}
+                />
               </div>
             </div>
           </Bulma.Card.Body>
@@ -131,7 +153,7 @@ const ProcessedExpressionValues = () => {
         </Bulma.Card.Header>
         <Bulma.Card.Body>
           <div className="content">
-            <div className="species-grid">
+            <div className="grid-species">
               <GridSpecies
                 speciesList={filteredSpecies}
                 defaultSelection={speciesID}

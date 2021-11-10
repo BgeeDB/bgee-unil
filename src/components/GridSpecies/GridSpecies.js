@@ -17,13 +17,16 @@ const GridSpecies = ({
     defaultSelection ? parseInt(defaultSelection, 10) : undefined
   );
   React.useEffect(() => {
-    if (speciesID && scrollAt)
+    if (speciesID && scrollAt) {
+      setSelectedSpecies(parseInt(speciesID, 10));
       setTimeout(() => {
         document
           .getElementById(`species-${speciesID}`)
           ?.scrollIntoView({ behavior: 'smooth' });
       }, 250);
+    }
   }, [speciesID]);
+  console.log(speciesID);
 
   return (
     <div className="species-grid">
@@ -46,6 +49,7 @@ const GridSpecies = ({
               }
             )}
           >
+            {console.log(species.name)}
             <CardSpecies {...species} />
           </div>
           {!expandable &&

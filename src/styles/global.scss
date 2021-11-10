@@ -748,8 +748,9 @@ label.label {
 .species-grid {
   display: grid;
   grid-column-gap: 5px;
-  grid-template-columns: repeat( auto-fit, minmax(126px, 1fr) );
+  grid-template-columns: repeat( auto-fill, 126px);
   grid-auto-flow: dense;
+  justify-content: center;
   .active, .fullwidth, .expression-species {
     background-color: #282828;
   }
@@ -839,4 +840,29 @@ label.label {
    white-space: unset;
    height: auto;
   flex-wrap: wrap;
- }
+}
+
+.autocomplete-wrapper {
+  overflow-y: auto;
+  max-height: 15rem;
+  border: 1px solid lightgrey;
+  width: 100%;
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 9;
+  top: 100%;
+  background-color: white;
+  & > div {
+    cursor: pointer;
+    margin: 2px 0;
+    &:hover {
+      background-color: $white;
+      color: $primary;
+      font-weight: 600;
+      margin: 1px 0;
+      border-top: 1px solid $primary;
+      border-bottom: 1px solid $primary;
+    }
+  }
+
+}

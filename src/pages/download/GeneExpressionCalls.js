@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/interactive-supports-focus,react/no-array-index-key,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import i18n from '../../i18n';
@@ -11,6 +11,7 @@ import GridSpecies from '../../components/GridSpecies/GridSpecies';
 import classnames from '../../helpers/classnames';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import GaEvent from '../../components/GaEvent/GaEvent';
+import ExpressionSearch from '../../components/Search/ExpressionSearch';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -65,7 +66,6 @@ const GeneExpressionCalls = () => {
     });
   }, []);
 
-  console.log(files);
   return (
     <>
       <div className="content has-text-centered">
@@ -97,25 +97,44 @@ const GeneExpressionCalls = () => {
         </a>
         {i18n.t('download.gene-exp-calls.description-4')}
       </p>
-      <Bulma.Card className="search-input mx-auto my-3">
+      <Bulma.Card className="form search-input mx-auto my-3">
         <Bulma.Card.Body>
           <div className="content">
             <div className="field">
               <label className="label" htmlFor="search-species">
                 {i18n.t('download.processed-exp-values.search-label')}
               </label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  name="search-species"
-                  placeholder={i18n.t(
-                    'download.processed-exp-values.search-placeholder'
-                  )}
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
+              <ExpressionSearch
+                search={search}
+                setSearch={setSearch}
+                elements={
+                  filteredSingleSpecies &&
+                  kwList &&
+                  filteredSingleSpecies
+                    ?.map((s) => ({
+                      info: s,
+                      word: kwList?.[s.id]?.find((kw) =>
+                        new RegExp(search, 'gi').test(kw)
+                      ),
+                    }))
+                    ?.sort((a, b) => a?.word?.localeCompare(b.word))
+                }
+                onRender={(s, closeAutoComplete) => (
+                  <div
+                    key={s.info.id}
+                    role="button"
+                    onClick={() => {
+                      setSearch(s.word);
+                      history.replace(`?id=${s.info.id}`);
+                      setTimeout(() => {
+                        closeAutoComplete();
+                      }, 100);
+                    }}
+                  >
+                    {s.word}
+                  </div>
+                )}
+              />
             </div>
           </div>
         </Bulma.Card.Body>
@@ -196,7 +215,7 @@ const GeneExpressionCalls = () => {
                                 Anatomical entities only
                               </p>
                               <div className="field has-addons">
-                                {files[species.id.toString()].anatSimple && (
+                                {files?.[species.id.toString()]?.anatSimple && (
                                   <p className="control">
                                     <GaEvent
                                       category="Gene Expression Calls"
@@ -221,7 +240,8 @@ const GeneExpressionCalls = () => {
                                     </GaEvent>
                                   </p>
                                 )}
-                                {files[species.id.toString()].anatAdvanced && (
+                                {files?.[species.id.toString()]
+                                  ?.anatAdvanced && (
                                   <p className="control">
                                     <GaEvent
                                       category="Gene Expression Calls"
@@ -253,7 +273,7 @@ const GeneExpressionCalls = () => {
                                 All conditions parameters
                               </p>
                               <div className="field has-addons">
-                                {files[species.id.toString()].fullSimple && (
+                                {files?.[species.id.toString()]?.fullSimple && (
                                   <p className="control">
                                     <GaEvent
                                       category="Gene Expression Calls"
@@ -278,7 +298,8 @@ const GeneExpressionCalls = () => {
                                     </GaEvent>
                                   </p>
                                 )}
-                                {files[species.id.toString()].fullAdvanced && (
+                                {files?.[species.id.toString()]
+                                  ?.fullAdvanced && (
                                   <p className="control">
                                     <GaEvent
                                       category="Gene Expression Calls"
