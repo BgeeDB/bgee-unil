@@ -492,8 +492,8 @@ a.image.cc {
 #notifications {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 1rem;
+  right: 1rem;
   z-index: 99;
 
   & > .notification {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 let timeout = [];
-const TIMEOUT_NOTIF = 3000;
+const TIMEOUT_NOTIF = 5000;
 const CLEAR_INTERVAL = 5000;
 
 const useNotifications = () => {

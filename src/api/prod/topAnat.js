@@ -1,6 +1,8 @@
 import axios from 'axios';
-import axiosInstance from './constant';
+import React from 'react';
+import axiosInstance, { getAxiosAddNotif } from './constant';
 import errorHandler from '../errorHandler';
+import random from '../../helpers/random';
 
 export const TOP_ANAT_CANCEL_API = {
   autoCompleteGenes: null,
@@ -169,7 +171,24 @@ const topAnat = {
         })
         .then(({ data }) => resolve(data))
         .catch((error) => {
-          errorHandler(error);
+          if (
+            error?.response?.data?.code === 400 &&
+            error?.response?.data?.data?.exceptionType ===
+              'JobResultNotFoundException'
+          ) {
+            getAxiosAddNotif()({
+              id: random.toString(),
+              children: (
+                <p>
+                  Results were not present on our server, resubmitting the
+                  analysis
+                </p>
+              ),
+              className: `is-warning`,
+            });
+          } else {
+            errorHandler(error);
+          }
           reject(error?.response);
         });
     }),
