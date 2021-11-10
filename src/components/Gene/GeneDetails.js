@@ -13,16 +13,6 @@ import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
 
-const styles = {
-  sideMenuPosition: {
-    position: 'fixed',
-  },
-  sideMenuText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-};
-
 const GeneDetails = ({
   details: { name, geneId, description, species, synonyms },
 }) => {
@@ -53,7 +43,7 @@ const GeneDetails = ({
     history.replace(`#${id}`);
   }, []);
 
-  const sideMenu = () => {
+  const sideMenu = React.useMemo(() => {
     const sideMenuElem = [
       { domId: 'general-infos', name: 'General information' },
       { domId: 'expression', name: 'Expression' },
@@ -63,18 +53,18 @@ const GeneDetails = ({
     ];
 
     return (
-      <aside className="menu" style={styles.sideMenuPosition}>
+      <aside className="menu">
         <ul className="menu-list">
           {sideMenuElem.map((elem) => (
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
-              <a style={styles.sideMenuText}>{elem.name}</a>
+              <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
             </li>
           ))}
         </ul>
       </aside>
     );
-  };
+  }, []);
 
   const metaTitle = `${name} 
        expression in
@@ -98,34 +88,33 @@ const GeneDetails = ({
         <meta name="keywords" content={metaKeywords} />
       </Helmet>
       <div className="columns">
-        <div className="column is-one-fifth">{sideMenu()}</div>
-        <div className="column is-four-fifths">
-          <Bulma.Columns className="my-0">
-            <Bulma.C size={3}>
-              <GeneSearch title={false} />
-            </Bulma.C>
-            <Bulma.C
-              size={9}
-              className="is-flex is-justify-content-center is-align-items-center"
-            >
-              <div className="content is-align-items-center is-flex">
-                <Bulma.Image
-                  className="m-0 mr-2"
-                  src={`https://bgee.org/img/species/${species.id}_light.jpg`}
-                  height={50}
-                  width={50}
-                />
-                <p className="title is-5 has-text-centered">
-                  {`Gene : ${name} - ${geneId} - `}
-                  <i>
-                    {species.genus} {species.speciesName}
-                  </i>
-                  {` (${species.name})`}
-                </p>
-              </div>
-            </Bulma.C>
-          </Bulma.Columns>
-          <div className="mb-6" id="general-infos">
+        <div className="column is-narrow-tablet is-narrow-desktop is-narrow-widescreen is-narrow-fullhd">
+          <div className="side-menu">
+            <div className="side-menu-wrapper">
+              <GeneSearch />
+              {sideMenu}
+            </div>
+          </div>
+        </div>
+        <div className="column">
+          <div className="is-flex is-justify-content-center is-align-items-center">
+            <div className="content is-align-items-center is-flex">
+              <Bulma.Image
+                className="m-0 mr-2"
+                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                height={50}
+                width={50}
+              />
+              <p className="title is-5 has-text-centered">
+                {`Gene : ${name} - ${geneId} - `}
+                <i>
+                  {species.genus} {species.speciesName}
+                </i>
+                {` (${species.name})`}
+              </p>
+            </div>
+          </div>
+          <div id="general-infos">
             <Bulma.Title size={5} className="gradient-underline">
               {i18n.t('search.gene.general-info')}
             </Bulma.Title>

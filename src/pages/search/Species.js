@@ -116,10 +116,18 @@ const Species = () => {
           <meta name="keywords" content={metaKeywords} />
         </Helmet>
       )}
-      <div className="content has-text-centered">
-        <Bulma.Title
-          size={4}
-        >{`Species: ${data.species.genus} ${data.species.speciesName} (${data.species.name})`}</Bulma.Title>
+      <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
+        <Bulma.Image
+          className="m-0 mr-2"
+          src={`https://bgee.org/img/species/${data.species.id}_light.jpg`}
+          height={75}
+          width={75}
+        />
+        <Bulma.Title size={4} className="m-0">{`Species: ${
+          data.species.genus
+        } ${data.species.speciesName}${
+          data.species.name ? ` (${data.species.name})` : ''
+        }`}</Bulma.Title>
       </div>
       <div>
         <Bulma.Title size={5} className="gradient-underline">

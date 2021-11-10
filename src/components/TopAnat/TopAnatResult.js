@@ -155,7 +155,7 @@ const TopAnatResult = ({
   }, [status, results, selectedStage]);
 
   const customHeader = React.useCallback(
-    (searchElement, pageSizeElement, showEntriesText) =>
+    (searchElement, pageSizeElement) =>
       dataDisplay.length > 0 ? (
         <>
           <Bulma.Columns vCentered>
@@ -234,10 +234,7 @@ const TopAnatResult = ({
               </div>
             </Bulma.C>
             <Bulma.C size={3}>
-              <div>
-                {pageSizeElement}
-                <div>{showEntriesText}</div>
-              </div>
+              <div>{pageSizeElement}</div>
             </Bulma.C>
           </Bulma.Columns>
           {results.analysis.length > 1 && (

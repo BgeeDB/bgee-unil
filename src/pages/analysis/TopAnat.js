@@ -149,6 +149,7 @@ const TopAnat = () => {
             .name,
           res.requestParameters.job_title
         );
+
         setData(ApiReducer.topAnatForm(rp));
         requestParameters.set(ApiReducer.topAnatRequestParameters(res, rp));
         setResults({

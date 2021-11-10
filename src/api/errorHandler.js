@@ -22,7 +22,7 @@ const errorHandler = (error) => {
     });
     getAxiosAddNotif()({
       id: random.toString(),
-      children: <p>{error.message}</p>,
+      children: <p>{error?.response?.data?.message || error.message}</p>,
       className: `is-danger`,
     });
   } else if (error.request) {

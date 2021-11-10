@@ -37,31 +37,28 @@ const Pagination = ({ current, total, setPage }) => {
 
   return (
     <nav
-      className="pagination is-centered"
+      className="pagination is-small is-centered"
       role="navigation"
       aria-label="pagination"
     >
       <a
         className="pagination-previous"
-        disabled={current === 1}
-        onClick={() => setPage(current - 1)}
+        onClick={() => current > 1 && setPage(current - 1)}
       >
         Previous
       </a>
       <a
         className="pagination-next"
-        disabled={current === total}
-        onClick={() => setPage(current + 1)}
+        onClick={() => current + 1 <= total && setPage(current + 1)}
       >
-        Next page
+        Next
       </a>
       <ul className="pagination-list">
         <li>
           <a
             className={`pagination-link  ${current === 1 ? 'is-current' : ''}`}
             aria-label="Goto page 1"
-            disabled={current === 1}
-            onClick={() => setPage(1)}
+            onClick={() => current !== 1 && setPage(1)}
           >
             1
           </a>
@@ -77,9 +74,10 @@ const Pagination = ({ current, total, setPage }) => {
               className={`pagination-link  ${
                 current === page ? 'is-current' : ''
               }`}
-              disabled={current === page}
-              aria-label={`Goto page ${page}`}
-              onClick={() => setPage(page)}
+              aria-label={`Go to page ${page}`}
+              onClick={() => {
+                if (current !== page) setPage(page);
+              }}
             >
               {page}
             </a>
@@ -96,8 +94,7 @@ const Pagination = ({ current, total, setPage }) => {
               current === total ? 'is-current' : ''
             }`}
             aria-label={`Goto page ${total}`}
-            disabled={current === total}
-            onClick={() => setPage(total)}
+            onClick={() => current !== total && setPage(total)}
           >
             {total}
           </a>

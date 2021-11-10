@@ -10,10 +10,12 @@ import DlProcessedExpressionValuesSpeciesModal from '../../components/Modal/DlPr
 import { ModalContext } from '../../contexts/ModalContext';
 import CreativeCommons from '../../components/CreativeCommons';
 import api from '../../api';
+import GridSpecies from '../../components/GridSpecies/GridSpecies';
+import classnames from '../../helpers/classnames';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
-  const { showModal } = React.useContext(ModalContext);
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [speciesList, setSpeciesList] = React.useState([]);
   const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
@@ -29,7 +31,7 @@ const ProcessedExpressionValues = () => {
   React.useEffect(() => {
     if (speciesID) {
       const species = speciesList.find((s) => s.id.toString() === speciesID);
-      console.log(species);
+      console.log('SPECIES', species);
       if (species) {
         const files = {
           affymetrixData: species.downloadFiles.find(
@@ -51,7 +53,7 @@ const ProcessedExpressionValues = () => {
             (d) => d.category === 'full_length_data'
           ),
         };
-        console.log(files);
+
         showModal(
           <DlProcessedExpressionValuesSpeciesModal
             species={species}
@@ -59,7 +61,7 @@ const ProcessedExpressionValues = () => {
           />,
           {
             onClose: () => () => {
-              history.push(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES);
+              history.replace(PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES);
             },
           }
         );
@@ -76,6 +78,9 @@ const ProcessedExpressionValues = () => {
       );
       setKwList(res.data.speciesIdToKeywords);
     });
+    return () => {
+      if (hideModal) hideModal();
+    };
   }, []);
 
   const allSpeciesName = `${speciesList
@@ -166,13 +171,20 @@ const ProcessedExpressionValues = () => {
         </Bulma.Card.Header>
         <Bulma.Card.Body>
           <div className="content">
-            <div className="grid-species">
-              {filteredSpecies.map((s, key) => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
-                  <CardSpecies {...s} />
-                </Link>
-              ))}
+            <div className="species-grid">
+              {/* TODO replace modal with  grid element */}
+              <GridSpecies
+                speciesList={filteredSpecies}
+                onRenderSelection={(species) => (
+                  <div
+                    className={classnames(
+                      'processed-exp is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
+                    )}
+                  >
+                    species
+                  </div>
+                )}
+              />
             </div>
           </div>
         </Bulma.Card.Body>

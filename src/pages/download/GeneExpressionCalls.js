@@ -11,10 +11,11 @@ import DlGeneExpressionCallsSpeciesModal from '../../components/Modal/DlGeneExpr
 import { ModalContext } from '../../contexts/ModalContext';
 import api from '../../api';
 import CreativeCommons from '../../components/CreativeCommons';
+import GridSpecies from '../../components/GridSpecies/GridSpecies';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
-  const { showModal } = React.useContext(ModalContext);
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [singleSpeciesList, setSingleSpeciesList] = React.useState([]);
   const [kwList, setKwList] = React.useState({});
   const [search, setSearch] = React.useState('');
@@ -33,11 +34,13 @@ const GeneExpressionCalls = () => {
       const species = singleSpeciesList.find(
         (s) => s.id.toString() === speciesID
       );
-      showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
-        onClose: () => () => {
-          history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
-        },
-      });
+      if (species) {
+        showModal(<DlGeneExpressionCallsSpeciesModal species={species} />, {
+          onClose: () => () => {
+            history.push(PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS);
+          },
+        });
+      }
     }
   }, [speciesID, singleSpeciesList]);
   React.useEffect(() => {
@@ -50,6 +53,9 @@ const GeneExpressionCalls = () => {
       );
       setKwList(res.data.speciesIdToKeywords);
     });
+    return () => {
+      if (hideModal) hideModal();
+    };
   }, []);
 
   const allSpeciesName = `${singleSpeciesList
@@ -137,11 +143,11 @@ const GeneExpressionCalls = () => {
         <Bulma.Card.Body>
           <div className="content">
             <div className="grid-species">
-              {filteredSingleSpecies.map((s, key) => (
-                <Link key={key} className="center-in-grid" to={`?id=${s.id}`}>
-                  <CardSpecies {...s} />
-                </Link>
-              ))}
+              {/* TODO replace modal with  grid element */}
+              <GridSpecies
+                speciesList={filteredSingleSpecies}
+                onRenderSelection={(species) => null}
+              />
             </div>
           </div>
         </Bulma.Card.Body>

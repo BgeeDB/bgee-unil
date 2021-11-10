@@ -94,7 +94,7 @@ const GeneSearch = ({ classNames, children }) => {
   }, []);
 
   return (
-    <Bulma.Card className={classnames(classNames)}>
+    <Bulma.Card className={classnames(classNames, 'form')}>
       <Bulma.Card.Body>
         <div className="content">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
@@ -111,6 +111,11 @@ const GeneSearch = ({ classNames, children }) => {
                 placeholder="Search Gene"
                 value={search}
                 onChange={handlerGeneSearch}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    onSubmitGene(search)();
+                  }
+                }}
               />
             </div>
           </div>
@@ -118,7 +123,7 @@ const GeneSearch = ({ classNames, children }) => {
           <div className="field">
             <div className="control is-flex is-align-items-center">
               <button
-                className="button mr-2"
+                className="button mr-2 search-form"
                 type="button"
                 onClick={onSubmitGene(search)}
               >
