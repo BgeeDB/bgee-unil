@@ -10,7 +10,8 @@ import { NotificationProvider } from '../contexts/NotificationsContext';
 import StaticPage from '../pages/StaticPage';
 import ScrollTop from '../components/ScrollTop';
 import MarkdownReader from '../pages/MarkdownReader';
-import genericHelmetProvider from '../helpers/genericHelmetProvider';
+import GenericHelmetProvider from '../helpers/GenericHelmetProvider';
+import Error from '../pages/Error';
 
 const Router = () => (
   <BrowserRouter>
@@ -18,7 +19,7 @@ const Router = () => (
       <ModalProvider>
         <NotificationProvider>
           <Layout>
-            <genericHelmetProvider />
+            <GenericHelmetProvider />
             <Switch>
               <Route
                 exact
@@ -201,7 +202,7 @@ const Router = () => (
                 )}
               />
 
-              {/* <Route path={PATHS.ERROR} component={Error} /> */}
+              <Route path={PATHS.ERROR} component={Error} />
 
               <Redirect to={PATHS.HOME} />
             </Switch>

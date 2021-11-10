@@ -8,28 +8,17 @@ import assets from '../assets';
 import packageJson from '../../package.json';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
-import { CardSpecies } from '../components/CustomCard';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
 import HomeNewsList from '../components/Home/HomeNewsList';
 import api from '../api';
-import { ModalContext } from '../contexts/ModalContext';
-import HomeSpeciesModal from '../components/Modal/HomeSpeciesModal';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
 
 const Home = () => {
-  const { showModal, hideModal } = React.useContext(ModalContext);
   const [speciesList, setSpeciesList] = useState([]);
 
-  const openSpeciesModal = React.useCallback(
-    (species) => () => {
-      console.log(species);
-      showModal(<HomeSpeciesModal species={species} hide={hideModal} />);
-    },
-    []
-  );
   React.useEffect(() => {
     api.search.species.list().then((resp) => {
       if (resp.code === 200) {
@@ -38,9 +27,6 @@ const Home = () => {
         setSpeciesList([]);
       }
     });
-    return () => {
-      if (hideModal) hideModal();
-    };
   }, []);
 
   return (

@@ -26,7 +26,6 @@ const GridSpecies = ({
       }, 250);
     }
   }, [speciesID]);
-  console.log(speciesID);
 
   return (
     <div className="species-grid">
@@ -49,7 +48,6 @@ const GridSpecies = ({
               }
             )}
           >
-            {console.log(species.name)}
             <CardSpecies {...species} />
           </div>
           {!expandable &&

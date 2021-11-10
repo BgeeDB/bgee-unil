@@ -16,6 +16,7 @@ import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons'
 import { getAxiosAddNotif } from '../../api/prod/constant';
 import random from '../../helpers/random';
 import ApiReducer from '../../helpers/ApiReducer';
+import { TOP_ANAT_DEFAULT_RP } from '../../helpers/constants/topAnat';
 
 let getJobStatusTimeOut;
 
@@ -46,11 +47,9 @@ const TopAnat = () => {
   } = useTopAnat(flowState, setFlowState);
 
   const getJobStatus = React.useCallback((ID, jobID, requestParams = true) => {
-    console.log('à');
     api.topAnat
       .getJob(ID, jobID, requestParams)
       .then((res) => {
-        console.log('zer', res);
         if (res.data.jobResponse.jobStatus === 'UNDEFINED') {
           setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
@@ -100,10 +99,10 @@ const TopAnat = () => {
                 res.requestParameters.data_type.find((f) => f === 'EST')
               ),
             }));
-            requestParameters.set((prev) => ({
-              ...prev,
-              fg: { list: { selectedSpecies: true } },
-            }));
+            requestParameters.set({
+              TOP_ANAT_DEFAULT_RP,
+              customBg: Boolean(res.requestParameters.bg_list),
+            });
 
             api.topAnat
               .autoCompleteGenes(res.requestParameters.fg_list.join('\n'))
@@ -114,13 +113,29 @@ const TopAnat = () => {
                     list: r.data.fg_list,
                     message: r.message,
                   },
-                  bg: null,
-                  customBg: false,
                 }));
               })
               .catch((err) => {
                 console.debug('[ERROR] api.topAnat.autoComplete', err);
               });
+            if (res.requestParameters.bg_list)
+              api.topAnat
+                .autoCompleteGenes(
+                  res.requestParameters.bg_list.join('\n'),
+                  false
+                )
+                .then((r) => {
+                  requestParameters.set((prev) => ({
+                    ...(prev || {}),
+                    bg: {
+                      list: r.data.bg_list,
+                      message: r.message,
+                    },
+                  }));
+                })
+                .catch((err) => {
+                  console.debug('[ERROR] api.topAnat.autoComplete', err);
+                });
           }
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
         } else {
@@ -283,7 +298,6 @@ const TopAnat = () => {
         />
         <TopAnatBanner results={results} status={flowState} />
       </Bulma.Section>
-
       <TopAnatResult
         status={flowState}
         results={results}

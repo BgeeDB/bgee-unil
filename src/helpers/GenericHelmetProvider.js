@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const genericHelmetProvider = () => (
+const GenericHelmetProvider = () => (
   <>
     <Helmet>
       <title>Bgee: gene expression data in animals</title>
@@ -18,4 +18,4 @@ const genericHelmetProvider = () => (
   </>
 );
 
-export default genericHelmetProvider;
+export default GenericHelmetProvider;

@@ -3,7 +3,6 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkToc from 'remark-toc';
 import remarkGfm from 'remark-gfm';
-import remarkHype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeRaw from 'rehype-raw';
