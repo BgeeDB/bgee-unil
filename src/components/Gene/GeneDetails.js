@@ -66,8 +66,27 @@ const GeneDetails = ({
     );
   }, []);
 
+  const metaTitle = `${name} 
+       expression in
+       ${
+         species.name ? species.name : `${species.genus} ${species.speciesName}`
+       }`;
+  const metaDescription = `Bgee gene expression data for ${
+    name ? `${name} (` : ''
+  }
+   ${geneId}  ${name ? ')' : ''}`;
+  const metaKeywords = `gene expression,
+  ${name ? `${name} , ${name} expression, ` : ''}
+  ${geneId}, ${geneId} expression
+  ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
+
   return (
     <div className="is-widescreen">
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+      </Helmet>
       <div className="columns">
         <div className="column is-narrow-tablet is-narrow-desktop is-narrow-widescreen is-narrow-fullhd">
           <div className="side-menu">
@@ -78,9 +97,6 @@ const GeneDetails = ({
           </div>
         </div>
         <div className="column">
-          <Helmet>
-            <title>{`Gene : ${name} - ${geneId} - `}</title>
-          </Helmet>
           <div className="is-flex is-justify-content-center is-align-items-center">
             <div className="content is-align-items-center is-flex">
               <Bulma.Image

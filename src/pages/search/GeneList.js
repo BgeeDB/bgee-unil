@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations,react/no-array-index-key */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router-dom';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
@@ -121,8 +122,22 @@ const GeneList = () => {
     }
   }, [queryParams]);
 
+  const metaDescription = `${
+    results
+      ? `${search} gene search, ${results.totalMatchCount} results in total`
+      : 'Search for a gene in Bgee'
+  }`;
+
+  const metaKeywords = `gene search, gene
+  ${search ? `, ${search}` : ''}`;
+
   return (
     <>
+      <Helmet>
+        <title>{search ? `${search} - ` : ''} Gene search</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+      </Helmet>
       <div className="content has-text-centered">
         <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
       </div>

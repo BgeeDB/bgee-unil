@@ -1,10 +1,22 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Bulma from '../../components/Bulma';
 import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
 
 const DataDumps = () => (
   <>
+    <Helmet>
+      <title>Data dumps download page</title>
+      <meta
+        name="description"
+        content="Download a simplified view of the Bgee database in various formats."
+      />
+      <meta
+        name="keywords"
+        content="dataset, data download, MySQL, RDF, EasyBgee, gene expression data"
+      />
+    </Helmet>
     <div className="content has-text-centered">
       <Bulma.Title size={5}>Bgee data dumps</Bulma.Title>
     </div>

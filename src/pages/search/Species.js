@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
@@ -87,8 +88,34 @@ const Species = () => {
       });
   }, [id]);
 
+  let metaTitle = '';
+  let metaDescription = '';
+  let metaKeywords = '';
+
+  if (data) {
+    metaTitle = `${data.species.genus}  ${data.species.speciesName}
+       ${data.species.name ? `( ${data.species.name} )` : ''}`;
+    metaDescription = `General information and datasets available 
+        in Bgee for species 
+        ${data.species.genus}  ${data.species.speciesName}
+       ${data.species.name ? `( ${data.species.name} )` : ''}`;
+    metaKeywords = `gene expression in 
+       ${data.species.genus} ${data.species.speciesName},
+       ${data.species.name ? `gene expression in ${data.species.name} , ` : ''}
+       ${data.species.genus} ${data.species.speciesName}, 
+       ${data.species.name ? `${data.species.name} , ` : ''}
+       species, taxon`;
+  }
+
   return !data ? null : (
     <>
+      {data && (
+        <Helmet>
+          <title>{metaTitle}</title>
+          <meta name="description" content={metaDescription} />
+          <meta name="keywords" content={metaKeywords} />
+        </Helmet>
+      )}
       <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
         <Bulma.Image
           className="m-0 mr-2"

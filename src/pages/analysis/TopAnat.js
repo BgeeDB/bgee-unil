@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
@@ -243,6 +244,20 @@ const TopAnat = () => {
     }
   }, [id, jobId, pageState]);
 
+  const todo = 'TODO !!!';
+
+  const firstPartTitle = jobId ? `analysis ${jobId} running` : todo;
+  const metaTitle = firstPartTitle
+    ? `analysis results :  (${todo})`
+    : ` - Gene expression enrichment analysis`;
+
+  const firstPartContent = jobId
+    ? 'A TopAnat analysis is running, this page will be updated when the results are available.'
+    : data.topAnatResults;
+  const metaContent = firstPartContent
+    ? `TopAnat analysis results ${todo ? `for analysis: ${todo}` : ''}`
+    : 'TopAnat: perform GO-like enrichment of anatomical terms, mapped to genes by expression patterns.';
+
   return (
     <>
       <Bulma.Section className="py-0">
@@ -275,6 +290,8 @@ const TopAnat = () => {
         searchId={id}
         title={data?.jobDescription}
         fg={requestParameters.value.fg}
+        jobId={jobId}
+        data={data}
       />
     </>
   );
