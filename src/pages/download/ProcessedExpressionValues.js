@@ -11,6 +11,7 @@ import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import readableFileSize from '../../helpers/readableFileSize';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
+import expressionPageHelper from '../../helpers/expressionPageHelper';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -109,32 +110,14 @@ const ProcessedExpressionValues = () => {
                 <ExpressionSearch
                   search={search}
                   setSearch={setSearch}
-                  elements={
-                    filteredSpecies &&
-                    kwList &&
-                    filteredSpecies
-                      ?.map((s) => ({
-                        info: s,
-                        word: kwList?.[s.id]?.find((kw) =>
-                          new RegExp(search, 'gi').test(kw)
-                        ),
-                      }))
-                      ?.sort((a, b) => a?.word?.localeCompare(b.word))
-                  }
-                  onRender={(s, closeAutoComplete) => (
-                    <div
-                      key={s.info.id}
-                      role="button"
-                      onClick={() => {
-                        setSearch(s.word);
-                        history.replace(`?id=${s.info.id}`);
-                        setTimeout(() => {
-                          closeAutoComplete();
-                        }, 100);
-                      }}
-                    >
-                      {s.word}
-                    </div>
+                  elements={expressionPageHelper.autocompleteSpecies(
+                    filteredSpecies,
+                    kwList,
+                    search
+                  )}
+                  onRender={expressionPageHelper.autocompleteSpecies(
+                    setSearch,
+                    history
                   )}
                 />
               </div>

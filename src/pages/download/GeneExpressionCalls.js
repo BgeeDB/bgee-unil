@@ -12,6 +12,7 @@ import classnames from '../../helpers/classnames';
 import LINK_ANCHOR from '../../routes/linkAnchor';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
+import expressionPageHelper from '../../helpers/expressionPageHelper';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -107,32 +108,14 @@ const GeneExpressionCalls = () => {
               <ExpressionSearch
                 search={search}
                 setSearch={setSearch}
-                elements={
-                  filteredSingleSpecies &&
-                  kwList &&
-                  filteredSingleSpecies
-                    ?.map((s) => ({
-                      info: s,
-                      word: kwList?.[s.id]?.find((kw) =>
-                        new RegExp(search, 'gi').test(kw)
-                      ),
-                    }))
-                    ?.sort((a, b) => a?.word?.localeCompare(b.word))
-                }
-                onRender={(s, closeAutoComplete) => (
-                  <div
-                    key={s.info.id}
-                    role="button"
-                    onClick={() => {
-                      setSearch(s.word);
-                      history.replace(`?id=${s.info.id}`);
-                      setTimeout(() => {
-                        closeAutoComplete();
-                      }, 100);
-                    }}
-                  >
-                    {s.word}
-                  </div>
+                elements={expressionPageHelper.autocompleteSpecies(
+                  filteredSingleSpecies,
+                  kwList,
+                  search
+                )}
+                onRender={expressionPageHelper.autocompleteSpecies(
+                  setSearch,
+                  history
                 )}
               />
             </div>
