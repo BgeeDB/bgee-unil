@@ -19,8 +19,8 @@ const GeneExpressionCalls = () => {
         />
         <meta
           name="keywords"
-          content="SAME AS FOR Gene expression calls download page
-     WITHOUT THE SPECIES NAMES"
+          content="dataset, data download, gene expression calls,
+          present/absent expression calls"
         />
       </Helmet>
       <div className="content has-text-centered">
