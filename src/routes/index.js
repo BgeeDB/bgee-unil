@@ -11,6 +11,7 @@ import StaticPage from '../pages/StaticPage';
 import ScrollTop from '../components/ScrollTop';
 import MarkdownReader from '../pages/MarkdownReader';
 import GenericHelmetProvider from '../helpers/GenericHelmetProvider';
+import Error from '../pages/Error';
 
 const Router = () => (
   <BrowserRouter>
@@ -201,7 +202,7 @@ const Router = () => (
                 )}
               />
 
-              {/* <Route path={PATHS.ERROR} component={Error} /> */}
+              <Route path={PATHS.ERROR} component={Error} />
 
               <Redirect to={PATHS.HOME} />
             </Switch>

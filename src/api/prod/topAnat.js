@@ -25,10 +25,10 @@ const DEFAULT_PARAMETERS = (page = 'top_anat') => {
 const topAnat = {
   autoCompleteGenes: (genes, isFg = true) =>
     new Promise((resolve, reject) => {
-      if (TOP_ANAT_CANCEL_API.autoCompleteGenes) {
-        TOP_ANAT_CANCEL_API.autoCompleteGenes();
-        TOP_ANAT_CANCEL_API.autoCompleteGenes = null;
-      }
+      // if (TOP_ANAT_CANCEL_API.autoCompleteGenes) {
+      //   TOP_ANAT_CANCEL_API.autoCompleteGenes();
+      //   TOP_ANAT_CANCEL_API.autoCompleteGenes = null;
+      // }
       const params = DEFAULT_PARAMETERS();
       params.append('action', 'gene_validation');
       params.append(isFg ? 'fg_list' : 'bg_list', genes);

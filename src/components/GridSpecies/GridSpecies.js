@@ -48,7 +48,6 @@ const GridSpecies = ({
               }
             )}
           >
-            {console.log(species.name)}
             <CardSpecies {...species} />
           </div>
           {!expandable &&
