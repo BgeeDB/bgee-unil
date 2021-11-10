@@ -750,7 +750,7 @@ label.label {
   grid-column-gap: 5px;
   grid-template-columns: repeat( auto-fit, minmax(126px, 1fr) );
   grid-auto-flow: dense;
-  .active, .fullwidth, .processed-exp, .gene-exp {
+  .active, .fullwidth, .expression-species {
     background-color: #282828;
   }
   .fullwidth {
@@ -792,7 +792,7 @@ label.label {
       }
     }
   }
-  .processed-exp {
+  .expression-species {
     grid-column: 1 / -1;
     min-height: 400px;
     color: #dbdbdb !important;
@@ -827,7 +827,7 @@ label.label {
 
 @media only screen and (max-width: $tablet) {
   .species-grid {
-    .processed-exp {
+    .expression-species {
       .image-container {
         display: none;
       }

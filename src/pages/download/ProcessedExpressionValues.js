@@ -136,7 +136,6 @@ const ProcessedExpressionValues = () => {
                 speciesList={filteredSpecies}
                 defaultSelection={speciesID}
                 onClick={(species, isSelected) => {
-                  console.log(species, isSelected);
                   history.replace(
                     isSelected
                       ? `?id=${species.id}`
@@ -146,7 +145,7 @@ const ProcessedExpressionValues = () => {
                 onRenderSelection={(species, { onClose }) => (
                   <div
                     className={classnames(
-                      'processed-exp is-flex is-flex-direction-row p-4'
+                      'expression-species is-flex is-flex-direction-row p-4'
                     )}
                   >
                     <div className="image-container">
