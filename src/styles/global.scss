@@ -748,9 +748,10 @@ label.label {
 .species-grid {
   display: grid;
   grid-column-gap: 5px;
-  grid-template-columns: repeat( auto-fit, minmax(126px, 1fr) );
+  grid-template-columns: repeat( auto-fill, 126px);
   grid-auto-flow: dense;
-  .active, .fullwidth, .processed-exp, .gene-exp {
+  justify-content: center;
+  .active, .fullwidth, .expression-species {
     background-color: #282828;
   }
   .fullwidth {
@@ -792,9 +793,76 @@ label.label {
       }
     }
   }
-  .processed-exp {
+  .expression-species {
     grid-column: 1 / -1;
-    height: 150px;
+    min-height: 400px;
     color: #dbdbdb !important;
+    font-size: 1rem !important;
+    .internal-link.grey {
+      color: #717177 !important;
+      &:hover {
+        color: #dbdbdb !important;
+      }
+    }
+    .close {
+      margin-left: 5px;
+      cursor: pointer;
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+    .image-container {
+      width: 260px;
+    }
+    .buttons-wrapper {
+      margin-bottom: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      & > span:not(:last-child) {
+        margin-right: .5rem;
+        margin-bottom: 5px;
+      }
+    }
   }
+}
+
+@media only screen and (max-width: $tablet) {
+  .species-grid {
+    .expression-species {
+      .image-container {
+        display: none;
+      }
+    }
+  }
+}
+.button.is-multiline {
+   min-height: 2.25em;
+   white-space: unset;
+   height: auto;
+  flex-wrap: wrap;
+}
+
+.autocomplete-wrapper {
+  overflow-y: auto;
+  max-height: 15rem;
+  border: 1px solid lightgrey;
+  width: 100%;
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 9;
+  top: 100%;
+  background-color: white;
+  & > div {
+    cursor: pointer;
+    margin: 2px 0;
+    &:hover {
+      background-color: $white;
+      color: $primary;
+      font-weight: 600;
+      margin: 1px 0;
+      border-top: 1px solid $primary;
+      border-bottom: 1px solid $primary;
+    }
+  }
+
 }
