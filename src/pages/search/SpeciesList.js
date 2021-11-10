@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import i18n from '../../i18n';
 import Bulma from '../../components/Bulma';

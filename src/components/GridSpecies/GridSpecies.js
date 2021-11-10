@@ -26,7 +26,6 @@ const GridSpecies = ({
       }, 250);
     }
   }, [speciesID]);
-  console.log(speciesID);
 
   return (
     <div className="species-grid">
