@@ -8,11 +8,12 @@ import Bulma from '../../components/Bulma';
 import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
+import speciesToJsonLd from '../../helpers/speciesToJsonLd';
 
 const Species = () => {
   const [data, setData] = React.useState();
-
   const { id } = useParams();
+
   const files = React.useMemo(() => {
     const src = {
       anatOnlyXpr: {},
@@ -80,12 +81,23 @@ const Species = () => {
     api.search.species
       .species(id)
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
+        /* add ld+json @ bottom of body */
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.id = 'ld+json';
+        script.text = JSON.stringify(speciesToJsonLd(res.data), null, 4);
+        const body = document.querySelector('body');
+        body.appendChild(script);
       })
       .catch(() => {
         // go to error
       });
+    return () => {
+      /* remove ld+json @ bottom of body */
+      const script = document.getElementById('ld+json');
+      if (script) script.remove();
+    };
   }, [id]);
 
   let metaTitle = '';
