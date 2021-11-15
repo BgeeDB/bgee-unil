@@ -5,8 +5,9 @@ const expressionPageHelper = {
   autocompleteSpecies: (list, kwList, search) =>
     list &&
     kwList &&
+    list?.map &&
     list
-      ?.map((s) => ({
+      .map((s) => ({
         info: s,
         word: kwList?.[s.id]?.find((kw) => new RegExp(search, 'gi').test(kw)),
       }))
