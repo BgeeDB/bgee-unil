@@ -281,6 +281,7 @@ const TopAnat = () => {
           jobId={jobId}
           cancelJob={job.cancel(jobId)}
           startNewJob={job.startNew}
+          isDisabled={data.genes === ''}
         />
         <TopAnatBanner results={results} status={flowState} />
       </Bulma.Section>
