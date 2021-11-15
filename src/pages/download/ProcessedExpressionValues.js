@@ -99,6 +99,8 @@ const ProcessedExpressionValues = () => {
         <a
           className="external-link"
           href="https://bioconductor.org/packages/BgeeDB/"
+          target="_blank"
+          rel="noreferrer"
         >
           R package
         </a>
@@ -113,6 +115,8 @@ const ProcessedExpressionValues = () => {
         <a
           className="external-link"
           href="https://creativecommons.org/publicdomain/zero/1.0/"
+          target="_blank"
+          rel="noreferrer"
         >
           Creative Commons Zero license (CC0)
         </a>

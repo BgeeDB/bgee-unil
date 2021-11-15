@@ -97,6 +97,8 @@ const GeneExpressionCalls = () => {
         <a
           className="external-link"
           href="https://bioconductor.org/packages/BgeeDB/"
+          target="_blank"
+          rel="noreferrer"
         >
           {i18n.t('download.gene-exp-calls.description-link-1')}
         </a>
@@ -111,6 +113,8 @@ const GeneExpressionCalls = () => {
         <a
           className="external-link"
           href="https://creativecommons.org/publicdomain/zero/1.0/"
+          target="_blank"
+          rel="noreferrer"
         >
           {i18n.t('download.gene-exp-calls.description-link-3')}
         </a>
