@@ -5,6 +5,7 @@ const PATHS = {
     TOP_ANAT_RESULT: '/analysis/top-anat/:id',
     TOP_ANAT_RESULT_JOB_ID: '/analysis/top-anat/:id/:jobId',
     EXPRESSION_COMPARISON: '/analysis/expr-comparison',
+    EXPRESSION_COMPARISON_RESULT: '/analysis/expr-comparison/:hash',
   },
   SEARCH: {
     GENE: '/search/genes',

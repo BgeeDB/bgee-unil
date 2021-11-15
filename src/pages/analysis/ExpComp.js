@@ -1,11 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import ComplexTable from '../../components/ComplexTable';
 import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
 import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
+import api from '../../api';
+import PATHS from '../../routes/paths';
 
 const KEYS = {
   'anat-entities': 0,
@@ -126,6 +128,29 @@ const onSort = (sortKey, sortDirection) => (elementA, elementB) => {
 
 const ExpComp = () => {
   const data = useQuery('data');
+  const [searchValue, setSearchValue] = useState('');
+  const [hashResponse, setHashResponse] = useState('');
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (searchValue !== '') {
+      api.topAnat.autoCompleteGenes(searchValue).then((res) => {
+        console.log(res);
+        const tempHash = 'thisIsMyTemporaryHashInTheURL';
+        setHashResponse(tempHash);
+      });
+    }
+  }, [searchValue]);
+
+  const handlerChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handlerClickSearch = () => {
+    history.push(
+      PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT.replace(':hash', hashResponse)
+    );
+  };
 
   return (
     <div>
@@ -157,12 +182,17 @@ const ExpComp = () => {
                         'analysis.expression-comparison.gene-list-placeholder'
                       )}
                       rows="10"
+                      onChange={handlerChange}
                     />
                   </div>
                 </div>
                 <div className="field">
                   <div className="control">
-                    <button className="button" type="button">
+                    <button
+                      className="button"
+                      type="button"
+                      onClick={handlerClickSearch}
+                    >
                       {i18n.t('analysis.expression-comparison.search-button')}
                     </button>
                   </div>
