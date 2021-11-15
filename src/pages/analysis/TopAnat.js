@@ -292,6 +292,7 @@ const TopAnat = () => {
         <TopAnatActionButtons
           status={flowState}
           handleSubmit={job.submit}
+          data={data}
           jobId={jobId}
           cancelJob={job.cancel(jobId)}
           startNewJob={job.startNew}

@@ -1,3 +1,5 @@
+import PATHS from '../../routes/paths';
+
 const about = [
   {
     type: 'title',
@@ -252,7 +254,7 @@ const about = [
           },
           {
             text: 'documentation',
-            path: '',
+            path: PATHS.RESOURCES.DOCS,
             type: 'link_internal',
           },
           {
@@ -413,7 +415,7 @@ const about = [
           {
             type: 'link_external',
             text: 'our GitHub page',
-            path: 'http://localhost:3000/about/',
+            path: 'https://github.com/BgeeDB',
           },
           {
             type: 'text',
@@ -432,7 +434,7 @@ const about = [
           {
             type: 'link_internal',
             text: 'documentation',
-            path: '/resources/',
+            path: PATHS.RESOURCES.DOCS,
           },
           {
             type: 'text',
