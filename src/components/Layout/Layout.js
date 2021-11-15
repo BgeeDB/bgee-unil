@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
 
   React.useEffect(() => {
     if (loc.hash !== '') {
-      console.log(loc.hash);
+      console.debug(loc.hash);
       document.getElementById(loc.hash.replace('#', ''))?.scrollIntoView();
     }
   }, [loc.hash]);
