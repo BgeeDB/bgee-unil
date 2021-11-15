@@ -28,7 +28,7 @@ const speciesToJsonLd = ({
         '@type': 'Dataset',
         dateModified: MODIFIED_DATE,
         citation: 'https://doi.org/10.1093/nar/gkaa793',
-        description: `${genus} ${speciesName}Homo sapiens calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
+        description: `${genus} ${speciesName} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
         includedInDataCatalog: {
           '@id': config.genericDomain,
           '@type': 'DataCatalog',
@@ -71,7 +71,7 @@ const speciesToJsonLd = ({
                   (d) =>
                     d.category === 'expr_simple' &&
                     d.conditionParameters.length === 1
-                ),
+                ).path,
               },
             ],
           },
@@ -100,7 +100,7 @@ const speciesToJsonLd = ({
                   (d) =>
                     d.category === 'expr_advanced' &&
                     d.conditionParameters.length === 1
-                ),
+                ).path,
               },
             ],
           },
@@ -128,7 +128,7 @@ const speciesToJsonLd = ({
                   (d) =>
                     d.category === 'expr_simple' &&
                     d.conditionParameters.length > 1
-                ),
+                ).path,
               },
             ],
           },
@@ -156,7 +156,7 @@ const speciesToJsonLd = ({
                   (d) =>
                     d.category === 'expr_advanced' &&
                     d.conditionParameters.length > 1
-                ),
+                ).path,
               },
             ],
           },

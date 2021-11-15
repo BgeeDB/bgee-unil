@@ -89,6 +89,7 @@ const Species = () => {
         script.text = JSON.stringify(speciesToJsonLd(res.data), null, 4);
         const body = document.querySelector('body');
         body.appendChild(script);
+        console.log(JSON.stringify(speciesToJsonLd(res.data), null, 4));
       })
       .catch(() => {
         // go to error
