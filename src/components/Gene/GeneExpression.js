@@ -7,6 +7,7 @@ import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
 import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
 
 const CUSTOM_FIELDS = [
   {
@@ -74,6 +75,54 @@ const columnsGenerator = (cFields, data) => () => {
   ];
   return c;
 };
+const AnatEntityCell = ({ cell }) => {
+  const cellInfo = [
+    <LinkExternal
+      key={`link-${cell.condition.anatEntity.id}`}
+      to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
+        ':',
+        '_'
+      )}`}
+      className="mr-1"
+    >
+      {cell.condition.anatEntity.id}
+    </LinkExternal>,
+  ];
+  if (cell.condition.cellType) {
+    cellInfo.push(<i key="link-in"> in </i>);
+    cellInfo.push(
+      <LinkExternal
+        key={`link-${cell.condition.cellType.id}`}
+        to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
+          ':',
+          '_'
+        )}`}
+        className="mr-1"
+      >
+        {cell.condition.cellType.id}
+      </LinkExternal>
+    );
+  }
+
+  if (cell.condition.cellType) {
+    cellInfo.push(
+      <span key={`name-${cell.condition.cellType.name}`}>
+        {cell.condition.cellType.name}
+      </span>
+    );
+    cellInfo.push(<i key="name-in"> in </i>);
+  }
+  cellInfo.push(
+    <span key={`name-${cell.condition.anatEntity.name}`}>
+      {cell.condition.anatEntity.name}
+    </span>
+  );
+  return (
+    <span typeof="schema:Gene" about={window.location.href}>
+      {cellInfo}
+    </span>
+  );
+};
 const GeneExpression = ({ geneId, speciesId }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
@@ -137,48 +186,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
     ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
-          const cellInfo = [
-            <LinkExternal
-              key={`link-${cell.condition.anatEntity.id}`}
-              to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
-                ':',
-                '_'
-              )}`}
-              className="mr-1"
-            >
-              {cell.condition.anatEntity.id}
-            </LinkExternal>,
-          ];
-          if (cell.condition.cellType) {
-            cellInfo.push(<i key="link-in"> in </i>);
-            cellInfo.push(
-              <LinkExternal
-                key={`link-${cell.condition.cellType.id}`}
-                to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
-                  ':',
-                  '_'
-                )}`}
-                className="mr-1"
-              >
-                {cell.condition.cellType.id}
-              </LinkExternal>
-            );
-          }
-
-          if (cell.condition.cellType) {
-            cellInfo.push(
-              <span key={`name-${cell.condition.cellType.name}`}>
-                {cell.condition.cellType.name}
-              </span>
-            );
-            cellInfo.push(<i key="name-in"> in </i>);
-          }
-          cellInfo.push(
-            <span key={`name-${cell.condition.anatEntity.name}`}>
-              {cell.condition.anatEntity.name}
-            </span>
-          );
-          return <>{cellInfo}</>;
+          return <AnatEntityCell cell={cell} />;
         case 'devStage':
           return (
             <>
@@ -329,12 +337,21 @@ const GeneExpression = ({ geneId, speciesId }) => {
       .expression(geneId, speciesId, fields)
       .then((res) => {
         setData(res.data);
+        if (
+          res.data.requestedConditionParameters.find(
+            (r) => r === 'Anat. entity'
+          )
+        )
+          schemaDotOrg.setGeneExpressionLdJSON(res.data);
       })
       .catch((err) => {
         console.error(err);
         setData();
       })
       .finally(() => setIsLoading(false));
+    return () => {
+      schemaDotOrg.unsetGeneExpressionLdJSON();
+    };
   }, [hashExpr]);
 
   return (

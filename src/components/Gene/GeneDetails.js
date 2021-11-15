@@ -6,7 +6,6 @@ import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import api from '../../api';
-import { SEARCH_CANCEL_API } from '../../api/prod/search';
 import GeneSearch from './GeneSearch';
 import GeneExpandableList from './GeneExpandableList';
 import GeneExpression from './GeneExpression';
@@ -28,7 +27,6 @@ const GeneDetails = ({
       api.search.genes.homologs(geneId, species.id),
       api.search.genes.xrefs(geneId, species.id),
     ]).then(([homologsPromise, xRefsPromise]) => {
-      // console.log('Results', results);
       if (homologsPromise.status === 'fulfilled') {
         const homo = {
           ...homologsPromise.value.data,
@@ -42,12 +40,12 @@ const GeneDetails = ({
           if (o.genes.length > homo.paralogs) homo.paralogs = o.genes.length;
         });
         setHomologs(homo);
+        schemaDotOrg.setGeneHomologsLdJSON(homo);
       } else {
         setHomologs();
       }
 
       if (xRefsPromise.status === 'fulfilled') {
-        console.log(xRefsPromise);
         setXRefs(xRefsPromise.value.data);
       } else {
         setXRefs();
@@ -62,6 +60,7 @@ const GeneDetails = ({
     });
     return () => {
       schemaDotOrg.unsetGeneLdJSON();
+      schemaDotOrg.unsetGeneHomologsLdJSON();
     };
   }, []);
 

@@ -9,44 +9,106 @@ const geneToLdJSON = ({
   species,
   xRefs,
   path,
-}) => {
-  const json = {
-    '@context': 'https://schema.org/',
-    '@type': 'Gene',
-    '@id': config.permanentVersionedDomain + path,
-    name,
-    'http://purl.org/dc/terms/conformsTo': {
-      '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
-      '@type': 'CreativeWork',
-    },
-    description,
-    alternateName: synonyms,
-    identifier: geneId,
-    subjectOf: {
-      '@type': 'WebPage',
-      url: config.permanentVersionedDomain + path,
-      name: `Gene: ${name} - ${geneId} - ${species.genus} ${
-        species.speciesName
-      }${species.name ? ` (${species.name})` : ''}`,
-    },
-    taxonomicRange: {
-      '@type': 'Taxon',
-      '@id':
-        config.permanentVersionedDomain +
-        PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id),
-      name: `${name} - ${geneId}`,
-      identifier: species.id,
-      sameAs: `http://purl.obolibrary.org/obo/NCBITaxon_${species.id}`,
-    },
-    sameAs: xRefs?.reduce((acc, a) => {
-      if (a.source.name !== 'Ensembl' && a.xRefs.length === 1)
-        acc.push(a.xRefs[0].xRefURL);
-      return acc;
-    }, []),
-  };
+}) => ({
+  '@context': 'https://schema.org/',
+  '@type': 'Gene',
+  '@id': window.location.href,
+  'http://purl.org/dc/terms/conformsTo': {
+    '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
+    '@type': 'CreativeWork',
+  },
+  description,
+  alternateName: synonyms,
+  identifier: geneId,
+  subjectOf: {
+    '@type': 'WebPage',
+    url: config.permanentVersionedDomain + path,
+    name: `Gene: ${name} - ${geneId} - ${species.genus} ${species.speciesName}${
+      species.name ? ` (${species.name})` : ''
+    }`,
+  },
+  taxonomicRange: {
+    '@type': 'Taxon',
+    '@id':
+      config.permanentVersionedDomain +
+      PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id),
+    name: `${name} - ${geneId}`,
+    identifier: species.id,
+    sameAs: `http://purl.obolibrary.org/obo/NCBITaxon_${species.id}`,
+  },
+  sameAs: xRefs?.reduce((acc, a) => {
+    if (a.source.name !== 'Ensembl' && a.xRefs.length === 1)
+      acc.push(a.xRefs[0].xRefURL);
+    return acc;
+  }, []),
+});
+const geneHomologsToLdJSON = (homo) => {
+  const ldJson = [];
+  homo.forEach((h) => {
+    ldJson.push({
+      '@type': 'https://schema.org/Taxon',
+      '@id': `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${h.taxon.id}`,
+      'https://schema.org/identifier': h.taxon.id,
+      'https://schema.org/name': h.taxon.name,
+    });
+  });
 
-  console.log(json);
-  return json;
+  return ldJson;
+};
+const geneExpressionToLdJSON = (genes) => {
+  const ldJson = [];
+  genes.forEach((g) => {
+    const { anatEntity, cellType } = g.condition;
+    if (g.condition.cellType)
+      ldJson.push({
+        '@type': 'Gene',
+        '@id': window.location.href,
+        expressedIn: {
+          '@type': 'AnatomicalStructure',
+          '@id': `https://schema.org/_:${cellType.id.replace(
+            ':',
+            '_'
+          )}_${anatEntity.id.replace(':', '_')}`,
+          name: `${cellType.name} in ${anatEntity.name}`,
+          subStructure: [
+            {
+              '@type': 'AnatomicalStructure',
+              '@id': `http://purl.obolibrary.org/obo/${cellType.id.replace(
+                ':',
+                '_'
+              )}`,
+              identifier: cellType.id,
+              name: cellType.name,
+            },
+            {
+              '@type': 'AnatomicalStructure',
+              '@id': `http://purl.obolibrary.org/obo/${anatEntity.id.replace(
+                ':',
+                '_'
+              )}`,
+              identifier: anatEntity.id,
+              name: anatEntity.name,
+            },
+          ],
+        },
+      });
+    else
+      ldJson.push({
+        '@type': 'Gene',
+        '@id': window.location.href,
+        expressedIn: {
+          '@type': 'AnatomicalStructure',
+          '@id': `http://purl.obolibrary.org/obo/${anatEntity.id.replace(
+            ':',
+            '_'
+          )}`,
+          identifier: anatEntity.id,
+          name: anatEntity.name,
+        },
+      });
+  });
+
+  return ldJson;
 };
 const speciesToLdJSON = ({
   downloadFiles: { downloadFiles },
@@ -420,8 +482,7 @@ const schemaDotOrg = {
   },
   unsetSpeciesLdJSON: () => {
     /* remove ld+json @ bottom of body */
-    const script = document.getElementById('species-ld+json');
-    if (script) script.remove();
+    document.getElementById('species-ld+json')?.remove();
   },
   setGeneLdJSON: (gene) => {
     /* add ld+json @ bottom of body */
@@ -434,8 +495,37 @@ const schemaDotOrg = {
   },
   unsetGeneLdJSON: () => {
     /* remove ld+json @ bottom of body */
-    const script = document.getElementById('gene-ld+json');
-    if (script) script.remove();
+    document.getElementById('gene-ld+json')?.remove();
+  },
+  setGeneHomologsLdJSON: (gene) => {
+    /* add ld+json @ bottom of body */
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'gene_homologs-ld+json';
+    script.text = JSON.stringify(
+      geneHomologsToLdJSON([...gene.orthologsByTaxon, ...gene.paralogsByTaxon]),
+      null,
+      4
+    );
+    const body = document.querySelector('body');
+    body.appendChild(script);
+  },
+  unsetGeneHomologsLdJSON: () => {
+    /* remove ld+json @ bottom of body */
+    document.getElementById('gene_homologs-ld+json')?.remove();
+  },
+  setGeneExpressionLdJSON: (genes) => {
+    /* add ld+json @ bottom of body */
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'gene_expression-ld+json';
+    script.text = JSON.stringify(geneExpressionToLdJSON(genes.calls), null, 4);
+    const body = document.querySelector('body');
+    body.appendChild(script);
+  },
+  unsetGeneExpressionLdJSON: () => {
+    /* remove ld+json @ bottom of body */
+    document.getElementById('gene_expression-ld+json')?.remove();
   },
 };
 
