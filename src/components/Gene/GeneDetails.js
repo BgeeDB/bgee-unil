@@ -1,41 +1,66 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import api from '../../api';
-import { SEARCH_CANCEL_API } from '../../api/prod/search';
 import GeneSearch from './GeneSearch';
 import GeneExpandableList from './GeneExpandableList';
 import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
 
 const GeneDetails = ({
+  details,
   details: { name, geneId, description, species, synonyms },
 }) => {
+  const loc = useLocation();
   const history = useHistory();
-  const [homologsIsLoading, setHomologsIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
+  const [xRefs, setXRefs] = React.useState();
   React.useEffect(() => {
-    api.search.genes
-      .homologs(geneId, species.id)
-      .then((res) => {
-        const homo = { ...res.data, orthologs: 0, paralogs: 0 };
-        res.data.orthologsByTaxon.forEach((o) => {
+    Promise.allSettled([
+      api.search.genes.homologs(geneId, species.id),
+      api.search.genes.xrefs(geneId, species.id),
+    ]).then(([homologsPromise, xRefsPromise]) => {
+      if (homologsPromise.status === 'fulfilled') {
+        const homo = {
+          ...homologsPromise.value.data,
+          orthologs: 0,
+          paralogs: 0,
+        };
+        homologsPromise.value.data.orthologsByTaxon.forEach((o) => {
           if (o.genes.length > homo.orthologs) homo.orthologs = o.genes.length;
         });
-        res.data.paralogsByTaxon.forEach((o) => {
+        homologsPromise.value.data.paralogsByTaxon.forEach((o) => {
           if (o.genes.length > homo.paralogs) homo.paralogs = o.genes.length;
         });
         setHomologs(homo);
-      })
-      .catch(() => setHomologs())
-      .finally(() => setTimeout(() => setHomologsIsLoading(false), 500));
+        schemaDotOrg.setGeneHomologsLdJSON(homo);
+      } else {
+        setHomologs();
+      }
+
+      if (xRefsPromise.status === 'fulfilled') {
+        setXRefs(xRefsPromise.value.data);
+      } else {
+        setXRefs();
+      }
+
+      schemaDotOrg.setGeneLdJSON({
+        ...details,
+        xRefs: xRefsPromise.value.data?.gene?.xRefs,
+        path: loc.pathname,
+      });
+      setTimeout(() => setIsLoading(false), 500);
+    });
     return () => {
-      if (SEARCH_CANCEL_API.genes.homologs) SEARCH_CANCEL_API.genes.homologs();
+      schemaDotOrg.unsetGeneLdJSON();
+      schemaDotOrg.unsetGeneHomologsLdJSON();
     };
   }, []);
 
@@ -205,9 +230,9 @@ const GeneDetails = ({
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
-            isLoading={homologsIsLoading}
+            isLoading={isLoading}
           />
-          <GeneXRefs geneId={geneId} speciesId={species.id} />
+          <GeneXRefs data={xRefs} isLoading={isLoading} />
         </div>
       </div>
     </div>

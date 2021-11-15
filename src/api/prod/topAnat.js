@@ -143,7 +143,6 @@ const topAnat = {
           }),
         })
         .then(({ data }) => {
-          console.log(data);
           resolve(data);
         })
         .catch((error) => {

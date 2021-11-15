@@ -9,11 +9,18 @@ import isPlural from '../../helpers/isPlural';
 import ComplexTable from '../ComplexTable';
 
 const TaxonNameCell = ({ id, scientificName }) => (
-  <LinkExternal
-    to={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
+  <span
+    typeof="schema:Taxon"
+    resource={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
   >
-    {scientificName}
-  </LinkExternal>
+    <LinkExternal
+      property="schema:identifier"
+      content={id}
+      to={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
+    >
+      <span property="schema:name">{scientificName}</span>
+    </LinkExternal>
+  </span>
 );
 const ExpressionComparisonCell = ({ geneId, genes }) => {
   let genesExpr = [geneId, ...genes.map((g) => g.geneId)];

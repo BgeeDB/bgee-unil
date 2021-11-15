@@ -8,11 +8,12 @@ import Bulma from '../../components/Bulma';
 import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
 
 const Species = () => {
   const [data, setData] = React.useState();
-
   const { id } = useParams();
+
   const files = React.useMemo(() => {
     const src = {
       anatOnlyXpr: {},
@@ -80,12 +81,15 @@ const Species = () => {
     api.search.species
       .species(id)
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
+        schemaDotOrg.setSpeciesLdJSON(res.data);
       })
       .catch(() => {
         // go to error
       });
+    return () => {
+      schemaDotOrg.unsetSpeciesLdJSON();
+    };
   }, [id]);
 
   let metaTitle = '';

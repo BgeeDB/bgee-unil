@@ -49,7 +49,7 @@ const ComplexTable = ({
 
   const pageSizeSelector = React.useMemo(
     () =>
-      pagination ? (
+      pagination && internalData?.length > 10 ? (
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
           <p className="mr-2">Show</p>
           <Select
