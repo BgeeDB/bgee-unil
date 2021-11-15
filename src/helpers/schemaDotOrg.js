@@ -1,9 +1,54 @@
 import config from '../config.json';
 import PATHS from '../routes/paths';
 
-const MODIFIED_DATE = '2021-07-01';
+const geneToLdJSON = ({
+  name,
+  geneId,
+  description,
+  synonyms,
+  species,
+  xRefs,
+  path,
+}) => {
+  const json = {
+    '@context': 'https://schema.org/',
+    '@type': 'Gene',
+    '@id': config.permanentVersionedDomain + path,
+    name,
+    'http://purl.org/dc/terms/conformsTo': {
+      '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
+      '@type': 'CreativeWork',
+    },
+    description,
+    alternateName: synonyms,
+    identifier: geneId,
+    subjectOf: {
+      '@type': 'WebPage',
+      url: config.permanentVersionedDomain + path,
+      name: `Gene: ${name} - ${geneId} - ${species.genus} ${
+        species.speciesName
+      }${species.name ? ` (${species.name})` : ''}`,
+    },
+    taxonomicRange: {
+      '@type': 'Taxon',
+      '@id':
+        config.permanentVersionedDomain +
+        PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id),
+      name: `${name} - ${geneId}`,
+      identifier: species.id,
+      sameAs: `http://purl.obolibrary.org/obo/NCBITaxon_${species.id}`,
+    },
+    sameAs: xRefs?.reduce((acc, a) => {
+      if (a.source.name !== 'Ensembl' && a.xRefs.length === 1)
+        acc.push(a.xRefs[0].xRefURL);
+      return acc;
+    }, []),
+  };
 
-const speciesToJsonLd = ({
+  console.log(json);
+  return json;
+};
+const speciesToLdJSON = ({
   downloadFiles: { downloadFiles },
   species: { genus, name, speciesName, id },
 }) => {
@@ -26,7 +71,7 @@ const speciesToJsonLd = ({
     subjectOf: [
       {
         '@type': 'Dataset',
-        dateModified: MODIFIED_DATE,
+        dateModified: config.bioSchemaModifiedData,
         citation: 'https://doi.org/10.1093/nar/gkaa793',
         description: `${genus} ${speciesName} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
         includedInDataCatalog: {
@@ -49,7 +94,7 @@ const speciesToJsonLd = ({
         hasPart: [
           {
             '@type': 'Dataset',
-            dateModified: MODIFIED_DATE,
+            dateModified: config.bioSchemaModifiedData,
             creator: {
               '@type': 'Organization',
               url: 'https://bgee.org/',
@@ -77,7 +122,7 @@ const speciesToJsonLd = ({
           },
           {
             '@type': 'Dataset',
-            dateModified: MODIFIED_DATE,
+            dateModified: config.bioSchemaModifiedData,
             creator: {
               '@type': 'Organization',
               url: 'https://bgee.org/',
@@ -106,7 +151,7 @@ const speciesToJsonLd = ({
           },
           {
             '@type': 'Dataset',
-            dateModified: MODIFIED_DATE,
+            dateModified: config.bioSchemaModifiedData,
             creator: {
               '@type': 'Organization',
               url: 'https://bgee.org/',
@@ -134,7 +179,7 @@ const speciesToJsonLd = ({
           },
           {
             '@type': 'Dataset',
-            dateModified: MODIFIED_DATE,
+            dateModified: config.bioSchemaModifiedData,
             creator: {
               '@type': 'Organization',
               url: 'https://bgee.org/',
@@ -164,7 +209,7 @@ const speciesToJsonLd = ({
       },
       {
         '@type': 'Dataset',
-        dateModified: MODIFIED_DATE,
+        dateModified: config.bioSchemaModifiedData,
         creator: {
           '@type': 'Organization',
           url: 'https://bgee.org/',
@@ -206,7 +251,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -233,7 +278,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -259,7 +304,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -285,7 +330,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -311,7 +356,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -337,7 +382,7 @@ const speciesToJsonLd = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       '@type': 'Dataset',
-      dateModified: MODIFIED_DATE,
+      dateModified: config.bioSchemaModifiedData,
       creator: {
         '@type': 'Organization',
         url: 'https://bgee.org/',
@@ -363,4 +408,35 @@ const speciesToJsonLd = ({
   return json;
 };
 
-export default speciesToJsonLd;
+const schemaDotOrg = {
+  setSpeciesLdJSON: (species) => {
+    /* add ld+json @ bottom of body */
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'species-ld+json';
+    script.text = JSON.stringify(speciesToLdJSON(species), null, 4);
+    const body = document.querySelector('body');
+    body.appendChild(script);
+  },
+  unsetSpeciesLdJSON: () => {
+    /* remove ld+json @ bottom of body */
+    const script = document.getElementById('species-ld+json');
+    if (script) script.remove();
+  },
+  setGeneLdJSON: (gene) => {
+    /* add ld+json @ bottom of body */
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'gene-ld+json';
+    script.text = JSON.stringify(geneToLdJSON(gene), null, 4);
+    const body = document.querySelector('body');
+    body.appendChild(script);
+  },
+  unsetGeneLdJSON: () => {
+    /* remove ld+json @ bottom of body */
+    const script = document.getElementById('gene-ld+json');
+    if (script) script.remove();
+  },
+};
+
+export default schemaDotOrg;

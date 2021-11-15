@@ -8,7 +8,7 @@ import Bulma from '../../components/Bulma';
 import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
-import speciesToJsonLd from '../../helpers/speciesToJsonLd';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
 
 const Species = () => {
   const [data, setData] = React.useState();
@@ -82,22 +82,13 @@ const Species = () => {
       .species(id)
       .then((res) => {
         setData(res.data);
-        /* add ld+json @ bottom of body */
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.id = 'ld+json';
-        script.text = JSON.stringify(speciesToJsonLd(res.data), null, 4);
-        const body = document.querySelector('body');
-        body.appendChild(script);
-        console.log(JSON.stringify(speciesToJsonLd(res.data), null, 4));
+        schemaDotOrg.setSpeciesLdJSON(res.data);
       })
       .catch(() => {
         // go to error
       });
     return () => {
-      /* remove ld+json @ bottom of body */
-      const script = document.getElementById('ld+json');
-      if (script) script.remove();
+      schemaDotOrg.unsetSpeciesLdJSON();
     };
   }, [id]);
 
