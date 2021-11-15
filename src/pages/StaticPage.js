@@ -5,11 +5,13 @@ import ROUTES from '../routes/routes';
 
 const StaticPage = ({ location: { pathname } }) => (
   <>
-    <Helmet>
-      <title>{ROUTES[pathname].meta.title}</title>
-      <meta name="decription" content={ROUTES[pathname].meta.description} />
-      <meta name="keywords" content={ROUTES[pathname].meta.keywords} />
-    </Helmet>
+    {ROUTES[pathname].meta && (
+      <Helmet>
+        <title>{ROUTES[pathname].meta.title}</title>
+        <meta name="decription" content={ROUTES[pathname].meta.description} />
+        <meta name="keywords" content={ROUTES[pathname].meta.keywords} />
+      </Helmet>
+    )}
     {staticBuilder(ROUTES[pathname].source)}
   </>
 );

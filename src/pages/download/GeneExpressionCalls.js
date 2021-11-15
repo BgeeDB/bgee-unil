@@ -14,6 +14,7 @@ import LINK_ANCHOR from '../../routes/linkAnchor';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
+import LinkExternal from '../../components/LinkExternal';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -88,37 +89,29 @@ const GeneExpressionCalls = () => {
         />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={5}>{`${i18n.t(
-          'download.gene-exp-calls.title'
-        )}`}</Bulma.Title>
+        <Bulma.Title size={5}>Gene expression calls</Bulma.Title>
       </div>
       <p>
-        {i18n.t('download.gene-exp-calls.description-1')}
-        <a
-          className="external-link"
-          href="https://bioconductor.org/packages/BgeeDB/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {i18n.t('download.gene-exp-calls.description-link-1')}
-        </a>
-        {i18n.t('download.gene-exp-calls.description-2')}
+        This page provides calls of baseline presence/absence of expression, and
+        of differential over-/under-expression, either in single species, or
+        made comparable between multiple species. Click on a species or a group
+        of species to browse files available for download. It is possible to
+        download these data directly into R using our{' '}
+        <LinkExternal to="https://bioconductor.org/packages/BgeeDB/">
+          R package
+        </LinkExternal>
+        . See also{' '}
         <Link
           to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
           className="internal-link"
         >
-          {i18n.t('download.gene-exp-calls.description-link-2')}
+          processed expression values
         </Link>
-        {i18n.t('download.gene-exp-calls.description-3')}
-        <a
-          className="external-link"
-          href="https://creativecommons.org/publicdomain/zero/1.0/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {i18n.t('download.gene-exp-calls.description-link-3')}
-        </a>
-        {i18n.t('download.gene-exp-calls.description-4')}
+        . All data are available under the{' '}
+        <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
+          Creative Commons Zero license (CC0)
+        </LinkExternal>
+        .
       </p>
       <Bulma.Card className="form search-input mx-auto my-3">
         <Bulma.Card.Body>

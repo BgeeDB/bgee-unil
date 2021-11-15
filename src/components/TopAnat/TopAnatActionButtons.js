@@ -19,7 +19,8 @@ const TopAnatActionButtons = ({
           <p className="control">
             <button
               type="button"
-              className="button is-success"
+              className="button is-info"
+              disabled={data.genes === ''}
               onClick={handleSubmit}
               disabled={isDisabled}
             >

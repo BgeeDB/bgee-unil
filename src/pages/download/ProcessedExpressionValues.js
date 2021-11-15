@@ -13,6 +13,7 @@ import GaEvent from '../../components/GaEvent/GaEvent';
 import readableFileSize from '../../helpers/readableFileSize';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
+import LinkExternal from '../../components/LinkExternal';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -96,14 +97,9 @@ const ProcessedExpressionValues = () => {
         normalized signal intensities). Click on a species to browse files
         available for download. It is possible to download these data directly
         into R using our{' '}
-        <a
-          className="external-link"
-          href="https://bioconductor.org/packages/BgeeDB/"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <LinkExternal to="https://bioconductor.org/packages/BgeeDB/">
           R package
-        </a>
+        </LinkExternal>
         . See also{' '}
         <Link
           to={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
@@ -112,14 +108,9 @@ const ProcessedExpressionValues = () => {
           gene expression calls
         </Link>
         . All data are available under the{' '}
-        <a
-          className="external-link"
-          href="https://creativecommons.org/publicdomain/zero/1.0/"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
           Creative Commons Zero license (CC0)
-        </a>
+        </LinkExternal>
         .
       </p>
       <div>
