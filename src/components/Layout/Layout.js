@@ -49,26 +49,22 @@ const Layout = ({ children }) => {
       <Header />
       {!config.archive && (
         <Alert type="warning" light>
-          <div>
-            <p className="is-size-7">
-              This release is a <b>beta</b> version. Please be aware that the
-              data will not be archived and should not yet be referenced in
-              publications, expecting long-term retrieval. The SPARQL endpoint
-              was not updated.
-            </p>
-          </div>
+          <span>
+            This release is a <b>beta</b> version. Please be aware that the data
+            will not be archived and should not yet be referenced in
+            publications, expecting long-term retrieval. The SPARQL endpoint was
+            not updated.
+          </span>
         </Alert>
       )}
       {config.archive && (
         <Alert type="danger" light>
-          <div>
-            <span className="is-size-67">
-              {`This is an archived version of Bgee (version ${APP_VERSION})`}
-              <a className="internal-link ml-2" href={config.genericDomain}>
-                <b>Access latest version of Bgee</b>
-              </a>
-            </span>
-          </div>
+          <span>
+            {`This is an archived version of Bgee (version ${APP_VERSION})`}
+            <a className="internal-link ml-2" href={config.genericDomain}>
+              <b>Access latest version of Bgee</b>
+            </a>
+          </span>
         </Alert>
       )}
       {body}
