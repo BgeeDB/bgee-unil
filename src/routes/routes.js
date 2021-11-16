@@ -22,8 +22,8 @@ import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
 import GtexFile from '../markdown/support/gtex.md';
-import TopAnatFile from '../static/support/topAnat';
-import GeneExpressionCallsSupport from '../pages/support/GeneExpressionCalls';
+import TopAnatFile from '../markdown/support/topAnat.md';
+import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -163,7 +163,7 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
     i18nKey: 'page.support.gene-expression-calls',
-    component: GeneExpressionCallsSupport,
+    source: GeneExpressionFile,
   },
   [PATHS.SUPPORT.FAQ]: {
     i18nKey: 'page.support.faq',
