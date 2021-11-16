@@ -38,6 +38,7 @@ const ExpandCell = ({ onClick }) => (
 );
 const GenesCell = ({ genes }) => {
   let prevSpecies = 0;
+  console.log(genes);
   const expandContent = genes.reduce((r, a, pos) => {
     r.push(
       <span className="is-size-7" key={a.geneId}>
@@ -49,7 +50,10 @@ const GenesCell = ({ genes }) => {
           to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
             ':geneId',
             a.geneId
-          ).replace(':speciesId', a.species.id)}
+          ).replace(
+            ':speciesId',
+            a.geneMappedToSameGeneIdCount === 1 ? '' : a.species.id
+          )}
         >
           {a.geneId}
         </Link>
