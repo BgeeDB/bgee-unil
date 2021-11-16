@@ -50,6 +50,16 @@ const Home = () => {
           <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
+      <div className="species-banner is-hidden-touch">
+        {speciesList.map((s) => (
+          <img
+            key={s.id}
+            src={`/static/img/species/${s.id}_light.jpg`}
+            alt={`${s.genus[0]}. ${s.speciesName}`}
+            style={{ width: `${100 / speciesList.length}%` }}
+          />
+        ))}
+      </div>
       <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={12}>
