@@ -120,6 +120,8 @@ const AnatomicalHomologySearch = () => {
         <a
           href="https://www.ebi.ac.uk/ols/ontologies/uberon"
           className="external-link"
+          target="_blank"
+          rel="noreferrer"
         >
           here
         </a>

@@ -10,7 +10,7 @@ const TopAnatActionButtons = ({
   cancelJob,
   startNewJob,
   jobId,
-  data,
+  isDisabled = false,
 }) => {
   switch (status) {
     case TOP_ANAT_FLOW.NEW_JOB:
@@ -22,6 +22,7 @@ const TopAnatActionButtons = ({
               className="button is-info"
               disabled={data.genes === ''}
               onClick={handleSubmit}
+              disabled={isDisabled}
             >
               {i18n.t('analysis.top-anat.submit-job')}
             </button>
