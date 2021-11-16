@@ -182,7 +182,7 @@ const ABOUT = {
     meta: {
       title: 'About Bgee',
       description: 'General information about Bgee and the team developing it.',
-      keywords: 'keywords" content="About, license, CC0',
+      keywords: 'About, license, CC0',
     },
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
