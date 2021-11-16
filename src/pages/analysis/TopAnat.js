@@ -259,20 +259,6 @@ const TopAnat = () => {
     }
   }, [id, jobId, pageState]);
 
-  const todo = 'TODO !!!';
-
-  const firstPartTitle = jobId ? `analysis ${jobId} running` : todo;
-  const metaTitle = firstPartTitle
-    ? `analysis results :  (${todo})`
-    : ` - Gene expression enrichment analysis`;
-
-  const firstPartContent = jobId
-    ? 'A TopAnat analysis is running, this page will be updated when the results are available.'
-    : data.topAnatResults;
-  const metaContent = firstPartContent
-    ? `TopAnat analysis results ${todo ? `for analysis: ${todo}` : ''}`
-    : 'TopAnat: perform GO-like enrichment of anatomical terms, mapped to genes by expression patterns.';
-
   return (
     <>
       <Bulma.Section className="py-0">
@@ -296,6 +282,7 @@ const TopAnat = () => {
           jobId={jobId}
           cancelJob={job.cancel(jobId)}
           startNewJob={job.startNew}
+          isDisabled={data.genes === ''}
         />
         <TopAnatBanner results={results} status={flowState} />
       </Bulma.Section>
