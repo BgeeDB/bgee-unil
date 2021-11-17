@@ -11,7 +11,7 @@ const geneToLdJSON = ({
   path,
 }) => ({
   '@context': 'https://schema.org/',
-  '@type': 'Gene',
+  '@type': 'https://schema.org/Gene',
   '@id': window.location.href,
   'http://purl.org/dc/terms/conformsTo': {
     '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
@@ -61,7 +61,7 @@ const geneExpressionToLdJSON = (genes) => {
     const { anatEntity, cellType } = g.condition;
     if (g.condition.cellType)
       ldJson.push({
-        '@type': 'Gene',
+        '@type': 'https://schema.org/Gene',
         '@id': window.location.href,
         expressedIn: {
           '@type': 'AnatomicalStructure',

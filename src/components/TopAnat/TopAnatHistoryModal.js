@@ -7,12 +7,14 @@ import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 
 const HISTORY_KEY = 'topAnatHistory';
-const ModalContent = ({ history, onRemove, onLoad }) => (
+const ModalContent = ({ history, onRemove, onLoad, hideModal }) => (
   <Bulma.Modal.Card.Wrapper>
     <Bulma.Modal.Card.Header>
       <Bulma.Modal.Card.Title>
         {i18n.t('analysis.top-anat.history')}
       </Bulma.Modal.Card.Title>
+      {/* eslint-disable-next-line react/button-has-type */}
+      <button className="delete" aria-label="close" onClick={hideModal} />
     </Bulma.Modal.Card.Header>
 
     <Bulma.Modal.Card.Body>
@@ -114,7 +116,12 @@ const TopAnatHistoryModal = () => {
         window.localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
 
         showModal(() => (
-          <ModalContent history={h} onLoad={onLoad} onRemove={onRemove} />
+          <ModalContent
+            history={h}
+            onLoad={onLoad}
+            onRemove={onRemove}
+            hideModal={hideModal}
+          />
         ));
       }
     },
@@ -127,7 +134,12 @@ const TopAnatHistoryModal = () => {
       type="button"
       onClick={() =>
         showModal(() => (
-          <ModalContent history={history} onLoad={onLoad} onRemove={onRemove} />
+          <ModalContent
+            history={history}
+            onLoad={onLoad}
+            onRemove={onRemove}
+            hideModal={hideModal}
+          />
         ))
       }
     >

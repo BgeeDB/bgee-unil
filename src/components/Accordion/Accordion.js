@@ -8,12 +8,13 @@ class Accordion extends React.Component {
   constructor(props) {
     super(props);
     this.id = `accordion-${uuid()}`;
+    this.myRef = React.createRef();
   }
 
   componentDidMount() {
     // eslint-disable-next-line no-undef
     this.collapsibles = bulmaCollapsible.attach('.is-collapsible', {
-      container: this.refs.collapsibles,
+      container: this.myRef.current,
     });
   }
 
@@ -21,7 +22,7 @@ class Accordion extends React.Component {
     const { elements } = this.props;
     return (
       <div
-        ref="collapsibles"
+        ref={this.myRef}
         id={this.id}
         className="custom-accordion"
         key={this.id}

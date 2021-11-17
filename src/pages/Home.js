@@ -50,6 +50,16 @@ const Home = () => {
           <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
+      <div className="species-banner is-hidden-touch">
+        {speciesList.map((s) => (
+          <img
+            key={s.id}
+            src={`/static/img/species/${s.id}_light.jpg`}
+            alt={`${s.genus[0]}. ${s.speciesName}`}
+            style={{ width: `${100 / speciesList.length}%` }}
+          />
+        ))}
+      </div>
       <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={12}>
@@ -105,7 +115,7 @@ const Home = () => {
                 onRenderSelection={(species) => (
                   <div
                     className={classnames(
-                      'fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
+                      'selection px-3 fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
                     )}
                   >
                     <p className="is-size-4 m-0">

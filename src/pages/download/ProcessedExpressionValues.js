@@ -129,7 +129,7 @@ const ProcessedExpressionValues = () => {
                     kwList,
                     search
                   )}
-                  onRender={expressionPageHelper.autocompleteSpecies(
+                  onRender={expressionPageHelper.autocompleteSpeciesRender(
                     setSearch,
                     history
                   )}

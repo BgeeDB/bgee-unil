@@ -40,12 +40,16 @@ const main = async () => {
     pkg.homepage = websiteUrl;
     await fs.writeFile('./package.json', JSON.stringify(pkg, null, 2));
 
-    console.log('\x1b[31m%s\x1b[0m', 'Building app');
-    execSync('yarn build:cra', { stdio: 'inherit' });
-    console.log('Moving directory');
-    execSync(`mv ./build "${buildDirectory}"`, { stdio: 'inherit' });
-    console.log('Removing unnecessary directories\n');
-    execSync('rm -fr coverage', { stdio: 'inherit' });
+    try {
+      console.log('\x1b[31m%s\x1b[0m', 'Building app');
+      execSync('yarn build:cra', { stdio: 'inherit' });
+      console.log('Moving directory');
+      execSync(`mv ./build "${buildDirectory}"`, { stdio: 'inherit' });
+      console.log('Removing unnecessary directories\n');
+      execSync('rm -fr coverage', { stdio: 'inherit' });
+    } catch (err) {
+      console.log('Error =>', err);
+    }
 
     //  Set back to production
     console.log('\x1b[31m%s\x1b[0m', 'Settings production data back\n');

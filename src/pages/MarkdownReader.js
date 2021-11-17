@@ -8,27 +8,14 @@ import rehypeSanitize from 'rehype-sanitize';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ROUTES from '../routes/routes';
 import classnames from '../helpers/classnames';
 import Bulma from '../components/Bulma';
+import LinkExternal from '../components/LinkExternal';
 
-const rehypeLink = () => (tree) => {
-  visit(tree, 'element', (node) => {
-    const isInternal = /(^#)|(^\/)|(^https:\/\/bgee.org)/gi;
-    if (node.tagName === 'a') {
-      if (isInternal.test(node.properties.href)) {
-        node.properties.classname = 'internal-link';
-      } else {
-        node.properties.classname = 'external-link';
-      }
-    }
-    // if (node.properties && !hasProperty(node, 'id')) {
-    //   node.properties.id = slugs.slug(toString(node));
-    // }
-  });
-};
 const MarkdownReader = ({ location: { pathname } }) => {
+  const history = useHistory();
   const components = React.useMemo(
     () => ({
       h1: ({ children }) => (
@@ -48,9 +35,34 @@ const MarkdownReader = ({ location: { pathname } }) => {
     []
   );
 
+  const rehypeLink = React.useCallback(
+    () => (tree) => {
+      visit(tree, 'element', (node) => {
+        const isInternal = /(^#)|(^\/)|(^https:\/\/bgee.org)/gi;
+        if (node.tagName === 'a') {
+          if (isInternal.test(node.properties.href)) {
+            node.properties.classname = 'internal-link';
+            node.properties.onclick = (e) => {
+              e.preventDefault();
+              history.push(e.target.href.replace(window.location.origin, ''));
+            };
+          } else {
+            node.properties.classname = 'external-link';
+            node.properties.target = '_blank';
+            node.properties.rel = 'noopener noreferrer';
+          }
+        }
+        // if (node.properties && !hasProperty(node, 'id')) {
+        //   node.properties.id = slugs.slug(toString(node));
+        // }
+      });
+    },
+    [history]
+  );
+
   return (
     <>
-      <Link to="/search/genes">Genes</Link>
+      <LinkExternal to="e" />
       <ReactMarkdown
         className="markdown"
         components={components}

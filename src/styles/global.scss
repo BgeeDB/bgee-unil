@@ -17,6 +17,9 @@ $dark-font-color: $dark-color;
 $hero-banner-bg: #999999;
 $body-size: 14px;
 $size-7: 12px;
+$tablet: 800px;
+$desktop: 960px;
+$widescreen: 1152px;
 
 /* Button customization*/
 .button.search-form {
@@ -864,5 +867,27 @@ label.label {
       border-bottom: 1px solid $primary;
     }
   }
+}
 
+@media only screen and (max-width: $tablet) {
+  #home-species-wrapper .selection.fullwidth {
+    flex-direction: column !important;
+    height: auto;
+    padding: 1rem;
+    & > *:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
+  .field.has-addons {
+    flex-direction: column;
+    & a.button {
+      border-radius: 4px !important;
+    }
+  }
+}
+
+@media only screen and (min-width: $tablet) {
+  #modal .modal-card {
+    max-height: 75vh;
+  }
 }

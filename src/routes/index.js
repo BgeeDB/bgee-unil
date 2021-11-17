@@ -168,7 +168,6 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
-                  PATHS.SUPPORT.TOP_ANAT,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
@@ -180,25 +179,13 @@ const Router = () => (
               />
               <Route
                 exact
-                path={[PATHS.SUPPORT.GTEX]}
+                path={[
+                  PATHS.SUPPORT.GTEX,
+                  PATHS.SUPPORT.TOP_ANAT,
+                  PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
+                ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />
-                )}
-              />
-
-              <Route
-                exact
-                path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-                render={(props) => (
-                  <Page
-                    {...props}
-                    title={i18n.t(
-                      ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
-                    )}
-                    Component={
-                      ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
-                    }
-                  />
                 )}
               />
 
