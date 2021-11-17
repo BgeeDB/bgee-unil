@@ -891,3 +891,9 @@ label.label {
     max-height: 75vh;
   }
 }
+
+.navbar-item {
+  &:focus {
+    background-color: transparent;
+  }
+}

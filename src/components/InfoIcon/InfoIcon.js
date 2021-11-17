@@ -22,6 +22,12 @@ const InfoIcon = ({ title, content, tooltip }) => {
           {title && (
             <header className="modal-card-head">
               <p className="modal-card-title">{title}</p>
+              {/* eslint-disable-next-line react/button-has-type */}
+              <button
+                className="delete"
+                aria-label="close"
+                onClick={() => setIsOpen(false)}
+              />
             </header>
           )}
           <div className="modal-card-body">{content}</div>
