@@ -39,9 +39,11 @@ const ExpressionSearch = ({ search, setSearch, elements, onRender }) => {
       {showAuto && (
         <div className="autocomplete-wrapper">
           {elements.map((s) =>
-            onRender(s, () => {
-              setShowAuto(false);
-            })
+            typeof onRender === 'function'
+              ? onRender(s, () => {
+                  setShowAuto(false);
+                })
+              : null
           )}
         </div>
       )}

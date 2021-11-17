@@ -12,12 +12,13 @@ import splitWithOccurrences from '../../helpers/splitWithOccurrences';
 
 const onRenderCell =
   (search) =>
-  ({ cell, key }, defaultRender) => {
+  ({ cell, key, keyRow }, defaultRender) => {
     switch (key) {
       case 'id':
       case 'name':
         return (
           <Link
+            key={`${key}-${keyRow}`}
             className="internal-link"
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
@@ -30,6 +31,7 @@ const onRenderCell =
       case 'organism':
         return (
           <Link
+            key={`${key}-${keyRow}`}
             className="internal-link"
             to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', cell.speciesId)}
           >
@@ -39,12 +41,17 @@ const onRenderCell =
       case 'match':
         const match = splitWithOccurrences(cell.match, search);
         return (
-          <span>
+          <span key={`${key}-${keyRow}`}>
             {match.map((v, keyMatch) =>
               typeof v === 'string' ? (
-                <React.Fragment key={keyMatch}>{v}</React.Fragment>
+                <React.Fragment key={`${key}-${keyRow}-${keyMatch}`}>
+                  {v}
+                </React.Fragment>
               ) : (
-                <strong key={v.key} className="has-text-primary">
+                <strong
+                  key={`${key}-${keyRow}-${keyMatch}`}
+                  className="has-text-primary"
+                >
                   {v.text}
                 </strong>
               )

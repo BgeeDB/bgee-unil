@@ -366,7 +366,7 @@ const about = [
         src: '/static/img/cc-zero-large.png',
         path: 'https://creativecommons.org/publicdomain/zero/1.0/',
         style: {
-          'margin-top': '.7rem',
+          marginTop: '.7rem',
         },
       },
       {

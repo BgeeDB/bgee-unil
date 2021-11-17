@@ -115,7 +115,7 @@ const Home = () => {
                 onRenderSelection={(species) => (
                   <div
                     className={classnames(
-                      'fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
+                      'selection px-3 fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
                     )}
                   >
                     <p className="is-size-4 m-0">
