@@ -99,7 +99,10 @@ const GeneDetails = ({
   const metaDescription = `Bgee gene expression data for ${
     name ? `${name} (` : ''
   }
-   ${geneId}  ${name ? ')' : ''}`;
+   ${geneId}  ${name ? ')' : ''} in ${species.genus} ${species.name} ${
+    species.name ? `( ${species.name} )` : ''
+  }`;
+
   const metaKeywords = `gene expression,
   ${name ? `${name} , ${name} expression, ` : ''}
   ${geneId}, ${geneId} expression
