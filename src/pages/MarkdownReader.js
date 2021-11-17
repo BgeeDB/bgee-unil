@@ -8,7 +8,7 @@ import rehypeSanitize from 'rehype-sanitize';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ROUTES from '../routes/routes';
 import classnames from '../helpers/classnames';
 import Bulma from '../components/Bulma';
