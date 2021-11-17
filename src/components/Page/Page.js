@@ -26,6 +26,7 @@ class Page extends React.PureComponent {
     if (hasError)
       return (
         <Redirect
+          push
           to={{
             pathname: '/error',
             state: { error: hasError },
