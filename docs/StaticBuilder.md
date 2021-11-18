@@ -153,14 +153,7 @@ There is 21 different element, with their properties:
     type: 'separator',
 } 
 ```
-- Sub Title
 
-```
-{
-    type: 'sub_title',
-    content: string,
-} 
-```
 - Table
 
 For a better understanding, please check the Table component.
