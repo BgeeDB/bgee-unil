@@ -127,14 +127,14 @@ const Species = () => {
           height={75}
           width={75}
         />
-        <Bulma.Title size={4} className="m-0">{`Species: ${
+        <Bulma.Title size={3} className="m-0">{`Species: ${
           data.species.genus
         } ${data.species.speciesName}${
           data.species.name ? ` (${data.species.name})` : ''
         }`}</Bulma.Title>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline">
           General information
         </Bulma.Title>
         <div className="static-section">
@@ -197,7 +197,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline">
           Gene expression call files
         </Bulma.Title>
         <div className="static-section">
@@ -215,7 +215,7 @@ const Species = () => {
             .
           </p>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
               Anatomical entities only
             </p>
             <ul className="unordered">
@@ -246,7 +246,7 @@ const Species = () => {
             </ul>
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
               Anatomical entities, developmental stages, sexes and strains
             </p>
             <ul className="unordered">
@@ -276,7 +276,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline">
           Processed expression value files
         </Bulma.Title>
         <div className="static-section">
@@ -285,7 +285,9 @@ const Species = () => {
             expression values.
           </p>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">Affymetrix</p>
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
+              Affymetrix
+            </p>
             {files.affymetrix.annot || files.affymetrix.data ? (
               <ul className="unordered">
                 {files.affymetrix.annot && (
@@ -318,7 +320,9 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">RNA-Seq</p>
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
+              RNA-Seq
+            </p>
             {files.rnaSeq.annot || files.rnaSeq.data ? (
               <ul className="unordered">
                 {files.rnaSeq.annot && (
@@ -345,7 +349,7 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
               {i18n.t('search.species.full-rna-seq')}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (

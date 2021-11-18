@@ -356,7 +356,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
 
   return (
     <div id="expression">
-      <Bulma.Title size={5} className="gradient-underline">
+      <Bulma.Title size={4} className="gradient-underline">
         Expression
       </Bulma.Title>
       <div className="static-section near-columns">
@@ -392,27 +392,32 @@ const GeneExpression = ({ geneId, speciesId }) => {
             <Bulma.Columns vCentered className="my-0">
               <Bulma.C>
                 <span>
-                  <b>A</b> Affimetrix
+                  <b>A</b>
+                  <span className="is-size-7"> Affimetrix</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>E</b> EST
+                  <b>E</b>
+                  <span className="is-size-7"> EST</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>I</b> In Situ
+                  <b>I</b>
+                  <span className="is-size-7"> In Situ</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>R</b> RNA-Seq
+                  <b>R</b>
+                  <span className="is-size-7"> RNA-Seq</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>FL</b> scRNA-Seq Full Length
+                  <b>FL</b>
+                  <span className="is-size-7"> scRNA-Seq Full Length</span>
                 </span>
               </Bulma.C>
               <Bulma.C className="is-flex is-align-items-center">
@@ -438,16 +443,20 @@ const GeneExpression = ({ geneId, speciesId }) => {
             <Bulma.Columns vCentered className="mt-0">
               <Bulma.C>
                 <span>
-                  <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey:
-                  low confidence scores
+                  <span style={{ color: 'lightGrey' }}>3.25e4</span>
+                  <span className="is-size-7">
+                    {' '}
+                    lightgrey: low confidence scores
+                  </span>
                 </span>
               </Bulma.C>
               <Bulma.C className="is-flex is-align-items-center">
-                <hr className="dot-line m-0 mr-2" /> important score variation
+                <hr className="dot-line m-0 mr-2" />
+                <span className="is-size-7"> important score variation</span>
               </Bulma.C>
             </Bulma.Columns>
             <div className="separator my-5" />
-            <p>
+            <p className="is-size-7">
               <b>Expression scores</b> of expression calls is based on the rank
               of a gene in a condition according to its expression levels
               (non-parametric statistics), normalized using the minimum and
@@ -458,11 +467,13 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </p>
             <Bulma.Columns>
               <Bulma.Column size={4}>
-                <p>Sources of annotations to anatomy and development:</p>
+                <p className="is-size-7">
+                  Sources of annotations to anatomy and development:
+                </p>
                 <ul className="unordered">
                   {data.gene.species.sourcesOfAnnotationsPerDataType.map(
                     (d, key) => (
-                      <li key={key}>
+                      <li key={key} className="is-size-7">
                         {`${d.dataType} data: `}
                         {d.sources.map((s, sKey) => (
                           <LinkExternal key={sKey} to={s.baseUrl}>
@@ -475,10 +486,10 @@ const GeneExpression = ({ geneId, speciesId }) => {
                 </ul>
               </Bulma.Column>
               <Bulma.Column size={4}>
-                <p>Sources of raw data:</p>
+                <p className="is-size-7">Sources of raw data:</p>
                 <ul className="unordered">
                   {data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
-                    <li key={key}>
+                    <li key={key} className="is-size-7">
                       {`${d.dataType} data: `}
                       {d.sources.reduce((acc, s, sKey) => {
                         if (sKey !== 0)

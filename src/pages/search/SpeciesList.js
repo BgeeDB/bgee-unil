@@ -22,9 +22,15 @@ const SpeciesList = () => {
     });
   }, []);
 
-  const metaKeywords = speciesList
-    .map((s) => `${s.genus} ${s.speciesName} ${s.name ? `, ${s.name}` : ''}`)
-    .join(', ');
+  const metaKeywords = React.useMemo(
+    () =>
+      speciesList
+        .map(
+          (s) => `${s.genus} ${s.speciesName} ${s.name ? `, ${s.name}` : ''}`
+        )
+        .join(', '),
+    [speciesList]
+  );
 
   return (
     <>
@@ -37,7 +43,7 @@ const SpeciesList = () => {
         <meta name="keywords" content={metaKeywords} />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={4}>
+        <Bulma.Title size={3}>
           {i18n.t('search.species.list-title')}
         </Bulma.Title>
       </div>

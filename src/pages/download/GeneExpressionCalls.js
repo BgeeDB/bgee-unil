@@ -69,9 +69,13 @@ const GeneExpressionCalls = () => {
     });
   }, []);
 
-  const allSpeciesName = `${singleSpeciesList
-    .map((s) => ` ${s.name} ${s.speciesName}`)
-    .join(', ')}`;
+  const allSpeciesName = React.useMemo(
+    () =>
+      `${singleSpeciesList
+        .map((s) => ` ${s.name} ${s.speciesName}`)
+        .join(', ')}`,
+    [singleSpeciesList]
+  );
 
   return (
     <>
@@ -89,9 +93,9 @@ const GeneExpressionCalls = () => {
         />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={5}>Gene expression calls</Bulma.Title>
+        <Bulma.Title size={3}>Gene expression calls</Bulma.Title>
       </div>
-      <p>
+      <p className="is-size-5">
         This page provides calls of baseline presence/absence of expression, and
         of differential over-/under-expression, either in single species, or
         made comparable between multiple species. Click on a species or a group

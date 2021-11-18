@@ -145,9 +145,12 @@ const GeneList = () => {
         <meta name="keywords" content={metaKeywords} />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
+        <Bulma.Title size={3}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
       </div>
-      <p>{i18n.t('search.genes.description')}</p>
+      <p className="is-size-5">
+        Search for genes based on gene IDs, gene names, gene descriptions,
+        synonyms and cross-references.
+      </p>
       <div>
         <GeneSearch classNames="search-input mx-auto my-3">
           <p>

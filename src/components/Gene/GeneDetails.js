@@ -133,7 +133,7 @@ const GeneDetails = ({
                 height={50}
                 width={50}
               />
-              <p className="title is-5 has-text-centered">
+              <p className="title is-size-3 has-text-centered">
                 {`Gene : ${name} - ${geneId} - `}
                 <i>
                   {species.genus} {species.speciesName}
@@ -143,7 +143,7 @@ const GeneDetails = ({
             </div>
           </div>
           <div id="general-infos">
-            <Bulma.Title size={5} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline">
               {i18n.t('search.gene.general-info')}
             </Bulma.Title>
             <div className="static-section near-columns">

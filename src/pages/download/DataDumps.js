@@ -18,7 +18,7 @@ const DataDumps = () => (
       />
     </Helmet>
     <div className="content has-text-centered">
-      <Bulma.Title size={5}>Bgee data dumps</Bulma.Title>
+      <Bulma.Title size={3}>Bgee data dumps</Bulma.Title>
     </div>
 
     <Bulma.Tile kind="ancestor">

@@ -1,4 +1,10 @@
 @charset "utf-8";
+
+$size-7: 12px !default;
+$size-6: 1.0rem !default;
+$size-5: 1.1rem !default;
+$size-4: 1.2rem !default;
+$size-3: 1.5rem !default;
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 @import "../../node_modules/bulma/sass/utilities/functions";
 
@@ -16,10 +22,10 @@ $dark-bg-hover-color: #555555;
 $dark-font-color: $dark-color;
 $hero-banner-bg: #999999;
 $body-size: 14px;
-$size-7: 12px;
 $tablet: 800px;
 $desktop: 960px;
 $widescreen: 1152px;
+
 
 /* Button customization*/
 .button.search-form {
@@ -42,6 +48,9 @@ $widescreen: 1152px;
 
 $desktop: 1090px;
 
+button, .button {
+  font-size: $size-4 !important;
+}
 body {
   margin: 0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
@@ -75,6 +84,12 @@ $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 //$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
+.navbar-item {
+  font-size: $size-5;
+  &.custom {
+    font-size: $size-6;
+  }
+}
 .navbar-dropdown.open {
   display: block;
 }

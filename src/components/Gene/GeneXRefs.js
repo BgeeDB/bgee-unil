@@ -7,7 +7,7 @@ import GeneExpandableList from './GeneExpandableList';
 
 const GeneXRefs = ({ isLoading, data }) => (
   <div id="cross-references">
-    <Bulma.Title size={5} className="gradient-underline">
+    <Bulma.Title size={4} className="gradient-underline">
       {i18n.t('search.gene.cross-references')}
     </Bulma.Title>
     <div className="static-section near-columns">

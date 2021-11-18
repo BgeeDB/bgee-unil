@@ -171,7 +171,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
 
   return (
     <>
-      <Bulma.Title size={5} className="gradient-underline" id="orthologs">
+      <Bulma.Title size={4} className="gradient-underline" id="orthologs">
         Orthologs
       </Bulma.Title>
       <div className="static-section near-columns">
@@ -211,14 +211,13 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                   },
                 ]}
                 data={homologs?.orthologsByTaxon}
-                fullwidth
                 onRenderCell={onRenderCell}
                 onFilter={onFilter}
                 customHeader={customHeader}
               />
             </div>
             {homologs.orthologyXRef && (
-              <span>
+              <span className="is-size-7">
                 {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
                 <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
                   {homologs.orthologyXRef?.xRefId}
@@ -232,7 +231,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
           <span>No data</span>
         )}
       </div>
-      <Bulma.Title size={5} className="gradient-underline" id="paralogs">
+      <Bulma.Title size={4} className="gradient-underline" id="paralogs">
         Paralogs (same species)
       </Bulma.Title>
       <div className="static-section near-columns">
@@ -267,13 +266,12 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                 },
               ]}
               data={homologs?.paralogsByTaxon}
-              fullwidth
               onRenderCell={onRenderCell}
               onFilter={onFilter}
               customHeader={customHeader}
             />
             {homologs.paralogyXRef && (
-              <span>
+              <span className="is-size-7">
                 {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
                 <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
                   {homologs.paralogyXRef?.xRefId}
