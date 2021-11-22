@@ -3,6 +3,12 @@
 import React from 'react';
 import staticBuilder from '../../helpers/staticBuilder';
 import classnames from '../../helpers/classnames';
+import {
+  hasColumnsTableHidden,
+  isHideMediaQuery,
+} from '../../helpers/constants/mediaQueries';
+import useWindowSize from '../../hooks/useWindowSize';
+import { ModalContext } from '../../contexts/ModalContext';
 
 const Table = ({
   scrollable = false,
@@ -17,6 +23,8 @@ const Table = ({
   onRenderRow, // function that generate custom css classes depending of
   striped,
 }) => {
+  const { showModal, hideModal } = React.useContext(ModalContext);
+  const { width } = useWindowSize();
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
     (key) => () => {
@@ -34,6 +42,13 @@ const Table = ({
     [sortOption, onSort]
   );
 
+  const showModalDetails = React.useCallback(
+    (item) => () => {
+      console.log(columns, item);
+      // todo display modal width grid
+    },
+    [columns, onRenderCell]
+  );
   const [isExpanded, setIsExpanded] = React.useState();
   const expandAction = React.useCallback(
     (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
@@ -42,8 +57,8 @@ const Table = ({
   const defaultRender = React.useCallback(
     (cell, key) => {
       let style;
-
-      if (columns.find((c) => c?.key === key && c?.style)) {
+      const col = columns.find((c) => c?.key === key);
+      if (col && col.style) {
         style = columns.find((c) => c?.key === key).style;
       }
       if (typeof cell === 'string' || typeof cell === 'number')
@@ -59,9 +74,13 @@ const Table = ({
         </div>
       ) : null;
     },
-    [columns]
+    [columns, width]
   );
 
+  const showTableModalButton = React.useMemo(
+    () => hasColumnsTableHidden(width, columns),
+    [width, columns]
+  );
   let TableObject = (
     <table
       className={classnames(
@@ -72,8 +91,11 @@ const Table = ({
     >
       <thead>
         <tr>
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+          {showTableModalButton && <th />}
           {columns.map((item, key) => {
-            if (typeof item === 'object')
+            if (typeof item === 'object') {
+              if (isHideMediaQuery(width, item.hide)) return null;
               return (
                 <th
                   key={item.key}
@@ -98,19 +120,13 @@ const Table = ({
                     )}
                 </th>
               );
+            }
             return <th key={key}>{item}</th>;
           })}
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          {columns.map((item, key) => (
-            // eslint-disable-next-line jsx-a11y/control-has-associated-label
-            <th key={key}> </th>
-          ))}
-        </tr>
-      </tfoot>
       <tbody>
+        {/* TODO add modal button and add element in head also */}
         {data.map((row, key) => (
           <tr
             key={key}
@@ -121,6 +137,16 @@ const Table = ({
                 : undefined
             )}
           >
+            {showTableModalButton && (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+              <td
+                className="table-modal-button"
+                onClick={showModalDetails(row)}
+              >
+                <ion-icon name="add-circle" />
+              </td>
+            )}
+            {/* {hasColumnsTableHidden(width, columns) && <th>yo</th>} */}
             {Array.isArray(row) &&
               row.map((cell, cellKey) => (
                 <td key={`${key}-${cellKey}`}>
@@ -138,20 +164,22 @@ const Table = ({
               ))}
             {typeof row &&
               !Array.isArray(row) &&
-              columns.map((c, keyCol) => (
-                <td key={`${key}-col-${keyCol}`}>
-                  {onRenderCell
-                    ? onRenderCell(
-                        { cell: row, key: c.key || keyCol, keyRow: key },
-                        defaultRender,
-                        {
-                          expandAction: expandAction(key),
-                          isExpanded: isExpanded === key,
-                        }
-                      )
-                    : null}
-                </td>
-              ))}
+              columns.map((c, keyCol) =>
+                isHideMediaQuery(width, c.hide) ? null : (
+                  <td key={`${key}-col-${keyCol}`}>
+                    {onRenderCell
+                      ? onRenderCell(
+                          { cell: row, key: c.key || keyCol, keyRow: key },
+                          defaultRender,
+                          {
+                            expandAction: expandAction(key),
+                            isExpanded: isExpanded === key,
+                          }
+                        )
+                      : null}
+                  </td>
+                )
+              )}
           </tr>
         ))}
       </tbody>

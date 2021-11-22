@@ -124,7 +124,7 @@ const ComplexTable = ({
         striped
         {...props}
       />
-      <div className="is-flex is-justify-content-space-between">
+      <div className="complex-table-footer is-flex is-justify-content-space-between">
         <div>{showEntriesText}</div>
         {pagination && (
           <Pagination

@@ -22,6 +22,7 @@ $dark-bg-hover-color: #555555;
 $dark-font-color: $dark-color;
 $hero-banner-bg: #999999;
 $body-size: 14px;
+$mobile: 480px;
 $tablet: 800px;
 $desktop: 960px;
 $widescreen: 1152px;
@@ -910,5 +911,21 @@ label.label {
 .navbar-item {
   &:focus {
     background-color: transparent;
+  }
+}
+
+@media only screen and (max-width: $mobile) {
+ .complex-table-footer {
+   flex-direction: column;
+   & > * {
+     margin-bottom: 0.5rem;
+   }
+ }
+}
+.table-modal-button {
+  cursor: pointer;
+  ion-icon {
+    font-size: 28px;
+    color: $primary;
   }
 }

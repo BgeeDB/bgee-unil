@@ -9,6 +9,7 @@ import Bulma from '../../components/Bulma';
 import useGeneSearch from '../../hooks/useGeneSearch';
 import GeneSearch from '../../components/Gene/GeneSearch';
 import splitWithOccurrences from '../../helpers/splitWithOccurrences';
+import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 
 const onRenderCell =
   (search) =>
@@ -128,21 +129,23 @@ const GeneList = () => {
     }
   }, [queryParams]);
 
-  const metaDescription = `${
-    results
-      ? `${search} gene search, ${results.totalMatchCount} results in total`
-      : 'Search for a gene in Bgee'
-  }`;
-
-  const metaKeywords = `gene search, gene
-  ${search ? `, ${search}` : ''}`;
+  const meta = React.useMemo(
+    () => ({
+      description: results
+        ? `${search} gene search, ${results.totalMatchCount} results in total`
+        : 'Search for a gene in Bgee',
+      keywords: `gene search, gene
+  ${search ? `, ${search}` : ''}`,
+    }),
+    [search, results]
+  );
 
   return (
     <>
       <Helmet>
         <title>{search ? `${search} - ` : ''} Gene search</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div className="content has-text-centered">
         <Bulma.Title size={3}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
@@ -184,15 +187,23 @@ const GeneList = () => {
           </p>
           <ComplexTable
             pagination
-            scrollable
+            // scrollable
             sortable
             classNamesTable="is-striped"
             columns={[
-              { text: 'Gene ID', key: 'id' },
+              { text: 'Gene ID', key: 'id', hide: MEDIA_QUERIES.MOBILE_P },
               { text: 'Name', key: 'name' },
-              { text: 'Description', key: 'description' },
-              { text: 'Organism', key: 'organism' },
-              { text: 'Match', key: 'match' },
+              {
+                text: 'Description',
+                key: 'description',
+                hide: MEDIA_QUERIES.TABLET,
+              },
+              {
+                text: 'Organism',
+                key: 'organism',
+                hide: MEDIA_QUERIES.MOBILE_L,
+              },
+              { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
             ]}
             data={results.geneMatches}
             onFilter={onFilter}

@@ -8,6 +8,7 @@ import LinkExternal from '../LinkExternal';
 import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
+import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 
 const CUSTOM_FIELDS = [
   {
@@ -42,28 +43,33 @@ const columnsGenerator = (cFields, data) => () => {
     c.push({
       key: 'devStage',
       text: 'Dev. stage',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Sex'))
     c.push({
       key: 'sex',
       text: 'Sex',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Strain'))
     c.push({
       key: 'strain',
       text: 'Strain',
       style: { minWidth: 100 },
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   c = [
     ...c,
     {
       key: 'expScore',
       text: 'Expression score',
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'fdr',
       text: 'FDR',
       style: { minWidth: 100 },
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'sources',
@@ -71,6 +77,7 @@ const columnsGenerator = (cFields, data) => () => {
       style: {
         width: 110,
       },
+      hide: MEDIA_QUERIES.DESKTOP,
     },
   ];
   return c;
