@@ -186,7 +186,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
               history.replace(`?expression=${query.join(',')}`);
             }}
           >
-            Search
+            Update
           </Bulma.Button>
         </div>
         <Bulma.Columns vCentered className="mt-0">
