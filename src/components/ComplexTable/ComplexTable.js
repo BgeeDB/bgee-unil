@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from '../Table';
 import Pagination from '../Pagination';
-import i18n from '../../i18n';
 import Select from '../Select';
 import Input from '../Form/Input';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -75,22 +74,14 @@ const ComplexTable = ({
   const showEntriesText = React.useMemo(
     () => (
       <p className="has-text-right">
-        {i18n
-          .t('analysis.top-anat.showing-entries-on-total')
-          .replace(
-            '{START}',
-            internalData.length
-              ? ((currentPage - 1) * pageSize + 1).toString(10)
-              : '0'
-          )
-          .replace(
-            '{END}',
-            (pageSize * currentPage > internalData.length
-              ? internalData.length
-              : pageSize * currentPage
-            ).toString(10)
-          )
-          .replace('{TOTAL}', internalData.length)}
+        {`Showing ${
+          internalData.length
+            ? ((currentPage - 1) * pageSize + 1).toString(10)
+            : '0'
+        } to ${(pageSize * currentPage > internalData.length
+          ? internalData.length
+          : pageSize * currentPage
+        ).toString(10)} of ${internalData.length} entries`}
       </p>
     ),
     [internalData, currentPage, pageSize]

@@ -2,7 +2,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router-dom';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
@@ -148,7 +147,7 @@ const GeneList = () => {
         <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={3}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
+        <Bulma.Title size={3}>Gene search</Bulma.Title>
       </div>
       <p className="is-size-5">
         Search for genes based on gene IDs, gene names, gene descriptions,
@@ -181,9 +180,7 @@ const GeneList = () => {
           <p className="has-text-centered my-5 has-text-weight-semibold">
             {results.totalMatchCount > 10000
               ? `About ${results.totalMatchCount} gene(s) found for '${search}' (only the first 10000 genes are displayed)`
-              : `${results.totalMatchCount} ${i18n.t(
-                  'search.genes.genes-found'
-                )} '${search}'`}
+              : `${results.totalMatchCount} gene(s) found for '${search}'`}
           </p>
           <ComplexTable
             pagination

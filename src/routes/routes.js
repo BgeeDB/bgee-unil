@@ -38,58 +38,58 @@ import NewsPages from '../pages/about/NewsPage';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
-    i18nKey: 'page.analysis.top-anat',
+    title: 'TopAnat: Expression enrichment analysis',
     component: TopAnatAnalysis,
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
-    i18nKey: 'page.analysis.expression-comparison',
+    title: 'Expression comparison',
     component: ExpComp,
   },
 };
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
-    i18nKey: 'page.search.gene-search',
+    title: 'Gene search',
     component: GeneList,
   },
   [PATHS.SEARCH.GENE_ITEM]: {
-    // i18nKey: 'page.search.gene-search',
     component: Gene,
+    title: 'Gene',
   },
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
-    i18nKey: 'page.search.anatomical-homology-search',
     component: AnatomicalHomologySearch,
+    title: 'Anatomical homology search',
   },
   [PATHS.SEARCH.SPECIES]: {
-    i18nKey: 'page.search.species',
     component: SpeciesList,
+    title: 'Species list',
   },
   [PATHS.SEARCH.SPECIES_ITEM]: {
-    i18nKey: 'page.search.species-item',
     component: Species,
+    title: 'Species',
   },
 };
 const DOWNLOAD = {
   [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
-    i18nKey: 'page.download.gene-expression-calls',
     component: GeneExpressionCallsDownload,
+    title: 'Gene expression calls',
   },
   [PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]: {
-    i18nKey: 'page.download.processed-expression-values',
     component: ProcessedExpressionValues,
+    title: 'Processed expression values',
   },
   [PATHS.DOWNLOAD.DATA_DUMPS]: {
-    i18nKey: 'page.download.data-dumps',
     component: DataDumps,
+    title: 'Data dumps',
   },
 };
 const RESOURCES = {
   [PATHS.RESOURCES.DOCS]: {
-    i18nKey: 'page.resources.docs',
     source: ResourcesFile,
+    title: 'Bgee documentation',
   },
   [PATHS.RESOURCES.R_PACKAGES]: {
-    i18nKey: 'page.resources.r-packages',
     source: RPackageFile,
+    title: 'R packages',
     meta: {
       title: 'R packages and containers available',
       description:
@@ -98,8 +98,8 @@ const RESOURCES = {
     },
   },
   [PATHS.RESOURCES.SPARQL]: {
-    i18nKey: 'page.resources.sparql',
     source: SparqlFile,
+    title: 'SPARQL endpoint',
     meta: {
       title: 'SPARQL endpoint documentation',
       description:
@@ -108,8 +108,8 @@ const RESOURCES = {
     },
   },
   [PATHS.RESOURCES.ANNOTATIONS]: {
-    i18nKey: 'page.resources.annotations',
     source: AnnotationsFile,
+    title: 'Annotations',
     meta: {
       title: 'Annotation resources',
       description:
@@ -119,8 +119,8 @@ const RESOURCES = {
     },
   },
   [PATHS.RESOURCES.ONTOLOGIES]: {
-    i18nKey: 'page.resources.ontologies',
     source: OntologiesFile,
+    title: 'Ontologies',
     meta: {
       title: 'Ontology resources',
       description:
@@ -130,8 +130,8 @@ const RESOURCES = {
     },
   },
   [PATHS.RESOURCES.SOURCE_CODE]: {
-    i18nKey: 'page.resources.source-code',
     source: ResourceSourceFile,
+    title: 'Source code',
     meta: {
       title: 'Source code information',
       description: 'Access the source code of the resources developed by Bgee.',
@@ -142,8 +142,8 @@ const RESOURCES = {
 };
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
-    i18nKey: 'page.support.gtex',
     source: GtexFile,
+    title: 'GTEx in Bgee',
     meta: {
       title: 'Datasets of interest',
       description:
@@ -152,8 +152,8 @@ const SUPPORT = {
     },
   },
   [PATHS.SUPPORT.TOP_ANAT]: {
-    i18nKey: 'page.support.top-anat',
     source: TopAnatFile,
+    title: 'TopAnat: Expression enrichment analysis',
     meta: {
       title: 'TopAnat documentation',
       description:
@@ -163,12 +163,12 @@ const SUPPORT = {
     },
   },
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
-    i18nKey: 'page.support.gene-expression-calls',
     source: GeneExpressionFile,
+    title: 'Gene expression calls',
   },
   [PATHS.SUPPORT.FAQ]: {
-    i18nKey: 'page.support.faq',
     source: FaqFile,
+    title: 'FAQ',
     meta: {
       title: 'FAQ',
       description: 'Answers to Frequently Asked Questions',
@@ -178,8 +178,8 @@ const SUPPORT = {
 };
 const ABOUT = {
   [PATHS.ABOUT.ABOUT]: {
-    i18nKey: 'page.about.about',
     source: AboutFile,
+    title: 'About Bgee',
     meta: {
       title: 'About Bgee',
       description: 'General information about Bgee and the team developing it.',
@@ -187,12 +187,12 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.NEWS]: {
-    i18nKey: 'page.about.news',
     component: NewsPages,
+    title: 'News',
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
-    i18nKey: 'page.about.collaborations',
     source: CollaborationsFile,
+    title: 'Bgee collaborations',
     meta: {
       title: 'Bgee collaborations',
       description:
@@ -201,8 +201,8 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.PUBLICATION]: {
-    i18nKey: 'page.about.publications',
     source: PublicationsFile,
+    title: 'Bgee publications',
     meta: {
       title: 'Bgee publications',
       description:
@@ -211,8 +211,8 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.SOURCES]: {
-    i18nKey: 'page.about.sources',
     source: AboutSourceFile,
+    title: 'Bgee source',
     meta: {
       title: 'Data sources',
       description:
@@ -221,8 +221,8 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.PRIVACY_POLICY]: {
-    i18nKey: 'page.about.privacy-policy',
     source: PrivacyPolicyFile,
+    title: 'Bgee privacy notice',
     meta: {
       title: 'Privacy notice',
       description:
@@ -235,8 +235,8 @@ const ABOUT = {
 
 const ROUTES = {
   [PATHS.HOME]: {
-    i18nKey: 'page.home',
     component: Home,
+    title: 'Bgee: gene expression data in animals',
   },
   ...ANALYSIS,
   ...SEARCH,
@@ -245,7 +245,7 @@ const ROUTES = {
   ...SUPPORT,
   ...ABOUT,
   [PATHS.ERROR]: {
-    i18nKey: 'page.error',
+    title: 'Error',
     component: Error,
   },
 };

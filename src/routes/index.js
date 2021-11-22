@@ -4,7 +4,6 @@ import Layout from '../components/Layout';
 import ROUTES from './routes';
 import PATHS from './paths';
 import Page from '../components/Page';
-import i18n from '../i18n';
 import { ModalProvider } from '../contexts/ModalContext';
 import { NotificationProvider } from '../contexts/NotificationsContext';
 import StaticPage from '../pages/StaticPage';
@@ -39,7 +38,7 @@ const Router = () => (
                 render={(props) => (
                   <Page
                     {...props}
-                    title={i18n.t(ROUTES[PATHS.ANALYSIS.TOP_ANAT].i18nKey)}
+                    title={ROUTES[PATHS.ANALYSIS.TOP_ANAT].name}
                     Component={ROUTES[PATHS.ANALYSIS.TOP_ANAT].component}
                   />
                 )}

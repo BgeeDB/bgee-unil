@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import TopAnatHistoryModal from './TopAnatHistoryModal';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import Tooltip from '../Tooltip';
 
 const EXAMPLES = [
@@ -66,12 +65,12 @@ const TopAnatHead = () => (
         className="button is-bgee-link is-outlined mr-2"
       >
         <Bulma.IonIcon name="newspaper-outline" />
-        <span>{i18n.t('analysis.top-anat.documentation')}</span>
+        <span>Documentation</span>
       </Link>
       <div className="is-align-items-center is-flex">
         <span className="icon-text">
           <Bulma.IonIcon name="bookmarks-sharp" />
-          <span>{i18n.t('analysis.top-anat.examples')}</span>
+          <span>Examples</span>
         </span>
         <div className="ml-1 buttons">
           {EXAMPLES.map((ex, key) => (

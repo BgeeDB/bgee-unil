@@ -3,16 +3,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 
 const HISTORY_KEY = 'topAnatHistory';
 const ModalContent = ({ history, onRemove, onLoad, hideModal }) => (
   <Bulma.Modal.Card.Wrapper>
     <Bulma.Modal.Card.Header>
-      <Bulma.Modal.Card.Title>
-        {i18n.t('analysis.top-anat.history')}
-      </Bulma.Modal.Card.Title>
+      <Bulma.Modal.Card.Title>History</Bulma.Modal.Card.Title>
       {/* eslint-disable-next-line react/button-has-type */}
       <button className="delete" aria-label="close" onClick={hideModal} />
     </Bulma.Modal.Card.Header>

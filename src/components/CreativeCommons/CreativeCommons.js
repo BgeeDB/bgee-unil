@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from '../../i18n';
 
 const CreativeCommons = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -7,10 +6,10 @@ const CreativeCommons = () => {
   return (
     <>
       <p className="is-size-7">
-        {`${i18n.t('home.image-right')} `}
+        {`Images from Wikimedia Commons. In most cases, pictures corresponds to the sequenced strains.  `}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <a onClick={() => setIsOpen(!isOpen)}>
-          {i18n.t('home.image-right-link')}
+          Show information about original images.
         </a>
       </p>
       <div id="creativecommons" className={isOpen ? 'is-open' : ''}>

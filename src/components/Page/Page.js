@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import ROUTES from '../../routes/routes';
-import i18n from '../../i18n';
 
 class Page extends React.PureComponent {
   constructor(props) {
@@ -37,11 +36,9 @@ class Page extends React.PureComponent {
     const { Component, title, ...props } = this.props;
     return (
       <>
-        {(title || ROUTES[props.location.pathname]?.i18nKey) && (
+        {(title || ROUTES[props.location.pathname]?.title) && (
           <Helmet>
-            <title>
-              {title || i18n.t(ROUTES[props.location.pathname].i18nKey)}
-            </title>
+            <title>{title || ROUTES[props.location.pathname].name}</title>
           </Helmet>
         )}
         <Component {...props} />

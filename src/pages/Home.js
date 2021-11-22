@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import i18n from '../i18n';
 import assets from '../assets';
 import packageJson from '../../package.json';
 import CreativeCommons from '../components/CreativeCommons';
@@ -33,9 +31,9 @@ const Home = () => {
     <>
       <Bulma.Hero className="home-hero-banner">
         <Bulma.Hero.Body className="pt-3">
-          <p className="has-text-right mb-5">{`${i18n.t(
-            config.archive ? 'global.archived-version' : 'global.version'
-          )} ${packageJson.version}`}</p>
+          <p className="has-text-right mb-5">{`${
+            config.archive ? 'Archived version' : 'Version'
+          } ${packageJson.version}`}</p>
           <div className="is-flex is-justify-content-center">
             <Bulma.Image
               src={assets.bgeeLogo}
@@ -199,19 +197,19 @@ const NavButtons = ({ className }) => (
         to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
       >
         <Bulma.IonIcon name="list-outline" />
-        <span>{i18n.t('home.exp-comparison')}</span>
+        <span>Expression comparison</span>
       </Link>
     </p>
     <p className="control">
       <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
         <Bulma.IonIcon name="stats-chart-outline" />
-        <span>{i18n.t('home.exp-enrichment-analysis')}</span>
+        <span>Expression enrichment analysis</span>
       </Link>
     </p>
     <p className="control">
       <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
         <Bulma.IonIcon name="search-outline" />
-        <span>{i18n.t('home.gene-search')}</span>
+        <span>Gene search</span>
       </Link>
     </p>
   </div>

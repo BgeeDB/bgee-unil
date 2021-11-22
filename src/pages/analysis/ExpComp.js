@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ComplexTable from '../../components/ComplexTable';
 import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
-import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
 
@@ -53,7 +52,7 @@ const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns vCentered>
     <Bulma.C size={3}>
       <div className="is-flex is-flex-direction-column">
-        <p>{i18n.t('analysis.top-anat.view')}</p>
+        <p>View</p>
       </div>
     </Bulma.C>
     <Bulma.C size={6}>
@@ -134,28 +133,25 @@ const ExpComp = () => {
           {staticBuilder([
             {
               type: 'title',
-              content: i18n.t('analysis.expression-comparison.title'),
+              content: 'Expression comparison',
             },
             {
               type: 'text',
-              content: i18n.t('analysis.expression-comparison.description'),
+              content:
+                'Compare expression of several genes. If genes belong to several species, comparisons will be performed in homologous organs. Please enter one gene ID per line.',
             },
           ])}
           <div className="is-flex is-justify-content-center my-3">
             <div className="message" style={{ maxWidth: '500px' }}>
               <header className="message-header">
-                <p className="is-size-5">
-                  {i18n.t('analysis.expression-comparison.gene-list')}
-                </p>
+                <p className="is-size-5">Gene list</p>
               </header>
               <div className="message-body">
                 <div className="field">
                   <div className="control">
                     <textarea
                       className="textarea is-small"
-                      placeholder={i18n.t(
-                        'analysis.expression-comparison.gene-list-placeholder'
-                      )}
+                      placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
                       rows="10"
                     />
                   </div>
@@ -163,7 +159,7 @@ const ExpComp = () => {
                 <div className="field">
                   <div className="control">
                     <button className="button" type="button">
-                      {i18n.t('analysis.expression-comparison.search-button')}
+                      Search
                     </button>
                   </div>
                 </div>
@@ -190,13 +186,12 @@ const ExpComp = () => {
             {staticBuilder([
               {
                 type: 'section',
-                title: i18n.t('analysis.expression-comparison.results'),
+                title: 'Results',
                 children: [
                   {
                     type: 'text',
-                    content: i18n.t(
-                      'analysis.expression-comparison.results-description'
-                    ),
+                    content:
+                      'Results are ordered by default by descendant "Conservation score", then ascendant "Genes with absence of expression", then descendant "Max expression score". The order could be changed by clicking on one column, then press shift and click on another column.',
                   },
                 ],
               },

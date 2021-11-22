@@ -3,7 +3,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import i18n from '../../i18n';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
@@ -359,7 +358,7 @@ const Species = () => {
               className="is-size-5 has-text-primary has-text-weight-semibold"
               id="proc-values-fl-scrna-seq"
             >
-              {i18n.t('search.species.full-rna-seq')}
+              Single cell full length RNA-Seq
             </p>
             {files.fullLength.annot || files.fullLength.data ? (
               <ul className="unordered">
