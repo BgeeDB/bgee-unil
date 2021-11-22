@@ -2,7 +2,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import classnames from '../../helpers/classnames';
 import api from '../../api';
 import PATHS from '../../routes/paths';
@@ -99,8 +98,9 @@ const GeneSearch = ({ classNames, children }) => {
         <div className="content">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <div className="field">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label className="label" htmlFor="search-species">
-              {i18n.t('search.genes.search-gene')}
+              Search genes
             </label>
             <div className="control">
               <input
@@ -127,7 +127,7 @@ const GeneSearch = ({ classNames, children }) => {
                 type="button"
                 onClick={onSubmitGene(search)}
               >
-                {i18n.t('global.search')}
+                Search
               </button>
               {children}
             </div>

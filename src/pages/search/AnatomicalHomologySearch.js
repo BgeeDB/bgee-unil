@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import i18n from '../../i18n';
 import useQuery from '../../hooks/useQuery';
 import ComplexTable from '../../components/ComplexTable';
 import PATHS from '../../routes/paths';
@@ -111,12 +110,11 @@ const AnatomicalHomologySearch = () => {
   return (
     <>
       <div className="content has-text-centered">
-        <Bulma.Title size={4}>{`${i18n.t(
-          'search.anatomical-homology.title'
-        )}`}</Bulma.Title>
+        <Bulma.Title size={4}>Anatomical homology</Bulma.Title>
       </div>
       <p>
-        {`${i18n.t('search.anatomical-homology.description')} `}
+        Retrieve anatomical homologies from a list of species and a list of
+        Uberon IDs. Retrieve Uberon IDs from organ names{' '}
         <a
           href="https://www.ebi.ac.uk/ols/ontologies/uberon"
           className="external-link"
@@ -134,7 +132,7 @@ const AnatomicalHomologySearch = () => {
               <div className="field is-flex is-justify-content-space-between">
                 <div>
                   <label className="label" htmlFor="search-species">
-                    {i18n.t('search.anatomical-homology.anat-label')}
+                    Anatomical entities
                   </label>
                   <div className="control" style={{ maxWidth: 250 }}>
                     <textarea
@@ -148,9 +146,7 @@ const AnatomicalHomologySearch = () => {
                 </div>
                 <div>
                   <label className="label" htmlFor="search-species">
-                    {i18n.t(
-                      'search.anatomical-homology.species-common-ancestor-label'
-                    )}
+                    Species to define least common ancestor
                   </label>
                   <div className="control checkboxes">
                     {checkboxes.map(({ id, name }) => (
@@ -169,10 +165,10 @@ const AnatomicalHomologySearch = () => {
               <div className="field">
                 <div className="control">
                   <button className="button mr-2" type="button">
-                    {i18n.t('global.search')}
+                    Search
                   </button>
                   <p className="mt-2">
-                    {`${i18n.t('global.example')}: `}
+                    {`Example: `}
                     <Link className="internal-link" to="?search=HBB">
                       Lung in human and zebrafish
                     </Link>
@@ -203,28 +199,26 @@ const AnatomicalHomologySearch = () => {
       {results && (
         <div>
           <Bulma.Title size={5} className="gradient-underline">
-            {i18n.t('global.results')}
+            Results
           </Bulma.Title>
-          <p className="my-5">{`${i18n.t(
-            'search.anatomical-homology.least-common-ancestor'
-          )}: Euteleostomi`}</p>
+          <p className="my-5">
+            Least common ancestor of provided species: Euteleostomi
+          </p>
           <ComplexTable
             pagination
             sortable
             classNamesTable="is-striped"
             columns={[
               {
-                text: i18n.t('search.anatomical-homology.anat-label'),
+                text: 'Anatomical entities',
                 key: 'id',
               },
               {
-                text: i18n.t(
-                  'search.anatomical-homology.ancestral-taxon-label'
-                ),
+                text: 'Ancestral taxon',
                 key: 'name',
               },
               {
-                text: i18n.t('search.anatomical-homology.presence-among-label'),
+                text: 'Presence among selected species',
                 key: 'description',
               },
             ]}

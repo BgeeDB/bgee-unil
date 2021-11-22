@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from '../../i18n';
 
 const ExpressionSearch = ({ search, setSearch, elements, onRender }) => {
   const [showAuto, setShowAuto] = React.useState(false);
@@ -29,7 +28,7 @@ const ExpressionSearch = ({ search, setSearch, elements, onRender }) => {
         className="input"
         type="text"
         name="search-species"
-        placeholder={i18n.t('download.processed-exp-values.search-placeholder')}
+        placeholder="Scientific name, common name, ..."
         value={search}
         onKeyDown={(e) => {
           if (e.key === 'Enter') setShowAuto(false);

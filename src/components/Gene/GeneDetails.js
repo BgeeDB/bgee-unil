@@ -3,7 +3,6 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import api from '../../api';
 import GeneSearch from './GeneSearch';
@@ -130,7 +129,7 @@ const GeneDetails = ({
           </div>
           <div id={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}>
             <Bulma.Title size={4} className="gradient-underline">
-              {i18n.t('search.gene.general-info')}
+              General information
             </Bulma.Title>
             <div className=" near-columns">
               <Bulma.Columns className="my-0">
@@ -169,9 +168,7 @@ const GeneDetails = ({
               </Bulma.Columns>
               <Bulma.Columns className="my-0">
                 <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">
-                    {i18n.t('search.gene.synonyms')}
-                  </p>
+                  <p className="has-text-weight-semibold">Synonym(s)</p>
                 </Bulma.C>
                 <Bulma.C size={9}>
                   <GeneExpandableList

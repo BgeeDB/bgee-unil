@@ -2,15 +2,13 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import i18n from '../i18n';
 import assets from '../assets';
 import packageJson from '../../package.json';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
-import HomeNewsList from '../components/Home/HomeNewsList';
+import HomeNewsList from '../components/HomeNewsList';
 import api from '../api';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
@@ -33,9 +31,9 @@ const Home = () => {
     <>
       <Bulma.Hero className="home-hero-banner">
         <Bulma.Hero.Body className="pt-3">
-          <p className="has-text-right mb-5">{`${i18n.t(
-            config.archive ? 'global.archived-version' : 'global.version'
-          )} ${packageJson.version}`}</p>
+          <p className="has-text-right mb-5">{`${
+            config.archive ? 'Archived version' : 'Version'
+          } ${packageJson.version}`}</p>
           <div className="is-flex is-justify-content-center">
             <Bulma.Image
               src={assets.bgeeLogo}
@@ -158,6 +156,11 @@ const Home = () => {
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
+        <div className="is-flex is-justify-content-flex-end mt-2">
+          <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
+            See all news
+          </Link>
+        </div>
         <NavButtons className="my-6 " />
         <Bulma.Columns>
           <Bulma.C size={config.archive ? 12 : 9}>
@@ -194,19 +197,19 @@ const NavButtons = ({ className }) => (
         to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
       >
         <Bulma.IonIcon name="list-outline" />
-        <span>{i18n.t('home.exp-comparison')}</span>
+        <span>Expression comparison</span>
       </Link>
     </p>
     <p className="control">
       <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
         <Bulma.IonIcon name="stats-chart-outline" />
-        <span>{i18n.t('home.exp-enrichment-analysis')}</span>
+        <span>Expression enrichment analysis</span>
       </Link>
     </p>
     <p className="control">
       <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
         <Bulma.IonIcon name="search-outline" />
-        <span>{i18n.t('home.gene-search')}</span>
+        <span>Gene search</span>
       </Link>
     </p>
   </div>

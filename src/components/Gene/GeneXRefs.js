@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import LinkExternal from '../LinkExternal';
 import GeneExpandableList from './GeneExpandableList';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
@@ -9,7 +8,7 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 const GeneXRefs = ({ isLoading, data }) => (
   <div id={GENE_DETAILS_HTML_IDS.XREFS}>
     <Bulma.Title size={4} className="gradient-underline">
-      {i18n.t('search.gene.cross-references')}
+      Cross-references
     </Bulma.Title>
     <div>
       {isLoading ? (

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import InfoIcon from '../InfoIcon';
 import TextArea from '../Form/TextArea';
 import HelpIcon from '../HelpIcon';
@@ -87,9 +86,7 @@ const TopAnatForm = ({
           <div className="field">
             <TextArea
               rows={10}
-              placeholder={i18n.t(
-                'analysis.top-anat.textarea-placeholder-gene-list'
-              )}
+              placeholder="Enter a list of gene identifiers, one ID per line, no quotes, no comma."
               onChange={foregroundHandler}
               error={errors.genes}
               value={formData.genes}
@@ -102,9 +99,7 @@ const TopAnatForm = ({
             <Bulma.C size={4}>
               <article className="message is-small">
                 <div className="message-header">
-                  <p className="is-size-6">
-                    {i18n.t('analysis.top-anat.background')}
-                  </p>
+                  <p className="is-size-6">Background</p>
                   <HelpIcon
                     title="Custom background"
                     style={{
@@ -202,19 +197,15 @@ const TopAnatForm = ({
             <Bulma.C size={4}>
               <article className="message is-small">
                 <div className="message-header">
-                  <p className="is-size-6">
-                    {i18n.t('analysis.top-anat.analysis-opts')}
-                  </p>
+                  <p className="is-size-6">Analysis options</p>
                 </div>
               </article>
               <div>
                 <p className="has-text-weight-semibold mb-2">
-                  {i18n.t('analysis.top-anat.expr-types')}
+                  Expression types
                 </p>
                 <p>Present</p>
-                <p className="has-text-weight-semibold my-2">
-                  {i18n.t('analysis.top-anat.data-types')}
-                </p>
+                <p className="has-text-weight-semibold my-2">Data types</p>
                 <div className="control">
                   <label className="checkbox">
                     <input
@@ -334,7 +325,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="stages"
                   >
-                    {i18n.t('analysis.top-anat.stages')}
+                    Development and life stages
                     <HelpIcon
                       title="Developmental and life stages"
                       style={{
@@ -401,7 +392,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="dataQuality"
                   >
-                    {i18n.t('analysis.top-anat.data-quality')}
+                    Data quality
                     <HelpIcon
                       title="Data quality"
                       style={{
@@ -449,7 +440,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="decorrelationType"
                   >
-                    {i18n.t('analysis.top-anat.decorrelation-type')}
+                    Decorrelation type (slower)
                     <HelpIcon
                       title="Decorrelation typey"
                       style={{
@@ -500,7 +491,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="nodeSize"
                   >
-                    {i18n.t('analysis.top-anat.node-size')}
+                    Node size
                     <HelpIcon
                       title="Node size"
                       style={{
@@ -539,7 +530,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="nbNode"
                   >
-                    {i18n.t('analysis.top-anat.nb-node')}
+                    Nb of nodes
                     <HelpIcon
                       title="Number of nodes"
                       style={{
@@ -578,7 +569,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="fdrThreshold"
                   >
-                    {i18n.t('analysis.top-anat.fdr-threshold')}
+                    FDR threshold
                     <HelpIcon
                       title="FDR threshold"
                       style={{
@@ -613,7 +604,7 @@ const TopAnatForm = ({
                     )}
                     htmlFor="pValueThreshold"
                   >
-                    {i18n.t('analysis.top-anat.p-value-threshold')}
+                    p-value threshold
                     <HelpIcon
                       title="p‑value threshold"
                       style={{
@@ -651,7 +642,7 @@ const TopAnatForm = ({
           disabled={formDisabled}
           value={formData.email}
           onChange={handleChange('email')}
-          placeholder={i18n.t('analysis.top-anat.email')}
+          placeholder="Email"
           error={errors.email}
           icons={
             <span className="icon is-left">
@@ -663,7 +654,7 @@ const TopAnatForm = ({
           controlClassName="has-icons-left"
           value={formData.jobDescription}
           onChange={handleChange('jobDescription')}
-          placeholder={i18n.t('analysis.top-anat.job-description')}
+          placeholder="Job description"
           error={errors.jobDescription}
           disabled={formDisabled}
           icons={

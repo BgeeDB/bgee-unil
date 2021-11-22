@@ -2,7 +2,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
@@ -122,7 +121,7 @@ const GeneExpressionCalls = () => {
           <div className="content">
             <div className="field">
               <label className="label" htmlFor="search-species">
-                {i18n.t('download.processed-exp-values.search-label')}
+                Search species
               </label>
               <ExpressionSearch
                 search={search}
@@ -344,19 +343,15 @@ const GeneExpressionCalls = () => {
                         </div>
                         <div>
                           <p className="has-text-weight-semibold is-size-5 mt-2">
-                            {i18n.t('download.gene-exp-calls.over-under-exp')}
+                            Over-/Under-expression
                             <Link
                               className="is-size-6 internal-link ml-2"
                               to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
                             >
-                              {i18n.t('global.see-documentation')}
+                              See documentation
                             </Link>
                           </p>
-                          <p>
-                            {i18n.t(
-                              'download.gene-exp-calls.improvement-in-progress'
-                            )}
-                          </p>
+                          <p>Improvement of these files is in progress</p>
                         </div>
                       </div>
                     </div>
