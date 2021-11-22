@@ -95,14 +95,14 @@ const GeneDetails = ({
   }, []);
 
   return (
-    <div className="is-widescreen">
+    <>
       <Helmet>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
         <meta name="keywords" content={metaKeywords} />
       </Helmet>
-      <div className="columns">
-        <div className="column is-narrow-tablet is-narrow-desktop is-narrow-widescreen is-narrow-fullhd">
+      <div id="gene-wrapper">
+        <div className="sidebar">
           <div className="side-menu">
             <div className="side-menu-wrapper">
               <GeneSearch />
@@ -110,7 +110,7 @@ const GeneDetails = ({
             </div>
           </div>
         </div>
-        <div className="column">
+        <div id="gene-body">
           <div className="is-flex is-justify-content-center is-align-items-center">
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
@@ -132,7 +132,7 @@ const GeneDetails = ({
             <Bulma.Title size={4} className="gradient-underline">
               {i18n.t('search.gene.general-info')}
             </Bulma.Title>
-            <div className="static-section near-columns">
+            <div className=" near-columns">
               <Bulma.Columns className="my-0">
                 <Bulma.C size={3}>
                   <p className="has-text-weight-semibold">Gene identifier</p>
@@ -215,6 +215,7 @@ const GeneDetails = ({
               </Bulma.Columns>
             </div>
           </div>
+
           <GeneExpression geneId={geneId} speciesId={species.id} />
           <GeneHomologs
             homologs={homologs}
@@ -224,7 +225,7 @@ const GeneDetails = ({
           <GeneXRefs data={xRefs} isLoading={isLoading} />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

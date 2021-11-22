@@ -137,7 +137,7 @@ const Species = () => {
         <Bulma.Title size={4} className="gradient-underline">
           General information
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <div className="is-flex">
             <div style={{ width: 150 }}>
               <p>
@@ -200,7 +200,7 @@ const Species = () => {
         <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
           Gene expression call files
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <p>
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
@@ -279,7 +279,7 @@ const Species = () => {
         <Bulma.Title size={4} className="gradient-underline" id="prov-values">
           Processed expression value files
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <p>
             Bgee provides annotations and experiment annotations, and processed
             expression values.

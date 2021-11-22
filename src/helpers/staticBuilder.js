@@ -339,9 +339,7 @@ const staticBuilder = (json, prefixKey = '') =>
             <Bulma.Title size={4} className="gradient-underline">
               {props.title}
             </Bulma.Title>
-            <div className="static-section">
-              {staticBuilder(props.children)}
-            </div>
+            <div className="">{staticBuilder(props.children)}</div>
           </div>
         );
       case 'separator':

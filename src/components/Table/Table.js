@@ -23,8 +23,9 @@ const Table = ({
   onRenderRow, // function that generate custom css classes depending of
   striped,
 }) => {
-  const { showModal, hideModal } = React.useContext(ModalContext);
+  const table = React.useRef();
   const { width } = useWindowSize();
+  const { showModal, hideModal } = React.useContext(ModalContext);
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
     (key) => () => {
@@ -62,7 +63,7 @@ const Table = ({
         </div>
       ) : null;
     },
-    [columns, width]
+    [columns, table]
   );
   const showModalDetails = React.useCallback(
     (item) => () => {
@@ -111,112 +112,8 @@ const Table = ({
   );
 
   const showTableModalButton = React.useMemo(
-    () => hasColumnsTableHidden(width, columns),
+    () => hasColumnsTableHidden(table?.current?.offsetWidth || width, columns),
     [width, columns]
-  );
-  const TableObject = (
-    <table
-      className={classnames(
-        'table',
-        { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
-        classNames
-      )}
-    >
-      <thead>
-        <tr>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          {showTableModalButton && <th />}
-          {columns.map((item, key) => {
-            if (typeof item === 'object') {
-              if (isHideMediaQuery(width, item.hide)) return null;
-              return (
-                <th
-                  key={item.key}
-                  onClick={defineSortOption(item.key)}
-                  style={item.style}
-                >
-                  {item.abbr && <abbr title={item.abbr} />}
-                  {item.text}
-                  {sortOption &&
-                    sortOption.key === item.key &&
-                    sortOption.sort === 'descending' && (
-                      <span className="icon is-small">
-                        <ion-icon name="caret-down-outline" />
-                      </span>
-                    )}
-                  {sortOption &&
-                    sortOption.key === item.key &&
-                    sortOption.sort === 'ascending' && (
-                      <span className="icon is-small">
-                        <ion-icon name="caret-up-outline" />
-                      </span>
-                    )}
-                </th>
-              );
-            }
-            return <th key={key}>{item}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {/* TODO add modal button and add element in head also */}
-        {data.map((row, key) => (
-          <tr
-            key={key}
-            className={classnames(
-              { 'is-expanded': isExpanded === key },
-              onRenderRow
-                ? onRenderRow(row, key > 0 ? data[key - 1] : null)
-                : undefined
-            )}
-          >
-            {showTableModalButton && (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-              <td
-                className="table-modal-button"
-                onClick={showModalDetails(row)}
-              >
-                <ion-icon name="add-circle" />
-              </td>
-            )}
-            {/* {hasColumnsTableHidden(width, columns) && <th>yo</th>} */}
-            {Array.isArray(row) &&
-              row.map((cell, cellKey) => (
-                <td key={`${key}-${cellKey}`}>
-                  {onRenderCell
-                    ? onRenderCell(
-                        { cell, key: cellKey, keyRow: key },
-                        defaultRender,
-                        {
-                          expandAction: expandAction(key),
-                          isExpanded: isExpanded === key,
-                        }
-                      )
-                    : defaultRender(cell, cellKey)}
-                </td>
-              ))}
-            {typeof row &&
-              !Array.isArray(row) &&
-              columns.map((c, keyCol) =>
-                isHideMediaQuery(width, c.hide) ? null : (
-                  <td key={`${key}-col-${keyCol}`}>
-                    {onRenderCell
-                      ? onRenderCell(
-                          { cell: row, key: c.key || keyCol, keyRow: key },
-                          defaultRender,
-                          {
-                            expandAction: expandAction(key),
-                            isExpanded: isExpanded === key,
-                          }
-                        )
-                      : null}
-                  </td>
-                )
-              )}
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 
   return (
@@ -226,7 +123,119 @@ const Table = ({
           {title}
         </p>
       )}
-      <div className="table-container">{TableObject}</div>
+      <div className="table-container">
+        <table
+          ref={table}
+          className={classnames(
+            'table',
+            { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+            classNames
+          )}
+        >
+          <thead>
+            <tr>
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+              {showTableModalButton && <th />}
+              {columns.map((item, key) => {
+                if (typeof item === 'object') {
+                  if (
+                    isHideMediaQuery(
+                      table?.current?.offsetWidth || width,
+                      item.hide
+                    )
+                  )
+                    return null;
+                  return (
+                    <th
+                      key={item.key}
+                      onClick={defineSortOption(item.key)}
+                      style={item.style}
+                    >
+                      {item.abbr && <abbr title={item.abbr} />}
+                      {item.text}
+                      {sortOption &&
+                        sortOption.key === item.key &&
+                        sortOption.sort === 'descending' && (
+                          <span className="icon is-small">
+                            <ion-icon name="caret-down-outline" />
+                          </span>
+                        )}
+                      {sortOption &&
+                        sortOption.key === item.key &&
+                        sortOption.sort === 'ascending' && (
+                          <span className="icon is-small">
+                            <ion-icon name="caret-up-outline" />
+                          </span>
+                        )}
+                    </th>
+                  );
+                }
+                return <th key={key}>{item}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {/* TODO add modal button and add element in head also */}
+            {data.map((row, key) => (
+              <tr
+                key={key}
+                className={classnames(
+                  { 'is-expanded': isExpanded === key },
+                  onRenderRow
+                    ? onRenderRow(row, key > 0 ? data[key - 1] : null)
+                    : undefined
+                )}
+              >
+                {showTableModalButton && (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+                  <td
+                    className="table-modal-button"
+                    onClick={showModalDetails(row)}
+                  >
+                    <ion-icon name="add-circle" />
+                  </td>
+                )}
+                {Array.isArray(row) &&
+                  row.map((cell, cellKey) => (
+                    <td key={`${key}-${cellKey}`}>
+                      {onRenderCell
+                        ? onRenderCell(
+                            { cell, key: cellKey, keyRow: key },
+                            defaultRender,
+                            {
+                              expandAction: expandAction(key),
+                              isExpanded: isExpanded === key,
+                            }
+                          )
+                        : defaultRender(cell, cellKey)}
+                    </td>
+                  ))}
+                {typeof row &&
+                  !Array.isArray(row) &&
+                  columns.map((c, keyCol) =>
+                    isHideMediaQuery(
+                      table?.current?.offsetWidth || width,
+                      c.hide
+                    ) ? null : (
+                      <td key={`${key}-col-${keyCol}`}>
+                        {onRenderCell
+                          ? onRenderCell(
+                              { cell: row, key: c.key || keyCol, keyRow: key },
+                              defaultRender,
+                              {
+                                expandAction: expandAction(key),
+                                isExpanded: isExpanded === key,
+                              }
+                            )
+                          : null}
+                      </td>
+                    )
+                  )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

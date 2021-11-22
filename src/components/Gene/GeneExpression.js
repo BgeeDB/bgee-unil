@@ -383,7 +383,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
       >
         Expression
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small"

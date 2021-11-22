@@ -217,10 +217,6 @@ footer.footer {
 .notification {
   margin-bottom: 0 !important;
 }
-
-div.static-section > *:not(:first-child) {
-  margin-top: .7rem;
-}
 .title.gradient-underline {
   margin: 1rem 0 !important;
   border-top: 0;
@@ -743,27 +739,6 @@ label.label {
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
   }
 }
-.side-menu {
-  width: 300px;
-  .side-menu-wrapper {
-    position: fixed;
-    width: 300px;
-  }
-}
-
-@media only screen and (max-width: $tablet) {
-  .side-menu {
-    width: auto;
-    .side-menu-wrapper {
-      position: relative;
-      width: auto;
-      .menu {
-        display: none;
-      }
-    }
-  }
-}
-
 .species-grid {
   display: grid;
   grid-column-gap: 5px;
@@ -914,14 +889,6 @@ label.label {
   }
 }
 
-@media only screen and (max-width: $mobile) {
- .complex-table-footer {
-   flex-direction: column;
-   & > * {
-     margin-bottom: 0.5rem;
-   }
- }
-}
 .table-modal-button {
   cursor: pointer;
   ion-icon {
@@ -937,5 +904,68 @@ label.label {
   .label {
     font-weight: 700;
     margin: 0;
+  }
+}
+
+#gene-wrapper {
+  display: flex;
+  .sidebar {
+    width: 321px;
+    min-height: 50px;
+    margin-right: 1rem;
+    .side-menu {
+      width: 300px;
+      height: 300px;
+      .side-menu-wrapper {
+        position: fixed;
+        width: 300px;
+      }
+    }
+
+  }
+  #gene-body {
+    flex: 1;
+    min-height: 50px;
+  }
+}
+
+@media only screen and (max-width: $tablet) {
+  #gene-wrapper {
+    flex-direction: column;
+    .sidebar {
+      width: auto;
+      margin-right: 0;
+      .side-menu {
+        width: auto;
+        height: auto;
+
+        .side-menu-wrapper {
+          position: relative;
+          width: auto;
+
+          .menu {
+            display: none;
+          }
+        }
+      }
+    }
+
+    #gene-body {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.table-container {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.complex-table-footer.tablet {
+  flex-direction: column;
+  & > * {
+    margin-bottom: 0.5rem;
   }
 }

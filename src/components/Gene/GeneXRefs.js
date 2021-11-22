@@ -11,7 +11,7 @@ const GeneXRefs = ({ isLoading, data }) => (
     <Bulma.Title size={4} className="gradient-underline">
       {i18n.t('search.gene.cross-references')}
     </Bulma.Title>
-    <div className="static-section near-columns">
+    <div>
       {isLoading ? (
         <progress
           className="progress is-small"

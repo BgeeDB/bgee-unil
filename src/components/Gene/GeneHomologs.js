@@ -195,7 +195,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
       >
         Orthologs
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small mt-6"
@@ -262,7 +262,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
       >
         Paralogs (same species)
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small mt-6"
