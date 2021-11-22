@@ -187,7 +187,7 @@ const GeneExpressionCalls = () => {
                         <div className="is-flex is-justify-content-flex-end">
                           <Link
                             className="internal-link grey"
-                            to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`}
+                            to={`${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`}
                           >
                             See processed expression values
                           </Link>
