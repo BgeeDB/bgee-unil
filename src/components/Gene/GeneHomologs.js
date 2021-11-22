@@ -12,6 +12,7 @@ import {
   MEDIA_QUERIES_SIZE,
 } from '../../helpers/constants/mediaQueries';
 import useWindowSize from '../../hooks/useWindowSize';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const TaxonNameCell = ({ id, scientificName }) => (
   <span
@@ -187,7 +188,11 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
 
   return (
     <>
-      <Bulma.Title size={4} className="gradient-underline" id="orthologs">
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
+      >
         Orthologs
       </Bulma.Title>
       <div className="static-section near-columns">
@@ -250,7 +255,11 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
           <span>No data</span>
         )}
       </div>
-      <Bulma.Title size={4} className="gradient-underline" id="paralogs">
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.PARALOGS}
+      >
         Paralogs (same species)
       </Bulma.Title>
       <div className="static-section near-columns">

@@ -9,6 +9,7 @@ import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const CUSTOM_FIELDS = [
   {
@@ -343,6 +344,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
   );
 
   React.useEffect(() => {
+    console.log('hashExpr', hashExpr);
     setIsLoading(true);
     const fields = {};
     if (hashExpr) {
@@ -373,8 +375,12 @@ const GeneExpression = ({ geneId, speciesId }) => {
   }, [hashExpr]);
 
   return (
-    <div id="expression">
-      <Bulma.Title size={4} className="gradient-underline">
+    <>
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.EXPRESSION}
+      >
         Expression
       </Bulma.Title>
       <div className="static-section near-columns">
@@ -528,7 +534,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
         )}
         {!isLoading && !data && <span>No data</span>}
       </div>
-    </div>
+    </>
   );
 };
 

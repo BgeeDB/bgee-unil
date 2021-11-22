@@ -4,9 +4,10 @@ import Bulma from '../Bulma';
 import i18n from '../../i18n';
 import LinkExternal from '../LinkExternal';
 import GeneExpandableList from './GeneExpandableList';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const GeneXRefs = ({ isLoading, data }) => (
-  <div id="cross-references">
+  <div id={GENE_DETAILS_HTML_IDS.XREFS}>
     <Bulma.Title size={4} className="gradient-underline">
       {i18n.t('search.gene.cross-references')}
     </Bulma.Title>

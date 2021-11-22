@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import i18n from '../../i18n';
@@ -12,13 +12,14 @@ import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
+import GeneDetailsSideMenu from './GeneDetailsSideMenu';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const GeneDetails = ({
   details,
   details: { name, geneId, description, species, synonyms },
 }) => {
   const loc = useLocation();
-  const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
   const [xRefs, setXRefs] = React.useState();
@@ -64,33 +65,6 @@ const GeneDetails = ({
     };
   }, []);
 
-  const handlerMenuClick = React.useCallback((id) => {
-    history.replace(`#${id}`);
-  }, []);
-
-  const sideMenu = React.useMemo(() => {
-    const sideMenuElem = [
-      { domId: 'general-infos', name: 'General information' },
-      { domId: 'expression', name: 'Expression' },
-      { domId: 'orthologs', name: 'Orthologs' },
-      { domId: 'paralogs', name: 'Paralogs' },
-      { domId: 'cross-references', name: 'Cross-references' },
-    ];
-
-    return (
-      <aside className="menu">
-        <ul className="menu-list">
-          {sideMenuElem.map((elem) => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-            <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
-              <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    );
-  }, []);
-
   const metaTitle = `${name} 
        expression in
        ${
@@ -108,6 +82,18 @@ const GeneDetails = ({
   ${geneId}, ${geneId} expression
   ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
 
+  React.useEffect(() => {
+    if (loc.hash) {
+      const element = document.getElementById(loc.hash.replace('#', ''));
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: 'smooth',
+        });
+      }
+    }
+  }, []);
+
   return (
     <div className="is-widescreen">
       <Helmet>
@@ -120,7 +106,7 @@ const GeneDetails = ({
           <div className="side-menu">
             <div className="side-menu-wrapper">
               <GeneSearch />
-              {sideMenu}
+              <GeneDetailsSideMenu />
             </div>
           </div>
         </div>
@@ -142,7 +128,7 @@ const GeneDetails = ({
               </p>
             </div>
           </div>
-          <div id="general-infos">
+          <div id={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}>
             <Bulma.Title size={4} className="gradient-underline">
               {i18n.t('search.gene.general-info')}
             </Bulma.Title>
