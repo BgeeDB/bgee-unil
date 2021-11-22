@@ -119,17 +119,7 @@ const SpeciesCell = ({ genes }) => {
       <div className="expand-content">
         {expandContentSpecies.map((s, pos) => (
           <span key={s.id} className="is-size-7">
-            <div style={Styles.separator}>
-              {pos !== 0 && (
-                <div
-                  style={{
-                    backgroundColor: 'black',
-                    height: '1px',
-                    width: '100%',
-                  }}
-                />
-              )}
-            </div>
+            {pos !== 0 && <div style={Styles.separator} />}
             <Link
               className="internal-link"
               to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
