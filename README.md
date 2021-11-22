@@ -1,6 +1,19 @@
 # Requirement
 
-- Node 16.x.x or fewer
+- NodeJS 16.x.x or fewer
+- Yarn 
+
+# Installation
+
+1. Have the tools asked in the requirement
+2. At the root of the project, run the command:
+````shell
+yarn install
+````
+3. Run the project in dev with the following command:
+````shell
+yarn start
+````
 
 # Build
 
