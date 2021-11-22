@@ -130,6 +130,7 @@ const AnatEntityCell = ({ cell }) => {
     </span>
   );
 };
+
 const GeneExpression = ({ geneId, speciesId }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
@@ -141,6 +142,15 @@ const GeneExpression = ({ geneId, speciesId }) => {
     cFields,
     data,
   ]);
+
+  // In order to disable the search button in the search has already been made
+  const formSearchButtonIsDisabled = React.useMemo(() => {
+    const oldQuery = Object.entries(cFields)
+      .reduce((acc, [key, value]) => (value ? [...acc, key] : acc), [])
+      .sort()
+      .join(',');
+    return oldQuery === (hashExpr || 'anat');
+  }, [cFields, hashExpr]);
 
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement) => (
@@ -166,6 +176,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
           ))}
           <Bulma.Button
             className="search-form"
+            disabled={formSearchButtonIsDisabled}
             onClick={() => {
               const query = Object.entries(cFields).reduce(
                 (acc, [key, value]) => (value ? [...acc, key] : acc),
