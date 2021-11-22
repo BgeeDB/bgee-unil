@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Table from '../Table';
 import Pagination from '../Pagination';
 import i18n from '../../i18n';

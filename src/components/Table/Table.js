@@ -179,7 +179,6 @@ const Table = ({
             </tr>
           </thead>
           <tbody>
-            {/* TODO add modal button and add element in head also */}
             {data.map((row, key) => (
               <tr
                 key={key}
