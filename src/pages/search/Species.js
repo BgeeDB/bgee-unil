@@ -197,7 +197,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
           Gene expression call files
         </Bulma.Title>
         <div className="static-section">
@@ -220,7 +220,7 @@ const Species = () => {
             </p>
             <ul className="unordered">
               {files.anatOnlyXpr.simple && (
-                <li>
+                <li id="exp-calls-anat-simple">
                   File without advanced column:{' '}
                   <a
                     className="internal-link"
@@ -232,7 +232,7 @@ const Species = () => {
                 </li>
               )}
               {files.anatOnlyXpr.advanced && (
-                <li>
+                <li id="exp-calls-anat-advanced">
                   File with advanced column:{' '}
                   <a
                     className="internal-link"
@@ -251,7 +251,7 @@ const Species = () => {
             </p>
             <ul className="unordered">
               {files.fullXpr.simple && (
-                <li>
+                <li id="exp-calls-cond-simple">
                   File without advanced column:{' '}
                   <a className="internal-link" href={files.fullXpr.simple.path}>
                     <code>{files.fullXpr.simple.name}</code>
@@ -260,7 +260,7 @@ const Species = () => {
                 </li>
               )}
               {files.fullXpr.advanced && (
-                <li>
+                <li id="exp-calls-cond-advanced">
                   File with advanced column:{' '}
                   <a
                     className="internal-link"
@@ -276,7 +276,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" id="prov-values">
           Processed expression value files
         </Bulma.Title>
         <div className="static-section">
@@ -285,7 +285,10 @@ const Species = () => {
             expression values.
           </p>
           <div className="mt-2">
-            <p className="is-size-5 has-text-primary has-text-weight-semibold">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="prov-values-affymetrix"
+            >
               Affymetrix
             </p>
             {files.affymetrix.annot || files.affymetrix.data ? (
@@ -320,7 +323,10 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-size-5 has-text-primary has-text-weight-semibold">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-rna-seq"
+            >
               RNA-Seq
             </p>
             {files.rnaSeq.annot || files.rnaSeq.data ? (
@@ -349,7 +355,10 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-size-5 has-text-primary has-text-weight-semibold">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-fl-scrna-seq"
+            >
               {i18n.t('search.species.full-rna-seq')}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (
