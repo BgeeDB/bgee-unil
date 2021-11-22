@@ -9,6 +9,7 @@ import {
 } from '../../helpers/constants/mediaQueries';
 import useWindowSize from '../../hooks/useWindowSize';
 import { ModalContext } from '../../contexts/ModalContext';
+import Bulma from '../Bulma';
 
 const Table = ({
   scrollable = false,
@@ -42,18 +43,6 @@ const Table = ({
     [sortOption, onSort]
   );
 
-  const showModalDetails = React.useCallback(
-    (item) => () => {
-      console.log(columns, item);
-      // todo display modal width grid
-    },
-    [columns, onRenderCell]
-  );
-  const [isExpanded, setIsExpanded] = React.useState();
-  const expandAction = React.useCallback(
-    (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
-    [isExpanded]
-  );
   const defaultRender = React.useCallback(
     (cell, key) => {
       let style;
@@ -75,6 +64,51 @@ const Table = ({
       ) : null;
     },
     [columns, width]
+  );
+  const showModalDetails = React.useCallback(
+    (item) => () => {
+      console.log(columns, item);
+      let titleModal = 'Details';
+      if (item?.condition?.anatEntity)
+        titleModal += ` in ${item?.condition?.anatEntity.name}`;
+
+      showModal(() => (
+        <Bulma.Modal.Card.Wrapper>
+          <Bulma.Modal.Card.Header>
+            <Bulma.Modal.Card.Title>{titleModal}</Bulma.Modal.Card.Title>
+            {/* eslint-disable-next-line react/button-has-type */}
+            <button className="delete" aria-label="close" onClick={hideModal} />
+          </Bulma.Modal.Card.Header>
+          <Bulma.Modal.Card.Body>
+            <div className="gene-expression-modal-grid">
+              {columns.map((col) => (
+                <React.Fragment key={col.key}>
+                  <div className="label">{col.text}</div>
+                  <div>
+                    {typeof onRenderCell === 'function'
+                      ? onRenderCell(
+                          { cell: item, key: col.key },
+                          defaultRender,
+                          {
+                            expandAction: () => {},
+                            isExpanded: true,
+                          }
+                        )
+                      : defaultRender(item, col.key)}
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          </Bulma.Modal.Card.Body>
+        </Bulma.Modal.Card.Wrapper>
+      ));
+    },
+    [columns, onRenderCell]
+  );
+  const [isExpanded, setIsExpanded] = React.useState();
+  const expandAction = React.useCallback(
+    (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
+    [isExpanded]
   );
 
   const showTableModalButton = React.useMemo(
