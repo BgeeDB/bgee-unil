@@ -14,6 +14,14 @@ import {
 import useWindowSize from '../../hooks/useWindowSize';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
+const Styles = {
+  separator: {
+    backgroundColor: 'black',
+    height: '1px',
+    width: '100%',
+  },
+};
+
 const TaxonNameCell = ({ id, scientificName }) => (
   <span
     typeof="schema:Taxon"
@@ -49,7 +57,7 @@ const GenesCell = ({ genes }) => {
     r.push(
       <span className="is-size-7" key={a.geneId}>
         {pos !== 0 && a.species.id !== prevSpecies && (
-          <div className={classnames('separator')} />
+          <div style={Styles.separator} />
         )}
         <Link
           className="internal-link"
@@ -111,7 +119,17 @@ const SpeciesCell = ({ genes }) => {
       <div className="expand-content">
         {expandContentSpecies.map((s, pos) => (
           <span key={s.id} className="is-size-7">
-            {pos !== 0 && <div className={classnames('separator')} />}
+            <div style={Styles.separator}>
+              {pos !== 0 && (
+                <div
+                  style={{
+                    backgroundColor: 'black',
+                    height: '1px',
+                    width: '100%',
+                  }}
+                />
+              )}
+            </div>
             <Link
               className="internal-link"
               to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}

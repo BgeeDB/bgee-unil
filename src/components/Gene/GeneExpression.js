@@ -495,38 +495,40 @@ const GeneExpression = ({ geneId, speciesId }) => {
                   Sources of annotations to anatomy and development:
                 </p>
                 <ul className="unordered">
-                  {data.gene.species.sourcesOfAnnotationsPerDataType.map(
-                    (d, key) => (
-                      <li key={key} className="is-size-7">
-                        {`${d.dataType} data: `}
-                        {d.sources.map((s, sKey) => (
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
-                        ))}
-                      </li>
-                    )
-                  )}
+                  {!!data?.gene?.species &&
+                    data.gene.species.sourcesOfAnnotationsPerDataType.map(
+                      (d, key) => (
+                        <li key={key} className="is-size-7">
+                          {`${d.dataType} data: `}
+                          {d.sources.map((s, sKey) => (
+                            <LinkExternal key={sKey} to={s.baseUrl}>
+                              {s.name}
+                            </LinkExternal>
+                          ))}
+                        </li>
+                      )
+                    )}
                 </ul>
               </Bulma.Column>
               <Bulma.Column size={4}>
                 <p className="is-size-7">Sources of raw data:</p>
                 <ul className="unordered">
-                  {data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
-                    <li key={key} className="is-size-7">
-                      {`${d.dataType} data: `}
-                      {d.sources.reduce((acc, s, sKey) => {
-                        if (sKey !== 0)
-                          acc.push(<span key={`comma-${sKey}`}>, </span>);
-                        acc.push(
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
-                        );
-                        return acc;
-                      }, [])}
-                    </li>
-                  ))}
+                  {!!data?.gene?.species &&
+                    data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
+                      <li key={key} className="is-size-7">
+                        {`${d.dataType} data: `}
+                        {d.sources.reduce((acc, s, sKey) => {
+                          if (sKey !== 0)
+                            acc.push(<span key={`comma-${sKey}`}>, </span>);
+                          acc.push(
+                            <LinkExternal key={sKey} to={s.baseUrl}>
+                              {s.name}
+                            </LinkExternal>
+                          );
+                          return acc;
+                        }, [])}
+                      </li>
+                    ))}
                 </ul>
               </Bulma.Column>
             </Bulma.Columns>
