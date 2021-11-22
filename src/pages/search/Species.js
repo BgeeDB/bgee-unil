@@ -127,17 +127,17 @@ const Species = () => {
           height={75}
           width={75}
         />
-        <Bulma.Title size={4} className="m-0">{`Species: ${
+        <Bulma.Title size={3} className="m-0">{`Species: ${
           data.species.genus
         } ${data.species.speciesName}${
           data.species.name ? ` (${data.species.name})` : ''
         }`}</Bulma.Title>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline">
           General information
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <div className="is-flex">
             <div style={{ width: 150 }}>
               <p>
@@ -197,10 +197,10 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
           Gene expression call files
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <p>
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
@@ -215,12 +215,12 @@ const Species = () => {
             .
           </p>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
               Anatomical entities only
             </p>
             <ul className="unordered">
               {files.anatOnlyXpr.simple && (
-                <li>
+                <li id="exp-calls-anat-simple">
                   File without advanced column:{' '}
                   <a
                     className="internal-link"
@@ -232,7 +232,7 @@ const Species = () => {
                 </li>
               )}
               {files.anatOnlyXpr.advanced && (
-                <li>
+                <li id="exp-calls-anat-advanced">
                   File with advanced column:{' '}
                   <a
                     className="internal-link"
@@ -246,12 +246,12 @@ const Species = () => {
             </ul>
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p className="is-size-5 has-text-primary has-text-weight-semibold">
               Anatomical entities, developmental stages, sexes and strains
             </p>
             <ul className="unordered">
               {files.fullXpr.simple && (
-                <li>
+                <li id="exp-calls-cond-simple">
                   File without advanced column:{' '}
                   <a className="internal-link" href={files.fullXpr.simple.path}>
                     <code>{files.fullXpr.simple.name}</code>
@@ -260,7 +260,7 @@ const Species = () => {
                 </li>
               )}
               {files.fullXpr.advanced && (
-                <li>
+                <li id="exp-calls-cond-advanced">
                   File with advanced column:{' '}
                   <a
                     className="internal-link"
@@ -276,16 +276,21 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={5} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" id="prov-values">
           Processed expression value files
         </Bulma.Title>
-        <div className="static-section">
+        <div className="">
           <p>
             Bgee provides annotations and experiment annotations, and processed
             expression values.
           </p>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">Affymetrix</p>
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="prov-values-affymetrix"
+            >
+              Affymetrix
+            </p>
             {files.affymetrix.annot || files.affymetrix.data ? (
               <ul className="unordered">
                 {files.affymetrix.annot && (
@@ -318,7 +323,12 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">RNA-Seq</p>
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-rna-seq"
+            >
+              RNA-Seq
+            </p>
             {files.rnaSeq.annot || files.rnaSeq.data ? (
               <ul className="unordered">
                 {files.rnaSeq.annot && (
@@ -345,7 +355,10 @@ const Species = () => {
             )}
           </div>
           <div className="mt-2">
-            <p className="is-6 has-text-weight-semibold">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-fl-scrna-seq"
+            >
               {i18n.t('search.species.full-rna-seq')}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (

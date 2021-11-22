@@ -44,8 +44,8 @@ const Home = () => {
               height={100}
             />
           </div>
-          <p className="subtitle has-text-uppercase has-text-centered has-text-white mb-6">
-            {i18n.t('global.description')}
+          <p className="is-size-4 has-text-uppercase has-text-centered has-text-white mb-6">
+            GENE EXPRESSION DATA IN ANIMALS
           </p>
           <NavButtons />
         </Bulma.Hero.Body>
@@ -63,14 +63,21 @@ const Home = () => {
       <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={12}>
-            <p className="has-text-centered">{i18n.t('home.description-1')}</p>
-            <p className="has-text-centered">{i18n.t('home.description-2')}</p>
+            <p className="has-text-centered is-size-5">
+              Bgee is a database for retrieval and comparison of gene expression
+              patterns across multiple animal species.
+            </p>
+            <p className="has-text-centered is-size-5">
+              It provides an intuitive answer to the question &quot;where is a
+              gene expressed?&quot; and supports research in cancer and
+              agriculture as well as evolutionary biology.
+            </p>
           </Bulma.C>
         </Bulma.Columns>
         <Bulma.Columns>
           <Bulma.C size={4}>
-            <div>
-              <p className="is-size-5">GENE EXPRESSION DATA</p>
+            <div className="is-size-5">
+              <p className="is-size-3">GENE EXPRESSION DATA</p>
               Bgee is a database for retrieval and comparison of gene expression
               patterns across multiple animal species, produced from multiple
               data types (bulk RNA-Seq, single-cell RNA-Seq, Affymetrix, in situ
@@ -83,18 +90,17 @@ const Home = () => {
             </div>
           </Bulma.C>
           <Bulma.C size={4}>
-            <div>
-              <p className="is-size-5">SIMPLY NORMAL</p>
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
-              Bgee is based exclusively on curated "normal", healthy wild-type,
-              expression data (e.g., no gene knock-out, no treatment, no
-              disease), to provide a comparable reference of normal gene
+            <div className="is-size-5">
+              <p className="is-size-3">SIMPLY NORMAL</p>
+              Bgee is based exclusively on curated &quot;normal&quot;, healthy
+              wild-type, expression data (e.g., no gene knock-out, no treatment,
+              no disease), to provide a comparable reference of normal gene
               expression.
             </div>
           </Bulma.C>
           <Bulma.C size={4}>
-            <div>
-              <p className="is-size-5">COMPARABLE BETWEEN SPECIES</p>
+            <div className="is-size-5">
+              <p className="is-size-3">COMPARABLE BETWEEN SPECIES</p>
               Bgee produces calls of presence/absence of expression, and of
               differential over-/under-expression, integrated along with
               information of gene orthology, and of homology between organs.

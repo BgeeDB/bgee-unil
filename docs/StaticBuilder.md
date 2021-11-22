@@ -153,21 +153,13 @@ There is 21 different element, with their properties:
     type: 'separator',
 } 
 ```
-- Sub Title
 
-```
-{
-    type: 'sub_title',
-    content: string,
-} 
-```
 - Table
 
 For a better understanding, please check the Table component.
 ```
 {
     type: 'table',
-    scrollable: boolean,
     fullWidth: boolean,
     title: string,
     columns: Array of Object,
