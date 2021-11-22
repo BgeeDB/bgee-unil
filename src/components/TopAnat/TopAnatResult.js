@@ -296,7 +296,7 @@ const TopAnatResult = ({
           />
         </Helmet>
         <div className="content has-text-centered">
-          <p className="title is-6">{title}</p>
+          <p className="title is-4">{title}</p>
         </div>
         <ComplexTable
           columns={COLUMNS}

@@ -1,4 +1,10 @@
 @charset "utf-8";
+
+$size-7: 12px !default;
+$size-6: 1.0rem !default;
+$size-5: 1.1rem !default;
+$size-4: 1.2rem !default;
+$size-3: 1.5rem !default;
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 @import "../../node_modules/bulma/sass/utilities/functions";
 
@@ -16,10 +22,11 @@ $dark-bg-hover-color: #555555;
 $dark-font-color: $dark-color;
 $hero-banner-bg: #999999;
 $body-size: 14px;
-$size-7: 12px;
-$tablet: 800px;
+$mobile: 480px;
+$tablet: 850px;
 $desktop: 960px;
 $widescreen: 1152px;
+
 
 /* Button customization*/
 .button.search-form {
@@ -42,6 +49,9 @@ $widescreen: 1152px;
 
 $desktop: 1090px;
 
+button, .button {
+  font-size: $size-4 !important;
+}
 body {
   margin: 0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
@@ -75,6 +85,12 @@ $custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color));
 //$custom-colors: ("bgee-inverted": ($dark-bg-color, $dark-color), "bgee-link": ($link, $dark-color));
 $colors: map-merge($colors, $custom-colors);
 
+.navbar-item {
+  font-size: $size-5;
+  &.custom {
+    font-size: $size-6;
+  }
+}
 .navbar-dropdown.open {
   display: block;
 }
@@ -200,10 +216,6 @@ footer.footer {
  */
 .notification {
   margin-bottom: 0 !important;
-}
-
-div.static-section > *:not(:first-child) {
-  margin-top: .7rem;
 }
 .title.gradient-underline {
   margin: 1rem 0 !important;
@@ -727,27 +739,6 @@ label.label {
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
   }
 }
-.side-menu {
-  width: 300px;
-  .side-menu-wrapper {
-    position: fixed;
-    width: 300px;
-  }
-}
-
-@media only screen and (max-width: $tablet) {
-  .side-menu {
-    width: auto;
-    .side-menu-wrapper {
-      position: relative;
-      width: auto;
-      .menu {
-        display: none;
-      }
-    }
-  }
-}
-
 .species-grid {
   display: grid;
   grid-column-gap: 5px;
@@ -895,5 +886,86 @@ label.label {
 .navbar-item {
   &:focus {
     background-color: transparent;
+  }
+}
+
+.table-modal-button {
+  cursor: pointer;
+  ion-icon {
+    font-size: 28px;
+    color: $primary;
+  }
+}
+
+.gene-expression-modal-grid {
+  display: grid;
+  grid-template-columns: minmax(100px, 200px) 1fr;
+  row-gap: .8rem;
+  .label {
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+#gene-wrapper {
+  display: flex;
+  .sidebar {
+    width: 321px;
+    min-height: 50px;
+    margin-right: 1rem;
+    .side-menu {
+      width: 300px;
+      height: 300px;
+      .side-menu-wrapper {
+        position: fixed;
+        width: 300px;
+      }
+    }
+
+  }
+  #gene-body {
+    flex: 1;
+    min-height: 50px;
+  }
+}
+
+@media only screen and (max-width: $tablet) {
+  #gene-wrapper {
+    flex-direction: column;
+    .sidebar {
+      width: auto;
+      margin-right: 0;
+      .side-menu {
+        width: auto;
+        height: auto;
+
+        .side-menu-wrapper {
+          position: relative;
+          width: auto;
+
+          .menu {
+            display: none;
+          }
+        }
+      }
+    }
+
+    #gene-body {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.table-container {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.complex-table-footer.tablet {
+  flex-direction: column;
+  & > * {
+    margin-bottom: 0.5rem;
   }
 }

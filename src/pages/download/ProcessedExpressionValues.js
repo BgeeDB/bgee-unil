@@ -66,9 +66,10 @@ const ProcessedExpressionValues = () => {
     return () => {};
   }, []);
 
-  const allSpeciesName = `${speciesList
-    .map((s) => ` ${s.name} ${s.speciesName}`)
-    .join(', ')}`;
+  const allSpeciesName = React.useMemo(
+    () => `${speciesList.map((s) => ` ${s.name} ${s.speciesName}`).join(', ')}`,
+    [speciesList]
+  );
 
   return (
     <>
@@ -87,9 +88,9 @@ const ProcessedExpressionValues = () => {
         />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={5}>Processed expression values</Bulma.Title>
+        <Bulma.Title size={3}>Processed expression values</Bulma.Title>
       </div>
-      <p>
+      <p className="is-size-5">
         This page provides annotations and experiment information (e.g.,
         annotations to anatomy and development, quality scores used in QCs, chip
         or library information), and processed expression values (e.g., read

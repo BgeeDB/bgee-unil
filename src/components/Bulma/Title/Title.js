@@ -20,7 +20,7 @@ const Title = ({
         title: !subtitle && !heading,
         subtitle,
         heading,
-        [`is-${size}`]: size,
+        [`is-size-${size}`]: size,
         [`has-text-weight-${weight}`]: weight,
         'is-spaced': spaced && !subtitle,
       },

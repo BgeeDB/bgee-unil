@@ -4,6 +4,11 @@ import Pagination from '../Pagination';
 import i18n from '../../i18n';
 import Select from '../Select';
 import Input from '../Form/Input';
+import useWindowSize from '../../hooks/useWindowSize';
+import {
+  MEDIA_QUERIES,
+  MEDIA_QUERIES_SIZE,
+} from '../../helpers/constants/mediaQueries';
 
 const defaultSort = (sortKey, sortDirection) => (a, b) => {
   if (a === b) return 0;
@@ -26,6 +31,8 @@ const ComplexTable = ({
   mappingObj = (arr) => arr,
   ...props
 }) => {
+  const table = React.useRef();
+  const { width } = useWindowSize();
   const [search, setSearch] = React.useState('');
   const [sort, setSort] = React.useState(undefined);
   const internalData = React.useMemo(() => {
@@ -124,7 +131,15 @@ const ComplexTable = ({
         striped
         {...props}
       />
-      <div className="is-flex is-justify-content-space-between">
+      <div
+        ref={table}
+        className={`complex-table-footer is-flex is-justify-content-space-between${
+          (table?.current?.offsetWidth || width) <=
+          MEDIA_QUERIES_SIZE[MEDIA_QUERIES.TABLET]
+            ? ' tablet'
+            : ''
+        }`}
+      >
         <div>{showEntriesText}</div>
         {pagination && (
           <Pagination

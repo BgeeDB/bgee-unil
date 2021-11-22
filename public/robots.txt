@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /search/anatomical-homology
+Disallow: /search/genes/*
+Disallow: /search/species/*

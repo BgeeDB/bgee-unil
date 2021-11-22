@@ -210,7 +210,6 @@ const AnatomicalHomologySearch = () => {
           )}: Euteleostomi`}</p>
           <ComplexTable
             pagination
-            scrollable
             sortable
             classNamesTable="is-striped"
             columns={[
