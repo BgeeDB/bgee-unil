@@ -187,7 +187,6 @@ const GeneList = () => {
           </p>
           <ComplexTable
             pagination
-            // scrollable
             sortable
             classNamesTable="is-striped"
             columns={[

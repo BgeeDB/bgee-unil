@@ -12,7 +12,6 @@ import { ModalContext } from '../../contexts/ModalContext';
 import Bulma from '../Bulma';
 
 const Table = ({
-  scrollable = false,
   fullwidth = true,
   classNames = '',
   title,
@@ -115,7 +114,7 @@ const Table = ({
     () => hasColumnsTableHidden(width, columns),
     [width, columns]
   );
-  let TableObject = (
+  const TableObject = (
     <table
       className={classnames(
         'table',
@@ -220,9 +219,6 @@ const Table = ({
     </table>
   );
 
-  if (scrollable)
-    TableObject = <div className="table-container">{TableObject}</div>;
-
   return (
     <div>
       {title && (
@@ -230,7 +226,7 @@ const Table = ({
           {title}
         </p>
       )}
-      {TableObject}
+      <div className="table-container">{TableObject}</div>
     </div>
   );
 };
