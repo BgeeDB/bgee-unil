@@ -199,6 +199,10 @@ const NAVBAR_RIGHT = [
   },
 ];
 
+const Styles = {
+  logo: { width: '6%' },
+};
+
 const Header = () => {
   const [openedMenuId, setOpenMenuId] = React.useState(undefined);
   const toggleOpenMenu = React.useCallback(
@@ -226,7 +230,7 @@ const Header = () => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="navbar-brand">
+      <div className="navbar-brand" style={Styles.logo}>
         <Link className="navbar-item" to={PATHS.HOME}>
           <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
         </Link>
