@@ -35,6 +35,7 @@ const PATHS = {
   },
   ABOUT: {
     ABOUT: '/about/',
+    NEWS: '/about/news',
     COLLABORATIONS: '/about/collaborations',
     PUBLICATION: '/about/publications',
     SOURCES: '/about/source',

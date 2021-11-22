@@ -10,7 +10,7 @@ import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import Bulma from '../components/Bulma';
 import config from '../config.json';
-import HomeNewsList from '../components/Home/HomeNewsList';
+import HomeNewsList from '../components/HomeNewsList';
 import api from '../api';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
@@ -158,6 +158,11 @@ const Home = () => {
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
+        <div className="is-flex is-justify-content-flex-end mt-2">
+          <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
+            See all news
+          </Link>
+        </div>
         <NavButtons className="my-6 " />
         <Bulma.Columns>
           <Bulma.C size={config.archive ? 12 : 9}>

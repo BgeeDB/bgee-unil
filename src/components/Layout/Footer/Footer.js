@@ -61,13 +61,9 @@ const Footer = () => {
           >
             {i18n.t('global.footer.copy-link')}
           </a>
-          <Link to={PATHS.ABOUT.PUBLICATION}>
-            {i18n.t('global.footer.cite-us')}
-          </Link>
+          <Link to={PATHS.ABOUT.PUBLICATION}>Cite us</Link>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <a onClick={obfuscateMailLink(config.contactEmail)}>
-            {i18n.t('global.footer.contact-us')}
-          </a>
+          <a onClick={obfuscateMailLink(config.contactEmail)}>Contact us</a>
         </div>
       </div>
     </Bulma.Footer>

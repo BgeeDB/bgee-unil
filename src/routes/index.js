@@ -161,6 +161,16 @@ const Router = () => (
 
               <Route
                 exact
+                path={PATHS.ABOUT.NEWS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ABOUT.NEWS].component}
+                  />
+                )}
+              />
+              <Route
+                exact
                 path={[
                   PATHS.RESOURCES.DOCS,
                   PATHS.RESOURCES.R_PACKAGES,

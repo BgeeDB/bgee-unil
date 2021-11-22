@@ -137,6 +137,11 @@ const NAVBAR_LEFT = [
         path: PATHS.ABOUT.ABOUT,
       },
       {
+        key: 'page.about.news',
+        type: 'internal',
+        path: PATHS.ABOUT.NEWS,
+      },
+      {
         key: 'page.about.collaborations',
         type: 'internal',
         path: PATHS.ABOUT.COLLABORATIONS,

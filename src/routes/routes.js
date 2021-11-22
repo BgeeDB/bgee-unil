@@ -34,6 +34,7 @@ import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
+import NewsPages from '../pages/about/NewsPage';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -184,6 +185,10 @@ const ABOUT = {
       description: 'General information about Bgee and the team developing it.',
       keywords: 'About, license, CC0',
     },
+  },
+  [PATHS.ABOUT.NEWS]: {
+    i18nKey: 'page.about.news',
+    component: NewsPages,
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
     i18nKey: 'page.about.collaborations',

@@ -13,9 +13,7 @@
     "advanced-file": "Advanced file",
     "footer": {
       "sib": "Swiss Institute of Bioinformatics",
-      "copy-link": "Copy permanent link",
-      "cite-us": "Cite us",
-      "contact-us": "Contact us"
+      "copy-link": "Copy permanent link"
     }
   },
   "menu": {
@@ -60,6 +58,7 @@
     },
     "about": {
       "about": "About Bgee",
+      "news": "News",
       "collaborations": "Bgee collaborations",
       "publications": "Bgee publications",
       "sources": "Bgee source",
