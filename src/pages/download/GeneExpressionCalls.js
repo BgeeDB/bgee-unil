@@ -204,7 +204,7 @@ const GeneExpressionCalls = () => {
                           <p className="has-text-weight-semibold is-size-5">
                             Presence/Absence of expression
                             <Link
-                              className="is-size-6 internal-link ml-2"
+                              className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
                               to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
                             >
                               See documentation
@@ -328,13 +328,13 @@ const GeneExpressionCalls = () => {
                               </div>
                             </div>
                             <p className=" is-size-7 mt-2">
-                              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                              <span className="is-underlined is-italic has-text-weight-semibold">
                                 All conditions
                               </span>
-                              : combinations anatomy-development
+                              : combinations anatomy-development-sex-strain
                             </p>
                             <p className=" is-size-7">
-                              <span className="is-underlined is-italic has-text-weight-semibold has-text-primary">
+                              <span className="is-underlined is-italic has-text-weight-semibold">
                                 Advanced file
                               </span>
                               : includes information by data types
@@ -342,10 +342,10 @@ const GeneExpressionCalls = () => {
                           </div>
                         </div>
                         <div>
-                          <p className="has-text-weight-semibold is-size-5 mt-2">
+                          <p className="has-text-weight-semibold is-size-5 mt-2 has-text-weight-normal">
                             Over-/Under-expression
                             <Link
-                              className="is-size-6 internal-link ml-2"
+                              className="is-size-6 internal-link ml-2 grey"
                               to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
                             >
                               See documentation
