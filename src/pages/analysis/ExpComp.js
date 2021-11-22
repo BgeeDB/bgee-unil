@@ -203,7 +203,6 @@ const ExpComp = () => {
             ])}
             <ComplexTable
               sortable
-              scrollable
               pagination
               classNamesTable="is-striped"
               onFilter={onFilter}

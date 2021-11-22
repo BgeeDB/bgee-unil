@@ -336,12 +336,10 @@ const staticBuilder = (json, prefixKey = '') =>
             key={`${prefixKey}-${key}`}
             className={classnames(classNames)}
           >
-            <Bulma.Title size={5} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline">
               {props.title}
             </Bulma.Title>
-            <div className="static-section">
-              {staticBuilder(props.children)}
-            </div>
+            <div className="">{staticBuilder(props.children)}</div>
           </div>
         );
       case 'separator':
@@ -350,16 +348,6 @@ const staticBuilder = (json, prefixKey = '') =>
             key={`${prefixKey}-${key}`}
             className={classnames('separator', classNames)}
           />
-        );
-      case 'sub_title':
-        return (
-          <p
-            id={props.id}
-            className={classnames('title is-6', classNames)}
-            key={`${prefixKey}-${key}`}
-          >
-            {props.content}
-          </p>
         );
       case 'table':
         return <Table key={`${prefixKey}-${key}`} {...props} />;
@@ -380,7 +368,7 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('content has-text-centered', classNames)}
             key={`${prefixKey}-${key}`}
           >
-            <p className="title is-5">{props.content}</p>
+            <p className="title is-3">{props.content}</p>
           </div>
         );
       case 'unordered_list':

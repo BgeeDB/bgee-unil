@@ -7,6 +7,20 @@ import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import isPlural from '../../helpers/isPlural';
 import ComplexTable from '../ComplexTable';
+import {
+  MEDIA_QUERIES,
+  MEDIA_QUERIES_SIZE,
+} from '../../helpers/constants/mediaQueries';
+import useWindowSize from '../../hooks/useWindowSize';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+
+const Styles = {
+  separator: {
+    backgroundColor: 'black',
+    height: '1px',
+    width: '100%',
+  },
+};
 
 const TaxonNameCell = ({ id, scientificName }) => (
   <span
@@ -37,13 +51,13 @@ const ExpandCell = ({ onClick }) => (
   </a>
 );
 const GenesCell = ({ genes }) => {
+  const { width } = useWindowSize();
   let prevSpecies = 0;
-  console.log(genes);
   const expandContent = genes.reduce((r, a, pos) => {
     r.push(
       <span className="is-size-7" key={a.geneId}>
         {pos !== 0 && a.species.id !== prevSpecies && (
-          <div className={classnames('separator')} />
+          <div style={Styles.separator} />
         )}
         <Link
           className="internal-link"
@@ -67,13 +81,19 @@ const GenesCell = ({ genes }) => {
   }, []);
 
   return (
-    <div style={{ minWidth: 230 }}>
+    <div
+      style={{
+        minWidth:
+          width > MEDIA_QUERIES_SIZE[MEDIA_QUERIES.DESKTOP] ? 230 : undefined,
+      }}
+    >
       <p>{`${genes.length} ${isPlural('gene', genes.length)}`}</p>
       <div className="expand-content">{expandContent}</div>
     </div>
   );
 };
 const SpeciesCell = ({ genes }) => {
+  const { width } = useWindowSize();
   const expandContentSpecies = genes.reduce((r, a) => {
     const pos = r.findIndex((g) => g.id === a.species.id);
     if (pos === -1)
@@ -89,12 +109,27 @@ const SpeciesCell = ({ genes }) => {
   }, []);
 
   return (
-    <div style={{ minWidth: 250 }}>
+    <div
+      style={{
+        minWidth:
+          width > MEDIA_QUERIES_SIZE[MEDIA_QUERIES.TABLET] ? 250 : undefined,
+      }}
+    >
       <p>{`${expandContentSpecies.length} species`}</p>
       <div className="expand-content">
         {expandContentSpecies.map((s, pos) => (
           <span key={s.id} className="is-size-7">
-            {pos !== 0 && <div className={classnames('separator')} />}
+            <div style={Styles.separator}>
+              {pos !== 0 && (
+                <div
+                  style={{
+                    backgroundColor: 'black',
+                    height: '1px',
+                    width: '100%',
+                  }}
+                />
+              )}
+            </div>
             <Link
               className="internal-link"
               to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id)}
@@ -171,10 +206,14 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
 
   return (
     <>
-      <Bulma.Title size={5} className="gradient-underline" id="orthologs">
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
+      >
         Orthologs
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small mt-6"
@@ -186,39 +225,41 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
         )}
         {!isLoading && homologs?.orthologsByTaxon.length > 0 && (
           <>
-            <div className="table-container">
-              <ComplexTable
-                columns={[
-                  {
-                    key: 'taxonName',
-                    text: 'Taxon Name',
-                  },
-                  {
-                    key: 'species',
-                    text: 'Species with orthologs',
-                  },
-                  {
-                    key: 'genes',
-                    text: 'Gene(s)',
-                  },
-                  {
-                    key: 'expressionComparison',
-                    text: 'Expression comparison',
-                  },
-                  {
-                    key: 'details',
-                    text: 'See details',
-                  },
-                ]}
-                data={homologs?.orthologsByTaxon}
-                fullwidth
-                onRenderCell={onRenderCell}
-                onFilter={onFilter}
-                customHeader={customHeader}
-              />
-            </div>
+            <ComplexTable
+              responsive
+              columns={[
+                {
+                  key: 'taxonName',
+                  text: 'Taxon Name',
+                },
+                {
+                  key: 'species',
+                  text: 'Species with orthologs',
+                  hide: MEDIA_QUERIES.MOBILE_P,
+                },
+                {
+                  key: 'genes',
+                  text: 'Gene(s)',
+                  hide: MEDIA_QUERIES.MOBILE_L,
+                },
+                {
+                  key: 'expressionComparison',
+                  text: 'Expression comparison',
+                  hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
+                },
+                {
+                  key: 'details',
+                  text: 'See details',
+                  hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
+                },
+              ]}
+              data={homologs?.orthologsByTaxon}
+              onRenderCell={onRenderCell}
+              onFilter={onFilter}
+              customHeader={customHeader}
+            />
             {homologs.orthologyXRef && (
-              <span>
+              <span className="is-size-7">
                 {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
                 <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
                   {homologs.orthologyXRef?.xRefId}
@@ -232,10 +273,14 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
           <span>No data</span>
         )}
       </div>
-      <Bulma.Title size={5} className="gradient-underline" id="paralogs">
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.PARALOGS}
+      >
         Paralogs (same species)
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small mt-6"
@@ -256,24 +301,26 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                 {
                   key: 'genes',
                   text: 'Gene(s)',
+                  hide: MEDIA_QUERIES.MOBILE_P,
                 },
                 {
                   key: 'expressionComparison',
                   text: 'Expression comparison',
+                  hide: MEDIA_QUERIES.MOBILE_L,
                 },
                 {
                   key: 'details',
                   text: 'See details',
+                  hide: MEDIA_QUERIES.DESKTOP,
                 },
               ]}
               data={homologs?.paralogsByTaxon}
-              fullwidth
               onRenderCell={onRenderCell}
               onFilter={onFilter}
               customHeader={customHeader}
             />
             {homologs.paralogyXRef && (
-              <span>
+              <span className="is-size-7">
                 {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
                 <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
                   {homologs.paralogyXRef?.xRefId}

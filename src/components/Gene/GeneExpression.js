@@ -8,6 +8,8 @@ import LinkExternal from '../LinkExternal';
 import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
+import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const CUSTOM_FIELDS = [
   {
@@ -42,28 +44,33 @@ const columnsGenerator = (cFields, data) => () => {
     c.push({
       key: 'devStage',
       text: 'Dev. stage',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Sex'))
     c.push({
       key: 'sex',
       text: 'Sex',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Strain'))
     c.push({
       key: 'strain',
       text: 'Strain',
       style: { minWidth: 100 },
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   c = [
     ...c,
     {
       key: 'expScore',
       text: 'Expression score',
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'fdr',
       text: 'FDR',
       style: { minWidth: 100 },
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'sources',
@@ -71,6 +78,7 @@ const columnsGenerator = (cFields, data) => () => {
       style: {
         width: 110,
       },
+      hide: MEDIA_QUERIES.DESKTOP,
     },
   ];
   return c;
@@ -123,6 +131,7 @@ const AnatEntityCell = ({ cell }) => {
     </span>
   );
 };
+
 const GeneExpression = ({ geneId, speciesId }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
@@ -134,6 +143,15 @@ const GeneExpression = ({ geneId, speciesId }) => {
     cFields,
     data,
   ]);
+
+  // In order to disable the search button in the search has already been made
+  const formSearchButtonIsDisabled = React.useMemo(() => {
+    const oldQuery = Object.entries(cFields)
+      .reduce((acc, [key, value]) => (value ? [...acc, key] : acc), [])
+      .sort()
+      .join(',');
+    return oldQuery === (hashExpr || 'anat');
+  }, [cFields, hashExpr]);
 
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement) => (
@@ -159,6 +177,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
           ))}
           <Bulma.Button
             className="search-form"
+            disabled={formSearchButtonIsDisabled}
             onClick={() => {
               const query = Object.entries(cFields).reduce(
                 (acc, [key, value]) => (value ? [...acc, key] : acc),
@@ -325,6 +344,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
   );
 
   React.useEffect(() => {
+    console.log('hashExpr', hashExpr);
     setIsLoading(true);
     const fields = {};
     if (hashExpr) {
@@ -355,11 +375,15 @@ const GeneExpression = ({ geneId, speciesId }) => {
   }, [hashExpr]);
 
   return (
-    <div id="expression">
-      <Bulma.Title size={5} className="gradient-underline">
+    <>
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.EXPRESSION}
+      >
         Expression
       </Bulma.Title>
-      <div className="static-section near-columns">
+      <div>
         {isLoading && (
           <progress
             className="progress is-small"
@@ -392,27 +416,32 @@ const GeneExpression = ({ geneId, speciesId }) => {
             <Bulma.Columns vCentered className="my-0">
               <Bulma.C>
                 <span>
-                  <b>A</b> Affimetrix
+                  <b>A</b>
+                  <span className="is-size-7"> Affimetrix</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>E</b> EST
+                  <b>E</b>
+                  <span className="is-size-7"> EST</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>I</b> In Situ
+                  <b>I</b>
+                  <span className="is-size-7"> In Situ</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>R</b> RNA-Seq
+                  <b>R</b>
+                  <span className="is-size-7"> RNA-Seq</span>
                 </span>
               </Bulma.C>
               <Bulma.C>
                 <span>
-                  <b>FL</b> scRNA-Seq Full Length
+                  <b>FL</b>
+                  <span className="is-size-7"> scRNA-Seq Full Length</span>
                 </span>
               </Bulma.C>
               <Bulma.C className="is-flex is-align-items-center">
@@ -438,16 +467,20 @@ const GeneExpression = ({ geneId, speciesId }) => {
             <Bulma.Columns vCentered className="mt-0">
               <Bulma.C>
                 <span>
-                  <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey:
-                  low confidence scores
+                  <span style={{ color: 'lightGrey' }}>3.25e4</span>
+                  <span className="is-size-7">
+                    {' '}
+                    lightgrey: low confidence scores
+                  </span>
                 </span>
               </Bulma.C>
               <Bulma.C className="is-flex is-align-items-center">
-                <hr className="dot-line m-0 mr-2" /> important score variation
+                <hr className="dot-line m-0 mr-2" />
+                <span className="is-size-7"> important score variation</span>
               </Bulma.C>
             </Bulma.Columns>
             <div className="separator my-5" />
-            <p>
+            <p className="is-size-7">
               <b>Expression scores</b> of expression calls is based on the rank
               of a gene in a condition according to its expression levels
               (non-parametric statistics), normalized using the minimum and
@@ -458,12 +491,14 @@ const GeneExpression = ({ geneId, speciesId }) => {
             </p>
             <Bulma.Columns>
               <Bulma.Column size={4}>
-                <p>Sources of annotations to anatomy and development:</p>
+                <p className="is-size-7">
+                  Sources of annotations to anatomy and development:
+                </p>
                 <ul className="unordered">
                   {!!data?.gene?.species &&
                     data.gene.species.sourcesOfAnnotationsPerDataType.map(
                       (d, key) => (
-                        <li key={key}>
+                        <li key={key} className="is-size-7">
                           {`${d.dataType} data: `}
                           {d.sources.map((s, sKey) => (
                             <LinkExternal key={sKey} to={s.baseUrl}>
@@ -476,11 +511,11 @@ const GeneExpression = ({ geneId, speciesId }) => {
                 </ul>
               </Bulma.Column>
               <Bulma.Column size={4}>
-                <p>Sources of raw data:</p>
+                <p className="is-size-7">Sources of raw data:</p>
                 <ul className="unordered">
                   {!!data?.gene?.species &&
                     data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
-                      <li key={key}>
+                      <li key={key} className="is-size-7">
                         {`${d.dataType} data: `}
                         {d.sources.reduce((acc, s, sKey) => {
                           if (sKey !== 0)
@@ -501,7 +536,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
         )}
         {!isLoading && !data && <span>No data</span>}
       </div>
-    </div>
+    </>
   );
 };
 
