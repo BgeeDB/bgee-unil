@@ -105,10 +105,14 @@ const Table = ({
     },
     [columns, onRenderCell]
   );
-  const [isExpanded, setIsExpanded] = React.useState();
+  const [isExpanded, setIsExpanded] = React.useState({});
   const expandAction = React.useCallback(
-    (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
-    [isExpanded]
+    (key) => () =>
+      setIsExpanded((prev) => ({
+        ...prev,
+        [key]: !prev[key],
+      })),
+    []
   );
 
   const showTableModalButton = React.useMemo(
@@ -180,7 +184,7 @@ const Table = ({
               <tr
                 key={key}
                 className={classnames(
-                  { 'is-expanded': isExpanded === key },
+                  { 'is-expanded': isExpanded[key] },
                   onRenderRow
                     ? onRenderRow(row, key > 0 ? data[key - 1] : null)
                     : undefined
@@ -204,7 +208,7 @@ const Table = ({
                             defaultRender,
                             {
                               expandAction: expandAction(key),
-                              isExpanded: isExpanded === key,
+                              isExpanded: isExpanded[key],
                             }
                           )
                         : defaultRender(cell, cellKey)}
@@ -224,7 +228,7 @@ const Table = ({
                               defaultRender,
                               {
                                 expandAction: expandAction(key),
-                                isExpanded: isExpanded === key,
+                                isExpanded: isExpanded[key],
                               }
                             )
                           : null}
