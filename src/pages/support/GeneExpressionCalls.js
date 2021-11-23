@@ -28,7 +28,7 @@ const GeneExpressionCalls = () => {
           Expression call download file documentation
         </p>
       </div>
-      <p property="schema:description">
+      <p>
         Bgee provides calls of baseline presence/absence of expression, and of
         differential over-/under-expression, either for single species, or
         compared between species (orthologous genes in homologous organs). This

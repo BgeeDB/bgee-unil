@@ -125,11 +125,7 @@ const AnatEntityCell = ({ cell }) => {
       {cell.condition.anatEntity.name}
     </span>
   );
-  return (
-    <span typeof="schema:Gene" about={window.location.href}>
-      {cellInfo}
-    </span>
-  );
+  return <>{cellInfo}</>;
 };
 
 const GeneExpression = ({ geneId, speciesId }) => {
