@@ -30,6 +30,13 @@ In the `index.js`, under `var options` change `removeCR` from "false" to "true".
 
 # FAQ
 
+### Where are the images?
+
+The images are stored externally of the project.
+You will find the path of the images in the config.json at the key `imageDomain`
+Be careful, the image used for the 'external icon' link is directly defined in the SCSS.
+If you are moving it, don't forget to change the path.
+
 ### Use of Node 17.x.x
 
 Node 17.x.x doesn't work with create-react-app. So it will be impossible to build the app.
