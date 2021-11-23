@@ -1,15 +1,21 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import api from '../../api';
 import PATHS from '../../routes/paths';
 
-const GeneSearch = ({ classNames, children }) => {
+const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
   const history = useHistory();
   const [search, setSearch] = React.useState('');
   const [autocompleteList, setAutocompleteList] = React.useState([]);
+
+  useEffect(() => {
+    if (searchTerm !== '') {
+      setSearch(searchTerm);
+    }
+  }, [searchTerm]);
 
   const onSubmitGene = React.useCallback(
     (geneStr) => () => {
