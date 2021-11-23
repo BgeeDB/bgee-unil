@@ -96,20 +96,6 @@ const TopAnatResult = ({
       Boolean(new RegExp(search).test(element.anatEntityName)),
     []
   );
-  const onSort = React.useCallback(
-    (sortKey, sortDirection) =>
-      ({ [sortKey]: a }, { [sortKey]: b }) => {
-        const AFormatted = typeof a === 'string' ? a.toLowerCase() : a;
-        const bFormatted = typeof b === 'string' ? b.toLowerCase() : b;
-        if (AFormatted === bFormatted) return 0;
-        if (sortDirection === 'ascending')
-          return AFormatted > bFormatted ? 1 : -1;
-        if (sortDirection === 'descending')
-          return AFormatted < bFormatted ? 1 : -1;
-        return 0;
-      },
-    []
-  );
   const dataCsvHref = React.useMemo(() => {
     let csvContent =
       'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
@@ -304,10 +290,10 @@ const TopAnatResult = ({
           data={dataDisplay}
           onRenderCell={onRenderCell}
           sortable
+          multiSortable
           pagination
           defaultPaginationSize={20}
           onFilter={onFilter}
-          onSort={onSort}
           classNamesTable="is-striped"
           customHeader={customHeader}
           mappingObj={mappingObj}

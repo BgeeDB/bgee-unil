@@ -11,6 +11,40 @@ import useWindowSize from '../../hooks/useWindowSize';
 import { ModalContext } from '../../contexts/ModalContext';
 import Bulma from '../Bulma';
 
+const cssSortOption = (key, sortOpts) => {
+  let pos;
+  let type;
+  if (sortOpts) {
+    if (Array.isArray(sortOpts)) {
+      pos = sortOpts.findIndex((s) => s.key === key);
+      if (pos >= 0) {
+        type = sortOpts[pos].sort;
+        pos += 1;
+      }
+    } else if (sortOpts.key === key) type = sortOpts.sort;
+  }
+
+  if (type === 'descending')
+    return (
+      <>
+        <span className="icon is-small">
+          <ion-icon name="caret-down-outline" />
+        </span>
+        {typeof pos === 'number' && <sup>{pos}</sup>}
+      </>
+    );
+  if (type === 'ascending')
+    return (
+      <>
+        <span className="icon is-small">
+          <ion-icon name="caret-up-outline" />
+        </span>
+        {typeof pos === 'number' && <sup>{pos}</sup>}
+      </>
+    );
+
+  return null;
+};
 const Table = ({
   fullwidth = true,
   classNames = '',
@@ -22,25 +56,45 @@ const Table = ({
   onRenderCell,
   onRenderRow, // function that generate custom css classes depending of
   striped,
+  multiSortable,
 }) => {
   const table = React.useRef();
   const { width } = useWindowSize();
   const { showModal, hideModal } = React.useContext(ModalContext);
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
-    (key) => () => {
+    (key) => (event) => {
       if (onSort) {
-        let newSortOpt;
-        if (!sortOption || sortOption.key !== key) {
-          newSortOpt = { key, sort: 'ascending' };
-        } else if (sortOption.sort === 'ascending') {
-          newSortOpt = { key, sort: 'descending' };
+        if (multiSortable && event.shiftKey) {
+          let newSort;
+          if (!Array.isArray(sortOption))
+            newSort = [{ key, sort: 'ascending' }];
+          else {
+            newSort = [...sortOption];
+            const pos = newSort.findIndex((f) => f.key === key);
+            if (pos >= 0) {
+              if (newSort[pos].sort === 'ascending')
+                newSort[pos].sort = 'descending';
+              else newSort.splice(pos, 1);
+            } else {
+              newSort.push({ key, sort: 'ascending' });
+            }
+          }
+          setSortOption(newSort);
+          onSort(newSort);
+        } else {
+          let newSortOpt;
+          if (!sortOption || sortOption.key !== key) {
+            newSortOpt = { key, sort: 'ascending' };
+          } else if (sortOption.sort === 'ascending') {
+            newSortOpt = { key, sort: 'descending' };
+          }
+          setSortOption(newSortOpt);
+          onSort(newSortOpt);
         }
-        setSortOption(newSortOpt);
-        onSort(newSortOpt);
       }
     },
-    [sortOption, onSort]
+    [multiSortable, sortOption, onSort]
   );
 
   const defaultRender = React.useCallback(
@@ -52,9 +106,9 @@ const Table = ({
       }
       if (typeof cell === 'string' || typeof cell === 'number')
         return (
-          <p key={key} style={style}>
+          <span key={key} style={style}>
             {cell}
-          </p>
+          </span>
         );
 
       return Array.isArray(cell) ? (
@@ -152,25 +206,15 @@ const Table = ({
                   return (
                     <th
                       key={item.key}
-                      onClick={defineSortOption(item.key)}
+                      onClick={
+                        sortable ? defineSortOption(item.key) : undefined
+                      }
                       style={item.style}
                     >
                       {item.abbr && <abbr title={item.abbr} />}
                       {item.text}
-                      {sortOption &&
-                        sortOption.key === item.key &&
-                        sortOption.sort === 'descending' && (
-                          <span className="icon is-small">
-                            <ion-icon name="caret-down-outline" />
-                          </span>
-                        )}
-                      {sortOption &&
-                        sortOption.key === item.key &&
-                        sortOption.sort === 'ascending' && (
-                          <span className="icon is-small">
-                            <ion-icon name="caret-up-outline" />
-                          </span>
-                        )}
+                      {/* //todo css */}
+                      {cssSortOption(item.key, sortOption)}
                     </th>
                   );
                 }

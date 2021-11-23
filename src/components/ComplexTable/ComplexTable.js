@@ -8,18 +8,12 @@ import {
   MEDIA_QUERIES,
   MEDIA_QUERIES_SIZE,
 } from '../../helpers/constants/mediaQueries';
-
-const defaultSort = (sortKey, sortDirection) => (a, b) => {
-  if (a === b) return 0;
-  if (sortDirection === 'ascending') return a > b ? 1 : -1;
-  if (sortDirection === 'descending') return a < b ? 1 : -1;
-  return 0;
-};
+import { monoSort, multiSort } from '../../helpers/sortTable';
 
 const ComplexTable = ({
   columns,
   data,
-  onSort,
+  sortable,
   onFilter,
   onRenderCell,
   onRenderRow,
@@ -27,6 +21,7 @@ const ComplexTable = ({
   pagination = false,
   defaultPaginationSize,
   customHeader,
+  customSort,
   mappingObj = (arr) => arr,
   ...props
 }) => {
@@ -39,10 +34,19 @@ const ComplexTable = ({
     const filtered =
       search === '' || !onFilter ? clone : clone.filter(onFilter(search));
     if (sort) {
-      filtered.sort((onSort || defaultSort)(sort.key, sort.sort));
+      console.log(
+        'SORT',
+        Array.isArray(sort) ? 'multi' : 'single',
+        customSort ? 'custom' : 'default'
+      );
+      filtered.sort(
+        (Array.isArray(sort)
+          ? customSort || multiSort
+          : customSort || monoSort)(sort)
+      );
     }
     return filtered;
-  }, [data, search, sort]);
+  }, [data, search, sort, customSort]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(
@@ -118,8 +122,9 @@ const ComplexTable = ({
           .map(mappingObj)}
         onRenderCell={onRenderCell}
         onRenderRow={onRenderRow}
-        onSort={onSort ? setSort : undefined}
+        onSort={sortable ? setSort : undefined}
         striped
+        sortable
         {...props}
       />
       <div

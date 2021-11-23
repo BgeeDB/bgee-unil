@@ -9,6 +9,7 @@ import useGeneSearch from '../../hooks/useGeneSearch';
 import GeneSearch from '../../components/Gene/GeneSearch';
 import splitWithOccurrences from '../../helpers/splitWithOccurrences';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import { customGeneListSorter, monoSort } from '../../helpers/sortTable';
 
 const onRenderCell =
   (search) =>
@@ -201,6 +202,7 @@ const GeneList = () => {
               },
               { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
             ]}
+            customSort={customGeneListSorter}
             data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}

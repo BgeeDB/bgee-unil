@@ -201,7 +201,7 @@ const ExpComp = () => {
               pagination
               classNamesTable="is-striped"
               onFilter={onFilter}
-              onSort={onSort}
+              customSort={onSort}
               columns={[
                 {
                   key: 'anat-entities',
