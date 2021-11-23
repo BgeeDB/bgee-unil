@@ -268,7 +268,7 @@ const ProcessedExpressionValues = () => {
                               <p className="is-size-6 has-text-grey">
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
-                                  className="internal-link"
+                                  className="internal-link grey"
                                   href={`https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
                                 >
                                   RNA-Seq data directory
@@ -351,7 +351,7 @@ const ProcessedExpressionValues = () => {
                               <p className="is-size-6 has-text-grey">
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
-                                  className="internal-link"
+                                  className="internal-link grey"
                                   href={`https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
                                 >
                                   Affymetrix data directory
@@ -434,7 +434,7 @@ const ProcessedExpressionValues = () => {
                               <p className="is-size-6 has-text-grey">
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
-                                  className="internal-link"
+                                  className="internal-link grey"
                                   href={`https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/sc_full_length/${species.genus}_${species.speciesName}/`}
                                 >
                                   Full length single cell RNA-Seq data directory
