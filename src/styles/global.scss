@@ -71,6 +71,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  border: 1px solid #999;
+  &.bio-query {
+    background-color: #0ff;
+    border-radius: 4px;
+    border: none;
+  }
 }
 
 .home-hero-banner {
@@ -303,14 +309,6 @@ div.card.species {
   }
 }
 
-code {
-  border: 1px solid #999;
-  &.bio-query {
-    background-color: #0ff;
-    border-radius: 4px;
-    border: none;
-  }
-}
 pre {
   border: 1px solid #999;
   border-radius: 4px;
