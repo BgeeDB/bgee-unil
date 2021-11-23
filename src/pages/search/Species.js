@@ -8,6 +8,7 @@ import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
+import imagePath from '../../helpers/imagePath';
 
 const Species = () => {
   const [data, setData] = React.useState();
@@ -122,7 +123,7 @@ const Species = () => {
       <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
         <Bulma.Image
           className="m-0 mr-2"
-          src={`https://bgee.org/img/species/${data.species.id}_light.jpg`}
+          src={imagePath(`/species/${data.species.id}_light.jpg`)}
           height={75}
           width={75}
         />

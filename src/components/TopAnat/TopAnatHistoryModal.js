@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
 import PATHS from '../../routes/paths';
+import imagePath from '../../helpers/imagePath';
 
 const HISTORY_KEY = 'topAnatHistory';
 const ModalContent = ({ history, onRemove, onLoad, hideModal }) => (
@@ -22,7 +23,7 @@ const ModalContent = ({ history, onRemove, onLoad, hideModal }) => (
         >
           <div className="is-flex is-flex-grow-1 is-align-items-center mr-3">
             <img
-              src={`/static/img/species/${h.speciesId}_light.jpg`}
+              src={imagePath(`/species/${h.speciesId}_light.jpg`)}
               style={{ height: 30, width: 30, marginRight: 10 }}
               title={`Species: ${h.speciesName}`}
             />

@@ -1,3 +1,5 @@
+import imagePath from '../../helpers/imagePath';
+
 const source = [
   {
     type: 'title',
@@ -12,7 +14,7 @@ const source = [
             type: 'card',
             title: 'Bgee pipeline',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master',
             linkType: 'external',
@@ -32,7 +34,7 @@ const source = [
             type: 'card',
             title: 'BgeeDB R package',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/BgeeDB_R',
             linkType: 'external',
@@ -52,7 +54,7 @@ const source = [
             type: 'card',
             title: 'BgeeCall R package',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/BgeeCall',
             linkType: 'external',
@@ -72,7 +74,7 @@ const source = [
             type: 'card',
             title: 'IQRay',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/IQRray',
             linkType: 'external',

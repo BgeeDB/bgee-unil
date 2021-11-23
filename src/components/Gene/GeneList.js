@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import PATHS from '../../routes/paths';
 import classnames from '../../helpers/classnames';
+import imagePath from '../../helpers/imagePath';
 
 const GeneList = ({ details, history }) => (
   <>
@@ -39,7 +40,7 @@ const GeneList = ({ details, history }) => (
           >
             <Bulma.Image
               className="mr-2"
-              src={`/static/img/species/${e.species.id}_light.jpg`}
+              src={imagePath(`/species/${e.species.id}_light.jpg`)}
               height={100}
               width={100}
             />

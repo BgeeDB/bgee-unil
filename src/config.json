@@ -2,6 +2,7 @@
   "version": "15.0",
   "archive": false,
   "genericDomain": "https://bgee.org",
+  "imageDomain": "https://bgee.org/bgee_test/img",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "archivedVersion": [
     {
