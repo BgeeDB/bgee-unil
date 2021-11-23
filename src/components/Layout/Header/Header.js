@@ -267,7 +267,7 @@ const Header = () => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="navbar-brand" style={Styles.logo}>
+      <div className="navbar-brand">
         <Link className="navbar-item" to={PATHS.HOME}>
           <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
         </Link>

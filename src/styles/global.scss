@@ -153,6 +153,18 @@ $colors: map-merge($colors, $custom-colors);
   }
 }
 
+.navbar-brand {
+  .navbar-item {
+    height: 50px !important;
+    padding: 15px;
+    width: 130px;
+    .logo > img {
+      height: 40px;
+      max-height: 40px;
+      margin-top: 5px;
+    }
+  }
+}
 /*
  * END navbar style
  */
