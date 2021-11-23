@@ -260,31 +260,29 @@ const TopAnat = () => {
 
   return (
     <>
-      <Bulma.Section className="py-0">
-        <TopAnatHead />
-        <TopAnatForm
-          status={flowState}
-          form={{ handleChange, data, errors }}
-          requestParameters={requestParameters.value}
-          handlers={{
-            foregroundHandler,
-            backgroundHandler,
-            setRP: requestParameters.set,
-            onSelectCustomStage,
-            checkBoxHandler,
-          }}
-        />
-        <TopAnatActionButtons
-          status={flowState}
-          handleSubmit={job.submit}
-          data={data}
-          jobId={jobId}
-          cancelJob={job.cancel(jobId)}
-          startNewJob={job.startNew}
-          isDisabled={data.genes === ''}
-        />
-        <TopAnatBanner results={results} status={flowState} />
-      </Bulma.Section>
+      <TopAnatHead />
+      <TopAnatForm
+        status={flowState}
+        form={{ handleChange, data, errors }}
+        requestParameters={requestParameters.value}
+        handlers={{
+          foregroundHandler,
+          backgroundHandler,
+          setRP: requestParameters.set,
+          onSelectCustomStage,
+          checkBoxHandler,
+        }}
+      />
+      <TopAnatActionButtons
+        status={flowState}
+        handleSubmit={job.submit}
+        data={data}
+        jobId={jobId}
+        cancelJob={job.cancel(jobId)}
+        startNewJob={job.startNew}
+        isDisabled={data.genes === ''}
+      />
+      <TopAnatBanner results={results} status={flowState} />
       <TopAnatResult
         status={flowState}
         results={results}
