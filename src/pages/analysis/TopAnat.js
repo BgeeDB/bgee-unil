@@ -2,7 +2,6 @@
 import React from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import Bulma from '../../components/Bulma';
 import api from '../../api';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat, { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';

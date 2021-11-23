@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import LinkExternal from '../LinkExternal';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
-import classnames from '../../helpers/classnames';
 import isPlural from '../../helpers/isPlural';
 import ComplexTable from '../ComplexTable';
 import {

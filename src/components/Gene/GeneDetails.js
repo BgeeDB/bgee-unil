@@ -64,22 +64,21 @@ const GeneDetails = ({
     };
   }, []);
 
-  const metaTitle = `${name} 
-       expression in
-       ${
-         species.name ? species.name : `${species.genus} ${species.speciesName}`
-       }`;
-  const metaDescription = `Bgee gene expression data for ${
-    name ? `${name} (` : ''
-  }
-   ${geneId}  ${name ? ')' : ''} in ${species.genus} ${species.name} ${
-    species.name ? `( ${species.name} )` : ''
-  }`;
-
-  const metaKeywords = `gene expression,
-  ${name ? `${name} , ${name} expression, ` : ''}
-  ${geneId}, ${geneId} expression
-  ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
+  const meta = React.useMemo(() => {
+    const speciesName = species.name
+      ? species.name
+      : `${species.genus} ${species.speciesName}`;
+    const hasNameOpener = name ? `${name} (` : '';
+    const hasNameCloser = name ? `)` : '';
+    const speciesNameBrackets = species.name ? `( ${species.name} )` : '';
+    const nameExpr = name ? `${name}, ${name} expression, ` : '';
+    const synonymsExpr = synonyms ? `, ${synonyms.join(', ')}` : '';
+    return {
+      title: `${name}  expression in ${speciesName}`,
+      description: `Bgee gene expression data for ${hasNameOpener}${geneId}${hasNameCloser} in ${species.genus} ${species.name} ${speciesNameBrackets}`,
+      keywords: `gene expression, ${nameExpr}${geneId}, ${geneId} expression${synonymsExpr}`,
+    };
+  }, [name, geneId, synonyms, species]);
 
   React.useEffect(() => {
     if (loc.hash) {
@@ -96,9 +95,9 @@ const GeneDetails = ({
   return (
     <>
       <Helmet>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div id="gene-wrapper">
         <div className="sidebar">
