@@ -13,6 +13,7 @@ import api from '../api';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
+import imagePath from '../helpers/imagePath';
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -52,7 +53,7 @@ const Home = () => {
         {speciesList.map((s) => (
           <img
             key={s.id}
-            src={`/static/img/species/${s.id}_light.jpg`}
+            src={imagePath(`/species/${s.id}_light.jpg`)}
             alt={`${s.genus[0]}. ${s.speciesName}`}
             style={{ width: `${100 / speciesList.length}%` }}
           />

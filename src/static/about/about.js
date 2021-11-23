@@ -1,4 +1,5 @@
 import PATHS from '../../routes/paths';
+import imagePath from '../../helpers/imagePath';
 
 const about = [
   {
@@ -363,7 +364,7 @@ const about = [
       },
       {
         type: 'link_image',
-        src: '/static/img/cc-zero-large.png',
+        src: imagePath('/cc-zero-large.png'),
         path: 'https://creativecommons.org/publicdomain/zero/1.0/',
         style: {
           marginTop: '.7rem',

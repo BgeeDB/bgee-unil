@@ -10,6 +10,7 @@ import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import { topAnatLabelClassNames } from '../../helpers/constants/topAnat';
 import GenesDetailsModal from './GenesDetailsModal';
 import classnames from '../../helpers/classnames';
+import imagePath from '../../helpers/imagePath';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -76,7 +77,9 @@ const TopAnatForm = ({
                       top: 20,
                       right: 0,
                     }}
-                    src={`/static/img/species/${rp?.fg?.list?.selectedSpecies}_light.jpg`}
+                    src={imagePath(
+                      `/species/${rp?.fg?.list?.selectedSpecies}_light.jpg`
+                    )}
                     alt="species image"
                     imgClassnames="top-anat-species"
                   />

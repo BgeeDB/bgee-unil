@@ -13,6 +13,7 @@ import GeneXRefs from './GeneXRefs';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import imagePath from '../../helpers/imagePath';
 
 const GeneDetails = ({
   details,
@@ -113,7 +114,7 @@ const GeneDetails = ({
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
                 className="m-0 mr-2"
-                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                src={imagePath(`/species/${species.id}_light.jpg`)}
                 height={50}
                 width={50}
               />

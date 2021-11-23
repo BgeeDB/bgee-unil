@@ -1,11 +1,12 @@
 import React from 'react';
 import Bulma from '../Bulma';
+import imagePath from '../../helpers/imagePath';
 
 const CardSpecies = ({ genus, speciesName, name, id }) => (
   <Bulma.Card className="species">
     <Bulma.Card.Image
       className="auto-center-100"
-      src={`/static/img/species/${id}_light.jpg`}
+      src={imagePath(`/species/${id}_light.jpg`)}
       alt={`species ${genus} ${speciesName}- ${name}`}
       fallback="https://via.placeholder.com/100"
       height={100}
