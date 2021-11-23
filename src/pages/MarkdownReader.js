@@ -12,7 +12,6 @@ import { useHistory } from 'react-router-dom';
 import ROUTES from '../routes/routes';
 import classnames from '../helpers/classnames';
 import Bulma from '../components/Bulma';
-import LinkExternal from '../components/LinkExternal';
 
 const MarkdownReader = ({ location: { pathname } }) => {
   const history = useHistory();
@@ -52,9 +51,6 @@ const MarkdownReader = ({ location: { pathname } }) => {
             node.properties.rel = 'noopener noreferrer';
           }
         }
-        // if (node.properties && !hasProperty(node, 'id')) {
-        //   node.properties.id = slugs.slug(toString(node));
-        // }
       });
     },
     [history]
@@ -62,7 +58,6 @@ const MarkdownReader = ({ location: { pathname } }) => {
 
   return (
     <>
-      <LinkExternal to="e" />
       <ReactMarkdown
         className="markdown"
         components={components}

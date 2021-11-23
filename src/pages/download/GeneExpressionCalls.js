@@ -14,6 +14,7 @@ import GaEvent from '../../components/GaEvent/GaEvent';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
 import LinkExternal from '../../components/LinkExternal';
+import imagePath from '../../helpers/imagePath';
 
 const GeneExpressionCalls = () => {
   const history = useHistory();
@@ -70,9 +71,7 @@ const GeneExpressionCalls = () => {
 
   const allSpeciesName = React.useMemo(
     () =>
-      `${singleSpeciesList
-        .map((s) => ` ${s.name} ${s.speciesName}`)
-        .join(', ')}`,
+      singleSpeciesList.map((s) => ` ${s.name} ${s.speciesName}`).join(', '),
     [singleSpeciesList]
   );
 
@@ -171,7 +170,7 @@ const GeneExpressionCalls = () => {
                     <div className="image-container">
                       <Bulma.Image
                         className="m-0"
-                        src={`/static/img/species/${species.id}_light.jpg`}
+                        src={imagePath(`/species/${species.id}_light.jpg`)}
                         alt={`species ${species.genus} ${species.speciesName}- ${species.name}`}
                         fallback="https://via.placeholder.com/260"
                         height={260}

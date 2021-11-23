@@ -34,7 +34,7 @@ import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
-import NewsPages from '../pages/about/NewsPage';
+import NewsPage from '../pages/about/NewsPage';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -187,7 +187,7 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.NEWS]: {
-    component: NewsPages,
+    component: NewsPage,
     title: 'News',
   },
   [PATHS.ABOUT.COLLABORATIONS]: {

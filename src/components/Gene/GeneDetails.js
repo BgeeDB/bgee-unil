@@ -13,6 +13,7 @@ import GeneXRefs from './GeneXRefs';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import imagePath from '../../helpers/imagePath';
 
 const GeneDetails = ({
   details,
@@ -64,22 +65,21 @@ const GeneDetails = ({
     };
   }, []);
 
-  const metaTitle = `${name} 
-       expression in
-       ${
-         species.name ? species.name : `${species.genus} ${species.speciesName}`
-       }`;
-  const metaDescription = `Bgee gene expression data for ${
-    name ? `${name} (` : ''
-  }
-   ${geneId}  ${name ? ')' : ''} in ${species.genus} ${species.name} ${
-    species.name ? `( ${species.name} )` : ''
-  }`;
-
-  const metaKeywords = `gene expression,
-  ${name ? `${name} , ${name} expression, ` : ''}
-  ${geneId}, ${geneId} expression
-  ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
+  const meta = React.useMemo(() => {
+    const speciesName = species.name
+      ? species.name
+      : `${species.genus} ${species.speciesName}`;
+    const hasNameOpener = name ? `${name} (` : '';
+    const hasNameCloser = name ? `)` : '';
+    const speciesNameBrackets = species.name ? `( ${species.name} )` : '';
+    const nameExpr = name ? `${name}, ${name} expression, ` : '';
+    const synonymsExpr = synonyms ? `, ${synonyms.join(', ')}` : '';
+    return {
+      title: `${name}  expression in ${speciesName}`,
+      description: `Bgee gene expression data for ${hasNameOpener}${geneId}${hasNameCloser} in ${species.genus} ${species.name} ${speciesNameBrackets}`,
+      keywords: `gene expression, ${nameExpr}${geneId}, ${geneId} expression${synonymsExpr}`,
+    };
+  }, [name, geneId, synonyms, species]);
 
   React.useEffect(() => {
     if (loc.hash) {
@@ -96,9 +96,9 @@ const GeneDetails = ({
   return (
     <>
       <Helmet>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div id="gene-wrapper">
         <div className="sidebar">
@@ -114,7 +114,7 @@ const GeneDetails = ({
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
                 className="m-0 mr-2"
-                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                src={imagePath(`/species/${species.id}_light.jpg`)}
                 height={50}
                 width={50}
               />

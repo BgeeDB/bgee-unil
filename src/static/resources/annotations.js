@@ -1,3 +1,5 @@
+import imagePath from '../../helpers/imagePath';
+
 const annotations = [
   {
     type: 'title',
@@ -12,7 +14,7 @@ const annotations = [
             type: 'card',
             title: 'Anatomical similarity annotations',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/anatomical-similarity-annotations',
             linkType: 'external',
@@ -32,7 +34,7 @@ const annotations = [
             type: 'card',
             title: 'RNA-Seq annotations',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/RNA_Seq',
             linkType: 'external',
@@ -52,7 +54,7 @@ const annotations = [
             type: 'card',
             title: 'Affymetrix annotations',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/Affymetrix',
             linkType: 'external',
@@ -72,7 +74,7 @@ const annotations = [
             type: 'card',
             title: 'ESTs annotations',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/ESTs',
             linkType: 'external',
@@ -92,7 +94,7 @@ const annotations = [
             type: 'card',
             title: 'GTEx cleaning for Bgee',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
             },
             link: 'https://docs.google.com/document/d/1IuNu3WGTSIhXnJffP_yo7lK2abSgxZQDPJgG1SYF5vI',
             linkType: 'external',

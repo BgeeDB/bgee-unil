@@ -17,18 +17,28 @@ yarn start
 
 # Build
 
-before building, we need to change the configuration of one of the library 
-`node_modules/resolve-url-loader` to avoid the following issue.
-````
-./src/styles/global.scss
-Error: resolve-url-loader: CSS error
-  source-map information is not available at url() declaration (found orphan CR, try removeCR option)
+There is 2 commands for building the application.
 
+````shell
+yarn build
+#or
+yarn archive 
 ````
 
-In the `index.js`, under `var options` change `removeCR` from "false" to "true".
+The first command will build the app to be ready for production.
+The second one will prepare the application to de deployed as an archive.
+
+DO NOT FORGET
+Be careful with the version set in config.json, it will impact the app in production or in archive.
 
 # FAQ
+
+### Where are the images?
+
+The images are stored externally of the project.
+You will find the path of the images in the config.json at the key `imageDomain`
+Be careful, the image used for the 'external icon' link is directly defined in the SCSS.
+If you are moving it, don't forget to change the path.
 
 ### Use of Node 17.x.x
 

@@ -25,7 +25,7 @@ import News20141219 from '../../markdown/news/News-2014-12-19.md';
 
 import NewsItem from '../../components/NewsItem';
 
-const NewsPages = () => (
+const NewsPage = () => (
   <>
     <div className="content has-text-centered">
       <Bulma.Title size={5}>News</Bulma.Title>
@@ -77,4 +77,4 @@ const NewsPages = () => (
   </>
 );
 
-export default NewsPages;
+export default NewsPage;

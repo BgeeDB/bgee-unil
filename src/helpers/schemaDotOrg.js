@@ -11,7 +11,7 @@ const geneToLdJSON = ({
   path,
 }) => ({
   '@context': 'https://schema.org/',
-  '@type': 'https://schema.org/Gene',
+  '@type': 'Gene',
   '@id': window.location.href,
   'http://purl.org/dc/terms/conformsTo': {
     '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
@@ -20,6 +20,7 @@ const geneToLdJSON = ({
   description,
   alternateName: synonyms,
   identifier: geneId,
+  name,
   subjectOf: {
     '@type': 'WebPage',
     url: config.permanentVersionedDomain + path,
@@ -32,43 +33,45 @@ const geneToLdJSON = ({
     '@id':
       config.permanentVersionedDomain +
       PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id),
-    name: `${name} - ${geneId}`,
+    name: `${species.genus} ${species.speciesName}${
+      species.name ? ` (${species.name})` : ''
+    }`,
     identifier: species.id,
     sameAs: `http://purl.obolibrary.org/obo/NCBITaxon_${species.id}`,
   },
   sameAs: xRefs?.reduce((acc, a) => {
-    if (a.source.name !== 'Ensembl' && a.xRefs.length === 1)
-      acc.push(a.xRefs[0].xRefURL);
+    if (a.xRefs.length === 1) acc.push(a.xRefs[0].xRefURL);
     return acc;
   }, []),
 });
+
 const geneHomologsToLdJSON = (homo) => {
   const ldJson = [];
   homo.forEach((h) => {
     ldJson.push({
+      '@context': 'https://schema.org/',
       '@type': 'https://schema.org/Taxon',
       '@id': `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${h.taxon.id}`,
-      'https://schema.org/identifier': h.taxon.id,
-      'https://schema.org/name': h.taxon.name,
+      identifier: h.taxon.id,
+      name: h.taxon.scientificName,
+      alternateName: h.taxon.name,
     });
   });
 
   return ldJson;
 };
+
 const geneExpressionToLdJSON = (genes) => {
   const ldJson = [];
   genes.forEach((g) => {
     const { anatEntity, cellType } = g.condition;
     if (g.condition.cellType)
       ldJson.push({
-        '@type': 'https://schema.org/Gene',
+        '@context': 'https://schema.org/',
+        '@type': 'Gene',
         '@id': window.location.href,
         expressedIn: {
           '@type': 'AnatomicalStructure',
-          '@id': `https://schema.org/_:${cellType.id.replace(
-            ':',
-            '_'
-          )}_${anatEntity.id.replace(':', '_')}`,
           name: `${cellType.name} in ${anatEntity.name}`,
           subStructure: [
             {
@@ -128,6 +131,7 @@ const fileDownloadProps = (file) => ({
     },
   ],
 });
+
 const speciesToLdJSON = ({
   downloadFiles: { downloadFiles },
   species: { genus, name, speciesName, id },

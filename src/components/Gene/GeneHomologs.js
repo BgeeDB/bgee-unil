@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import LinkExternal from '../LinkExternal';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
-import classnames from '../../helpers/classnames';
 import isPlural from '../../helpers/isPlural';
 import ComplexTable from '../ComplexTable';
 import {
@@ -23,18 +22,14 @@ const Styles = {
 };
 
 const TaxonNameCell = ({ id, scientificName }) => (
-  <span
-    typeof="schema:Taxon"
-    resource={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
-  >
+  <>
     <LinkExternal
-      property="schema:identifier"
       content={id}
       to={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
     >
-      <span property="schema:name">{scientificName}</span>
+      <span>{scientificName}</span>
     </LinkExternal>
-  </span>
+  </>
 );
 const ExpressionComparisonCell = ({ geneId, genes }) => {
   let genesExpr = [geneId, ...genes.map((g) => g.geneId)];

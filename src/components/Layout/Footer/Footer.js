@@ -7,6 +7,7 @@ import PATHS from '../../../routes/paths';
 import { NotificationContext } from '../../../contexts/NotificationsContext';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import random from '../../../helpers/random';
+import imagePath from '../../../helpers/imagePath';
 
 const Footer = () => {
   const { addNotification } = React.useContext(NotificationContext);
@@ -35,7 +36,7 @@ const Footer = () => {
           >
             <Bulma.Image
               className="no-responsive"
-              src="https://bgee.org/img/cc-zero.png"
+              src={imagePath('/img/cc-zero.png')}
               alt="CC0"
               height={15}
               width={80}
