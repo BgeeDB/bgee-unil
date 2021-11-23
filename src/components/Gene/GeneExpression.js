@@ -340,7 +340,6 @@ const GeneExpression = ({ geneId, speciesId }) => {
   );
 
   React.useEffect(() => {
-    console.log('hashExpr', hashExpr);
     setIsLoading(true);
     const fields = {};
     if (hashExpr) {
