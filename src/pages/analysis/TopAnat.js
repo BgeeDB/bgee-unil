@@ -2,7 +2,6 @@
 import React from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import Bulma from '../../components/Bulma';
 import api from '../../api';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat, { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
@@ -260,31 +259,29 @@ const TopAnat = () => {
 
   return (
     <>
-      <Bulma.Section className="py-0">
-        <TopAnatHead />
-        <TopAnatForm
-          status={flowState}
-          form={{ handleChange, data, errors }}
-          requestParameters={requestParameters.value}
-          handlers={{
-            foregroundHandler,
-            backgroundHandler,
-            setRP: requestParameters.set,
-            onSelectCustomStage,
-            checkBoxHandler,
-          }}
-        />
-        <TopAnatActionButtons
-          status={flowState}
-          handleSubmit={job.submit}
-          data={data}
-          jobId={jobId}
-          cancelJob={job.cancel(jobId)}
-          startNewJob={job.startNew}
-          isDisabled={data.genes === ''}
-        />
-        <TopAnatBanner results={results} status={flowState} />
-      </Bulma.Section>
+      <TopAnatHead />
+      <TopAnatForm
+        status={flowState}
+        form={{ handleChange, data, errors }}
+        requestParameters={requestParameters.value}
+        handlers={{
+          foregroundHandler,
+          backgroundHandler,
+          setRP: requestParameters.set,
+          onSelectCustomStage,
+          checkBoxHandler,
+        }}
+      />
+      <TopAnatActionButtons
+        status={flowState}
+        handleSubmit={job.submit}
+        data={data}
+        jobId={jobId}
+        cancelJob={job.cancel(jobId)}
+        startNewJob={job.startNew}
+        isDisabled={data.genes === ''}
+      />
+      <TopAnatBanner results={results} status={flowState} />
       <TopAnatResult
         status={flowState}
         results={results}

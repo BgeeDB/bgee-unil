@@ -224,9 +224,13 @@ const staticBuilder = (json, prefixKey = '') =>
             {props.content.map((col, colKey) => (
               <div
                 key={`${prefixKey}-${key}-${colKey}`}
-                className={`column ${col.size ? `is-${col.size}` : ''} ${
-                  col.classNames || ''
-                }`}
+                className={classnames(
+                  'column',
+                  {
+                    [`is-${col.size}`]: col.size,
+                  },
+                  col.classNames
+                )}
               >
                 {staticBuilder(col.content, `${prefixKey}-${key}-${colKey}`)}
               </div>

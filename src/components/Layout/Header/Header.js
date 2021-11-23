@@ -236,10 +236,6 @@ const NAVBAR_RIGHT = [
   },
 ];
 
-const Styles = {
-  logo: { width: '6%' },
-};
-
 const Header = () => {
   const [openedMenuId, setOpenMenuId] = React.useState(undefined);
   const toggleOpenMenu = React.useCallback(

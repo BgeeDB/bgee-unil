@@ -70,9 +70,7 @@ const GeneExpressionCalls = () => {
 
   const allSpeciesName = React.useMemo(
     () =>
-      `${singleSpeciesList
-        .map((s) => ` ${s.name} ${s.speciesName}`)
-        .join(', ')}`,
+      singleSpeciesList.map((s) => ` ${s.name} ${s.speciesName}`).join(', '),
     [singleSpeciesList]
   );
 

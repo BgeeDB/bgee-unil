@@ -63,11 +63,10 @@ const ProcessedExpressionValues = () => {
       });
       setFiles(speciesFiles);
     });
-    return () => {};
   }, []);
 
   const allSpeciesName = React.useMemo(
-    () => `${speciesList.map((s) => ` ${s.name} ${s.speciesName}`).join(', ')}`,
+    () => speciesList.map((s) => ` ${s.name} ${s.speciesName}`).join(', '),
     [speciesList]
   );
 
