@@ -22,18 +22,14 @@ const Styles = {
 };
 
 const TaxonNameCell = ({ id, scientificName }) => (
-  <span
-    typeof="schema:Taxon"
-    resource={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
-  >
+  <>
     <LinkExternal
-      property="schema:identifier"
       content={id}
       to={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${id}`}
     >
-      <span property="schema:name">{scientificName}</span>
+      <span>{scientificName}</span>
     </LinkExternal>
-  </span>
+  </>
 );
 const ExpressionComparisonCell = ({ geneId, genes }) => {
   let genesExpr = [geneId, ...genes.map((g) => g.geneId)];
