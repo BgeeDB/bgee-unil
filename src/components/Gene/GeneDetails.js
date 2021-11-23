@@ -105,7 +105,7 @@ const GeneDetails = ({
           <div className="side-menu">
             <div className="side-menu-wrapper">
               <GeneSearch />
-              <GeneDetailsSideMenu />
+              <GeneDetailsSideMenu homologs={homologs} />
             </div>
           </div>
         </div>
