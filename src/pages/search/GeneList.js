@@ -154,7 +154,7 @@ const GeneList = () => {
         synonyms and cross-references.
       </p>
       <div>
-        <GeneSearch classNames="search-input mx-auto my-3">
+        <GeneSearch classNames="search-input mx-auto my-3" searchTerm={search}>
           <p>
             {`Example: `}
             <Link className="internal-link" to="?search=HBB">
