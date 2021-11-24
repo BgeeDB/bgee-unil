@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key,import/no-cycle,jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable react/no-array-index-key,jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React, { useContext } from 'react';
 import classnames from '../../helpers/classnames';
 import { isHideMediaQuery } from '../../helpers/constants/mediaQueries';
@@ -70,7 +70,6 @@ const TableBody = () => {
     usedWidth,
     currentPage,
     pageSize,
-    mappingObj,
   } = useContext(TableContext);
   const defaultRender = React.useCallback(
     (cell, key) => {
@@ -98,13 +97,11 @@ const TableBody = () => {
 
   const dataToDisplay = React.useMemo(
     () =>
-      data
-        ?.slice(
-          (currentPage - 1) * pageSize,
-          (currentPage - 1) * pageSize + pageSize
-        )
-        ?.map(mappingObj),
-    [data, currentPage, pageSize, mappingObj]
+      data?.slice(
+        (currentPage - 1) * pageSize,
+        (currentPage - 1) * pageSize + pageSize
+      ),
+    [data, currentPage, pageSize]
   );
 
   return (

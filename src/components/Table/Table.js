@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key,import/no-cycle */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import classnames from '../../helpers/classnames';
 import { hasColumnsTableHidden } from '../../helpers/constants/mediaQueries';
@@ -31,6 +31,10 @@ const Table = ({
   customHeader,
   mappingObj = (obj) => obj,
 }) => {
+  const mappedData = React.useMemo(
+    () => data.map(mappingObj),
+    [data, mappingObj()]
+  );
   const table = React.useRef();
   const { width } = useWindowSize();
   const usedWidth = React.useMemo(
@@ -89,7 +93,7 @@ const Table = ({
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(
-    pagination ? defaultPaginationSize || 10 : data.length
+    pagination ? defaultPaginationSize || 10 : mappedData.length
   );
 
   const [search, setSearch] = React.useState('');
@@ -112,7 +116,7 @@ const Table = ({
 
   const pageSizeSelector = React.useMemo(
     () =>
-      pagination && data?.length > 10 ? (
+      pagination && mappedData?.length > 10 ? (
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
           <p className="mr-2">Show</p>
           <Select
@@ -126,10 +130,10 @@ const Table = ({
           <p className="ml-2">entries</p>
         </div>
       ) : null,
-    [pageSize, currentPage, data, pagination]
+    [pageSize, currentPage, mappedData, pagination]
   );
   const processedData = React.useMemo(() => {
-    const clone = JSON.parse(JSON.stringify(data));
+    const clone = JSON.parse(JSON.stringify(mappedData));
     const filtered =
       search === '' || !onFilter ? clone : clone.filter(onFilter(search));
     if (sortOption) {
@@ -145,7 +149,7 @@ const Table = ({
       );
     }
     return filtered;
-  }, [data, search, sortOption, onSortCustom]);
+  }, [mappedData, search, sortOption, onSortCustom]);
 
   return (
     <TableProvider

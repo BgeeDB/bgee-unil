@@ -5,9 +5,9 @@ import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
-import { API_DOMAIN } from '../../api/prod/constant';
 import LinkExternal from '../LinkExternal';
 import Table from '../Table';
+import config from '../../config.json';
 
 const COLUMNS = [
   {
@@ -149,10 +149,10 @@ const TopAnatResult = ({
                 <GaEvent
                   category="Top Anat"
                   action="Download R scripts and data"
-                  label={`All - ${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
+                  label={`All - ${config.apiDomain}/?page=top_anat&action=download&data=${searchId}`}
                 >
                   <Bulma.Button
-                    href={`${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
+                    href={`${config.apiDomain}/?page=top_anat&action=download&data=${searchId}`}
                     color="danger"
                     light
                     style={{ width: 'fit-content' }}

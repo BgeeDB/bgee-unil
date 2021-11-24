@@ -30,7 +30,7 @@ abbr: string (abbreaviation)
 style: CSS Object
 hide: MEDIA_QUERIES
 } | string)
-data: [] of Object
+mappedData: [] of Object
 sortable: boolean (allow mono sorting)
 multiSortable: boolean (allow multi sorting)
 striped: boolean (striped rows)

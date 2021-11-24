@@ -1,7 +1,4 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-case-declarations */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-cycle */
+/* eslint-disable no-use-before-define,no-case-declarations,react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './arrayHelper';
