@@ -186,30 +186,34 @@ const GeneDetails = ({
                   />
                 </Bulma.C>
               </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Orthologs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#orthologs">
-                      {homologs ? `${homologs.orthologs} orthologs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Paralogs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#paralogs">
-                      {homologs ? `${homologs.paralogs} paralogs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
+              {homologs?.orthologs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Orthologs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#orthologs">
+                        {homologs ? `${homologs.orthologs} orthologs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
+              {homologs?.paralogs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Paralogs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#paralogs">
+                        {homologs ? `${homologs.paralogs} paralogs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
             </div>
           </div>
 
