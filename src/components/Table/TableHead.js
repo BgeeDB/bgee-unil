@@ -60,7 +60,6 @@ const TableHead = () => {
                 onClick={sortable ? defineSortOption(item.key) : undefined}
                 style={item.style}
               >
-                {item.abbr && <abbr title={item.abbr} />}
                 {item.text}
                 {cssSortOption(item.key, sortOption)}
               </th>

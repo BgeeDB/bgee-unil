@@ -27,7 +27,7 @@ const Table = ({
   onRenderRow, // function that generate custom css classes depending of
   striped = true,
   pagination = false,
-  defaultPaginationSize,
+  defaultPaginationSize = 10,
   customHeader,
   mappingObj = (obj) => obj,
 }) => {
@@ -93,7 +93,7 @@ const Table = ({
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(
-    pagination ? defaultPaginationSize || 10 : mappedData.length
+    pagination ? defaultPaginationSize : mappedData.length
   );
 
   const [search, setSearch] = React.useState('');

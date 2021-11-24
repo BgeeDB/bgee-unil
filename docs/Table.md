@@ -21,19 +21,38 @@ To configure the header and the visibility of the header follow the template bel
 `Table.js`
 ````
 fullwidth: boolean
+
 classNames: string
+
 title: string | undefined
-columns: [] of ({
-key: string,
-text: string
-abbr: string (abbreaviation)
-style: CSS Object
-hide: MEDIA_QUERIES
-} | string)
-mappedData: [] of Object
+
+columns: [] of {
+        key: string,
+        text: string
+        style: CSS Object
+        hide: MEDIA_QUERIES
+    }
+    
+data: [] of Object
+
+onFilter: () => boolean
+
 sortable: boolean (allow mono sorting)
+
 multiSortable: boolean (allow multi sorting)
-striped: boolean (striped rows)
+onSortCustom: () => -1 | 0 | 1
+
 onRenderCell: function | undefined (custom cell rendering when logic need to be apply for the rendering or custom rendering)
+
 onRenderRow: function | undefined (custom row style)
+
+striped: boolean (striped rows)
+
+pagination: boolean
+
+defaultPaginationSize: number (default = 10)
+
+customHeader: () => React.Component
+
+mappingObj: (object, key) => object
 ````

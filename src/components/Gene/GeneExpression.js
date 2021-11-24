@@ -56,7 +56,7 @@ const columnsGenerator = (cFields, data) => () => {
     c.push({
       key: 'strain',
       text: 'Strain',
-      style: { minWidth: 100 },
+      style: { width: 100 },
       hide: MEDIA_QUERIES.DESKTOP,
     });
   c = [
@@ -69,7 +69,7 @@ const columnsGenerator = (cFields, data) => () => {
     {
       key: 'fdr',
       text: 'FDR',
-      style: { minWidth: 100 },
+      style: { width: 100 },
       hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
