@@ -36,7 +36,7 @@ const Footer = () => {
           >
             <Bulma.Image
               className="no-responsive"
-              src={imagePath('/img/cc-zero.png')}
+              src={imagePath('/cc-zero.png')}
               alt="CC0"
               height={15}
               width={80}

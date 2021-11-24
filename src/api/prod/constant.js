@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-export const API_DOMAIN = 'https://bgee.org/bgee_test';
+import config from '../../config.json';
 
 const axiosInstance = axios.create({
-  baseURL: API_DOMAIN,
+  baseURL: config.apiDomain,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
   },

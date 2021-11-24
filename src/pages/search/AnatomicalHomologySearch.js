@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useQuery from '../../hooks/useQuery';
-import ComplexTable from '../../components/ComplexTable';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
+import Table from '../../components/Table';
 
 const checkboxes = [
   { id: 0, name: ' Select all' },
@@ -204,7 +204,7 @@ const AnatomicalHomologySearch = () => {
           <p className="my-5">
             Least common ancestor of provided species: Euteleostomi
           </p>
-          <ComplexTable
+          <Table
             pagination
             sortable
             classNamesTable="is-striped"

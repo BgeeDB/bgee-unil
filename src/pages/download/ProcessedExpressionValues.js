@@ -15,6 +15,7 @@ import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
 import LinkExternal from '../../components/LinkExternal';
 import imagePath from '../../helpers/imagePath';
+import config from '../../config.json';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -269,7 +270,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
                                 >
                                   RNA-Seq data directory
                                 </a>
@@ -352,7 +353,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
                                 >
                                   Affymetrix data directory
                                 </a>
@@ -435,7 +436,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/sc_full_length/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.genus}_${species.speciesName}/`}
                                 >
                                   Full length single cell RNA-Seq data directory
                                 </a>

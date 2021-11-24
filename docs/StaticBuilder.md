@@ -163,7 +163,7 @@ For a better understanding, please check the Table component.
     fullWidth: boolean,
     title: string,
     columns: Array of Object,
-    data: Array of Object,
+    mappedData: Array of Object,
     onRenderCell: ({
         cell,
         key: cellKey,

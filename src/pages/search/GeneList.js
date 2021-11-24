@@ -3,12 +3,13 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
 import useGeneSearch from '../../hooks/useGeneSearch';
 import GeneSearch from '../../components/Gene/GeneSearch';
 import splitWithOccurrences from '../../helpers/splitWithOccurrences';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import { customGeneListSorter } from '../../helpers/sortTable';
+import Table from '../../components/Table';
 
 const onRenderCell =
   (search) =>
@@ -182,7 +183,7 @@ const GeneList = () => {
               ? `About ${results.totalMatchCount} gene(s) found for '${search}' (only the first 10000 genes are displayed)`
               : `${results.totalMatchCount} gene(s) found for '${search}'`}
           </p>
-          <ComplexTable
+          <Table
             pagination
             sortable
             classNamesTable="is-striped"
@@ -201,6 +202,7 @@ const GeneList = () => {
               },
               { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
             ]}
+            onSortCustom={customGeneListSorter}
             data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}

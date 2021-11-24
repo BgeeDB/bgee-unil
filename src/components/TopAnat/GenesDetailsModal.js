@@ -12,7 +12,7 @@ const GenesDetailsModal = (props) => {
     <div className="content">
       <p>
         {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genes} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
+        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
         {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
       </p>
       {Object.keys(data.detectedSpecies).length > 1 && (
