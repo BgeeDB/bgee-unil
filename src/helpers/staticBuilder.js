@@ -6,7 +6,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './arrayHelper';
 import Accordion from '../components/Accordion';
-import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';
 import Bulma from '../components/Bulma';
 import classnames from './classnames';
@@ -353,8 +352,6 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('separator', classNames)}
           />
         );
-      case 'table':
-        return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
         return (
           <p

@@ -5,11 +5,11 @@ import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
-import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import Table from '../Table';
 
 const CUSTOM_FIELDS = [
   {
@@ -390,7 +390,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
         )}{' '}
         {!isLoading && data && (
           <>
-            <ComplexTable
+            <Table
               columns={columns}
               data={data.calls}
               onRenderCell={onRenderCell}

@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
 import { API_DOMAIN } from '../../api/prod/constant';
+import LinkExternal from '../LinkExternal';
+import Table from '../Table';
 
 const COLUMNS = [
   {
@@ -79,14 +80,11 @@ const TopAnatResult = ({
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
-        <a
-          className="external-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
+        <LinkExternal
+          to={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
         >
           {cell}
-        </a>
+        </LinkExternal>
       );
     return defaultRender(cell, key);
   }, []);
@@ -101,7 +99,7 @@ const TopAnatResult = ({
       'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
     if (results?.data)
       results?.data.forEach((row) => {
-        csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
+        csvContent += `${row.anatEntityId}\t${row.anatEntityName}\t${row.annotated}\t${row.significant}\t${row.expected}\t${row.foldEnrichment}\t${row.pValue}\t${row.FDR}\n`;
       });
 
     return csvContent;
@@ -201,13 +199,13 @@ const TopAnatResult = ({
               </div>
             </Bulma.C>
             <Bulma.C size={5}>
-              <div className="field has-addons">
+              <div className="is-flex is-flex-direction-row">
                 {searchElement}
-                <div className="control">
+                <div className="ml-2 control">
                   <a
                     className="button"
                     href={dataCsvHref}
-                    download="data.csv"
+                    download="data.tsv"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -284,9 +282,9 @@ const TopAnatResult = ({
         <div className="content has-text-centered">
           <p className="title is-4">{title}</p>
         </div>
-        <ComplexTable
-          columns={COLUMNS}
+        <Table
           key={searchId + selectedStage}
+          columns={COLUMNS}
           data={dataDisplay}
           onRenderCell={onRenderCell}
           sortable
@@ -294,7 +292,7 @@ const TopAnatResult = ({
           pagination
           defaultPaginationSize={20}
           onFilter={onFilter}
-          classNamesTable="is-striped"
+          striped
           customHeader={customHeader}
           mappingObj={mappingObj}
         />

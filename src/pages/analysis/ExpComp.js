@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ComplexTable from '../../components/ComplexTable';
-import json from './mockExpComp.json';
+import Table from '../../components/Table';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
@@ -196,51 +195,51 @@ const ExpComp = () => {
                 ],
               },
             ])}
-            <ComplexTable
-              sortable
-              pagination
-              classNamesTable="is-striped"
-              onFilter={onFilter}
-              customSort={onSort}
-              columns={[
-                {
-                  key: 'anat-entities',
-                  text: 'Anatomical entities',
-                },
-                {
-                  key: 'xpr-score',
-                  text: 'Conservation score',
-                },
-                {
-                  key: 'max-xpr-score',
-                  text: 'Max expression score',
-                },
-                {
-                  key: 'gene-present',
-                  text: 'Genes with presence of expression',
-                },
-                {
-                  key: 'gene-absent',
-                  text: 'Genes with absence of expression',
-                },
-                {
-                  key: 'gene-no-data',
-                  text: 'Genes with no data',
-                },
-                {
-                  key: 'species-present',
-                  text: 'Species with presence of expression',
-                },
-                {
-                  key: 'species-absent',
-                  text: 'Species with absence of expression',
-                },
-                'See details',
-              ]}
-              data={json}
-              customHeader={customHeader}
-              onRenderCell={onRenderCell}
-            />
+            {/* <Table */}
+            {/*  sortable */}
+            {/*  pagination */}
+            {/*  classNamesTable="is-striped" */}
+            {/*  onFilter={onFilter} */}
+            {/*  customSort={onSort} */}
+            {/*  columns={[ */}
+            {/*    { */}
+            {/*      key: 'anat-entities', */}
+            {/*      text: 'Anatomical entities', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'xpr-score', */}
+            {/*      text: 'Conservation score', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'max-xpr-score', */}
+            {/*      text: 'Max expression score', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'gene-present', */}
+            {/*      text: 'Genes with presence of expression', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'gene-absent', */}
+            {/*      text: 'Genes with absence of expression', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'gene-no-data', */}
+            {/*      text: 'Genes with no data', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'species-present', */}
+            {/*      text: 'Species with presence of expression', */}
+            {/*    }, */}
+            {/*    { */}
+            {/*      key: 'species-absent', */}
+            {/*      text: 'Species with absence of expression', */}
+            {/*    }, */}
+            {/*    'See details', */}
+            {/*  ]} */}
+            {/*  data={json} */}
+            {/*  customHeader={customHeader} */}
+            {/*  onRenderCell={onRenderCell} */}
+            {/* /> */}
           </div>
         )}
       </Bulma.Section>

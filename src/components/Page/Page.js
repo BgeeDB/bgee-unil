@@ -22,7 +22,7 @@ class Page extends React.PureComponent {
 
   render() {
     const { hasError } = this.state;
-    if (hasError)
+    if (hasError && process.env.NODE_ENV === 'production')
       return (
         <Redirect
           push
