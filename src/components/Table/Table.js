@@ -33,7 +33,7 @@ const Table = ({
 }) => {
   const mappedData = React.useMemo(
     () => data.map(mappingObj),
-    [data, mappingObj()]
+    [data, mappingObj]
   );
   const table = React.useRef();
   const { width } = useWindowSize();

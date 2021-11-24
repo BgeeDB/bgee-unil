@@ -104,28 +104,33 @@ const TopAnatResult = ({
 
     return csvContent;
   }, [results]);
-  const mappingObj = React.useCallback(
-    ({
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    }) => [
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    ],
-    []
-  );
+  const mappingObj = React.useCallback((obj) => {
+    try {
+      const {
+        anatEntityId,
+        anatEntityName,
+        annotated,
+        significant,
+        expected,
+        foldEnrichment,
+        pValue,
+        FDR,
+      } = obj;
+      return [
+        anatEntityId,
+        anatEntityName,
+        annotated,
+        significant,
+        expected,
+        foldEnrichment,
+        pValue,
+        FDR,
+      ];
+    } catch (e) {
+      console.log(e);
+    }
+    return obj;
+  }, []);
 
   const dataDisplay = React.useMemo(() => {
     if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
