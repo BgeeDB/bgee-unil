@@ -5,11 +5,11 @@ import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
-import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import Table from '../Table';
 
 const CUSTOM_FIELDS = [
   {
@@ -56,7 +56,7 @@ const columnsGenerator = (cFields, data) => () => {
     c.push({
       key: 'strain',
       text: 'Strain',
-      style: { minWidth: 100 },
+      style: { width: 100 },
       hide: MEDIA_QUERIES.DESKTOP,
     });
   c = [
@@ -69,7 +69,7 @@ const columnsGenerator = (cFields, data) => () => {
     {
       key: 'fdr',
       text: 'FDR',
-      style: { minWidth: 100 },
+      style: { width: 100 },
       hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
@@ -353,7 +353,6 @@ const GeneExpression = ({
   );
 
   React.useEffect(() => {
-    console.log('hashExpr', hashExpr);
     setIsLoading(true);
     const fields = {};
     if (hashExpr) {

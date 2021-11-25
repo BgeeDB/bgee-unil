@@ -1,12 +1,8 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-case-declarations */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-cycle */
+/* eslint-disable no-use-before-define,no-case-declarations,react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './arrayHelper';
 import Accordion from '../components/Accordion';
-import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';
 import Bulma from '../components/Bulma';
 import classnames from './classnames';
@@ -353,8 +349,6 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('separator', classNames)}
           />
         );
-      case 'table':
-        return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
         return (
           <p

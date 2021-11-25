@@ -321,6 +321,9 @@ $table-cell-border-width: 0;
   max-width: 500px;
 }
 
+th {
+  -webkit-user-select: none;
+}
 table.table {
   &.sortable {
     thead > tr > th {

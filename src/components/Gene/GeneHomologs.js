@@ -5,13 +5,13 @@ import LinkExternal from '../LinkExternal';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
 import isPlural from '../../helpers/isPlural';
-import ComplexTable from '../ComplexTable';
 import {
   MEDIA_QUERIES,
   MEDIA_QUERIES_SIZE,
 } from '../../helpers/constants/mediaQueries';
 import useWindowSize from '../../hooks/useWindowSize';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import Table from '../Table';
 
 const Styles = {
   separator: {
@@ -212,7 +212,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             )}
             {!isLoading && homologs?.orthologsByTaxon.length > 0 && (
               <>
-                <ComplexTable
+                <Table
                   responsive
                   columns={[
                     {
@@ -283,7 +283,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             )}
             {!isLoading && homologs?.paralogsByTaxon.length > 0 && (
               <>
-                <ComplexTable
+                <Table
                   columns={[
                     {
                       key: 'taxonName',
