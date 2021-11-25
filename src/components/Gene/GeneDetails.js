@@ -15,6 +15,15 @@ import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import imagePath from '../../helpers/imagePath';
 
+const Styles = {
+  sideMenuWidth: {
+    width: '13%',
+  },
+  searchBoxMargin: {
+    marginRight: 100,
+  },
+};
+
 const GeneDetails = ({
   details,
   details: { name, geneId, description, species, synonyms },
@@ -101,16 +110,18 @@ const GeneDetails = ({
         <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div id="gene-wrapper">
-        <div className="sidebar">
+        <div className="sidebar" style={Styles.sideMenuWidth}>
           <div className="side-menu">
             <div className="side-menu-wrapper">
-              <GeneSearch />
               <GeneDetailsSideMenu />
             </div>
           </div>
         </div>
         <div id="gene-body">
-          <div className="is-flex is-justify-content-center is-align-items-center">
+          <div className="is-flex ">
+            <div style={Styles.searchBoxMargin}>
+              <GeneSearch />
+            </div>
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
                 className="m-0 mr-2"
