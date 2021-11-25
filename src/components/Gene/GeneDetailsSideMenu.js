@@ -1,49 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions,jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
-const sideMenuElemArray = [
-  {
-    domId: GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION,
-    name: 'General information',
-  },
-  { domId: GENE_DETAILS_HTML_IDS.EXPRESSION, name: 'Expression' },
-];
-
-const GeneDetailsSideMenu = ({ homologs = null }) => {
+const GeneDetailsSideMenu = ({ homologs = null, isExpression, xRefs }) => {
   const history = useHistory();
   const location = useLocation();
-  const [sideMenuElem, setSideMenuElem] = useState(sideMenuElemArray);
-
-  useEffect(() => {
-    if (homologs?.paralogs > 0 && homologs?.orthologs > 0) {
-      setSideMenuElem([
-        ...sideMenuElem,
-        { domId: GENE_DETAILS_HTML_IDS.ORTHOLOGS, name: 'Orthologs' },
-        {
-          domId: GENE_DETAILS_HTML_IDS.PARALOGS,
-          name: 'Paralogs',
-        },
-        { domId: GENE_DETAILS_HTML_IDS.XREFS, name: 'Cross-references' },
-      ]);
-    } else if (homologs?.paralogs === 0 && homologs?.orthologs > 0) {
-      setSideMenuElem([
-        ...sideMenuElem,
-        { domId: GENE_DETAILS_HTML_IDS.ORTHOLOGS, name: 'Orthologs' },
-        { domId: GENE_DETAILS_HTML_IDS.XREFS, name: 'Cross-references' },
-      ]);
-    } else if (homologs?.paralogs > 0 && homologs?.orthologs === 0) {
-      setSideMenuElem([
-        ...sideMenuElem,
-        {
-          domId: GENE_DETAILS_HTML_IDS.PARALOGS,
-          name: 'Paralogs',
-        },
-        { domId: GENE_DETAILS_HTML_IDS.XREFS, name: 'Cross-references' },
-      ]);
-    }
-  }, [homologs]);
 
   const handlerMenuClick = React.useCallback(
     (id) => {
@@ -55,11 +17,50 @@ const GeneDetailsSideMenu = ({ homologs = null }) => {
   return (
     <aside className="menu">
       <ul className="menu-list">
-        {sideMenuElem.map((elem) => (
-          <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
-            <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
+        <li
+          key={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}
+          onClick={() =>
+            handlerMenuClick(GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION)
+          }
+        >
+          <a className="is-size-5 has-text-weight-semibold">
+            General information
+          </a>
+        </li>
+        {isExpression && (
+          <li
+            key={GENE_DETAILS_HTML_IDS.EXPRESSION}
+            onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION)}
+          >
+            <a className="is-size-5 has-text-weight-semibold">Expression</a>
           </li>
-        ))}
+        )}
+        {homologs?.orthologs > 0 && (
+          <li
+            key={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
+            onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.ORTHOLOGS)}
+          >
+            <a className="is-size-5 has-text-weight-semibold">Orthologs</a>
+          </li>
+        )}
+        {homologs?.paralogs > 0 && (
+          <li
+            key={GENE_DETAILS_HTML_IDS.PARALOGS}
+            onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.PARALOGS)}
+          >
+            <a className="is-size-5 has-text-weight-semibold">Paralogs</a>
+          </li>
+        )}
+        {xRefs && (
+          <li
+            key={GENE_DETAILS_HTML_IDS.XREFS}
+            onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.XREFS)}
+          >
+            <a className="is-size-5 has-text-weight-semibold">
+              Cross-references
+            </a>
+          </li>
+        )}
       </ul>
     </aside>
   );

@@ -23,6 +23,8 @@ const GeneDetails = ({
   const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
   const [xRefs, setXRefs] = React.useState();
+  const [isExpression, setIsExpression] = React.useState(false);
+
   React.useEffect(() => {
     Promise.allSettled([
       api.search.genes.homologs(geneId, species.id),
@@ -105,7 +107,11 @@ const GeneDetails = ({
           <div className="side-menu">
             <div className="side-menu-wrapper">
               <GeneSearch />
-              <GeneDetailsSideMenu homologs={homologs} />
+              <GeneDetailsSideMenu
+                homologs={homologs}
+                isExpression={isExpression}
+                xRefs={xRefs}
+              />
             </div>
           </div>
         </div>
@@ -216,14 +222,19 @@ const GeneDetails = ({
               )}
             </div>
           </div>
-
-          <GeneExpression geneId={geneId} speciesId={species.id} />
+          <GeneExpression
+            geneId={geneId}
+            speciesId={species.id}
+            setIsExpression={setIsExpression}
+            isExpression={isExpression}
+          />
+          )
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
             isLoading={isLoading}
           />
-          <GeneXRefs data={xRefs} isLoading={isLoading} />
+          {xRefs && <GeneXRefs data={xRefs} isLoading={isLoading} />}
         </div>
       </div>
     </>
