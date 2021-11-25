@@ -405,7 +405,7 @@ const GeneExpression = ({
             )}{' '}
             {!isLoading && data && (
               <>
-                <ComplexTable
+                <Table
                   columns={columns}
                   data={data.calls}
                   onRenderCell={onRenderCell}
