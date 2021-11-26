@@ -914,15 +914,14 @@ label.label {
 #gene-wrapper {
   display: flex;
   .sidebar {
-    width: 321px;
+    width: 13vw;
+    min-width: 160px;
     min-height: 50px;
     margin-right: 1rem;
     .side-menu {
-      width: 300px;
       height: 300px;
       .side-menu-wrapper {
         position: fixed;
-        width: 300px;
       }
     }
 
@@ -930,6 +929,9 @@ label.label {
   #gene-body {
     flex: 1;
     min-height: 50px;
+    .head {
+      .content {margin-left: 1rem}
+    }
   }
 }
 
@@ -937,6 +939,7 @@ label.label {
   #gene-wrapper {
     flex-direction: column;
     .sidebar {
+      display: none;
       width: auto;
       margin-right: 0;
       .side-menu {
@@ -956,6 +959,14 @@ label.label {
 
     #gene-body {
       margin-top: 1rem;
+      .head {
+        flex-direction: column;
+        .content {
+          margin-top: 1rem;
+          margin-left: 0;
+          justify-content: center;
+        }
+      }
     }
   }
 }
@@ -972,4 +983,8 @@ label.label {
   & > * {
     margin-bottom: 0.5rem;
   }
+}
+
+.gene-menu {
+
 }
