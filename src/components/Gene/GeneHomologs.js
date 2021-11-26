@@ -191,134 +191,142 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
 
   return (
     <>
-      <Bulma.Title
-        size={4}
-        className="gradient-underline"
-        id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
-      >
-        Orthologs
-      </Bulma.Title>
-      <div>
-        {isLoading && (
-          <progress
-            className="progress is-small mt-6"
-            max="100"
-            style={{ animationDuration: '4s' }}
+      {homologs?.orthologs > 0 && (
+        <div>
+          <Bulma.Title
+            size={4}
+            className="gradient-underline"
+            id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
           >
-            80%
-          </progress>
-        )}
-        {!isLoading && homologs?.orthologsByTaxon.length > 0 && (
-          <>
-            <Table
-              responsive
-              columns={[
-                {
-                  key: 'taxonName',
-                  text: 'Taxon Name',
-                },
-                {
-                  key: 'species',
-                  text: 'Species with orthologs',
-                  hide: MEDIA_QUERIES.MOBILE_P,
-                },
-                {
-                  key: 'genes',
-                  text: 'Gene(s)',
-                  hide: MEDIA_QUERIES.MOBILE_L,
-                },
-                {
-                  key: 'expressionComparison',
-                  text: 'Expression comparison',
-                  hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
-                },
-                {
-                  key: 'details',
-                  text: 'See details',
-                  hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
-                },
-              ]}
-              data={homologs?.orthologsByTaxon}
-              onRenderCell={onRenderCell}
-              onFilter={onFilter}
-              customHeader={customHeader}
-            />
-            {homologs.orthologyXRef && (
-              <span className="is-size-7">
-                {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
-                <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
-                  {homologs.orthologyXRef?.xRefId}
-                </LinkExternal>
-                .
-              </span>
+            Orthologs
+          </Bulma.Title>
+          <div>
+            {isLoading && (
+              <progress
+                className="progress is-small mt-6"
+                max="100"
+                style={{ animationDuration: '4s' }}
+              >
+                80%
+              </progress>
             )}
-          </>
-        )}
-        {!isLoading && homologs?.orthologsByTaxon.length === 0 && (
-          <span>No data</span>
-        )}
-      </div>
-      <Bulma.Title
-        size={4}
-        className="gradient-underline"
-        id={GENE_DETAILS_HTML_IDS.PARALOGS}
-      >
-        Paralogs (same species)
-      </Bulma.Title>
-      <div>
-        {isLoading && (
-          <progress
-            className="progress is-small mt-6"
-            max="100"
-            style={{ animationDuration: '4s' }}
+            {!isLoading && homologs?.orthologsByTaxon.length > 0 && (
+              <>
+                <Table
+                  responsive
+                  columns={[
+                    {
+                      key: 'taxonName',
+                      text: 'Taxon Name',
+                    },
+                    {
+                      key: 'species',
+                      text: 'Species with orthologs',
+                      hide: MEDIA_QUERIES.MOBILE_P,
+                    },
+                    {
+                      key: 'genes',
+                      text: 'Gene(s)',
+                      hide: MEDIA_QUERIES.MOBILE_L,
+                    },
+                    {
+                      key: 'expressionComparison',
+                      text: 'Expression comparison',
+                      hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
+                    },
+                    {
+                      key: 'details',
+                      text: 'See details',
+                      hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
+                    },
+                  ]}
+                  data={homologs?.orthologsByTaxon}
+                  onRenderCell={onRenderCell}
+                  onFilter={onFilter}
+                  customHeader={customHeader}
+                />
+                {homologs.orthologyXRef && (
+                  <span className="is-size-7">
+                    {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
+                    <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
+                      {homologs.orthologyXRef?.xRefId}
+                    </LinkExternal>
+                    .
+                  </span>
+                )}
+              </>
+            )}
+            {!isLoading && homologs?.orthologsByTaxon.length === 0 && (
+              <span>No data</span>
+            )}
+          </div>
+        </div>
+      )}
+      {homologs?.paralogs > 0 && (
+        <div>
+          <Bulma.Title
+            size={4}
+            className="gradient-underline"
+            id={GENE_DETAILS_HTML_IDS.PARALOGS}
           >
-            80%
-          </progress>
-        )}
-        {!isLoading && homologs?.paralogsByTaxon.length > 0 && (
-          <>
-            <Table
-              columns={[
-                {
-                  key: 'taxonName',
-                  text: 'Taxon Name',
-                },
-                {
-                  key: 'genes',
-                  text: 'Gene(s)',
-                  hide: MEDIA_QUERIES.MOBILE_P,
-                },
-                {
-                  key: 'expressionComparison',
-                  text: 'Expression comparison',
-                  hide: MEDIA_QUERIES.MOBILE_L,
-                },
-                {
-                  key: 'details',
-                  text: 'See details',
-                  hide: MEDIA_QUERIES.DESKTOP,
-                },
-              ]}
-              data={homologs?.paralogsByTaxon}
-              onRenderCell={onRenderCell}
-              onFilter={onFilter}
-              customHeader={customHeader}
-            />
-            {homologs.paralogyXRef && (
-              <span className="is-size-7">
-                {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
-                <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
-                  {homologs.paralogyXRef?.xRefId}
-                </LinkExternal>
-                .
-              </span>
+            Paralogs (same species)
+          </Bulma.Title>
+          <div>
+            {isLoading && (
+              <progress
+                className="progress is-small mt-6"
+                max="100"
+                style={{ animationDuration: '4s' }}
+              >
+                80%
+              </progress>
             )}
-          </>
-        )}
-        {!isLoading && homologs?.paralogsByTaxon.length === 0 && (
-          <span>No data</span>
-        )}
-      </div>
+            {!isLoading && homologs?.paralogsByTaxon.length > 0 && (
+              <>
+                <Table
+                  columns={[
+                    {
+                      key: 'taxonName',
+                      text: 'Taxon Name',
+                    },
+                    {
+                      key: 'genes',
+                      text: 'Gene(s)',
+                      hide: MEDIA_QUERIES.MOBILE_P,
+                    },
+                    {
+                      key: 'expressionComparison',
+                      text: 'Expression comparison',
+                      hide: MEDIA_QUERIES.MOBILE_L,
+                    },
+                    {
+                      key: 'details',
+                      text: 'See details',
+                      hide: MEDIA_QUERIES.DESKTOP,
+                    },
+                  ]}
+                  data={homologs?.paralogsByTaxon}
+                  onRenderCell={onRenderCell}
+                  onFilter={onFilter}
+                  customHeader={customHeader}
+                />
+                {homologs.paralogyXRef && (
+                  <span className="is-size-7">
+                    {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
+                    <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
+                      {homologs.paralogyXRef?.xRefId}
+                    </LinkExternal>
+                    .
+                  </span>
+                )}
+              </>
+            )}
+            {!isLoading && homologs?.paralogsByTaxon.length === 0 && (
+              <span>No data</span>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };

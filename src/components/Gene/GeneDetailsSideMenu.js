@@ -13,16 +13,6 @@ const GeneDetailsSideMenu = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const sideMenuElem = [
-    {
-      domId: GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION,
-      name: 'General information',
-    },
-    { domId: GENE_DETAILS_HTML_IDS.EXPRESSION, name: 'Expression' },
-    { domId: GENE_DETAILS_HTML_IDS.ORTHOLOGS, name: 'Orthologs' },
-    { domId: GENE_DETAILS_HTML_IDS.PARALOGS, name: 'Paralogs' },
-    { domId: GENE_DETAILS_HTML_IDS.XREFS, name: 'Cross-references' },
-  ];
   const handlerMenuClick = React.useCallback(
     (id) => {
       history.replace(`${location.pathname}${location.search}#${id}`);
@@ -37,7 +27,7 @@ const GeneDetailsSideMenu = () => {
           <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
             <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
           </li>
-        ))}
+        )}
       </ul>
     </aside>
   );

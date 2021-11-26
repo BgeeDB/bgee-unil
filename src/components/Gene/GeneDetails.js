@@ -32,6 +32,8 @@ const GeneDetails = ({
   const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
   const [xRefs, setXRefs] = React.useState();
+  const [isExpression, setIsExpression] = React.useState(false);
+
   React.useEffect(() => {
     Promise.allSettled([
       api.search.genes.homologs(geneId, species.id),
@@ -197,40 +199,49 @@ const GeneDetails = ({
                   />
                 </Bulma.C>
               </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Orthologs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#orthologs">
-                      {homologs ? `${homologs.orthologs} orthologs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Paralogs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#paralogs">
-                      {homologs ? `${homologs.paralogs} paralogs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
+              {homologs?.orthologs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Orthologs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#orthologs">
+                        {homologs ? `${homologs.orthologs} orthologs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
+              {homologs?.paralogs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Paralogs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#paralogs">
+                        {homologs ? `${homologs.paralogs} paralogs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
             </div>
           </div>
-
-          <GeneExpression geneId={geneId} speciesId={species.id} />
+          <GeneExpression
+            geneId={geneId}
+            speciesId={species.id}
+            setIsExpression={setIsExpression}
+            isExpression={isExpression}
+          />
+          )
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
             isLoading={isLoading}
           />
-          <GeneXRefs data={xRefs} isLoading={isLoading} />
+          {xRefs && <GeneXRefs data={xRefs} isLoading={isLoading} />}
         </div>
       </div>
     </>
