@@ -168,7 +168,7 @@ const TopAnatForm = ({
                         </p>
                       </div>
                     </div>
-                    {rp.bg && (
+                    {rp.customBg && rp.bg && (
                       <div className="is-flex is-align-items-center">
                         <p className="mr-1">{rp.bg?.message}</p>
                         <InfoIcon
