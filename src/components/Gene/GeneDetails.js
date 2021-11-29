@@ -11,18 +11,9 @@ import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
-import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import imagePath from '../../helpers/imagePath';
-
-const Styles = {
-  sideMenuWidth: {
-    width: '13%',
-  },
-  searchBoxMargin: {
-    marginRight: 100,
-  },
-};
+import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 
 const GeneDetails = ({
   details,
@@ -112,18 +103,20 @@ const GeneDetails = ({
         <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div id="gene-wrapper">
-        <div className="sidebar" style={Styles.sideMenuWidth}>
+        <div className="sidebar">
           <div className="side-menu">
             <div className="side-menu-wrapper">
-              <GeneDetailsSideMenu />
+              <GeneDetailsSideMenu
+                homologs={homologs}
+                isExpression={isExpression}
+                xRefs={xRefs}
+              />
             </div>
           </div>
         </div>
         <div id="gene-body">
-          <div className="is-flex ">
-            <div style={Styles.searchBoxMargin}>
-              <GeneSearch />
-            </div>
+          <div className="is-flex head">
+            <GeneSearch />
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
                 className="m-0 mr-2"
