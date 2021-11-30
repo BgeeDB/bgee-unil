@@ -228,7 +228,6 @@ const GeneDetails = ({
             setIsExpression={setIsExpression}
             isExpression={isExpression}
           />
-          )
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
