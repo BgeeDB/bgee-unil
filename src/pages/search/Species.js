@@ -11,6 +11,10 @@ import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
 
 const Species = () => {
+  let metaTitle = '';
+  let metaDescription = '';
+  let metaKeywords = '';
+
   const [data, setData] = React.useState();
   const { id } = useParams();
 
@@ -24,77 +28,76 @@ const Species = () => {
     };
 
     if (data) {
-      let search = data.downloadFiles.downloadFiles.find(
+      let search = data.downloadFilesGroups.downloadFiles.find(
         (d) =>
           d.category === 'expr_simple' && d.conditionParameters.length === 1
       );
       if (search) src.anatOnlyXpr.simple = search;
-
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) =>
           d.category === 'expr_advanced' && d.conditionParameters.length === 1
       );
       if (search) src.anatOnlyXpr.advanced = search;
 
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'expr_simple' && d.conditionParameters.length > 1
       );
       if (search) src.fullXpr.simple = search;
 
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) =>
           d.category === 'expr_advanced' && d.conditionParameters.length > 1
       );
       if (search) src.fullXpr.advanced = search;
 
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'affy_annot'
       );
       if (search) src.affymetrix.annot = search;
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'affy_data'
       );
       if (search) src.affymetrix.data = search;
 
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'rnaseq_annot'
       );
       if (search) src.rnaSeq.annot = search;
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'rnaseq_data'
       );
       if (search) src.rnaSeq.data = search;
 
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'full_length_annot'
       );
       if (search) src.fullLength.annot = search;
-      search = data.downloadFiles.downloadFiles.find(
+      search = data.downloadFilesGroups.downloadFiles.find(
         (d) => d.category === 'full_length_data'
       );
       if (search) src.fullLength.data = search;
     }
     return src;
   }, [data]);
+
   React.useEffect(() => {
+    console.log('MOUNT id', id);
     setData();
     api.search.species
       .species(id)
       .then((res) => {
+        // setPlop(res.data);
         setData(res.data);
         schemaDotOrg.setSpeciesLdJSON(res.data);
       })
       .catch(() => {
         // go to error
       });
-    return () => {
-      schemaDotOrg.unsetSpeciesLdJSON();
-    };
-  }, [id]);
-
-  let metaTitle = '';
-  let metaDescription = '';
-  let metaKeywords = '';
+    // return () => {
+    //   console.log('UNMOUNT id', id);
+    //   // schemaDotOrg.unsetSpeciesLdJSON();
+    // };
+  }, []);
 
   if (data) {
     metaTitle = `${data.species.genus}  ${data.species.speciesName}
@@ -122,10 +125,8 @@ const Species = () => {
       )}
       <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
         <Bulma.Image
-          className="m-0 mr-2"
+          className="m-0 mr-2 species-img"
           src={imagePath(`/species/${data.species.id}_light.jpg`)}
-          height={75}
-          width={75}
         />
         <Bulma.Title size={3} className="m-0">{`Species: ${
           data.species.genus
