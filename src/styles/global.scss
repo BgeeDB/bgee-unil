@@ -998,3 +998,9 @@ label.label {
 .gene-expr-row {
   height: 33px;
 }
+.gene-expr-fields-wrapper {
+  margin: -0.5rem;
+  & > * {
+    margin: 0.5rem;
+  }
+}

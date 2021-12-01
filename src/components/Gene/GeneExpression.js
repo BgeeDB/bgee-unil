@@ -197,7 +197,7 @@ const GeneExpression = ({
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement) => (
       <>
-        <div className="is-flex is-flex-wrap-wrap">
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper">
           {CUSTOM_FIELDS.map((c) => (
             <label
               className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
@@ -216,8 +216,31 @@ const GeneExpression = ({
               <b className="mx-1">{c.text}</b>
             </label>
           ))}
+          <Bulma.Button
+            className="search-form"
+            disabled={
+              JSON.stringify(dataType.sort()) ===
+              JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+            }
+            onClick={() => {
+              const obj = {};
+              CUSTOM_FIELDS.forEach((c) => {
+                obj[c.key] = true;
+              });
+              setCFields(obj);
+            }}
+          >
+            Select All
+          </Bulma.Button>
+          <Bulma.Button
+            className="search-form"
+            disabled={dataType.length === 0}
+            onClick={() => setCFields({})}
+          >
+            Unselect All
+          </Bulma.Button>
         </div>
-        <div className="is-flex is-flex-wrap-wrap mt-2">
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
           {DATA_TYPES.map((c) => (
             <label
               className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
@@ -242,6 +265,25 @@ const GeneExpression = ({
               <b className="mx-1">{c.text}</b>
             </label>
           ))}
+          <Bulma.Button
+            className="search-form"
+            disabled={
+              JSON.stringify(dataType.sort()) ===
+              JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+            }
+            onClick={() => setDataTypes(DATA_TYPES.map((d) => d.key))}
+          >
+            Select All
+          </Bulma.Button>
+          <Bulma.Button
+            className="search-form"
+            disabled={dataType.length === 0}
+            onClick={() => setDataTypes([])}
+          >
+            Unselect All
+          </Bulma.Button>
+        </div>
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
           <Bulma.Button
             className="search-form"
             disabled={formSearchButtonIsDisabled}
