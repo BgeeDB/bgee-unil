@@ -83,7 +83,7 @@ const search = {
             reject(error?.response);
           });
       }),
-    expression: (geneId, speciesId, fields) =>
+    expression: (geneId, speciesId, fields, dataType) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('gene', 'expression');
         params.append('gene_id', geneId);
@@ -96,6 +96,7 @@ const search = {
         if (fields.strain) params.append('cond_param', 'strain');
         if (fields.devStage) params.append('cond_param', 'dev_stage');
         if (fields.sex) params.append('cond_param', 'sex');
+        dataType.forEach((d) => params.append('data_type', d));
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
