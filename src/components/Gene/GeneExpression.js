@@ -410,6 +410,7 @@ const GeneExpression = ({
                   data={data.calls}
                   onRenderCell={onRenderCell}
                   pagination
+                  name="GeneExpression"
                   onFilter={onFilter}
                   customHeader={customHeader}
                   onRenderRow={(row, prev) => {

@@ -30,6 +30,7 @@ const Table = ({
   defaultPaginationSize = 10,
   customHeader,
   mappingObj = (obj) => obj,
+  name,
 }) => {
   const mappedData = React.useMemo(
     () => data.map(mappingObj),
@@ -154,6 +155,7 @@ const Table = ({
   return (
     <TableProvider
       data={{
+        name,
         table,
         title,
         columns,
