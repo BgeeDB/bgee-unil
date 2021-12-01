@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import ComplexTable from '../ComplexTable';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
-import { API_DOMAIN } from '../../api/prod/constant';
+import LinkExternal from '../LinkExternal';
+import Table from '../Table';
+import config from '../../config.json';
 
 const COLUMNS = [
   {
@@ -79,14 +80,11 @@ const TopAnatResult = ({
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
-        <a
-          className="external-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
+        <LinkExternal
+          to={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
         >
           {cell}
-        </a>
+        </LinkExternal>
       );
     return defaultRender(cell, key);
   }, []);
@@ -96,52 +94,43 @@ const TopAnatResult = ({
       Boolean(new RegExp(search).test(element.anatEntityName)),
     []
   );
-  const onSort = React.useCallback(
-    (sortKey, sortDirection) =>
-      ({ [sortKey]: a }, { [sortKey]: b }) => {
-        const AFormatted = typeof a === 'string' ? a.toLowerCase() : a;
-        const bFormatted = typeof b === 'string' ? b.toLowerCase() : b;
-        if (AFormatted === bFormatted) return 0;
-        if (sortDirection === 'ascending')
-          return AFormatted > bFormatted ? 1 : -1;
-        if (sortDirection === 'descending')
-          return AFormatted < bFormatted ? 1 : -1;
-        return 0;
-      },
-    []
-  );
   const dataCsvHref = React.useMemo(() => {
     let csvContent =
       'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
     if (results?.data)
       results?.data.forEach((row) => {
-        csvContent += `${row.anatEntityId};${row.anatEntityName};${row.annotated};${row.significant};${row.expected};${row.foldEnrichment};${row.pValue};${row.FDR}\n`;
+        csvContent += `${row.anatEntityId}\t${row.anatEntityName}\t${row.annotated}\t${row.significant}\t${row.expected}\t${row.foldEnrichment}\t${row.pValue}\t${row.FDR}\n`;
       });
 
     return csvContent;
   }, [results]);
-  const mappingObj = React.useCallback(
-    ({
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    }) => [
-      anatEntityId,
-      anatEntityName,
-      annotated,
-      significant,
-      expected,
-      foldEnrichment,
-      pValue,
-      FDR,
-    ],
-    []
-  );
+  const mappingObj = React.useCallback((obj) => {
+    try {
+      const {
+        anatEntityId,
+        anatEntityName,
+        annotated,
+        significant,
+        expected,
+        foldEnrichment,
+        pValue,
+        FDR,
+      } = obj;
+      return [
+        anatEntityId,
+        anatEntityName,
+        annotated,
+        significant,
+        expected,
+        foldEnrichment,
+        pValue,
+        FDR,
+      ];
+    } catch (e) {
+      console.log(e);
+    }
+    return obj;
+  }, []);
 
   const dataDisplay = React.useMemo(() => {
     if (status !== TOP_ANAT_FLOW.GOT_RESULTS) return null;
@@ -165,10 +154,10 @@ const TopAnatResult = ({
                 <GaEvent
                   category="Top Anat"
                   action="Download R scripts and data"
-                  label={`All - ${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
+                  label={`All - ${config.apiDomain}/?page=top_anat&action=download&data=${searchId}`}
                 >
                   <Bulma.Button
-                    href={`${API_DOMAIN}/?page=top_anat&action=download&data=${searchId}`}
+                    href={`${config.apiDomain}/?page=top_anat&action=download&data=${searchId}`}
                     color="danger"
                     light
                     style={{ width: 'fit-content' }}
@@ -215,13 +204,13 @@ const TopAnatResult = ({
               </div>
             </Bulma.C>
             <Bulma.C size={5}>
-              <div className="field has-addons">
+              <div className="is-flex is-flex-direction-row">
                 {searchElement}
-                <div className="control">
+                <div className="ml-2 control">
                   <a
                     className="button"
                     href={dataCsvHref}
-                    download="data.csv"
+                    download="data.tsv"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -296,19 +285,19 @@ const TopAnatResult = ({
           />
         </Helmet>
         <div className="content has-text-centered">
-          <p className="title is-6">{title}</p>
+          <p className="title is-4">{title}</p>
         </div>
-        <ComplexTable
-          columns={COLUMNS}
+        <Table
           key={searchId + selectedStage}
+          columns={COLUMNS}
           data={dataDisplay}
           onRenderCell={onRenderCell}
           sortable
+          multiSortable
           pagination
           defaultPaginationSize={20}
           onFilter={onFilter}
-          onSort={onSort}
-          classNamesTable="is-striped"
+          striped
           customHeader={customHeader}
           mappingObj={mappingObj}
         />

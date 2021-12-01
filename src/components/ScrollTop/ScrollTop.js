@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 const ScrollTop = ({ children }) => {
   const { pathname } = useLocation();
   React.useEffect(() => {
-    console.log(pathname);
+    console.debug(pathname);
     window.scrollTo(0, 0);
   }, [pathname]);
 

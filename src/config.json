@@ -3,10 +3,13 @@
   "archive": false,
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
+  "imageDomain": "https://bgee.org/bgee15_0/img",
+  "apiDomain": "https://bgee.org/bgee_test",
+  "ftpDomain": "https://bgee.org/ftp/bgee_v15_0",
   "archivedVersion": [
     {
       "version": "14.2",
-      "url": "https://bgee.org/bgee14_/"
+      "url": "https://bgee.org/bgee14_2/"
     },
     {
       "version": "14.1",
@@ -23,5 +26,6 @@
   ],
   "contactEmail": "Bgee@sib.swiss",
   "googleAnalyticsIdDev": "291016193",
-  "googleAnalyticsIdProd": "UA-18281910-2"
+  "googleAnalyticsIdProd": "UA-18281910-2",
+  "bioSchemaModifiedData": "2021-07-01"
 }

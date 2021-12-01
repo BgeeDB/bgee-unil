@@ -27,7 +27,7 @@ const ApiReducer = {
       list: res.data.fg_list,
       message: `${rp.fg_list.length} IDs provided, ${
         res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
-      } unique gene${isPlural(
+      } unique ${isPlural(
         'gene',
         res.data.fg_list.geneCount[res.data.fg_list.selectedSpecies]
       )} found in ${

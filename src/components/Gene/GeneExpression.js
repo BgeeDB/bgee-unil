@@ -1,12 +1,15 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
 import LinkExternal from '../LinkExternal';
-import ComplexTable from '../ComplexTable';
 import useQuery from '../../hooks/useQuery';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
+import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import Table from '../Table';
 
 const CUSTOM_FIELDS = [
   {
@@ -41,28 +44,33 @@ const columnsGenerator = (cFields, data) => () => {
     c.push({
       key: 'devStage',
       text: 'Dev. stage',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Sex'))
     c.push({
       key: 'sex',
       text: 'Sex',
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   if (data.requestedConditionParameters.find((r) => r === 'Strain'))
     c.push({
       key: 'strain',
       text: 'Strain',
-      style: { minWidth: 100 },
+      style: { width: 100 },
+      hide: MEDIA_QUERIES.DESKTOP,
     });
   c = [
     ...c,
     {
       key: 'expScore',
       text: 'Expression score',
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'fdr',
       text: 'FDR',
-      style: { minWidth: 100 },
+      style: { width: 100 },
+      hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
       key: 'sources',
@@ -70,21 +78,89 @@ const columnsGenerator = (cFields, data) => () => {
       style: {
         width: 110,
       },
+      hide: MEDIA_QUERIES.DESKTOP,
     },
   ];
   return c;
 };
-const GeneExpression = ({ geneId, speciesId }) => {
+const AnatEntityCell = ({ cell }) => {
+  const cellInfo = [
+    <LinkExternal
+      key={`link-${cell.condition.anatEntity.id}`}
+      to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
+        ':',
+        '_'
+      )}`}
+      className="mr-1"
+    >
+      {cell.condition.anatEntity.id}
+    </LinkExternal>,
+  ];
+  if (cell.condition.cellType) {
+    cellInfo.push(<i key="link-in"> in </i>);
+    cellInfo.push(
+      <LinkExternal
+        key={`link-${cell.condition.cellType.id}`}
+        to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
+          ':',
+          '_'
+        )}`}
+        className="mr-1"
+      >
+        {cell.condition.cellType.id}
+      </LinkExternal>
+    );
+  }
+
+  if (cell.condition.cellType) {
+    cellInfo.push(
+      <span key={`name-${cell.condition.cellType.name}`}>
+        {cell.condition.cellType.name}
+      </span>
+    );
+    cellInfo.push(<i key="name-in"> in </i>);
+  }
+  cellInfo.push(
+    <span key={`name-${cell.condition.anatEntity.name}`}>
+      {cell.condition.anatEntity.name}
+    </span>
+  );
+  return <>{cellInfo}</>;
+};
+
+const GeneExpression = ({
+  geneId,
+  speciesId,
+  setIsExpression,
+  isExpression,
+}) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
 
+  useEffect(() => {
+    if (data?.calls.length) {
+      setIsExpression(true);
+    } else {
+      setIsExpression(false);
+    }
+  }, [data]);
+
   const columns = React.useMemo(columnsGenerator(cFields, data), [
     cFields,
     data,
   ]);
+
+  // In order to disable the search button in the search has already been made
+  const formSearchButtonIsDisabled = React.useMemo(() => {
+    const oldQuery = Object.entries(cFields)
+      .reduce((acc, [key, value]) => (value ? [...acc, key] : acc), [])
+      .sort()
+      .join(',');
+    return oldQuery === (hashExpr || 'anat');
+  }, [cFields, hashExpr]);
 
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement) => (
@@ -110,6 +186,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
           ))}
           <Bulma.Button
             className="search-form"
+            disabled={formSearchButtonIsDisabled}
             onClick={() => {
               const query = Object.entries(cFields).reduce(
                 (acc, [key, value]) => (value ? [...acc, key] : acc),
@@ -118,7 +195,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
               history.replace(`?expression=${query.join(',')}`);
             }}
           >
-            Search
+            Update
           </Bulma.Button>
         </div>
         <Bulma.Columns vCentered className="mt-0">
@@ -137,48 +214,7 @@ const GeneExpression = ({ geneId, speciesId }) => {
     ({ cell, key }, defaultRender) => {
       switch (key) {
         case 'anatEntity':
-          const cellInfo = [
-            <LinkExternal
-              key={`link-${cell.condition.anatEntity.id}`}
-              to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
-                ':',
-                '_'
-              )}`}
-              className="mr-1"
-            >
-              {cell.condition.anatEntity.id}
-            </LinkExternal>,
-          ];
-          if (cell.condition.cellType) {
-            cellInfo.push(<i key="link-in"> in </i>);
-            cellInfo.push(
-              <LinkExternal
-                key={`link-${cell.condition.cellType.id}`}
-                to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
-                  ':',
-                  '_'
-                )}`}
-                className="mr-1"
-              >
-                {cell.condition.cellType.id}
-              </LinkExternal>
-            );
-          }
-
-          if (cell.condition.cellType) {
-            cellInfo.push(
-              <span key={`name-${cell.condition.cellType.name}`}>
-                {cell.condition.cellType.name}
-              </span>
-            );
-            cellInfo.push(<i key="name-in"> in </i>);
-          }
-          cellInfo.push(
-            <span key={`name-${cell.condition.anatEntity.name}`}>
-              {cell.condition.anatEntity.name}
-            </span>
-          );
-          return <>{cellInfo}</>;
+          return <AnatEntityCell cell={cell} />;
         case 'devStage':
           return (
             <>
@@ -329,160 +365,198 @@ const GeneExpression = ({ geneId, speciesId }) => {
       .expression(geneId, speciesId, fields)
       .then((res) => {
         setData(res.data);
+        if (
+          res.data.requestedConditionParameters.find(
+            (r) => r === 'Anat. entity'
+          )
+        )
+          schemaDotOrg.setGeneExpressionLdJSON(res.data);
       })
       .catch((err) => {
         console.error(err);
         setData();
       })
       .finally(() => setIsLoading(false));
+    return () => {
+      schemaDotOrg.unsetGeneExpressionLdJSON();
+    };
   }, [hashExpr]);
 
   return (
-    <div id="expression">
-      <Bulma.Title size={5} className="gradient-underline">
-        Expression
-      </Bulma.Title>
-      <div className="static-section near-columns">
-        {isLoading && (
-          <progress
-            className="progress is-small"
-            max="100"
-            style={{ animationDuration: '4s' }}
+    <>
+      {isExpression && (
+        <div>
+          <Bulma.Title
+            size={4}
+            className="gradient-underline"
+            id={GENE_DETAILS_HTML_IDS.EXPRESSION}
           >
-            80%
-          </progress>
-        )}{' '}
-        {!isLoading && data && (
-          <>
-            <ComplexTable
-              columns={columns}
-              data={data.calls}
-              onRenderCell={onRenderCell}
-              pagination
-              onFilter={onFilter}
-              customHeader={customHeader}
-              onRenderRow={(row, prev) => {
-                if (prev && row.clusterIndex > prev.clusterIndex) {
-                  return 'gap-cluster';
-                }
-                return '';
-              }}
-            />
+            Expression
+          </Bulma.Title>
+          <div>
+            {isLoading && (
+              <progress
+                className="progress is-small"
+                max="100"
+                style={{ animationDuration: '4s' }}
+              >
+                80%
+              </progress>
+            )}{' '}
+            {!isLoading && data && (
+              <>
+                <Table
+                  columns={columns}
+                  data={data.calls}
+                  onRenderCell={onRenderCell}
+                  pagination
+                  onFilter={onFilter}
+                  customHeader={customHeader}
+                  onRenderRow={(row, prev) => {
+                    if (prev && row.clusterIndex > prev.clusterIndex) {
+                      return 'gap-cluster';
+                    }
+                    return '';
+                  }}
+                />
 
-            <p className="has-text-weight-semibold is-underlined mt-0">
-              Sources
-            </p>
-            <Bulma.Columns vCentered className="my-0">
-              <Bulma.C>
-                <span>
-                  <b>A</b> Affimetrix
-                </span>
-              </Bulma.C>
-              <Bulma.C>
-                <span>
-                  <b>E</b> EST
-                </span>
-              </Bulma.C>
-              <Bulma.C>
-                <span>
-                  <b>I</b> In Situ
-                </span>
-              </Bulma.C>
-              <Bulma.C>
-                <span>
-                  <b>R</b> RNA-Seq
-                </span>
-              </Bulma.C>
-              <Bulma.C>
-                <span>
-                  <b>FL</b> scRNA-Seq Full Length
-                </span>
-              </Bulma.C>
-              <Bulma.C className="is-flex is-align-items-center">
-                <span
-                  className={classnames('tag tag-source present legend', {
-                    'is-primary': true,
-                  })}
-                >
-                  data
-                </span>
-                <span
-                  className={classnames('ml-1 tag tag-source legend', {
-                    'is-primary': false,
-                  })}
-                >
-                  no data
-                </span>
-              </Bulma.C>
-            </Bulma.Columns>
-            <p className="has-text-weight-semibold is-underlined mt-0">
-              Expression scores
-            </p>
-            <Bulma.Columns vCentered className="mt-0">
-              <Bulma.C>
-                <span>
-                  <span style={{ color: 'lightGrey' }}>3.25e4</span> lightgrey:
-                  low confidence scores
-                </span>
-              </Bulma.C>
-              <Bulma.C className="is-flex is-align-items-center">
-                <hr className="dot-line m-0 mr-2" /> important score variation
-              </Bulma.C>
-            </Bulma.Columns>
-            <div className="separator my-5" />
-            <p>
-              <b>Expression scores</b> of expression calls is based on the rank
-              of a gene in a condition according to its expression levels
-              (non-parametric statistics), normalized using the minimum and
-              maximum Rank of the species. Values of Expression scores are
-              between 0 and 100. Low score means that the gene is lowly
-              expressed in the condition compared to other genes. Scores are
-              normalized and comparable across genes, conditions and species.
-            </p>
-            <Bulma.Columns>
-              <Bulma.Column size={4}>
-                <p>Sources of annotations to anatomy and development:</p>
-                <ul className="unordered">
-                  {data.gene.species.sourcesOfAnnotationsPerDataType.map(
-                    (d, key) => (
-                      <li key={key}>
-                        {`${d.dataType} data: `}
-                        {d.sources.map((s, sKey) => (
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
-                        ))}
-                      </li>
-                    )
-                  )}
-                </ul>
-              </Bulma.Column>
-              <Bulma.Column size={4}>
-                <p>Sources of raw data:</p>
-                <ul className="unordered">
-                  {data.gene.species.sourcesOfDataPerDataType.map((d, key) => (
-                    <li key={key}>
-                      {`${d.dataType} data: `}
-                      {d.sources.reduce((acc, s, sKey) => {
-                        if (sKey !== 0)
-                          acc.push(<span key={`comma-${sKey}`}>, </span>);
-                        acc.push(
-                          <LinkExternal key={sKey} to={s.baseUrl}>
-                            {s.name}
-                          </LinkExternal>
-                        );
-                        return acc;
-                      }, [])}
-                    </li>
-                  ))}
-                </ul>
-              </Bulma.Column>
-            </Bulma.Columns>
-          </>
-        )}
-        {!isLoading && !data && <span>No data</span>}
-      </div>
-    </div>
+                <p className="has-text-weight-semibold is-underlined mt-0">
+                  Sources
+                </p>
+                <Bulma.Columns vCentered className="my-0">
+                  <Bulma.C>
+                    <span>
+                      <b>A</b>
+                      <span className="is-size-7"> Affimetrix</span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C>
+                    <span>
+                      <b>E</b>
+                      <span className="is-size-7"> EST</span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C>
+                    <span>
+                      <b>I</b>
+                      <span className="is-size-7"> In Situ</span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C>
+                    <span>
+                      <b>R</b>
+                      <span className="is-size-7"> RNA-Seq</span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C>
+                    <span>
+                      <b>FL</b>
+                      <span className="is-size-7"> scRNA-Seq Full Length</span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C className="is-flex is-align-items-center">
+                    <span
+                      className={classnames('tag tag-source present legend', {
+                        'is-primary': true,
+                      })}
+                    >
+                      data
+                    </span>
+                    <span
+                      className={classnames('ml-1 tag tag-source legend', {
+                        'is-primary': false,
+                      })}
+                    >
+                      no data
+                    </span>
+                  </Bulma.C>
+                </Bulma.Columns>
+                <p className="has-text-weight-semibold is-underlined mt-0">
+                  Expression scores
+                </p>
+                <Bulma.Columns vCentered className="mt-0">
+                  <Bulma.C>
+                    <span>
+                      <span style={{ color: 'lightGrey' }}>3.25e4</span>
+                      <span className="is-size-7">
+                        {' '}
+                        lightgrey: low confidence scores
+                      </span>
+                    </span>
+                  </Bulma.C>
+                  <Bulma.C className="is-flex is-align-items-center">
+                    <hr className="dot-line m-0 mr-2" />
+                    <span className="is-size-7">
+                      {' '}
+                      important score variation
+                    </span>
+                  </Bulma.C>
+                </Bulma.Columns>
+                <div className="separator my-5" />
+                <p className="is-size-7">
+                  <b>Expression scores</b> of expression calls is based on the
+                  rank of a gene in a condition according to its expression
+                  levels (non-parametric statistics), normalized using the
+                  minimum and maximum Rank of the species. Values of Expression
+                  scores are between 0 and 100. Low score means that the gene is
+                  lowly expressed in the condition compared to other genes.
+                  Scores are normalized and comparable across genes, conditions
+                  and species.
+                </p>
+                <Bulma.Columns>
+                  <Bulma.Column size={4}>
+                    <p className="is-size-7">
+                      Sources of annotations to anatomy and development:
+                    </p>
+                    <ul className="unordered">
+                      {!!data?.gene?.species &&
+                        data.gene.species.sourcesOfAnnotationsPerDataType.map(
+                          (d, key) => (
+                            <li key={key} className="is-size-7">
+                              {`${d.dataType} data: `}
+                              {d.sources.map((s, sKey) => (
+                                <LinkExternal key={sKey} to={s.baseUrl}>
+                                  {s.name}
+                                </LinkExternal>
+                              ))}
+                            </li>
+                          )
+                        )}
+                    </ul>
+                  </Bulma.Column>
+                  <Bulma.Column size={4}>
+                    <p className="is-size-7">Sources of raw data:</p>
+                    <ul className="unordered">
+                      {!!data?.gene?.species &&
+                        data.gene.species.sourcesOfDataPerDataType.map(
+                          (d, key) => (
+                            <li key={key} className="is-size-7">
+                              {`${d.dataType} data: `}
+                              {d.sources.reduce((acc, s, sKey) => {
+                                if (sKey !== 0)
+                                  acc.push(
+                                    <span key={`comma-${sKey}`}>, </span>
+                                  );
+                                acc.push(
+                                  <LinkExternal key={sKey} to={s.baseUrl}>
+                                    {s.name}
+                                  </LinkExternal>
+                                );
+                                return acc;
+                              }, [])}
+                            </li>
+                          )
+                        )}
+                    </ul>
+                  </Bulma.Column>
+                </Bulma.Columns>
+              </>
+            )}
+            {!isLoading && !data && <span>No data</span>}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -4,13 +4,13 @@ import Layout from '../components/Layout';
 import ROUTES from './routes';
 import PATHS from './paths';
 import Page from '../components/Page';
-import i18n from '../i18n';
 import { ModalProvider } from '../contexts/ModalContext';
 import { NotificationProvider } from '../contexts/NotificationsContext';
 import StaticPage from '../pages/StaticPage';
 import ScrollTop from '../components/ScrollTop';
 import MarkdownReader from '../pages/MarkdownReader';
-import genericHelmetProvider from '../helpers/genericHelmetProvider';
+import GenericHelmetProvider from '../helpers/GenericHelmetProvider';
+import Error from '../pages/Error';
 
 const Router = () => (
   <BrowserRouter>
@@ -18,7 +18,7 @@ const Router = () => (
       <ModalProvider>
         <NotificationProvider>
           <Layout>
-            <genericHelmetProvider />
+            <GenericHelmetProvider />
             <Switch>
               <Route
                 exact
@@ -38,7 +38,7 @@ const Router = () => (
                 render={(props) => (
                   <Page
                     {...props}
-                    title={i18n.t(ROUTES[PATHS.ANALYSIS.TOP_ANAT].i18nKey)}
+                    title={ROUTES[PATHS.ANALYSIS.TOP_ANAT].name}
                     Component={ROUTES[PATHS.ANALYSIS.TOP_ANAT].component}
                   />
                 )}
@@ -163,6 +163,16 @@ const Router = () => (
 
               <Route
                 exact
+                path={PATHS.ABOUT.NEWS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ABOUT.NEWS].component}
+                  />
+                )}
+              />
+              <Route
+                exact
                 path={[
                   PATHS.RESOURCES.DOCS,
                   PATHS.RESOURCES.R_PACKAGES,
@@ -170,7 +180,6 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
-                  PATHS.SUPPORT.TOP_ANAT,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
@@ -182,29 +191,17 @@ const Router = () => (
               />
               <Route
                 exact
-                path={[PATHS.SUPPORT.GTEX]}
+                path={[
+                  PATHS.SUPPORT.GTEX,
+                  PATHS.SUPPORT.TOP_ANAT,
+                  PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
+                ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />
                 )}
               />
 
-              <Route
-                exact
-                path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-                render={(props) => (
-                  <Page
-                    {...props}
-                    title={i18n.t(
-                      ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].i18nKey
-                    )}
-                    Component={
-                      ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
-                    }
-                  />
-                )}
-              />
-
-              {/* <Route path={PATHS.ERROR} component={Error} /> */}
+              <Route path={PATHS.ERROR} component={Error} />
 
               <Redirect to={PATHS.HOME} />
             </Switch>

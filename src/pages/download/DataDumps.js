@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import Bulma from '../../components/Bulma';
 import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
+import imagePath from '../../helpers/imagePath';
+import config from '../../config.json';
 
 const DataDumps = () => (
   <>
@@ -18,7 +20,7 @@ const DataDumps = () => (
       />
     </Helmet>
     <div className="content has-text-centered">
-      <Bulma.Title size={5}>Bgee data dumps</Bulma.Title>
+      <Bulma.Title size={3}>Bgee data dumps</Bulma.Title>
     </div>
 
     <Bulma.Tile kind="ancestor">
@@ -27,16 +29,16 @@ const DataDumps = () => (
           <GaEvent
             category="Data dumps"
             action="download_EasyBgee dump"
-            label="https://bgee.org/ftp/bgee_v15_0/easybgee_dump.tar.gz"
+            label={`${config.ftpDomain}/easybgee_dump.tar.gz`}
           >
-            <a href="https://bgee.org/ftp/bgee_v15_0/easybgee_dump.tar.gz">
+            <a href={`${config.ftpDomain}/easybgee_dump.tar.gz`}>
               <div className={classnames('card custom-card', 'mb-3')}>
                 <div className="card-image">
                   <figure
                     className={`image is-128x128'
                   }`}
                   >
-                    <img src="/static/img/mysql_logo.png" />
+                    <img src={imagePath('/logo/mysql_logo.png')} />
                   </figure>
                 </div>
 
@@ -57,13 +59,13 @@ const DataDumps = () => (
           <GaEvent
             category="Data dumps"
             action="download_Bgee RDF data dump"
-            label="https://bgee.org/ftp/bgee_v15_0/rdf_easybgee.zip"
+            label={`${config.ftpDomain}/rdf_easybgee.zip`}
           >
-            <a href="https://bgee.org/ftp/bgee_v15_0/rdf_easybgee.zip">
+            <a href={`${config.ftpDomain}/rdf_easybgee.zip`}>
               <div className={classnames('card custom-card', 'mb-3')}>
                 <div className="card-image">
                   <figure className="image is-128x128">
-                    <img src="/static/img/rdf_logo.png" />
+                    <img src={imagePath('/logo/rdf_logo.png')} />
                   </figure>
                 </div>
 

@@ -4,4 +4,4 @@ const random = () => {
   return crypto.getRandomValues(array)[0]; // Compliant for security-sensitive use cases
 };
 
-export default random();
+export default random;

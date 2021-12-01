@@ -1,12 +1,8 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-case-declarations */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-cycle */
+/* eslint-disable no-use-before-define,no-case-declarations,react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import arrayHelper from './arrayHelper';
 import Accordion from '../components/Accordion';
-import Table from '../components/Table/Table';
 import LinkExternal from '../components/LinkExternal';
 import Bulma from '../components/Bulma';
 import classnames from './classnames';
@@ -224,9 +220,13 @@ const staticBuilder = (json, prefixKey = '') =>
             {props.content.map((col, colKey) => (
               <div
                 key={`${prefixKey}-${key}-${colKey}`}
-                className={`column ${col.size ? `is-${col.size}` : ''} ${
-                  col.classNames || ''
-                }`}
+                className={classnames(
+                  'column',
+                  {
+                    [`is-${col.size}`]: col.size,
+                  },
+                  col.classNames
+                )}
               >
                 {staticBuilder(col.content, `${prefixKey}-${key}-${colKey}`)}
               </div>
@@ -336,12 +336,10 @@ const staticBuilder = (json, prefixKey = '') =>
             key={`${prefixKey}-${key}`}
             className={classnames(classNames)}
           >
-            <Bulma.Title size={5} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline">
               {props.title}
             </Bulma.Title>
-            <div className="static-section">
-              {staticBuilder(props.children)}
-            </div>
+            <div className="">{staticBuilder(props.children)}</div>
           </div>
         );
       case 'separator':
@@ -351,18 +349,6 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('separator', classNames)}
           />
         );
-      case 'sub_title':
-        return (
-          <p
-            id={props.id}
-            className={classnames('title is-6', classNames)}
-            key={`${prefixKey}-${key}`}
-          >
-            {props.content}
-          </p>
-        );
-      case 'table':
-        return <Table key={`${prefixKey}-${key}`} {...props} />;
       case 'text':
         return (
           <p
@@ -380,7 +366,7 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('content has-text-centered', classNames)}
             key={`${prefixKey}-${key}`}
           >
-            <p className="title is-5">{props.content}</p>
+            <p className="title is-3">{props.content}</p>
           </div>
         );
       case 'unordered_list':

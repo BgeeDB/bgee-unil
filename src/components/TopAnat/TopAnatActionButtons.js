@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from '../../i18n';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 import GaEvent from '../GaEvent/GaEvent';
 import PATHS from '../../routes/paths';
@@ -10,6 +9,8 @@ const TopAnatActionButtons = ({
   cancelJob,
   startNewJob,
   jobId,
+  isDisabled = false,
+  data,
 }) => {
   switch (status) {
     case TOP_ANAT_FLOW.NEW_JOB:
@@ -18,10 +19,11 @@ const TopAnatActionButtons = ({
           <p className="control">
             <button
               type="button"
-              className="button is-success"
+              className="button is-info"
+              disabled={data.genes === '' || isDisabled}
               onClick={handleSubmit}
             >
-              {i18n.t('analysis.top-anat.submit-job')}
+              Submit your job
             </button>
           </p>
         </div>
@@ -38,7 +40,7 @@ const TopAnatActionButtons = ({
                   className="button is-danger"
                   onClick={cancelJob}
                 >
-                  {i18n.t('analysis.top-anat.cancel-job')}
+                  Cancel your job
                 </button>
               </GaEvent>
             </p>
@@ -49,7 +51,7 @@ const TopAnatActionButtons = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {i18n.t('analysis.top-anat.start-new-job')}
+                Start a new job
               </a>
             </p>
           </div>
@@ -67,7 +69,7 @@ const TopAnatActionButtons = ({
               className="button is-info"
               onClick={startNewJob(false)}
             >
-              {i18n.t('analysis.top-anat.start-new-job')}
+              Start a new job
             </button>
           </p>
         </div>

@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import Bulma from '../../components/Bulma';
 import api from '../../api';
 import TopAnatBanner from '../../components/TopAnat/TopAnatBanner';
 import useTopAnat, { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
@@ -16,6 +14,7 @@ import TopAnatActionButtons from '../../components/TopAnat/TopAnatActionButtons'
 import { getAxiosAddNotif } from '../../api/prod/constant';
 import random from '../../helpers/random';
 import ApiReducer from '../../helpers/ApiReducer';
+import { TOP_ANAT_DEFAULT_RP } from '../../helpers/constants/topAnat';
 
 let getJobStatusTimeOut;
 
@@ -46,11 +45,9 @@ const TopAnat = () => {
   } = useTopAnat(flowState, setFlowState);
 
   const getJobStatus = React.useCallback((ID, jobID, requestParams = true) => {
-    console.log('à');
     api.topAnat
       .getJob(ID, jobID, requestParams)
       .then((res) => {
-        console.log('zer', res);
         if (res.data.jobResponse.jobStatus === 'UNDEFINED') {
           setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
@@ -100,10 +97,10 @@ const TopAnat = () => {
                 res.requestParameters.data_type.find((f) => f === 'EST')
               ),
             }));
-            requestParameters.set((prev) => ({
-              ...prev,
-              fg: { list: { selectedSpecies: true } },
-            }));
+            requestParameters.set({
+              TOP_ANAT_DEFAULT_RP,
+              customBg: Boolean(res.requestParameters.bg_list),
+            });
 
             api.topAnat
               .autoCompleteGenes(res.requestParameters.fg_list.join('\n'))
@@ -114,13 +111,29 @@ const TopAnat = () => {
                     list: r.data.fg_list,
                     message: r.message,
                   },
-                  bg: null,
-                  customBg: false,
                 }));
               })
               .catch((err) => {
                 console.debug('[ERROR] api.topAnat.autoComplete', err);
               });
+            if (res.requestParameters.bg_list)
+              api.topAnat
+                .autoCompleteGenes(
+                  res.requestParameters.bg_list.join('\n'),
+                  false
+                )
+                .then((r) => {
+                  requestParameters.set((prev) => ({
+                    ...(prev || {}),
+                    bg: {
+                      list: r.data.bg_list,
+                      message: r.message,
+                    },
+                  }));
+                })
+                .catch((err) => {
+                  console.debug('[ERROR] api.topAnat.autoComplete', err);
+                });
           }
           setFlowState(TOP_ANAT_FLOW.GOT_JOB);
         } else {
@@ -244,46 +257,31 @@ const TopAnat = () => {
     }
   }, [id, jobId, pageState]);
 
-  const todo = 'TODO !!!';
-
-  const firstPartTitle = jobId ? `analysis ${jobId} running` : todo;
-  const metaTitle = firstPartTitle
-    ? `analysis results :  (${todo})`
-    : ` - Gene expression enrichment analysis`;
-
-  const firstPartContent = jobId
-    ? 'A TopAnat analysis is running, this page will be updated when the results are available.'
-    : data.topAnatResults;
-  const metaContent = firstPartContent
-    ? `TopAnat analysis results ${todo ? `for analysis: ${todo}` : ''}`
-    : 'TopAnat: perform GO-like enrichment of anatomical terms, mapped to genes by expression patterns.';
-
   return (
     <>
-      <Bulma.Section className="py-0">
-        <TopAnatHead />
-        <TopAnatForm
-          status={flowState}
-          form={{ handleChange, data, errors }}
-          requestParameters={requestParameters.value}
-          handlers={{
-            foregroundHandler,
-            backgroundHandler,
-            setRP: requestParameters.set,
-            onSelectCustomStage,
-            checkBoxHandler,
-          }}
-        />
-        <TopAnatActionButtons
-          status={flowState}
-          handleSubmit={job.submit}
-          jobId={jobId}
-          cancelJob={job.cancel(jobId)}
-          startNewJob={job.startNew}
-        />
-        <TopAnatBanner results={results} status={flowState} />
-      </Bulma.Section>
-
+      <TopAnatHead />
+      <TopAnatForm
+        status={flowState}
+        form={{ handleChange, data, errors }}
+        requestParameters={requestParameters.value}
+        handlers={{
+          foregroundHandler,
+          backgroundHandler,
+          setRP: requestParameters.set,
+          onSelectCustomStage,
+          checkBoxHandler,
+        }}
+      />
+      <TopAnatActionButtons
+        status={flowState}
+        handleSubmit={job.submit}
+        data={data}
+        jobId={jobId}
+        cancelJob={job.cancel(jobId)}
+        startNewJob={job.startNew}
+        isDisabled={data.genes === ''}
+      />
+      <TopAnatBanner results={results} status={flowState} />
       <TopAnatResult
         status={flowState}
         results={results}

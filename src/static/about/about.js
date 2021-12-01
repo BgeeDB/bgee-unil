@@ -1,3 +1,6 @@
+import PATHS from '../../routes/paths';
+import imagePath from '../../helpers/imagePath';
+
 const about = [
   {
     type: 'title',
@@ -252,7 +255,7 @@ const about = [
           },
           {
             text: 'documentation',
-            path: '',
+            path: PATHS.RESOURCES.DOCS,
             type: 'link_internal',
           },
           {
@@ -361,10 +364,10 @@ const about = [
       },
       {
         type: 'link_image',
-        src: '/static/img/cc-zero-large.png',
+        src: imagePath('/cc-zero-large.png'),
         path: 'https://creativecommons.org/publicdomain/zero/1.0/',
         style: {
-          'margin-top': '.7rem',
+          marginTop: '.7rem',
         },
       },
       {
@@ -413,7 +416,7 @@ const about = [
           {
             type: 'link_external',
             text: 'our GitHub page',
-            path: 'http://localhost:3000/about/',
+            path: 'https://github.com/BgeeDB',
           },
           {
             type: 'text',
@@ -432,7 +435,7 @@ const about = [
           {
             type: 'link_internal',
             text: 'documentation',
-            path: '/resources/',
+            path: PATHS.RESOURCES.DOCS,
           },
           {
             type: 'text',

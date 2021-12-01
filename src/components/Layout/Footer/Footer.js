@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import i18n from '../../../i18n';
 import Bulma from '../../Bulma';
 import config from '../../../config.json';
 import copyToClipboard from '../../../helpers/copyToClipboard';
@@ -8,6 +7,7 @@ import PATHS from '../../../routes/paths';
 import { NotificationContext } from '../../../contexts/NotificationsContext';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import random from '../../../helpers/random';
+import imagePath from '../../../helpers/imagePath';
 
 const Footer = () => {
   const { addNotification } = React.useContext(NotificationContext);
@@ -26,7 +26,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {i18n.t('global.footer.sib')}
+            Swiss Institute of Bioinformatics
           </a>
           <a
             className="image cc"
@@ -36,7 +36,7 @@ const Footer = () => {
           >
             <Bulma.Image
               className="no-responsive"
-              src="https://bgee.org/img/cc-zero.png"
+              src={imagePath('/cc-zero.png')}
               alt="CC0"
               height={15}
               width={80}
@@ -59,15 +59,11 @@ const Footer = () => {
               });
             }}
           >
-            {i18n.t('global.footer.copy-link')}
+            Copy permanent link
           </a>
-          <Link to={PATHS.ABOUT.PUBLICATION}>
-            {i18n.t('global.footer.cite-us')}
-          </Link>
+          <Link to={PATHS.ABOUT.PUBLICATION}>Cite us</Link>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <a onClick={obfuscateMailLink(config.contactEmail)}>
-            {i18n.t('global.footer.contact-us')}
-          </a>
+          <a onClick={obfuscateMailLink(config.contactEmail)}>Contact us</a>
         </div>
       </div>
     </Bulma.Footer>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
+import imagePath from '../../helpers/imagePath';
 
 const HomeSpeciesModal = ({ species, hide }) => {
   const { hideModal, customOnClose } = React.useContext(ModalContext);
@@ -21,7 +22,7 @@ const HomeSpeciesModal = ({ species, hide }) => {
             <figure className="image is-128x128 rounded-border">
               {species && (
                 <Bulma.Image
-                  src={`/static/img/species/${species.id}_light.jpg`}
+                  src={imagePath(`/species/${species.id}_light.jpg`)}
                   alt={`${species.genus} ${species.speciesName} (${species.name})`}
                   fallback="https://via.placeholder.com/128"
                 />

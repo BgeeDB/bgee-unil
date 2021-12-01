@@ -1,111 +1,130 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
 import api from '../../api';
-import { SEARCH_CANCEL_API } from '../../api/prod/search';
 import GeneSearch from './GeneSearch';
 import GeneExpandableList from './GeneExpandableList';
 import GeneExpression from './GeneExpression';
 import GeneHomologs from './GeneHomologs';
 import GeneXRefs from './GeneXRefs';
+import schemaDotOrg from '../../helpers/schemaDotOrg';
+import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import imagePath from '../../helpers/imagePath';
+import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 
 const GeneDetails = ({
+  details,
   details: { name, geneId, description, species, synonyms },
 }) => {
-  const history = useHistory();
-  const [homologsIsLoading, setHomologsIsLoading] = React.useState(true);
+  const loc = useLocation();
+  const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
+  const [xRefs, setXRefs] = React.useState();
+  const [isExpression, setIsExpression] = React.useState(false);
+
   React.useEffect(() => {
-    api.search.genes
-      .homologs(geneId, species.id)
-      .then((res) => {
-        const homo = { ...res.data, orthologs: 0, paralogs: 0 };
-        res.data.orthologsByTaxon.forEach((o) => {
+    Promise.allSettled([
+      api.search.genes.homologs(geneId, species.id),
+      api.search.genes.xrefs(geneId, species.id),
+    ]).then(([homologsPromise, xRefsPromise]) => {
+      if (homologsPromise.status === 'fulfilled') {
+        const homo = {
+          ...homologsPromise.value.data,
+          orthologs: 0,
+          paralogs: 0,
+        };
+        homologsPromise.value.data.orthologsByTaxon.forEach((o) => {
           if (o.genes.length > homo.orthologs) homo.orthologs = o.genes.length;
         });
-        res.data.paralogsByTaxon.forEach((o) => {
+        homologsPromise.value.data.paralogsByTaxon.forEach((o) => {
           if (o.genes.length > homo.paralogs) homo.paralogs = o.genes.length;
         });
         setHomologs(homo);
-      })
-      .catch(() => setHomologs())
-      .finally(() => setTimeout(() => setHomologsIsLoading(false), 500));
+        schemaDotOrg.setGeneHomologsLdJSON(homo);
+      } else {
+        setHomologs();
+      }
+
+      if (xRefsPromise.status === 'fulfilled') {
+        setXRefs(xRefsPromise.value.data);
+      } else {
+        setXRefs();
+      }
+
+      schemaDotOrg.setGeneLdJSON({
+        ...details,
+        xRefs: xRefsPromise.value.data?.gene?.xRefs,
+        path: loc.pathname,
+      });
+      setTimeout(() => setIsLoading(false), 500);
+    });
     return () => {
-      if (SEARCH_CANCEL_API.genes.homologs) SEARCH_CANCEL_API.genes.homologs();
+      schemaDotOrg.unsetGeneLdJSON();
+      schemaDotOrg.unsetGeneHomologsLdJSON();
     };
   }, []);
 
-  const handlerMenuClick = React.useCallback((id) => {
-    history.replace(`#${id}`);
+  const meta = React.useMemo(() => {
+    const speciesName = species.name
+      ? species.name
+      : `${species.genus} ${species.speciesName}`;
+    const hasNameOpener = name ? `${name} (` : '';
+    const hasNameCloser = name ? `)` : '';
+    const speciesNameBrackets = species.name ? `( ${species.name} )` : '';
+    const nameExpr = name ? `${name}, ${name} expression, ` : '';
+    const synonymsExpr = synonyms ? `, ${synonyms.join(', ')}` : '';
+    return {
+      title: `${name}  expression in ${speciesName}`,
+      description: `Bgee gene expression data for ${hasNameOpener}${geneId}${hasNameCloser} in ${species.genus} ${species.name} ${speciesNameBrackets}`,
+      keywords: `gene expression, ${nameExpr}${geneId}, ${geneId} expression${synonymsExpr}`,
+    };
+  }, [name, geneId, synonyms, species]);
+
+  React.useEffect(() => {
+    if (loc.hash) {
+      const element = document.getElementById(loc.hash.replace('#', ''));
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: 'smooth',
+        });
+      }
+    }
   }, []);
-
-  const sideMenu = React.useMemo(() => {
-    const sideMenuElem = [
-      { domId: 'general-infos', name: 'General information' },
-      { domId: 'expression', name: 'Expression' },
-      { domId: 'orthologs', name: 'Orthologs' },
-      { domId: 'paralogs', name: 'Paralogs' },
-      { domId: 'cross-references', name: 'Cross-references' },
-    ];
-
-    return (
-      <aside className="menu">
-        <ul className="menu-list">
-          {sideMenuElem.map((elem) => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-            <li key={elem.domId} onClick={() => handlerMenuClick(elem.domId)}>
-              <a className="is-size-5 has-text-weight-semibold">{elem.name}</a>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    );
-  }, []);
-
-  const metaTitle = `${name} 
-       expression in
-       ${
-         species.name ? species.name : `${species.genus} ${species.speciesName}`
-       }`;
-  const metaDescription = `Bgee gene expression data for ${
-    name ? `${name} (` : ''
-  }
-   ${geneId}  ${name ? ')' : ''}`;
-  const metaKeywords = `gene expression,
-  ${name ? `${name} , ${name} expression, ` : ''}
-  ${geneId}, ${geneId} expression
-  ${synonyms ? `, ${synonyms.join(', ')}` : ''}`;
 
   return (
-    <div className="is-widescreen">
+    <>
       <Helmet>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
       </Helmet>
-      <div className="columns">
-        <div className="column is-narrow-tablet is-narrow-desktop is-narrow-widescreen is-narrow-fullhd">
+      <div id="gene-wrapper">
+        <div className="sidebar">
           <div className="side-menu">
             <div className="side-menu-wrapper">
-              <GeneSearch />
-              {sideMenu}
+              <GeneDetailsSideMenu
+                homologs={homologs}
+                isExpression={isExpression}
+                xRefs={xRefs}
+              />
             </div>
           </div>
         </div>
-        <div className="column">
-          <div className="is-flex is-justify-content-center is-align-items-center">
+        <div id="gene-body">
+          <div className="is-flex head">
+            <GeneSearch />
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
                 className="m-0 mr-2"
-                src={`https://bgee.org/img/species/${species.id}_light.jpg`}
+                src={imagePath(`/species/${species.id}_light.jpg`)}
                 height={50}
                 width={50}
               />
-              <p className="title is-5 has-text-centered">
+              <p className="title is-size-3 has-text-centered">
                 {`Gene : ${name} - ${geneId} - `}
                 <i>
                   {species.genus} {species.speciesName}
@@ -114,11 +133,11 @@ const GeneDetails = ({
               </p>
             </div>
           </div>
-          <div id="general-infos">
-            <Bulma.Title size={5} className="gradient-underline">
-              {i18n.t('search.gene.general-info')}
+          <div id={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}>
+            <Bulma.Title size={4} className="gradient-underline">
+              General information
             </Bulma.Title>
-            <div className="static-section near-columns">
+            <div className=" near-columns">
               <Bulma.Columns className="my-0">
                 <Bulma.C size={3}>
                   <p className="has-text-weight-semibold">Gene identifier</p>
@@ -155,9 +174,7 @@ const GeneDetails = ({
               </Bulma.Columns>
               <Bulma.Columns className="my-0">
                 <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">
-                    {i18n.t('search.gene.synonyms')}
-                  </p>
+                  <p className="has-text-weight-semibold">Synonym(s)</p>
                 </Bulma.C>
                 <Bulma.C size={9}>
                   <GeneExpandableList
@@ -175,42 +192,52 @@ const GeneDetails = ({
                   />
                 </Bulma.C>
               </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Orthologs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#orthologs">
-                      {homologs ? `${homologs.orthologs} orthologs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
-              <Bulma.Columns className="my-0">
-                <Bulma.C size={3}>
-                  <p className="has-text-weight-semibold">Paralogs</p>
-                </Bulma.C>
-                <Bulma.C size={9}>
-                  <p>
-                    <a className="internal-link" href="#paralogs">
-                      {homologs ? `${homologs.paralogs} paralogs` : ''}
-                    </a>
-                  </p>
-                </Bulma.C>
-              </Bulma.Columns>
+              {homologs?.orthologs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Orthologs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#orthologs">
+                        {homologs ? `${homologs.orthologs} orthologs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
+              {homologs?.paralogs > 0 && (
+                <Bulma.Columns className="my-0">
+                  <Bulma.C size={3}>
+                    <p className="has-text-weight-semibold">Paralogs</p>
+                  </Bulma.C>
+                  <Bulma.C size={9}>
+                    <p>
+                      <a className="internal-link" href="#paralogs">
+                        {homologs ? `${homologs.paralogs} paralogs` : ''}
+                      </a>
+                    </p>
+                  </Bulma.C>
+                </Bulma.Columns>
+              )}
             </div>
           </div>
-          <GeneExpression geneId={geneId} speciesId={species.id} />
+          <GeneExpression
+            geneId={geneId}
+            speciesId={species.id}
+            setIsExpression={setIsExpression}
+            isExpression={isExpression}
+          />
+          )
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
-            isLoading={homologsIsLoading}
+            isLoading={isLoading}
           />
-          <GeneXRefs geneId={geneId} speciesId={species.id} />
+          {xRefs && <GeneXRefs data={xRefs} isLoading={isLoading} />}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

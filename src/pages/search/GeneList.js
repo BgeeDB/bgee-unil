@@ -2,22 +2,24 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router-dom';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
-import ComplexTable from '../../components/ComplexTable';
 import Bulma from '../../components/Bulma';
 import useGeneSearch from '../../hooks/useGeneSearch';
 import GeneSearch from '../../components/Gene/GeneSearch';
 import splitWithOccurrences from '../../helpers/splitWithOccurrences';
+import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
+import { customGeneListSorter } from '../../helpers/sortTable';
+import Table from '../../components/Table';
 
 const onRenderCell =
   (search) =>
-  ({ cell, key }, defaultRender) => {
+  ({ cell, key, keyRow }, defaultRender) => {
     switch (key) {
       case 'id':
       case 'name':
         return (
           <Link
+            key={`${key}-${keyRow}`}
             className="internal-link"
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
@@ -30,6 +32,7 @@ const onRenderCell =
       case 'organism':
         return (
           <Link
+            key={`${key}-${keyRow}`}
             className="internal-link"
             to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', cell.speciesId)}
           >
@@ -39,12 +42,17 @@ const onRenderCell =
       case 'match':
         const match = splitWithOccurrences(cell.match, search);
         return (
-          <span>
+          <span key={`${key}-${keyRow}`}>
             {match.map((v, keyMatch) =>
               typeof v === 'string' ? (
-                <React.Fragment key={keyMatch}>{v}</React.Fragment>
+                <React.Fragment key={`${key}-${keyRow}-${keyMatch}`}>
+                  {v}
+                </React.Fragment>
               ) : (
-                <strong key={v.key} className="has-text-primary">
+                <strong
+                  key={`${key}-${keyRow}-${keyMatch}`}
+                  className="has-text-primary"
+                >
                   {v.text}
                 </strong>
               )
@@ -112,7 +120,6 @@ const GeneList = () => {
   React.useEffect(() => {
     const params = new URLSearchParams(queryParams);
 
-    console.log(params.get('search'));
     if (params.get('search')) {
       setSearch(params.get('search'));
       setResults();
@@ -122,28 +129,33 @@ const GeneList = () => {
     }
   }, [queryParams]);
 
-  const metaDescription = `${
-    results
-      ? `${search} gene search, ${results.totalMatchCount} results in total`
-      : 'Search for a gene in Bgee'
-  }`;
-
-  const metaKeywords = `gene search, gene
-  ${search ? `, ${search}` : ''}`;
+  const meta = React.useMemo(
+    () => ({
+      description: results
+        ? `${search} gene search, ${results.totalMatchCount} results in total`
+        : 'Search for a gene in Bgee',
+      keywords: `gene search, gene
+  ${search ? `, ${search}` : ''}`,
+    }),
+    [search, results]
+  );
 
   return (
     <>
       <Helmet>
         <title>{search ? `${search} - ` : ''} Gene search</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={5}>{`${i18n.t('search.genes.title')}`}</Bulma.Title>
+        <Bulma.Title size={3}>Gene search</Bulma.Title>
       </div>
-      <p>{i18n.t('search.genes.description')}</p>
+      <p className="is-size-5">
+        Search for genes based on gene IDs, gene names, gene descriptions,
+        synonyms and cross-references.
+      </p>
       <div>
-        <GeneSearch classNames="search-input mx-auto my-3">
+        <GeneSearch classNames="search-input mx-auto my-3" searchTerm={search}>
           <p>
             {`Example: `}
             <Link className="internal-link" to="?search=HBB">
@@ -169,22 +181,28 @@ const GeneList = () => {
           <p className="has-text-centered my-5 has-text-weight-semibold">
             {results.totalMatchCount > 10000
               ? `About ${results.totalMatchCount} gene(s) found for '${search}' (only the first 10000 genes are displayed)`
-              : `${results.totalMatchCount} ${i18n.t(
-                  'search.genes.genes-found'
-                )} '${search}'`}
+              : `${results.totalMatchCount} gene(s) found for '${search}'`}
           </p>
-          <ComplexTable
+          <Table
             pagination
-            scrollable
             sortable
             classNamesTable="is-striped"
             columns={[
-              { text: 'Gene ID', key: 'id' },
+              { text: 'Gene ID', key: 'id', hide: MEDIA_QUERIES.MOBILE_P },
               { text: 'Name', key: 'name' },
-              { text: 'Description', key: 'description' },
-              { text: 'Organism', key: 'organism' },
-              { text: 'Match', key: 'match' },
+              {
+                text: 'Description',
+                key: 'description',
+                hide: MEDIA_QUERIES.TABLET,
+              },
+              {
+                text: 'Organism',
+                key: 'organism',
+                hide: MEDIA_QUERIES.MOBILE_L,
+              },
+              { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
             ]}
+            onSortCustom={customGeneListSorter}
             data={results.geneMatches}
             onFilter={onFilter}
             customHeader={customHeader}

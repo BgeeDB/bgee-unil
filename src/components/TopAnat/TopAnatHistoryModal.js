@@ -3,16 +3,16 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
-import i18n from '../../i18n';
 import PATHS from '../../routes/paths';
+import imagePath from '../../helpers/imagePath';
 
 const HISTORY_KEY = 'topAnatHistory';
-const ModalContent = ({ history, onRemove, onLoad }) => (
+const ModalContent = ({ history, onRemove, onLoad, hideModal }) => (
   <Bulma.Modal.Card.Wrapper>
     <Bulma.Modal.Card.Header>
-      <Bulma.Modal.Card.Title>
-        {i18n.t('analysis.top-anat.history')}
-      </Bulma.Modal.Card.Title>
+      <Bulma.Modal.Card.Title>History</Bulma.Modal.Card.Title>
+      {/* eslint-disable-next-line react/button-has-type */}
+      <button className="delete" aria-label="close" onClick={hideModal} />
     </Bulma.Modal.Card.Header>
 
     <Bulma.Modal.Card.Body>
@@ -23,7 +23,7 @@ const ModalContent = ({ history, onRemove, onLoad }) => (
         >
           <div className="is-flex is-flex-grow-1 is-align-items-center mr-3">
             <img
-              src={`/static/img/species/${h.speciesId}_light.jpg`}
+              src={imagePath(`/species/${h.speciesId}_light.jpg`)}
               style={{ height: 30, width: 30, marginRight: 10 }}
               title={`Species: ${h.speciesName}`}
             />
@@ -114,7 +114,12 @@ const TopAnatHistoryModal = () => {
         window.localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
 
         showModal(() => (
-          <ModalContent history={h} onLoad={onLoad} onRemove={onRemove} />
+          <ModalContent
+            history={h}
+            onLoad={onLoad}
+            onRemove={onRemove}
+            hideModal={hideModal}
+          />
         ));
       }
     },
@@ -127,7 +132,12 @@ const TopAnatHistoryModal = () => {
       type="button"
       onClick={() =>
         showModal(() => (
-          <ModalContent history={history} onLoad={onLoad} onRemove={onRemove} />
+          <ModalContent
+            history={history}
+            onLoad={onLoad}
+            onRemove={onRemove}
+            hideModal={hideModal}
+          />
         ))
       }
     >

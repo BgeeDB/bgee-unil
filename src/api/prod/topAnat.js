@@ -1,6 +1,8 @@
 import axios from 'axios';
-import axiosInstance from './constant';
+import React from 'react';
+import axiosInstance, { getAxiosAddNotif } from './constant';
 import errorHandler from '../errorHandler';
+import random from '../../helpers/random';
 
 export const TOP_ANAT_CANCEL_API = {
   autoCompleteGenes: null,
@@ -23,10 +25,6 @@ const DEFAULT_PARAMETERS = (page = 'top_anat') => {
 const topAnat = {
   autoCompleteGenes: (genes, isFg = true) =>
     new Promise((resolve, reject) => {
-      if (TOP_ANAT_CANCEL_API.autoCompleteGenes) {
-        TOP_ANAT_CANCEL_API.autoCompleteGenes();
-        TOP_ANAT_CANCEL_API.autoCompleteGenes = null;
-      }
       const params = DEFAULT_PARAMETERS();
       params.append('action', 'gene_validation');
       params.append(isFg ? 'fg_list' : 'bg_list', genes);
@@ -141,7 +139,6 @@ const topAnat = {
           }),
         })
         .then(({ data }) => {
-          console.log(data);
           resolve(data);
         })
         .catch((error) => {
@@ -169,7 +166,24 @@ const topAnat = {
         })
         .then(({ data }) => resolve(data))
         .catch((error) => {
-          errorHandler(error);
+          if (
+            error?.response?.data?.code === 400 &&
+            error?.response?.data?.data?.exceptionType ===
+              'JobResultNotFoundException'
+          ) {
+            getAxiosAddNotif()({
+              id: random.toString(),
+              children: (
+                <p>
+                  Results were not present on our server, resubmitting the
+                  analysis
+                </p>
+              ),
+              className: `is-warning`,
+            });
+          } else {
+            errorHandler(error);
+          }
           reject(error?.response);
         });
     }),

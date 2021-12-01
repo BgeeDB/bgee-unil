@@ -1,3 +1,5 @@
+import config from '../../config.json';
+
 const publications = [
   {
     type: 'title',
@@ -45,7 +47,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'RIS',
-                path: 'ftp://ftp.bgee.org/general/citation_bgee_suite.ris',
+                path: `${config.ftpDomain}/general/citation_bgee_suite.ris`,
               },
             ],
           },
@@ -99,7 +101,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'RIS',
-                path: 'ftp://ftp.bgee.org/general/citation05.ris',
+                path: `${config.ftpDomain}/general/citation05.ris`,
               },
             ],
           },
@@ -140,7 +142,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'RIS',
-                path: 'ftp://ftp.bgee.org/general/citation04.ris',
+                path: `${config.ftpDomain}/general/citation04.ris`,
               },
             ],
           },
@@ -505,7 +507,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'RIS',
-                path: 'ftp://ftp.bgee.org/general/citation01.ris',
+                path: `${config.ftpDomain}/general/citation01.ris`,
               },
             ],
           },

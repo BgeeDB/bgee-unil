@@ -1,9 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
-import i18n from '../../i18n';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import GridSpecies from '../../components/GridSpecies/GridSpecies';
@@ -22,9 +21,15 @@ const SpeciesList = () => {
     });
   }, []);
 
-  const metaKeywords = speciesList
-    .map((s) => `${s.genus} ${s.speciesName} ${s.name ? `, ${s.name}` : ''}`)
-    .join(', ');
+  const metaKeywords = React.useMemo(
+    () =>
+      speciesList
+        .map(
+          (s) => `${s.genus} ${s.speciesName} ${s.name ? `, ${s.name}` : ''}`
+        )
+        .join(', '),
+    [speciesList]
+  );
 
   return (
     <>
@@ -37,9 +42,7 @@ const SpeciesList = () => {
         <meta name="keywords" content={metaKeywords} />
       </Helmet>
       <div className="content has-text-centered">
-        <Bulma.Title size={4}>
-          {i18n.t('search.species.list-title')}
-        </Bulma.Title>
+        <Bulma.Title size={3}>Bgee species list</Bulma.Title>
       </div>
       <div className="content">
         <div className="grid-species">

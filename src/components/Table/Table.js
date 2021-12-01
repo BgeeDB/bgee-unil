@@ -1,175 +1,200 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-cycle */
 import React from 'react';
-import staticBuilder from '../../helpers/staticBuilder';
 import classnames from '../../helpers/classnames';
+import { hasColumnsTableHidden } from '../../helpers/constants/mediaQueries';
+import useWindowSize from '../../hooks/useWindowSize';
+import TableHead from './TableHead';
+import TableTitle from './TableTitle';
+import TableBody from './TableBody';
+import { TableProvider } from '../../contexts/TableContext';
+import TableHeader from './TableHeader';
+import Input from '../Form/Input';
+import Select from '../Select';
+import { monoSort, multiSort } from '../../helpers/sortTable';
+import TablePagination from './TablePagination';
 
 const Table = ({
-  scrollable = false,
   fullwidth = true,
   classNames = '',
   title,
   columns = [],
   data = [],
+  onFilter,
   sortable = false,
-  onSort,
+  multiSortable = false,
+  onSortCustom,
   onRenderCell,
   onRenderRow, // function that generate custom css classes depending of
-  striped,
+  striped = true,
+  pagination = false,
+  defaultPaginationSize = 10,
+  customHeader,
+  mappingObj = (obj) => obj,
 }) => {
+  const mappedData = React.useMemo(
+    () => data.map(mappingObj),
+    [data, mappingObj]
+  );
+  const table = React.useRef();
+  const { width } = useWindowSize();
+  const usedWidth = React.useMemo(
+    () => table?.current?.offsetWidth || width,
+    [table, width]
+  );
+
   const [sortOption, setSortOption] = React.useState();
   const defineSortOption = React.useCallback(
-    (key) => () => {
-      if (onSort) {
-        let newSortOpt;
-        if (!sortOption || sortOption.key !== key) {
-          newSortOpt = { key, sort: 'ascending' };
-        } else if (sortOption.sort === 'ascending') {
-          newSortOpt = { key, sort: 'descending' };
+    (key) => (event) => {
+      if (sortable) {
+        if (multiSortable && event.shiftKey) {
+          let newSort;
+          if (!Array.isArray(sortOption))
+            newSort = [{ key, sort: 'ascending' }];
+          else {
+            newSort = [...sortOption];
+            const pos = newSort.findIndex((f) => f.key === key);
+            if (pos >= 0) {
+              if (newSort[pos].sort === 'ascending')
+                newSort[pos].sort = 'descending';
+              else newSort.splice(pos, 1);
+            } else {
+              newSort.push({ key, sort: 'ascending' });
+            }
+          }
+          setSortOption(newSort);
+        } else {
+          let newSortOpt;
+          if (!sortOption || sortOption.key !== key) {
+            newSortOpt = { key, sort: 'ascending' };
+          } else if (sortOption.sort === 'ascending') {
+            newSortOpt = { key, sort: 'descending' };
+          }
+          setSortOption(newSortOpt);
         }
-        setSortOption(newSortOpt);
-        onSort(newSortOpt);
       }
     },
-    [sortOption, onSort]
+    [multiSortable, sortOption, sortable]
   );
 
-  const [isExpanded, setIsExpanded] = React.useState();
+  const [isExpanded, setIsExpanded] = React.useState({});
   const expandAction = React.useCallback(
-    (key) => () => setIsExpanded(isExpanded === key ? undefined : key),
-    [isExpanded]
+    (key) => () =>
+      setIsExpanded((prev) => ({
+        ...prev,
+        [key]: !prev[key],
+      })),
+    []
   );
-  const defaultRender = React.useCallback(
-    (cell, key) => {
-      let style;
 
-      if (columns.find((c) => c?.key === key && c?.style)) {
-        style = columns.find((c) => c?.key === key).style;
-      }
-      if (typeof cell === 'string' || typeof cell === 'number')
-        return (
-          <p key={key} style={style}>
-            {cell}
-          </p>
-        );
+  const showTableModalButton = React.useMemo(
+    () => hasColumnsTableHidden(usedWidth, columns),
+    [usedWidth, columns]
+  );
 
-      return Array.isArray(cell) ? (
-        <div key={key} style={style}>
-          {staticBuilder(cell)}
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(
+    pagination ? defaultPaginationSize : mappedData.length
+  );
+
+  const [search, setSearch] = React.useState('');
+  const searchInput = React.useMemo(
+    () => (
+      <div className="control table-search is-flex is-flex-direction-row is-align-items-center">
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <p className="mr-1">Filter:</p>
+        <Input
+          value={search}
+          onChange={(e) => {
+            if (currentPage !== 1) setCurrentPage(1);
+            setSearch(e.target.value);
+          }}
+        />
+      </div>
+    ),
+    [search, currentPage]
+  );
+
+  const pageSizeSelector = React.useMemo(
+    () =>
+      pagination && mappedData?.length > 10 ? (
+        <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
+          <p className="mr-2">Show</p>
+          <Select
+            defaultValue={pageSize}
+            options={[10, 20, 50, { value: 100, text: 100 }]}
+            onChange={(p) => {
+              setCurrentPage(1);
+              setPageSize(parseInt(p, 10));
+            }}
+          />
+          <p className="ml-2">entries</p>
         </div>
-      ) : null;
-    },
-    [columns]
+      ) : null,
+    [pageSize, currentPage, mappedData, pagination]
   );
-
-  let TableObject = (
-    <table
-      className={classnames(
-        'table',
-        { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
-        classNames
-      )}
-    >
-      <thead>
-        <tr>
-          {columns.map((item, key) => {
-            if (typeof item === 'object')
-              return (
-                <th
-                  key={item.key}
-                  onClick={defineSortOption(item.key)}
-                  style={item.style}
-                >
-                  {item.abbr && <abbr title={item.abbr} />}
-                  {item.text}
-                  {sortOption &&
-                    sortOption.key === item.key &&
-                    sortOption.sort === 'descending' && (
-                      <span className="icon is-small">
-                        <ion-icon name="caret-down-outline" />
-                      </span>
-                    )}
-                  {sortOption &&
-                    sortOption.key === item.key &&
-                    sortOption.sort === 'ascending' && (
-                      <span className="icon is-small">
-                        <ion-icon name="caret-up-outline" />
-                      </span>
-                    )}
-                </th>
-              );
-            return <th key={key}>{item}</th>;
-          })}
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          {columns.map((item, key) => (
-            // eslint-disable-next-line jsx-a11y/control-has-associated-label
-            <th key={key}> </th>
-          ))}
-        </tr>
-      </tfoot>
-      <tbody>
-        {data.map((row, key) => (
-          <tr
-            key={key}
-            className={classnames(
-              { 'is-expanded': isExpanded === key },
-              onRenderRow
-                ? onRenderRow(row, key > 0 ? data[key - 1] : null)
-                : undefined
-            )}
-          >
-            {Array.isArray(row) &&
-              row.map((cell, cellKey) => (
-                <td key={`${key}-${cellKey}`}>
-                  {onRenderCell
-                    ? onRenderCell(
-                        { cell, key: cellKey, keyRow: key },
-                        defaultRender,
-                        {
-                          expandAction: expandAction(key),
-                          isExpanded: isExpanded === key,
-                        }
-                      )
-                    : defaultRender(cell, cellKey)}
-                </td>
-              ))}
-            {typeof row &&
-              !Array.isArray(row) &&
-              columns.map((c, keyCol) => (
-                <td key={`${key}-col-${keyCol}`}>
-                  {onRenderCell
-                    ? onRenderCell(
-                        { cell: row, key: c.key || keyCol, keyRow: key },
-                        defaultRender,
-                        {
-                          expandAction: expandAction(key),
-                          isExpanded: isExpanded === key,
-                        }
-                      )
-                    : null}
-                </td>
-              ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-
-  if (scrollable)
-    TableObject = <div className="table-container">{TableObject}</div>;
+  const processedData = React.useMemo(() => {
+    const clone = JSON.parse(JSON.stringify(mappedData));
+    const filtered =
+      search === '' || !onFilter ? clone : clone.filter(onFilter(search));
+    if (sortOption) {
+      console.log(
+        'SORT',
+        Array.isArray(sortOption) ? 'multi' : 'single',
+        onSortCustom ? 'custom' : 'default'
+      );
+      filtered.sort(
+        (Array.isArray(sortOption)
+          ? onSortCustom || multiSort
+          : onSortCustom || monoSort)(sortOption)
+      );
+    }
+    return filtered;
+  }, [mappedData, search, sortOption, onSortCustom]);
 
   return (
-    <div>
-      {title && (
-        <p className="has-text-centered has-text-weight-semibold mb-1">
-          {title}
-        </p>
-      )}
-      {TableObject}
-    </div>
+    <TableProvider
+      data={{
+        table,
+        title,
+        columns,
+        data: processedData,
+        expandAction,
+        isExpanded,
+        onRenderRow,
+        onRenderCell,
+        showTableModalButton,
+        usedWidth,
+        sortable,
+        sortOption,
+        defineSortOption,
+        pagination,
+        currentPage,
+        setCurrentPage,
+        pageSize,
+        setPageSize,
+        customHeader,
+        searchInput,
+        pageSizeSelector,
+        mappingObj,
+      }}
+    >
+      <TableHeader />
+      <TableTitle />
+      <div className="table-container">
+        <table
+          ref={table}
+          className={classnames(
+            'table',
+            { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+            classNames
+          )}
+        >
+          <TableHead />
+          <TableBody />
+        </table>
+      </div>
+      <TablePagination />
+    </TableProvider>
   );
 };
 

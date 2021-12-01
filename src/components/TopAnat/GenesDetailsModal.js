@@ -1,28 +1,18 @@
 import React from 'react';
 import isPlural from '../../helpers/isPlural';
-import { ModalContext } from '../../contexts/ModalContext';
 
-const GenesDetailsModal = ({ data }) => {
-  const { hideModal, customOnClose } = React.useContext(ModalContext);
-  const { selectedSpecies } = data;
+const GenesDetailsModal = (props) => {
+  const {
+    data,
+    data: { selectedSpecies },
+  } = props;
 
   if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
   return (
     <div className="content">
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        type="button"
-        onClick={() => {
-          if (customOnClose) {
-            customOnClose();
-          }
-          hideModal();
-        }}
-      />
       <p>
         {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genes} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
+        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
         {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
       </p>
       {Object.keys(data.detectedSpecies).length > 1 && (
