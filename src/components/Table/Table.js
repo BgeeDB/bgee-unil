@@ -31,9 +31,11 @@ const Table = ({
   customHeader,
   mappingObj = (obj) => obj,
   name,
+  identifierAtFilter = false,
 }) => {
   const mappedData = React.useMemo(
-    () => data.map(mappingObj),
+    () =>
+      data.map((obj, key) => ({ ...obj, identifier: key + 1 })).map(mappingObj),
     [data, mappingObj]
   );
   const table = React.useRef();
@@ -98,6 +100,13 @@ const Table = ({
   );
 
   const [search, setSearch] = React.useState('');
+  const definiteColumns = React.useMemo(
+    () =>
+      search !== '' && identifierAtFilter
+        ? [{ key: 'identifier', text: 'ID' }, ...columns]
+        : [...columns],
+    [identifierAtFilter, columns, search]
+  );
   const searchInput = React.useMemo(
     () => (
       <div className="control table-search is-flex is-flex-direction-row is-align-items-center">
@@ -158,7 +167,7 @@ const Table = ({
         name,
         table,
         title,
-        columns,
+        columns: definiteColumns,
         data: processedData,
         expandAction,
         isExpanded,

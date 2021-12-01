@@ -330,7 +330,7 @@ const GeneExpression = ({
             </div>
           );
         default:
-          return defaultRender(key, key);
+          return defaultRender(cell?.[key] || key, key);
       }
     },
     [columns]
@@ -406,6 +406,7 @@ const GeneExpression = ({
             {!isLoading && data && (
               <>
                 <Table
+                  identifierAtFilter
                   columns={columns}
                   data={data.calls}
                   onRenderCell={onRenderCell}
@@ -415,9 +416,9 @@ const GeneExpression = ({
                   customHeader={customHeader}
                   onRenderRow={(row, prev) => {
                     if (prev && row.clusterIndex > prev.clusterIndex) {
-                      return 'gap-cluster';
+                      return 'gene-expr-row gap-cluster';
                     }
-                    return '';
+                    return 'gene-expr-row';
                   }}
                 />
 
