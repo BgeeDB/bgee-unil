@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Table from '../../components/Table';
-import json from './mockExpComp.json';
 import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import PATHS from '../../routes/paths';
+import LinkExternal from '../../components/LinkExternal/LinkExternal';
+import {
+  MEDIA_QUERIES,
+  MEDIA_QUERIES_SIZE,
+} from '../../helpers/constants/mediaQueries';
+import useWindowSize from '../../hooks/useWindowSize';
 
 const KEYS = {
   'anat-entities': 0,
@@ -18,36 +23,120 @@ const KEYS = {
   'species-present': 6,
   'species-absent': 7,
 };
+
+const AnatEntitiesCell = ({
+  multiSpeciesCondition = null,
+  condition = null,
+}) => {
+  if (condition) {
+    return (
+      <>
+        <LinkExternal
+          content={condition.anatEntity.id}
+          to={`https://www.${condition.anatEntity.id}`}
+        >
+          <span>{condition.anatEntity.name}</span>
+        </LinkExternal>
+      </>
+    );
+  }
+
+  if (multiSpeciesCondition) {
+    let itemConcat = '';
+    multiSpeciesCondition.anatEntities.forEach((item) => {
+      if (itemConcat !== '') {
+        itemConcat = `${itemConcat}, ${item.name}`;
+      }
+      itemConcat = `${item.name}`;
+    });
+
+    return (
+      <>
+        <LinkExternal
+          content={multiSpeciesCondition.anatEntities[0].id}
+          to={`https://www.${multiSpeciesCondition.anatEntities[0].id}`}
+        >
+          <span>{itemConcat}</span>
+        </LinkExternal>
+      </>
+    );
+  }
+
+  return null;
+};
+
+const GeneItemNb = ({ itemTab }) => {
+  if (itemTab.length > 1) {
+    return <span>{itemTab.length} genes</span>;
+  }
+  return <span>{itemTab.length} gene</span>;
+};
+
+const ExpandCell = ({ onClick }) => (
+  <a
+    className="expand-button"
+    onClick={onClick}
+    onKeyPress={onClick}
+    role="button"
+    tabIndex={0}
+  >
+    <Bulma.IonIcon name="chevron-down-sharp" />
+  </a>
+);
+
+const GenesCell = ({ genes }) => {
+  const { width } = useWindowSize();
+  const expandContent = () => {
+    const renderContent = genes.map((item) => (
+      <div>
+        <Link
+          style={{ textDecoration: 'true' }}
+          content={item.geneId}
+          to={`https://www.${item.geneId}`}
+        >
+          <span>{item.geneId}</span>
+        </Link>
+        <span style={{ marginLeft: 5 }}>{item.name}</span>
+      </div>
+    ));
+    return renderContent;
+  };
+
+  return (
+    <div
+      style={{
+        minWidth:
+          width > MEDIA_QUERIES_SIZE[MEDIA_QUERIES.DESKTOP] ? 230 : undefined,
+      }}
+    >
+      <GeneItemNb itemTab={genes} />
+      <div className="expand-content">{expandContent()}</div>
+    </div>
+  );
+};
+
 const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
   switch (key) {
-    case 0:
-    case 1:
-    case 2:
-      return defaultRender(cell, key);
+    case 'anat-entities':
+      return <AnatEntitiesCell {...cell} />;
+    case 'xpr-score':
+      return <span>{cell.conservationScore}</span>;
+    case 'max-xpr-score':
+      return <span>{cell.maxExpressionScore}</span>;
+    case 'gene-present':
+      return <GenesCell genes={cell.genesExpressionPresent} />;
+    case 'gene-absent':
+      return <GenesCell genes={cell.genesExpressionAbsent} />;
+    case 'gene-no-data':
+      return <GenesCell genes={cell.genesNoData} />;
+    case 'species-present':
+      return null;
+    case 'species-absent':
+      return null;
     case 8:
-      return (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-        <a key={key} className="expand-button" onClick={expandAction}>
-          <Bulma.IonIcon name="chevron-down-sharp" />
-        </a>
-      );
+      return <ExpandCell key={key} onClick={expandAction} />;
     default:
-      // eslint-disable-next-line no-case-declarations
-      const expandContent = cell.elements.reduce(
-        (r, a) => r.concat(a, { type: 'break_line' }),
-        []
-      );
-      return (
-        <div key={key}>
-          <p>{`${cell.elements.length} ${cell.name}${
-            cell.elements.length > 1 &&
-            cell.name.charAt(cell.name.length - 1) !== 's'
-              ? 's'
-              : ''
-          }`}</p>
-          <p className="expand-content">{richTextBuilder(expandContent)}</p>
-        </div>
-      );
+      return null;
   }
 };
 const customHeader = (searchElement, pageSizeElement) => (
@@ -126,15 +215,14 @@ const onSort = (sortKey, sortDirection) => (elementA, elementB) => {
 };
 
 const ExpComp = () => {
-  const data = useQuery('data');
   const [searchValue, setSearchValue] = useState('');
   const [hashResponse, setHashResponse] = useState('');
   const history = useHistory();
+  const [searchRes, setSearchRes] = useState({});
 
   React.useEffect(() => {
     if (searchValue !== '') {
       api.topAnat.autoCompleteGenes(searchValue).then((res) => {
-        console.log(res);
         const tempHash = 'thisIsMyTemporaryHashInTheURL';
         setHashResponse(tempHash);
       });
@@ -146,6 +234,10 @@ const ExpComp = () => {
   };
 
   const handlerClickSearch = () => {
+    const geneList = 'ENSPPAG00000028134&ENSPPAG00000028135';
+    api.expressionComparison.getResults(geneList).then((res) => {
+      setSearchRes(res);
+    });
     history.push(
       PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT.replace(':hash', hashResponse)
     );
@@ -189,7 +281,7 @@ const ExpComp = () => {
                       type="button"
                       onClick={handlerClickSearch}
                     >
-                      {i18n.t('analysis.expression-comparison.search-button')}
+                      Search
                     </button>
                   </div>
                 </div>
@@ -210,7 +302,7 @@ const ExpComp = () => {
             </div>
           </div>
         </div>
-        {data && (
+        {searchRes?.data?.comparisonResults && (
           <div>
             <p>Unknown Ensembl IDs:</p>
             {staticBuilder([
@@ -226,51 +318,51 @@ const ExpComp = () => {
                 ],
               },
             ])}
-            {/* <Table */}
-            {/*  sortable */}
-            {/*  pagination */}
-            {/*  classNamesTable="is-striped" */}
-            {/*  onFilter={onFilter} */}
-            {/*  customSort={onSort} */}
-            {/*  columns={[ */}
-            {/*    { */}
-            {/*      key: 'anat-entities', */}
-            {/*      text: 'Anatomical entities', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'xpr-score', */}
-            {/*      text: 'Conservation score', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'max-xpr-score', */}
-            {/*      text: 'Max expression score', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'gene-present', */}
-            {/*      text: 'Genes with presence of expression', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'gene-absent', */}
-            {/*      text: 'Genes with absence of expression', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'gene-no-data', */}
-            {/*      text: 'Genes with no data', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'species-present', */}
-            {/*      text: 'Species with presence of expression', */}
-            {/*    }, */}
-            {/*    { */}
-            {/*      key: 'species-absent', */}
-            {/*      text: 'Species with absence of expression', */}
-            {/*    }, */}
-            {/*    'See details', */}
-            {/*  ]} */}
-            {/*  data={json} */}
-            {/*  customHeader={customHeader} */}
-            {/*  onRenderCell={onRenderCell} */}
-            {/* /> */}
+            <Table
+              sortable
+              pagination
+              classNamesTable="is-striped"
+              onFilter={onFilter}
+              customSort={onSort}
+              columns={[
+                {
+                  key: 'anat-entities',
+                  text: 'Anatomical entities',
+                },
+                {
+                  key: 'xpr-score',
+                  text: 'Conservation score',
+                },
+                {
+                  key: 'max-xpr-score',
+                  text: 'Max expression score',
+                },
+                {
+                  key: 'gene-present',
+                  text: 'Genes with presence of expression',
+                },
+                {
+                  key: 'gene-absent',
+                  text: 'Genes with absence of expression',
+                },
+                {
+                  key: 'gene-no-data',
+                  text: 'Genes with no data',
+                },
+                {
+                  key: 'species-present',
+                  text: 'Species with presence of expression',
+                },
+                {
+                  key: 'species-absent',
+                  text: 'Species with absence of expression',
+                },
+                'See details',
+              ]}
+              data={searchRes.data.comparisonResults}
+              customHeader={customHeader}
+              onRenderCell={onRenderCell}
+            />
           </div>
         )}
       </Bulma.Section>

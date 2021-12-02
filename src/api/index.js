@@ -1,5 +1,6 @@
 import topAnat from './prod/topAnat';
 import search from './prod/search';
+import expressionComparison from './prod/expressionComparison';
 
 /*
  * ERROR RESPONSE FORMAT
@@ -17,6 +18,7 @@ import search from './prod/search';
 const api = {
   search,
   topAnat,
+  expressionComparison,
 };
 
 export default api;
