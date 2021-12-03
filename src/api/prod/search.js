@@ -1,6 +1,7 @@
 import axios from 'axios';
 import axiosInstance from './constant';
 import errorHandler from '../errorHandler';
+import PATHS from '../../routes/paths';
 
 export const SEARCH_CANCEL_API = {
   genes: {
@@ -29,6 +30,54 @@ const DEFAULT_PARAMETERS = (page, action) => {
 };
 
 const search = {
+  anatomicalHomology: ({ type, query }, species, aeList) =>
+    new Promise((resolve, reject) => {
+      let params = DEFAULT_PARAMETERS('anat_similarities');
+      if (type === 'form') {
+        if (aeList) params.append('ae_list', aeList);
+        species.forEach((s) => params.append('species_list', s));
+      } else if (type === 'query') {
+        params = new URLSearchParams(query);
+
+        params.append('display_type', 'json');
+        params.append('page', 'anat_similarities');
+        params.append('display_rp', 1);
+      } else {
+        reject(new Error('invalid format'));
+      }
+
+      axiosInstance
+        .get(`/?${params.toString()}`)
+        .then(({ data }) => {
+          const formatted = JSON.parse(JSON.stringify(data));
+          formatted.data.anatEntitySimilarities =
+            formatted.data.anatEntitySimilarities.map(
+              ({
+                anatEntities,
+                ancestralTaxon,
+                speciesWithAnatEntityPresence,
+              }) => ({
+                anatEntities: anatEntities.map((a) => ({
+                  name: `${a.name} (${a.id})`,
+                  link: `http://purl.obolibrary.org/obo/${a.id}`,
+                  id: a.id,
+                })),
+                ancestralTaxon: `${ancestralTaxon.scientificName} (${ancestralTaxon.id})`,
+                speciesWithAnatEntityPresence:
+                  speciesWithAnatEntityPresence.map((s) => ({
+                    id: s.id,
+                    name: `${s.genus} ${s.speciesName}`,
+                    link: PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id),
+                  })),
+              })
+            );
+          resolve(formatted);
+        })
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
+    }),
   genes: {
     autoComplete: (val) =>
       new Promise((resolve, reject) => {

@@ -1,91 +1,53 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
-import { Link } from 'react-router-dom';
-import useQuery from '../../hooks/useQuery';
-import PATHS from '../../routes/paths';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Bulma from '../../components/Bulma';
 import Table from '../../components/Table';
-
-const checkboxes = [
-  { id: 0, name: ' Select all' },
-  { id: 1, name: ' Homo sapiens' },
-  { id: 2, name: ' Mus musculus' },
-  { id: 3, name: ' Danio rerio' },
-  { id: 4, name: ' Drosophila melanogaster' },
-  { id: 5, name: ' Caenorhabditis elegans' },
-  { id: 6, name: ' Canis lupus familiaris' },
-  { id: 7, name: ' Felis catus' },
-  { id: 8, name: ' Equus caballus' },
-  { id: 9, name: ' Sus scrofa' },
-  { id: 10, name: ' Bos taurus' },
-  { id: 11, name: ' Capra hircus' },
-  { id: 12, name: ' Ovis aries' },
-  { id: 13, name: ' Oryctolagus cuniculus' },
-  { id: 14, name: ' Cavia porcellus' },
-  { id: 15, name: ' Gallus gallus' },
-  { id: 16, name: ' Meleagris gallopavo' },
-  { id: 17, name: ' Ornithorhynchus anatinus' },
-  { id: 18, name: ' Callithrix jacchus' },
-  { id: 19, name: ' Cercocebus atys' },
-  { id: 20, name: ' Macaca fascicularis' },
-  { id: 21, name: ' Macaca mulatta' },
-  { id: 22, name: ' Macaca nemestrina' },
-  { id: 23, name: ' Papio anubis' },
-  { id: 24, name: ' Gorilla gorilla' },
-  { id: 25, name: ' Pan paniscus' },
-  { id: 26, name: ' Pan troglodytes' },
-  { id: 27, name: ' Microcebus murinus' },
-  { id: 28, name: ' Chlorocebus sabaeus' },
-  { id: 29, name: ' Manis javanica' },
-  { id: 30, name: ' Rattus norvegicus' },
-  { id: 31, name: ' Heterocephalus glaber' },
-  { id: 32, name: ' Monodelphis domestica' },
-  { id: 33, name: ' Xenopus laevis' },
-  { id: 34, name: ' Xenopus tropicalis' },
-  { id: 35, name: ' Anolis carolinensis' },
-  { id: 36, name: ' Lepisosteus oculatus' },
-  { id: 37, name: ' Anguilla anguilla' },
-  { id: 38, name: ' Astyanax mexicanus' },
-  { id: 39, name: ' Esox lucius' },
-  { id: 40, name: ' Salmo salar' },
-  { id: 41, name: ' Gadus morhua' },
-  { id: 42, name: ' Poecilia reticulata' },
-  { id: 43, name: ' Oryzias latipes' },
-  { id: 44, name: ' Astatotilapia calliptera' },
-  { id: 45, name: ' Neolamprologus brichardi' },
-  { id: 46, name: ' Scophthalmus maximus' },
-  { id: 47, name: ' Gasterosteus aculeatus' },
-  { id: 48, name: ' Nothobranchius furzeri' },
-  { id: 49, name: ' Branchiostoma lanceolatum' },
-  { id: 50, name: ' Latimeria chalumnae' },
-  { id: 51, name: ' Drosophila pseudoobscura' },
-  { id: 52, name: ' Drosophila simulans' },
-];
+import api from '../../api';
+import usePrevious from '../../hooks/usePrevious';
+import LinkExternal from '../../components/LinkExternal';
 
 const onRenderCell =
-  (search) =>
+  () =>
   ({ cell, key }, defaultRender) => {
     switch (key) {
-      case 'id':
-      case 'name':
-      case 'organism':
-        return (
-          <Link
-            className="internal-link"
-            to={PATHS.SEARCH.GENE_ITEM.replace(':id', cell.id)}
-          >
-            {cell[key]}
-          </Link>
-        );
-      case 'description':
-        return defaultRender('element that match', key);
+      case 'ae':
+        return cell.anatEntities
+          .map((a) => (
+            <LinkExternal key={a.id} to={a.link}>
+              {a.name}
+            </LinkExternal>
+          ))
+          .reduce(
+            (r, a, idx) =>
+              idx + 1 === cell.anatEntities.length
+                ? r.concat(a)
+                : r.concat(a, <span key={`ae-${a.id}comma`}>, </span>),
+            []
+          );
+      case 'ss':
+        console.log();
+        return cell.speciesWithAnatEntityPresence
+          .map((a) => (
+            <Link className="internal-link" key={a.id} to={a.link}>
+              {a.name}
+            </Link>
+          ))
+          .reduce(
+            (r, a, idx) =>
+              idx + 1 === cell.speciesWithAnatEntityPresence.length
+                ? r.concat(a)
+                : // eslint-disable-next-line react/no-array-index-key
+                  r.concat(a, <span key={`ss-${idx}-comma`}>, </span>),
+            []
+          );
+      case 'at':
+        return defaultRender(cell.ancestralTaxon, key);
       default:
-        return (
-          <p>
-            Match: <b>{search}</b>
-          </p>
-        );
+        return null;
     }
   };
+
 const customHeader = (searchElement, pageSizeElement) => (
   <Bulma.Columns>
     <Bulma.C size={6}>
@@ -97,20 +59,147 @@ const customHeader = (searchElement, pageSizeElement) => (
   </Bulma.Columns>
 );
 
-const AnatomicalHomologySearch = () => {
-  const [search, setSearch] = React.useState('');
-  const query = useQuery('search');
-  const [results, setResults] = React.useState(undefined);
+const onFilter = (search) => (element) => {
+  const regExp = new RegExp(search, 'gi');
+  let matchFilter = regExp.test(element?.ancestralTaxon);
+  if (!matchFilter) {
+    for (let i = 0; i < element.anatEntities.length; i += 1) {
+      matchFilter = regExp.test(element?.anatEntities[i].name);
+      if (matchFilter) i = element.anatEntities.length;
+    }
+  }
+  if (!matchFilter) {
+    for (let i = 0; i < element.speciesWithAnatEntityPresence.length; i += 1) {
+      matchFilter = regExp.test(element?.speciesWithAnatEntityPresence[i].name);
+      if (matchFilter) i = element.speciesWithAnatEntityPresence.length;
+    }
+  }
+  return matchFilter;
+};
+const DEFAULT_RESULTS = {
+  signature: undefined,
+  data: undefined,
+};
 
+const AnatomicalHomologySearch = () => {
+  const history = useHistory();
+  const [loading, setLoading] = React.useState(false);
+  const [anatomicalEntities, setAnatomicalEntities] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const [selectedSpecies, setSelectedSpecies] = React.useState([]);
+  const { search: searchParams } = useLocation();
+  const [results, set] = React.useState(DEFAULT_RESULTS);
+  const [speciesList, setSpeciesList] = React.useState([]);
+
+  const onToggleSpecies = React.useCallback(
+    (speciesId) => () => {
+      setSelectedSpecies((prev) => {
+        let curr = [...prev];
+        if (speciesId !== 'ALL') {
+          const pos = curr.findIndex((c) => c === speciesId);
+          if (pos >= 0) {
+            curr.splice(pos, 1);
+          } else {
+            curr.push(speciesId);
+          }
+        } else if (curr.length === speciesList.length) {
+          curr = [];
+        } else curr = speciesList.map(({ id }) => id);
+        return curr;
+      });
+    },
+    [speciesList]
+  );
+  const setResults = React.useCallback(
+    (d) => {
+      set(d || DEFAULT_RESULTS);
+    },
+    [anatomicalEntities]
+  );
+
+  const onSubmit = React.useCallback(() => {
+    if (selectedSpecies.length < 2) {
+      setError('species');
+      return;
+    }
+    if (anatomicalEntities === '') {
+      setError('ae');
+      return;
+    }
+    setError(false);
+
+    setLoading(true);
+    api.search
+      .anatomicalHomology(
+        {
+          type: 'form',
+        },
+        selectedSpecies,
+        anatomicalEntities
+      )
+      .then(({ data, storableParams: { queryString } }) => {
+        setResults({
+          signature: queryString,
+          data,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        setResults();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [anatomicalEntities, selectedSpecies]);
   React.useEffect(() => {
-    setSearch(query);
-    setResults();
-  }, [query]);
+    if (searchParams !== results?.signature) {
+      if (results?.signature) history.replace(`?${results.signature}`);
+      else {
+        setLoading(true);
+        api.search
+          .anatomicalHomology({
+            type: 'query',
+            query: searchParams,
+          })
+          .then(
+            ({ data, storableParams: { queryString }, requestParameters }) => {
+              setResults({
+                signature: queryString,
+                data,
+              });
+              setSelectedSpecies(
+                requestParameters?.species_list.map((s) => parseInt(s, 10))
+              );
+              setAnatomicalEntities(requestParameters?.ae_list.join('\n'));
+            }
+          )
+          .catch((err) => {
+            console.error(err);
+            setResults();
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
+    }
+  }, [searchParams, results]);
+  React.useEffect(() => {
+    api.search.species.list().then((r) => {
+      setSpeciesList(
+        r.data.species
+          .sort((a, b) => a.preferredDisplayOrder - b.preferredDisplayOrder)
+          .map(({ id, genus, speciesName }) => ({
+            id,
+            name: `${genus} ${speciesName}`,
+          }))
+      );
+    });
+  }, []);
 
   return (
     <>
       <div className="content has-text-centered">
-        <Bulma.Title size={4}>Anatomical homology</Bulma.Title>
+        <Bulma.Title size={3}>Anatomical homology</Bulma.Title>
       </div>
       <p>
         Retrieve anatomical homologies from a list of species and a list of
@@ -139,8 +228,8 @@ const AnatomicalHomologySearch = () => {
                       className="textarea has-fixed-size"
                       name="search-species"
                       rows="10"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
+                      value={anatomicalEntities}
+                      onChange={(e) => setAnatomicalEntities(e.target.value)}
                     />
                   </div>
                 </div>
@@ -149,13 +238,30 @@ const AnatomicalHomologySearch = () => {
                     Species to define least common ancestor
                   </label>
                   <div className="control checkboxes">
-                    {checkboxes.map(({ id, name }) => (
+                    <label
+                      className="checkbox is-size-7 p-1"
+                      onClick={onToggleSpecies('ALL')}
+                    >
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={speciesList.length === selectedSpecies.length}
+                      />
+                      <i>Select All</i>
+                    </label>
+                    {speciesList?.map(({ id, name }) => (
                       <label
-                        className="checkbox is-size-7"
+                        className="checkbox is-size-7 p-1"
                         key={id}
                         htmlFor={id}
+                        onClick={onToggleSpecies(id)}
                       >
-                        <input type="checkbox" name={id} />
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          name={id}
+                          checked={selectedSpecies.find((s) => s === id)}
+                        />
                         <i>{name}</i>
                       </label>
                     ))}
@@ -164,9 +270,23 @@ const AnatomicalHomologySearch = () => {
               </div>
               <div className="field">
                 <div className="control">
-                  <button className="button mr-2" type="button">
-                    Search
-                  </button>
+                  <div className="is-flex is-align-items-center">
+                    <button
+                      className="button mr-2"
+                      type="button"
+                      onClick={onSubmit}
+                    >
+                      Search
+                    </button>
+                    {error && (
+                      <span className="has-text-primary has-text-weight-semibold">
+                        {error === 'species' &&
+                          'You must select at least two species.'}
+                        {error === 'ae' &&
+                          'You must enter least one Uberon ID.'}
+                      </span>
+                    )}
+                  </div>
                   <p className="mt-2">
                     {`Example: `}
                     <Link className="internal-link" to="?search=HBB">
@@ -196,36 +316,66 @@ const AnatomicalHomologySearch = () => {
           </Bulma.Card.Body>
         </Bulma.Card>
       </div>
-      {results && (
+      {loading && (
+        <Bulma.Notification color="info" className="mt-5">
+          <p className="has-text-centered">Loading</p>
+          <progress
+            className="progress is-small"
+            max="100"
+            style={{ animationDuration: '3s', marginBottom: 12 }}
+          >
+            80%
+          </progress>
+        </Bulma.Notification>
+      )}
+      {!loading && results.signature && (
         <div>
           <Bulma.Title size={5} className="gradient-underline">
             Results
           </Bulma.Title>
           <p className="my-5">
-            Least common ancestor of provided species: Euteleostomi
+            Least common ancestor of provided species:{' '}
+            {results.data.leastCommonAncestor.scientificName}
           </p>
           <Table
             pagination
+            multiSortable
             sortable
+            onFilter={onFilter}
             classNamesTable="is-striped"
             columns={[
               {
                 text: 'Anatomical entities',
-                key: 'id',
+                key: 'ae',
               },
               {
                 text: 'Ancestral taxon',
-                key: 'name',
+                key: 'at',
               },
               {
                 text: 'Presence among selected species',
-                key: 'description',
+                key: 'ss',
               },
             ]}
-            data={results}
+            data={results?.data?.anatEntitySimilarities || []}
             customHeader={customHeader}
-            onRenderCell={onRenderCell(search)}
+            onRenderCell={onRenderCell(anatomicalEntities)}
           />
+          <span>
+            Anatomical entities without anatomical homology:{' '}
+            {results.data.anatEntitesWithNoSimilarityAnnotation.map(
+              (ann, key) => (
+                <React.Fragment key={ann.id}>
+                  <LinkExternal to={`http://purl.obolibrary.org/obo/${ann.id}`}>
+                    {`${ann.name} (${ann.id})`}
+                  </LinkExternal>
+                  {key + 1 !==
+                    results.data.anatEntitesWithNoSimilarityAnnotation.length &&
+                    ', '}
+                </React.Fragment>
+              )
+            )}
+          </span>
         </div>
       )}
     </>

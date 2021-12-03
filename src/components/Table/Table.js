@@ -126,7 +126,7 @@ const Table = ({
 
   const pageSizeSelector = React.useMemo(
     () =>
-      pagination && mappedData?.length > 10 ? (
+      pagination ? (
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
           <p className="mr-2">Show</p>
           <Select

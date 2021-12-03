@@ -14,7 +14,6 @@ import { NotificationContext } from '../../contexts/NotificationsContext';
 const Layout = ({ children }) => {
   const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();
-  console.log('LOCATION', loc);
   const { listen } = useHistory();
   const body = React.useMemo(
     () =>
