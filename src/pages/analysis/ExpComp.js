@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Table from '../../components/Table';
-import staticBuilder, { richTextBuilder } from '../../helpers/staticBuilder';
-import useQuery from '../../hooks/useQuery';
+import staticBuilder from '../../helpers/staticBuilder';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import PATHS from '../../routes/paths';
 import LinkExternal from '../../components/LinkExternal/LinkExternal';
-import {
-  MEDIA_QUERIES,
-  MEDIA_QUERIES_SIZE,
-} from '../../helpers/constants/mediaQueries';
-import useWindowSize from '../../hooks/useWindowSize';
 
 const KEYS = {
   'anat-entities': 0,
@@ -33,7 +27,7 @@ const AnatEntitiesCell = ({
       <>
         <LinkExternal
           content={condition.anatEntity.id}
-          to={`https://www.${condition.anatEntity.id}`}
+          to={`http://purl.obolibrary.org/obo/${condition.anatEntity.id}`}
         >
           <span>{condition.anatEntity.name}</span>
         </LinkExternal>
@@ -54,7 +48,7 @@ const AnatEntitiesCell = ({
       <>
         <LinkExternal
           content={multiSpeciesCondition.anatEntities[0].id}
-          to={`https://www.${multiSpeciesCondition.anatEntities[0].id}`}
+          to={`http://purl.obolibrary.org/obo/${multiSpeciesCondition.anatEntities[0].id}`}
         >
           <span>{itemConcat}</span>
         </LinkExternal>
@@ -85,18 +79,20 @@ const ExpandCell = ({ onClick }) => (
 );
 
 const GenesCell = ({ genes }) => {
-  const { width } = useWindowSize();
   const expandContent = () => {
     const renderContent = genes.map((item) => (
-      <div>
+      <div key={item.geneId}>
         <Link
-          style={{ textDecoration: 'true' }}
+          className="internal-link"
           content={item.geneId}
-          to={`https://www.${item.geneId}`}
+          to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+            ':geneId',
+            item.geneId
+          ).replace(':speciesId', item.species.id)}
         >
-          <span>{item.geneId}</span>
+          <span style={{ fontSize: 12 }}>{item.geneId}</span>
         </Link>
-        <span style={{ marginLeft: 5 }}>{item.name}</span>
+        <span style={{ marginLeft: 3, fontSize: 12 }}>{item.name}</span>
       </div>
     ));
     return renderContent;
@@ -105,11 +101,52 @@ const GenesCell = ({ genes }) => {
   return (
     <div
       style={{
-        minWidth:
-          width > MEDIA_QUERIES_SIZE[MEDIA_QUERIES.DESKTOP] ? 230 : undefined,
+        width: '180px',
       }}
     >
       <GeneItemNb itemTab={genes} />
+      <div className="expand-content">{expandContent()}</div>
+    </div>
+  );
+};
+
+const SpeciesCell = ({ genes }) => {
+  const speciesList = [];
+  genes.forEach((item) => {
+    if (speciesList.length === 0) {
+      speciesList.push(item.species);
+    } else if (
+      speciesList.find((element) => element.id === item.species.id) ===
+      undefined
+    ) {
+      speciesList.push(item.species);
+    }
+  });
+
+  const expandContent = () => {
+    const renderContent = speciesList.map((item) => (
+      <div key={item.id}>
+        <Link
+          className="internal-link"
+          content={item.id}
+          to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', item.id)}
+        >
+          <span style={{ fontSize: 12 }}>
+            {item.genus} {item.speciesName}
+          </span>
+        </Link>
+      </div>
+    ));
+    return renderContent;
+  };
+
+  return (
+    <div
+      style={{
+        width: '160px',
+      }}
+    >
+      <span>{speciesList.length} species</span>
       <div className="expand-content">{expandContent()}</div>
     </div>
   );
@@ -130,9 +167,9 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
     case 'gene-no-data':
       return <GenesCell genes={cell.genesNoData} />;
     case 'species-present':
-      return null;
+      return <SpeciesCell genes={cell.genesExpressionPresent} />;
     case 'species-absent':
-      return null;
+      return <SpeciesCell genes={cell.genesExpressionAbsent} />;
     case 8:
       return <ExpandCell key={key} onClick={expandAction} />;
     default:
@@ -216,15 +253,13 @@ const onSort = (sortKey, sortDirection) => (elementA, elementB) => {
 
 const ExpComp = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [hashResponse, setHashResponse] = useState('');
   const history = useHistory();
   const [searchRes, setSearchRes] = useState({});
 
   React.useEffect(() => {
     if (searchValue !== '') {
       api.topAnat.autoCompleteGenes(searchValue).then((res) => {
-        const tempHash = 'thisIsMyTemporaryHashInTheURL';
-        setHashResponse(tempHash);
+        console.log('auto complete genes list', res);
       });
     }
   }, [searchValue]);
@@ -234,13 +269,26 @@ const ExpComp = () => {
   };
 
   const handlerClickSearch = () => {
-    const geneList = 'ENSPPAG00000028134&ENSPPAG00000028135';
-    api.expressionComparison.getResults(geneList).then((res) => {
-      setSearchRes(res);
-    });
-    history.push(
-      PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT.replace(':hash', hashResponse)
-    );
+    if (searchValue && searchValue !== '') {
+      history.push(
+        PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT.replace(
+          ':hash',
+          searchValue
+        )
+      );
+      api.expressionComparison.getResults(searchValue).then((res) => {
+        console.log(res);
+        setSearchRes(res);
+        if (res?.storableParams?.hash) {
+          history.push(
+            PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT.replace(
+              ':hash',
+              res.storableParams.hash
+            )
+          );
+        }
+      });
+    }
   };
 
   return (
