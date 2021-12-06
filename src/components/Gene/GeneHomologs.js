@@ -237,7 +237,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                     {
                       key: 'details',
                       text: 'See details',
-                      hide: MEDIA_QUERIES.DESKTOP_HOMOLOGS,
+                      hide: MEDIA_QUERIES.TABLET,
                     },
                   ]}
                   data={homologs?.orthologsByTaxon}

@@ -11,6 +11,28 @@ import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 
+const DATA_TYPES = [
+  {
+    key: 'AFFYMETRIX',
+    text: 'Affymetrix',
+  },
+  {
+    key: 'EST',
+    text: 'EST',
+  },
+  {
+    key: 'IN_SITU',
+    text: 'In Situ',
+  },
+  {
+    key: 'RNA_SEQ',
+    text: 'RNA Seq',
+  },
+  {
+    key: 'FULL_LENGTH',
+    text: 'Full Length single cell RNA-Seq',
+  },
+];
 const CUSTOM_FIELDS = [
   {
     key: 'anat',
@@ -136,9 +158,11 @@ const GeneExpression = ({
 }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
+  const dataTypeExpr = useQuery('data_type');
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
+  const [dataType, setDataTypes] = React.useState(DATA_TYPES.map((d) => d.key));
 
   useEffect(() => {
     if (data?.calls.length) {
@@ -159,13 +183,21 @@ const GeneExpression = ({
       .reduce((acc, [key, value]) => (value ? [...acc, key] : acc), [])
       .sort()
       .join(',');
-    return oldQuery === (hashExpr || 'anat');
-  }, [cFields, hashExpr]);
+
+    const oldDataType = (
+      dataTypeExpr?.split(',') || DATA_TYPES.map((d) => d.key)
+    ).sort();
+
+    return (
+      oldQuery === (hashExpr || 'anat') &&
+      JSON.stringify(dataType.sort()) === JSON.stringify(oldDataType)
+    );
+  }, [cFields, hashExpr, dataType, dataTypeExpr]);
 
   const customHeader = React.useCallback(
     (searchElement, pageSizeElement) => (
       <>
-        <div className="is-flex">
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper">
           {CUSTOM_FIELDS.map((c) => (
             <label
               className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
@@ -186,13 +218,88 @@ const GeneExpression = ({
           ))}
           <Bulma.Button
             className="search-form"
+            disabled={
+              JSON.stringify(Object.keys(cFields).sort()) ===
+              JSON.stringify(CUSTOM_FIELDS.map((d) => d.key).sort())
+            }
+            onClick={() => {
+              const obj = {};
+              CUSTOM_FIELDS.forEach((c) => {
+                obj[c.key] = true;
+              });
+              setCFields(obj);
+            }}
+          >
+            Select All
+          </Bulma.Button>
+          <Bulma.Button
+            className="search-form"
+            disabled={dataType.length === 0}
+            onClick={() => setCFields({})}
+          >
+            Unselect All
+          </Bulma.Button>
+        </div>
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
+          {DATA_TYPES.map((c) => (
+            <label
+              className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
+              key={c.key}
+            >
+              <input
+                type="checkbox"
+                checked={dataType.find((d) => d === c.key) || false}
+                onChange={(e) => {
+                  setDataTypes((prev) => {
+                    const curr = [...prev];
+                    if (e.target.checked) {
+                      curr.push(c.key);
+                    } else {
+                      const pos = curr.findIndex((d) => d === c.key);
+                      if (pos >= 0) curr.splice(pos, 1);
+                    }
+                    return curr;
+                  });
+                }}
+              />
+              <b className="mx-1">{c.text}</b>
+            </label>
+          ))}
+          <Bulma.Button
+            className="search-form"
+            disabled={
+              JSON.stringify(dataType.sort()) ===
+              JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+            }
+            onClick={() => setDataTypes(DATA_TYPES.map((d) => d.key))}
+          >
+            Select All
+          </Bulma.Button>
+          <Bulma.Button
+            className="search-form"
+            disabled={dataType.length === 0}
+            onClick={() => setDataTypes([])}
+          >
+            Unselect All
+          </Bulma.Button>
+        </div>
+        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
+          <Bulma.Button
+            className="search-form"
             disabled={formSearchButtonIsDisabled}
             onClick={() => {
               const query = Object.entries(cFields).reduce(
                 (acc, [key, value]) => (value ? [...acc, key] : acc),
                 []
               );
-              history.replace(`?expression=${query.join(',')}`);
+              let dtQuery = dataType.join(',');
+              if (dtQuery.length > 0) dtQuery = `&data_type=${dtQuery}`;
+              if (
+                JSON.stringify(dataType.sort()) ===
+                JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+              )
+                dtQuery = '';
+              history.replace(`?expression=${query.join(',')}${dtQuery}`);
             }}
           >
             Update
@@ -208,7 +315,7 @@ const GeneExpression = ({
         </Bulma.Columns>
       </>
     ),
-    [isLoading, cFields]
+    [isLoading, cFields, dataType]
   );
   const onRenderCell = React.useCallback(
     ({ cell, key }, defaultRender) => {
@@ -330,7 +437,7 @@ const GeneExpression = ({
             </div>
           );
         default:
-          return defaultRender(key, key);
+          return defaultRender(cell?.[key] || key, key);
       }
     },
     [columns]
@@ -361,8 +468,15 @@ const GeneExpression = ({
       });
     } else fields.anat = true;
     setCFields(fields);
+
+    let dt;
+    if (dataTypeExpr) {
+      dt = dataTypeExpr.split(',');
+    } else dt = DATA_TYPES.map((d) => d.key);
+    setDataTypes(dt);
+
     api.search.genes
-      .expression(geneId, speciesId, fields)
+      .expression(geneId, speciesId, fields, !dataTypeExpr ? ['all'] : dt)
       .then((res) => {
         setData(res.data);
         if (
@@ -377,10 +491,11 @@ const GeneExpression = ({
         setData();
       })
       .finally(() => setIsLoading(false));
+
     return () => {
       schemaDotOrg.unsetGeneExpressionLdJSON();
     };
-  }, [hashExpr]);
+  }, [hashExpr, dataTypeExpr]);
 
   return (
     <>
@@ -402,21 +517,23 @@ const GeneExpression = ({
               >
                 80%
               </progress>
-            )}{' '}
+            )}
             {!isLoading && data && (
               <>
                 <Table
+                  identifierAtFilter
                   columns={columns}
                   data={data.calls}
                   onRenderCell={onRenderCell}
                   pagination
+                  name="GeneExpression"
                   onFilter={onFilter}
                   customHeader={customHeader}
                   onRenderRow={(row, prev) => {
                     if (prev && row.clusterIndex > prev.clusterIndex) {
-                      return 'gap-cluster';
+                      return 'gene-expr-row gap-cluster';
                     }
-                    return '';
+                    return 'gene-expr-row';
                   }}
                 />
 

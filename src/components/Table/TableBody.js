@@ -6,6 +6,7 @@ import { TableContext } from '../../contexts/TableContext';
 import Bulma from '../Bulma';
 import { ModalContext } from '../../contexts/ModalContext';
 import staticBuilder from '../../helpers/staticBuilder';
+import uuid from '../../helpers/uuid';
 
 const PlusModalCell = ({ row, defaultRender }) => {
   const { showModal, hideModal } = React.useContext(ModalContext);
@@ -81,7 +82,7 @@ const TableBody = () => {
       }
       if (typeof cell === 'string' || typeof cell === 'number')
         return (
-          <span key={key} style={style}>
+          <span key={key + uuid()} style={style}>
             {cell}
           </span>
         );
