@@ -219,8 +219,8 @@ const GeneExpression = ({
           <Bulma.Button
             className="search-form"
             disabled={
-              JSON.stringify(dataType.sort()) ===
-              JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+              JSON.stringify(Object.keys(cFields).sort()) ===
+              JSON.stringify(CUSTOM_FIELDS.map((d) => d.key).sort())
             }
             onClick={() => {
               const obj = {};
