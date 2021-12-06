@@ -42,3 +42,18 @@ export const customGeneListSorter =
     }
     return 0;
   };
+
+export const customAnatomicalHomologySorter = (sortOpts) => (a, b) => {
+  if (Array.isArray(sortOpts)) {
+    for (let i = 0; i < sortOpts.length; i += 1) {
+      const diff = monoSort({
+        ...sortOpts[i],
+        key: `${sortOpts[i].key}Sorter`,
+      })(a, b);
+      if (diff !== 0) return diff;
+    }
+  } else {
+    return monoSort({ ...sortOpts, key: `${sortOpts.key}Sorter` })(a, b);
+  }
+  return 0;
+};

@@ -119,10 +119,8 @@ const GeneDetails = ({
             <GeneSearch />
             <div className="content is-align-items-center is-flex">
               <Bulma.Image
-                className="m-0 mr-2"
+                className="m-0 mr-2 species-img"
                 src={imagePath(`/species/${species.id}_light.jpg`)}
-                height={50}
-                width={50}
               />
               <p className="title is-size-3 has-text-centered">
                 {`Gene : ${name} - ${geneId} - `}
@@ -228,7 +226,6 @@ const GeneDetails = ({
             setIsExpression={setIsExpression}
             isExpression={isExpression}
           />
-          )
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}

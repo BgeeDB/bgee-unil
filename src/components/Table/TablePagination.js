@@ -8,6 +8,7 @@ import { TableContext } from '../../contexts/TableContext';
 
 const TablePagination = () => {
   const {
+    name,
     table,
     data,
     usedWidth,
@@ -31,9 +32,10 @@ const TablePagination = () => {
     [data, currentPage, pageSize]
   );
   const totalPage = React.useMemo(
-    () => Math.round(data.length / pageSize) || 1,
+    () => Math.ceil(data.length / pageSize) || 1,
     [data, pageSize]
   );
+
   return (
     <div
       ref={table}
