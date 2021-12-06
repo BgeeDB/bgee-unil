@@ -74,7 +74,6 @@ const TableBody = () => {
   const defaultRender = React.useCallback(
     (cell, key) => {
       let style;
-      // todo hide column @ onResize
       const col = columns.find((c) => c?.key === key);
       if (col && col.style) {
         style = columns.find((c) => c?.key === key).style;

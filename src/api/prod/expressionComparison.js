@@ -40,11 +40,16 @@ const expressionComparison = {
               speciesPresent = new Set();
               let filterAnatEntities = '';
               if (r.condition) {
-                filterAnatEntities = r.condition.anatEntity.name;
-                // todo add celltype
-                // if (r.condition.cellType)
+                if (r.condition.cellType)
+                  filterAnatEntities = `${r.condition.cellType.name} in `;
+                filterAnatEntities += r.condition.anatEntity.name;
               } else if (r.multiSpeciesCondition) {
-                filterAnatEntities = r.multiSpeciesCondition.anatEntities
+                if (r.multiSpeciesCondition.cellTypes) {
+                  filterAnatEntities = `${r.multiSpeciesCondition.cellTypes
+                    .map((a) => a.name)
+                    .join(', ')} in `;
+                }
+                filterAnatEntities += r.multiSpeciesCondition.anatEntities
                   .map((a) => a.name)
                   .join(', ');
               }

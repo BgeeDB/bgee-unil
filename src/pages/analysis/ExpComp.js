@@ -21,10 +21,20 @@ const AnatEntitiesCell = ({
   multiSpeciesCondition = null,
   condition = null,
 }) => {
-  // todo add cell types
   if (condition) {
     return (
       <>
+        {condition.cellType && (
+          <>
+            <LinkExternal
+              content={condition.cellType.id}
+              to={`http://purl.obolibrary.org/obo/${condition.cellType.id}`}
+            >
+              <span>{condition.cellType.name}</span>
+            </LinkExternal>
+            <i> in </i>
+          </>
+        )}
         <LinkExternal
           content={condition.anatEntity.id}
           to={`http://purl.obolibrary.org/obo/${condition.anatEntity.id}`}
@@ -36,24 +46,33 @@ const AnatEntitiesCell = ({
   }
 
   if (multiSpeciesCondition) {
-    let itemConcat = '';
-    multiSpeciesCondition.anatEntities.forEach((item) => {
-      if (itemConcat !== '') {
-        itemConcat = `${itemConcat}, ${item.name}`;
-      }
-      itemConcat = `${item.name}`;
+    const items = [];
+    if (multiSpeciesCondition.cellTypes) {
+      multiSpeciesCondition.cellTypes.forEach((cellType, key) => {
+        items.push(
+          <LinkExternal
+            key={cellType.id}
+            to={`http://purl.obolibrary.org/obo/${cellType.id}`}
+          >
+            <span>{cellType.name}</span>
+          </LinkExternal>
+        );
+        if (key + 1 !== multiSpeciesCondition.cellTypes.length)
+          items.push(<span key={`separator-${cellType.id}`}>, </span>);
+      });
+      items.push(<i key="separator-in"> in </i>);
+    }
+    multiSpeciesCondition.anatEntities.forEach((item, key) => {
+      items.push(
+        <LinkExternal to={`http://purl.obolibrary.org/obo/${item.id}`}>
+          <span>{item.name}</span>
+        </LinkExternal>
+      );
+      if (key + 1 !== multiSpeciesCondition.anatEntities.length)
+        items.push(<span key={`separator-${item.id}`}>, </span>);
     });
 
-    return (
-      <>
-        <LinkExternal
-          content={multiSpeciesCondition.anatEntities[0].id}
-          to={`http://purl.obolibrary.org/obo/${multiSpeciesCondition.anatEntities[0].id}`}
-        >
-          <span>{itemConcat}</span>
-        </LinkExternal>
-      </>
-    );
+    return items;
   }
   return null;
 };
@@ -182,9 +201,14 @@ const dataToTsv = (data) => {
   data.forEach((d) => {
     let ids = '';
     if (d.multiSpeciesCondition) {
+      if (d.multiSpeciesCondition.cellTypes)
+        ids = `${d.multiSpeciesCondition.cellTypes
+          .map((a) => a.id)
+          .join(', ')} in `;
       ids = d.multiSpeciesCondition.anatEntities.map((a) => a.id).join(', ');
     } else if (d.condition) {
-      ids = d.condition.anatEntity.id;
+      if (d.condition.cellType) ids = `${d.condition.cellType.id} in `;
+      ids += d.condition.anatEntity.id;
     }
     tsv += `${[
       d.filterAnatEntities,
@@ -261,22 +285,27 @@ const onFilter = (search) => (element) => {
     regExp.test(element.conservationScore) ||
     regExp.test(element.maxExpressionScore);
 
-  // todo multiSpeciesCondition or condition
-  for (
-    let i = 0;
-    i < element.multiSpeciesCondition.anatEntities.length && !hasMatch;
-    i += 1
-  ) {
-    if (regExp.test(element.multiSpeciesCondition.anatEntities[i].name))
-      hasMatch = true;
-  }
-  for (
-    let i = 0;
-    i < element.multiSpeciesCondition.cellTypes.length && !hasMatch;
-    i += 1
-  ) {
-    if (regExp.test(element.multiSpeciesCondition.cellTypes[i].name))
-      hasMatch = true;
+  if (element.multiSpeciesCondition) {
+    for (
+      let i = 0;
+      i < element.multiSpeciesCondition.anatEntities.length && !hasMatch;
+      i += 1
+    ) {
+      if (regExp.test(element.multiSpeciesCondition.anatEntities[i].name))
+        hasMatch = true;
+    }
+    for (
+      let i = 0;
+      i < element.multiSpeciesCondition.cellTypes.length && !hasMatch;
+      i += 1
+    ) {
+      if (regExp.test(element.multiSpeciesCondition.cellTypes[i].name))
+        hasMatch = true;
+    }
+  } else if (element.condition) {
+    hasMatch =
+      regExp.test(element.condition.anaEntity.name) ||
+      regExp.test(element.condition.cellType.name);
   }
 
   for (
@@ -381,7 +410,7 @@ const ExpComp = () => {
       api.topAnat.autoCompleteGenes(searchValue).then((res) => {
         setUnknownGenes(res.data.fg_list.undeterminedGeneIds);
       });
-    }
+    } else setUnknownGenes();
   }, [searchValue]);
 
   const handlerClickSearch = () => {
@@ -409,29 +438,30 @@ const ExpComp = () => {
   };
 
   React.useEffect(() => {
-    if (searchParams !== results?.signature) {
-      if (results?.signature) history.replace(`?${results.signature}`);
-      else if (searchParams) {
-        setLoading(true);
-        api.expressionComparison
-          .getResults({ type: 'query', data: searchParams })
-          .then(
-            ({ data, storableParams: { queryString }, requestParameters }) => {
-              setResults({
-                signature: queryString,
-                data,
-              });
-              setSearchValue(requestParameters?.gene_list.join('\n'));
-            }
-          )
-          .catch((err) => {
-            console.error(err);
-            setResults();
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
+    if (searchParams && searchParams.replace('?', '') !== results?.signature) {
+      setLoading(true);
+      console.log(searchParams, results?.signature);
+      api.expressionComparison
+        .getResults({ type: 'query', data: searchParams })
+        .then(
+          ({ data, storableParams: { queryString }, requestParameters }) => {
+            setResults({
+              signature: queryString,
+              data,
+            });
+            setSearchValue(requestParameters?.gene_list.join('\n'));
+          }
+        )
+        .catch((err) => {
+          console.error(err);
+          setResults({ ...DEFAULT_RESULTS, signature: searchParams });
+          if (err.data.requestParameters?.gene_list)
+            setSearchValue(err.data.requestParameters?.gene_list.join('\n'));
+          else setSearchValue('');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [searchParams, results]);
   return (
@@ -480,7 +510,10 @@ const ExpComp = () => {
                       SRRM4 (brain specific genes)
                     </Link>
                     {', '}
-                    <Link className="internal-link" to="?data=8798798749849841">
+                    <Link
+                      className="internal-link"
+                      to="?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823"
+                    >
                       Hoxd12 (development pattern genes)
                     </Link>
                   </p>
@@ -490,7 +523,7 @@ const ExpComp = () => {
           </Bulma.Card>
         </div>
       </div>
-      {unknownGenes && (
+      {unknownGenes && unknownGenes.length > 0 && (
         <p>
           Unknown Ensembl IDs:{' '}
           {unknownGenes.map((g, key) => (
@@ -513,7 +546,7 @@ const ExpComp = () => {
           </progress>
         </Bulma.Notification>
       )}
-      {!loading && results.signature && (
+      {!loading && results.signature && results.data && (
         <div>
           <div className="mb-2">
             <h1 className="gradient-underline title is-size-4 has-text-primary        ">
