@@ -102,9 +102,9 @@ const AnatomicalHomologySearch = () => {
           } else {
             curr.push(speciesId);
           }
-        } else if (curr.length === speciesList.length) {
-          curr = [];
-        } else curr = speciesList.map(({ id }) => id);
+        } else if (curr.length !== speciesList.length)
+          curr = speciesList.map((s) => s.id);
+        else curr = [];
         return curr;
       });
     },
@@ -142,6 +142,7 @@ const AnatomicalHomologySearch = () => {
           signature: queryString,
           data,
         });
+        history.push(`?${queryString}`);
       })
       .catch((err) => {
         console.error(err);
@@ -237,11 +238,13 @@ const AnatomicalHomologySearch = () => {
                   <div className="control checkboxes">
                     <label
                       className="checkbox is-size-7 p-1"
+                      htmlFor="ALL"
                       onClick={onToggleSpecies('ALL')}
                     >
                       <input
                         type="checkbox"
                         className="mr-2"
+                        name="ALL"
                         checked={speciesList.length === selectedSpecies.length}
                       />
                       <i>Select All</i>
@@ -375,7 +378,7 @@ const AnatomicalHomologySearch = () => {
             customHeader={customHeader}
             onRenderCell={onRenderCell(anatomicalEntities)}
           />
-          {results.data.unrecognizedAnatEntityIds?.length && (
+          {results.data.unrecognizedAnatEntityIds?.length > 0 && (
             <p className="mt-2">
               Anatomical entities IDs unknown:{' '}
               {results.data.unrecognizedAnatEntityIds.map((ann, key) => (
