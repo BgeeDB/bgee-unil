@@ -96,7 +96,7 @@ const TopAnatResult = ({
   );
   const dataCsvHref = React.useMemo(() => {
     let csvContent =
-      'data:text/csv;charset=utf-8,Anat Entity ID;Anat Entity ID;Annotated;Significant;Expected;Fold Enrichment;P value;Fdr\n';
+      'data:text/csv;charset=utf-8,Anat Entity ID\tAnat Entity ID\tAnnotated\tSignificant\tExpected\tFold Enrichment\tP value\tFdr\n';
     if (results?.data)
       results?.data.forEach((row) => {
         csvContent += `${row.anatEntityId}\t${row.anatEntityName}\t${row.annotated}\t${row.significant}\t${row.expected}\t${row.foldEnrichment}\t${row.pValue}\t${row.FDR}\n`;
@@ -214,7 +214,7 @@ const TopAnatResult = ({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>CSV</span>
+                    <span>TSV</span>
                     <span className="icon is-small">
                       <ion-icon name="download-outline" />
                     </span>

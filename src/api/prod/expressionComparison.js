@@ -8,18 +8,21 @@ export const EXPRESSION_COMPARISON_API = {
   getResults: null,
 };
 
-const DEFAULT_PARAMETERS = (page = 'expression_comparison') => {
-  const params = new URLSearchParams();
-  params.append('page', page);
+const DEFAULT_PARAMETERS = (queryBase) => {
+  const params = new URLSearchParams(queryBase);
+  params.append('page', 'expression_comparison');
 
   return params;
 };
 
 const expressionComparison = {
-  getResults: (geneList) =>
+  getResults: ({ type, data: dataForm }) =>
     new Promise((resolve, reject) => {
-      const params = DEFAULT_PARAMETERS();
-      params.append('gene_list', geneList);
+      const params = DEFAULT_PARAMETERS(
+        type === 'query' ? dataForm : undefined
+      );
+      if (type === 'query') params.append('display_rp', '1');
+      if (type === 'form') params.append('gene_list', dataForm);
       params.append('display_type', 'json');
       axiosInstance
         .get(`/?${params.toString()}`, {
@@ -27,7 +30,48 @@ const expressionComparison = {
             EXPRESSION_COMPARISON_API.getResults = c;
           }),
         })
-        .then(({ data }) => resolve(data))
+        .then(({ data }) => {
+          const formatted = JSON.parse(JSON.stringify(data));
+          let speciesAbsent;
+          let speciesPresent;
+          formatted.data.comparisonResults =
+            formatted.data.comparisonResults.map((r) => {
+              speciesAbsent = new Set();
+              speciesPresent = new Set();
+              let filterAnatEntities = '';
+              if (r.condition) {
+                filterAnatEntities = r.condition.anatEntity.name;
+                // todo add celltype
+                // if (r.condition.cellType)
+              } else if (r.multiSpeciesCondition) {
+                filterAnatEntities = r.multiSpeciesCondition.anatEntities
+                  .map((a) => a.name)
+                  .join(', ');
+              }
+              return {
+                ...r,
+                filterAnatEntities,
+                countGenesExprAbsent: r.genesExpressionAbsent.length,
+                countGenesExprPresent: r.genesExpressionPresent.length,
+                countGenesNoData: r.genesNoData.length,
+                countSpeciesExprAbsent: r.genesExpressionAbsent
+                  .map((g) => g.species)
+                  .filter((el) => {
+                    const duplicate = speciesAbsent.has(el.id);
+                    speciesAbsent.add(el.id);
+                    return !duplicate;
+                  }).length,
+                countSpeciesExprPresent: r.genesExpressionPresent
+                  .map((g) => g.species)
+                  .filter((el) => {
+                    const duplicate = speciesPresent.has(el.id);
+                    speciesPresent.add(el.id);
+                    return !duplicate;
+                  }).length,
+              };
+            });
+          resolve(formatted);
+        })
         .catch((error) => {
           if (
             error?.response?.data?.code === 400 &&

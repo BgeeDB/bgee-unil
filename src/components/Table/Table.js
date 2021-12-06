@@ -23,6 +23,7 @@ const Table = ({
   sortable = false,
   multiSortable = false,
   onSortCustom,
+  initialSorting,
   onRenderCell,
   onRenderRow, // function that generate custom css classes depending of
   striped = true,
@@ -42,7 +43,7 @@ const Table = ({
     [table, width]
   );
 
-  const [sortOption, setSortOption] = React.useState();
+  const [sortOption, setSortOption] = React.useState(initialSorting);
   const defineSortOption = React.useCallback(
     (key) => (event) => {
       if (sortable) {
@@ -137,11 +138,6 @@ const Table = ({
     const filtered =
       search === '' || !onFilter ? clone : clone.filter(onFilter(search));
     if (sortOption) {
-      console.log(
-        'SORT',
-        Array.isArray(sortOption) ? 'multi' : 'single',
-        onSortCustom ? 'custom' : 'default'
-      );
       filtered.sort(
         (Array.isArray(sortOption)
           ? onSortCustom || multiSort
