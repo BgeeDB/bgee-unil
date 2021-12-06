@@ -23,7 +23,6 @@ const GeneDetails = ({
   const [isLoading, setIsLoading] = React.useState(true);
   const [homologs, setHomologs] = React.useState();
   const [xRefs, setXRefs] = React.useState();
-  const [isExpression, setIsExpression] = React.useState(false);
 
   React.useEffect(() => {
     Promise.allSettled([
@@ -106,11 +105,7 @@ const GeneDetails = ({
         <div className="sidebar">
           <div className="side-menu">
             <div className="side-menu-wrapper">
-              <GeneDetailsSideMenu
-                homologs={homologs}
-                isExpression={isExpression}
-                xRefs={xRefs}
-              />
+              <GeneDetailsSideMenu homologs={homologs} xRefs={xRefs} />
             </div>
           </div>
         </div>
@@ -220,12 +215,7 @@ const GeneDetails = ({
               )}
             </div>
           </div>
-          <GeneExpression
-            geneId={geneId}
-            speciesId={species.id}
-            setIsExpression={setIsExpression}
-            isExpression={isExpression}
-          />
+          <GeneExpression geneId={geneId} speciesId={species.id} />
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}

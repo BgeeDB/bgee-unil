@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
-const GeneDetailsSideMenu = ({ homologs = null, isExpression, xRefs }) => {
+const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -27,14 +27,12 @@ const GeneDetailsSideMenu = ({ homologs = null, isExpression, xRefs }) => {
             General information
           </a>
         </li>
-        {isExpression && (
-          <li
-            key={GENE_DETAILS_HTML_IDS.EXPRESSION}
-            onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION)}
-          >
-            <a className="is-size-5 has-text-weight-semibold">Expression</a>
-          </li>
-        )}
+        <li
+          key={GENE_DETAILS_HTML_IDS.EXPRESSION}
+          onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION)}
+        >
+          <a className="is-size-5 has-text-weight-semibold">Expression</a>
+        </li>
         {homologs?.orthologs > 0 && (
           <li
             key={GENE_DETAILS_HTML_IDS.ORTHOLOGS}

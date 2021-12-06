@@ -150,12 +150,7 @@ const AnatEntityCell = ({ cell }) => {
   return <>{cellInfo}</>;
 };
 
-const GeneExpression = ({
-  geneId,
-  speciesId,
-  setIsExpression,
-  isExpression,
-}) => {
+const GeneExpression = ({ geneId, speciesId, isExpression }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
   const dataTypeExpr = useQuery('data_type');
@@ -163,14 +158,6 @@ const GeneExpression = ({
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
   const [dataType, setDataTypes] = React.useState(DATA_TYPES.map((d) => d.key));
-
-  useEffect(() => {
-    if (data?.calls.length) {
-      setIsExpression(true);
-    } else {
-      setIsExpression(false);
-    }
-  }, [data]);
 
   const columns = React.useMemo(columnsGenerator(cFields, data), [
     cFields,
@@ -499,44 +486,43 @@ const GeneExpression = ({
 
   return (
     <>
-      {isExpression && (
-        <div>
-          <Bulma.Title
-            size={4}
-            className="gradient-underline"
-            id={GENE_DETAILS_HTML_IDS.EXPRESSION}
+      <Bulma.Title
+        size={4}
+        className="gradient-underline"
+        id={GENE_DETAILS_HTML_IDS.EXPRESSION}
+      >
+        Expression
+      </Bulma.Title>
+      <div>
+        {isLoading && (
+          <progress
+            className="progress is-small"
+            max="100"
+            style={{ animationDuration: '4s' }}
           >
-            Expression
-          </Bulma.Title>
-          <div>
-            {isLoading && (
-              <progress
-                className="progress is-small"
-                max="100"
-                style={{ animationDuration: '4s' }}
-              >
-                80%
-              </progress>
-            )}
-            {!isLoading && data && (
+            80%
+          </progress>
+        )}
+        {!isLoading && data && (
+          <>
+            <Table
+              identifierAtFilter
+              columns={columns}
+              data={data.calls}
+              onRenderCell={onRenderCell}
+              pagination
+              name="GeneExpression"
+              onFilter={onFilter}
+              customHeader={customHeader}
+              onRenderRow={(row, prev) => {
+                if (prev && row.clusterIndex > prev.clusterIndex) {
+                  return 'gene-expr-row gap-cluster';
+                }
+                return 'gene-expr-row';
+              }}
+            />
+            {data.calls.length > 0 && (
               <>
-                <Table
-                  identifierAtFilter
-                  columns={columns}
-                  data={data.calls}
-                  onRenderCell={onRenderCell}
-                  pagination
-                  name="GeneExpression"
-                  onFilter={onFilter}
-                  customHeader={customHeader}
-                  onRenderRow={(row, prev) => {
-                    if (prev && row.clusterIndex > prev.clusterIndex) {
-                      return 'gene-expr-row gap-cluster';
-                    }
-                    return 'gene-expr-row';
-                  }}
-                />
-
                 <p className="has-text-weight-semibold is-underlined mt-0">
                   Sources
                 </p>
@@ -620,59 +606,59 @@ const GeneExpression = ({
                   Scores are normalized and comparable across genes, conditions
                   and species.
                 </p>
-                <Bulma.Columns>
-                  <Bulma.Column size={4}>
-                    <p className="is-size-7">
-                      Sources of annotations to anatomy and development:
-                    </p>
-                    <ul className="unordered">
-                      {!!data?.gene?.species &&
-                        data.gene.species.sourcesOfAnnotationsPerDataType.map(
-                          (d, key) => (
-                            <li key={key} className="is-size-7">
-                              {`${d.dataType} data: `}
-                              {d.sources.map((s, sKey) => (
+              </>
+            )}
+            {data?.gene?.species && (
+              <Bulma.Columns>
+                <Bulma.Column size={4}>
+                  <p className="is-size-7">
+                    Sources of annotations to anatomy and development:
+                  </p>
+                  <ul className="unordered">
+                    {!!data?.gene?.species &&
+                      data.gene.species.sourcesOfAnnotationsPerDataType.map(
+                        (d, key) => (
+                          <li key={key} className="is-size-7">
+                            {`${d.dataType} data: `}
+                            {d.sources.map((s, sKey) => (
+                              <LinkExternal key={sKey} to={s.baseUrl}>
+                                {s.name}
+                              </LinkExternal>
+                            ))}
+                          </li>
+                        )
+                      )}
+                  </ul>
+                </Bulma.Column>
+                <Bulma.Column size={4}>
+                  <p className="is-size-7">Sources of raw data:</p>
+                  <ul className="unordered">
+                    {!!data?.gene?.species &&
+                      data.gene.species.sourcesOfDataPerDataType.map(
+                        (d, key) => (
+                          <li key={key} className="is-size-7">
+                            {`${d.dataType} data: `}
+                            {d.sources.reduce((acc, s, sKey) => {
+                              if (sKey !== 0)
+                                acc.push(<span key={`comma-${sKey}`}>, </span>);
+                              acc.push(
                                 <LinkExternal key={sKey} to={s.baseUrl}>
                                   {s.name}
                                 </LinkExternal>
-                              ))}
-                            </li>
-                          )
-                        )}
-                    </ul>
-                  </Bulma.Column>
-                  <Bulma.Column size={4}>
-                    <p className="is-size-7">Sources of raw data:</p>
-                    <ul className="unordered">
-                      {!!data?.gene?.species &&
-                        data.gene.species.sourcesOfDataPerDataType.map(
-                          (d, key) => (
-                            <li key={key} className="is-size-7">
-                              {`${d.dataType} data: `}
-                              {d.sources.reduce((acc, s, sKey) => {
-                                if (sKey !== 0)
-                                  acc.push(
-                                    <span key={`comma-${sKey}`}>, </span>
-                                  );
-                                acc.push(
-                                  <LinkExternal key={sKey} to={s.baseUrl}>
-                                    {s.name}
-                                  </LinkExternal>
-                                );
-                                return acc;
-                              }, [])}
-                            </li>
-                          )
-                        )}
-                    </ul>
-                  </Bulma.Column>
-                </Bulma.Columns>
-              </>
+                              );
+                              return acc;
+                            }, [])}
+                          </li>
+                        )
+                      )}
+                  </ul>
+                </Bulma.Column>
+              </Bulma.Columns>
             )}
-            {!isLoading && !data && <span>No data</span>}
-          </div>
-        </div>
-      )}
+          </>
+        )}
+        {!isLoading && !data && <span>No data</span>}
+      </div>
     </>
   );
 };
