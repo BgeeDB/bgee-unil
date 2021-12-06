@@ -34,11 +34,22 @@ class Page extends React.PureComponent {
       );
 
     const { Component, title, ...props } = this.props;
+    console.log(ROUTES[props.location.pathname]);
+    const { meta } = ROUTES[props.location.pathname];
     return (
       <>
-        {(title || ROUTES[props.location.pathname]?.title) && (
+        {!meta && (title || ROUTES[props.location.pathname]?.title) && (
           <Helmet>
             <title>{title || ROUTES[props.location.pathname].name}</title>
+          </Helmet>
+        )}
+        {meta && (
+          <Helmet>
+            {meta.title && <title>{meta.title}</title>}
+            {meta.description && (
+              <meta name="description" content={meta.description} />
+            )}
+            {meta.keywords && <meta name="keywords" content={meta.keywords} />}
           </Helmet>
         )}
         <Component {...props} />

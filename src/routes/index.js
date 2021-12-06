@@ -173,6 +173,17 @@ const Router = () => (
               />
               <Route
                 exact
+                path={PATHS.ABOUT.SOURCES}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ABOUT.SOURCES].component}
+                  />
+                )}
+              />
+
+              <Route
+                exact
                 path={[
                   PATHS.RESOURCES.DOCS,
                   PATHS.RESOURCES.R_PACKAGES,
@@ -184,7 +195,6 @@ const Router = () => (
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
-                  PATHS.ABOUT.SOURCES,
                   PATHS.ABOUT.PRIVACY_POLICY,
                 ]}
                 render={(props) => <Page {...props} Component={StaticPage} />}

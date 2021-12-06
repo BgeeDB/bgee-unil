@@ -29,12 +29,12 @@ import FaqFile from '../static/support/faq';
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
-import AboutSourceFile from '../static/about/sources';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
+import DataSource from '../pages/about/DataSource';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -211,7 +211,7 @@ const ABOUT = {
     },
   },
   [PATHS.ABOUT.SOURCES]: {
-    source: AboutSourceFile,
+    component: DataSource,
     title: 'Bgee source',
     meta: {
       title: 'Data sources',
