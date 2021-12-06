@@ -622,6 +622,14 @@ label.label.not-default,span.not-default {
   margin-right: 0;
 }
 
+@media only screen and (max-width: 600px) {
+  .tablet-flex-direction-column {
+    flex-direction: column-reverse !important;
+    & > * {
+      margin: 5px 0;
+    }
+  }
+}
 @media only screen and (max-width: $tablet) {
   .section {
     padding: 1rem 0rem;
