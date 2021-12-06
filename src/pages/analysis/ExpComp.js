@@ -47,7 +47,10 @@ const AnatEntitiesCell = ({
 
   if (multiSpeciesCondition) {
     const items = [];
-    if (multiSpeciesCondition.cellTypes) {
+    if (
+      multiSpeciesCondition.cellTypes &&
+      multiSpeciesCondition.cellTypes.length > 0
+    ) {
       multiSpeciesCondition.cellTypes.forEach((cellType, key) => {
         items.push(
           <LinkExternal
