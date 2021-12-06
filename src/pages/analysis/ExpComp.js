@@ -6,6 +6,7 @@ import Bulma from '../../components/Bulma';
 import api from '../../api';
 import PATHS from '../../routes/paths';
 import LinkExternal from '../../components/LinkExternal/LinkExternal';
+import classnames from '../../helpers/classnames';
 
 const KEYS = {
   'anat-entities': 0,
@@ -307,47 +308,54 @@ const ExpComp = () => {
             },
           ])}
           <div className="is-flex is-justify-content-center my-3">
-            <div className="message" style={{ maxWidth: '500px' }}>
-              <header className="message-header">
-                <p className="is-size-5">Gene list</p>
-              </header>
-              <div className="message-body">
-                <div className="field">
-                  <div className="control">
-                    <textarea
-                      className="textarea is-small"
-                      placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
-                      rows="10"
-                      onChange={handlerChange}
-                    />
+            <Bulma.Card className={classnames('form')}>
+              <Bulma.Card.Body>
+                <div className="content">
+                  <div className="field">
+                    <label className="has-text-weight-semibold">
+                      Gene list
+                    </label>
+                    <div className="control">
+                      <textarea
+                        className="textarea is-small"
+                        placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
+                        rows="10"
+                        onChange={handlerChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <div className="control">
+                      <button
+                        className="button search-form"
+                        type="button"
+                        onClick={handlerClickSearch}
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <p>
+                      Examples:{' '}
+                      <Link
+                        className="internal-link"
+                        to="?data=8798798749849841"
+                      >
+                        SRRM4 (brain specific genes)
+                      </Link>
+                      {', '}
+                      <Link
+                        className="internal-link"
+                        to="?data=8798798749849841"
+                      >
+                        Hoxd12 (development pattern genes)
+                      </Link>
+                    </p>
                   </div>
                 </div>
-                <div className="field">
-                  <div className="control">
-                    <button
-                      className="button"
-                      type="button"
-                      onClick={handlerClickSearch}
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-                <div className="field">
-                  <p className="is-size-7">
-                    Examples:{' '}
-                    <Link className="internal-link" to="?data=8798798749849841">
-                      SRRM4
-                    </Link>{' '}
-                    (brain specific genes){' '}
-                    <a className="internal-link" to="?data=8798798749849841">
-                      Hoxd12
-                    </a>{' '}
-                    (development pattern genes)
-                  </p>
-                </div>
-              </div>
-            </div>
+              </Bulma.Card.Body>
+            </Bulma.Card>
           </div>
         </div>
         {searchRes?.data?.comparisonResults && (
