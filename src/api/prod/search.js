@@ -30,7 +30,11 @@ const DEFAULT_PARAMETERS = (page, action) => {
 };
 
 const search = {
-  anatomicalHomology: ({ type, query }, species, aeList) =>
+  anatomicalHomology: (
+    { type, query },
+    species = undefined,
+    aeList = undefined
+  ) =>
     new Promise((resolve, reject) => {
       let params = DEFAULT_PARAMETERS('anat_similarities');
       if (type === 'form') {

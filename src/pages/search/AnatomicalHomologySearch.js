@@ -152,35 +152,32 @@ const AnatomicalHomologySearch = () => {
       });
   }, [anatomicalEntities, selectedSpecies]);
   React.useEffect(() => {
-    if (searchParams !== results?.signature) {
-      if (results?.signature) history.replace(`?${results.signature}`);
-      else {
-        setLoading(true);
-        api.search
-          .anatomicalHomology({
-            type: 'query',
-            query: searchParams,
-          })
-          .then(
-            ({ data, storableParams: { queryString }, requestParameters }) => {
-              setResults({
-                signature: queryString,
-                data,
-              });
-              setSelectedSpecies(
-                requestParameters?.species_list.map((s) => parseInt(s, 10))
-              );
-              setAnatomicalEntities(requestParameters?.ae_list.join('\n'));
-            }
-          )
-          .catch((err) => {
-            console.error(err);
-            setResults();
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
+    if (searchParams && searchParams.replace('?', '') !== results?.signature) {
+      setLoading(true);
+      api.search
+        .anatomicalHomology({
+          type: 'query',
+          query: searchParams,
+        })
+        .then(
+          ({ data, storableParams: { queryString }, requestParameters }) => {
+            setResults({
+              signature: queryString,
+              data,
+            });
+            setSelectedSpecies(
+              requestParameters?.species_list.map((s) => parseInt(s, 10))
+            );
+            setAnatomicalEntities(requestParameters?.ae_list.join('\n'));
+          }
+        )
+        .catch((err) => {
+          console.error(err);
+          setResults();
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [searchParams, results]);
   React.useEffect(() => {
@@ -274,6 +271,7 @@ const AnatomicalHomologySearch = () => {
                     <button
                       className="button mr-2 search-form px-6"
                       type="button"
+                      disabled={loading}
                       onClick={onSubmit}
                     >
                       Search
@@ -289,23 +287,38 @@ const AnatomicalHomologySearch = () => {
                   </div>
                   <p className="mt-2">
                     {`Example: `}
-                    <Link className="internal-link" to="?search=HBB">
+                    <Link
+                      className="internal-link"
+                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0002048"
+                    >
                       Lung in human and zebrafish
                     </Link>
                     {', '}
-                    <Link className="internal-link" to="?search=HBB">
+                    <Link
+                      className="internal-link"
+                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0000206"
+                    >
                       Pharyngeal gill in human and zebrafish
                     </Link>
                     {', '}
-                    <Link className="internal-link" to="?search=HBB">
+                    <Link
+                      className="internal-link"
+                      to="?species_list=9606&species_list=7955&ae_list=CL%3A0000084"
+                    >
                       T Cell in human and zebrafish
                     </Link>
                     {', Placenta '}
-                    <Link className="internal-link" to="?search=HBB">
+                    <Link
+                      className="internal-link"
+                      to="?species_list=9606&species_list=9598&ae_list=UBERON%3A0001987"
+                    >
                       in human and chimpanzee
                     </Link>
                     {' (homologous structure), or  '}
-                    <Link className="internal-link" to="?search=HBB">
+                    <Link
+                      className="internal-link"
+                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987"
+                    >
                       in human and zebrafish
                     </Link>
                     (no homologous structure)
