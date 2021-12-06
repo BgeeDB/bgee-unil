@@ -376,7 +376,7 @@ const AnatomicalHomologySearch = () => {
             ]}
             data={results?.data?.anatEntitySimilarities || []}
             customHeader={customHeader}
-            onRenderCell={onRenderCell(anatomicalEntities)}
+            onRenderCell={onRenderCell()}
           />
           {results.data.unrecognizedAnatEntityIds?.length > 0 && (
             <p className="mt-2">
