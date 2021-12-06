@@ -4,8 +4,8 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import Bulma from '../../components/Bulma';
 import Table from '../../components/Table';
 import api from '../../api';
-import usePrevious from '../../hooks/usePrevious';
 import LinkExternal from '../../components/LinkExternal';
+import { customAnatomicalHomologySorter } from '../../helpers/sortTable';
 
 const onRenderCell =
   () =>
@@ -215,7 +215,7 @@ const AnatomicalHomologySearch = () => {
         .
       </p>
       <div>
-        <Bulma.Card className="mx-auto my-3" style={{ maxWidth: 750 }}>
+        <Bulma.Card className="form mx-auto my-3" style={{ maxWidth: 750 }}>
           <Bulma.Card.Body>
             <div className="content">
               <div className="field is-flex is-justify-content-space-between">
@@ -272,7 +272,7 @@ const AnatomicalHomologySearch = () => {
                 <div className="control">
                   <div className="is-flex is-align-items-center">
                     <button
-                      className="button mr-2"
+                      className="button mr-2 search-form px-6"
                       type="button"
                       onClick={onSubmit}
                     >
@@ -339,8 +339,9 @@ const AnatomicalHomologySearch = () => {
           </p>
           <Table
             pagination
-            multiSortable
             sortable
+            multiSortable
+            onSortCustom={customAnatomicalHomologySorter}
             onFilter={onFilter}
             classNamesTable="is-striped"
             columns={[
@@ -361,21 +362,40 @@ const AnatomicalHomologySearch = () => {
             customHeader={customHeader}
             onRenderCell={onRenderCell(anatomicalEntities)}
           />
-          <span>
-            Anatomical entities without anatomical homology:{' '}
-            {results.data.anatEntitesWithNoSimilarityAnnotation.map(
-              (ann, key) => (
-                <React.Fragment key={ann.id}>
-                  <LinkExternal to={`http://purl.obolibrary.org/obo/${ann.id}`}>
-                    {`${ann.name} (${ann.id})`}
-                  </LinkExternal>
-                  {key + 1 !==
-                    results.data.anatEntitesWithNoSimilarityAnnotation.length &&
-                    ', '}
-                </React.Fragment>
-              )
-            )}
-          </span>
+          {results.data.unrecognizedAnatEntityIds?.length && (
+            <p className="mt-2">
+              Anatomical entities IDs unknown:{' '}
+              {results.data.unrecognizedAnatEntityIds.map((ann, key) => (
+                <span key={ann}>
+                  {`'${ann}'${
+                    key + 1 !==
+                    results.data.anatEntitesWithNoSimilarityAnnotation.length
+                      ? ', '
+                      : ''
+                  }`}
+                </span>
+              ))}
+            </p>
+          )}
+          {results.data.anatEntitesWithNoSimilarityAnnotation?.length > 0 && (
+            <p className="mt-2">
+              Anatomical entities without anatomical homology:{' '}
+              {results.data.anatEntitesWithNoSimilarityAnnotation.map(
+                (ann, key) => (
+                  <React.Fragment key={ann.id}>
+                    <LinkExternal
+                      to={`http://purl.obolibrary.org/obo/${ann.id}`}
+                    >
+                      {`${ann.name} (${ann.id})`}
+                    </LinkExternal>
+                    {key + 1 !==
+                      results.data.anatEntitesWithNoSimilarityAnnotation
+                        .length && ', '}
+                  </React.Fragment>
+                )
+              )}
+            </p>
+          )}
         </div>
       )}
     </>

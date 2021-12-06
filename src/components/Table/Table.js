@@ -147,7 +147,7 @@ const Table = ({
     const filtered =
       search === '' || !onFilter ? clone : clone.filter(onFilter(search));
     if (sortOption) {
-      console.log(
+      console.debug(
         'SORT',
         Array.isArray(sortOption) ? 'multi' : 'single',
         onSortCustom ? 'custom' : 'default'

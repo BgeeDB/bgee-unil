@@ -69,6 +69,13 @@ const search = {
                     name: `${s.genus} ${s.speciesName}`,
                     link: PATHS.SEARCH.SPECIES_ITEM.replace(':id', s.id),
                   })),
+                aeSorter: anatEntities
+                  .map((a) => `${a.name} (${a.id})`)
+                  .join(', '),
+                atSorter: `${ancestralTaxon.scientificName} (${ancestralTaxon.id})`,
+                ssSorter: speciesWithAnatEntityPresence
+                  .map((s) => `${s.genus} ${s.speciesName}`)
+                  .join(', '),
               })
             );
           resolve(formatted);
