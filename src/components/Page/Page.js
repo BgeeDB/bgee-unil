@@ -34,8 +34,7 @@ class Page extends React.PureComponent {
       );
 
     const { Component, title, ...props } = this.props;
-    console.log(ROUTES[props.location.pathname]);
-    const { meta } = ROUTES[props.location.pathname];
+    const meta = ROUTES?.[props.location.pathname]?.meta;
     return (
       <>
         {!meta && (title || ROUTES[props.location.pathname]?.title) && (
