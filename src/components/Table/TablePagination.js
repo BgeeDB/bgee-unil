@@ -8,7 +8,6 @@ import { TableContext } from '../../contexts/TableContext';
 
 const TablePagination = () => {
   const {
-    name,
     table,
     data,
     usedWidth,
