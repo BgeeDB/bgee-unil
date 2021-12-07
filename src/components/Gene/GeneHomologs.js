@@ -31,15 +31,11 @@ const TaxonNameCell = ({ id, scientificName }) => (
     </LinkExternal>
   </>
 );
-const ExpressionComparisonCell = ({ geneId, genes }) => {
-  let genesExpr = [geneId, ...genes.map((g) => g.geneId)];
-  genesExpr = encodeURI(genesExpr.join('\n'));
-  return (
-    <Link to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON}?query=${genesExpr}`}>
-      Compare expression
-    </Link>
-  );
-};
+const ExpressionComparisonCell = ({ query }) => (
+  <Link to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON}?${query}`}>
+    Compare expression
+  </Link>
+);
 const ExpandCell = ({ onClick }) => (
   <a className="expand-button" onClick={onClick}>
     <Bulma.IonIcon name="chevron-down-sharp" />
@@ -142,8 +138,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
           return (
             <ExpressionComparisonCell
               key={key}
-              geneId={geneId}
-              genes={cell.genes}
+              query={cell.storableParams?.queryString}
             />
           );
         case 'details':
@@ -302,7 +297,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                     {
                       key: 'details',
                       text: 'See details',
-                      hide: MEDIA_QUERIES.DESKTOP,
+                      hide: MEDIA_QUERIES.TABLET,
                     },
                   ]}
                   data={homologs?.paralogsByTaxon}
