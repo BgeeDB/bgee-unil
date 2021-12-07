@@ -283,21 +283,24 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             className="search-form"
             disabled={formSearchButtonIsDisabled}
             onClick={() => {
-              const query = Object.entries(cFields).reduce(
-                (acc, [key, value]) => (value ? [...acc, key] : acc),
-                []
+              const queryParams = new URLSearchParams(window.location.search);
+              queryParams.set(
+                exprKey,
+                Object.entries(cFields)
+                  .reduce(
+                    (acc, [key, value]) => (value ? [...acc, key] : acc),
+                    []
+                  )
+                  .join(',')
               );
-              let dtQuery = dataType.join(',');
-              // todo handle correct query key, use dataTypeKey
-              if (dtQuery.length > 0) dtQuery = `&data_type=${dtQuery}`;
               if (
-                JSON.stringify(dataType.sort()) ===
-                JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
+                JSON.stringify(dataType.sort()) !==
+                  JSON.stringify(DATA_TYPES.map((d) => d.key).sort()) &&
+                dataType.length > 0
               )
-                dtQuery = '';
-              // todo handle query by only replacing the changed value
-              // todo use the correct key, use exprKey
-              history.replace(`?expression=${query.join(',')}${dtQuery}`);
+                queryParams.set(dataTypeKey, dataType.join(','));
+
+              history.replace(`?${queryParams.toString()}`);
             }}
           >
             Update
