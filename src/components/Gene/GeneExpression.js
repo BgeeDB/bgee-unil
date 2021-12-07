@@ -151,9 +151,17 @@ const AnatEntityCell = ({ cell }) => {
 };
 
 const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
+  const exprKey = React.useMemo(
+    () => (notExpressed ? 'not_expression' : 'expression'),
+    [notExpressed]
+  );
+  const dataTypeKey = React.useMemo(
+    () => (notExpressed ? 'not_data_type' : 'data_type'),
+    [notExpressed]
+  );
   const history = useHistory();
-  const hashExpr = useQuery('expression');
-  const dataTypeExpr = useQuery('data_type');
+  const hashExpr = useQuery(exprKey);
+  const dataTypeExpr = useQuery(dataTypeKey);
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState();
   const [cFields, setCFields] = React.useState({ anat: true });
@@ -280,12 +288,15 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                 []
               );
               let dtQuery = dataType.join(',');
+              // todo handle correct query key, use dataTypeKey
               if (dtQuery.length > 0) dtQuery = `&data_type=${dtQuery}`;
               if (
                 JSON.stringify(dataType.sort()) ===
                 JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
               )
                 dtQuery = '';
+              // todo handle query by only replacing the changed value
+              // todo use the correct key, use exprKey
               history.replace(`?expression=${query.join(',')}${dtQuery}`);
             }}
           >
