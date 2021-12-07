@@ -433,7 +433,6 @@ const ExpComp = () => {
   React.useEffect(() => {
     if (searchParams && searchParams.replace('?', '') !== results?.signature) {
       setLoading(true);
-      console.log(searchParams, results?.signature);
       api.expressionComparison
         .getResults({ type: 'query', data: searchParams })
         .then(
@@ -447,7 +446,10 @@ const ExpComp = () => {
         )
         .catch((err) => {
           console.error(err);
-          setResults({ ...DEFAULT_RESULTS, signature: searchParams });
+          setResults({
+            ...DEFAULT_RESULTS,
+            signature: searchParams.replace('?', ''),
+          });
           if (err.data.requestParameters?.gene_list)
             setSearchValue(err.data.requestParameters?.gene_list.join('\n'));
           else setSearchValue('');
@@ -457,6 +459,7 @@ const ExpComp = () => {
         });
     }
   }, [searchParams, results]);
+
   return (
     <>
       <div>

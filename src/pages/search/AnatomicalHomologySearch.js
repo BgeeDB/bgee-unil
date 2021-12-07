@@ -176,7 +176,10 @@ const AnatomicalHomologySearch = () => {
         )
         .catch((err) => {
           console.error(err);
-          setResults();
+          setResults({
+            ...DEFAULT_RESULTS,
+            signature: searchParams.replace('?', ''),
+          });
         })
         .finally(() => {
           setLoading(false);
