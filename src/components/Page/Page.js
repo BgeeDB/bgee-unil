@@ -10,6 +10,7 @@ class Page extends React.PureComponent {
   }
 
   static getDerivedStateFromError(error) {
+    console.log('YOOOO', error);
     // Update state so the next render will show the fallback UI.
     return { hasError: { name: error.name, message: error.message } };
   }
@@ -22,7 +23,7 @@ class Page extends React.PureComponent {
 
   render() {
     const { hasError } = this.state;
-    if (hasError && process.env.NODE_ENV === 'production')
+    if (hasError) {
       return (
         <Redirect
           push
@@ -32,6 +33,7 @@ class Page extends React.PureComponent {
           }}
         />
       );
+    }
 
     const { Component, title, ...props } = this.props;
     const meta = ROUTES?.[props.location.pathname]?.meta;

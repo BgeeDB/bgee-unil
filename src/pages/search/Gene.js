@@ -29,7 +29,14 @@ const Gene = () => {
           setFlowState(FLOW.LOADED);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.log(err.message);
+        history.replace(PATHS.ERROR, {
+          error: {
+            message: err.message || err?.data?.code,
+          },
+        });
+      });
   }, [geneId, urlSpeciesId]);
 
   if (flowState === FLOW.LOADING) return null;
