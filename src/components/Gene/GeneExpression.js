@@ -10,6 +10,7 @@ import schemaDotOrg from '../../helpers/schemaDotOrg';
 import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
+import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 const DATA_TYPES = [
   {
@@ -109,10 +110,7 @@ const AnatEntityCell = ({ cell }) => {
   const cellInfo = [
     <LinkExternal
       key={`link-${cell.condition.anatEntity.id}`}
-      to={`http://purl.obolibrary.org/obo/${cell.condition.anatEntity.id.replace(
-        ':',
-        '_'
-      )}`}
+      to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
       className="mr-1"
     >
       {cell.condition.anatEntity.id}
@@ -123,10 +121,7 @@ const AnatEntityCell = ({ cell }) => {
     cellInfo.push(
       <LinkExternal
         key={`link-${cell.condition.cellType.id}`}
-        to={`http://purl.obolibrary.org/obo/${cell.condition.cellType.id.replace(
-          ':',
-          '_'
-        )}`}
+        to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
         className="mr-1"
       >
         {cell.condition.cellType.id}
@@ -328,10 +323,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             <>
               <span className="is-size-7">
                 <LinkExternal
-                  to={`http://purl.obolibrary.org/obo/${cell.condition.devStage.id.replace(
-                    ':',
-                    '_'
-                  )}`}
+                  to={obolibraryLinkFromID(cell.condition.devStage.id)}
                   className="mr-1"
                 >
                   {cell.condition.devStage.id}

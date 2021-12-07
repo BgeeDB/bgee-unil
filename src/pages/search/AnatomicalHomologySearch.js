@@ -6,6 +6,7 @@ import Table from '../../components/Table';
 import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import { customAnatomicalHomologySorter } from '../../helpers/sortTable';
+import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 const onRenderCell =
   () =>
@@ -404,9 +405,7 @@ const AnatomicalHomologySearch = () => {
               {results.data.anatEntitesWithNoSimilarityAnnotation.map(
                 (ann, key) => (
                   <React.Fragment key={ann.id}>
-                    <LinkExternal
-                      to={`http://purl.obolibrary.org/obo/${ann.id}`}
-                    >
+                    <LinkExternal to={obolibraryLinkFromID(ann.id)}>
                       {`${ann.name} (${ann.id})`}
                     </LinkExternal>
                     {key + 1 !==

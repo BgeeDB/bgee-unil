@@ -1,5 +1,8 @@
 import config from '../config.json';
 import PATHS from '../routes/paths';
+import obolibraryLinkFromID, {
+  obolibraryNCBITaxonLinkFromID,
+} from './obolibraryLinkFromID';
 
 const geneToLdJSON = ({
   name,
@@ -37,7 +40,7 @@ const geneToLdJSON = ({
       species.name ? ` (${species.name})` : ''
     }`,
     identifier: species.id,
-    sameAs: `http://purl.obolibrary.org/obo/NCBITaxon_${species.id}`,
+    sameAs: obolibraryNCBITaxonLinkFromID(species.id),
   },
   sameAs: xRefs?.reduce((acc, a) => {
     if (a.xRefs.length === 1) acc.push(a.xRefs[0].xRefURL);
@@ -76,19 +79,13 @@ const geneExpressionToLdJSON = (genes) => {
           subStructure: [
             {
               '@type': 'AnatomicalStructure',
-              '@id': `http://purl.obolibrary.org/obo/${cellType.id.replace(
-                ':',
-                '_'
-              )}`,
+              '@id': obolibraryLinkFromID(cellType.id),
               identifier: cellType.id,
               name: cellType.name,
             },
             {
               '@type': 'AnatomicalStructure',
-              '@id': `http://purl.obolibrary.org/obo/${anatEntity.id.replace(
-                ':',
-                '_'
-              )}`,
+              '@id': obolibraryLinkFromID(anatEntity.id),
               identifier: anatEntity.id,
               name: anatEntity.name,
             },
@@ -101,10 +98,7 @@ const geneExpressionToLdJSON = (genes) => {
         '@id': window.location.href,
         expressedIn: {
           '@type': 'AnatomicalStructure',
-          '@id': `http://purl.obolibrary.org/obo/${anatEntity.id.replace(
-            ':',
-            '_'
-          )}`,
+          '@id': obolibraryLinkFromID(anatEntity.id),
           identifier: anatEntity.id,
           name: anatEntity.name,
         },
@@ -133,7 +127,7 @@ const fileDownloadProps = (file) => ({
 });
 
 const speciesToLdJSON = ({
-  downloadFiles: { downloadFiles },
+  downloadFilesGroups: { downloadFiles },
   species: { genus, name, speciesName, id },
 }) => {
   const json = {
@@ -148,7 +142,7 @@ const speciesToLdJSON = ({
     alternateName: name,
     identifier: id,
     sameAs: [
-      `http://purl.obolibrary.org/obo/NCBITaxon_${id}`,
+      obolibraryNCBITaxonLinkFromID(id),
       `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?lvl=0&id=${id}`,
       `http://nov2020.archive.ensembl.org/${genus}_${speciesName}`,
     ],
