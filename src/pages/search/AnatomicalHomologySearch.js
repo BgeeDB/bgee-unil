@@ -65,13 +65,13 @@ const onFilter = (search) => (element) => {
   if (!matchFilter) {
     for (let i = 0; i < element.anatEntities.length; i += 1) {
       matchFilter = regExp.test(element?.anatEntities[i].name);
-      if (matchFilter) i = element.anatEntities.length;
+      if (matchFilter) break;
     }
   }
   if (!matchFilter) {
     for (let i = 0; i < element.speciesWithAnatEntityPresence.length; i += 1) {
       matchFilter = regExp.test(element?.speciesWithAnatEntityPresence[i].name);
-      if (matchFilter) i = element.speciesWithAnatEntityPresence.length;
+      if (matchFilter) break;
     }
   }
   return matchFilter;
@@ -102,9 +102,11 @@ const AnatomicalHomologySearch = () => {
           } else {
             curr.push(speciesId);
           }
-        } else if (curr.length !== speciesList.length)
+        } else if (curr.length !== speciesList.length) {
           curr = speciesList.map((s) => s.id);
-        else curr = [];
+        } else {
+          curr = [];
+        }
         return curr;
       });
     },

@@ -97,37 +97,32 @@ const ExpandCell = ({ onClick }) => (
   </a>
 );
 
-const GenesCell = ({ genes }) => {
-  const expandContent = () => {
-    const renderContent = genes.map((item) => (
-      <div key={item.geneId}>
-        <Link
-          className="internal-link"
-          content={item.geneId}
-          to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
-            ':geneId',
-            item.geneId
-          ).replace(':speciesId', item.species.id)}
-        >
-          <span style={{ fontSize: 12 }}>{item.geneId}</span>
-        </Link>
-        <span style={{ marginLeft: 3, fontSize: 12 }}>{item.name}</span>
-      </div>
-    ));
-    return renderContent;
-  };
-
-  return (
-    <div
-      style={{
-        width: '180px',
-      }}
-    >
-      <GeneItemNb itemTab={genes} />
-      <div className="expand-content">{expandContent()}</div>
+const GenesCell = ({ genes }) => (
+  <div
+    style={{
+      width: '180px',
+    }}
+  >
+    <GeneItemNb itemTab={genes} />
+    <div className="expand-content">
+      {genes.map((item) => (
+        <div key={item.geneId}>
+          <Link
+            className="internal-link"
+            content={item.geneId}
+            to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+              ':geneId',
+              item.geneId
+            ).replace(':speciesId', item.species.id)}
+          >
+            <span style={{ fontSize: 12 }}>{item.geneId}</span>
+          </Link>
+          <span style={{ marginLeft: 3, fontSize: 12 }}>{item.name}</span>
+        </div>
+      ))}
     </div>
-  );
-};
+  </div>
+);
 
 const SpeciesCell = ({ genes }) => {
   const speciesList = [];
@@ -142,23 +137,6 @@ const SpeciesCell = ({ genes }) => {
     }
   });
 
-  const expandContent = () => {
-    const renderContent = speciesList.map((item) => (
-      <div key={item.id}>
-        <Link
-          className="internal-link"
-          content={item.id}
-          to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', item.id)}
-        >
-          <span style={{ fontSize: 12 }}>
-            {item.genus} {item.speciesName}
-          </span>
-        </Link>
-      </div>
-    ));
-    return renderContent;
-  };
-
   return (
     <div
       style={{
@@ -166,7 +144,21 @@ const SpeciesCell = ({ genes }) => {
       }}
     >
       <span>{speciesList.length} species</span>
-      <div className="expand-content">{expandContent()}</div>
+      <div className="expand-content">
+        {speciesList.map((item) => (
+          <div key={item.id}>
+            <Link
+              className="internal-link"
+              content={item.id}
+              to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', item.id)}
+            >
+              <span style={{ fontSize: 12 }}>
+                {item.genus} {item.speciesName}
+              </span>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -206,7 +198,7 @@ const dataToTsv = (data) => {
         ids = `${d.multiSpeciesCondition.cellTypes
           .map((a) => a.id)
           .join(', ')} in `;
-      ids = d.multiSpeciesCondition.anatEntities.map((a) => a.id).join(', ');
+      ids += d.multiSpeciesCondition.anatEntities.map((a) => a.id).join(', ');
     } else if (d.condition) {
       if (d.condition.cellType) ids = `${d.condition.cellType.id} in `;
       ids += d.condition.anatEntity.id;

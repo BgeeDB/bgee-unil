@@ -86,17 +86,12 @@ const Species = () => {
     api.search.species
       .species(id)
       .then((res) => {
-        // setPlop(res.data);
         setData(res.data);
         schemaDotOrg.setSpeciesLdJSON(res.data);
       })
-      .catch(() => {
-        // go to error
+      .catch((err) => {
+        console.error(err);
       });
-    // return () => {
-    //   console.log('UNMOUNT id', id);
-    //   // schemaDotOrg.unsetSpeciesLdJSON();
-    // };
   }, []);
 
   if (data) {
