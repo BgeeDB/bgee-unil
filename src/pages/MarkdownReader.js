@@ -7,11 +7,11 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
-import { visit } from 'unist-util-visit';
 import { useHistory } from 'react-router-dom';
 import ROUTES from '../routes/routes';
 import classnames from '../helpers/classnames';
 import Bulma from '../components/Bulma';
+import rehypeLink from '../helpers/rehypeLink';
 
 const MarkdownReader = ({ location: { pathname } }) => {
   const history = useHistory();
@@ -34,28 +34,6 @@ const MarkdownReader = ({ location: { pathname } }) => {
     []
   );
 
-  const rehypeLink = React.useCallback(
-    () => (tree) => {
-      visit(tree, 'element', (node) => {
-        const isInternal = /(^#)|(^\/)|(^https:\/\/bgee.org)/gi;
-        if (node.tagName === 'a') {
-          if (isInternal.test(node.properties.href)) {
-            node.properties.classname = 'internal-link';
-            node.properties.onclick = (e) => {
-              e.preventDefault();
-              history.push(e.target.href.replace(window.location.origin, ''));
-            };
-          } else {
-            node.properties.classname = 'external-link';
-            node.properties.target = '_blank';
-            node.properties.rel = 'noopener noreferrer';
-          }
-        }
-      });
-    },
-    [history]
-  );
-
   return (
     <>
       <ReactMarkdown
@@ -68,7 +46,7 @@ const MarkdownReader = ({ location: { pathname } }) => {
           rehypeSanitize,
           rehypeRaw,
           rehypeSlug,
-          rehypeLink,
+          rehypeLink(history),
         ]}
       />
     </>
