@@ -143,9 +143,10 @@ const search = {
             reject(error?.response);
           });
       }),
-    expression: (geneId, speciesId, fields, dataType) =>
+    expression: (geneId, speciesId, fields, dataType, isNotExpressed = false) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('gene', 'expression');
+        if (isNotExpressed) params.append('expr_type', 'not_expressed');
         params.append('gene_id', geneId);
         params.append('species_id', speciesId);
 

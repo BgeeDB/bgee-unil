@@ -150,7 +150,7 @@ const AnatEntityCell = ({ cell }) => {
   return <>{cellInfo}</>;
 };
 
-const GeneExpression = ({ geneId, speciesId, isExpression }) => {
+const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
   const history = useHistory();
   const hashExpr = useQuery('expression');
   const dataTypeExpr = useQuery('data_type');
@@ -463,7 +463,13 @@ const GeneExpression = ({ geneId, speciesId, isExpression }) => {
     setDataTypes(dt);
 
     api.search.genes
-      .expression(geneId, speciesId, fields, !dataTypeExpr ? ['all'] : dt)
+      .expression(
+        geneId,
+        speciesId,
+        fields,
+        !dataTypeExpr ? ['all'] : dt,
+        notExpressed
+      )
       .then((res) => {
         setData(res.data);
         if (
@@ -489,9 +495,13 @@ const GeneExpression = ({ geneId, speciesId, isExpression }) => {
       <Bulma.Title
         size={4}
         className="gradient-underline"
-        id={GENE_DETAILS_HTML_IDS.EXPRESSION}
+        id={
+          notExpressed
+            ? GENE_DETAILS_HTML_IDS.EXPRESSION_ABSENT
+            : GENE_DETAILS_HTML_IDS.EXPRESSION
+        }
       >
-        Expression
+        {notExpressed ? 'Expression Absent' : 'Expression'}
       </Bulma.Title>
       <div>
         {isLoading && (

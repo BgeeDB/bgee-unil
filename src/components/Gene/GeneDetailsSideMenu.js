@@ -18,7 +18,6 @@ const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
     <aside className="menu">
       <ul className="menu-list gene-menu">
         <li
-          key={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}
           onClick={() =>
             handlerMenuClick(GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION)
           }
@@ -27,11 +26,17 @@ const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
             General information
           </a>
         </li>
-        <li
-          key={GENE_DETAILS_HTML_IDS.EXPRESSION}
-          onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION)}
-        >
+        <li onClick={() => handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION)}>
           <a className="is-size-5 has-text-weight-semibold">Expression</a>
+        </li>
+        <li
+          onClick={() =>
+            handlerMenuClick(GENE_DETAILS_HTML_IDS.EXPRESSION_ABSENT)
+          }
+        >
+          <a className="is-size-5 has-text-weight-semibold">
+            Expression Absent
+          </a>
         </li>
         {homologs?.orthologs > 0 && (
           <li

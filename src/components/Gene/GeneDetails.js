@@ -216,6 +216,7 @@ const GeneDetails = ({
             </div>
           </div>
           <GeneExpression geneId={geneId} speciesId={species.id} />
+          <GeneExpression geneId={geneId} speciesId={species.id} notExpressed />
           <GeneHomologs
             homologs={homologs}
             geneId={geneId}
