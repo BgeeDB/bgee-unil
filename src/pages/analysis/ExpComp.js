@@ -6,8 +6,6 @@ import api from '../../api';
 import PATHS from '../../routes/paths';
 import LinkExternal from '../../components/LinkExternal/LinkExternal';
 import classnames from '../../helpers/classnames';
-import { monoSort } from '../../helpers/sortTable';
-import Button from '../../components/Bulma/Button/Button';
 import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import random from '../../helpers/random';
