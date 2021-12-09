@@ -25,7 +25,7 @@ const Table = ({
   onSortCustom,
   initialSorting,
   onRenderCell,
-  onRenderRow, // function that generate custom css classes depending of
+  onRenderRow,
   striped = true,
   pagination = false,
   defaultPaginationSize = 10,
