@@ -44,6 +44,13 @@ const ANALYSIS = {
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
     title: 'Expression comparison',
     component: ExpComp,
+    meta: {
+      title: 'Expression comparison analysis',
+      description:
+        'Compare gene expression within species, or between species using homology relations between anatomical entities.',
+      keywords:
+        'gene expression comparison, homology, gene expression patterns, expression call comparison',
+    },
   },
 };
 const SEARCH = {
@@ -58,6 +65,12 @@ const SEARCH = {
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
     component: AnatomicalHomologySearch,
     title: 'Anatomical homology search',
+    meta: {
+      title: 'Anatomical homology search',
+      description:
+        'Identify relations of homology and anatomical similarity between anatomical entities.',
+      keywords: 'homology, similarity, anatomical entity',
+    },
   },
   [PATHS.SEARCH.SPECIES]: {
     component: SpeciesList,
