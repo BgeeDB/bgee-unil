@@ -1,7 +1,9 @@
+import config from '../config.json';
+
 const obolibraryLinkFromID = (id) =>
-  `http://purl.obolibrary.org/obo/${id.replace(':', '_')}`;
+  `${config.oboLibraryOboPath}${id.replace(':', '_')}`;
 
 export const obolibraryNCBITaxonLinkFromID = (id) =>
-  `http://purl.obolibrary.org/obo/NCBITaxon_${id}`;
+  `${config.oboLibraryNCBITaxonPath}${id}`;
 
 export default obolibraryLinkFromID;
