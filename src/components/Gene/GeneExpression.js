@@ -145,13 +145,17 @@ const AnatEntityCell = ({ cell }) => {
   return <>{cellInfo}</>;
 };
 
+// PAss to true if you want the two table to be handled separately in the url
+const SEPARATE_DATA_FORM = false;
+
 const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
   const exprKey = React.useMemo(
-    () => (notExpressed ? 'not_expression' : 'expression'),
+    () =>
+      notExpressed && SEPARATE_DATA_FORM ? 'not_expression' : 'expression',
     [notExpressed]
   );
   const dataTypeKey = React.useMemo(
-    () => (notExpressed ? 'not_data_type' : 'data_type'),
+    () => (notExpressed && SEPARATE_DATA_FORM ? 'not_data_type' : 'data_type'),
     [notExpressed]
   );
   const history = useHistory();
@@ -507,7 +511,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             : GENE_DETAILS_HTML_IDS.EXPRESSION
         }
       >
-        {notExpressed ? 'Expression Absent' : 'Expression'}
+        {notExpressed ? 'Reported absence of expression' : 'Expression'}
       </Bulma.Title>
       <div>
         {isLoading && (
@@ -519,7 +523,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             80%
           </progress>
         )}
-        {!isLoading && data && (
+        {!isLoading && data && data.calls.length > 0 ? (
           <>
             <Table
               identifierAtFilter
@@ -537,93 +541,87 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                 return 'gene-expr-row';
               }}
             />
-            {data.calls.length > 0 && (
-              <>
-                <p className="has-text-weight-semibold is-underlined mt-0">
-                  Sources
-                </p>
-                <Bulma.Columns vCentered className="my-0">
-                  <Bulma.C>
-                    <span>
-                      <b>A</b>
-                      <span className="is-size-7"> Affimetrix</span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C>
-                    <span>
-                      <b>E</b>
-                      <span className="is-size-7"> EST</span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C>
-                    <span>
-                      <b>I</b>
-                      <span className="is-size-7"> In Situ</span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C>
-                    <span>
-                      <b>R</b>
-                      <span className="is-size-7"> RNA-Seq</span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C>
-                    <span>
-                      <b>FL</b>
-                      <span className="is-size-7"> scRNA-Seq Full Length</span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C className="is-flex is-align-items-center">
-                    <span
-                      className={classnames('tag tag-source present legend', {
-                        'is-primary': true,
-                      })}
-                    >
-                      data
-                    </span>
-                    <span
-                      className={classnames('ml-1 tag tag-source legend', {
-                        'is-primary': false,
-                      })}
-                    >
-                      no data
-                    </span>
-                  </Bulma.C>
-                </Bulma.Columns>
-                <p className="has-text-weight-semibold is-underlined mt-0">
-                  Expression scores
-                </p>
-                <Bulma.Columns vCentered className="mt-0">
-                  <Bulma.C>
-                    <span>
-                      <span style={{ color: 'lightGrey' }}>3.25e4</span>
-                      <span className="is-size-7">
-                        {' '}
-                        lightgrey: low confidence scores
-                      </span>
-                    </span>
-                  </Bulma.C>
-                  <Bulma.C className="is-flex is-align-items-center">
-                    <hr className="dot-line m-0 mr-2" />
+            <>
+              <p className="has-text-weight-semibold is-underlined mt-0">
+                Sources
+              </p>
+              <Bulma.Columns vCentered className="my-0">
+                <Bulma.C>
+                  <span>
+                    <b>A</b>
+                    <span className="is-size-7"> Affimetrix</span>
+                  </span>
+                </Bulma.C>
+                <Bulma.C>
+                  <span>
+                    <b>E</b>
+                    <span className="is-size-7"> EST</span>
+                  </span>
+                </Bulma.C>
+                <Bulma.C>
+                  <span>
+                    <b>I</b>
+                    <span className="is-size-7"> In Situ</span>
+                  </span>
+                </Bulma.C>
+                <Bulma.C>
+                  <span>
+                    <b>R</b>
+                    <span className="is-size-7"> RNA-Seq</span>
+                  </span>
+                </Bulma.C>
+                <Bulma.C>
+                  <span>
+                    <b>FL</b>
+                    <span className="is-size-7"> scRNA-Seq Full Length</span>
+                  </span>
+                </Bulma.C>
+                <Bulma.C className="is-flex is-align-items-center">
+                  <span
+                    className={classnames('tag tag-source present legend', {
+                      'is-primary': true,
+                    })}
+                  >
+                    data
+                  </span>
+                  <span
+                    className={classnames('ml-1 tag tag-source legend', {
+                      'is-primary': false,
+                    })}
+                  >
+                    no data
+                  </span>
+                </Bulma.C>
+              </Bulma.Columns>
+              <p className="has-text-weight-semibold is-underlined mt-0">
+                Expression scores
+              </p>
+              <Bulma.Columns vCentered className="mt-0">
+                <Bulma.C>
+                  <span>
+                    <span style={{ color: 'lightGrey' }}>3.25e4</span>
                     <span className="is-size-7">
                       {' '}
-                      important score variation
+                      lightgrey: low confidence scores
                     </span>
-                  </Bulma.C>
-                </Bulma.Columns>
-                <div className="separator my-5" />
-                <p className="is-size-7">
-                  <b>Expression scores</b> of expression calls is based on the
-                  rank of a gene in a condition according to its expression
-                  levels (non-parametric statistics), normalized using the
-                  minimum and maximum Rank of the species. Values of Expression
-                  scores are between 0 and 100. Low score means that the gene is
-                  lowly expressed in the condition compared to other genes.
-                  Scores are normalized and comparable across genes, conditions
-                  and species.
-                </p>
-              </>
-            )}
+                  </span>
+                </Bulma.C>
+                <Bulma.C className="is-flex is-align-items-center">
+                  <hr className="dot-line m-0 mr-2" />
+                  <span className="is-size-7"> important score variation</span>
+                </Bulma.C>
+              </Bulma.Columns>
+              <div className="separator my-5" />
+              <p className="is-size-7">
+                <b>Expression scores</b> of expression calls is based on the
+                rank of a gene in a condition according to its expression levels
+                (non-parametric statistics), normalized using the minimum and
+                maximum Rank of the species. Values of Expression scores are
+                between 0 and 100. Low score means that the gene is lowly
+                expressed in the condition compared to other genes. Scores are
+                normalized and comparable across genes, conditions and species.
+              </p>
+            </>
             {data?.gene?.species && (
               <Bulma.Columns>
                 <Bulma.Column size={4}>
@@ -672,6 +670,12 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
               </Bulma.Columns>
             )}
           </>
+        ) : (
+          <span>
+            {notExpressed
+              ? 'No reported absence of expression for this gene'
+              : ''}
+          </span>
         )}
         {!isLoading && !data && <span>No data</span>}
       </div>
