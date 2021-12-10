@@ -86,10 +86,12 @@ const GeneDetails = ({
     if (loc.hash) {
       const element = document.getElementById(loc.hash.replace('#', ''));
       if (element) {
-        window.scrollTo({
-          top: element.offsetTop,
-          behavior: 'smooth',
-        });
+        setTimeout(() => {
+          window.scrollTo({
+            top: element.offsetTop,
+            behavior: 'smooth',
+          });
+        }, 2500); // wait for all the elements to load and then scroll. Might need an adjustment
       }
     }
   }, []);
