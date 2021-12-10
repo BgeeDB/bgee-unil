@@ -70,8 +70,8 @@ const TopAnat = () => {
           if (requestParams) {
             setData((prev) => ({
               ...prev,
-              genes: res.requestParameters.fg_list.join('\n'),
-              genesBg: (res.requestParameters.bg_list || []).join('\n'),
+              genes: (res.requestParameters.fg_list || []).join('\n'),
+              genesBg: (res.requestParameters?.bg_list || []).join('\n'),
               email: '',
               jobDescription: res.requestParameters.job_title || '',
               stages: res.requestParameters.stage_id || 'all',
@@ -82,19 +82,23 @@ const TopAnat = () => {
               fdrThreshold: res.requestParameters.fdr_thr || '',
               pValueThreshold: res.requestParameters.p_value_thr || '',
               rnaSeq: Boolean(
-                res.requestParameters.data_type.find((f) => f === 'RNA_SEQ')
+                res?.requestParameters?.data_type?.find((f) => f === 'RNA_SEQ')
               ),
               affymetrix: Boolean(
-                res.requestParameters.data_type.find((f) => f === 'AFFYMETRIX')
+                res?.requestParameters?.data_type?.find(
+                  (f) => f === 'AFFYMETRIX'
+                )
               ),
               inSitu: Boolean(
-                res.requestParameters.data_type.find((f) => f === 'IN_SITU')
+                res?.requestParameters?.data_type?.find((f) => f === 'IN_SITU')
               ),
               full: Boolean(
-                res.requestParameters.data_type.find((f) => f === 'FULL_LENGTH')
+                res?.requestParameters?.data_type?.find(
+                  (f) => f === 'FULL_LENGTH'
+                )
               ),
               est: Boolean(
-                res.requestParameters.data_type.find((f) => f === 'EST')
+                res?.requestParameters?.data_type?.find((f) => f === 'EST')
               ),
             }));
             requestParameters.set({

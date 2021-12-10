@@ -9,6 +9,7 @@ import classnames from '../../helpers/classnames';
 import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import random from '../../helpers/random';
+import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 const DEFAULT_RESULTS = {
   signature: undefined,
@@ -26,7 +27,7 @@ const AnatEntitiesCell = ({
           <>
             <LinkExternal
               content={condition.cellType.id}
-              to={`http://purl.obolibrary.org/obo/${condition.cellType.id}`}
+              to={obolibraryLinkFromID(condition.cellType.id)}
             >
               <span>{condition.cellType.name}</span>
             </LinkExternal>
@@ -35,7 +36,7 @@ const AnatEntitiesCell = ({
         )}
         <LinkExternal
           content={condition.anatEntity.id}
-          to={`http://purl.obolibrary.org/obo/${condition.anatEntity.id}`}
+          to={obolibraryLinkFromID(condition.anatEntity.id)}
         >
           <span>{condition.anatEntity.name}</span>
         </LinkExternal>
@@ -53,7 +54,7 @@ const AnatEntitiesCell = ({
         items.push(
           <LinkExternal
             key={cellType.id}
-            to={`http://purl.obolibrary.org/obo/${cellType.id}`}
+            to={obolibraryLinkFromID(cellType.id)}
           >
             <span>{cellType.name}</span>
           </LinkExternal>
@@ -65,7 +66,7 @@ const AnatEntitiesCell = ({
     }
     multiSpeciesCondition.anatEntities.forEach((item, key) => {
       items.push(
-        <LinkExternal to={`http://purl.obolibrary.org/obo/${item.id}`}>
+        <LinkExternal to={obolibraryLinkFromID(item.id)}>
           <span>{item.name}</span>
         </LinkExternal>
       );

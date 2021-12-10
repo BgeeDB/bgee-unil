@@ -2,6 +2,7 @@ import axios from 'axios';
 import axiosInstance from './constant';
 import errorHandler from '../errorHandler';
 import PATHS from '../../routes/paths';
+import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 export const SEARCH_CANCEL_API = {
   genes: {
@@ -63,7 +64,7 @@ const search = {
               }) => ({
                 anatEntities: anatEntities.map((a) => ({
                   name: `${a.name} (${a.id})`,
-                  link: `http://purl.obolibrary.org/obo/${a.id}`,
+                  link: obolibraryLinkFromID(a.id),
                   id: a.id,
                 })),
                 ancestralTaxon: `${ancestralTaxon.scientificName} (${ancestralTaxon.id})`,

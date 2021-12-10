@@ -314,7 +314,7 @@ const Header = () => {
                           <a
                             key={keyChild}
                             className="navbar-item custom"
-                            onClick={obfuscateMailLink(childProps.email)}
+                            onClick={obfuscateMailLink(childProps.mail)}
                           >
                             {pageTitle}
                           </a>

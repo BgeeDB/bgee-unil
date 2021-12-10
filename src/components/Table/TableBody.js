@@ -112,7 +112,7 @@ const TableBody = () => {
           className={classnames(
             { 'is-expanded': isExpanded[key] },
             onRenderRow
-              ? onRenderRow(row, key > 0 ? data[key - 1] : null)
+              ? onRenderRow(row, key > 0 ? data[key - 1] : null, key)
               : undefined
           )}
         >

@@ -8,6 +8,7 @@ import GaEvent from '../GaEvent/GaEvent';
 import LinkExternal from '../LinkExternal';
 import Table from '../Table';
 import config from '../../config.json';
+import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 const COLUMNS = [
   {
@@ -80,11 +81,7 @@ const TopAnatResult = ({
   const onRenderCell = React.useCallback(({ cell, key }, defaultRender) => {
     if (key === 0)
       return (
-        <LinkExternal
-          to={`http://purl.obolibrary.org/obo/${cell.replace(':', '_')}`}
-        >
-          {cell}
-        </LinkExternal>
+        <LinkExternal to={obolibraryLinkFromID(cell)}>{cell}</LinkExternal>
       );
     return defaultRender(cell, key);
   }, []);
