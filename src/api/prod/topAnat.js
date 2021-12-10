@@ -111,8 +111,8 @@ const topAnat = {
       const params = DEFAULT_PARAMETERS();
       params.append('action', 'tracking_job');
       if (requestParams) params.append('display_rp', 1);
-      params.append('data', searchId);
-      params.append('job_id', jobId);
+      if (jobId) params.append('job_id', jobId);
+      else params.append('data', searchId);
       axiosInstance
         .get(`/?${params.toString()}`, {
           cancelToken: new axios.CancelToken((c) => {
