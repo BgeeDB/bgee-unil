@@ -224,7 +224,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           </Bulma.Button>
           <Bulma.Button
             className="search-form"
-            disabled={dataType.length === 0}
+            disabled={Object.keys(cFields).length === 0}
             onClick={() => setCFields({})}
           >
             Unselect All
