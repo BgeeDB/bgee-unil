@@ -33,6 +33,7 @@ const Table = ({
   mappingObj = (obj) => obj,
   name,
   identifierAtFilter = false,
+  emptyTableMessage = 'No data',
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -187,19 +188,23 @@ const Table = ({
     >
       <TableHeader />
       <TableTitle />
-      <div className="table-container">
-        <table
-          ref={table}
-          className={classnames(
-            'table',
-            { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
-            classNames
-          )}
-        >
-          <TableHead />
-          <TableBody />
-        </table>
-      </div>
+      {processedData.length > 0 ? (
+        <div className="table-container">
+          <table
+            ref={table}
+            className={classnames(
+              'table',
+              { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+              classNames
+            )}
+          >
+            <TableHead />
+            <TableBody />
+          </table>
+        </div>
+      ) : (
+        emptyTableMessage
+      )}
       <TablePagination />
     </TableProvider>
   );

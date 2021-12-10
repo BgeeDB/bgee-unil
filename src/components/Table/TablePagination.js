@@ -35,6 +35,7 @@ const TablePagination = () => {
     [data, pageSize]
   );
 
+  if (data.length === 0) return null;
   return (
     <div
       ref={table}
