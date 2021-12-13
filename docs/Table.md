@@ -36,6 +36,8 @@ interface Column {
   key: string; // use to identify the column in onRenderCell
   text: string; // text to be display for the header of the column
   hide: string | number; // adaptative design
+  style: CSSOptions;
+  noSort: boolean; // if true, the column will not be sortable
 }
 
 const columns: Column[] = [
