@@ -10,6 +10,9 @@ import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import random from '../../helpers/random';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import InfoIcon from '../../components/InfoIcon';
+import GenesDetailsModal from '../../components/TopAnat/GenesDetailsModal';
+import imagePath from '../../helpers/imagePath';
 
 const DEFAULT_RESULTS = {
   signature: undefined,
@@ -66,7 +69,7 @@ const AnatEntitiesCell = ({
     }
     multiSpeciesCondition.anatEntities.forEach((item, key) => {
       items.push(
-        <LinkExternal to={obolibraryLinkFromID(item.id)}>
+        <LinkExternal to={obolibraryLinkFromID(item.id)} key={item.id}>
           <span>{item.name}</span>
         </LinkExternal>
       );
@@ -99,15 +102,11 @@ const ExpandCell = ({ onClick }) => (
 );
 
 const GenesCell = ({ genes }) => (
-  <div
-    style={{
-      width: '180px',
-    }}
-  >
+  <div style={{}}>
     <GeneItemNb itemTab={genes} />
     <div className="expand-content">
       {genes.map((item) => (
-        <div key={item.geneId}>
+        <div key={item.geneId} className="is-flex is-flex-wrap-wrap">
           <Link
             className="internal-link"
             content={item.geneId}
@@ -190,7 +189,7 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
 };
 const dataToTsv = (data) => {
   let tsv =
-    'Anatomical entities\tConservation score\tMax expression score\tGenes with presence of expression\tGenes with absence of expression\tGenes with no data\tSpecies with presence of expression\tSpecies with absence of expression\tAnatomical entity IDs\tGene count with presence of expression\tGene count with absence of expression\tGene count with no data\tSpecies count with presence of expression\tSpecies count with absence of expression\n';
+    'Anatomical entities\tConservation score\tMax expression score\tGenes with presence of expression\tGenes with absence of expression\tGenes with no data\tSpecies with presence of expression\tSpecies with absence of expression\tAnatomical entity IDs\tGene count with presence of expression\tGene count with absence of expression\tGene count with no data\tSpecies count with presence of expression\tSpecies count with absence of expression\r\n';
 
   data.forEach((d) => {
     let ids = '';
@@ -223,7 +222,7 @@ const dataToTsv = (data) => {
       d.countGenesNoData,
       d.countSpeciesExprPresent,
       d.countSpeciesExprAbsent,
-    ].join('\t')}\n`;
+    ].join('\t')}\r\n`;
   });
 
   return tsv;
@@ -239,7 +238,9 @@ const customHeader =
         className: `is-success`,
       });
     };
-    const exportTSV = `data:text/csv;charset=utf-8,${dataToTsv(data)}`;
+    const exportTSV = `data:text/tab-separated-values;charset=utf-8,${dataToTsv(
+      data
+    )}`;
     return (
       <Bulma.Columns vCentered>
         <Bulma.C size={9}>
@@ -387,10 +388,11 @@ const onSort = (sortOpts) => (a, b) => {
 
 const ExpComp = () => {
   const history = useHistory();
+  const [error, setError] = React.useState(false);
+  const [geneInfo, setGeneInfo] = React.useState();
   const { addNotification } = React.useContext(NotificationContext);
   const [loading, setLoading] = React.useState(false);
   const [results, set] = React.useState(DEFAULT_RESULTS);
-  const [unknownGenes, setUnknownGenes] = React.useState();
   const { search: searchParams } = useLocation();
 
   const setResults = React.useCallback((d) => {
@@ -402,13 +404,18 @@ const ExpComp = () => {
   React.useEffect(() => {
     if (searchValue !== '') {
       api.topAnat.autoCompleteGenes(searchValue).then((res) => {
-        setUnknownGenes(res.data.fg_list.undeterminedGeneIds);
+        setGeneInfo({ ...res.data.fg_list, message: res.message });
       });
-    } else setUnknownGenes();
+    } else setGeneInfo();
   }, [searchValue]);
 
   const handlerClickSearch = () => {
     if (searchValue && searchValue !== '') {
+      if (searchValue.split('\n').filter((a) => a !== '').length < 2) {
+        setError(true);
+        return;
+      }
+      setError(false);
       setLoading(true);
       api.expressionComparison
         .getResults({ type: 'form', data: searchValue })
@@ -475,6 +482,39 @@ const ExpComp = () => {
         <div className="is-flex is-justify-content-center my-3">
           <Bulma.Card className={classnames('form')}>
             <Bulma.Card.Body>
+              {geneInfo && (
+                <div
+                  className="message-body is-flex"
+                  style={{ position: 'relative', height: '100px' }}
+                >
+                  <div
+                    className="is-flex is-align-items-center"
+                    style={{ marginRight: 50 }}
+                  >
+                    <p className="mr-1">{geneInfo.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      tooltip="See gene list details"
+                      content={<GenesDetailsModal data={geneInfo} />}
+                    />
+                  </div>
+                  <Bulma.Image
+                    className="no-responsive"
+                    style={{
+                      height: 60,
+                      width: 70,
+                      position: 'absolute',
+                      top: 20,
+                      right: 0,
+                    }}
+                    src={imagePath(
+                      `/species/${geneInfo.selectedSpecies}_light.jpg`
+                    )}
+                    alt="species image"
+                    imgClassnames="top-anat-species"
+                  />
+                </div>
+              )}
               <div className="content">
                 <div className="field">
                   <label className="has-text-weight-semibold">Gene list</label>
@@ -489,6 +529,11 @@ const ExpComp = () => {
                   </div>
                 </div>
                 <div className="field">
+                  {error && (
+                    <span className="has-text-danger">
+                      At least two IDs should be provided
+                    </span>
+                  )}
                   <div className="control">
                     <button
                       className="button search-form"
@@ -520,13 +565,13 @@ const ExpComp = () => {
           </Bulma.Card>
         </div>
       </div>
-      {unknownGenes && unknownGenes.length > 0 && (
+      {geneInfo && geneInfo.undeterminedGeneIds.length > 0 && (
         <p>
           Unknown Ensembl IDs:{' '}
-          {unknownGenes.map((g, key) => (
+          {geneInfo.undeterminedGeneIds.map((g, key) => (
             // eslint-disable-next-line react/no-array-index-key
             <React.Fragment key={`UG-${key}`}>{`'${g}'${
-              key + 1 !== unknownGenes.length ? ', ' : ''
+              key + 1 !== geneInfo.undeterminedGeneIds.length ? ', ' : ''
             }`}</React.Fragment>
           ))}
         </p>
@@ -579,30 +624,37 @@ const ExpComp = () => {
               {
                 key: 'xpr-score',
                 text: 'Conservation score',
+                style: { width: 80 },
               },
               {
                 key: 'max-xpr-score',
                 text: 'Max expression score',
+                style: { width: 100 },
               },
               {
                 key: 'gene-present',
                 text: 'Genes with presence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'gene-absent',
                 text: 'Genes with absence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'gene-no-data',
                 text: 'Genes with no data',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'species-present',
                 text: 'Species with presence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'species-absent',
                 text: 'Species with absence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'details',

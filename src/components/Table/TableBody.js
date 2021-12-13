@@ -119,7 +119,7 @@ const TableBody = () => {
           <PlusModalCell row={row} defaultRender={defaultRender} />
           {Array.isArray(row)
             ? row.map((cell, cellKey) => (
-                <td key={`${key}-${cellKey}`}>
+                <td key={`${key}-${cellKey}`} style={columns?.[cellKey]?.style}>
                   {onRenderCell
                     ? onRenderCell(
                         { cell, key: cellKey, keyRow: key },
@@ -134,7 +134,10 @@ const TableBody = () => {
               ))
             : columns.map((c, keyCol) =>
                 isHideMediaQuery(usedWidth, c.hide) ? null : (
-                  <td key={`${key}-col-${keyCol}`}>
+                  <td
+                    key={`${key}-col-${keyCol}`}
+                    style={columns?.[keyCol]?.style}
+                  >
                     {onRenderCell
                       ? onRenderCell(
                           { cell: row, key: c.key || keyCol, keyRow: key },
