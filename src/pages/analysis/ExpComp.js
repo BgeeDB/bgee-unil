@@ -106,7 +106,7 @@ const GenesCell = ({ genes }) => (
     <GeneItemNb itemTab={genes} />
     <div className="expand-content">
       {genes.map((item) => (
-        <div key={item.geneId} className="is-flex is-flex-wrap-wrap">
+        <div key={item.geneId}>
           <Link
             className="internal-link"
             content={item.geneId}
@@ -624,12 +624,12 @@ const ExpComp = () => {
               {
                 key: 'xpr-score',
                 text: 'Conservation score',
-                style: { width: 80 },
+                style: { width: 100 },
               },
               {
                 key: 'max-xpr-score',
                 text: 'Max expression score',
-                style: { width: 100 },
+                style: { width: 85 },
               },
               {
                 key: 'gene-present',
@@ -659,6 +659,8 @@ const ExpComp = () => {
               {
                 key: 'details',
                 text: 'See details',
+                style: { width: 55 },
+                noSort: true,
               },
             ]}
             data={results?.data?.comparisonResults || []}

@@ -233,6 +233,8 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                       key: 'details',
                       text: 'See details',
                       hide: MEDIA_QUERIES.TABLET,
+                      style: { width: 55 },
+                      noSort: true,
                     },
                   ]}
                   data={homologs?.orthologsByTaxon}
@@ -298,6 +300,8 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                       key: 'details',
                       text: 'See details',
                       hide: MEDIA_QUERIES.TABLET,
+                      style: { width: 55 },
+                      noSort: true,
                     },
                   ]}
                   data={homologs?.paralogsByTaxon}
