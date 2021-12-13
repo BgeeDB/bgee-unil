@@ -10,6 +10,9 @@ import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import random from '../../helpers/random';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import InfoIcon from '../../components/InfoIcon';
+import GenesDetailsModal from '../../components/TopAnat/GenesDetailsModal';
+import imagePath from '../../helpers/imagePath';
 
 const DEFAULT_RESULTS = {
   signature: undefined,
@@ -66,7 +69,7 @@ const AnatEntitiesCell = ({
     }
     multiSpeciesCondition.anatEntities.forEach((item, key) => {
       items.push(
-        <LinkExternal to={obolibraryLinkFromID(item.id)}>
+        <LinkExternal to={obolibraryLinkFromID(item.id)} key={item.id}>
           <span>{item.name}</span>
         </LinkExternal>
       );
@@ -386,10 +389,10 @@ const onSort = (sortOpts) => (a, b) => {
 const ExpComp = () => {
   const history = useHistory();
   const [error, setError] = React.useState(false);
+  const [geneInfo, setGeneInfo] = React.useState();
   const { addNotification } = React.useContext(NotificationContext);
   const [loading, setLoading] = React.useState(false);
   const [results, set] = React.useState(DEFAULT_RESULTS);
-  const [unknownGenes, setUnknownGenes] = React.useState();
   const { search: searchParams } = useLocation();
 
   const setResults = React.useCallback((d) => {
@@ -401,9 +404,9 @@ const ExpComp = () => {
   React.useEffect(() => {
     if (searchValue !== '') {
       api.topAnat.autoCompleteGenes(searchValue).then((res) => {
-        setUnknownGenes(res.data.fg_list.undeterminedGeneIds);
+        setGeneInfo({ ...res.data.fg_list, message: res.message });
       });
-    } else setUnknownGenes();
+    } else setGeneInfo();
   }, [searchValue]);
 
   const handlerClickSearch = () => {
@@ -479,6 +482,40 @@ const ExpComp = () => {
         <div className="is-flex is-justify-content-center my-3">
           <Bulma.Card className={classnames('form')}>
             <Bulma.Card.Body>
+              {console.log(geneInfo)}
+              {geneInfo && (
+                <div
+                  className="message-body is-flex"
+                  style={{ position: 'relative', height: '100px' }}
+                >
+                  <div
+                    className="is-flex is-align-items-center"
+                    style={{ marginRight: 50 }}
+                  >
+                    <p className="mr-1">{geneInfo.message}</p>
+                    <InfoIcon
+                      title="Gene detection details"
+                      tooltip="See gene list details"
+                      content={<GenesDetailsModal data={geneInfo} />}
+                    />
+                  </div>
+                  <Bulma.Image
+                    className="no-responsive"
+                    style={{
+                      height: 60,
+                      width: 70,
+                      position: 'absolute',
+                      top: 20,
+                      right: 0,
+                    }}
+                    src={imagePath(
+                      `/species/${geneInfo.selectedSpecies}_light.jpg`
+                    )}
+                    alt="species image"
+                    imgClassnames="top-anat-species"
+                  />
+                </div>
+              )}
               <div className="content">
                 <div className="field">
                   <label className="has-text-weight-semibold">Gene list</label>
@@ -529,13 +566,13 @@ const ExpComp = () => {
           </Bulma.Card>
         </div>
       </div>
-      {unknownGenes && unknownGenes.length > 0 && (
+      {geneInfo && geneInfo.undeterminedGeneIds.length > 0 && (
         <p>
           Unknown Ensembl IDs:{' '}
-          {unknownGenes.map((g, key) => (
+          {geneInfo.undeterminedGeneIds.map((g, key) => (
             // eslint-disable-next-line react/no-array-index-key
             <React.Fragment key={`UG-${key}`}>{`'${g}'${
-              key + 1 !== unknownGenes.length ? ', ' : ''
+              key + 1 !== geneInfo.undeterminedGeneIds.length ? ', ' : ''
             }`}</React.Fragment>
           ))}
         </p>

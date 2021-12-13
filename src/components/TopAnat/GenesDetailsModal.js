@@ -1,26 +1,25 @@
 import React from 'react';
 import isPlural from '../../helpers/isPlural';
 
-const GenesDetailsModal = (props) => {
-  const {
-    data,
-    data: { selectedSpecies },
-  } = props;
-
+const GenesDetailsModal = ({ data }) => {
   if (!data || Object.keys(data.detectedSpecies).length === 0) return null;
   return (
     <div className="content">
       <p>
         {`Selected species: `}
-        <i>{`${data.detectedSpecies[selectedSpecies].genus} ${data.detectedSpecies[selectedSpecies].speciesName}`}</i>
-        {`, ${data.geneCount[selectedSpecies]} unique genes identified in Bgee`}
+        <i>{`${data.detectedSpecies[data.selectedSpecies].genus} ${
+          data.detectedSpecies[data.selectedSpecies].speciesName
+        }`}</i>
+        {`, ${
+          data.geneCount[data.selectedSpecies]
+        } unique genes identified in Bgee`}
       </p>
       {Object.keys(data.detectedSpecies).length > 1 && (
         <>
           <p>Other species detected in ID list: </p>
           <ul className="unordered">
             {Object.entries(data.detectedSpecies).map(([key, value]) =>
-              key === selectedSpecies.toString() ? null : (
+              key === data.selectedSpecies.toString() ? null : (
                 <li key={key}>
                   <p>
                     <i>{`${value.genus} ${value.speciesName}`}</i>
