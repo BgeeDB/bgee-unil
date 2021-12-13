@@ -99,15 +99,11 @@ const ExpandCell = ({ onClick }) => (
 );
 
 const GenesCell = ({ genes }) => (
-  <div
-    style={{
-      width: '180px',
-    }}
-  >
+  <div style={{}}>
     <GeneItemNb itemTab={genes} />
     <div className="expand-content">
       {genes.map((item) => (
-        <div key={item.geneId}>
+        <div key={item.geneId} className="is-flex is-flex-wrap-wrap">
           <Link
             className="internal-link"
             content={item.geneId}
@@ -389,6 +385,7 @@ const onSort = (sortOpts) => (a, b) => {
 
 const ExpComp = () => {
   const history = useHistory();
+  const [error, setError] = React.useState(false);
   const { addNotification } = React.useContext(NotificationContext);
   const [loading, setLoading] = React.useState(false);
   const [results, set] = React.useState(DEFAULT_RESULTS);
@@ -411,6 +408,11 @@ const ExpComp = () => {
 
   const handlerClickSearch = () => {
     if (searchValue && searchValue !== '') {
+      if (searchValue.split('\n').filter((a) => a !== '').length < 2) {
+        setError(true);
+        return;
+      }
+      setError(false);
       setLoading(true);
       api.expressionComparison
         .getResults({ type: 'form', data: searchValue })
@@ -491,6 +493,11 @@ const ExpComp = () => {
                   </div>
                 </div>
                 <div className="field">
+                  {error && (
+                    <span className="has-text-danger">
+                      At least two IDs should be provided
+                    </span>
+                  )}
                   <div className="control">
                     <button
                       className="button search-form"
@@ -581,30 +588,37 @@ const ExpComp = () => {
               {
                 key: 'xpr-score',
                 text: 'Conservation score',
+                style: { width: 80 },
               },
               {
                 key: 'max-xpr-score',
                 text: 'Max expression score',
+                style: { width: 100 },
               },
               {
                 key: 'gene-present',
                 text: 'Genes with presence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'gene-absent',
                 text: 'Genes with absence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'gene-no-data',
                 text: 'Genes with no data',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'species-present',
                 text: 'Species with presence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'species-absent',
                 text: 'Species with absence of expression',
+                style: { minWidth: 75, maxWidth: 150 },
               },
               {
                 key: 'details',
