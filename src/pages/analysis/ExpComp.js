@@ -10,9 +10,6 @@ import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
 import random from '../../helpers/random';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
-import InfoIcon from '../../components/InfoIcon';
-import GenesDetailsModal from '../../components/TopAnat/GenesDetailsModal';
-import imagePath from '../../helpers/imagePath';
 
 const DEFAULT_RESULTS = {
   signature: undefined,
