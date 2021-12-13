@@ -57,7 +57,11 @@ const TableHead = () => {
             return (
               <th
                 key={item.key}
-                onClick={sortable ? defineSortOption(item.key) : undefined}
+                onClick={
+                  sortable && !item.noSort
+                    ? defineSortOption(item.key)
+                    : undefined
+                }
                 style={item.style}
               >
                 {item.text}

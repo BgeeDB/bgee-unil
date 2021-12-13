@@ -1009,3 +1009,13 @@ label.label {
     margin: 0.5rem;
   }
 }
+table {
+  table-layout: fixed;
+  th {
+    word-wrap: break-word;
+  }
+  tr {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+}
