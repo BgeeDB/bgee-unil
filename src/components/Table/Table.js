@@ -37,7 +37,9 @@ const Table = ({
 }) => {
   const mappedData = React.useMemo(
     () =>
-      data.map((obj, key) => ({ ...obj, identifier: key + 1 })).map(mappingObj),
+      data
+        .map((obj, key) => ({ ...obj, identifierRow: key + 1 }))
+        .map(mappingObj),
     [data, mappingObj]
   );
   const table = React.useRef();
@@ -109,7 +111,7 @@ const Table = ({
   const definiteColumns = React.useMemo(
     () =>
       search !== '' && identifierAtFilter
-        ? [{ key: 'identifier', text: 'ID' }, ...columns]
+        ? [{ key: 'identifierRow', text: 'Row Number' }, ...columns]
         : [...columns],
     [identifierAtFilter, columns, search]
   );
