@@ -219,124 +219,128 @@ const AnatomicalHomologySearch = () => {
         .
       </p>
       <div>
-        <Bulma.Card className="form mx-auto my-3" style={{ maxWidth: 750 }}>
-          <Bulma.Card.Body>
-            <div className="content">
-              <div className="field is-flex is-justify-content-space-between">
-                <div>
-                  <label className="label" htmlFor="search-species">
-                    Anatomical entities
-                  </label>
-                  <div className="control" style={{ maxWidth: 250 }}>
-                    <textarea
-                      className="textarea has-fixed-size"
-                      name="search-species"
-                      rows="10"
-                      value={anatomicalEntities}
-                      onChange={(e) => setAnatomicalEntities(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="label" htmlFor="search-species">
-                    Species to define least common ancestor
-                  </label>
-                  <div className="control checkboxes">
-                    <label
-                      className="checkbox is-size-7 p-1"
-                      htmlFor="ALL"
-                      onClick={onToggleSpecies('ALL')}
-                    >
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        name="ALL"
-                        checked={speciesList.length === selectedSpecies.length}
-                      />
-                      <i>Select All</i>
+        {!(loading && anatomicalEntities === '') && (
+          <Bulma.Card className="form mx-auto my-3" style={{ maxWidth: 750 }}>
+            <Bulma.Card.Body>
+              <div className="content">
+                <div className="field is-flex is-justify-content-space-between">
+                  <div>
+                    <label className="label" htmlFor="search-species">
+                      Anatomical entities
                     </label>
-                    {speciesList?.map(({ id, name }) => (
+                    <div className="control" style={{ maxWidth: 250 }}>
+                      <textarea
+                        className="textarea has-fixed-size"
+                        name="search-species"
+                        rows="10"
+                        value={anatomicalEntities}
+                        onChange={(e) => setAnatomicalEntities(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="label" htmlFor="search-species">
+                      Species to define least common ancestor
+                    </label>
+                    <div className="control checkboxes">
                       <label
                         className="checkbox is-size-7 p-1"
-                        key={id}
-                        htmlFor={id}
-                        onClick={onToggleSpecies(id)}
+                        htmlFor="ALL"
+                        onClick={onToggleSpecies('ALL')}
                       >
                         <input
                           type="checkbox"
                           className="mr-2"
-                          name={id}
-                          checked={selectedSpecies.find((s) => s === id)}
+                          name="ALL"
+                          checked={
+                            speciesList.length === selectedSpecies.length
+                          }
                         />
-                        <i>{name}</i>
+                        <i>Select All</i>
                       </label>
-                    ))}
+                      {speciesList?.map(({ id, name }) => (
+                        <label
+                          className="checkbox is-size-7 p-1"
+                          key={id}
+                          htmlFor={id}
+                          onClick={onToggleSpecies(id)}
+                        >
+                          <input
+                            type="checkbox"
+                            className="mr-2"
+                            name={id}
+                            checked={selectedSpecies.find((s) => s === id)}
+                          />
+                          <i>{name}</i>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="field">
+                  <div className="control">
+                    <div className="is-flex is-align-items-center">
+                      <button
+                        className="button mr-2 search-form px-6"
+                        type="button"
+                        disabled={loading}
+                        onClick={onSubmit}
+                      >
+                        Search
+                      </button>
+                      {error && (
+                        <span className="has-text-primary has-text-weight-semibold">
+                          {error === 'species' &&
+                            'You must select at least two species.'}
+                          {error === 'ae' &&
+                            'You must enter least one Uberon ID.'}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-2">
+                      {`Example: `}
+                      <Link
+                        className="internal-link"
+                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0002048"
+                      >
+                        Lung in human and zebrafish
+                      </Link>
+                      {', '}
+                      <Link
+                        className="internal-link"
+                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0000206"
+                      >
+                        Pharyngeal gill in human and zebrafish
+                      </Link>
+                      {', '}
+                      <Link
+                        className="internal-link"
+                        to="?species_list=9606&species_list=7955&ae_list=CL%3A0000084"
+                      >
+                        T Cell in human and zebrafish
+                      </Link>
+                      {', Placenta '}
+                      <Link
+                        className="internal-link"
+                        to="?species_list=9606&species_list=9598&ae_list=UBERON%3A0001987"
+                      >
+                        in human and chimpanzee
+                      </Link>
+                      {' (homologous structure), or  '}
+                      <Link
+                        className="internal-link"
+                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987"
+                      >
+                        in human and zebrafish
+                      </Link>
+                      (no homologous structure)
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="field">
-                <div className="control">
-                  <div className="is-flex is-align-items-center">
-                    <button
-                      className="button mr-2 search-form px-6"
-                      type="button"
-                      disabled={loading}
-                      onClick={onSubmit}
-                    >
-                      Search
-                    </button>
-                    {error && (
-                      <span className="has-text-primary has-text-weight-semibold">
-                        {error === 'species' &&
-                          'You must select at least two species.'}
-                        {error === 'ae' &&
-                          'You must enter least one Uberon ID.'}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2">
-                    {`Example: `}
-                    <Link
-                      className="internal-link"
-                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0002048"
-                    >
-                      Lung in human and zebrafish
-                    </Link>
-                    {', '}
-                    <Link
-                      className="internal-link"
-                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0000206"
-                    >
-                      Pharyngeal gill in human and zebrafish
-                    </Link>
-                    {', '}
-                    <Link
-                      className="internal-link"
-                      to="?species_list=9606&species_list=7955&ae_list=CL%3A0000084"
-                    >
-                      T Cell in human and zebrafish
-                    </Link>
-                    {', Placenta '}
-                    <Link
-                      className="internal-link"
-                      to="?species_list=9606&species_list=9598&ae_list=UBERON%3A0001987"
-                    >
-                      in human and chimpanzee
-                    </Link>
-                    {' (homologous structure), or  '}
-                    <Link
-                      className="internal-link"
-                      to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987"
-                    >
-                      in human and zebrafish
-                    </Link>
-                    (no homologous structure)
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Bulma.Card.Body>
-        </Bulma.Card>
+            </Bulma.Card.Body>
+          </Bulma.Card>
+        )}
       </div>
       {loading && (
         <Bulma.Notification color="info" className="mt-5">
