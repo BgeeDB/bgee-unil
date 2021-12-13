@@ -620,16 +620,20 @@ const ExpComp = () => {
                 text: 'Genes with no data',
                 style: { minWidth: 75, maxWidth: 150 },
               },
-              {
-                key: 'species-present',
-                text: 'Species with presence of expression',
-                style: { minWidth: 75, maxWidth: 150 },
-              },
-              {
-                key: 'species-absent',
-                text: 'Species with absence of expression',
-                style: { minWidth: 75, maxWidth: 150 },
-              },
+              ...(results?.data?.comparisonResults?.[0]?.multiSpeciesCondition
+                ? [
+                    {
+                      key: 'species-present',
+                      text: 'Species with presence of expression',
+                      style: { minWidth: 75, maxWidth: 150 },
+                    },
+                    {
+                      key: 'species-absent',
+                      text: 'Species with absence of expression',
+                      style: { minWidth: 75, maxWidth: 150 },
+                    },
+                  ]
+                : []),
               {
                 key: 'details',
                 text: 'See details',
