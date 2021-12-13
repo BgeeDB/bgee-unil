@@ -139,7 +139,6 @@ const speciesToLdJSON = ({
       '@type': 'CreativeWork',
     },
     name: `${genus} ${speciesName}`,
-    alternateName: name,
     identifier: id,
     sameAs: [
       obolibraryNCBITaxonLinkFromID(id),
