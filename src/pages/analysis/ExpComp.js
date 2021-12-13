@@ -190,7 +190,7 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
 };
 const dataToTsv = (data) => {
   let tsv =
-    'Anatomical entities\tConservation score\tMax expression score\tGenes with presence of expression\tGenes with absence of expression\tGenes with no data\tSpecies with presence of expression\tSpecies with absence of expression\tAnatomical entity IDs\tGene count with presence of expression\tGene count with absence of expression\tGene count with no data\tSpecies count with presence of expression\tSpecies count with absence of expression\n';
+    'Anatomical entities\tConservation score\tMax expression score\tGenes with presence of expression\tGenes with absence of expression\tGenes with no data\tSpecies with presence of expression\tSpecies with absence of expression\tAnatomical entity IDs\tGene count with presence of expression\tGene count with absence of expression\tGene count with no data\tSpecies count with presence of expression\tSpecies count with absence of expression\r\n';
 
   data.forEach((d) => {
     let ids = '';
@@ -223,7 +223,7 @@ const dataToTsv = (data) => {
       d.countGenesNoData,
       d.countSpeciesExprPresent,
       d.countSpeciesExprAbsent,
-    ].join('\t')}\n`;
+    ].join('\t')}\r\n`;
   });
 
   return tsv;
@@ -239,7 +239,9 @@ const customHeader =
         className: `is-success`,
       });
     };
-    const exportTSV = `data:text/csv;charset=utf-8,${dataToTsv(data)}`;
+    const exportTSV = `data:text/tab-separated-values;charset=utf-8,${dataToTsv(
+      data
+    )}`;
     return (
       <Bulma.Columns vCentered>
         <Bulma.C size={9}>

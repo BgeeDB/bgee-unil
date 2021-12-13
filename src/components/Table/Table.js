@@ -96,7 +96,11 @@ const Table = ({
     [usedWidth, columns]
   );
 
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setPage] = React.useState(1);
+  const setCurrentPage = React.useCallback((page) => {
+    setPage(page);
+    setIsExpanded({});
+  }, []);
   const [pageSize, setPageSize] = React.useState(
     pagination ? defaultPaginationSize : mappedData.length
   );
