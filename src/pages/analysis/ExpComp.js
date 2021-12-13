@@ -479,91 +479,65 @@ const ExpComp = () => {
           species, comparisons will be performed in homologous organs. Please
           enter one gene ID per line.
         </p>
-        <div className="is-flex is-justify-content-center my-3">
-          <Bulma.Card className={classnames('form')}>
-            <Bulma.Card.Body>
-              {geneInfo && (
-                <div
-                  className="message-body is-flex"
-                  style={{ position: 'relative', height: '100px' }}
-                >
-                  <div
-                    className="is-flex is-align-items-center"
-                    style={{ marginRight: 50 }}
-                  >
-                    <p className="mr-1">{geneInfo.message}</p>
-                    <InfoIcon
-                      title="Gene detection details"
-                      tooltip="See gene list details"
-                      content={<GenesDetailsModal data={geneInfo} />}
-                    />
+        {!(loading && searchValue === '') && (
+          <div className="is-flex is-justify-content-center my-3">
+            <Bulma.Card className={classnames('form')}>
+              <Bulma.Card.Body>
+                <div className="content">
+                  <div className="field">
+                    <label className="has-text-weight-semibold">
+                      Gene list
+                    </label>
+                    <div className="control">
+                      <textarea
+                        className="textarea is-small"
+                        placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
+                        rows="10"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <Bulma.Image
-                    className="no-responsive"
-                    style={{
-                      height: 60,
-                      width: 70,
-                      position: 'absolute',
-                      top: 20,
-                      right: 0,
-                    }}
-                    src={imagePath(
-                      `/species/${geneInfo.selectedSpecies}_light.jpg`
+                  <div className="field">
+                    {error && (
+                      <span className="has-text-danger">
+                        At least two IDs should be provided
+                      </span>
                     )}
-                    alt="species image"
-                    imgClassnames="top-anat-species"
-                  />
-                </div>
-              )}
-              <div className="content">
-                <div className="field">
-                  <label className="has-text-weight-semibold">Gene list</label>
-                  <div className="control">
-                    <textarea
-                      className="textarea is-small"
-                      placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
-                      rows="10"
-                      value={searchValue}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                    />
+                    <div className="control">
+                      <button
+                        className="button search-form"
+                        type="button"
+                        disabled={loading}
+                        onClick={handlerClickSearch}
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <p>
+                      Examples:{' '}
+                      <Link
+                        className="internal-link"
+                        to="?data=8798798749849841"
+                      >
+                        SRRM4 (brain specific genes)
+                      </Link>
+                      {', '}
+                      <Link
+                        className="internal-link"
+                        to="?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823"
+                      >
+                        Hoxd12 (development pattern genes)
+                      </Link>
+                    </p>
                   </div>
                 </div>
-                <div className="field">
-                  {error && (
-                    <span className="has-text-danger">
-                      At least two IDs should be provided
-                    </span>
-                  )}
-                  <div className="control">
-                    <button
-                      className="button search-form"
-                      type="button"
-                      disabled={loading}
-                      onClick={handlerClickSearch}
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-                <div className="field">
-                  <p>
-                    Examples:{' '}
-                    <Link className="internal-link" to="?data=8798798749849841">
-                      SRRM4 (brain specific genes)
-                    </Link>
-                    {', '}
-                    <Link
-                      className="internal-link"
-                      to="?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823"
-                    >
-                      Hoxd12 (development pattern genes)
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </Bulma.Card.Body>
-          </Bulma.Card>
-        </div>
+              </Bulma.Card.Body>
+            </Bulma.Card>
+          </div>
+        )}
       </div>
       {geneInfo && geneInfo.undeterminedGeneIds.length > 0 && (
         <p>
