@@ -482,7 +482,6 @@ const ExpComp = () => {
         <div className="is-flex is-justify-content-center my-3">
           <Bulma.Card className={classnames('form')}>
             <Bulma.Card.Body>
-              {console.log(geneInfo)}
               {geneInfo && (
                 <div
                   className="message-body is-flex"
