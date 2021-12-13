@@ -89,6 +89,7 @@ const GeneList = () => {
   const objMapping = React.useCallback(
     (element) => ({
       id: element.gene.geneId,
+      gene: element.gene,
       speciesId: element.gene.species.id,
       name: element.gene.name,
       description: element.gene.description,
