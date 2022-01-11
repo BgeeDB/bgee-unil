@@ -1,5 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
+Sitemap: https://bgee.org/sitemap.xml
 User-agent: *
+Crawl-delay: 10
 Disallow: /search/anatomical-homology
 Disallow: /search/genes/*
 Disallow: /search/species/*
