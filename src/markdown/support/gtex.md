@@ -1,6 +1,3 @@
-[Genes](/search/genes)
-## Table of contents
-
 # GTEx data into Bgee
 
 In addition to the continuous growth of transcriptomics datasets, some specific projects produce large amounts of data, generated and accessible in a consistent manner, as, notably, the [GTEx project](https://www.gtexportal.org/home/). The GTEx project aims at building a comprehensive resource for tissue-specific gene expression in human. Here we describe how this dataset was integrated into Bgee.
@@ -15,13 +12,13 @@ In total, only 50% of samples were kept; these represent a high quality subset o
 
 ## GTEx data into Bgee
 
-All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently with all other healthy RNA-seq from human and other species. These data are being made available both through the website, and through [BgeeDB R package](https://bioconductor.org/packages/BgeeDB/) (with sensitive information hidden).
+All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently with all other healthy RNA-seq from human and other species. These data are being made available both through the website, and through the [BgeeDB R package](https://bioconductor.org/packages/BgeeDB/) (with sensitive information hidden).
 
 ### GTEx data into our website
 
-- Annotations can be retrieved from [RNA-Seq human experiments/libraries info](https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_experiments_libraries.tar.gz). Experiment ID of GTEx is 'SRP012682'.
-- Processed expression values, from GTEx only, are available on our FTP ([download file](https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_read_counts_TPM_FPKM_SRP012682.tsv.tar.gz)).
-  Gene expression calls are included into [human files](https://bgee.org/bgee15_0/?page=download&action=expr_calls#id1).
+- Annotations can be retrieved from [RNA-Seq human experiments/libraries info](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_experiments_libraries.tar.gz). Experiment ID of GTEx is 'SRP012682'.
+- Processed expression values, from GTEx only, are available on our FTP ([download file](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_read_counts_TPM_FPKM_SRP012682.tsv.tar.gz)).
+  Gene expression calls are included into [human files](https://bgee.org/?page=download&action=expr_calls#id1).
 - Each human gene page includes GTEx data if there is any (search a gene [here](/search/genes)).
 - TopAnat analyses can be performed [here](/analysis/top-anat), which leverage the power of the abundant GTEx data integrated with many smaller datasets to provide biological insight into gene lists.
 
