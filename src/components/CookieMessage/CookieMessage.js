@@ -42,7 +42,7 @@ const CookieMessage = () => {
           This website requires cookies, and limited processing of your personal
           data in order to function. By using the site you are agreeing to this
           as outlined in our{' '}
-          <Link to={PATHS.ABOUT.PRIVACY_POLICY} className=" is-underlined" style="color:#FFF">
+          <Link to={PATHS.ABOUT.PRIVACY_POLICY} className=" is-underlined color-white">
             privacy notice
           </Link>
           .
@@ -50,7 +50,7 @@ const CookieMessage = () => {
       </div>
       <div className="right">
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-        <a className="is-underlined" style="color:#FFF" onClick={acceptMessage}>
+        <a className="is-underlined color-white" onClick={acceptMessage}>
           Do not show this banner again
         </a>
       </div>
