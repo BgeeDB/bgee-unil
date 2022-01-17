@@ -3,7 +3,7 @@
   "archive": false,
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
-  "imageDomain": "https://bgee.org/bgee15_0/img",
+  "imageDomain": "/img",
   "apiDomain": "https://bgee.org/bgee_test",
   "ftpDomain": "https://bgee.org/ftp/bgee_v15_0",
   "archivedVersion": [
@@ -17,7 +17,7 @@
     },
     {
       "version": "14.0",
-      "url": "https://bgee.org/bgee14/"
+      "url": "https://bgee.org/bgee14_0/"
     },
     {
       "version": "13.0",
