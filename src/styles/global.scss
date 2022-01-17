@@ -439,6 +439,9 @@ span.icon {
 }
 .color-white {
   color: #FFF;
+  &:hover {
+    color: #fcf798;
+  }
 }
 
 .download-button {
