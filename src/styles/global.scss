@@ -322,6 +322,7 @@ $table-cell-border-width: 0;
 }
 
 th {
+  -ms-user-select: none;
   -webkit-user-select: none;
 }
 table.table {
@@ -464,7 +465,9 @@ figure.image {
 
 
 .control.checkboxes {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: auto auto;
   grid-template-columns: auto auto;
   grid-column-gap: 1rem;
   grid-row-gap: .25rem;
@@ -757,15 +760,17 @@ label.label {
     li {list-style: disc}
   }
   pre {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* Since CSS 2.1 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
   }
 }
 .species-grid {
+  display: -ms-grid;
   display: grid;
   grid-column-gap: 5px;
+  -ms-grid-columns: repeat( auto-fill, 126px);
   grid-template-columns: repeat( auto-fill, 126px);
   grid-auto-flow: dense;
   justify-content: center;
@@ -910,7 +915,9 @@ label.label {
 }
 
 .gene-expression-modal-grid {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: minmax(100px, 200px) 1fr;
   grid-template-columns: minmax(100px, 200px) 1fr;
   row-gap: .8rem;
   .label {
