@@ -26,7 +26,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Swiss Institute of Bioinformatics
+            SIB Swiss Institute of Bioinformatics
           </a>
           <a
             className="image cc"
