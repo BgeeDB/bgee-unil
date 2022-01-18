@@ -3,7 +3,7 @@
   "archive": false,
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
-  "imageDomain": "http://databioinfo.unil.ch/img",
+  "imageDomain": "/img",
   "apiDomain": "https://bgee.org/bgee_test",
   "ftpDomain": "https://bgee.org/ftp/bgee_v15_0",
   "archivedVersion": [
