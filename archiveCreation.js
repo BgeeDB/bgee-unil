@@ -4,8 +4,6 @@ const fsStd = require('fs');
 const { execSync } = require('child_process');
 const { APP_VERSION_URL, APP_VERSION } = require('./src/helpers/constants');
 
-const CURRENT_YEAR = new Date().getFullYear();
-
 const main = async () => {
   try {
     let config = await fs.readFile('./src/config.json', 'utf8');
@@ -33,7 +31,7 @@ const main = async () => {
       './archives/resources/htmlHead.txt',
       'utf8'
     );
-    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`).replace('%CURRENT_YEAR%', CURRENT_YEAR);
+    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`);
     await fs.writeFile('./public/index.html', tmpHtml);
     console.log('Setting noindex in html\n');
 
