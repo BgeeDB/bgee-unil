@@ -12,8 +12,8 @@ const main = async () => {
 
     const scss = await fs.readFile('./src/styles/global.scss', 'utf8');
 
-    html = await fs.readFile('./public/index.html', 'utf8');
-    const html = html.replace('%CURRENT_YEAR%', CURRENT_YEAR);
+    const html0 = await fs.readFile('./public/index.html', 'utf8');
+    const html = html0.replace('%CURRENT_YEAR%', CURRENT_YEAR);
     const noIndexSource = await fs.readFile(
       './archives/resources/htmlHead.txt',
       'utf8'
