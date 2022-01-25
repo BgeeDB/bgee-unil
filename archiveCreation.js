@@ -4,6 +4,8 @@ const fsStd = require('fs');
 const { execSync } = require('child_process');
 const { APP_VERSION_URL, APP_VERSION } = require('./src/helpers/constants');
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 const main = async () => {
   try {
     let config = await fs.readFile('./src/config.json', 'utf8');
@@ -27,6 +29,7 @@ const main = async () => {
     console.log('Setting scss as an archive');
 
     const html = await fs.readFile('./public/index.html', 'utf8');
+    html = html.replace('%CURRENT_YEAR%', CURRENT_YEAR);
     const noIndexSource = await fs.readFile(
       './archives/resources/htmlHead.txt',
       'utf8'
