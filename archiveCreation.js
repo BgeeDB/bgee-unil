@@ -29,12 +29,11 @@ const main = async () => {
     console.log('Setting scss as an archive');
 
     const html = await fs.readFile('./public/index.html', 'utf8');
-    html = html.replace('%CURRENT_YEAR%', CURRENT_YEAR);
     const noIndexSource = await fs.readFile(
       './archives/resources/htmlHead.txt',
       'utf8'
     );
-    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`);
+    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`).replace('%CURRENT_YEAR%', CURRENT_YEAR);
     await fs.writeFile('./public/index.html', tmpHtml);
     console.log('Setting noindex in html\n');
 
