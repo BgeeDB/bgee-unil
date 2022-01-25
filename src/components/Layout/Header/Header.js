@@ -7,6 +7,8 @@ import config from '../../../config.json';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import ROUTES from '../../../routes/routes';
 
+export const CURRENT_YEAR = new Date().getFullYear();
+
 const NAVBAR_LEFT = [
   {
     key: 'menu.analysis',
