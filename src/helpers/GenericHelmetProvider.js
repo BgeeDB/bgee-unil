@@ -2,7 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const CURRENT_YEAR = new Date().getFullYear();
-const COPYRIGHT = Bgee copyright 2007/{CURRENT_YEAR} UNIL;
+const COPYR_LEFT  = 'Bgee copyright 2007/';
+const COPYR_RIGHT = ' UNIL';
+const COPYRIGHT   = {COPYR_LEFT}{CURRENT_YEAR}{COPYR_RIGHT};
 
 const GenericHelmetProvider = () => (
   <>
