@@ -50,7 +50,7 @@ const Layout = ({ children }) => {
       {!config.archive && (
         <Alert type="warning" light>
           <span>
-            This release is a <b>beta</b> version. Please be aware that the data
+            This release is a <strong>beta</strong> version. Please be aware that the data
             will not be archived and should not yet be referenced in
             publications, expecting long-term retrieval. The SPARQL endpoint was
             not updated.
@@ -62,7 +62,7 @@ const Layout = ({ children }) => {
           <span>
             {`This is an archived version of Bgee (version ${APP_VERSION})`}
             <a className="internal-link ml-2" href={config.genericDomain}>
-              <b>Access latest version of Bgee</b>
+              <strong>Access latest version of Bgee</strong>
             </a>
           </span>
         </Alert>
