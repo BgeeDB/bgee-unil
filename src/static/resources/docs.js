@@ -18,6 +18,7 @@ const docs = [
             description: undefined,
             image: {
               src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee TopAnat logo',
             },
             link: PATHS.SUPPORT.TOP_ANAT,
             linkType: 'internal',
@@ -33,6 +34,7 @@ const docs = [
             description: undefined,
             image: {
               src: imagePath('/logo/download_logo.png'),
+              alt: 'Bgee Download logo',
             },
             link: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
             linkType: 'internal',
@@ -47,6 +49,7 @@ const docs = [
             description: undefined,
             image: {
               src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee Blog logo',
             },
             link: 'https://bgeedb.wordpress.com/',
             linkType: 'external',
@@ -61,6 +64,7 @@ const docs = [
             description: undefined,
             image: {
               src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee data logo',
             },
             imageClass: 'is-128x128',
             link: PATHS.ABOUT.SOURCES,

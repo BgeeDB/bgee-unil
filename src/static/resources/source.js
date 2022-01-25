@@ -15,9 +15,9 @@ const source = [
             title: 'Bgee pipeline',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master',
-            alt: 'Github logo',
             linkType: 'external',
             classNames: 'mb-3',
           },
@@ -36,9 +36,9 @@ const source = [
             title: 'BgeeDB R package',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeDB_R',
-            alt: 'Github logo',
             linkType: 'external',
             classNames: 'mb-3',
           },
@@ -57,9 +57,9 @@ const source = [
             title: 'BgeeCall R package',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeCall',
-            alt: 'Github logo',
             linkType: 'external',
             classNames: 'mb-3',
           },
@@ -78,9 +78,9 @@ const source = [
             title: 'IQRay',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/IQRray',
-            alt: 'Github logo',
             linkType: 'external',
             classNames: 'mb-3',
           },
