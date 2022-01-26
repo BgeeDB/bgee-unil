@@ -193,10 +193,7 @@ const NavButtons = ({ className }) => (
     )}
   >
     <p className="control">
-      <Link
-        className="button is-primary"
-        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-      >
+      <Link className="button is-primary" to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}>
         <Bulma.IonIcon name="list-outline" />
         <span>Expression comparison</span>
       </Link>
