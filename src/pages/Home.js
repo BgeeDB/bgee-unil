@@ -13,6 +13,7 @@ import api from '../api';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
+import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
     api.search.species.list().then((resp) => {
       if (resp.code === 200) {
         setSpeciesList(resp.data.species);
+        schemaDotOrg.setHomeDatasetLdJSON(resp.data.species);
       } else {
         setSpeciesList([]);
       }

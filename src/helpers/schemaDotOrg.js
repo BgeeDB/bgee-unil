@@ -126,6 +126,27 @@ const fileDownloadProps = (file) => ({
   ],
 });
 
+const datasetToLdJSON = (species) => {
+    const ldJson = {
+        '@context': 'https://schema.org/',
+        '@id': window.location.href,
+        '@graph': [{
+            '@type': 'Organization',
+            name: 'Bgee - Bring Gene Expression Expertise',
+            url: 'https://bgee.org/',
+            description: 'The aim of Bgee is to help biologists to use and understand gene expression',
+            logo: 'https://bgee.org/img/logo/bgee13_hp_logo.png',
+            sameAs: [
+                'https://twitter.com/Bgeedb',
+                'https://bgeedb.wordpress.com/',
+            ],
+        },
+        ],
+    };
+
+    return ldJson;
+};
+
 const speciesToLdJSON = ({
   downloadFilesGroups: { downloadFiles },
   species: { genus, name, speciesName, id },
@@ -381,6 +402,19 @@ const speciesToLdJSON = ({
 };
 
 const schemaDotOrg = {
+  setHomeDatasetLdJSON: (species) => {
+    /* add ld+json @ bottom of body */
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'dataset-ld+json';
+    script.text = JSON.stringify(datasetToLdJSON(species), null, 4);
+    const body = document.querySelector('body');
+    body.appendChild(script);
+  },
+  unsetHomeDatasetLdJSON: () => {
+    /* remove ld+json @ bottom of body */
+    document.getElementById('dataset-ld+json')?.remove();
+  },
   setSpeciesLdJSON: (species) => {
     /* add ld+json @ bottom of body */
     const script = document.createElement('script');
