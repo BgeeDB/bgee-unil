@@ -127,7 +127,8 @@ const fileDownloadProps = (file) => ({
 });
 
 const datasetToLdJSON = (species) => {
-    const ldJson = {
+    const ldJson = [];
+    ldJson.push({
         '@context': 'https://schema.org/',
         '@id': window.location.href,
         '@graph': [{
@@ -140,11 +141,68 @@ const datasetToLdJSON = (species) => {
                 'https://twitter.com/Bgeedb',
                 'https://bgeedb.wordpress.com/',
             ],
+            parentOrganization: [{
+                '@type': 'Organization',
+                name: 'SIB Swiss Institute of Bioinformatics',
+                sameAs: [
+                    'https://www.sib.swiss',
+                    'https://en.wikipedia.org/wiki/Swiss_Institute_of_Bioinformatics',
+                ],
+                }, {
+                '@type': 'CollegeOrUniversity',
+                name: 'UNIL University of Lausanne',
+                sameAs: [
+                    'https://unil.ch/',
+                    'https://en.wikipedia.org/wiki/University_of_Lausanne',
+                ],
+                }, {
+                '@type': 'EducationalOrganization',
+                name: 'Evolutionary Bioinformatics group',
+                sameAs: 'https://www.unil.ch/dee/robinson-rechavi-group',
+            }],
+        }, {
+            '@type': 'DataCatalog',
+            '@id': 'https://bgee.org/',
+            url: 'https://bgee.org/',
+            name: 'Bgee gene expression data',
+            description: 'Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question -where is a gene expressed?- and supports research in cancer and agriculture as well as evolutionary biology.',
+            keywords: 'bgee, gene expression, evolution, ontology, anatomy, development, evo-devo database, anatomical ontology, developmental ontology, gene expression evolution',
+            creator: [{
+                '@type': 'EducationalOrganization',
+                name: 'Evolutionary Bioinformatics group',
+                sameAs: 'https://www.unil.ch/dee/robinson-rechavi-group',
+            }],
+            provider: [{
+                '@type': 'Organization',
+                name: 'SIB Swiss Institute of Bioinformatics',
+                sameAs: [
+                    'https://www.sib.swiss',
+                    'https://en.wikipedia.org/wiki/Swiss_Institute_of_Bioinformatics',
+                ],
+            }, {
+                '@type': 'CollegeOrUniversity',
+                name: 'UNIL University of Lausanne',
+                sameAs: [
+                    'https://unil.ch/',
+                    'https://en.wikipedia.org/wiki/University_of_Lausanne',
+                ],
+            }, {
+                '@type': 'EducationalOrganization',
+                name: 'Evolutionary Bioinformatics group',
+                sameAs: 'https://www.unil.ch/dee/robinson-rechavi-group',
+            }],
+            license: 'https://creativecommons.org/publicdomain/zero/1.0/',
+            version: '14.2',
+            potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://bgee.org/search/genes?search={query}',
+                'query-input': 'required name=query',
+            },
         },
         ],
-    };
+    });
 
-    return ldJson;
+    return ldJson[0];
 };
 
 const speciesToLdJSON = ({
