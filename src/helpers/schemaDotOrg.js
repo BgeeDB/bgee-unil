@@ -192,7 +192,7 @@ const datasetToLdJSON = (species) => {
                 sameAs: 'https://www.unil.ch/dee/robinson-rechavi-group',
             }],
             license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            version: '14.2',
+            version: config.version,
             potentialAction: {
                 '@type': 'SearchAction',
                 target: 'https://bgee.org/search/genes?search={query}',
