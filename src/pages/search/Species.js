@@ -272,7 +272,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="prov-values">
+        <Bulma.Title size={4} className="gradient-underline" id="proc-values">
           Processed expression value files
         </Bulma.Title>
         <div className="">
@@ -283,7 +283,7 @@ const Species = () => {
           <div className="mt-2">
             <p
               className="is-size-5 has-text-primary has-text-weight-semibold"
-              id="prov-values-affymetrix"
+              id="proc-values-affymetrix"
             >
               Affymetrix
             </p>
