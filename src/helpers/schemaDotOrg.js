@@ -127,10 +127,10 @@ const fileDownloadProps = (file) => ({
 });
 
 const datasetToLdJSON = (species) => {
-    const dataset = [];
+    const datasets = [];
     species.forEach((s) => {
         const { genus, name, speciesName, id } = s;
-        dataset.push({
+        datasets.push({
             '@type': 'Dataset',
             '@id': `https://bgee.org/species/${id}#exp-calls`,
             name: `expr-calls ${id}`,
@@ -177,7 +177,6 @@ const datasetToLdJSON = (species) => {
         },
         );
     });
-    const datasets = dataset;
 
     const ldJson = [];
     ldJson.push({
@@ -250,7 +249,7 @@ const datasetToLdJSON = (species) => {
                 target: 'https://bgee.org/search/genes?search={query}',
                 'query-input': 'required name=query',
             },
-            dataset: {datasets},
+            dataset: datasets,
         },
         ],
     });
