@@ -1,6 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
+const current = new Date();
+const copyright = `Bgee copyright 2007/${current.getFullYear()} UNIL`;
+
 const GenericHelmetProvider = () => (
   <>
     <Helmet>
@@ -13,7 +16,7 @@ const GenericHelmetProvider = () => (
         name="keywords"
         content="bgee, gene expression, evolution, ontology, anatomy, development, evo-devo database, anatomical ontology, developmental ontology, gene expression evolution"
       />
-      <meta name="dcterms.rights" content="Bgee copyright 2007/2022 UNIL" />
+      <meta name="dcterms.rights" content={copyright} />
     </Helmet>
   </>
 );
