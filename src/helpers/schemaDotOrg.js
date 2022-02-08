@@ -199,21 +199,25 @@ const datasetToLdJSON = (species) => {
                     'https://www.sib.swiss',
                     'https://en.wikipedia.org/wiki/Swiss_Institute_of_Bioinformatics',
                 ],
-                }, {
+              }, {
                 '@type': 'CollegeOrUniversity',
                 name: 'UNIL University of Lausanne',
                 sameAs: [
                     'https://unil.ch/',
                     'https://en.wikipedia.org/wiki/University_of_Lausanne',
                 ],
-                }, {
+              }, {
                 '@type': 'EducationalOrganization',
                 name: 'Evolutionary Bioinformatics group',
                 sameAs: 'https://www.unil.ch/dee/robinson-rechavi-group',
             }],
         }, {
             '@type': 'DataCatalog',
-            '@id': 'https://bgee.org/',
+            '@id': window.location.href,
+            'http://purl.org/dc/terms/conformsTo': {
+                '@id': 'https://bioschemas.org/profiles/DataCatalog/0.3-RELEASE-2019_07_01',
+                '@type': 'CreativeWork',
+            },
             url: 'https://bgee.org/',
             name: 'Bgee gene expression data',
             description: 'Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question -where is a gene expressed?- and supports research in cancer and agriculture as well as evolutionary biology.',
@@ -266,7 +270,7 @@ const speciesToLdJSON = ({
     '@id': window.location.href,
     '@type': 'Taxon',
     'http://purl.org/dc/terms/conformsTo': {
-      '@id': 'https://bioschemas.org/profiles/Gene/1.0-RELEASE',
+      '@id': 'https://bioschemas.org/profiles/Taxon/0.6-RELEASE',
       '@type': 'CreativeWork',
     },
     name: `${genus} ${speciesName}`,
@@ -275,6 +279,13 @@ const speciesToLdJSON = ({
       obolibraryNCBITaxonLinkFromID(id),
       `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?lvl=0&id=${id}`,
       `https://nov2020.archive.ensembl.org/${genus}_${speciesName}`,
+    ],
+    taxonRank: [
+        'http://rs.tdwg.org/ontology/voc/TaxonRank#Species',
+        'http://purl.uniprot.org/core/Species',
+        'http://purl.obolibrary.org/obo/NCBITaxon_species',
+        'http://www.wikidata.org/entity/Q7432',
+        'species',
     ],
     subjectOf: [
       {
