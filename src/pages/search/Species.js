@@ -109,8 +109,8 @@ const Species = () => {
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
     /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
-    /* TODO need to use Homo_sapiens and not 9606 because does not work for Ensembl Metazoa ! */
-    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.id}/`}`;
+    const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
+    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
   }
 
   return !data ? null : (
