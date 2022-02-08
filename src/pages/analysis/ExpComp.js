@@ -463,7 +463,7 @@ const ExpComp = () => {
           setLoading(false);
         });
     }
-  }, [searchParams, results]);
+  }, [searchParams, results.signature]);
 
   return (
     <>
