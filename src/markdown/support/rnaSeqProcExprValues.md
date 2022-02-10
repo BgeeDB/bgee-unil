@@ -1,15 +1,15 @@
-Annotation & Processed expression values download files documentation
+RNA-Seq download files documentation: annotations and processed expression values 
 =====================================================================
 
-This documentation describes the format of annotations download files (that include the library and experiment files) as well as the processed expression values download files for RNA Seq data. The files can be found in the Bgee [web-page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values data page") for each species.
+This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression value download page") for each species.
 
-*   [Annotations download files](#ann_downl "Quick jump to this section")
+*   [Annotation download files](#ann_downl "Quick jump to this section")
     *   [Library file](#lib_file "Quick jump to this section")
     *   [Experiment file](#exp_file "Quick jump to this section")
 *   [Processed expression values download files](#proc_Exp "Quick jump to this section")
 
 
-<a name="ann_downl"></a>Annotations download files
+<a name="ann_downl"></a>Annotation download files
 ---------------------------------------------------------------
 
 Go to:
@@ -20,13 +20,13 @@ Go to:
 
 The annotation download files are divided in 2 main files:
 
-1) **libraries information**: where is provided detailed information for each individual sample, as annotation to anatomy, development, sex, strain as well as provide quality scores used in quality control metrics.
+1) **library information**: where is provided detailed information for each individual sample, as annotation to anatomy, development, sex, strain as well as provide quality scores used in quality control metrics.
 
 2) **experiment information**: where is provided the over-all information about the experiment, as number of libraries that belongs to the experiment, as well as number of conditions, number of organs, number of stages and number of strains.
 
 ### <a name="lib_file"></a>Library file
 
-Format description of the libraries download file for a target species:
+Format description of the library download file for a target species:
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -65,7 +65,7 @@ Format description of the libraries download file for a target species:
 |33|[Bgee normalized data URL](#lib_col33 "See Bgee normalized data URL column description")|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/rna_seq/Drosophila_simulans/Drosophila_simulans_RNA-Seq_read_counts_TPM_FPKM_GSE44612.tsv.gz|
 |34|[Raw file URL](#lib_col34 "See Raw file URL column description")|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=SRX091570|
 
-Example of rows of the libraries download file for a target species:
+Example of rows of the library download file for a target species:
 
 |Experiment ID|Library ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Expression mapped anatomical entity ID|Expression mapped anatomical entity name|Expression mapped stage ID|Expression mapped stage name|Expression mapped sex|Expression mapped strain|Platform ID|Protocol|Library type|Library orientation|TMM normalization factor|TPM expression threshold|Read count|Mapped read count|Min. read length|Max. read length|All genes percent present|Protein coding genes percent present|Intergenic regions percent present|Distinct rank count|Max rank in the expression mapped condition|Run IDs|Data source|Data source URL|Bgee normalized data URL|Raw file URL|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
@@ -99,22 +99,22 @@ The Sex column provides the sexes information.
 The Strain column provides the information about the genetic variant or subtype of an organism.
 
 ##### <a name="lib_col9"></a>Expression mapped anatomical entity ID (column 9)
-The Expression mapped anatomical entity ID column is the annotation used in the Bgee Database. That can be different from the `Anatomical entity ID` (column 3) if it was to precise to be inserted in the database or if the `Anatomical entity ID` (column 3) was not present in the UBERON ontology.
+The Expression mapped anatomical entity ID column is the annotation used in the Bgee expression calls. It can be different from the `Anatomical entity ID` (column 3) if it was too granular to be inserted in the database.
 
 ##### <a name="lib_col10"></a>Expression mapped anatomical entity name (column 10)
 The Expression mapped anatomical entity name column provides the name of the anatomical entity defined by `Expression mapped anatomical entity ID` (column 9).
 
 ##### <a name="lib_col11"></a>Expression mapped stage ID (column 11)
-The Expression mapped stage ID column is the annotation used in the Bgee Database. That can be different from the `Stage ID` (column 5) if it was to precise to be inserted in the database or if the `Stage ID` (column 5) was not present in the UBERON ontology.
+The Expression mapped stage ID column is the annotation used in the Bgee expression calls. It can be different from the `Stage ID` (column 5) if it was too granular to be inserted in the database.
 
 ##### <a name="lib_col12"></a>Expression mapped stage name (column 12)
 The Expression mapped stage name column provides the name of the developmental stage defined by `Expression mapped stage ID` (column 11).
 
 ##### <a name="lib_col13"></a>Expression mapped sex (column 13)
-The Expression mapped sex column provides the sexes information used in the Bgee Database.
+The Expression mapped sex column provides the sexes information used in the Bgee expression calls.
 
 ##### <a name="lib_col14"></a>Expression mapped strain (column 14)
-The Expression mapped strain column provides the sexes information used in the Bgee Database.
+The Expression mapped strain column provides the sexes information used in the Bgee expression calls.
 
 ##### <a name="lib_col15"></a>Platform ID (column 15)
 The Platform ID column provides the sequencing platform identifier. 
@@ -156,10 +156,10 @@ The Protein coding genes percent present column provides the information about t
 The Intergenic regions percent present column provides the information about the proportion of intergenic regions called actively expressed in the `Library ID` (column 2).
 
 ##### <a name="lib_col28"></a>Distinct rank count (column 28)
-The Distinct rank count column provides information about unique rank counts in the `Library ID` (column 2).
+The Distinct rank count column provides information about unique rank counts in the `Library ID` (column 2). It is used to weight the rank information coming from this library when computing expression ranks and expression scores.
 
 ##### <a name="lib_col29"></a>Max rank in the expression mapped condition (column 29)
-The Max rank in the expression mapped condition column provides the computed max rank over all conditions.
+The Max rank in the expression mapped condition column provides the max rank over all libraries in this condition. It is used to normalized ranks between conditions when computing expression ranks and expression scores.
 
 ##### <a name="lib_col30"></a>Run IDs (column 30)
 The Run IDs column refers to a sequencing run associated to `library ID` (column 2).
@@ -247,7 +247,7 @@ Description provided by the authors of the `Experiment ID` (column 1).
 <a name="proc_Exp"></a>Processed expression values download files
 -----------------------------------------------------------------
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through ftp https://bgee.org/ftp/bgee_v15_0/download/processed_expr_values/rna_seq/), or through the [web-page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values data page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data referent to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the correspondent target experiment.
+The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/), or through the [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
 
 Format description of processed expression values download file per experiment identifier.
 
@@ -321,11 +321,11 @@ The TPM column provides a normalized quantification measure for sequencing depth
 The FPKM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2). 
 
 ##### <a name="procVal_col14"></a>Rank (column 14)
-The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species.
+The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species. It is used to compute expression ranks and expression scores.
 
 ##### <a name="procVal_col15"></a>Detection flag (column 15)
 The Detection flag column provides an informative classification of a  `Gene ID` (column 4) being classified as present or absent.
-The flag present means that the gene is actively expressed and absent means that the gene is inactively expressed.
+The flag present means that the gene is actively expressed and absent means that the gene is not actively expressed.
 The genes are classified as present or absent based on `pValue` (column 16) cutoff.
 
 ##### <a name="procVal_col16"></a>pValue (column 16)
