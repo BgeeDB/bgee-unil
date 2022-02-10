@@ -1,7 +1,7 @@
-RNA-Seq download files documentation: annotations and processed expression values 
+RNA-Seq download file documentation: annotations and processed expression values 
 =====================================================================
 
-This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression value download page") for each species.
+This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") for each species.
 
 *   [Annotation download files](#ann_downl "Quick jump to this section")
     *   [Library file](#lib_file "Quick jump to this section")
