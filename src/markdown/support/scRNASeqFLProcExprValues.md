@@ -1,4 +1,4 @@
-single cell RNA-Seq full-length download file documentation: annotations and processed expression values 
+single cell RNA-Seq full-length download file documentation: annotations and processed expression values
 ========================================================================================================
 
 This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") for each species.
@@ -131,10 +131,10 @@ The Expression mapped sex column provides the sexes information used in the Bgee
 The Expression mapped strain column provides the genetic variant or subtype of an organism used in the Bgee expression calls.
 
 ##### <a name="lib_col19"></a>Platform ID (column 19)
-The Platform ID column provides the sequencing platform identifier. 
+The Platform ID column provides the sequencing platform identifier.
 
 ##### <a name="lib_col20"></a>Library type (column 20)
-The Library type column consists in the strandedness of the library. This can be single or paired-end. 
+The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="lib_col21"></a>Library orientation (column 21)
 The Library orientation column provides the relative orientation of the reads.
@@ -149,10 +149,10 @@ The Read count column provides the total number of read counts that will be mapp
 The Mapped read count column provides the number of read counts that overlap/mapped to the genomic position.
 
 ##### <a name="lib_col25"></a>Min. read length (column 25)
-The Min. read length column provides the minimum number of base pairs (bp) sequenced from a DNA fragment. 
+The Min. read length column provides the minimum number of base pairs (bp) sequenced from a DNA fragment.
 
 ##### <a name="lib_col26"></a>Max. read length (column 26)
-The Max. read length column provides the maximum number of base pairs (bp) sequenced from a DNA fragment. 
+The Max. read length column provides the maximum number of base pairs (bp) sequenced from a DNA fragment.
 
 ##### <a name="lib_col27"></a>All genes percent present (column 27)
 The All genes percent present column provides the information about the proportion of genes called actively expressed in the `Library ID` (column 2).
@@ -223,7 +223,7 @@ The Experiment name column provides the title referent to the `Experiment ID` (c
 The Library count column provides the total number of the libraries associated to the `Experiment ID` (column 1).
 
 ##### <a name="exp_col4"></a>Condition count (column 4)
-The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, cell types, sex and strains. 
+The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, cell types, sex and strains.
 
 ##### <a name="exp_col5"></a>Organ-stage count (column 5)
 The Organ-stage count column provides the total number of unique combinations between anatomical entities Ids `Organ count` (column 6) and developmental stages `Stage count` (column 7) in the target `Experiment ID` (column 1).
@@ -302,7 +302,7 @@ The Experiment ID column provides the unique identifier per experiment.
 The Library ID column provides the unique identifier per sample (where each sample is a unique cell) that belongs to a `Experiment ID` (column 1).
 
 ##### <a name="procVal_col3"></a>Library type (column 3)
-The Library type column consists in the strandedness of the library. This can be single or paired-end. 
+The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
 The Gene ID column  provides the unique identifier of gene from Ensembl.
@@ -329,16 +329,16 @@ The Cell type name column provides the name of the cell type defined by `Cell ty
 The Sex column provides the sexes information.
 
 ##### <a name="procVal_col12"></a>Strain (column 12)
-The Strain column provides the information about the genetic variant or subtype of an organism. 
+The Strain column provides the information about the genetic variant or subtype of an organism.
 
 ##### <a name="procVal_col13"></a>Read count (column 13)
 The Read count column provides the total number of read of `Gene ID` (column 4) from a target `Library ID` (column 2) that will be mapped to the transcriptome.
 
 ##### <a name="procVal_col14"></a>TPM (column 14)
-The TPM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2). 
+The TPM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2).
 
 ##### <a name="procVal_col15"></a>FPKM (column 15)
-The FPKM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2). 
+The FPKM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2).
 
 ##### <a name="procVal_col16"></a>Rank (column 16)
 The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species. It is used to compute expression ranks and expression scores.
@@ -355,7 +355,7 @@ For each individual `Library ID` (column 2) we map reads both to transcripts and
 
 $ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 14)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
 
-Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution. 
+Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 
 The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value ≤ \alpha$.
 In the download files we used $\alpha = 0.05$.
@@ -363,7 +363,7 @@ In the download files we used $\alpha = 0.05$.
 ##### <a name="procVal_col19"></a>State in Bgee (column 19)
 The State in Bgee column provides the information about the usage of `Gene ID` (column 4) to make expression calls.
 Three different labels can be retrieved in this column:
- 
-1) Part of a call --> This means the information from the `Gene ID` (column 4)  were used to make an expression informative call. 
+
+1) Part of a call --> This means the information from the `Gene ID` (column 4)  were used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 3) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) for absent calls.

@@ -1,4 +1,4 @@
-RNA-Seq download file documentation: annotations and processed expression values 
+RNA-Seq download file documentation: annotations and processed expression values
 =====================================================================
 
 This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") for each species.
@@ -117,19 +117,19 @@ The Expression mapped sex column provides the sexes information used in the Bgee
 The Expression mapped strain column provides the sexes information used in the Bgee expression calls.
 
 ##### <a name="lib_col15"></a>Platform ID (column 15)
-The Platform ID column provides the sequencing platform identifier. 
+The Platform ID column provides the sequencing platform identifier.
 
 ##### <a name="lib_col16"></a>Protocol (column 16)
 The Protocol column provides the information about the RNA-sequencing protocol used for libraries construction. For the moment four different types of protocols are annotated: circRNA, lncRNA, miRNA and polyA.
 
 ##### <a name="lib_col17"></a>Library type (column 17)
-The Library type column consists in the strandedness of the library. This can be single or paired-end. 
+The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="lib_col18"></a>Library orientation (column 18)
 The Library orientation column provides the relative orientation of the reads.
 
 ##### <a name="lib_col19"></a>TMM normalization factor (column 19)
-The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method we estimate the scale factors between samples, this means from libraries that belongs to the same target `Experiment ID` (column 1). 
+The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method we estimate the scale factors between samples, this means from libraries that belongs to the same target `Experiment ID` (column 1).
 
 ##### <a name="lib_col20"></a>TPM expression threshold (column 20)
 The TPM expression threshold column provides the minimum TPM value to call expressed genes in the `Library ID` (column 2).
@@ -141,10 +141,10 @@ The Read count column provides the total number of read counts that will be mapp
 The Mapped read count column provides the number of read counts that overlap/mapped to the genomic position.
 
 ##### <a name="lib_col23"></a>Min. read length (column 23)
-The Min. read length column provides the minimum number of base pairs (bp) sequenced from a DNA fragment. 
+The Min. read length column provides the minimum number of base pairs (bp) sequenced from a DNA fragment.
 
 ##### <a name="lib_col24"></a>Max. read length (column 24)
-The Max. read length column provides the maximum number of base pairs (bp) sequenced from a DNA fragment. 
+The Max. read length column provides the maximum number of base pairs (bp) sequenced from a DNA fragment.
 
 ##### <a name="lib_col25"></a>All genes percent present (column 25)
 The All genes percent present column provides the information about the proportion of genes called actively expressed in the `Library ID` (column 2).
@@ -214,7 +214,7 @@ The Experiment name column provides the title referent to the `Experiment ID` (c
 The Library count column provides the total number of the libraries associated to the `Experiment ID` (column 1).
 
 ##### <a name="exp_col4"></a>Condition count (column 4)
-The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, sex and strains. 
+The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, sex and strains.
 
 ##### <a name="exp_col5"></a>Organ-stage count (column 5)
 The Organ-stage count column provides the total number of unique combinations between anatomical entities Ids `Organ count` (column 6) and developmental stages `Stage count` (column 7) in the target `Experiment ID` (column 1).
@@ -288,7 +288,7 @@ The Experiment ID column provides the unique identifier per experiment.
 The Library ID column provides the unique identifier per sample that belongs to a `Experiment ID` (column 1).
 
 ##### <a name="procVal_col3"></a>Library type (column 3)
-The Library type column consists in the strandedness of the library. This can be single or paired-end. 
+The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
 The Gene ID column  provides the unique identifier of gene from Ensembl.
@@ -309,16 +309,16 @@ The Stage name column provides the name of the developmental stage defined by `S
 The Sex column provides the sexes information.
 
 ##### <a name="procVal_col10"></a>Strain (column 10)
-The Strain column provides the information about the genetic variant or subtype of an organism. 
+The Strain column provides the information about the genetic variant or subtype of an organism.
 
 ##### <a name="procVal_col11"></a>Read count (column 11)
 The Read count column provides the total number of read of `Gene ID` (column 4) from a target `Library ID` (column 2) that will be mapped to the transcriptome.
 
 ##### <a name="procVal_col12"></a>TPM (column 12)
-The TPM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2). 
+The TPM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2).
 
 ##### <a name="procVal_col13"></a>FPKM (column 13)
-The FPKM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2). 
+The FPKM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2).
 
 ##### <a name="procVal_col14"></a>Rank (column 14)
 The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species. It is used to compute expression ranks and expression scores.
@@ -335,7 +335,7 @@ For each individual `Library ID` (column 2) we map reads both to transcripts and
 
 $ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 12)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
 
-Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution. 
+Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 
 The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value ≤ \alpha$.
 In the download files we used $\alpha = 0.05$.
@@ -343,8 +343,8 @@ In the download files we used $\alpha = 0.05$.
 ##### <a name="procVal_col17"></a>State in Bgee (column 17)
 The State in Bgee column provides the information about the usage of `Gene ID` (column 4) to make expression calls.
 Three different labels can be retrieved in this column:
- 
-1) Part of a call --> This means the information from the `Gene ID` (column 4)  were used to make an expression informative call. 
+
+1) Part of a call --> This means the information from the `Gene ID` (column 4)  were used to make an expression informative call.
 1) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 2) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) absent for this gene biotype.
 
