@@ -45,7 +45,7 @@ const NAVBAR_LEFT = [
       {
         key: 'page.resources.sparql',
         title: 'SPARQL endpoint',
-        path: 'https://bgee.org/sparql/',
+        path: '/sparql/',
         type: 'external',
       },
       {
