@@ -29,7 +29,7 @@ All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently wit
 More information and examples can be found on the [BgeeDB R package page](https://bioconductor.org/packages/BgeeDB/).
 
 - Annotations can be retrieved from RNA-Seq human experiments/libraries information. Experiment ID of GTEx is 'SRP012682'. 
-    ```
+    ```R
         if (!requireNamespace("BiocManager", quietly = TRUE))
             install.packages("BiocManager")
         BiocManager::install("BgeeDB")
@@ -38,13 +38,13 @@ More information and examples can be found on the [BgeeDB R package page](https:
         myAnnotation <- getAnnotation(bgee)
     ```
 - Quantitative expression data and presence calls for GTEx can be loaded.
-    ```
+    ```R
         bgee <- Bgee$new(species = "Homo_sapiens", dataType = "rna_seq")
         # This step can take a lot of time as all Bgee GTEx data have to be downloaded and uncompressed.
         dataGTEx <- getData(bgee, experimentId = "SRP012682")
     ```
 - TopAnat analyses can be performed, which leverage the power of the abundant GTEx data integrated with many smaller datasets to provide biological insight into gene lists.
-    ```
+    ```R
       bgee <- Bgee$new(species = "Homo_sapiens")
         myTopAnatData <- loadTopAnatData(bgee)
         # Retrieve all genes with data in Bgee
