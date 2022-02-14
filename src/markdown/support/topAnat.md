@@ -21,11 +21,11 @@ Quick start
 
 ### Examples
 
-*   [Mouse genes mapped to the GO term "spermatogenesis"](?page=top_anat#/result/00fecfca04bf1b2cf88ced9b0a937d68f0eea6cb "TopAnat example").
-*   [Human genes involved in autism and epilepsy, with decorrelation](?page=top_anat#/result/8fce889da7b4519c5792573ed3933032c8122819 "TopAnat example").
-*   [Mouse genes mapped to the GO term "neurological system process", with decorrelation and high quality data only](?page=top_anat#/result/e37009ba698919c75d06e81b3eca5d48f78210a0 "TopAnat example").
-*   [Cow genes with the keyword 'muscle' in their UniProtKB/Swiss-Prot description](?page=top_anat#/result/7e8c74c073be03be4c40810c16c6be06c0bef1be "TopAnat example").
-*   [Platypus genes located on X chromosome](?page=top_anat#/result/5fc8ff1fcfed7cfba0f82f82a67b418ce8a709b6 "TopAnat example").
+*   [Mouse genes mapped to the GO term "spermatogenesis"](/analysis/top-anat/00fecfca04bf1b2cf88ced9b0a937d68f0eea6cb "TopAnat example").
+*   [Human genes involved in autism and epilepsy, with decorrelation](/analysis/top-anat/8fce889da7b4519c5792573ed3933032c8122819 "TopAnat example").
+*   [Mouse genes mapped to the GO term "neurological system process", with decorrelation and high quality data only](/analysis/top-anat/e37009ba698919c75d06e81b3eca5d48f78210a0 "TopAnat example").
+*   [Cow genes with the keyword 'muscle' in their UniProtKB/Swiss-Prot description](/analysis/top-anat/7e8c74c073be03be4c40810c16c6be06c0bef1be "TopAnat example").
+*   [Platypus genes located on X chromosome](/analysis/top-anat/5fc8ff1fcfed7cfba0f82f82a67b418ce8a709b6 "TopAnat example").
 
 Note of caution
 ---------------

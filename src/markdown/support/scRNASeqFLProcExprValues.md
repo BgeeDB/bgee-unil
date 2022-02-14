@@ -1,7 +1,7 @@
 single cell RNA-Seq full-length download file documentation: annotations and processed expression values
 ========================================================================================================
 
-This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the Bgee [download page](https://bgee.org/download/processed-expression-values "Bgee Processed expression values download page") for each species.
+This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the Bgee [download page](/download/processed-expression-values "Bgee Processed expression values download page") for each species.
 
 *   [Annotation download files](#ann_downl "Quick jump to this section")
     *   [Library file](#lib_file "Quick jump to this section")
@@ -259,7 +259,7 @@ Description provided by the authors of the `Experiment ID` (column 1).
 <a name="proc_Exp"></a>Processed expression values download files
 -----------------------------------------------------------------
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/), or through the [download page](https://bgee.org/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
+The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
 
 Format description of processed expression values download file per experiment identifier.
 

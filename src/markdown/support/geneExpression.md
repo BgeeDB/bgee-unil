@@ -1,7 +1,7 @@
 Expression call download file documentation
 ===========================================
 
-Bgee provides calls of baseline presence/absence of expression, and of differential over-/under-expression, either for single species, or compared between species (orthologous genes in homologous organs). This documentation describes the format of these [download files](https://bgee.org/?page=download&action=expr_calls "Bgee expression data page").
+Bgee provides calls of baseline presence/absence of expression, and of differential over-/under-expression, either for single species, or compared between species (orthologous genes in homologous organs). This documentation describes the format of these [download files](/download/gene-expression-calls "Bgee expression data page").
 
 *   [Single-species download files](#single "Quick jump to this section")
     *   [Presence/absence of expression](#single_expr "Quick jump to this section")
