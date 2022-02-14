@@ -1,7 +1,7 @@
 RNA-Seq download file documentation: annotations and processed expression values
 =====================================================================
 
-This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") for each species.
+This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found in the Bgee [download page](https://bgee.org/download/processed-expression-values "Bgee Processed expression values download page") for each species.
 
 *   [Annotation download files](#ann_downl "Quick jump to this section")
     *   [Library file](#lib_file "Quick jump to this section")
@@ -22,7 +22,7 @@ The annotation download files are divided in 2 main files:
 
 1) **library information**: where is provided detailed information for each individual sample, as annotation to anatomy, development, sex, strain as well as provide quality scores used in quality control metrics.
 
-2) **experiment information**: where is provided the over-all information about the experiment, as number of libraries that belongs to the experiment, as well as number of conditions, number of organs, number of stages and number of strains.
+2) **experiment information**: where is provided the over-all information about the experiment, as number of libraries that belong to the experiment, as well as number of conditions, number of organs, number of stages and number of strains.
 
 ### <a name="lib_file"></a>Library file
 
@@ -78,10 +78,10 @@ GSE44612|	SRX091572|	UBERON:0000079|	male reproductive system|	DsimDv:0000007|	d
 The Experiment ID column provides the unique identifier per experiment.
 
 ##### <a name="lib_col2"></a>Library ID (column 2)
-The Library ID column provides the unique identifier per sample that belongs to a `Experiment ID` (column 1).
+The Library ID column provides the unique identifier per sample that belongs to an `Experiment ID` (column 1).
 
 ##### <a name="lib_col3"></a>Anatomical entity ID (column 3)
-The Anatomical entity ID column provides unique identifier of the anatomical entity, from the Uberon ontology.
+The Anatomical entity ID column provides a unique identifier of the anatomical entity, from the Uberon ontology.
 
 ##### <a name="lib_col4"></a>Anatomical entity name (column 4)
 The anatomical entity name column provides the name of the anatomical entity defined by `Anatomical entity ID` (column 3).
@@ -129,7 +129,7 @@ The Library type column consists in the strandedness of the library. This can be
 The Library orientation column provides the relative orientation of the reads.
 
 ##### <a name="lib_col19"></a>TMM normalization factor (column 19)
-The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method we estimate the scale factors between samples, this means from libraries that belongs to the same target `Experiment ID` (column 1).
+The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method we estimate the scale factors between samples, this means from libraries that belong to the same target `Experiment ID` (column 1).
 
 ##### <a name="lib_col20"></a>TPM expression threshold (column 20)
 The TPM expression threshold column provides the minimum TPM value to call expressed genes in the `Library ID` (column 2).
@@ -159,13 +159,13 @@ The Intergenic regions percent present column provides the information about the
 The Distinct rank count column provides information about unique rank counts in the `Library ID` (column 2). It is used to weight the rank information coming from this library when computing expression ranks and expression scores.
 
 ##### <a name="lib_col29"></a>Max rank in the expression mapped condition (column 29)
-The Max rank in the expression mapped condition column provides the max rank over all libraries in this condition. It is used to normalized ranks between conditions when computing expression ranks and expression scores.
+The Max rank in the expression mapped condition column provides the max rank over all libraries in this condition. It is used to normalize ranks between conditions when computing expression ranks and expression scores.
 
 ##### <a name="lib_col30"></a>Run IDs (column 30)
-The Run IDs column refers to a sequencing run associated to `library ID` (column 2).
+The Run IDs column refers to a sequencing run associated to a `library ID` (column 2).
 
 ##### <a name="lib_col31"></a>Data source (column 31)
-Data repository from where the raw files were extracted. Collect all `Run IDs` (column 30) correspondent to the a target `library ID` (column 2).
+Data repository from where the raw files were extracted. Collect all `Run IDs` (column 30) correspondent to a target `library ID` (column 2).
 
 ##### <a name="lib_col32"></a>Data source URL (column 32)
 URL pathway to the data repository where is located the `library ID` (column 2).
@@ -174,7 +174,7 @@ URL pathway to the data repository where is located the `library ID` (column 2).
 URL pathway where is located the processed data for the correspondent `Experiment ID` (column 1) in Bgee.
 
 ##### <a name="lib_col34"></a>Raw file URL (column 34)
-URL pathway to the SRA Run Selector. This allow to access to the `Run IDs` (column 30) through the `library ID` (column 2).
+URL pathway to the SRA Run Selector. This allows to access to the `Run IDs` (column 30) through the `library ID` (column 2).
 
 
 ### <a name="exp_file"></a>Experiment file
@@ -232,7 +232,7 @@ The Sex count column provides the total number of sexes in the target `Experimen
 The Strain count column provides the total number of genetic variants or sub-types in the target `Experiment ID` (column 1).
 
 ##### <a name="exp_col10"></a>Data source (column 10)
-Data repository from where the raw files that belongs to the `Experiment ID` (column 1) were extracted.
+Data repository from where the raw files that belong to the `Experiment ID` (column 1) were extracted.
 
 ##### <a name="exp_col11"></a>Data source URL (column 11)
 URL pathway to the data repository where is located the `Experiment ID` (column 1).
@@ -247,7 +247,7 @@ Description provided by the authors of the `Experiment ID` (column 1).
 <a name="proc_Exp"></a>Processed expression values download files
 -----------------------------------------------------------------
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/), or through the [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
+The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/), or through the [download page](https://bgee.org/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
 
 Format description of processed expression values download file per experiment identifier.
 
@@ -285,19 +285,19 @@ SRP099257|	SRX2548614|	paired|	FBgn0012824|	UBERON:0000922|	embryo|	UBERON:00000
 The Experiment ID column provides the unique identifier per experiment.
 
 ##### <a name="procVal_col2"></a>Library ID (column 2)
-The Library ID column provides the unique identifier per sample that belongs to a `Experiment ID` (column 1).
+The Library ID column provides the unique identifier per sample that belongs to an `Experiment ID` (column 1).
 
 ##### <a name="procVal_col3"></a>Library type (column 3)
 The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
-The Gene ID column  provides the unique identifier of gene from Ensembl.
+The Gene ID column  provides the unique identifier of genes from Ensembl.
 
 ##### <a name="procVal_col5"></a>Anatomical entity ID (column 5)
 The Anatomical entity ID column provides the unique identifier of the anatomical entity, from the Uberon ontology.
 
 ##### <a name="procVal_col6"></a>Anatomical entity name (column 6)
-The Anatomical entity name column provides provides the name of the anatomical entity defined by `Anatomical entity ID` (column 5).
+The Anatomical entity name column provides the name of the anatomical entity defined by `Anatomical entity ID` (column 5).
 
 ##### <a name="procVal_col7"></a>Stage ID (column 7)
 The Stage ID column provides the unique identifier of the developmental stage, from the Uberon ontology.
@@ -312,7 +312,7 @@ The Sex column provides the sexes information.
 The Strain column provides the information about the genetic variant or subtype of an organism.
 
 ##### <a name="procVal_col11"></a>Read count (column 11)
-The Read count column provides the total number of read of `Gene ID` (column 4) from a target `Library ID` (column 2) that will be mapped to the transcriptome.
+The Read count column provides the total number of reads of `Gene ID` (column 4) from a target `Library ID` (column 2) that will be mapped to the transcriptome.
 
 ##### <a name="procVal_col12"></a>TPM (column 12)
 The TPM column provides a normalized quantification measure for sequencing depth and gene length of `Gene ID` (column 4) from a specific `Library ID` (column 2).
