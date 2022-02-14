@@ -139,16 +139,10 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
       },
       {
-        key: 'page.support.rnaseq-processed-expression-values',
-        title: ROUTES[PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES].title,
+        key: 'page.support.processed-expression-values',
+        title: ROUTES[PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES].title,
         type: 'internal',
-        path: PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
-      },
-      {
-        key: 'page.support.singlecell-rnaseq-fulllength-processed-expression-values',
-        title: ROUTES[PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES].title,
-        type: 'internal',
-        path: PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
+        path: PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
       },
       {
         key: 'page.support.faq',

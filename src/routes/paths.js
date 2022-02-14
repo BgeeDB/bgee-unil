@@ -32,8 +32,10 @@ const PATHS = {
     GTEX: '/support/data-sets',
     TOP_ANAT: '/support/top-anat',
     GENE_EXPRESSION_CALLS: '/support/gene-expression-calls',
+    PROCESSED_EXPRESSION_VALUES: '/support/processed-expression-values',
     RNASEQ_PROCESSED_EXPRESSION_VALUES: '/support/rnaseq-processed-expression-values',
     SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES: '/support/singlecell-rnaseq-fulllength-processed-expression-values',
+    AFFYMETRIX_PROCESSED_EXPRESSION_VALUES: '/support/affymetrix-processed-expression-values',
     FAQ: '/support/faq',
   },
   ABOUT: {

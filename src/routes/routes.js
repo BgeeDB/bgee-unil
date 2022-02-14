@@ -24,6 +24,7 @@ import ResourceSourceFile from '../static/resources/source';
 import GtexFile from '../markdown/support/gtex.md';
 import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
+import ProcExprValFile from '../markdown/support/procExprValFile.md';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import FaqFile from '../static/support/faq';
@@ -181,6 +182,10 @@ const SUPPORT = {
     source: GeneExpressionFile,
     title: 'Gene expression calls',
   },
+  [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
+    source: ProcExprValFile,
+    title: 'Processed expression values',
+  },
   [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
     source: RNASeqProcExprValFile,
     title: 'RNA-Seq annotations and processed expression values',
@@ -188,6 +193,9 @@ const SUPPORT = {
   [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
     source: ScRNASeqFLProcExprValFile,
     title: 'Single cell RNA-Seq full-length annotations and processed expression values',
+  },
+  [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
+    title: 'Affymetrix annotations and processed expression values',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
