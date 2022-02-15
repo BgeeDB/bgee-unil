@@ -60,7 +60,7 @@ Example of rows of the chip download file for a target species:
 
 |Experiment ID|Chip ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|IQRray score|MAS5 percent present|Normalization type|Scan date|Chip type ID|CDF name|Chip type name|IQRray score threshold for the chip type|MAS5 percent present threshold for the chip type|Data source|Data source URL|Bgee normalized data URL|Bgee normalized data file|Bgee raw file URL|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
-E-MEXP-1594|EA05066_30456_DROSO2_1|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113944.65|51.59|gcRMA|11/21/06 19:03:15|A-AFFY-35|Drosophila_2| Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
+E-MEXP-1594|EA05066_30456_DROSO2_1|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113944.65|51.59|gcRMA|11/21/06 19:03:15|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
 E-MEXP-1594|EA05066_30460_DROSO2_10|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113462.67|51.46|gcRMA|11/21/06 19:11:47|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30460_DROSO2_10.CEL.gz|
 E-MEXP-1594|EA05066_30461_DROSO2_22|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|117482.56|52.42|gcRMA|11/21/06 19:17:40|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30461_DROSO2_22.CEL.gz|
 
@@ -260,7 +260,7 @@ The Probeset ID column provides a unique identifier associated to a `Chip ID` (c
 Ensembl.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
-The Gene ID column  provides the unique identifier of genes from Ensembl.
+The Gene ID column provides the unique identifier of genes from Ensembl.
 
 ##### <a name="procVal_col5"></a>Anatomical entity ID (column 5)
 The Anatomical entity ID column provides the unique identifier of the anatomical entity, from the Uberon ontology.

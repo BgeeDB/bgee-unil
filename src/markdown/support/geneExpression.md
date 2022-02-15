@@ -737,13 +737,13 @@ Please note that the list of all genes member of the OMA orthologous gene group 
 
 ##### Gene IDs
 
-IDs of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. IDs are separated with the character |.
+IDs of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. IDs are separated with the character.
 
 This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Gene names
 
-Name of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. Names are separated with the character |.
+Name of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. Names are separated with the character.
 
 This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 

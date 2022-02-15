@@ -70,11 +70,11 @@ Format description of the library download file for a target species:
 
 Example of rows of the library download file for a target species:
 
-|Experiment ID| Library ID| Anatomical entity ID| Anatomical entity name| Stage ID| Stage name| Cell type ID| Cell type name| Sex| Strain| Expression mapped anatomical entity ID| Expression mapped anatomical entity name| Expression mapped stage ID|E xpression mapped stage name| Expression mapped cell type ID| Expression mapped cell type name| Expression mapped sex| Expression mapped strain| Platform ID| Library type| Library orientation| TPM expression threshold| Read count| Mapped read count| Min. read length| Max. read length| All genes percent present| Protein coding genes percent present| Intergenic regions percent present| Distinct rank count| Max rank in the expression mapped condition| Run IDs| Data source| Data source URL| Bgee normalized data URL| Raw file URL|
+|Experiment ID|Library ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Expression mapped anatomical entity ID|Expression mapped anatomical entity name|Expression mapped stage ID|E xpression mapped stage name|Expression mapped cell type ID|Expression mapped cell type name|Expression mapped sex|Expression mapped strain|Platform ID|Library type|Library orientation|TPM expression threshold|Read count|Mapped read count|Min. read length|Max. read length|All genes percent present|Protein coding genes percent present|Intergenic regions percent present|Distinct rank count|Max rank in the expression mapped condition|Run IDs|Data source|Data source URL|Bgee normalized data URL|Raw file URL|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
-ERP013381|	ERX1226594|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	NA|	CD-1|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	not annotated|	CD-1|	Illumina HiSeq 2500|	single|	NA|	3.88442|	3238518|	1467281|	125|	125|	13.79|	31.54|	1.55|	10642|	NA|	NA|	SRA|	https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226594|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|	https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226594|
-ERP013381|	ERX1226595|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	NA|	CD-1|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	not annotated	|CD-1|	Illumina HiSeq 2500|	single|	NA|	2.32718|	3621774|	2049490|	125|	125|	15.34|	34.81|	1.28|	11014|	NA|	NA|	SRA|	https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226595|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|	https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226595|
-ERP013381|	ERX1226596|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	NA|	CD-1|	UBERON:0000922|	embryo|	MmusDv:0000014|	Theiler stage 09 (mouse)|	CL:0000352|	epiblast cell|	not annotated|	CD-1|	Illumina HiSeq 2500|	single|	NA|	3.39165|3581718|	1606871|	125|	125|	13.11|	29.75|	1.17|	9585|	NA|	NA|	SRA|	https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226596|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|	https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226596|
+ERP013381|ERX1226594|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.88442|3238518|1467281|125|125|13.79|31.54|1.55|10642|NA|NA|SRA|https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226594|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226594|
+ERP013381|ERX1226595|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|2.32718|3621774|2049490|125|125|15.34|34.81|1.28|11014|NA|NA|SRA|https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226595|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226595|
+ERP013381|ERX1226596|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.39165|3581718|1606871|125|125|13.11|29.75|1.17|9585|NA|NA|SRA|https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?cmd=viewer&m=data&s=viewer&run=ERX1226596|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226596|
 
 ##### <a name="lib_col1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -210,8 +210,8 @@ Example of rows for a single species in experiment download file:
 
 |Experiment ID|Experiment name|Library count|Condition count|Organ-stage count|Organ count|Stage count|Cell-Type count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Experiment description|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
-ERP013381|	Mouse embryonic RNA-seq|	1205|	4|	4|	1|	4|	2|	1|	1|	SRA|	https://www.ncbi.nlm.nih.gov/sra/ERP013381|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|	The study was aimed at interrogating the early stages of blood cell development within the embryo...
-SRP020490|	Single-cell RNA-Seq reveals dynamic, random monoallelic gene expression in mammalian cells|	118|	2|	2|	2|	2|	2|	2|	1|	SRA|	https://www.ncbi.nlm.nih.gov/sra/SRP020490|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_SRP020490.tsv.tar.gz|	In the diploid genome, genes come in two copies, which can have different DNA sequence and where one is maternal and one is paternal...
+ERP013381|Mouse embryonic RNA-seq|1205|4|4|1|4|2|1|1|SRA|https://www.ncbi.nlm.nih.gov/sra/ERP013381|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.tar.gz|The study was aimed at interrogating the early stages of blood cell development within the embryo...
+SRP020490|Single-cell RNA-Seq reveals dynamic, random monoallelic gene expression in mammalian cells|118|2|2|2|2|2|2|1|SRA|https://www.ncbi.nlm.nih.gov/sra/SRP020490|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/full_length_sc_rna_seq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_SRP020490.tsv.tar.gz|In the diploid genome, genes come in two copies, which can have different DNA sequence and where one is maternal and one is paternal...
 
 ##### <a name="exp_col1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -288,11 +288,11 @@ Format description of processed expression values download file per experiment i
 
 Example of rows of processed expression values download file. Experiment SRP020490 from *Mus musculus*.
 
-|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name| Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
+|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
 |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
-SRP020490|	SRX259105|	single|	ENSMUSG00000000001|	UBERON:0000085|	morula|	MmusDv:0000006|	Theiler stage 03 (mouse)|	CL:0000353|	blastoderm cell|	NA|	CAST_EiJ(mother)_x_C57BL_6J(father)|	2154|	54.538026|	55.33224|	2465|	present|	3.70353E-06|	Part of a call|
-SRP020490|	SRX259105|	single|	ENSMUSG00000000003|	UBERON:0000085|	morula|	MmusDv:0000006|	Theiler stage 03 (mouse)|	CL:0000353|	blastoderm cell|	NA|	CAST_EiJ(mother)_x_C57BL_6J(father)|	0|	0|	0|	NA|		|NA|	Result excluded, reason: absent call not reliable|
-SRP020490|	SRX259105|	single|	ENSMUSG00000000028|	UBERON:0000085|	morula|	MmusDv:0000006|	Theiler stage 03 (mouse)|	CL:0000353|	blastoderm cell|	NA|	CAST_EiJ(mother)_x_C57BL_6J(father)|	341.9999|	16.191957|	16.427753|	4671|	present|	8.89015E-05|	Part of a call|
+SRP020490|SRX259105|single|ENSMUSG00000000001|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|2154|54.538026|55.33224|2465|present|3.70353E-06|Part of a call|
+SRP020490|SRX259105|single|ENSMUSG00000000003|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|0|0|0|NA||NA|Result excluded, reason: absent call not reliable|
+SRP020490|SRX259105|single|ENSMUSG00000000028|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|341.9999|16.191957|16.427753|4671|present|8.89015E-05|Part of a call|
 
 
 ##### <a name="procVal_col1"></a>Experiment ID (column 1)
@@ -305,7 +305,7 @@ The Library ID column provides the unique identifier per sample (where each samp
 The Library type column consists in the strandedness of the library. This can be single or paired-end.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
-The Gene ID column  provides the unique identifier of genes from Ensembl.
+The Gene ID column provides the unique identifier of genes from Ensembl.
 
 ##### <a name="procVal_col5"></a>Anatomical entity ID (column 5)
 The Anatomical entity ID column provides the unique identifier of the anatomical entity, from the Uberon ontology.
@@ -344,7 +344,7 @@ The FPKM column provides a normalized quantification measure for sequencing dept
 The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species. It is used to compute expression ranks and expression scores.
 
 ##### <a name="procVal_col17"></a>Detection flag (column 17)
-The Detection flag column provides an informative classification of a  `Gene ID` (column 4). The flag can be present that means that the gene is actively expressed or empty classification (NULL).
+The Detection flag column provides an informative classification of a `Gene ID` (column 4). The flag can be present that means that the gene is actively expressed or empty classification (NULL).
 Note that in single cell RNA-Seq full-length data we don't call absent genes.
 The genes are classified as present based on `pValue` (column 18) cutoff.
 
