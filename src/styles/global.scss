@@ -1039,6 +1039,7 @@ table {
   overflow-y: hidden;
   table {
     table-layout: auto;
+    font-size: 0.9em;
   }
   table tr {
     word-wrap: normal;
@@ -1047,5 +1048,23 @@ table {
   table tr th, table tr td {
     border: 1px solid black;
     padding: 2px 4px 2px 4px;
+  }
+  h3 {
+    display: block;
+    font-size: 1.1rem;
+    margin: 1em 0 0 0;
+    font-weight: bold;
+  }
+  h4 {
+    display: block;
+    font-size: 1em;
+    margin: 1.33em 0 0 0;
+    font-weight: bold;
+  }
+  h5 {
+    display: block;
+    font-size: .83em;
+    margin: 1.67em 0 0 0;
+    font-weight: bold;
   }
 }
