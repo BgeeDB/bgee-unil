@@ -67,10 +67,10 @@ E-MEXP-1594|	EA05066_30461_DROSO2_22|	UBERON:0007023|	adult organism|	UBERON:000
 The Experiment ID column provides the unique identifier per experiment.
 
 ##### <a name="chip_col2"></a>Chip ID (column 2)
-The Chip ID column provides the unique identifier per sample that belongs to a `Experiment ID` (column 1).
+The Chip ID column provides the unique identifier per sample that belongs to an `Experiment ID` (column 1).
 
 ##### <a name="chip_col3"></a>Anatomical entity ID (column 3)
-The Anatomical entity ID column provides unique identifier of the anatomical entity, from the Uberon ontology.
+The Anatomical entity ID column provides a unique identifier of the anatomical entity, from the Uberon ontology.
 
 ##### <a name="chip_col4"></a>Anatomical entity name (column 4)
 The anatomical entity name column provides the name of the anatomical entity defined by `Anatomical entity ID` (column 3).
@@ -98,12 +98,12 @@ The Normalization type column provides the information about the normalization m
 
 Two normalization approaches can be used: gcRMA and MAS5.
 
-The gcRMA normalization is applied when the CEL files are available. This is default method applied in Bgee.
+The gcRMA normalization is applied when the CEL files are available. This is the default method applied in Bgee.
 
 The MAS5 normalization is applied when only the processed MAS5 files are available.
 
 ##### <a name="chip_col12"></a>Scan date (column 12)
-The Scan date column provides the information about the processing date of the Affymetrix CEL files that belongs to the `Experiment ID` (column 1).
+The Scan date column provides the information about the processing date of the Affymetrix CEL files that belong to the `Experiment ID` (column 1).
 
 ##### <a name="chip_col13"></a>Chip type ID (column 13)
 The Chip type ID column provides the information about the type of array produced in the factory.
@@ -118,7 +118,7 @@ The Chip type name column provides the correspondent name based on the `Chip typ
 The IQRray score threshold for the chip type column provides a minimum threshold value applied per `Chip type ID` (column 13) as quality control metric.
 
 ##### <a name="chip_col17"></a>MAS5 percent present threshold for the chip type (column 17)
-The MAS5 percent present threshold for the chip type column provides the information about minimum proportion of genes called expressed in the `Chip type ID` (column 13).
+The MAS5 percent present threshold for the chip type column provides the information about the minimum proportion of genes called expressed in the `Chip type ID` (column 13).
 
 ##### <a name="chip_col18"></a>Data source (column 18)
 Data repository from where the raw files were extracted referent to the `Chip ID` (column 2).
@@ -194,7 +194,7 @@ The Sex count column provides the total number of sexes in the target `Experimen
 The Strain count column provides the total number of genetic variants or sub-types in the target `Experiment ID` (column 1).
 
 ##### <a name="exp_col10"></a>Data source (column 10)
-Data repository from where the raw files that belongs to the `Experiment ID` (column 1) were extracted.
+Data repository from where the raw files that belong to the `Experiment ID` (column 1) were extracted.
 
 ##### <a name="exp_col11"></a>Data source URL (column 11)
 URL pathway to the data repository where is located the `Experiment ID` (column 1).
@@ -211,7 +211,7 @@ Description provided by the authors of the `Experiment ID` (column 1).
 <a name="processed-expression-values-download-files"></a>Processed expression values download files
 -----------------------------------------------------------------
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web-page all the processed data related to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all samples that belong to the corresponding target experiment.
+The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all samples that belong to the corresponding target experiment.
 
 Format description of processed expression values download file per experiment identifier.
 
@@ -249,7 +249,7 @@ The Experiment ID column provides the unique identifier per experiment.
 The Chip ID column provides the unique identifier per sample that belongs to an `Experiment ID` (column 1).
 
 ##### <a name="procVal_col3"></a>Probeset ID (column 3)
-The Probeset ID column provides an unique identifier associated to a `Chip ID` (column 2) in the target `Experiment ID` (column 1). The `Probeset ID`(column 3) allow to define a `Gene ID` (column 4) based on the chip type information. This allow us to retrieve the mapping of probesets to genes from
+The Probeset ID column provides a unique identifier associated to a `Chip ID` (column 2) in the target `Experiment ID` (column 1). The `Probeset ID`(column 3) allows to define a `Gene ID` (column 4) based on the chip type information. This allows us to retrieve the mapping of probesets to genes from
 Ensembl.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
@@ -285,8 +285,8 @@ The flag present means that the `Gene ID` (column 4) associated to a `Probeset I
 The pValue column provides a quantitative metric for each unique `Probeset ID`(column 3) referent to `Gene ID` (column 4) in a `Chip ID` (column 2).
 Based on the availability of the raw CEL files or by using the processed files (MAS5), the p-values are calculated/attributed differently, this means, for:
 
-1) Raw CEL files, the p-value are calculated based on wilcoxon test on the signal of the probesets against a subset of weakly expressed probesets.
-For this, we use a `mas5calls()` R function, were we set the parameters: tau=0.015, alpha1 = 0.024 and alpha2 = 0.111.
+1) Raw CEL files, the p-value are calculated based on Wilcoxon test on the signal of the probesets against a subset of weakly expressed probesets.
+For this, we use a `mas5calls()` R function, where we set the parameters: tau=0.015, alpha1 = 0.024 and alpha2 = 0.111.
 
 2) MAS5 processed files, the p-value cutoffs are assigned manually, this means:
 
@@ -300,5 +300,5 @@ For this, we use a `mas5calls()` R function, were we set the parameters: tau=0.0
 The State in Bgee column provides the information about the usage of `Probeset ID`(column 3) linked to a `Gene ID` (column 4) to make expression calls.
 Two different labels can be retrieved in this column:
 
-1) Part of a call --> This means the information from the `Gene ID` (column 4)  were used to make an expression informative call.
+1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Chip ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
