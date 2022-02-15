@@ -27,6 +27,7 @@ import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import ProcExprValFile from '../markdown/support/procExprValFile.md';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
+import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -195,6 +196,7 @@ const SUPPORT = {
     title: 'Single cell RNA-Seq full-length annotations and processed expression values',
   },
   [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
+    source: AffymetrixProcExprValFile,
     title: 'Affymetrix annotations and processed expression values',
   },
   [PATHS.SUPPORT.FAQ]: {

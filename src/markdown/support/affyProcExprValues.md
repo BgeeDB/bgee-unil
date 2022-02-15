@@ -1,7 +1,7 @@
-Affymetrix download file documentation: annotations and processed expression values 
+Affymetrix download file documentation: annotations and processed expression values
 ===================================================================================
 
-This documentation describes the format of annotation download files (that include the chip and experiment files) as well as the processed expression values download files for Affymetrix data. The files can be found in the Bgee [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") for each species.
+This documentation describes the format of annotation download files (that include the chip and experiment files) as well as the processed expression values download files for Affymetrix data. The files can be found in the Bgee [download page](/download/processed-expression-values "Bgee Processed expression values download page") for each species.
 
 *   [Annotation download files](#annotation-download-files "Quick jump to this section")
     *   [Chip file](#chip-file "Quick jump to this section")
@@ -94,9 +94,9 @@ The IQRray score column provides a quality control metric of the CEL file data t
 The MAS5 percent present column provides the information about the proportion of genes called expressed in the `Chip ID` (column 2).
 
 ##### <a name="chip_col11"></a>Normalization type (column 11)
-The Normalization type column provides the information about the normalization method applied to the `Chip ID` (column 2). 
+The Normalization type column provides the information about the normalization method applied to the `Chip ID` (column 2).
 
-Two normalization approaches can be used: gcRMA and MAS5. 
+Two normalization approaches can be used: gcRMA and MAS5.
 
 The gcRMA normalization is applied when the CEL files are available. This is default method applied in Bgee.
 
@@ -106,7 +106,7 @@ The MAS5 normalization is applied when only the processed MAS5 files are availab
 The Scan date column provides the information about the processing date of the Affymetrix CEL files that belongs to the `Experiment ID` (column 1).
 
 ##### <a name="chip_col13"></a>Chip type ID (column 13)
-The Chip type ID column provides the information about the type of array produced in the factory. 
+The Chip type ID column provides the information about the type of array produced in the factory.
 
 ##### <a name="chip_col14"></a>CDF name (column 14)
 The CDF name column provides the name of the chip description file based on `Chip type ID` (column 13).
@@ -176,7 +176,7 @@ The Experiment name column provides the title referent to the `Experiment ID` (c
 The Chip count column provides the total number of the samples associated to the `Experiment ID` (column 1).
 
 ##### <a name="exp_col4"></a>Condition count (column 4)
-The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, sex and strains. 
+The Condition count column provides all the combinations of unique parameters in Bgee. This means, combinations between unique anatomical entities, developmental stages, sex and strains.
 
 ##### <a name="exp_col5"></a>Organ-stage count (column 5)
 The Organ-stage count column provides the total number of unique combinations between anatomical entities Ids `Organ count` (column 6) and developmental stages `Stage count` (column 7) in the target `Experiment ID` (column 1).
@@ -211,7 +211,7 @@ Description provided by the authors of the `Experiment ID` (column 1).
 <a name="processed-expression-values-download-files"></a>Processed expression values download files
 -----------------------------------------------------------------
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through FTP https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](https://bgee.org/?page=download&action=proc_values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web-page all the processed data related to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all samples that belong to the corresponding target experiment.
+The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web-page all the processed data related to the species are download, this means all the experiments are automatically download. In the folder directory all the files (if more then 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all samples that belong to the corresponding target experiment.
 
 Format description of processed expression values download file per experiment identifier.
 
@@ -250,10 +250,10 @@ The Chip ID column provides the unique identifier per sample that belongs to an 
 
 ##### <a name="procVal_col3"></a>Probeset ID (column 3)
 The Probeset ID column provides an unique identifier associated to a `Chip ID` (column 2) in the target `Experiment ID` (column 1). The `Probeset ID`(column 3) allow to define a `Gene ID` (column 4) based on the chip type information. This allow us to retrieve the mapping of probesets to genes from
-Ensembl. 
+Ensembl.
 
 ##### <a name="procVal_col4"></a>Gene ID (column 4)
-The Gene ID column  provides the unique identifier of genes from Ensembl. 
+The Gene ID column  provides the unique identifier of genes from Ensembl.
 
 ##### <a name="procVal_col5"></a>Anatomical entity ID (column 5)
 The Anatomical entity ID column provides the unique identifier of the anatomical entity, from the Uberon ontology.
@@ -279,7 +279,7 @@ The Log of normalized signal intensity column provides a log transformation of n
 ##### <a name="procVal_col12"></a>Detection flag (column 12)
 The Detection flag column provides an informative classification based on `pValue` (column 13) cutoff.
 A `Probeset ID` (column 3) linked to a `Gene ID` (column 4) can be classified as present, marginal or absent.
-The flag present means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is actively expressed. The absent flag means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is not actively expressed. The marginal label means that the intensities of `Gene ID` (column 4) associated to a `Probeset ID`(column 3) are between the two p-value cutoffs, this means between present and absent p-values. 
+The flag present means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is actively expressed. The absent flag means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is not actively expressed. The marginal label means that the intensities of `Gene ID` (column 4) associated to a `Probeset ID`(column 3) are between the two p-value cutoffs, this means between present and absent p-values.
 
 ##### <a name="procVal_col13"></a>pValue (column 13)
 The pValue column provides a quantitative metric for each unique `Probeset ID`(column 3) referent to `Gene ID` (column 4) in a `Chip ID` (column 2).
@@ -291,9 +291,9 @@ For this, we use a `mas5calls()` R function, were we set the parameters: tau=0.0
 2) MAS5 processed files, the p-value cutoffs are assigned manually, this means:
 
   * for stored MAS5 flags of expression "present" is attributed the p-value = 0.01,
-  
+
   * for stored MAS5 flags of expression "marginal" is attributed the p-value = 0.05,
-  
+
   * for stored MAS5 flags of expression "absent" is attributed the p-value = 0.1,
 
 ##### <a name="procVal_col14"></a>State in Bgee (column 14)
