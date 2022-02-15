@@ -28,7 +28,6 @@ import ProcExprValFile from '../static/support/ProcessedExpressionValues';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
 import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
-import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
