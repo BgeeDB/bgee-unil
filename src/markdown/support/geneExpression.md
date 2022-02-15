@@ -33,7 +33,7 @@ Call propagation allows a complete integration of the data, even if provided at 
 
 It is possible to select two different combinations of `condition parameters`:
 
-*   anatomical entities only (by default) files contain one expression call for each unique pair of gene and anatomical entity.If more than one developmental stage map this unique pair, the resulting expression call correspond to summarized information coming from all developmental stages.
+*   anatomical entities only (by default) files contain one expression call for each unique pair of gene and anatomical entity. If more than one developmental stage maps this unique pair, the resulting expression call corresponds to summarized information coming from all developmental stages.
 *   anatomical entities and developmental stages files contain one expression call for each unique gene, anatomical entity and developmental stage.
 
 Presence/absence calls are then filtered and presented differently depending on whether a `simple file`, or an `advanced file` is used. Notably: `simple files` aim at providing summarized information over all data types, and only in anatomical entities and developmental stages actually used in experimental data; `advanced files` aim at reporting all information, allowing for instance to retrieve the contribution of each data type to a call, in all possible anatomical entities and developmental stages.
@@ -587,7 +587,7 @@ Bgee provides the ability to compare expression data between species, with great
 
 *   homology of anatomical entities: When comparing multiple species, only anatomical entities homologous between all species compared are considered, meaning, only anatomical entities derived from an organ existing before the divergence of the species compared. This requires careful annotations of the homology history of animal anatomy. These annotations are described in a separate project maintained by the Bgee team, see [homology annotation project on GitHub](https://github.com/BgeeDB/anatomical-similarity-annotations/ "See anatomical-similarity-annotations project on GitHub").  
     In practice, when comparing expression data between several species, the anatomical entities used are those with a homology relation valid for their Least Common Ancestor (LCA), or any of its ancestral taxa. For instance, if comparing data between human and zebrafish, the LCA would be the taxon _Euteleostomi_; as a result, annotations to this taxon would be used, such as the relation of homology between "tetrapod parietal bone" (UBERON:0000210) and "actinopterygian frontal bone" (UBERON:0004866); but also, annotations to ancestral taxa, such as the annotation stating that "ophthalmic nerve" appeared in the _Vertebrata_ common ancestor; annotations to more recent taxa than the LCA would be discarded, such as the annotation to the "forelimb" structure (UBERON:0002102), homologous in the _Tetrapoda_ lineage.
-*   orthology of genes: relations of orthology between genes are retrieved using [OMA](https://omabrowser.org/oma/hogs/ "External link to OMA browser"); when comparing several species, Bgee identifies their Least Common Ancestor (LCA), and retrieve genes that have descended from a single common ancestral gene in that LCA. Relations of orthology between genes are provided in Bgee through [hierarchical orthologous groups files](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+*   orthology of genes: relations of orthology between genes are retrieved using [OMA](https://omabrowser.org/oma/hogs/ "External link to OMA browser"); when comparing several species, Bgee identifies their Least Common Ancestor (LCA), and retrieves genes that have descended from a single common ancestral gene in that LCA. Relations of orthology between genes are provided in Bgee through [hierarchical orthologous groups files](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 Jump to:
 
@@ -616,7 +616,7 @@ Example lines for a OMA Hierarchical orthologous groups file
 
 ##### OMA ID (column 1)
 
-Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Genes member of a OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Gene ID (column 2)
 
@@ -655,7 +655,7 @@ In simple files, each line provides information for a gene orthology group, in a
 
 In simple files, only lines with data in at least two species, and at least one over-expression or under-expression call in a species, are provided, and only for anatomical entities with a homology relation defined with a good level of confidence.
 
-Relations of orthology between genes member of a same orthology gene group are provided through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Relations of orthology between gene members of a same orthology gene group are provided through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 Format description for multi-species simple differential expression file
 
@@ -689,7 +689,7 @@ Example lines for multi-species simple differential expression file
 
 ##### OMA ID (column 1)
 
-Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Genes member of a OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Anatomical entity IDs (column 2)
 
@@ -715,35 +715,35 @@ Name of the developmental stage defined by `Developmental stage ID` (column 4)
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant over-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
-Please note that the list of all genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Under-expressed gene count for speciesXX
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant under-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
-Please note that the list of all genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Not diff. expressed gene count for speciesXX
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), but that were never shown to have a significant variation of their level of expression as compared to the other conditions of the analyses, or for which conflicting results were generated from different data types.
 
-Please note that the list of all genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### NA gene count for speciesXX
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were not tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)).
 
-Please note that the list of all genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Gene IDs
 
-IDs of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. IDs are separated with the character.
+IDs of the gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. IDs are separated with the character.
 
 This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Gene names
 
-Name of the genes member of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. Names are separated with the character.
+Name of the gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. Names are separated with the character.
 
 This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
@@ -751,7 +751,7 @@ This column is provided as additional information, members of OMA orthologous ge
 
 #### <a name="multi_diff_complete"></a>Complete file
 
-In complete files, information for all genes are provided, in all conditions tested, for anatomical entities homologous between all species compared, and comparable broad developmental stages. As opposed to simple multi-species files, all homology relations available for the anatomical entities are considered, even from homology hypotheses with low support; a column allows to retrieve the level of confidence in the homology hypothesis used. Also, the number of columns in complete files is not variable, whatever the number of species compared is.
+In complete files, information for all genes is provided, in all conditions tested, for anatomical entities homologous between all species compared, and comparable broad developmental stages. As opposed to simple multi-species files, all homology relations available for the anatomical entities are considered, even from homology hypotheses with low support; a column allows to retrieve the level of confidence in the homology hypothesis used. Also, the number of columns in complete files is not variable, whatever the number of species compared is.
 
 Relations of orthology between genes can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation"). This allows notably to detect genes with no data for a condition: if a gene is listed as a member of an orthology group, but there is no call for this gene in a given condition, it means that there is no data available for this gene in this condition.
 
@@ -794,7 +794,7 @@ Example lines for multi-species complete differential expression file
 
 ##### OMA ID (column 1)
 
-Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Genes member of a OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
+Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
 ##### Gene ID (column 2)
 
@@ -802,7 +802,7 @@ Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-Please note that the list of all genes member of the OMA ortholoogous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation"). If a gene listed in this file has no call for the condition `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6), it means that there is no data available for this gene in this condition.
+Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation"). If a gene listed in this file has no call for the condition `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6), it means that there is no data available for this gene in this condition.
 
 ##### Gene name (column 3)
 
@@ -830,7 +830,7 @@ Name of the developmental stage defined by `Developmental stage ID` (column 6)
 
 ##### Latin species name (column 8)
 
-The latin name of the species which the gene in Gene ID (column 2) belongs to.
+The Latin name of the species which the gene in Gene ID (column 2) belongs to.
 
 ##### Differential expression (column 9)
 

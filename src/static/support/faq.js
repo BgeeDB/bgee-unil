@@ -68,7 +68,7 @@ const faq = [
       },
       {
         title: 'Why do you use chimpanzee gene IDs for bonobo data?',
-        body: "When generating data for Bgee release 14, the bonobo genome was not yet available in Ensembl. So bonobo RNA-Seq libraries are mapped to the chimpanzee genome, and 'ENSPTRG' chimpanzee gene IDs are reported. Since the bonobo genome has been made available December 2017 in Ensembl, Bgee release 15 will use the actual bonobo genome as reference. In the meantime, you can use Ensembl tools to retrieve a mapping from chimpanzee genes to bonobo orthologs. We are sorry for the inconvenience.",
+        body: "When generating data for Bgee release 14, the bonobo genome was not yet available in Ensembl. So, bonobo RNA-Seq libraries are mapped to the chimpanzee genome, and 'ENSPTRG' chimpanzee gene IDs are reported. Since the bonobo genome has been made available December 2017 in Ensembl, Bgee release 15 will use the actual bonobo genome as reference. In the meantime, you can use Ensembl tools to retrieve a mapping from chimpanzee genes to bonobo orthologs. We are sorry for the inconvenience.",
       },
       {
         title:
@@ -221,7 +221,7 @@ const faq = [
               {
                 type: 'text',
                 content:
-                  'Bgee contains only manually curated healthy expression data (e.g., no gene knock-out, no treatment, no disease). Currently (Bgee release 14), information on strain or sex is not available in files that provides calls of baseline presence/absence of expression (see ',
+                  'Bgee contains only manually curated healthy expression data (e.g., no gene knock-out, no treatment, no disease). Currently (Bgee release 14), information on strain or sex is not available in files that provide calls of baseline presence/absence of expression (see ',
               },
               {
                 type: 'link_internal',
@@ -231,7 +231,7 @@ const faq = [
               {
                 type: 'text',
                 content:
-                  '). However information is available in files that provides annotations and experiment information or processed expression values (see ',
+                  '). However, information is available in files that provide annotations and experiment information or processed expression values (see ',
               },
               {
                 type: 'link_internal',
