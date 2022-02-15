@@ -1033,3 +1033,18 @@ table {
     word-break: break-word;
   }
 }
+
+.markdown {
+  overflow-x: auto;
+  table {
+    table-layout: auto;
+  }
+  table tr {
+    word-wrap: normal;
+    word-break: normal;
+  }
+  table tr th, table tr td {
+    border: 1px solid black;
+    padding: 2px 4px 2px 4px;
+  }
+}

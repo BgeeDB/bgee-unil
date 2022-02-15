@@ -1,5 +1,4 @@
-Affymetrix download file documentation: annotations and processed expression values
-===================================================================================
+# Affymetrix download file documentation: annotations and processed expression values
 
 This documentation describes the format of annotation download files (that include the chip and experiment files) as well as the processed expression values download files for Affymetrix data. The files can be found in the Bgee [download page](/download/processed-expression-values "Bgee Processed expression values download page") for each species.
 
@@ -9,8 +8,7 @@ This documentation describes the format of annotation download files (that inclu
 *   [Processed expression values download files](#processed-expression-values-download-files "Quick jump to this section")
 
 
-<a name="annotation-download-files"></a>Annotation download files
----------------------------------------------------------------
+## Annotation download files
 
 Go to:
 
@@ -23,6 +21,8 @@ The annotation download files are divided in 2 main files:
 1) **chip information**: where is provided detailed information for each individual chip, as annotation to anatomy, development, sex, strain, chip type as well as normalization type and quality scores used in quality control metrics.
 
 2) **experiment information**: where is provided the over-all information about the experiment, as number of chips that belongs to the experiment, as well as number of conditions, number of organs, number of stages and number of strains.
+
+
 
 ### Chip file
 
@@ -54,13 +54,15 @@ Format description of the chip download file for a target species:
 |21|[Bgee normalized data file](#chip_col21 "See Bgee normalized data file column description")|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|
 |22|[Bgee raw file URL](#chip_col22 "See Bgee raw file URL column description")|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
 
+
+
 Example of rows of the chip download file for a target species:
 
 |Experiment ID|Chip ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|IQRray score|MAS5 percent present|Normalization type|Scan date|Chip type ID|CDF name|Chip type name|IQRray score threshold for the chip type|MAS5 percent present threshold for the chip type|Data source|Data source URL|Bgee normalized data URL|Bgee normalized data file|Bgee raw file URL|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
-E-MEXP-1594|	EA05066_30456_DROSO2_1|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	113944.65|	51.59|	gcRMA|	11/21/06 19:03:15|	A-AFFY-35|	Drosophila_2| Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|	77335.92|	37.17|	ArrayExpress|	NA|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|	Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|	ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
-E-MEXP-1594|	EA05066_30460_DROSO2_10|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	113462.67|	51.46|	gcRMA|	11/21/06 19:11:47|	A-AFFY-35|	Drosophila_2|	Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|	77335.92|	37.17|	ArrayExpress|	NA|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|	Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|	ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30460_DROSO2_10.CEL.gz|
-E-MEXP-1594|	EA05066_30461_DROSO2_22|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	117482.56|	52.42|	gcRMA|	11/21/06 19:17:40|	A-AFFY-35|	Drosophila_2|	Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|	77335.92|	37.17|	ArrayExpress|	NA|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|	Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|	ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30461_DROSO2_22.CEL.gz|
+E-MEXP-1594|EA05066_30456_DROSO2_1|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113944.65|51.59|gcRMA|11/21/06 19:03:15|A-AFFY-35|Drosophila_2| Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
+E-MEXP-1594|EA05066_30460_DROSO2_10|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113462.67|51.46|gcRMA|11/21/06 19:11:47|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30460_DROSO2_10.CEL.gz|
+E-MEXP-1594|EA05066_30461_DROSO2_22|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|117482.56|52.42|gcRMA|11/21/06 19:17:40|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30461_DROSO2_22.CEL.gz|
 
 
 ##### <a name="chip_col1"></a>Experiment ID (column 1)
@@ -136,6 +138,7 @@ File name of the normalized data referent to the `Experiment ID` (column 1).
 URL pathway where is located the raw data (CEL files) referent to the `Chip ID` (column 2) that belongs to a target `Experiment ID` (column 1) in Bgee.
 
 
+
 ### Experiment file
 
 Format description of the experiment download file for a target species:
@@ -157,13 +160,15 @@ Format description of the experiment download file for a target species:
 |13|[Bgee raw files URL](#exp_col13 "See Bgee raw files URL column description")|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/|
 |14|[Experiment description](#exp_col14 "See Experiment description column description")|We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
 
+
+
 Example of rows for a single species in experiment download file:
 
 |Experiment ID|Experiment name|Chip count|Condition count|Organ-stage count|Organ count|Stage count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Bgee raw files URL|Experiment description|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
-E-MEXP-1594|	Transcription profiling of Drosophila 40 homozygous Raleigh lines to understand the genetic basis of complex traits in Drosophila|	160|	2|	1|	1|	1|	2|	1|	ArrayExpress|	https://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-1594|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|	ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/|	We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
-GSE17013|	The sexually antagonistic genes of Drosophila melanogaster|	120|	2|	1|	1|	1|	2|	1|	GEO|	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17013|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE17013.tar.gz|	ftp://ftp.bgee.org/affymetrix_data/cel_files/GSE17013/|	Differences in the selective pressures experienced by males and females are believed to be ubiquitous in dioecious organisms...|
-GSE3842|	Transcription profiling of Drosophila LD/DD time course of y w; tim01, cn bw, and y w|	46|	2|	1|	1|	1|	0|	2|	GEO|	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE3842|	ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE3842.tar.gz|	ftp://ftp.bgee.org/affymetrix_data/cel_files/GSE3842/|	This SuperSeries is composed of the following subset Series:; GSE3826: LD/DD time course of y w Drosophila ...|
+E-MEXP-1594|Transcription profiling of Drosophila 40 homozygous Raleigh lines to understand the genetic basis of complex traits in Drosophila|160|2|1|1|1|2|1|ArrayExpress|https://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-1594|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/|We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
+GSE17013|The sexually antagonistic genes of Drosophila melanogaster|120|2|1|1|1|2|1|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17013|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE17013.tar.gz|ftp://ftp.bgee.org/affymetrix_data/cel_files/GSE17013/|Differences in the selective pressures experienced by males and females are believed to be ubiquitous in dioecious organisms...|
+GSE3842|Transcription profiling of Drosophila LD/DD time course of y w; tim01, cn bw, and y w|46|2|1|1|1|0|2|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE3842|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE3842.tar.gz|ftp://ftp.bgee.org/affymetrix_data/cel_files/GSE3842/|This SuperSeries is composed of the following subset Series:; GSE3826: LD/DD time course of y w Drosophila ...|
 
 
 ##### <a name="exp_col1"></a>Experiment ID (column 1)
@@ -208,8 +213,9 @@ URL pathway where is located the raw files (CEL files) correspondent to the `Exp
 ##### <a name="exp_col14"></a>Experiment description (column 14)
 Description provided by the authors of the `Experiment ID` (column 1).
 
-<a name="processed-expression-values-download-files"></a>Processed expression values download files
------------------------------------------------------------------
+
+
+## Processed expression values download files
 
 The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all samples that belong to the corresponding target experiment.
 
@@ -234,13 +240,14 @@ Format description of processed expression values download file per experiment i
 |14|[State in Bgee](#procVal_col14 "See State in Bgee column description")|Part of a call|
 
 
+
 Example of rows of processed expression values download file. Experiment E-MEXP-1594 from *Drosophila melanogaster*.
 
 |Experiment ID|Chip ID|Probeset ID|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Log of normalized signal intensity|Detection flag|pValue|State in Bgee|
 |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
-E-MEXP-1594|	EA05066_30456_DROSO2_1|	1633746_s_at|	FBgn0000008|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	8.00643|	present|	0.000612574|	Part of a call|
-E-MEXP-1594|	EA05066_30456_DROSO2_1|	1636558_a_at|	FBgn0000014|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	2.11749|	absent|	0.745101314|	Part of a call|
-E-MEXP-1594|	EA05066_30456_DROSO2_1|	1637813_at|	FBgn0000014|	UBERON:0007023|	adult organism|	UBERON:0000066|	fully formed stage|	female|	Raleigh|	5.201|	present|	0.001164789|	Part of a call|
+E-MEXP-1594|EA05066_30456_DROSO2_1|1633746_s_at|FBgn0000008|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|8.00643|present|0.000612574|Part of a call|
+E-MEXP-1594|EA05066_30456_DROSO2_1|1636558_a_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|2.11749|absent|0.745101314|Part of a call|
+E-MEXP-1594|EA05066_30456_DROSO2_1|1637813_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|5.201|present|0.001164789|Part of a call|
 
 ##### <a name="procVal_col1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -302,3 +309,4 @@ Two different labels can be retrieved in this column:
 
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Chip ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
+
