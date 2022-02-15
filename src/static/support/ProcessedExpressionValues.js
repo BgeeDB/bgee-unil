@@ -65,7 +65,7 @@ const expressionValues = [
               {
                 type: 'text',
                 content:
-                  'Description of the format of annotation download files (that include the chips and experiment files) as well as the processed expression values download files for Affymetrix data. The files can be found in the ',
+                  'Description of the format of annotation download files (that include the chips and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the ',
               },
               {
                 type: 'link_internal',
