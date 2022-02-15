@@ -24,8 +24,9 @@ import ResourceSourceFile from '../static/resources/source';
 import GtexFile from '../markdown/support/gtex.md';
 import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
-import ProcExprValFile from '../markdown/support/procExprValFile.md';
+import ProcExprValFile from '../static/support/ProcessedExpressionValues';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
+import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import FaqFile from '../static/support/faq';
@@ -186,6 +187,11 @@ const SUPPORT = {
   [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
     source: ProcExprValFile,
     title: 'Processed expression values',
+    meta: {
+      title: 'processed expression values files documentation',
+      description: 'Documentation of processed expression values download files',
+      keywords: 'Documentation, processed expression values, Download files',
+    },
   },
   [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
     source: RNASeqProcExprValFile,

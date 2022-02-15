@@ -191,6 +191,7 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
+                  PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
