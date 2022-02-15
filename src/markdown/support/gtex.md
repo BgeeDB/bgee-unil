@@ -1,6 +1,6 @@
 ## Table of contents
 
-# GTEx data into Bgee
+# GTEx in Bgee
 
 In addition to the continuous growth of transcriptomics datasets, some specific projects produce large amounts of data, generated and accessible in a consistent manner, as, notably, the [GTEx project](https://www.gtexportal.org/home/). The GTEx project aims at building a comprehensive resource for tissue-specific gene expression in human. Here we describe how this dataset was integrated into Bgee.
 
