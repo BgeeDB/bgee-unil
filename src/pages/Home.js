@@ -36,7 +36,7 @@ const Home = () => {
         <Bulma.Hero.Body className="pt-3">
           <p className="has-text-right mb-5 has-text-black-ter">{`${
             config.archive ? 'Archived version' : 'Version'
-          } ${packageJson.version}`}</p>
+          } ${config.version}`}</p>
           <div className="is-flex is-justify-content-center">
             <Bulma.Image
               src={assets.bgeeLogo}
