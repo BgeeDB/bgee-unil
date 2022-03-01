@@ -38,7 +38,7 @@ const CookieMessage = () => {
   return ReactDOM.createPortal(
     <>
       <div className="left">
-        <span>
+        <span className="privacycolor">
           This website requires cookies, and limited processing of your personal
           data in order to function. By using the site you are agreeing to this
           as outlined in our{' '}

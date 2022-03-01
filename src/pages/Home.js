@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import assets from '../assets';
-import packageJson from '../../package.json';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import Bulma from '../components/Bulma';
