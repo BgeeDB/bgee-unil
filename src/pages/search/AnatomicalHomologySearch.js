@@ -326,14 +326,14 @@ const AnatomicalHomologySearch = () => {
                       >
                         in human and chimpanzee
                       </Link>
-                      {' (homologous structure), or  '}
+                      {' (homologous structure), or '}
                       <Link
                         className="internal-link"
                         to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987"
                       >
                         in human and zebrafish
                       </Link>
-                      (no homologous structure)
+                      {' (no homologous structure)'}
                     </p>
                   </div>
                 </div>
