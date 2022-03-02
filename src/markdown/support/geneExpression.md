@@ -666,14 +666,14 @@ Format description for multi-species simple differential expression file
 |3|[Anatomical entity names](#anatomical-entity-names-3 "See Anatomical entity names column description")|1 or greater|hypothalamus|
 |4|[Developmental stage ID](#developmental-stage-id-column4 "See Developmental stage ID column description")|1|UBERON:0000113|
 |5|[Developmental stage name](#developmental-stage-name-column-5 "See Developmental stage name column description")|1|post-juvenile adult stage|
-|6|[Over-expressed gene count for species1](#over-expressed-gene-count-for-species1-column-6 "See Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens) column description")|1|1|
-|7|[Under-expressed gene count for species1](#under-expressed-gene-count-for-species1-column-7 "See Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens) column description")|1|0|
-|8|[Not diff. expressed gene count for species1](#not-diff-expressed-gene-count-for-species1-column-8 "See Not diff. expressed gene count for species1 (e.g., Not diff. expressed gene count for Homo sapiens) column description")|1|0|
-|9|[NA gene count for species1](#na-gene-count-for-species1-column-9 "See NA gene count for species1 (e.g., NA gene count for Homo sapiens) column description")|1|0|
-|10|[Over-expressed gene count for species2](#over-expressed-gene-count-for-species2-column-10 "See Over-expressed gene count for species2 (e.g., Over-expressed gene count for Mus musculus) column description")|1|1|
-|11|[Under-expressed gene count for species2](#under-expressed-gene-count-for-species2-column-11 "See Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus) column description")|1|0|
-|12|[Not diff. expressed gene count for species2](#not-diff-expressed-gene-count-for-species2-column-12 "See Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus) column description")|1|0|
-|13|[NA gene count for species2](#na-gene-count-for-species2-column-13 "See NA gene count for species2 (e.g., NA gene count for Mus musculus) column description")|1|0|
+|6|[Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens)](#over-expressed-gene-count-for-speciesxx "See Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens) column description")|1|1|
+|7|[Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens)](#under-expressed-gene-count-for-speciesxx "See Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens) column description")|1|0|
+|8|[Not diff. expressed gene count for species1 (e.g., Not diff. expressed gene count for Homo sapiens)](#not-diff-expressed-gene-count-for-speciesxx "See Not diff. expressed gene count for species1 (e.g., Not diff. expressed gene count for Homo sapiens) column description")|1|0|
+|9|[NA gene count for species1 (e.g., NA gene count for Homo sapiens)](#na-gene-count-for-speciesxx "See NA gene count for species1 (e.g., NA gene count for Homo sapiens) column description")|1|0|
+|10|[Over-expressed gene count for species2 (e.g., Over-expressed gene count for Mus musculus)](#over-expressed-gene-count-for-speciesxx "See Over-expressed gene count for species2 (e.g., Over-expressed gene count for Mus musculus) column description")|1|1|
+|11|[Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus)](#under-expressed-gene-count-for-speciesxx "See Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus) column description")|1|0|
+|12|[Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus)](#not-diff-expressed-gene-count-for-speciesxx "See Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus) column description")|1|0|
+|13|[NA gene count for species2 (e.g., NA gene count for Mus musculus)](#na-gene-count-for-speciesxx "See NA gene count for species2 (e.g., NA gene count for Mus musculus) column description")|1|0|
 |...|[Over-expressed gene count for speciesXX](#over-expressed-gene-count-for-speciesXX "See Over-expressed gene count for speciesXX column description")|1|...|
 |...|...|||
 |(species*4 + 6)|[Gene IDs](#gene-ids "See Gene IDs column description")|2 or greater|ENSG00000169057|ENSMUSG00000031393|
@@ -711,25 +711,25 @@ Unique identifier of the developmental stage, from the Uberon ontology. For mult
 
 Name of the developmental stage defined by `Developmental stage ID` (column 4)
 
-#### <a name="over-expressed-gene-count-for-species1-column-6"></a>Over-expressed gene count for species1 (column 6)
+#### <a name="over-expressed-gene-count-for-speciesxx"></a>Over-expressed gene count for speciesxx
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant over-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-#### <a name="under-expressed-gene-count-for-species1-column-7"></a>Under-expressed gene count for species1 (column 7)
+#### <a name="under-expressed-gene-count-for-speciesxx"></a>Under-expressed gene count for speciesxx
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant under-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-#### <a name="not-diff-expressed-gene-count-for-species1-column-8"></a>Not diff. expressed gene count for species1 (column 8)
+#### <a name="not-diff-expressed-gene-count-for-speciesxx"></a>Not diff. expressed gene count for speciesxx
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), but that were never shown to have a significant variation of their level of expression as compared to the other conditions of the analyses, or for which conflicting results were generated from different data types.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-#### <a name="na-gene-count-for-species1-column-9"></a>NA gene count for species1 (column 9)
+#### <a name="na-gene-count-for-speciesxx"></a>NA gene count for speciesxx
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were not tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)).
 
