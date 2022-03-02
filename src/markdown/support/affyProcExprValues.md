@@ -49,7 +49,7 @@ Format description of the chip download file for a target species:
 |16|[IQRray score threshold for the chip type](#iqrray-score-threshold-for-the-chip-type-column-16 "See IQRray score threshold for the chip type column description")|77335.92|
 |17|[MAS5 percent present threshold for the chip type](#mas5-percent-present-threshold-for-the-chip-type-column-17 "See MAS5 percent present threshold for the chip type column description")|37.17|
 |18|[Data source](#data-source-column-18 "See Data source column description")|ArrayExpress|
-|19|[Data source URL](#data-source-url-column-19 URL "See Data source URL column description")|NA|
+|19|[Data source URL](#data-source-url-column-19 "See Data source URL column description")|NA|
 |20|[Bgee normalized data URL](#bgee-normalized-data-url-column-20 "See Bgee normalized data URL column description")|ftp://ftp.bgee.org/bgee_v15_0/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|
 |21|[Bgee normalized data file](#bgee-normalized-data-file-column-21 "See Bgee normalized data file column description")|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|
 |22|[Bgee raw file URL](#bgee-raw-file-url-column-22 "See Bgee raw file URL column description")|ftp://ftp.bgee.org/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
