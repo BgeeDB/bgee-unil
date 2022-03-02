@@ -145,7 +145,7 @@ Format description for single species advanced expression file
 |Column|Content|Example|
 |--- |--- |--- |
 |1|[Gene ID](#gene-id-column-1-1 "See Gene ID column description")|ENSDARG00000070769|
-|2|[Gene name](#gene-name-2-1 "See Gene name column description")|foxg1a|
+|2|[Gene name](#gene-name-column-2-1 "See Gene name column description")|foxg1a|
 |3|[Anatomical entity ID](#anatomical-entity-id-column-3-1 "See Anatomical entity ID column description")|UBERON:0000955|
 |4|[Anatomical entity name](#anatomical-entity-name-column-4-1 "See Anatomical entity name column description")|brain|
 |5|[Developmental stage ID](#developmental-stage-id-column-5-1 "See Developmental stage ID column description") *|UBERON:0000113|
@@ -194,7 +194,7 @@ Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### <a name="gene-name-2-1"></a>Gene name (column 2)
+##### <a name="gene-name-column-2-1"></a>Gene name (column 2)
 
 Name of the gene defined by `Gene ID` (column 1)
 
@@ -451,7 +451,7 @@ Format description for single species complete differential expression file
 |5|[Developmental stage ID](#developmental-stage-id-column-5-3 "See Developmental stage ID column description")|UBERON:0000113|
 |6|[Developmental stage name](#developmental-stage-name-column-6-3 "See Developmental stage name column description")|post-juvenile adult stage|
 |7|[Differential expression](#differential-expression-column-7-1 "See Differential expression column description")|over-expression|
-|8|[Call quality](#call-quality-8-3 "See Call quality column description")|high quality|
+|8|[Call quality](#call-quality-column-8-3 "See Call quality column description")|high quality|
 |9|[Affymetrix data](#affymetrix-data-column-9 "See Affymetrix data column description")|over-expression|
 |10|[Affymetrix call quality](#affymetrix-call-quality-column-10 "See Affymetrix call quality column description")|poor quality|
 |11|[Affymetrix best supporting p-value](#affymetrix-best-supporting-p-value-column-11 "See Affymetrix best supporting p-value column description")|0.0035659347|
@@ -510,7 +510,7 @@ Call generated from all data types for `Gene ID` (column 1), in `Anatomical enti
 
 This corresponds to the same differential expression state summary column as in simple files (column 7 of over-/under-expression simple file)
 
-##### <a name="call-quality-8-3"></a>Call quality (column 8)
+##### <a name="call-quality-column-8-3"></a>Call quality (column 8)
 
 Confidence in the differential expression call provided in `Differential expression` (column 7). Permitted values:
 
@@ -663,8 +663,8 @@ Format description for multi-species simple differential expression file
 |--- |--- |--- |--- |
 |1|[OMA ID](#oma-id-column-1-1 "See OMA ID column description")|1|80|
 |2|[Anatomical entity IDs](#anatomical-entity-ids-column-2 "See Anatomical entity IDs column description")|1 or greater|UBERON:0001898|
-|3|[Anatomical entity names](#anatomical-entity-names-3 "See Anatomical entity names column description")|1 or greater|hypothalamus|
-|4|[Developmental stage ID](#developmental-stage-id-column4 "See Developmental stage ID column description")|1|UBERON:0000113|
+|3|[Anatomical entity names](#anatomical-entity-names-column-3 "See Anatomical entity names column description")|1 or greater|hypothalamus|
+|4|[Developmental stage ID](#developmental-stage-id-column-4 "See Developmental stage ID column description")|1|UBERON:0000113|
 |5|[Developmental stage name](#developmental-stage-name-column-5 "See Developmental stage name column description")|1|post-juvenile adult stage|
 |6|[Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens)](#over-expressed-gene-count-for-speciesxx "See Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens) column description")|1|1|
 |7|[Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens)](#under-expressed-gene-count-for-speciesxx "See Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens) column description")|1|0|
@@ -674,7 +674,7 @@ Format description for multi-species simple differential expression file
 |11|[Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus)](#under-expressed-gene-count-for-speciesxx "See Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus) column description")|1|0|
 |12|[Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus)](#not-diff-expressed-gene-count-for-speciesxx "See Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus) column description")|1|0|
 |13|[NA gene count for species2 (e.g., NA gene count for Mus musculus)](#na-gene-count-for-speciesxx "See NA gene count for species2 (e.g., NA gene count for Mus musculus) column description")|1|0|
-|...|[Over-expressed gene count for speciesXX](#over-expressed-gene-count-for-speciesXX "See Over-expressed gene count for speciesXX column description")|1|...|
+|...|[Over-expressed gene count for speciesXX](#over-expressed-gene-count-for-speciesxx "See Over-expressed gene count for speciesxx column description")|1|...|
 |...|...|||
 |(species*4 + 6)|[Gene IDs](#gene-ids "See Gene IDs column description")|2 or greater|ENSG00000169057|ENSMUSG00000031393|
 |(species*4 + 7)|[Gene names](#gene-names "See Gene names column description")|2 or greater|MECP2|Mecp2|
@@ -699,11 +699,11 @@ In most cases, the cardinality is 1, as most of the homologous anatomical entiti
 
 For instance, if comparing expression data in human and zebrafish, the anatomical entity "bulbus arteriosus" (UBERON:0004152) would be considered, as it is believed to be homologous in the _Euteleostomi_ lineage; as it is represented by the same anatomical term in both species, the cardinality of the value for this column would be 1. But homology relations between distinct anatomical concepts would also be considered, such as the homology between lung (UBERON:0002048) and swim bladder (UBERON:0006860): these organs are believed to descend from a same common ancestral organ, existing in the ancestor of _Gnathostomata_, but are now sufficiently derived that they are represented by different anatomical concepts in these species; the cardinality of the value of this column would be 2, and the IDs of these anatomical entities would be separated by the character `|`, e.g., `UBERON:0002048|UBERON:0006860`.
 
-#### <a name="anatomical-entity-names-3"></a>Anatomical entity names (column 3)
+#### <a name="anatomical-entity-names-column-3"></a>Anatomical entity names (column 3)
 
 Names of the anatomical entities defined by `Anatomical entity IDs` (column 2). Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character `|`. See `Anatomical entity IDs` column description for more details.
 
-#### <a name="developmental-stage-id-column4"></a>Developmental stage ID (column 4)
+#### <a name="developmental-stage-id-column-4"></a>Developmental stage ID (column 4)
 
 Unique identifier of the developmental stage, from the Uberon ontology. For multi-species analyses, only broad developmental stages are used, common to the species being compared.
 
