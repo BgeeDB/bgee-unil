@@ -269,7 +269,7 @@ Format description of processed expression values download file per experiment i
 |14|[Rank](#rank-column-14 "See Rank column description")|10528|
 |15|[Detection flag](#detection-flag-column-15 "See Detection flag column description")|absent|
 |16|[pValue](#pvalue-column-16 "See pValue column description")|0.13514812|
-|17|[State in Bgee](#state-in-Bgee-column-17 "See State in Bgee column description")|Part of a call|
+|17|[State in Bgee](#state-in-bgee-column-17 "See State in Bgee column description")|Part of a call|
 
 
 Example of rows of processed expression values download file. Experiment SRP099257 from *Drosophila simulans*.
@@ -340,7 +340,7 @@ Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-va
 The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value ≤ \alpha$.
 In the download files we used $\alpha = 0.05$.
 
-##### <a name="state-in-Bgee-column-17"></a>State in Bgee (column 17)
+##### <a name="state-in-bgee-column-17"></a>State in Bgee (column 17)
 The State in Bgee column provides the information about the usage of `Gene ID` (column 4) to make expression calls.
 Three different labels can be retrieved in this column:
 
