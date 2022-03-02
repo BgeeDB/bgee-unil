@@ -51,15 +51,15 @@ Format description for single species simple expression file
 
 |Column|Content|Example|
 |--- |--- |--- |
-|1|[Gene ID](#single_expr_simple_col1 "See Gene ID column description")|FBgn0005427|
-|2|[Gene name](#single_expr_simple_col2 "See Gene name column description")|ewg|
-|3|[Anatomical entity ID](#single_expr_simple_col3 "See Anatomical entity ID column description")|FBbt:00003404|
-|4|[Anatomical entity name](#single_expr_simple_col4 "See Anatomical entity name column description")|mesothoracic extracoxal depressor muscle 66 (Drosophila)|
-|5|[Developmental stage ID](#single_expr_simple_col5 "See Developmental stage ID column description") *|FBdv:00005348|
-|6|[Developmental stage name](#single_expr_simple_col6 "See Developmental stage name column description") *|prepupal stage P4(ii) (Drosophila)|
-|7|[Expression](#single_expr_simple_col7 "See Expression column description")|present|
-|8|[Call quality](#single_expr_simple_col8 "See Call quality column description")|silver quality|
-|9|[Expression rank](#single_expr_simple_col9 "See Expression rank column description")|1.24e4|
+|1|[Gene ID](#gene-id-column-1 "See Gene ID column description")|FBgn0005427|
+|2|[Gene name](#gene-name-column-2 "See Gene name column description")|ewg|
+|3|[Anatomical entity ID](#anatomical-entity-id-column-3 "See Anatomical entity ID column description")|FBbt:00003404|
+|4|[Anatomical entity name](#anatomical-entity-name-column-4 "See Anatomical entity name column description")|mesothoracic extracoxal depressor muscle 66 (Drosophila)|
+|5|[Developmental stage ID](#developmental-stage-id-column-5 "See Developmental stage ID column description") *|FBdv:00005348|
+|6|[Developmental stage name](#developmental-stage-name-column-6 "See Developmental stage name column description") *|prepupal stage P4(ii) (Drosophila)|
+|7|[Expression](#expression-column-7 "See Expression column description")|present|
+|8|[Call quality](#call-quality-column-8 "See Call quality column description")|silver quality|
+|9|[Expression rank](#expression-rank-column-9 "See Expression rank column description")|1.24e4|
 
 **\*** only present if 'developmental stage' is selected as a condition parameter.
 
@@ -71,33 +71,33 @@ Example lines for single species simple expression file
 |FBgn0005536|Mbs|UBERON:0000033|head|FBdv:00007085|day 10 of adulthood (Drosophila)|present|gold quality|1.57e3|
 |FBgn0005558|ey|FBbt:00001684|embryonic/larval hemocyte (Drosophila)|FBdv:00005339|third instar larval stage (Drosophila)|absent|silver quality|2.35e4|
 
-##### <a name="single_expr_simple_col1"></a>Gene ID (column 1)
+##### <a name="gene-id-column-1"></a>Gene ID (column 1)
 
 Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### <a name="single_expr_simple_col2"></a>Gene name (column 2)
+##### <a name="gene-name-column-2"></a>Gene name (column 2)
 
 Name of the gene defined by `Gene ID` (column 1)
 
-##### <a name="single_expr_simple_col3"></a>Anatomical entity ID (column 3)
+##### <a name="anatomical-entity-id-column-3"></a>Anatomical entity ID (column 3)
 
 Unique identifier of the anatomical entity, from the Uberon ontology.
 
-##### <a name="single_expr_simple_col4"></a>Anatomical entity name (column 4)
+##### <a name="anatomical-entity-name-column-4"></a>Anatomical entity name (column 4)
 
 Name of the anatomical entity defined by `Anatomical entity ID` (column 3)
 
-##### <a name="single_expr_simple_col5"></a>Developmental stage ID (column 5)
+##### <a name="developmental-stage-id-column-5"></a>Developmental stage ID (column 5)
 
 Unique identifier of the developmental stage, from the Uberon ontology.
 
-##### <a name="single_expr_simple_col6"></a>Developmental stage name (column 6)
+##### <a name="developmental-stage-name-column-6"></a>Developmental stage name (column 6)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 5)
 
-##### <a name="single_expr_simple_col7"></a>Expression (column 7)
+##### <a name="expression-column-7"></a>Expression (column 7)
 
 Call generated from all data types for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -106,7 +106,7 @@ Call generated from all data types for `Gene ID` (column 1), in `Anatomical enti
 
 In Bgee, calls of absence of expression are always discarded if there exists a contradicting call of expression, for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
 
-##### <a name="single_expr_simple_col8"></a>Call quality (column 8)
+##### <a name="call-quality-column-8"></a>Call quality (column 8)
 
 Quality associated to the call. Permitted values:
 
@@ -121,7 +121,7 @@ Quality associated to the call in column `Expression` (column 7) is this `summar
 *   silver quality: 1 high quality call or 2 low quality calls
 *   bronze quality: 1 low quality call (for internal use only. Not present in this file).
 
-##### <a name="single_expr_simple_col9"></a>Expression rank (column 9)
+##### <a name="expression-rank-column-9"></a>Expression rank (column 9)
 
 Rank score associated to the call. Rank scores of expression calls are normalized across genes, conditions and species.
 
@@ -144,38 +144,38 @@ Format description for single species advanced expression file
 
 |Column|Content|Example|
 |--- |--- |--- |
-|1|[Gene ID](#single_expr_advanced_col1 "See Gene ID column description")|ENSDARG00000070769|
-|2|[Gene name](#single_expr_advanced_col2 "See Gene name column description")|foxg1a|
-|3|[Anatomical entity ID](#single_expr_advanced_col3 "See Anatomical entity ID column description")|UBERON:0000955|
-|4|[Anatomical entity name](#single_expr_advanced_col4 "See Anatomical entity name column description")|brain|
-|5|[Developmental stage ID](#single_expr_advanced_col5 "See Developmental stage ID column description") *|UBERON:0000113|
-|6|[Developmental stage name](#single_expr_advanced_col6 "See Developmental stage name column description") *|post-juvenile adult stage|
-|7|[Expression](#single_expr_advanced_col7 "See Expression column description")|present|
-|8|[Call quality](#single_expr_advanced_col8 "See Call quality column description")|silver quality|
-|9|[Expression rank](#single_expr_advanced_col9 "See Expression rank column description")|1.23e4|
-|10|[Including observed data](#single_expr_advanced_col10 "See Including observed data column description")|yes|
-|11|[Affymetrix data](#single_expr_advanced_col11 "See Affymetrix data column description")|present|
-|12|[Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#single_expr_advanced_col12 "See Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
-|13|[Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#single_expr_advanced_col13 "See Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
-|14|[Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#single_expr_advanced_col14 "See Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality column description")|0|
-|15|[Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#single_expr_advanced_col15 "See Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
-|16|[Including Affymetrix observed data](#single_expr_advanced_col16 "See Including Affymetrix observed data column description")|yes|
-|17|[EST data](#single_expr_advanced_col17 "See EST data column description")|present|
-|18|[EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#single_expr_advanced_col18 "See EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|0|
-|19|[EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#single_expr_advanced_col19 "See EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
-|20|[Including EST observed data](#single_expr_advanced_col20 "See Including EST observed data column description")|no|
-|21|[In situ data](#single_expr_advanced_col21 "See In situ data column description")|present|
-|22|[In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#single_expr_advanced_col22 "See In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
-|23|[In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#single_expr_advanced_col23 "See In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
-|24|[In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#single_expr_advanced_col24 "In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality")|0|
-|25|[In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#single_expr_advanced_col25 "See In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
-|26|[Including in situ observed data](#single_expr_advanced_col26 "See Including in situ observed data column description")|yes|
-|27|[RNA-Seq data](#single_expr_advanced_col27 "See RNA-Seq data column description")|present|
-|28|[RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#single_expr_advanced_col28 "See RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
-|29|[RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#single_expr_advanced_col29 "See RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
-|30|[RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#single_expr_advanced_col30 "See RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality column description")|0|
-|31|[RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#single_expr_advanced_col31 "See RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
-|32|[Including RNA-Seq observed data](#single_expr_advanced_col32 "See Including RNA-Seq observed data column description")|yes|
+|1|[Gene ID](#gene-id-column-1-1 "See Gene ID column description")|ENSDARG00000070769|
+|2|[Gene name](#gene-name-2-1 "See Gene name column description")|foxg1a|
+|3|[Anatomical entity ID](#anatomical-entity-id-column-3-1 "See Anatomical entity ID column description")|UBERON:0000955|
+|4|[Anatomical entity name](#anatomical-entity-name-column-4-1 "See Anatomical entity name column description")|brain|
+|5|[Developmental stage ID](#developmental-stage-id-column-5-1 "See Developmental stage ID column description") *|UBERON:0000113|
+|6|[Developmental stage name](#developmental-stage-name-column-6-1 "See Developmental stage name column description") *|post-juvenile adult stage|
+|7|[Expression](#expression-column-7-1 "See Expression column description")|present|
+|8|[Call quality](#call-quality-column-8-1 "See Call quality column description")|silver quality|
+|9|[Expression rank](#expression-rank-column-9-1 "See Expression rank column description")|1.23e4|
+|10|[Including observed data](#including-observed-data-column-10 "See Including observed data column description")|yes|
+|11|[Affymetrix data](#affymetrix-data-column-11 "See Affymetrix data column description")|present|
+|12|[Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#affymetrix-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-12 "See Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
+|13|[Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#affymetrix-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-13 "See Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
+|14|[Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#affymetrix-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-14 "See Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality column description")|0|
+|15|[Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#affymetrix-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-15 "See Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
+|16|[Including Affymetrix observed data](#including-affymetrix-observed-data-column-16 "See Including Affymetrix observed data column description")|yes|
+|17|[EST data](#est-data-column-17 "See EST data column description")|present|
+|18|[EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#est-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-18 "See EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|0|
+|19|[EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#est-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-19 "See EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
+|20|[Including EST observed data](#including-est-observed-data-column-20 "See Including EST observed data column description")|no|
+|21|[In situ data](#in-situ-data-column-21 "See In situ data column description")|present|
+|22|[In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#in-situ-hybridization-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-22 "See In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
+|23|[In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#in-situ-hybridization-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-23 "See In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
+|24|[In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#in-situ-hybridization-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-24 "In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality")|0|
+|25|[In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#in-situ-hybridization-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-25 "See In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
+|26|[Including in situ observed data](#including-in-situ-observed-data-column-26 "See Including in situ observed data column description")|yes|
+|27|[RNA-Seq data](#rna-seq-data-column-27 "See RNA-Seq data column description")|present|
+|28|[RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality](#rna-seq-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-28 "See RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality column description")|1|
+|29|[RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality](#rna-seq-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-29 "See RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality column description")|0|
+|30|[RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality](#rna-seq-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-30 "See RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality column description")|0|
+|31|[RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality](#rna-seq-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-31 "See RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality column description")|0|
+|32|[Including RNA-Seq observed data](#including-rna-seq-observed-data-column-32 "See Including RNA-Seq observed data column description")|yes|
 
 
 **\*** only present if 'developmental stage' is selected as a condition parameter.
@@ -188,33 +188,33 @@ Example lines for single species advanced expression file
 |ENSDARG00000000175|hoxb2a|UBERON:0004734|gastrula|ZFS:0000017|Gastrula:50%-epiboly (Danio)|absent|silver quality|3.6e4|yes|no data|0|0|0|0|no|no data|0|0|no|absent|0|0|0|1|no|absent|0|0|1|0|yes|
 |ENSDARG00000000241|slc40a1|UBERON:0000922|embryo|ZFS:0000019|Gastrula:Shield (Danio)|present|silver quality|8.2e3|yes|present|0|1|0|0|yes|no data|0|0|no|no data|0|0|0|0|no|present|0|1|0|0|yes|
 
-##### <a name="single_expr_advanced_col1"></a>Gene ID (column 1)
+##### <a name="gene-id-column-1-1"></a>Gene ID (column 1)
 
 Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### <a name="single_expr_advanced_col2"></a>Gene name (column 2)
+##### <a name="gene-name-2-1"></a>Gene name (column 2)
 
 Name of the gene defined by `Gene ID` (column 1)
 
-##### <a name="single_expr_advanced_col3"></a>Anatomical entity ID (column 3)
+##### <a name="anatomical-entity-id-column-3-1"></a>Anatomical entity ID (column 3)
 
 Unique identifier of the anatomical entity, from the Uberon ontology.
 
-##### <a name="single_expr_advanced_col4"></a>Anatomical entity name (column 4)
+##### <a name="anatomical-entity-name-column-4-1"></a>Anatomical entity name (column 4)
 
 Name of the anatomical entity defined by `Anatomical entity ID` (column 3)
 
-##### <a name="single_expr_advanced_col5"></a>Developmental stage ID (column 5)
+##### <a name="Developmental stage ID"></a>Developmental stage ID (column 5)
 
 Unique identifier of the developmental stage, from the Uberon ontology.
 
-##### <a name="single_expr_advanced_col6"></a>Developmental stage name (column 6)
+##### <a name="developmental-stage-name-column-6-1"></a>Developmental stage name (column 6)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 5)
 
-##### <a name="single_expr_advanced_col7"></a>Expression (column 7)
+##### <a name="expression-column-7-1"></a>Expression (column 7)
 
 Call generated from all data types for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -223,7 +223,7 @@ Call generated from all data types for `Gene ID` (column 1), in `Anatomical enti
 
 In Bgee, calls of absence of expression are always discarded if there exists a contradicting call of expression, for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
 
-##### <a name="single_expr_advanced_col8"></a>Call quality (column 8)
+##### <a name="call-quality-column-8-1"></a>Call quality (column 8)
 
 Quality associated to the call. Permitted values:
 
@@ -238,19 +238,19 @@ Quality associated to the call in column `Expression` (column 7) is this `summar
 *   silver quality: 1 high quality call or 2 low quality calls
 *   bronze quality: 1 low quality call (for internal use only. Not present in this file).
 
-##### <a name="single_expr_advanced_col9"></a>Expression rank (column 9)
+##### <a name="expression-rank-column-9-1"></a>Expression rank (column 9)
 
 Rank score associated to the call. Rank scores of expression calls are normalized across genes, conditions and species.
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="single_expr_advanced_col10"></a>Including observed data (column 10)
+##### <a name="including-observed-data-column-10"></a>Including observed data (column 10)
 
 Permitted value: `yes`
 
 Only calls which were actually seen in experimental data, at least once, are in this file.
 
-##### <a name="single_expr_advanced_col11"></a>Affymetrix data (column 11)
+##### <a name="affymetrix-data-column-11"></a>Affymetrix data (column 11)
 
 Call generated by Affymetrix data for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -258,15 +258,15 @@ Call generated by Affymetrix data for `Gene ID` (column 1), in `Anatomical entit
 *   absent: report of absence of expression from Bgee statistical tests, with no contradicting call of presence of expression generated by other Affymetrix probesets or chips for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
 *   no data: no Affymetrix data available for this gene/anatomical entity/developmental stage (data either not available, or discarded by Bgee quality controls).
 
-##### <a name="single_expr_advanced_col12"></a>Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 12)
+##### <a name="affymetrix-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-12"></a>Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 12)
 
-##### <a name="single_expr_advanced_col13"></a>Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 13)
+##### <a name="affymetrix-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-13"></a>Affymetrix experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 13)
 
-##### <a name="single_expr_advanced_col14"></a>Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 14)
+##### <a name="affymetrix-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-14"></a>Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 14)
 
-##### <a name="single_expr_advanced_col15"></a>Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 15)
+##### <a name="affymetrix-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-15"></a>Affymetrix experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 15)
 
-##### <a name="single_expr_advanced_col16"></a>Including Affymetrix observed data (column 16)
+##### <a name="including-affymetrix-observed-data-column-16"></a>Including Affymetrix observed data (column 16)
 
 Permitted values: `yes` and `no`.
 
@@ -274,18 +274,18 @@ Defines whether this call was generated from propagation only, or whether this c
 
 In this column, the information is provided by solely considering Affymetrix data.
 
-##### <a name="single_expr_advanced_col17"></a>EST data (column 17)
+##### <a name="est-data-column-17"></a>EST data (column 17)
 
 Call generated by EST data for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Note that EST data are not used to produce calls of absence of expression. Permitted values:
 
 *   present: expression reported from Bgee statistical tests.
 *   no data: no EST data available for this gene/anatomical entity/developmental stage (data either not available, or discarded by Bgee quality controls).
 
-##### <a name="single_expr_advanced_col18"></a>EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 18)
+##### <a name="est-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-18"></a>EST experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 18)
 
-##### <a name="single_expr_advanced_col19"></a>EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 19)
+##### <a name="est-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-19"></a>EST experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 19)
 
-##### <a name="single_expr_advanced_col20"></a>Including EST observed data (column 20)
+##### <a name="including-est-observed-data-column-20"></a>Including EST observed data (column 20)
 
 Permitted values: `yes` and `no`.
 
@@ -293,7 +293,7 @@ Defines whether this call was generated from propagation only, or whether this c
 
 In this column, the information is provided by solely considering EST data.
 
-##### <a name="single_expr_advanced_col21"></a>In situ data (column 21)
+##### <a name="in-situ-data-column-21"></a>In situ data (column 21)
 
 Call generated by _in situ_ data for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -301,15 +301,15 @@ Call generated by _in situ_ data for `Gene ID` (column 1), in `Anatomical entity
 *   absent: report of absence of expression from _in situ_ data sources, with no contradicting call of presence of expression generated by other _in situ_ hybridization evidence lines for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
 *   no data: no _in situ_ data available for this gene/anatomical entity/developmental stage (data either not available, or discarded by Bgee quality controls).
 
-##### <a name="single_expr_advanced_col22"></a>In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 22)
+##### <a name="in-situ-hybridization-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-22"></a>In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 22)
 
-##### <a name="single_expr_advanced_col23"></a>In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 23)
+##### <a name="in-situ-hybridization-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-23"></a>In situ hybridization experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 23)
 
-##### <a name="single_expr_advanced_col24"></a>In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 24)
+##### <a name="in-situ-hybridization-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-24"></a>In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 24)
 
-##### <a name="single_expr_advanced_col25"></a>In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 25)
+##### <a name="in-situ-hybridization-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-25"></a>In situ hybridization experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 25)
 
-##### <a name="single_expr_advanced_col26"></a>Including in situ observed data (column 26)
+##### <a name="including-in-situ-observed-data-column-26"></a>Including in situ observed data (column 26)
 
 Permitted values: `yes` and `no`.
 
@@ -317,7 +317,7 @@ Defines whether this call was generated from propagation only, or whether this c
 
 In this column, the information is provided by solely considering _in situ_ data.
 
-##### <a name="single_expr_advanced_col27"></a>RNA-Seq data (column 27)
+##### <a name="rna-seq-data-column-27"></a>RNA-Seq data (column 27)
 
 Call generated by RNA-Seq data for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -325,15 +325,15 @@ Call generated by RNA-Seq data for `Gene ID` (column 1), in `Anatomical entity I
 *   absent: report of absence of expression from Bgee statistical tests, with no contradicting call of presence of expression generated by other RNA-Seq libraries for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
 *   no data: no RNA-Seq data available for this gene/anatomical entity/developmental stage (data either not available, or discarded by Bgee quality controls).
 
-##### <a name="single_expr_advanced_col28"></a>RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 28)
+##### <a name="rna-seq-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-high-quality-column-28"></a>RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a high quality (column 28)
 
-##### <a name="single_expr_advanced_col29"></a>RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 29)
+##### <a name="rna-seq-experiment-count-showing-expression-of-this-gene-in-this-condition-or-in-sub-conditions-with-a-low-quality-column-29"></a>RNA-Seq experiment count showing expression of this gene in this condition or in sub-conditions with a low quality (column 29)
 
-##### <a name="single_expr_advanced_col30"></a>RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 30)
+##### <a name="rna-seq-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-high-quality-column-30"></a>RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a high quality (column 30)
 
-##### <a name="single_expr_advanced_col31"></a>RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 31)
+##### <a name="rna-seq-experiment-count-showing-absence-of-expression-of-this-gene-in-this-condition-or-valid-parent-conditions-with-a-low-quality-column-31"></a>RNA-Seq experiment count showing absence of expression of this gene in this condition or valid parent conditions with a low quality (column 31)
 
-##### <a name="single_expr_advanced_col32"></a>Including RNA-Seq observed data (column 32)
+##### <a name="including-rna-seq-observed-data-column-32"></a>Including RNA-Seq observed data (column 32)
 
 Permitted values: `yes` and `no`.
 
@@ -370,14 +370,14 @@ Format description for single species simple differential expression file
 
 |Column|Content|Example|
 |--- |--- |--- |
-|1|[Gene ID](#single_diff_simple_col1 "See Gene ID column description")|ENSG00000000419|
-|2|[Gene name](#single_diff_simple_col2 "See Gene name column description")|DPM1|
-|3|[Anatomical entity ID](#single_diff_simple_col3 "See Anatomical entity ID column description")|UBERON:0009834|
-|4|[Anatomical entity name](#single_diff_simple_col4 "See Anatomical entity name column description")|dorsolateral prefrontal cortex|
-|5|[Developmental stage ID](#single_diff_simple_col5 "See Developmental stage ID column description")|HsapDv:0000083|
-|6|[Developmental stage name](#single_diff_simple_col6 "See Developmental stage name column description")|infant stage (human)|
-|7|[Differential expression](#single_diff_simple_col7 "See Differential expression column description")|under-expression|
-|8|[Call quality](#single_diff_simple_col8 "See Call quality column description")|high quality|
+|1|[Gene ID](#gene-id-column-1-2 "See Gene ID column description")|ENSG00000000419|
+|2|[Gene name](#gene-name-column-2-2 "See Gene name column description")|DPM1|
+|3|[Anatomical entity ID](#anatomical-entity-id-column-3-2 "See Anatomical entity ID column description")|UBERON:0009834|
+|4|[Anatomical entity name](#anatomical-entity-name-column-4-2 "See Anatomical entity name column description")|dorsolateral prefrontal cortex|
+|5|[Developmental stage ID](#developmental-stage-id-column-5-2 "See Developmental stage ID column description")|HsapDv:0000083|
+|6|[Developmental stage name](#developmental-stage-name-column-6-2 "See Developmental stage name column description")|infant stage (human)|
+|7|[Differential expression](#differential-expression-column-7 "See Differential expression column description")|under-expression|
+|8|[Call quality](#call-quality-column-8-2 "See Call quality column description")|high quality|
 
 Example lines for single species simple differential expression file
 
@@ -388,33 +388,33 @@ Example lines for single species simple differential expression file
 |ENSG00000000457|SCYL3|UBERON:0000178|blood|HsapDv:0000094|65-79 year-old human stage (human)|over-expression|low quality|
 
 
-##### <a name="single_diff_simple_col1"></a>Gene ID (column 1)
+##### <a name="gene-id-column-1-2"></a>Gene ID (column 1)
 
 Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### <a name="single_diff_simple_col2"></a>Gene name (column 2)
+##### <a name="gene-name-column-2-2"></a>Gene name (column 2)
 
 Name of the gene defined by `Gene ID` (column 1)
 
-##### <a name="single_diff_simple_col3"></a>Anatomical entity ID (column 3)
+##### <a name="anatomical-entity-id-column-3-2"></a>Anatomical entity ID (column 3)
 
 Unique identifier of the anatomical entity, from the Uberon ontology.
 
-##### <a name="single_diff_simple_col4"></a>Anatomical entity name (column 4)
+##### <a name="anatomical-entity-name-column-4-2"></a>Anatomical entity name (column 4)
 
 Name of the anatomical entity defined by `Anatomical entity ID` (column 3)
 
-##### <a name="single_diff_simple_col5"></a>Developmental stage ID (column 5)
+##### <a name="developmental-stage-id-column-5-2"></a>Developmental stage ID (column 5)
 
 Unique identifier of the developmental stage, from the Uberon ontology.
 
-##### <a name="single_diff_simple_col6"></a>Developmental stage name (column 6)
+##### <a name="developmental-stage-name-column-6-2"></a>Developmental stage name (column 6)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 5)
 
-##### <a name="single_diff_simple_col7"></a>Differential expression (column 7)
+##### <a name="differential-expression-column-7"></a>Differential expression (column 7)
 
 Call generated from all data types for `Gene ID` (column 1), in `Anatomical entity ID` (column 3), at `Developmental stage ID` (column 5). Permitted values:
 
@@ -423,7 +423,7 @@ Call generated from all data types for `Gene ID` (column 1), in `Anatomical enti
 *   weak ambiguity: there exists a call of over-expression or under-expression generated from a data type, but another data type showed no significant variation of the level of expression of this gene in the same condition; or, a gene was shown to be never expressed in a condition by some analyses of a given data type, but other analyses of different data types produced a call of over-expression or of absence of differential expression for the same gene, in the same condition (note that conflicts where a data type produced an under-expression call in a condition, while another data type showed the same gene to be never expressed in that condition, do not produce a `weak ambiguity` call, but a call of `under-expression low quality`).
 *   strong ambiguity: there exists a call of over-expression or under-expression generated from a data type, but there exists a call in the opposite direction generated from another data type for the same gene, anatomical entity and developmental stage. For instance, gene A is reported to be over-expressed in the midbrain at young adult stage from Affymetrix data, but is reported to be under-expressed in the midbrain at young adult stage from RNA-Seq data.
 
-##### <a name="single_diff_simple_col8"></a>Call quality (column 8)
+##### <a name="call-quality-column-8-2"></a>Call quality (column 8)
 
 Confidence in the differential expression call provided in `Differential expression` (column 7). Permitted values:
 
@@ -444,24 +444,24 @@ Format description for single species complete differential expression file
 
 |Column|Content|Example|
 |--- |--- |--- |
-|1|Gene ID|ENSMUSG00000093930|
-|2|Gene name|Hmgcs1|
-|3|Anatomical entity ID|UBERON:0002107|
-|4|Anatomical entity name|liver|
-|5|Developmental stage ID|UBERON:0000113|
-|6|Developmental stage name|post-juvenile adult stage|
-|7|Differential expression|over-expression|
-|8|Call quality|high quality|
-|9|Affymetrix data|over-expression|
-|10|Affymetrix call quality|poor quality|
-|11|Affymetrix best supporting p-value|0.0035659347|
-|12|Affymetrix analysis count supporting Affymetrix call|1|
-|13|Affymetrix analysis count in conflict with Affymetrix call|1|
-|14|RNA-Seq data|over-expression|
-|15|RNA-Seq call quality|high quality|
-|16|RNA-Seq best supporting p-value|2.96E-8|
-|17|RNA-Seq analysis count supporting RNA-Seq call|2|
-|18|RNA-Seq analysis count in conflict with RNA-Seq call|0|
+|1|[Gene ID](#gene-id-column-1-3 "See Gene ID column description")|ENSMUSG00000093930|
+|2|[Gene name](#gene-name-column-2-3 "See Gene name column description")|Hmgcs1|
+|3|[Anatomical entity ID](#anatomical-entity-id-column-3-3 "See Anatomical entity ID column description")|UBERON:0002107|
+|4|[Anatomical entity name](#anatomical-entity-name-column-4-3 "See Anatomical entity name column description")|liver|
+|5|[Developmental stage ID](#developmental-stage-id-column-5-3 "See Developmental stage ID column description")|UBERON:0000113|
+|6|[Developmental stage name](#developmental-stage-name-column-6-3 "See Developmental stage name column description")|post-juvenile adult stage|
+|7|[Differential expression](#differential-expression-column-7-1 "See Differential expression column description")|over-expression|
+|8|[Call quality](#call-quality-8-3 "See Call quality column description")|high quality|
+|9|[Affymetrix data](#affymetrix-data-column-9 "See Affymetrix data column description")|over-expression|
+|10|[Affymetrix call quality](#affymetrix-call-quality-column-10 "See Affymetrix call quality column description")|poor quality|
+|11|[Affymetrix best supporting p-value](#affymetrix-best-supporting-p-value-column-11 "See Affymetrix best supporting p-value column description")|0.0035659347|
+|12|[Affymetrix analysis count supporting Affymetrix call](#affymetrix-analysis-count-supporting-affymetrix-call-column-12 "See Affymetrix analysis count supporting Affymetrix call column description")|1|
+|13|[Affymetrix analysis count in conflict with Affymetrix call](#affymetrix-analysis-count-in-conflict-with-affymetrix-call-column-13 "See Affymetrix analysis count in conflict with Affymetrix call column description")|1|
+|14|[RNA-Seq data](#rna-seq-data-column-14 "See RNA-Seq data column description")|over-expression|
+|15|[RNA-Seq call quality](#rna-seq-call-quality-column-15 "See RNA-Seq call quality column description")|high quality]|
+|16|[RNA-Seq best supporting p-value](#rna-seq-best-supporting-p-value-column-16 "See RNA-Seq best supporting p-value column description")|2.96E-8|
+|17|[RNA-Seq analysis count supporting RNA-Seq call](#rna-seq-analysis-count-supporting-rna-seq-call-column-17 "See RNA-Seq analysis count supporting RNA-Seq call column description")|2|
+|18|[RNA-Seq analysis count in conflict with RNA-Seq call](#rna-seq-analysis-count-in-conflict-with-rna-seq-call-column-18 "See RNA-Seq analysis count in conflict with RNA-Seq call column description")|0|
 
 
 Example lines for single species complete differential expression file
@@ -472,33 +472,33 @@ Example lines for single species complete differential expression file
 |ENSMUSG00000000028|Cdc45|UBERON:0000992|female gonad|MmusDv:0000035|Theiler stage 26 (mouse)|under-expression|poor quality|under-expression|poor quality|6.386149E-4|1|1|no data|no data|1.0|0|0|
 |ENSMUSG00000000031|H19|UBERON:0002037|cerebellum|MmusDv:0000036|Theiler stage 27 (mouse)|over-expression|high quality|over-expression|high quality|1.2336E-6|2|0|no data|no data|1.0|0|0|
 
-##### Gene ID (column 1)
+##### <a name="gene-id-column-1-3"></a>Gene ID (column 1)
 
 Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### Gene name (column 2)
+##### <a name="gene-name-column-2-3"></a>Gene name (column 2)
 
 Name of the gene defined by `Gene ID` (column 1)
 
-##### Anatomical entity ID (column 3)
+##### <a name="anatomical-entity-id-column-3-3"></a>Anatomical entity ID (column 3)
 
 Unique identifier of the anatomical entity, from the Uberon ontology.
 
-##### Anatomical entity name (column 4)
+##### <a name="anatomical-entity-name-column-4-3"></a>Anatomical entity name (column 4)
 
 Name of the anatomical entity defined by `Anatomical entity ID` (column 3)
 
-##### Developmental stage ID (column 5)
+##### <a name="developmental-stage-id-column-5-3"></a>Developmental stage ID (column 5)
 
 Unique identifier of the developmental stage, from the Uberon ontology.
 
-##### Developmental stage name (column 6)
+##### <a name="developmental-stage-name-column-6-3"></a>Developmental stage name (column 6)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 5)
 
-##### Differential expression (column 7)
+##### <a name="differential-expression-column-7-1"></a>Differential expression (column 7)
 
 Call generated from all data types for `Gene ID` (column 1), in `Anatomical entity ID` (column 5), at `Developmental stage ID` (column 3). Permitted values:
 
@@ -510,7 +510,7 @@ Call generated from all data types for `Gene ID` (column 1), in `Anatomical enti
 
 This corresponds to the same differential expression state summary column as in simple files (column 7 of over-/under-expression simple file)
 
-##### Call quality (column 8)
+##### <a name="call-quality-8-3"></a>Call quality (column 8)
 
 Confidence in the differential expression call provided in `Differential expression` (column 7). Permitted values:
 
@@ -520,7 +520,7 @@ Confidence in the differential expression call provided in `Differential express
 
 This corresponds to the same differential expression quality column as in simple files (column 8 of over-/under-expression simple file)
 
-##### Affymetrix data (column 9)
+##### <a name="affymetrix-data-column-9"></a>Affymetrix data (column 9)
 
 Call generated from Affymetrix data for `Gene ID` (column 1), in `Anatomical entity ID` (column 5), at `Developmental stage ID` (column 3). Permitted values:
 
@@ -529,7 +529,7 @@ Call generated from Affymetrix data for `Gene ID` (column 1), in `Anatomical ent
 *   no diff expression: the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.
 *   no data: no analyses of this data type compared expression level of this gene in this condition.
 
-##### Affymetrix call quality (column 10)
+##### <a name="affymetrix-call-quality-column-10"></a>Affymetrix call quality (column 10)
 
 Confidence in the differential expression call provided in `Affymetrix data` (column 9). Permitted values:
 
@@ -537,19 +537,19 @@ Confidence in the differential expression call provided in `Affymetrix data` (co
 *   poor quality: differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is `under-expression low quality`.
 *   no data: no data associated to `Affymetrix data` (column 9).
 
-##### Affymetrix best supporting p-value (column 11)
+##### <a name="affymetrix-best-supporting-p-value-column-11"></a>Affymetrix best supporting p-value (column 11)
 
 Best p-value from the Affymetrix analyses supporting the Affymetrix call provided in `Affymetrix data` (column 9). Set to 1.0 if no data available by Affymetrix.
 
-##### Affymetrix analysis count supporting Affymetrix call (column 12)
+##### <a name="affymetrix-analysis-count-supporting-affymetrix-call-column-12"></a>Affymetrix analysis count supporting Affymetrix call (column 12)
 
 Number of Affymetrix analyses supporting the Affymetrix call provided in `Affymetrix data` (column 9). Set to 0 if no data available by Affymetrix.
 
-##### Affymetrix analysis count in conflict with Affymetrix call (column 13)
+##### <a name="affymetrix-analysis-count-in-conflict-with-affymetrix-call-column-13"></a>Affymetrix analysis count in conflict with Affymetrix call (column 13)
 
 Number of Affymetrix analyses in conflict, generating a call different from the call provided in `Affymetrix data` (column 9). Set to 0 if no data available by Affymetrix.
 
-##### RNA-Seq data (column 14)
+##### <a name="rna-seq-data-column-14"></a>RNA-Seq data (column 14)
 
 Call generated from RNA-Seq data for `Gene ID` (column 1), in `Anatomical entity ID` (column 5), at `Developmental stage ID` (column 3). Permitted values:
 
@@ -558,7 +558,7 @@ Call generated from RNA-Seq data for `Gene ID` (column 1), in `Anatomical entity
 *   no diff expression: the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.
 *   no data: no analyses of this data type compared expression level of this gene in this condition.
 
-##### RNA-Seq call quality (column 15)
+##### <a name="rna-seq-call-quality-column-15"></a>RNA-Seq call quality (column 15)
 
 Confidence in the differential expression call provided in `RNA-Seq data` (column 14). Permitted values:
 
@@ -566,15 +566,15 @@ Confidence in the differential expression call provided in `RNA-Seq data` (colum
 *   poor quality: differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is `under-expression low quality`.
 *   no data: no data associated to `RNA-Seq data` (column 14).
 
-##### RNA-Seq best supporting p-value (column 16)
+##### <a name="rna-seq-best-supporting-p-value-column-16"></a>RNA-Seq best supporting p-value (column 16)
 
 Best p-value from the RNA-Seq analyses supporting the RNA-Seq call provided in `RNA-Seq data` (column 14). Set to 1.0 if no data available by RNA-Seq.
 
-##### RNA-Seq analysis count supporting RNA-Seq call (column 17)
+##### <a name="rna-seq-analysis-count-supporting-rna-seq-call-column-17"></a>RNA-Seq analysis count supporting RNA-Seq call (column 17)
 
 Number of RNA-Seq analyses supporting the RNA-Seq call provided in `RNA-Seq data` (column 14). Set to 0 if no data available by RNA-Seq.
 
-##### RNA-Seq analysis count in conflict with RNA-Seq call (column 18)
+##### <a name="rna-seq-analysis-count-in-conflict-with-rna-seq-call-column-18"></a>RNA-Seq analysis count in conflict with RNA-Seq call (column 18)
 
 Number of RNA-Seq analyses in conflict, generating a call different from the call provided in `RNA-Seq data` (column 14). Set to 0 if no data available by RNA-Seq.
 
@@ -603,9 +603,9 @@ OMA Hierarchical orthologous groups files provide gene orthology relations, by g
 Format description for OMA Hierarchical orthologous groups file
 |Column|Content|Example|
 |--- |--- |--- |
-|1|OMA ID|10|
-|2|Gene ID|ENSG00000105298|
-|3|Gene name|CACTIN|
+|1|[OMA ID](#oma-id-column-1 "See OMA ID column description")|10|
+|2|[Gene ID](#gene-id-column-2 "See Gene ID column description")|ENSG00000105298|
+|3|[Gene name](#gene-name-column-3 "See Gene name column description")|CACTIN|
 
 Example lines for a OMA Hierarchical orthologous groups file
 |OMA ID|Gene ID|Gene name|
@@ -614,17 +614,17 @@ Example lines for a OMA Hierarchical orthologous groups file
 |98828|ENSMUSG00000028076|Cd1d1|
 |98828|ENSMUSG00000041750|Cd1d2|
 
-##### OMA ID (column 1)
+#### <a name="oma-id-column-15"></a>OMA ID (column 1)
 
 Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Gene ID (column 2)
+#### <a name="gene-id-column-2"></a>Gene ID (column 2)
 
 Unique identifier of gene from Ensembl.
 
 Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chimpanzee), and that for _P. pygmaeus_ (Bornean orangutan) we use _P. abelii_ genome (Sumatran orangutan). Only for those species (bonobo and Bornean orangutan), we modify the Ensembl gene IDs, to ensure that we provide unique gene identifiers over all species. It is therefore necessary, to obtain correct Ensembl gene IDs for those species, to replace gene ID prefix 'PPAG' with 'ENSPTRG', and 'PPYG' prefix with 'ENSPPYG'.
 
-##### Gene name (column 3)
+#### <a name="gene-name-column-3"></a>Gene name (column 3)
 
 Name of the gene defined by `Gene ID` (column 2)
 
@@ -661,23 +661,23 @@ Format description for multi-species simple differential expression file
 
 |Column|Content|Cardinality|Example|
 |--- |--- |--- |--- |
-|1|OMA ID|1|80|
-|2|Anatomical entity IDs|1 or greater|UBERON:0001898|
-|3|Anatomical entity names|1 or greater|hypothalamus|
-|4|Developmental stage ID|1|UBERON:0000113|
-|5|Developmental stage name|1|post-juvenile adult stage|
-|6|Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens)|1|1|
-|7|Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens)|1|0|
-|8|Not diff. expressed gene count for species1 (e.g., Not diff. expressed gene count for Homo sapiens)|1|0|
-|9|NA gene count for species1 (e.g., NA gene count for Homo sapiens)|1|0|
-|10|Over-expressed gene count for species2 (e.g., Over-expressed gene count for Mus musculus)|1|1|
-|11|Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus)|1|0|
-|12|Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus)|1|0|
-|13|NA gene count for species2 (e.g., NA gene count for Mus musculus)|1|0|
-|...|Over-expressed gene count for speciesXX|1|...|
+|1|[OMA ID](#oma-id-column-1-1 "See OMA ID column description")|1|80|
+|2|[Anatomical entity IDs](#anatomical-entity-ids-column-2 "See Anatomical entity IDs column description")|1 or greater|UBERON:0001898|
+|3|[Anatomical entity names](#anatomical-entity-names-3 "See Anatomical entity names column description")|1 or greater|hypothalamus|
+|4|[Developmental stage ID](#developmental-stage-id-column4 "See Developmental stage ID column description")|1|UBERON:0000113|
+|5|[Developmental stage name](#developmental-stage-name-column-5 "See Developmental stage name column description")|1|post-juvenile adult stage|
+|6|[Over-expressed gene count for species1](#over-expressed-gene-count-for-species1-column-6 "See Over-expressed gene count for species1 (e.g., Over-expressed gene count for Homo sapiens) column description")|1|1|
+|7|[Under-expressed gene count for species1](#under-expressed-gene-count-for-species1-column-7 "See Under-expressed gene count for species1 (e.g., Under-expressed gene count for Homo sapiens) column description")|1|0|
+|8|[Not diff. expressed gene count for species1](#not-diff-expressed-gene-count-for-species1-column-8 "See Not diff. expressed gene count for species1 (e.g., Not diff. expressed gene count for Homo sapiens) column description")|1|0|
+|9|[NA gene count for species1](#na-gene-count-for-species1-column-9 "See NA gene count for species1 (e.g., NA gene count for Homo sapiens) column description")|1|0|
+|10|[Over-expressed gene count for species2](#over-expressed-gene-count-for-species2-column-10 "See Over-expressed gene count for species2 (e.g., Over-expressed gene count for Mus musculus) column description")|1|1|
+|11|[Under-expressed gene count for species2](#under-expressed-gene-count-for-species2-column-11 "See Under-expressed gene count for species2 (e.g., Under-expressed gene count for Mus musculus) column description")|1|0|
+|12|[Not diff. expressed gene count for species2](#not-diff-expressed-gene-count-for-species2-column-12 "See Not diff. expressed gene count for species2 (e.g., Not diff. expressed gene count for Mus musculus) column description")|1|0|
+|13|[NA gene count for species2](#na-gene-count-for-species2-column-13 "See NA gene count for species2 (e.g., NA gene count for Mus musculus) column description")|1|0|
+|...|[Over-expressed gene count for speciesXX](#over-expressed-gene-count-for-speciesXX "See Over-expressed gene count for speciesXX column description")|1|...|
 |...|...|||
-|(species*4 + 6)|Gene IDs|2 or greater|ENSG00000169057|ENSMUSG00000031393|
-|(species*4 + 7)|Gene names|2 or greater|MECP2|Mecp2|
+|(species*4 + 6)|[Gene IDs](#gene-ids "See Gene IDs column description")|2 or greater|ENSG00000169057|ENSMUSG00000031393|
+|(species*4 + 7)|[Gene names](#gene-names "See Gene names column description")|2 or greater|MECP2|Mecp2|
 
 Example lines for multi-species simple differential expression file
 
@@ -687,11 +687,11 @@ Example lines for multi-species simple differential expression file
 |93|UBERON:0000955|brain|UBERON:0000113|post-juvenile adult stage|1|0|0|0|1|0|0|0|ENSG00000162512|ENSMUSG00000025743|SDC3|Sdc3|
 |93|UBERON:0001134|skeletal muscle tissue|UBERON:0000113|post-juvenile adult stage|0|1|0|0|0|1|0|0|ENSG00000162512|ENSMUSG00000025743|SDC3|Sdc3|
 
-##### OMA ID (column 1)
+#### <a name="oma-id-column-1-1"></a>OMA ID (column 1)
 
 Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Anatomical entity IDs (column 2)
+#### <a name="anatomical-entity-ids-column-2"></a>Anatomical entity IDs (column 2)
 
 Unique identifiers of the homologous anatomical entities, from the Uberon ontology. Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character `|`.
 
@@ -699,49 +699,49 @@ In most cases, the cardinality is 1, as most of the homologous anatomical entiti
 
 For instance, if comparing expression data in human and zebrafish, the anatomical entity "bulbus arteriosus" (UBERON:0004152) would be considered, as it is believed to be homologous in the _Euteleostomi_ lineage; as it is represented by the same anatomical term in both species, the cardinality of the value for this column would be 1. But homology relations between distinct anatomical concepts would also be considered, such as the homology between lung (UBERON:0002048) and swim bladder (UBERON:0006860): these organs are believed to descend from a same common ancestral organ, existing in the ancestor of _Gnathostomata_, but are now sufficiently derived that they are represented by different anatomical concepts in these species; the cardinality of the value of this column would be 2, and the IDs of these anatomical entities would be separated by the character `|`, e.g., `UBERON:0002048|UBERON:0006860`.
 
-##### Anatomical entity names (column 3)
+#### <a name="anatomical-entity-names-3"></a>Anatomical entity names (column 3)
 
 Names of the anatomical entities defined by `Anatomical entity IDs` (column 2). Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character `|`. See `Anatomical entity IDs` column description for more details.
 
-##### Developmental stage ID (column 4)
+#### <a name="developmental-stage-id-column4"></a>Developmental stage ID (column 4)
 
 Unique identifier of the developmental stage, from the Uberon ontology. For multi-species analyses, only broad developmental stages are used, common to the species being compared.
 
-##### Developmental stage name (column 5)
+#### <a name="developmental-stage-name-column-5"></a>Developmental stage name (column 5)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 4)
 
-##### Over-expressed gene count for speciesXX
+#### <a name="over-expressed-gene-count-for-species1-column-6"></a>Over-expressed gene count for species1 (column 6)
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant over-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Under-expressed gene count for speciesXX
+#### <a name="under-expressed-gene-count-for-species1-column-7"></a>Under-expressed gene count for species1 (column 7)
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), shown in one or more analyses to have a significant under-expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), as compared to the expression levels in other conditions of the analyses. This means that there were no conflicts found between results generated from different data types (result generated either from a single data type, or from congruent analyses of different data types). Note that there can still be conflicts between different analyses within a same data type, but such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value, in order to produce a single differential expression call, taking into account all analyses from a given data type.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Not diff. expressed gene count for speciesXX
+#### <a name="not-diff-expressed-gene-count-for-species1-column-8"></a>Not diff. expressed gene count for species1 (column 8)
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)), but that were never shown to have a significant variation of their level of expression as compared to the other conditions of the analyses, or for which conflicting results were generated from different data types.
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### NA gene count for speciesXX
+#### <a name="na-gene-count-for-species1-column-9"></a>NA gene count for species1 (column 9)
 
 Number of genes, members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1), that were not tested for differential expression in this condition (`Anatomical entity IDs` (column 2), at `Developmental stage ID` (column 4)).
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Gene IDs
+#### <a name="gene-ids"></a>Gene IDs
 
 IDs of the gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. IDs are separated with the character.
 
 This column is provided as additional information, members of OMA orthologous gene groups can be retrieved through the use of the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Gene names
+#### <a name="gene-names"></a>Gene names
 
 Name of the gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1). Cardinality 2 or greater. Names are separated with the character.
 
@@ -759,28 +759,28 @@ Format description for multi-species complete differential expression file
 
 |Column|Content|Cardinality|Example|
 |--- |--- |--- |--- |
-|1|OMA ID|1|42865|
-|2|Gene ID|1|ENSMMUG00000012094|
-|3|Gene name|1|RAB17|
-|4|Anatomical entity IDs|1 or greater|UBERON:0002037|
-|5|Anatomical entity names|1 or greater|cerebellum|
-|6|Developmental stage ID|1|UBERON:0018241|
-|7|Developmental stage name|1|prime adult stage|
-|8|Latin species name|1|Macaca_mulatta|
-|9|Differential expression|1|under-expression|
-|10|Call quality|1|high quality|
-|11|Affymetrix data|1|no data|
-|12|Affymetrix call quality|1|no data|
-|13|Affymetrix best supporting p-value|1|1.0|
-|14|Affymetrix analysis count supporting Affymetrix call|1|0|
-|15|Affymetrix analysis count in conflict with Affymetrix call|1|0|
-|16|RNA-Seq data|1|under-expression|
-|17|RNA-Seq call quality|1|high quality|
-|18|RNA-Seq best supporting p-value|1|8.82E-7|
-|19|RNA-Seq analysis count supporting RNA-Seq call|1|1|
-|20|RNA-Seq analysis count in conflict with RNA-Seq call|1|0|
-|21|Anatomy homology CIO ID|1|CIO:0000003|
-|22|Anatomy homology CIO name|1|high confidence from single evidence|
+|1|[OMA ID](#oma-id-column-1-2 "See OMA ID column description")|1|42865|
+|2|[Gene ID](#gene-id-column-2-1 "See Gene ID column description")|1|ENSMMUG00000012094|
+|3|[Gene name](#gene-name-column-3-1 "See Gene name column description")|1|RAB17|
+|4|[Anatomical entity IDs](#anatomical-entity-ids-column-4 "See Anatomical entity IDs column description")|1 or greater|UBERON:0002037|
+|5|[Anatomical entity names](#anatomical-entity-names-column-5 "See Anatomical entity names column description")|1 or greater|cerebellum|
+|6|[Developmental stage ID](#developmental-stage-id-column-6 "See Developmental stage ID column description")|1|UBERON:0018241|
+|7|[Developmental stage name](#developmental-stage-name-column-7 "See Developmental stage name column description")|1|prime adult stage|
+|8|[Latin species name](#latin-species-name-column-8 "See Latin species name column description")|1|Macaca_mulatta|
+|9|[Differential expression](#differential-expression-column-9 "See Differential expression column description")|1|under-expression|
+|10|[Call quality](#call-quality-column-10 "See Call quality column description")|1|high quality|
+|11|[Affymetrix data](#affymetrix-data-column-11-1 "See Affymetrix data column description")|1|no data|
+|12|[Affymetrix call quality](#affymetrix-call-quality-column-12 "See Affymetrix call quality column description")|1|no data|
+|13|[Affymetrix best supporting p-value](#affymetrix-best-supporting-p-value-column-13 "See Affymetrix best supporting p-value column description")|1|1.0|
+|14|[Affymetrix analysis count supporting Affymetrix call](#affymetrix-analysis-count-supporting-affymetrix-call-column-14 "See Affymetrix analysis count supporting Affymetrix call column description")|1|0|
+|15|[Affymetrix analysis count in conflict with Affymetrix call](#affymetrix-analysis-count-in-conflict-with-affymetrix-call-column-15 "See Affymetrix analysis count in conflict with Affymetrix call column description")|1|0|
+|16|[RNA-Seq data](#rna-seq-data-column-16 "See RNA-Seq data column description")|1|under-expression|
+|17|[RNA-Seq call quality](#rna-seq-call-quality-column-17 "See RNA-Seq call quality column description")|1|high quality|
+|18|[RNA-Seq best supporting p-value](#rna-seq-best-supporting-p-value-column-18 "See RNA-Seq best supporting p-value column description")|1|8.82E-7|
+|19|[RNA-Seq analysis count supporting RNA-Seq call](#rna-seq-analysis-count-supporting-rna-seq-call-column-19 "See RNA-Seq analysis count supporting RNA-Seq call column description")|1|1|
+|20|[RNA-Seq analysis count in conflict with RNA-Seq call](#rna-seq-analysis-count-in-conflict-with-rna-seq-call-column-20 "See RNA-Seq analysis count in conflict with RNA-Seq call column description")|1|0|
+|21|[Anatomy homology CIO ID](#anatomy-homology-cio-id-column-21 "See Anatomy homology CIO ID column description")|1|CIO:0000003|
+|22|[Anatomy homology CIO name](#anatomy-homology-cio-name-column-22 "See Anatomy homology CIO name column description")|1|high confidence from single evidence|
 
 
 Example lines for multi-species complete differential expression file
@@ -792,11 +792,11 @@ Example lines for multi-species complete differential expression file
 |59|ENSBTAG00000015398|ZO1|UBERON:0000948|heart|UBERON:0018241|prime adult stage|Bos_taurus|over-expression|high quality|no data|no data|1.0|0|0|over-expression|high quality|8.741838E-4|1|0|CIO:0000004|medium confidence from single evidence|
 
 
-##### OMA ID (column 1)
+#### <a name="oma-id-column-1-2"></a>OMA ID (column 1)
 
 Unique identifier of the OMA gene orthology group. Note that these identifiers are not stable between releases, and cannot be used to retrieve data from [the OMA browser](https://omabrowser.org/oma/hogs/ "External link to OMA browser"). They are provided solely to group data from orthologous genes belonging to a same orthology group. Gene members of an OMA gene orthology group can be retrieved through the associated [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation").
 
-##### Gene ID (column 2)
+#### <a name="gene-id-column-2-1"></a>Gene ID (column 2)
 
 Unique identifier of gene from Ensembl.
 
@@ -804,11 +804,11 @@ Please note that for _P. paniscus_ (bonobo) we use _P. troglodytes_ genome (chim
 
 Please note that the list of all gene members of the OMA orthologous gene group with ID provided in `OMA ID` (column 1) is provided through the [hierarchical orthologous groups file](#oma_hog "Jump to hierarchical orthologous groups file documentation"). If a gene listed in this file has no call for the condition `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6), it means that there is no data available for this gene in this condition.
 
-##### Gene name (column 3)
+#### <a name="gene-name-column-3-1"></a>Gene name (column 3)
 
 Name of the gene defined by `Gene ID` (column 2)
 
-##### Anatomical entity IDs (column 4)
+#### <a name="anatomical-entity-ids-column-4"></a>Anatomical entity IDs (column 4)
 
 Unique identifiers of the homologous anatomical entities, from the Uberon ontology. Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character `|`.
 
@@ -816,23 +816,23 @@ In most cases, the cardinality is 1, as most of the homologous anatomical entiti
 
 For instance, if comparing expression data in human and zebrafish, the anatomical entity "bulbus arteriosus" (UBERON:0004152) would be considered, as it is believed to be homologous in the _Euteleostomi_ lineage; as it is represented by the same anatomical term in both species, the cardinality of the value for this column would be 1. But homology relations between distinct anatomical concepts would also be considered, such as the homology between lung (UBERON:0002048) and swim bladder (UBERON:0006860): these organs are believed to descend from a same common ancestral organ, existing in the ancestor of _Gnathostomata_, but are now sufficiently derived that they are represented by different anatomical concepts in these species; the cardinality of the value of this column would be 2, and the IDs of these anatomical entities would be separated by the character `|`, e.g., `UBERON:0002048|UBERON:0006860`.
 
-##### Anatomical entity names (column 5)
+#### <a name="anatomical-entity-names-column-5"></a>Anatomical entity names (column 5)
 
 Names of the anatomical entities defined by `Anatomical entity IDs` (column 4). Cardinality 1 or greater. When more than one anatomical entity is used, they are separated with the character `|`. See `Anatomical entity IDs` column description for more details.
 
-##### Developmental stage ID (column 6)
+#### <a name="developmental-stage-id-column-6"></a>Developmental stage ID (column 6)
 
 Unique identifier of the developmental stage, from the Uberon ontology. For multi-species analyses, only broad developmental stages are used, common to the species being compared.
 
-##### Developmental stage name (column 7)
+#### <a name="developmental-stage-name-column-7"></a>Developmental stage name (column 7)
 
 Name of the developmental stage defined by `Developmental stage ID` (column 6)
 
-##### Latin species name (column 8)
+#### <a name="latin-species-name-column-8"></a>Latin species name (column 8)
 
 The Latin name of the species which the gene in Gene ID (column 2) belongs to.
 
-##### Differential expression (column 9)
+#### <a name="differential-expression-column-9"></a>Differential expression (column 9)
 
 Call generated from all data types for `Gene ID` (column 2), in `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6). Permitted values:
 
@@ -842,7 +842,7 @@ Call generated from all data types for `Gene ID` (column 2), in `Anatomical enti
 *   weak ambiguity: there exists a call of over-expression or under-expression generated from a data type, but another data type showed no significant variation of the level of expression of this gene in the same condition; or, a gene was shown to be never expressed in a condition by some analyses of a given data type, but other analyses of different data types produced a call of over-expression or of absence of differential expression for the same gene, in the same condition (note that conflicts where a data type produced an under-expression call in a condition, while another data type showed the same gene to be never expressed in that condition, do not produce a `weak ambiguity` call, but a call of `under-expression low quality`).
 *   strong ambiguity: there exists a call of over-expression or under-expression generated from a data type, but there exists a call in the opposite direction generated from another data type for the same gene, anatomical entity and developmental stage. For instance, gene A is reported to be over-expressed in the midbrain at young adult stage from Affymetrix data, but is reported to be under-expressed in the midbrain at young adult stage from RNA-Seq data.
 
-##### Call quality (column 10)
+#### <a name="call-quality-column-10"></a>Call quality (column 10)
 
 Confidence in the differential expression call provided in `Differential expression` (column 2). Permitted values:
 
@@ -850,7 +850,7 @@ Confidence in the differential expression call provided in `Differential express
 *   poor quality: differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is `under-expression low quality`.
 *   NA: no quality applicable when ambiguity state in `Differential expression` (column 2).
 
-##### Affymetrix data (column 11)
+#### <a name="affymetrix-data-column-11-1"></a>Affymetrix data (column 11)
 
 Call generated from Affymetrix data for `Gene ID` (column 2), in `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6). Permitted values:
 
@@ -859,7 +859,7 @@ Call generated from Affymetrix data for `Gene ID` (column 2), in `Anatomical ent
 *   no diff expression: the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.
 *   no data: no analyses of this data type compared expression level of this gene in this condition.
 
-##### Affymetrix call quality (column 12)
+#### <a name="affymetrix-call-quality-column-12"></a>Affymetrix call quality (column 12)
 
 Confidence in the differential expression call provided in `Affymetrix data` (column 9). Permitted values:
 
@@ -867,19 +867,19 @@ Confidence in the differential expression call provided in `Affymetrix data` (co
 *   poor quality: differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is `under-expression low quality`.
 *   no data: no data associated to `Affymetrix data` (column 9).
 
-##### Affymetrix best supporting p-value (column 13)
+#### <a name="affymetrix-best-supporting-p-value-column-13"></a>Affymetrix best supporting p-value (column 13)
 
 Best p-value from the Affymetrix analyses supporting the Affymetrix call provided in `Affymetrix data` (column 11). Set to 1.0 if no data available by Affymetrix.
 
-##### Affymetrix analysis count supporting Affymetrix call (column 14)
+#### <a name="affymetrix-analysis-count-supporting-affymetrix-call-column-14"></a>Affymetrix analysis count supporting Affymetrix call (column 14)
 
 Number of Affymetrix analyses supporting the Affymetrix call provided in `Affymetrix data` (column 11). Set to 0 if no data available by Affymetrix.
 
-##### Affymetrix analysis count in conflict with Affymetrix call (column 15)
+#### <a name="affymetrix-analysis-count-in-conflict-with-affymetrix-call-column-15"></a>Affymetrix analysis count in conflict with Affymetrix call (column 15)
 
 Number of Affymetrix analyses in conflict, generating a call different from the call provided in `Affymetrix data` (column 11). Set to 0 if no data available by Affymetrix.
 
-##### RNA-Seq data (column 16)
+#### <a name="rna-seq-data-column-16"></a>RNA-Seq data (column 16)
 
 Call generated from RNA-Seq data for `Gene ID` (column 2), in `Anatomical entity IDs` (column 4), at `Developmental stage ID` (column 6). Permitted values:
 
@@ -888,7 +888,7 @@ Call generated from RNA-Seq data for `Gene ID` (column 2), in `Anatomical entity
 *   no diff expression: the gene was tested for differential expression in this condition, but was never shown to have a significant variation of expression as compared to the other conditions of the analyses.
 *   no data: no analyses of this data type compared expression level of this gene in this condition.
 
-##### RNA-Seq call quality (column 17)
+#### <a name="rna-seq-call-quality-column-17"></a>RNA-Seq call quality (column 17)
 
 Confidence in the differential expression call provided in `RNA-Seq data` (column 16). Permitted values:
 
@@ -896,23 +896,23 @@ Confidence in the differential expression call provided in `RNA-Seq data` (colum
 *   poor quality: differential expression reported as low quality, or there exists a conflict for the same gene, anatomical entity and developmental stage, from different analyses of a same data type (conflicts between different data types are treated differently). For instance, an analysis showed a gene to be over-expressed in a condition, while another analysis showed the same gene to be under-expressed or not differentially expressed in the same condition. Such conflicts are resolved by a voting system based on the number of conditions compared, weighted by p-value. Note that in one case, this quality level is used to reconcile conflicting calls from different data types: when a data type produced an under-expression call, while a different data type has shown that the same gene was never seen as expressed in the same condition. In that case, the overall summary is `under-expression low quality`.
 *   no data: no data associated to `RNA-Seq data` (column 16).
 
-##### RNA-Seq best supporting p-value (column 18)
+#### <a name="rna-seq-best-supporting-p-value-column-18"></a>RNA-Seq best supporting p-value (column 18)
 
 Best p-value from the RNA-Seq analyses supporting the RNA-Seq call provided in `RNA-Seq data` (column 16). Set to 1.0 if no data available by RNA-Seq.
 
-##### RNA-Seq analysis count supporting RNA-Seq call (column 19)
+#### <a name="rna-seq-analysis-count-supporting-rna-seq-call-column-19"></a>RNA-Seq analysis count supporting RNA-Seq call (column 19)
 
 Number of RNA-Seq analyses supporting the RNA-Seq call provided in `RNA-Seq data` (column 16). Set to 0 if no data available by RNA-Seq.
 
-##### RNA-Seq analysis count in conflict with RNA-Seq call (column 20)
+#### <a name="rna-seq-analysis-count-in-conflict-with-rna-seq-call-column-20"></a>RNA-Seq analysis count in conflict with RNA-Seq call (column 20)
 
 Number of RNA-Seq analyses in conflict, generating a call different from the call provided in `RNA-Seq data` (column 16). Set to 0 if no data available by RNA-Seq.
 
-##### Anatomy homology CIO ID (column 21)
+#### <a name="anatomy-homology-cio-id-column-21"></a>Anatomy homology CIO ID (column 21)
 
 Unique identifier from the [Confidence Information Ontology](https://github.com/BgeeDB/confidence-information-ontology/blob/master/src/ontology/cio-simple.obo "External link to CIO in OBO"), providing the confidence in the annotation of homology of anatomical entities defined in `Anatomical entity IDs` (column 4). This ontology is an attempt to provide a mean to capture the confidence in annotations. See [project home](https://github.com/BgeeDB/confidence-information-ontology "External link to CIO project") for more details.
 
-##### Anatomy homology CIO name (column 22)
+#### <a name="anatomy-homology-cio-name-column-22"></a>Anatomy homology CIO name (column 22)
 
 Name of the CIO term defined by `Anatomy homology CIO ID` (column 21)
 
