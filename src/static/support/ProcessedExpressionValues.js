@@ -1,5 +1,6 @@
 import imagePath from '../../helpers/imagePath';
 import PATHS from '../../routes/paths';
+import Bulma from '../../components/Bulma';
 
 const expressionValues = [
   {
@@ -13,9 +14,10 @@ const expressionValues = [
         children: [
           {
             type: 'card',
+            id: 'pouetpouet',
             title: 'RNA-Seq processed expression values',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/document-text-outline.svg'),
               alt: 'Github logo',
             },
             link: PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
@@ -51,7 +53,7 @@ const expressionValues = [
             type: 'card',
             title: 'Single cell RNA-Seq full-length processed expression values',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/document-text-outline.svg'),
               alt: 'Github logo',
             },
             link: PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
@@ -87,7 +89,7 @@ const expressionValues = [
             type: 'card',
             title: 'Affymetrix processed expression values',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/document-text-outline.svg'),
               alt: 'Github logo',
             },
             link: PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
