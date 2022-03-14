@@ -1,6 +1,5 @@
 import imagePath from '../../helpers/imagePath';
 import PATHS from '../../routes/paths';
-import Bulma from '../../components/Bulma';
 
 const expressionValues = [
   {
@@ -14,7 +13,6 @@ const expressionValues = [
         children: [
           {
             type: 'card',
-            id: 'pouetpouet',
             title: 'RNA-Seq processed expression values',
             image: {
               src: imagePath('/document-text-outline.svg'),
