@@ -250,7 +250,7 @@ const ABOUT = {
   },
   [PATHS.ABOUT.SOURCES]: {
     component: DataSource,
-    title: 'Bgee source',
+    title: 'Bgee sources',
     meta: {
       title: 'Data sources',
       description:
