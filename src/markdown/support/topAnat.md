@@ -21,11 +21,11 @@ Quick start
 
 ### Examples
 
-*   [Mouse genes mapped to the GO term "spermatogenesis"](/analysis/top-anat/00fecfca04bf1b2cf88ced9b0a937d68f0eea6cb "TopAnat example").
-*   [Human genes involved in autism and epilepsy, with decorrelation](/analysis/top-anat/8fce889da7b4519c5792573ed3933032c8122819 "TopAnat example").
-*   [Mouse genes mapped to the GO term "neurological system process", with decorrelation and high quality data only](/analysis/top-anat/e37009ba698919c75d06e81b3eca5d48f78210a0 "TopAnat example").
-*   [Cow genes with the keyword 'muscle' in their UniProtKB/Swiss-Prot description](/analysis/top-anat/7e8c74c073be03be4c40810c16c6be06c0bef1be "TopAnat example").
-*   [Platypus genes located on X chromosome](/analysis/top-anat/5fc8ff1fcfed7cfba0f82f82a67b418ce8a709b6 "TopAnat example").
+*   [Human genes involved in autism and epilepsy, with decorrelation](/analysis/top-anat/8af5b0727ba1c62318707bf6f59c7c9c2b3697a1 "TopAnat example").
+*   [Mouse genes mapped to the GO term "spermatogenesis", with decorrelation](/analysis/top-anat/2dd226ea83f1b041cf105e7d18a01d81fff19d10 "TopAnat example").
+*   [Zebrafish 3R ohnologs showing nervous system expression of 3R duplicates](/analysis/top-anat/2bf58d4561f36bbaec9bebc730131423e695df3d "TopAnat example").
+*   [Pigmentation genes in rabbit, with decorrelation](/analysis/top-anat/9a9896727557dab83c45731d3fd4f4ccadf19be0 "TopAnat example").
+*   [COVID-19 related human genes, with decorrelation and increased FDR threshold](/analysis/top-anat/10fb20cc0f767484a570ee82e5c24fc317657d23 "TopAnat example").
 
 Note of caution
 ---------------
