@@ -17,13 +17,20 @@ const MarkdownReader = ({ location: { pathname } }) => {
   const history = useHistory();
   const components = React.useMemo(
     () => ({
-      h1: ({ children }) => (
+      h1: ({ children, id }) => (
         <div className={classnames('content has-text-centered')}>
-          <p className="title is-5">{children}</p>
+          <h1 className="title in-md is-5" id={id}>
+            {children}
+          </h1>
         </div>
       ),
-      h2: ({ children }) => (
-        <Bulma.Title size={5} className="gradient-underline">
+      h2: ({ children, id }) => (
+        <Bulma.Title
+          id={id}
+          renderAs="h2"
+          size={5}
+          className="gradient-underline"
+        >
           {children}
         </Bulma.Title>
       ),
