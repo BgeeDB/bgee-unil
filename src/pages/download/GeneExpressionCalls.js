@@ -340,18 +340,6 @@ const GeneExpressionCalls = () => {
                             </p>
                           </div>
                         </div>
-                        <div>
-                          <p className="has-text-weight-semibold is-size-5 mt-2 has-text-weight-normal">
-                            Over-/Under-expression
-                            <Link
-                              className="is-size-6 internal-link ml-2 grey"
-                              to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_DIFF_ID}`}
-                            >
-                              See documentation
-                            </Link>
-                          </p>
-                          <p>Improvement of these files is in progress</p>
-                        </div>
                       </div>
                     </div>
                   </div>
