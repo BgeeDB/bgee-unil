@@ -126,7 +126,8 @@ const fileDownloadProps = (file) => ({
   ],
 });
 
-const datasetToLdJSON = (species) => {
+const datasetToLdJSON = () => {
+// const datasetToLdJSON = (species) => {
 //    const datasets = [];
 //    species.forEach((s) => {
 //        const { genus, name, speciesName, id } = s;
