@@ -3,19 +3,19 @@ single cell RNA-Seq full-length download file documentation: annotations and pro
 
 This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the Bgee [download page](/download/processed-expression-values "Bgee Processed expression values download page") for each species.
 
-*   [Annotation download files](#ann_downl "Quick jump to this section")
-    *   [Library file](#lib_file "Quick jump to this section")
-    *   [Experiment file](#exp_file "Quick jump to this section")
-*   [Processed expression values download files](#proc_Exp "Quick jump to this section")
+*   [Annotation download files](#annotation-download-files "Quick jump to this section")
+    *   [Library file](#library-file "Quick jump to this section")
+    *   [Experiment file](#experiment-file "Quick jump to this section")
+*   [Processed expression values download files](#processed-expression-values-download-files "Quick jump to this section")
 
 
-<a name="ann_downl"></a>Annotation download files
+Annotation download files
 ---------------------------------------------------------------
 
 Go to:
 
-*   [Library file](#lib_file "Quick jump to this section")
-*   [Experiment file](#exp_file "Quick jump to this section")
+*   [Library file](#library-file "Quick jump to this section")
+*   [Experiment file](#experiment-file "Quick jump to this section")
 
 
 The annotation download files are divided in 2 main files:
@@ -24,7 +24,7 @@ The annotation download files are divided in 2 main files:
 
 2) **experiment information**: where is provided the over-all information about the experiment, as number of libraries that belongs to the experiment, as well as number of conditions, number of organs, number of stages, number of cell types and number of strains.
 
-### <a name="lib_file"></a>Library file
+### Library file
 
 Format description of the library download file for a target species:
 
@@ -185,7 +185,7 @@ URL pathway where is located the processed data for the correspondent `Experimen
 URL pathway to the SRA Run Selector. This allows to access to the `Run IDs` (column 32) through the `library ID` (column 2).
 
 
-### <a name="exp_file"></a>Experiment file
+### Experiment file
 
 Format description of the experiment download file for a target species:
 
@@ -256,7 +256,7 @@ URL pathway where is located the processed data for the correspondent `Experimen
 Description provided by the authors of the `Experiment ID` (column 1).
 
 
-<a name="proc_Exp"></a>Processed expression values download files
+Processed expression values download files
 -----------------------------------------------------------------
 
 The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](/ftp/current/download/processed_expr_values/sc_full_length/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web-page all the processed data related to the species are downloaded, this means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file include all processed data of all libraries that belong to the corresponding target experiment.
