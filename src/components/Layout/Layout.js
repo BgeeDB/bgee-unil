@@ -47,16 +47,6 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Header />
-      {!config.archive && (
-        <Alert type="warning" light>
-          <span>
-            This release is a <strong>beta</strong> version. Please be aware that the data
-            will not be archived and should not yet be referenced in
-            publications, expecting long-term retrieval. The SPARQL endpoint was
-            not updated.
-          </span>
-        </Alert>
-      )}
       {config.archive && (
         <Alert type="danger" light>
           <span>
