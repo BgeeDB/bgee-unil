@@ -70,8 +70,28 @@ export const TOP_ANAT_DEFAULT_VALUES = {
   fdrThreshold: '0.2',
   pValueThreshold: '1',
 };
-
-export const topAnatLabelClassNames = (key, value) =>
-  classnames('label', 'is-relative', {
-    'not-default': TOP_ANAT_DEFAULT_VALUES[key] !== value,
+export const topAnatAdvancedOptsNotDefault = (opts) => {
+  let isNotDefault = false;
+  Object.entries(TOP_ANAT_DEFAULT_VALUES).forEach(([opt, value]) => {
+    if (
+      (['stages', 'dataQuality', 'decorrelationType'].includes(opt) &&
+        opts[opt] !== value) ||
+      parseFloat(opts[opt]) !== parseFloat(value)
+    ) {
+      isNotDefault = true;
+    }
   });
+  return isNotDefault;
+};
+
+export const topAnatLabelClassNames = (key, value) => {
+  if (['stages', 'dataQuality', 'decorrelationType'].includes(key)) {
+    return classnames('label', 'is-relative', {
+      'not-default': TOP_ANAT_DEFAULT_VALUES[key] !== value,
+    });
+  }
+  return classnames('label', 'is-relative', {
+    'not-default':
+      parseFloat(TOP_ANAT_DEFAULT_VALUES[key]) !== parseFloat(value),
+  });
+};
