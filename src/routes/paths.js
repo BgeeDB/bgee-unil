@@ -44,6 +44,7 @@ const PATHS = {
     COLLABORATIONS: '/about/collaborations',
     PUBLICATION: '/about/publications',
     SOURCES: '/about/sources',
+    TEAM: '/about/team',
     PRIVACY_POLICY: '/about/privacy-policy',
   },
   ERROR: '/error',

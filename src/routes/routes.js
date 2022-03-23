@@ -33,6 +33,7 @@ import FaqFile from '../static/support/faq';
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
+import TeamFile from '../static/about/team';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
@@ -256,6 +257,15 @@ const ABOUT = {
       description:
         'List of the sources and the versions used to build the Bgee database.',
       keywords: 'data sources, data source versions',
+    },
+  },
+  [PATHS.ABOUT.TEAM]: {
+    source: TeamFile,
+    title: 'Bgee team',
+    meta: {
+      title: 'Bgee team',
+      description: 'The Bgee team from SIB/UNIL',
+      keywords: 'The Bgee team, Bgee team, SIB bgee, UNIL bgee',
     },
   },
   [PATHS.ABOUT.PRIVACY_POLICY]: {
