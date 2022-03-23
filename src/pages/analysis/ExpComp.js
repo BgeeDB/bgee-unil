@@ -518,6 +518,9 @@ const ExpComp = () => {
                       <Link
                         className="internal-link"
                         to="?data=8798798749849841"
+                        onClick={() => {
+                          setSearchValue('');
+                        }}
                       >
                         SRRM4 (brain specific genes)
                       </Link>
@@ -525,6 +528,9 @@ const ExpComp = () => {
                       <Link
                         className="internal-link"
                         to="?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823"
+                        onClick={() => {
+                          setSearchValue('');
+                        }}
                       >
                         Hoxd12 (development pattern genes)
                       </Link>
