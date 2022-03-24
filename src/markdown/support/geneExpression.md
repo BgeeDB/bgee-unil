@@ -136,16 +136,14 @@ Call generated from all data types for the selected combination of condition par
 *   present: report of presence of expression, from Bgee statistical tests and/or from _in situ_ data sources.
 *   absent: report of absence of expression, from Bgee statistical tests and/or from _in situ_ data sources.
 
-In Bgee, calls of absence of expression are always discarded if there exists a contradicting call of expression, for the same gene, in the same anatomical entity and developmental stage, or in a child entity or child developmental stage.
-
 ##### <a name="call-quality-column-10"></a>Call quality (column 10)
 
-Quality associated to the call. Permitted values:
+Raw quality associated to the call :
 
 *   high quality: presence or absence of expression reported as high quality from Bgee statistical tests and/or from _in situ_ data sources.
 *   low quality: presence or absence of expression reported as low quality from Bgee statistical tests and/or from _in situ_ data sources.
 
-From this quality a `summary quality` is calculated using all calls corresponding to the same gene and condition parameters coming from different experiments and/or data types.
+From this raw quality a `summary quality` is calculated using all calls corresponding to the same gene and condition parameters coming from different experiments and/or data types.
 
 Quality associated to the call in column `Expression` (column 9) is this `summary quality` and is calculated using following rules:
 
@@ -155,6 +153,9 @@ Quality associated to the call in column `Expression` (column 9) is this `summar
 
 ##### <a name="fdr-column-11"></a>FDR (column 11)
 
+FDR value of the call. In Bgee one pValue is calculated for each observation of expression. One call can then combine different observations of expression coming from different datatypes or from descendant conditions. 
+
+A Benjamini-Hochberg procedure is applyed to calculate the FDR corresponding to the combination of the pValues of all osbservations of the call.
 
 ##### <a name="expression-score-column-12"></a>Expression score (column 12)
 
@@ -184,135 +185,260 @@ Number of observation coming from experimental data for combination of condition
 
 ##### <a name="affymetrix-expression-column-17"></a>Affymetrix expression (column 17)
 
+Call generated from Affymetrix data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+
+*   present: report of presence of expression.
+*   absent: report of absence of expression.
+*   no data: no data of expression
 
 ##### <a name="affymetrix-call-quality-column-18"></a>Affymetrix call quality (column 18)
 
+Quality associated to the call from Affymetrix data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+
+Permitted values:
+
+*   gold quality
+*   silver quality
+*   bronze quality
+*   NA
 
 ##### <a name="affymetrix-fdr-column-19"></a>Affymetrix FDR (column 19)
 
+FDR value of the call calculated using pValues coming from Affymetrix data.
 
 ##### <a name="affymetrix-expression-score-column-20"></a>Affymetrix expression score (column 20)
 
+Score of expression to the call from Affymetrix data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+
+Low score means that the gene is lowly expressed in the condition.
 
 ##### <a name="affymetrix-expression-rank-column-17"></a>Affymetrix expression rank (column 21)
 
+Rank score associated to the call from Affymetrix data. Rank scores of expression calls are normalized across genes, conditions and species.
+
+A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="affymetrix-weight-column-17"></a>Affymetrix weight for expression rank and score (column 22)
 
 
 ##### <a name="including-affymetrix-observed-data-column-17"></a>Including Affymetrix observed data (column 23)
 
+Information about the calls actually coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
+
+Permitted value: `yes` or `no`
 
 ##### <a name="self-observation-count-affymetrix-column-17"></a>Self observation count Affymetrix (column 24)
 
+Number of observation coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
 
 ##### <a name="descendant-observation-count-affymetrix-column-17"></a>Descendant observation count Affymetrix (column 25)
 
+Number of observation coming from experimental Affymetrix data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
 ##### <a name="est-expression-column-26"></a>EST expression (column 26)
 
+Call generated from EST data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+
+*   present: report of presence of expression.
+*   absent: report of absence of expression.
+*   no data: no data of expression
 
 ##### <a name="est-call-quality-column-27"></a>EST call quality (column 27)
 
+Quality associated to the call from EST data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+
+Permitted values:
+
+*   gold quality
+*   silver quality
+*   bronze quality
+*   NA
 
 ##### <a name="est-fdr-column-28"></a>EST FDR (column 28)
 
+FDR value of the call calculated using pValues coming from EST data.
 
 ##### <a name="est-expression-score-column-29"></a>EST expression score (column 29)
 
+Score of expression to the call from EST data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+
+Low score means that the gene is lowly expressed in the condition.
 
 ##### <a name="est-expression-rank-column-30"></a>EST expression rank (column 30)
 
+Rank score associated to the call from EST data. Rank scores of expression calls are normalized across genes, conditions and species.
+
+A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="est-weight-column-31"></a>EST weight for expression rank and score (column 31)
 
 
 ##### <a name="including-est-observed-data-column-32"></a>Including EST observed data (column 32)
 
+Information about the calls actually coming from experimental EST data for this combination of condition parameters (anatomical or all conditions).
+
+Permitted value: `yes` or `no`
 
 ##### <a name="self-observation-count-est-column-33"></a>Self observation count EST (column 33)
 
+Number of observation coming from experimental EST data for this combination of condition parameters (anatomical or all conditions).
 
 ##### <a name="descendant-observation-count-est-column-34"></a>Descendant observation count EST (column 34)
 
+Number of observation coming from experimental EST data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
 ##### <a name="in-situ-hybridization-expression-column-35"></a>in situ hybridization expression (column 35)
 
+Call generated from in situ hybridization data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+
+*   present: report of presence of expression.
+*   absent: report of absence of expression.
+*   no data: no data of expression
 
 ##### <a name="in-situ-hybridization-call-quality-column-36"></a>in situ hybridization call quality (column 36)
 
+Quality associated to the call from in situ hybridization data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+
+Permitted values:
+
+*   gold quality
+*   silver quality
+*   bronze quality
+*   NA
 
 ##### <a name="in-situ-hybridization-fdr-column-37"></a>in situ hybridization FDR (column 37)
 
+FDR value of the call calculated using pValues coming from in situ hybridization data.
 
 ##### <a name="in-situ-hybridization-expression-score-column-38"></a>in situ hybridization expression score (column 38)
 
+Score of expression to the call from in situ hybridization data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+
+Low score means that the gene is lowly expressed in the condition.
 
 ##### <a name="in-situ-hybridization-expression-rank-column-39"></a>in situ hybridization expression rank (column 39)
 
+Rank score associated to the call from in situ hybridization data. Rank scores of expression calls are normalized across genes, conditions and species.
+
+A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="in-situ-hybridization-weight-column-40"></a>in situ hybridization weight for expression rank and score (column 40)
 
 
 ##### <a name="including-in-situ-hybridization-observed-data-column-41"></a>Including in situ hybridization observed data (column 41)
 
+Information about the calls actually coming from experimental in situ hybridization data for this combination of condition parameters (anatomical or all conditions).
+
+Permitted value: `yes` or `no`
 
 ##### <a name="self-observation-count-in-situ-hybridization-column-42"></a>Self observation count in situ hybridization (column 42)
 
+Number of observation coming from experimental in situ hybridization data for this combination of condition parameters (anatomical or all conditions).
 
 ##### <a name="descendant-observation-count-in-situ-hybridization-column-43"></a>Descendant observation count in situ hybridization (column 43)
 
+Number of observation coming from experimental in situ hybridization data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
 ##### <a name="rna-seq-expression-column-44"></a>RNA-Seq expression (column 44)
 
+Call generated from RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+
+*   present: report of presence of expression.
+*   absent: report of absence of expression.
+*   no data: no data of expression
 
 ##### <a name="rna-seq-call-quality-column-45"></a>RNA-Seq call quality (column 45)
 
+Quality associated to the call from RNA-Seq data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+
+Permitted values:
+
+*   gold quality
+*   silver quality
+*   bronze quality
+*   NA
 
 ##### <a name="rna-seq-fdr-column-46"></a>RNA-Seq FDR (column 46)
 
+FDR value of the call calculated using pValues coming from RNA-Seq data.
 
 ##### <a name="rna-seq-expression-score-column-47"></a>RNA-Seq expression score (column 47)
 
+Score of expression to the call from RNA-Seq data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+
+Low score means that the gene is lowly expressed in the condition.
 
 ##### <a name="rna-seq-expression-rank-column-48"></a>RNA-Seq expression rank (column 48)
 
+Rank score associated to the call from RNA-Seq data. Rank scores of expression calls are normalized across genes, conditions and species.
+
+A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="rna-seq-weight-column-49"></a>RNA-Seq weight for expression rank and score (column 49)
 
 
 ##### <a name="including-rna-seq-observed-data-column-50"></a>Including RNA-Seq observed data (column 50)
 
+Information about the calls actually coming from experimental RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
+
+Permitted value: `yes` or `no`
 
 ##### <a name="self-observation-count-rna-seq-column-51"></a>Self observation count RNA-Seq (column 51)
 
+Number of observation coming from experimental RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
 
 ##### <a name="descendant-observation-count-rna-seq-column-52"></a>Descendant observation count RNA-Seq (column 52)
 
+Number of observation coming from experimental RNA-Seq data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
 ##### <a name="full-length-single-cell-rna-seq-expression-column-53"></a>full length single cell RNA-Seq expression (column 53)
 
+Call generated from full length single cell RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+
+*   present: report of presence of expression.
+*   absent: report of absence of expression.
+*   no data: no data of expression
 
 ##### <a name="full-length-single-cell-rna-seq-call-quality-column-54"></a>full length single cell RNA-Seq call quality (column 54)
 
+Quality associated to the call from full length single cell RNA-Seq data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+
+Permitted values:
+
+*   gold quality
+*   silver quality
+*   bronze quality
+*   NA
 
 ##### <a name="full-length-single-cell-rna-seq-fdr-column-55"></a>full length single cell RNA-Seq FDR (column 55)
 
+FDR value of the call calculated using pValues coming from full length single cell RNA-Seq data.
 
 ##### <a name="full-length-single-cell-rna-seq-expression-score-column-56"></a>full length single cell RNA-Seq expression score (column 56)
 
+Score of expression to the call from full length single cell RNA-Seq data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+
+Low score means that the gene is lowly expressed in the condition.
 
 ##### <a name="full-length-single-cell-rna-seq-expression-rank-column-57"></a>full length single cell RNA-Seq expression rank (column 57)
 
+Rank score associated to the call from full length single cell RNA-Seq data. Rank scores of expression calls are normalized across genes, conditions and species.
+
+A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="full-length-single-cell-rna-seq-weight-column-58"></a>full length single cell RNA-Seq weight for expression rank and score (column 58)
 
 
 ##### <a name="including-full-length-single-cell-rna-seq-observed-data-column-59"></a>Including full length single cell RNA-Seq observed data (column 59)
 
+Information about the calls actually coming from experimental full length single cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
+
+Permitted value: `yes` or `no`
 
 ##### <a name="self-observation-count-full-length-single-cell-rna-seq-column-60"></a>Self observation count full length single cell RNA-Seq (column 60)
 
+Number of observation coming from experimental full length single cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
 
 ##### <a name="descendant-observation-count-full-length-single-cell-rna-seq-column-61"></a>Descendant observation count full length single cell RNA-Seq (column 61)
 
+Number of observation coming from experimental full length single cell RNA-Seq data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
