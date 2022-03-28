@@ -33,7 +33,7 @@ import FaqFile from '../static/support/faq';
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
-import TeamFile from '../static/about/team';
+import TeamFile from '../markdown/about/team.md';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
