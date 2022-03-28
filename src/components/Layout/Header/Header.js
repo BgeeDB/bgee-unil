@@ -198,12 +198,12 @@ const NAVBAR_LEFT = [
         type: 'external',
         path: 'https://bgeedb.wordpress.com/',
       },
-      {
+/*      {
         key: 'page.about.team',
         title: ROUTES[PATHS.ABOUT.TEAM].title,
         type: 'internal',
         path: PATHS.ABOUT.TEAM,
-      },
+      }, */
       {
         key: 'page.about.privacy-policy',
         title: ROUTES[PATHS.ABOUT.PRIVACY_POLICY].title,
