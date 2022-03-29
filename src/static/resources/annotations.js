@@ -98,7 +98,7 @@ const annotations = [
             type: 'card',
             title: 'GTEx cleaning for Bgee',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/document-text-outline.svg'),
               alt: 'Github logo',
             },
             link: 'https://docs.google.com/document/d/1IuNu3WGTSIhXnJffP_yo7lK2abSgxZQDPJgG1SYF5vI',
