@@ -1,27 +1,57 @@
 Expression call download file documentation
 ===========================================
 
-This documentation describes both the format of single species presence/absence of expression files and how values of each columns are created. The files can be found in the Bgee [download page](/download/gene-expression-calls "Bgee expression data page") for each species.
+This documentation describes the format of presence/absence expression calls download files, and how values of each columns are generated. The files can be found in the Bgee [download page](/download/gene-expression-calls "Bgee expression data page") for each species.
 
-Bgee provides calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, and a life stage, with reported presence or absence of expression. Life stages describe development and aging. Only "normal" expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different types, from different studies, in different organisms, and provides a summary from all these data as unique calls `gene - anatomical entity - developmental stage`, with confidence information, notably taking into account potential conflicts.
+## Introduction
 
-Calls of presence/absence of expression are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, and RNA-Seq data, with confidence information, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these calls of presence/absence of expression between different experiments, different data types, and different species, and to benefit from both the high anatomy coverage provided by low-throughput methods, and the high genomic coverage provided by high-throughput methods.
+Bgee provides present/absent expression calls, that can be retrieved in download files either per gene and anatomical entity, or per gene and combination of: i) anatomical entity; ii) developmental and life stage; iii) sex; and iv) strain or ethnicity.  
+Only "normal" wild-type expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, a FDR-corrected p-value is provided, along with an expression score allowing to compare levels of expression.
 
-After presence/absence calls are generated from the raw data, they are propagated using anatomical and life stage ontologies:
+Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
 
-*   calls of expression are propagated to parent anatomical entities and parent developmental stages. For instance, if gene A is expressed in midbrain at young adult stage, it will also be considered as expressed in brain at adult stage.
-*   calls of absence of expression are propagated to child anatomical entities (and not to child developmental stages). For instance, if gene A is reported as not expressed in the brain at young adult stage, it will also be considered as not expressed in the midbrain at young adult stage. This is only permitted when it does not generate any contradiction with expression calls from the same data type (for instance, no contradiction permitted of reported absence of expression by RNA-Seq, with report of expression by RNA-Seq for the same gene, in the same anatomical entity and developmental stage, or any child anatomical entity or child developmental stage).
+### Generation of present/absent expression calls per gene and condition
 
-Call propagation allows a complete integration of the data, even if provided at different anatomical or developmental levels. For instance: if gene A is reported to be expressed in the midbrain dura mater at young adult stage; gene B is reported to be expressed in the midbrain pia mater at late adult stage; and gene C has an absence of expression reported in the brain at adult stage; it is then possible to retrieve that, in the midbrain at adult stage, gene A and B are both expressed, while gene C is not, thanks to call propagation.
+#### First step: computation of expression p-values per gene and sample
+
+For each gene and each sample in Bgee, we produce a p-value based on a null hypothesis of expression level equal to or below the background expression noise (i.e., absence of expression).
+
+* For <u>bulk RNA-Seq data</u>: we use a novel method to estimate for each RNA-Seq library independently the TPM threshold to consider a gene as actively transcribed, inferred by the amount of reads mapped to intergenic regions of the genome. To this aim, we first define a stringent set of reference intergenic regions, based on available bulk RNA-Seq libraries for each species. We then call genes expressed if their level of expression is significantly higher than the background noise. For each gene in the library, we compute a Z-score in terms of standard deviations from the mean of reference intergenic regions. Then we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
+* For <u>single-cell RNA-Seq data</u>: as of Bgee 15.0, only full-length protocols are integrated. The method used is the same as for bulk RNA-Seq data, for each cell/library.
+* For <u>Affymetrix data</u>: when raw CEL files are available, we use the gcRMA algorithm to normalize the signal taking into account probe sequences, and use a subset of weakly expressed probesets for estimating the background signal of expression. We then apply a Wilcoxon test to compare the normalized signal of the probesets with the background signal, as implemented in the ‘mas5calls’ function of the bioconductor package ‘affy’, and we use the resulting p-value. When only the MAS5 files of an analysis are available, we use the flags provided by the MAS5 software, with the following mapping to a p-value: 0.01 for 'present' detection flags; 0.05 for 'marginal' detection flags; 0.1 for 'absent' detection flags.
+* For <u>EST data</u>: based on the number of ESTs mapped to a gene in a library, we produce a p-value based on the null hypothesis that the EST count is not different from 0, with the formula: 2^(-(est_count + 1)).
+* For <u>_in situ_ hybridization data</u>: we retrieve _in situ_ hybridization data from Model Organism Databases part of the Alliance of Genome Resources. We map call qualities provided by these resources to p-values: 0.0004 for 'present high quality' calls; 0.01 for "present low quality"; 0.1 for "absent low quality"; 0.5 for "absent high quality".
+
+#### Second step: FDR corrected p-values per gene and condition
+
+We capture information about the anatomical localization of samples, their developmental and life stage, their sex, and their strain or ethnicity. We either manually capture this information using ontologies and controlled vocabularies, or we map existing annotations provided by MODs to these ontologies and vocabularies.
+
+After p-values are generated from the raw data for each gene and sample, they are propagated using anatomical and life stage ontologies. For instance, the p-value obtained for a gene in a sample studying the condition 'midbrain' at 'aged stage', will be propagated to the condition 'brain' at 'adult stage'. All p-values are propagated in a similar way towards the root of the graph of conditions.
+
+After all p-values have been propagated, we apply a Benjamini-Hochberg FDR correction to generate one FDR p-value per gene and condition.
+
+#### Final step: generation of present/absent expression calls per gene and condition
+
+* Present gold quality expression calls: if the FDR-corrected p-value for a gene in a condition is less than or equal to 0.01.
+* Present silver quality expression calls: if the FDR-corrected p-value for a gene in a condition is less than or equal to 0.05, and greater than 0.01.
+* Absent gold quality expression calls:
+  * if the call is notably supported by p-values generated from data types trusted for absent calls (bulk RNA-Seq, Affymetrix, _in situ_ hybridization)
+  * and the FDR-corrected p-value for a gene in a condition is greater than 0.1, taking into account all requested data types
+  * and the FDR-corrected p-value taking into account only data types trusted for absent calls is greater than 0.1
+  * and there is no FDR-corrected p-value less than or equal to 0.05 in any child condition for that gene, considering the data types trusted for absent calls
+* Absent silver quality expression calls: same as absent gold quality expression calls, but using a FDR-corrected p-value threshold of 0.05
+
+### Download file format description
 
 It is possible to select two different combinations of `condition parameters`:
 
-*   anatomical entities only (by default) files contain one expression call for each unique pair of gene and anatomical entity. If more than one developmental stage maps this unique pair, the resulting expression call corresponds to summarized information coming from all developmental stages.
-*   all conditions parameters files contain one expression call for each unique gene, anatomical entity, developmental stage, sex and strain.
+* anatomical entities only: files contain one expression call for each unique pair of gene and anatomical entity.
+* all conditions parameters: files contain one expression call for each unique gene, anatomical entity, developmental stage, sex and strain.
 
-Presence/absence calls are then filtered and presented differently depending on whether a `simple file`, or an `advanced file` is used. Notably: `simple files` aim at providing summarized information over all data types, and only in anatomical entities and developmental stages actually used in experimental data; `advanced files` aim at reporting all information, allowing for instance to retrieve the contribution of each data type to a call, in all possible anatomical entities and developmental stages.
+These download files exist in two flavors:
 
-In simple files, propagated presence/absence expression calls are provided, but only calls in conditions of anatomical entity/developmental stage actually used in experimental data are displayed (no calls generated from propagation only).
+* simple: aim at providing summarized information over all data types
+* advanced: aim at reporting all information, allowing for instance to retrieve the contribution of each data type to a call
 
 Simple and advanced files contain the same expression calls (same number of lines) but advanced files contain more information on each call (more columns).
 
@@ -86,15 +116,15 @@ Advanced file information:
 |50|[Including RNA-Seq observed data](#including-rna-seq-observed-data-column-50 "See Including RNA-Seq observed data column description")|No|Yes|No|Yes|no|
 |51|[Self observation count RNA-Seq](#self-observation-count-rna-seq-column-51 "See Self observation count RNA-Seq column description")|No|Yes|No|Yes|0|
 |52|[Descendant observation count RNA-Seq](#descendant-observation-count-rna-seq-column-52 "See Descendant observation count RNA-Seq column description")|No|Yes|No|Yes|0|
-|53|[full length single cell RNA-Seq expression](#full-length-single-cell-rna-seq-expression-column-53 "See full length single cell RNA-Seq expression column description")|No|Yes|No|Yes|no data|
-|54|[full length single cell RNA-Seq call quality](#full-length-single-cell-rna-seq-call-quality-column-54 "See full length single cell RNA-Seq call quality column description")|No|Yes|No|Yes|NA|
-|55|[full length single cell RNA-Seq FDR](#full-length-single-cell-rna-seq-fdr-column-55 "See full length single cell RNA-Seq FDR column description")|No|Yes|No|Yes|NA|
-|56|[full length single cell RNA-Seq expression score](#full-length-single-cell-rna-seq-expression-score-column-56 "See full length single cell RNA-Seq expression score column description")|No|Yes|No|Yes|NA|
-|57|[full length single cell RNA-Seq expression rank](#full-length-single-cell-rna-seq-expression-rank-column-57 "See full length single cell RNA-Seq expression rank column description")|No|Yes|No|Yes|NA|
-|58|[full length single cell RNA-Seq weight for expression rank and score](#full-length-single-cell-rna-seq-weight-column-58 "See full length single cell RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
-|59|[Including full length single cell RNA-Seq observed data](#including-full-length-single-cell-rna-seq-observed-data-column-59 "See Including full length single cell RNA-Seq observed data column description")|No|Yes|No|Yes|no|
-|60|[Self observation count full length single cell RNA-Seq](#self-observation-count-full-length-single-cell-rna-seq-column-60 "See Self observation count full length single cell RNA-Seq column description")|No|Yes|No|Yes|0|
-|61|[Descendant observation count full length single cell RNA-Seq](#descendant-observation-count-full-length-single-cell-rna-seq-column-61 "See Descendant observation count full length single cell RNA-Seq column description")|No|Yes|No|Yes|0|
+|53|[full-length single-cell RNA-Seq expression](#full-length-single-cell-rna-seq-expression-column-53 "See full-length single-cell RNA-Seq expression column description")|No|Yes|No|Yes|no data|
+|54|[full-length single-cell RNA-Seq call quality](#full-length-single-cell-rna-seq-call-quality-column-54 "See full-length single-cell RNA-Seq call quality column description")|No|Yes|No|Yes|NA|
+|55|[full-length single-cell RNA-Seq FDR](#full-length-single-cell-rna-seq-fdr-column-55 "See full-length single-cell RNA-Seq FDR column description")|No|Yes|No|Yes|NA|
+|56|[full-length single-cell RNA-Seq expression score](#full-length-single-cell-rna-seq-expression-score-column-56 "See full-length single-cell RNA-Seq expression score column description")|No|Yes|No|Yes|NA|
+|57|[full-length single-cell RNA-Seq expression rank](#full-length-single-cell-rna-seq-expression-rank-column-57 "See full-length single-cell RNA-Seq expression rank column description")|No|Yes|No|Yes|NA|
+|58|[full-length single-cell RNA-Seq weight for expression rank and score](#full-length-single-cell-rna-seq-weight-column-58 "See full-length single-cell RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|59|[Including full-length single-cell RNA-Seq observed data](#including-full-length-single-cell-rna-seq-observed-data-column-59 "See Including full-length single-cell RNA-Seq observed data column description")|No|Yes|No|Yes|no|
+|60|[Self observation count full-length single-cell RNA-Seq](#self-observation-count-full-length-single-cell-rna-seq-column-60 "See Self observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
+|61|[Descendant observation count full-length single-cell RNA-Seq](#descendant-observation-count-full-length-single-cell-rna-seq-column-61 "See Descendant observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
 
 
 ##### <a name="gene-id-column-1"></a>Gene ID (column 1)
@@ -131,31 +161,15 @@ Strain of the sample used to generate the call
 
 ##### <a name="expression-column-9"></a>Expression (column 9)
 
-Call generated from all data types for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
-
-*   present: report of presence of expression, from Bgee statistical tests and/or from _in situ_ data sources.
-*   absent: report of absence of expression, from Bgee statistical tests and/or from _in situ_ data sources.
+Call generated from all data types for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent.
 
 ##### <a name="call-quality-column-10"></a>Call quality (column 10)
 
-Raw quality associated to the call :
-
-*   high quality: presence or absence of expression reported as high quality from Bgee statistical tests and/or from _in situ_ data sources.
-*   low quality: presence or absence of expression reported as low quality from Bgee statistical tests and/or from _in situ_ data sources.
-
-From this raw quality a `summary quality` is calculated using all calls corresponding to the same gene and condition parameters coming from different experiments and/or data types.
-
-Quality associated to the call in column `Expression` (column 9) is this `summary quality` and is calculated using following rules:
-
-*   gold quality: 2 or more high quality calls.
-*   silver quality: 1 high quality call or 2 low quality calls
-*   bronze quality: 1 low quality call (for internal use only. Not present in this file).
+Call quality from all data types for the selected combination of condition parameters (anatomical or all conditions). Permitted values: gold quality, silver quality.
 
 ##### <a name="fdr-column-11"></a>FDR (column 11)
 
-FDR value of the call. In Bgee one pValue is calculated for each observation of expression. One call can then combine different observations of expression coming from different datatypes or from descendant conditions. 
-
-A Benjamini-Hochberg procedure is applyed to calculate the FDR corresponding to the combination of the pValues of all osbservations of the call.
+FDR-corrected p-value of the call.
 
 ##### <a name="expression-score-column-12"></a>Expression score (column 12)
 
@@ -185,26 +199,15 @@ Number of observation coming from experimental data for combination of condition
 
 ##### <a name="affymetrix-expression-column-17"></a>Affymetrix expression (column 17)
 
-Call generated from Affymetrix data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
-
-*   present: report of presence of expression.
-*   absent: report of absence of expression.
-*   no data: no data of expression
+Call generated from Affymetrix data for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent, no data.
 
 ##### <a name="affymetrix-call-quality-column-18"></a>Affymetrix call quality (column 18)
 
-Quality associated to the call from Affymetrix data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
-
-Permitted values:
-
-*   gold quality
-*   silver quality
-*   bronze quality
-*   NA
+Quality associated to the call from Affymetrix data. Permitted values: gold quality, silver quality, NA.
 
 ##### <a name="affymetrix-fdr-column-19"></a>Affymetrix FDR (column 19)
 
-FDR value of the call calculated using pValues coming from Affymetrix data.
+FDR-corrected p-value of the call calculated using p-values coming from Affymetrix data.
 
 ##### <a name="affymetrix-expression-score-column-20"></a>Affymetrix expression score (column 20)
 
@@ -220,6 +223,7 @@ A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="affymetrix-weight-column-17"></a>Affymetrix weight for expression rank and score (column 22)
 
+The weight given to Affymetrix expression ranks and scores when computing the weighted mean over several data types.
 
 ##### <a name="including-affymetrix-observed-data-column-17"></a>Including Affymetrix observed data (column 23)
 
@@ -237,26 +241,15 @@ Number of observation coming from experimental Affymetrix data for combination o
 
 ##### <a name="est-expression-column-26"></a>EST expression (column 26)
 
-Call generated from EST data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
-
-*   present: report of presence of expression.
-*   absent: report of absence of expression.
-*   no data: no data of expression
+Call generated from EST data for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent, no data.
 
 ##### <a name="est-call-quality-column-27"></a>EST call quality (column 27)
 
-Quality associated to the call from EST data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
-
-Permitted values:
-
-*   gold quality
-*   silver quality
-*   bronze quality
-*   NA
+Quality associated to the call from EST data. Permitted values: gold quality, silver quality,  NA.
 
 ##### <a name="est-fdr-column-28"></a>EST FDR (column 28)
 
-FDR value of the call calculated using pValues coming from EST data.
+FDR-corrected p-value of the call calculated using p-values coming from EST data.
 
 ##### <a name="est-expression-score-column-29"></a>EST expression score (column 29)
 
@@ -272,6 +265,7 @@ A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="est-weight-column-31"></a>EST weight for expression rank and score (column 31)
 
+The weight given to EST expression ranks and scores when computing the weighted mean over several data types.
 
 ##### <a name="including-est-observed-data-column-32"></a>Including EST observed data (column 32)
 
@@ -289,26 +283,15 @@ Number of observation coming from experimental EST data for combination of condi
 
 ##### <a name="in-situ-hybridization-expression-column-35"></a>in situ hybridization expression (column 35)
 
-Call generated from in situ hybridization data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
-
-*   present: report of presence of expression.
-*   absent: report of absence of expression.
-*   no data: no data of expression
+Call generated from _in situ_ hybridization data for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent, no data.
 
 ##### <a name="in-situ-hybridization-call-quality-column-36"></a>in situ hybridization call quality (column 36)
 
-Quality associated to the call from in situ hybridization data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
-
-Permitted values:
-
-*   gold quality
-*   silver quality
-*   bronze quality
-*   NA
+Quality associated to the call from in situ hybridization data. Permitted values: gold quality, silver quality, NA.
 
 ##### <a name="in-situ-hybridization-fdr-column-37"></a>in situ hybridization FDR (column 37)
 
-FDR value of the call calculated using pValues coming from in situ hybridization data.
+FDR value of the call calculated using p-values coming from in situ hybridization data.
 
 ##### <a name="in-situ-hybridization-expression-score-column-38"></a>in situ hybridization expression score (column 38)
 
@@ -324,6 +307,7 @@ A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="in-situ-hybridization-weight-column-40"></a>in situ hybridization weight for expression rank and score (column 40)
 
+The weight given to in situ hybridization expression ranks and scores when computing the weighted mean over several data types.
 
 ##### <a name="including-in-situ-hybridization-observed-data-column-41"></a>Including in situ hybridization observed data (column 41)
 
@@ -341,26 +325,15 @@ Number of observation coming from experimental in situ hybridization data for co
 
 ##### <a name="rna-seq-expression-column-44"></a>RNA-Seq expression (column 44)
 
-Call generated from RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
-
-*   present: report of presence of expression.
-*   absent: report of absence of expression.
-*   no data: no data of expression
+Call generated from bulk RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent, no data.
 
 ##### <a name="rna-seq-call-quality-column-45"></a>RNA-Seq call quality (column 45)
 
-Quality associated to the call from RNA-Seq data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
-
-Permitted values:
-
-*   gold quality
-*   silver quality
-*   bronze quality
-*   NA
+Quality associated to the call from bulk RNA-Seq data. Permitted values: gold quality, silver quality, NA.
 
 ##### <a name="rna-seq-fdr-column-46"></a>RNA-Seq FDR (column 46)
 
-FDR value of the call calculated using pValues coming from RNA-Seq data.
+FDR-corrected p-value of the call calculated using p-values coming from RNA-Seq data.
 
 ##### <a name="rna-seq-expression-score-column-47"></a>RNA-Seq expression score (column 47)
 
@@ -376,6 +349,7 @@ A low score means that the gene is highly expressed in the condition.
 
 ##### <a name="rna-seq-weight-column-49"></a>RNA-Seq weight for expression rank and score (column 49)
 
+The weight given to RNA-Seq expression ranks and scores when computing the weighted mean over several data types.
 
 ##### <a name="including-rna-seq-observed-data-column-50"></a>Including RNA-Seq observed data (column 50)
 
@@ -391,54 +365,44 @@ Number of observation coming from experimental RNA-Seq data for this combination
 
 Number of observation coming from experimental RNA-Seq data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
-##### <a name="full-length-single-cell-rna-seq-expression-column-53"></a>full length single cell RNA-Seq expression (column 53)
+##### <a name="full-length-single-cell-rna-seq-expression-column-53"></a>full-length single-cell RNA-Seq expression (column 53)
 
-Call generated from full length single cell RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values:
+Call generated from full-length single-cell RNA-Seq data for the selected combination of condition parameters (anatomical or all conditions). Permitted values: present, absent, no data.
 
-*   present: report of presence of expression.
-*   absent: report of absence of expression.
-*   no data: no data of expression
+##### <a name="full-length-single-cell-rna-seq-call-quality-column-54"></a>full-length single-cell RNA-Seq call quality (column 54)
 
-##### <a name="full-length-single-cell-rna-seq-call-quality-column-54"></a>full length single cell RNA-Seq call quality (column 54)
+Quality associated to the call from full-length single-cell RNA-Seq data. Permitted values: gold quality, silver quality, NA.
 
-Quality associated to the call from full length single cell RNA-Seq data. More description on how this quality is generated in [Call quality](#call-quality-column-10 "See Call quality column description").
+##### <a name="full-length-single-cell-rna-seq-fdr-column-55"></a>full-length single-cell RNA-Seq FDR (column 55)
 
-Permitted values:
+FDR-corrected p-value of the call calculated using p-values coming from full-length single-cell RNA-Seq data.
 
-*   gold quality
-*   silver quality
-*   bronze quality
-*   NA
+##### <a name="full-length-single-cell-rna-seq-expression-score-column-56"></a>full-length single-cell RNA-Seq expression score (column 56)
 
-##### <a name="full-length-single-cell-rna-seq-fdr-column-55"></a>full length single cell RNA-Seq FDR (column 55)
-
-FDR value of the call calculated using pValues coming from full length single cell RNA-Seq data.
-
-##### <a name="full-length-single-cell-rna-seq-expression-score-column-56"></a>full length single cell RNA-Seq expression score (column 56)
-
-Score of expression to the call from full length single cell RNA-Seq data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
+Score of expression to the call from full-length single-cell RNA-Seq data. The score uses the minimum and maximum `Expression Rank` (column 13) of the species to normalize the expression to a value between 0 and 100. 
 
 Low score means that the gene is lowly expressed in the condition.
 
-##### <a name="full-length-single-cell-rna-seq-expression-rank-column-57"></a>full length single cell RNA-Seq expression rank (column 57)
+##### <a name="full-length-single-cell-rna-seq-expression-rank-column-57"></a>full-length single-cell RNA-Seq expression rank (column 57)
 
-Rank score associated to the call from full length single cell RNA-Seq data. Rank scores of expression calls are normalized across genes, conditions and species.
+Rank score associated to the call from full-length single-cell RNA-Seq data. Rank scores of expression calls are normalized across genes, conditions and species.
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="full-length-single-cell-rna-seq-weight-column-58"></a>full length single cell RNA-Seq weight for expression rank and score (column 58)
+##### <a name="full-length-single-cell-rna-seq-weight-column-58"></a>full-length single-cell RNA-Seq weight for expression rank and score (column 58)
 
+The weight given to full-length single-cell expression ranks and scores when computing the weighted mean over several data types.
 
-##### <a name="including-full-length-single-cell-rna-seq-observed-data-column-59"></a>Including full length single cell RNA-Seq observed data (column 59)
+##### <a name="including-full-length-single-cell-rna-seq-observed-data-column-59"></a>Including full-length single-cell RNA-Seq observed data (column 59)
 
-Information about the calls actually coming from experimental full length single cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
+Information about the calls actually coming from experimental full-length single-cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
 
 Permitted value: `yes` or `no`
 
-##### <a name="self-observation-count-full-length-single-cell-rna-seq-column-60"></a>Self observation count full length single cell RNA-Seq (column 60)
+##### <a name="self-observation-count-full-length-single-cell-rna-seq-column-60"></a>Self observation count full-length single-cell RNA-Seq (column 60)
 
-Number of observation coming from experimental full length single cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
+Number of observation coming from experimental full-length single-cell RNA-Seq data for this combination of condition parameters (anatomical or all conditions).
 
-##### <a name="descendant-observation-count-full-length-single-cell-rna-seq-column-61"></a>Descendant observation count full length single cell RNA-Seq (column 61)
+##### <a name="descendant-observation-count-full-length-single-cell-rna-seq-column-61"></a>Descendant observation count full-length single-cell RNA-Seq (column 61)
 
-Number of observation coming from experimental full length single cell RNA-Seq data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
+Number of observation coming from experimental full-length single-cell RNA-Seq data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
