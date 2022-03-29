@@ -6,9 +6,9 @@ This documentation describes the format of presence/absence expression calls dow
 ## Introduction
 
 Bgee provides present/absent expression calls, that can be retrieved in download files either per gene and anatomical entity, or per gene and combination of: i) anatomical entity; ii) developmental and life stage; iii) sex; and iv) strain or ethnicity.  
-Only "normal" wild-type expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, a FDR-corrected p-value is provided, along with an expression score allowing to compare levels of expression.
+Only "normal" wild-type healthy expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, a FDR-corrected p-value is provided, along with an expression score allowing to compare levels of expression.
 
-Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
+Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, and single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
 
 * [Generation of present/absent expression calls](#generation-of-presentabsent-expression-calls-per-gene-and-condition "Quick jump to this section")
 * [Download file format description](#download-file-format-description "Quick jump to this section")
@@ -38,7 +38,7 @@ After all p-values have been propagated, we apply a Benjamini-Hochberg FDR corre
 * Present gold quality expression calls: if the FDR-corrected p-value for a gene in a condition is less than or equal to 0.01.
 * Present silver quality expression calls: if the FDR-corrected p-value for a gene in a condition is less than or equal to 0.05, and greater than 0.01.
 * Absent gold quality expression calls:
-  * if the call is notably supported by p-values generated from data types trusted for absent calls (bulk RNA-Seq, Affymetrix, _in situ_ hybridization)
+  * if the call is supported by at least one p-values generated from data types trusted for absent calls (bulk RNA-Seq, Affymetrix, _in situ_ hybridization)
   * and the FDR-corrected p-value for a gene in a condition is greater than 0.1, taking into account all requested data types
   * and the FDR-corrected p-value taking into account only data types trusted for absent calls is greater than 0.1
   * and there is no FDR-corrected p-value less than or equal to 0.05 in any child condition for that gene, considering the data types trusted for absent calls
