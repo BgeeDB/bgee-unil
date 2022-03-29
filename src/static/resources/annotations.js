@@ -54,6 +54,27 @@ const annotations = [
         children: [
           {
             type: 'card',
+            title: 'single-cell RNA-Seq annotations',
+            image: {
+              src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
+            },
+            link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/scRNA_Seq',
+            linkType: 'external',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'text',
+            classNames: 'has-text-centered',
+            content:
+              'Annotations of single-cell RNA-Seq experiments, libraries and platforms used to generate the last version of Bgee.',
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
             title: 'Affymetrix annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),
