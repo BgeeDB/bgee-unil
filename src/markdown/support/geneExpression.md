@@ -10,6 +10,9 @@ Only "normal" wild-type expression is considered in Bgee (i.e., no treatment, no
 
 Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
 
+* [Generation of present/absent expression calls](#generation-of-presentabsent-expression-calls-per-gene-and-condition "Quick jump to this section")
+* [Download file format description](#download-file-format-description "Quick jump to this section")
+
 ### Generation of present/absent expression calls per gene and condition
 
 #### First step: computation of expression p-values per gene and sample
