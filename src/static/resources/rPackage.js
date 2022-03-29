@@ -15,6 +15,7 @@ const rPackage = [
             title: 'BgeeDB R package',
             image: {
               src: imagePath('/logo/r_logo_color.png'),
+              alt: 'R logo',
             },
             link: 'https://bioconductor.org/packages/BgeeDB/',
             linkType: 'external',
@@ -33,7 +34,10 @@ const rPackage = [
           {
             type: 'card',
             title: 'BgeeCall R package',
-            image: { src: imagePath('/logo/r_logo_color.png') },
+            image: {
+              src: imagePath('/logo/r_logo_color.png'),
+              alt: 'R logo',
+            },
             link: 'https://bioconductor.org/packages/BgeeCall/',
             linkType: 'external',
             classNames: 'mb-3',
@@ -53,6 +57,7 @@ const rPackage = [
             title: 'Container for BgeeCall and BgeeDB',
             image: {
               src: imagePath('/logo/docker_logo.png'),
+              alt: 'Docker logo',
             },
             link: 'https://hub.docker.com/r/bgeedb/bgee_r',
             linkType: 'external',

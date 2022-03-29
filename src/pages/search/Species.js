@@ -14,6 +14,7 @@ const Species = () => {
   let metaTitle = '';
   let metaDescription = '';
   let metaKeywords = '';
+  let genomeSourceURL = '';
 
   const [data, setData] = React.useState();
   const { id } = useParams();
@@ -107,6 +108,9 @@ const Species = () => {
        ${data.species.genus} ${data.species.speciesName}, 
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
+    /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
+    const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
+    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
   }
 
   return !data ? null : (
@@ -175,7 +179,7 @@ const Species = () => {
               </p>
             </div>
             <div>
-              <LinkExternal to={`${data.species.genomeSource.baseUrl}`}>
+              <LinkExternal to={genomeSourceURL}>
                 {data.species.genomeSource.name}
               </LinkExternal>
             </div>
@@ -272,7 +276,7 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="prov-values">
+        <Bulma.Title size={4} className="gradient-underline" id="proc-values">
           Processed expression value files
         </Bulma.Title>
         <div className="">
@@ -283,7 +287,7 @@ const Species = () => {
           <div className="mt-2">
             <p
               className="is-size-5 has-text-primary has-text-weight-semibold"
-              id="prov-values-affymetrix"
+              id="proc-values-affymetrix"
             >
               Affymetrix
             </p>

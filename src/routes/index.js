@@ -191,10 +191,12 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
+                  PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
+                  PATHS.ABOUT.TEAM,
                   PATHS.ABOUT.PRIVACY_POLICY,
                 ]}
                 render={(props) => <Page {...props} Component={StaticPage} />}
@@ -205,6 +207,9 @@ const Router = () => (
                   PATHS.SUPPORT.GTEX,
                   PATHS.SUPPORT.TOP_ANAT,
                   PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
+                  PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />

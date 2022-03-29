@@ -366,6 +366,7 @@ const about = [
         type: 'link_image',
         src: imagePath('/cc-zero-large.png'),
         path: 'https://creativecommons.org/publicdomain/zero/1.0/',
+        alt: 'CC Zero',
         style: {
           marginTop: '.7rem',
         },

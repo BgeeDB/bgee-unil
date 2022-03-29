@@ -15,6 +15,7 @@ const source = [
             title: 'Bgee pipeline',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master',
             linkType: 'external',
@@ -35,6 +36,7 @@ const source = [
             title: 'BgeeDB R package',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeDB_R',
             linkType: 'external',
@@ -55,6 +57,7 @@ const source = [
             title: 'BgeeCall R package',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeCall',
             linkType: 'external',
@@ -75,6 +78,7 @@ const source = [
             title: 'IQRay',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/IQRray',
             linkType: 'external',

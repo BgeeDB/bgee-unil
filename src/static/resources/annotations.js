@@ -15,6 +15,7 @@ const annotations = [
             title: 'Anatomical similarity annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/anatomical-similarity-annotations',
             linkType: 'external',
@@ -35,6 +36,7 @@ const annotations = [
             title: 'RNA-Seq annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/RNA_Seq',
             linkType: 'external',
@@ -55,6 +57,7 @@ const annotations = [
             title: 'Affymetrix annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/Affymetrix',
             linkType: 'external',
@@ -75,6 +78,7 @@ const annotations = [
             title: 'ESTs annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/source_files/ESTs',
             linkType: 'external',
@@ -95,6 +99,7 @@ const annotations = [
             title: 'GTEx cleaning for Bgee',
             image: {
               src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://docs.google.com/document/d/1IuNu3WGTSIhXnJffP_yo7lK2abSgxZQDPJgG1SYF5vI',
             linkType: 'external',

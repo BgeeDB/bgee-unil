@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import assets from '../assets';
-import packageJson from '../../package.json';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import Bulma from '../components/Bulma';
@@ -13,6 +12,7 @@ import api from '../api';
 import LinkExternal from '../components/LinkExternal';
 import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
+import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
 
 const Home = () => {
@@ -22,6 +22,7 @@ const Home = () => {
     api.search.species.list().then((resp) => {
       if (resp.code === 200) {
         setSpeciesList(resp.data.species);
+        schemaDotOrg.setHomeDatasetLdJSON(resp.data.species);
       } else {
         setSpeciesList([]);
       }
@@ -34,7 +35,7 @@ const Home = () => {
         <Bulma.Hero.Body className="pt-3">
           <p className="has-text-right mb-5 has-text-black-ter">{`${
             config.archive ? 'Archived version' : 'Version'
-          } ${packageJson.version}`}</p>
+          } ${config.version}`}</p>
           <div className="is-flex is-justify-content-center">
             <Bulma.Image
               src={assets.bgeeLogo}
@@ -193,10 +194,7 @@ const NavButtons = ({ className }) => (
     )}
   >
     <p className="control">
-      <Link
-        className="button is-primary"
-        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-      >
+      <Link className="button is-primary" to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}>
         <Bulma.IonIcon name="list-outline" />
         <span>Expression comparison</span>
       </Link>

@@ -200,6 +200,7 @@ footer.footer {
     &.image {
       position: relative;
       height: 15px;
+      top: 4px;
       img {
         margin: 0;
         position: absolute;
@@ -255,7 +256,7 @@ a.internal-link, a.external-link, a.mail-link {
 a.external-link {
   background-position: right center;
   background-repeat: no-repeat;
-  background-image: linear-gradient(transparent,transparent), url(https://bgee.org/bgee_test/img/external_link.png);
+  background-image: linear-gradient(transparent,transparent), url("/img/external_link.png");
   background-size: 9px;
   padding-right: 13px;
 }
@@ -322,6 +323,7 @@ $table-cell-border-width: 0;
 }
 
 th {
+  -ms-user-select: none;
   -webkit-user-select: none;
 }
 table.table {
@@ -436,6 +438,12 @@ span.icon {
 .color-link {
   color: $link !important;
 }
+.color-white {
+  color: #FFF;
+  &:hover {
+    color: #fcf798;
+  }
+}
 
 .download-button {
   color: $link;
@@ -464,7 +472,9 @@ figure.image {
 
 
 .control.checkboxes {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: auto auto;
   grid-template-columns: auto auto;
   grid-column-gap: 1rem;
   grid-row-gap: .25rem;
@@ -551,6 +561,9 @@ a.image.cc {
     width: 200px;
     margin: 5px 0;
   }
+}
+.privacycolor {
+  color: #9E9E9E;
 }
 
 .archived-link > a.external-link {
@@ -757,15 +770,17 @@ label.label {
     li {list-style: disc}
   }
   pre {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* Since CSS 2.1 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
   }
 }
 .species-grid {
+  display: -ms-grid;
   display: grid;
   grid-column-gap: 5px;
+  -ms-grid-columns: repeat( auto-fill, 126px);
   grid-template-columns: repeat( auto-fill, 126px);
   grid-auto-flow: dense;
   justify-content: center;
@@ -910,7 +925,9 @@ label.label {
 }
 
 .gene-expression-modal-grid {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: minmax(100px, 200px) 1fr;
   grid-template-columns: minmax(100px, 200px) 1fr;
   row-gap: .8rem;
   .label {
@@ -1018,4 +1035,43 @@ table {
     word-wrap: break-word;
     word-break: break-word;
   }
+}
+
+.markdown {
+  overflow-x: auto;
+  overflow-y: hidden;
+  table {
+    table-layout: auto;
+    font-size: 0.9em;
+  }
+  table tr {
+    word-wrap: normal;
+    word-break: normal;
+  }
+  table tr th, table tr td {
+    border: 1px solid black;
+    padding: 2px 4px 2px 4px;
+  }
+  h3 {
+    display: block;
+    font-size: 1.1rem;
+    margin: 1em 0 0 0;
+    font-weight: bold;
+    color: #e2011b;
+  }
+  h4 {
+    display: block;
+    font-size: 1em;
+    margin: 1.33em 0 0 0;
+    font-weight: bold;
+  }
+  h5 {
+    display: block;
+    font-size: .83em;
+    margin: 1.67em 0 0 0;
+    font-weight: bold;
+  }
+}
+h1.title.in-md {
+  color: $title-color;
 }

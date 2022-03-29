@@ -42,7 +42,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  ' Nucleic Acids Research, Volume 49, Issue D1, 8 January 2021, Pages D831–D847.',
+                  ' Nucleic Acids Research, Volume 49, Issue D1, 8 January 2021, Pages D831–D847. ',
               },
               {
                 type: 'link_external',
@@ -81,6 +81,9 @@ const publications = [
                 type: 'text',
                 content:
                   'Komljenovic A, Roux J, Wollbrett J, Robinson-Rechavi M, Bastian F.',
+              },
+              {
+                type: 'break_line',
               },
               {
                 type: 'link_external',
@@ -137,7 +140,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'J Biomed Semantics. (2014): 5:21',
+                content: 'J Biomed Semantics. (2014): 5:21. ',
               },
               {
                 type: 'link_external',
@@ -170,7 +173,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'OncoMX: A Knowledgebase for Exploring Cancer Biomarkers in the Context of Related Cancer and Healthy Data.',
+                text: 'OncoMX: A Knowledgebase for Exploring Cancer Biomarkers in the Context of Related Cancer and Healthy Data',
                 path: 'https://doi.org/10.1200/CCI.19.00117',
               },
               {
@@ -199,7 +202,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'Quality Matters: Biocuration Experts on the Impact of Duplication and Other Data Quality.',
+                text: 'Quality Matters: Biocuration Experts on the Impact of Duplication and Other Data Quality',
                 path: 'https://doi.org/10.1016/j.gpb.2018.11.006',
               },
               {
@@ -211,7 +214,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Genomics, Proteomics & Bioinformatics. 2020',
+                content: 'Genomics, Proteomics & Bioinformatics. 2020.',
               },
             ],
           },
@@ -228,7 +231,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'The Expression Comparison Tool in Bgee.',
+                text: 'The Expression Comparison Tool in Bgee',
                 path: 'https://hal.archives-ouvertes.fr/hal-02535720',
               },
               {
@@ -241,7 +244,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Scornavacca, Celine; Delsuc, Frédéric; Galtier, Nicolas. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1--4.3:4, 2020.',
+                  'Scornavacca, Celine; Delsuc, Frédéric; Galtier, Nicolas. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
               },
             ],
           },
@@ -258,7 +261,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'Enabling semantic queries across federated bioinformatics databases.',
+                text: 'Enabling semantic queries across federated bioinformatics databases',
                 path: 'https://doi.org/10.1093/database/baz106',
               },
               {
@@ -286,7 +289,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'VoIDext: Vocabulary and Patterns for Enhancing Interoperable Datasets with Virtual Links.',
+                text: 'VoIDext: Vocabulary and Patterns for Enhancing Interoperable Datasets with Virtual Links',
                 path: 'https://doi.org/10.1007/978-3-030-33246-4_38',
               },
               {
@@ -315,7 +318,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'The SIB Swiss Institute of Bioinformatics’ resources: focus on curated databases.',
+                text: 'The SIB Swiss Institute of Bioinformatics’ resources: focus on curated databases',
                 path: 'https://doi.org/10.1093/nar/gkv1310',
               },
               {
@@ -345,7 +348,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'The Confidence Information Ontology: a step towards a standard for asserting confidence in annotations.',
+                text: 'The Confidence Information Ontology: a step towards a standard for asserting confidence in annotations',
                 path: 'https://doi.org/10.1093/database/bav043',
               },
               {
@@ -373,7 +376,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'IQRray, a new method for Affymetrix microarray quality control, and the homologous organ conservation score, a new benchmark method for quality control metrics.',
+                text: 'IQRray, a new method for Affymetrix microarray quality control, and the homologous organ conservation score, a new benchmark method for quality control metrics',
                 path: 'https://doi.org/10.1093/bioinformatics/btu027',
               },
               {
@@ -403,7 +406,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'vHOG, a multispecies vertebrate ontology of homologous organs groups.',
+                text: 'vHOG, a multispecies vertebrate ontology of homologous organs groups',
                 path: 'https://doi.org/10.1093/bioinformatics/bts048',
               },
               {
@@ -432,7 +435,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'An ontology to clarify homology-related concepts.',
+                text: 'An ontology to clarify homology-related concepts',
                 path: 'https://doi.org/10.1016/j.tig.2009.12.012',
               },
               {
@@ -460,7 +463,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'Generating Homology Relationships by Alignment of Anatomical Ontologies.',
+                text: 'Generating Homology Relationships by Alignment of Anatomical Ontologies',
                 path: 'https://www.nature.com/articles/npre.2009.3546.1',
               },
               {
@@ -489,7 +492,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'Bgee: Integrating and Comparing Heterogeneous Transcriptome Data Among Species.',
+                text: 'Bgee: Integrating and Comparing Heterogeneous Transcriptome Data Among Species',
                 path: 'https://link.springer.com/chapter/10.1007/978-3-540-69828-9_12',
               },
               {
@@ -502,7 +505,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'DILS: Data Integration in Life Sciences. Lecture Notes in Computer Science. 5109:124-131.',
+                  'DILS: Data Integration in Life Sciences. Lecture Notes in Computer Science. 5109:124-131. ',
               },
               {
                 type: 'link_external',

@@ -12,6 +12,10 @@ const CATEGORIES = [
     title: 'Proteomics databases',
   },
   {
+    key: 'SC_RNA_SEQ',
+    title: 'Single-cell RNA-Seq data sources',
+  },
+  {
     key: 'RNA_SEQ',
     title: 'RNA-Seq data sources',
   },

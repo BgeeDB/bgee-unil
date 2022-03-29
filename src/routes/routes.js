@@ -24,11 +24,16 @@ import ResourceSourceFile from '../static/resources/source';
 import GtexFile from '../markdown/support/gtex.md';
 import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
+import ProcExprValFile from '../static/support/ProcessedExpressionValues';
+import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
+import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
+import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
+import TeamFile from '../markdown/about/team.md';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
@@ -179,6 +184,27 @@ const SUPPORT = {
     source: GeneExpressionFile,
     title: 'Gene expression calls',
   },
+  [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
+    source: ProcExprValFile,
+    title: 'Processed expression values',
+    meta: {
+      title: 'processed expression values files documentation',
+      description: 'Documentation of processed expression values download files',
+      keywords: 'Documentation, processed expression values, Download files',
+    },
+  },
+  [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
+    source: RNASeqProcExprValFile,
+    title: 'RNA-Seq annotations and processed expression values',
+  },
+  [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
+    source: ScRNASeqFLProcExprValFile,
+    title: 'Single cell RNA-Seq full-length annotations and processed expression values',
+  },
+  [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
+    source: AffymetrixProcExprValFile,
+    title: 'Affymetrix annotations and processed expression values',
+  },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
     title: 'FAQ',
@@ -225,12 +251,21 @@ const ABOUT = {
   },
   [PATHS.ABOUT.SOURCES]: {
     component: DataSource,
-    title: 'Bgee source',
+    title: 'Bgee sources',
     meta: {
       title: 'Data sources',
       description:
         'List of the sources and the versions used to build the Bgee database.',
       keywords: 'data sources, data source versions',
+    },
+  },
+  [PATHS.ABOUT.TEAM]: {
+    source: TeamFile,
+    title: 'Bgee team',
+    meta: {
+      title: 'Bgee team',
+      description: 'The Bgee team from SIB/UNIL',
+      keywords: 'The Bgee team, Bgee team, SIB bgee, UNIL bgee',
     },
   },
   [PATHS.ABOUT.PRIVACY_POLICY]: {

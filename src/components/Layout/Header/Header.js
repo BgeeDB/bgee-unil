@@ -45,7 +45,7 @@ const NAVBAR_LEFT = [
       {
         key: 'page.resources.sparql',
         title: 'SPARQL endpoint',
-        path: 'https://bgee.org/sparql/',
+        path: '/sparql/',
         type: 'external',
       },
       {
@@ -139,6 +139,12 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
       },
       {
+        key: 'page.support.processed-expression-values',
+        title: ROUTES[PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES].title,
+        type: 'internal',
+        path: PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
+      },
+      {
         key: 'page.support.faq',
         title: ROUTES[PATHS.SUPPORT.FAQ].title,
         type: 'internal',
@@ -192,6 +198,12 @@ const NAVBAR_LEFT = [
         type: 'external',
         path: 'https://bgeedb.wordpress.com/',
       },
+/*      {
+        key: 'page.about.team',
+        title: ROUTES[PATHS.ABOUT.TEAM].title,
+        type: 'internal',
+        path: PATHS.ABOUT.TEAM,
+      }, */
       {
         key: 'page.about.privacy-policy',
         title: ROUTES[PATHS.ABOUT.PRIVACY_POLICY].title,

@@ -463,7 +463,7 @@ const ExpComp = () => {
           setLoading(false);
         });
     }
-  }, [searchParams, results]);
+  }, [searchParams, results.signature]);
 
   return (
     <>
@@ -517,7 +517,7 @@ const ExpComp = () => {
                       Examples:{' '}
                       <Link
                         className="internal-link"
-                        to="?data=8798798749849841"
+                        to="?data=34beddfc93bb7fbb440e757e6de24d91fc0ce177"
                       >
                         SRRM4 (brain specific genes)
                       </Link>
