@@ -84,26 +84,85 @@ const sparql = [
       'Programmatic access to the latest version of the Bgee SPARQL endpoint',
     children: [
       {
+        type: 'text',
+        content:
+          'The latest version of the Bgee SPARQL endpoint is accessible by using your prefered programming language through the URL address below:',
+      },
+      {
         type: 'rich_text',
-        classNames: 'has-text-centered has-text-weight-bold',
+        classNames: 'has-text-centered has-text-weight-semibold',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://bgee.org/sparql/',
+            text: 'https://bgee.org/sparql/',
+          },
+        ],
+      },
+      {
+        type: 'text',
+        content:
+          'For example, to retrieve all anatomic entities in Rattus norvegicus where the APOC1 gene is expressed, the query is:',
+      },
+      {
+        type: 'pre_code',
+        content: `PREFIX orth: <http://purl.org/net/orth#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT DISTINCT ?anatEntity ?anatName {
+    ?seq a orth:Gene;
+         orth:organism ?organism ;
+         rdfs:label ?geneName .
+    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+    ?seq genex:isExpressedIn ?anatEntity.
+    ?anatEntity a genex:AnatomicalEntity .
+    ?anatEntity rdfs:label ?anatName .
+    FILTER (LCASE(?geneName) = LCASE('APOC1'))
+}`,
+      },
+      {
+        type: 'rich_text',
         content: [
           {
             type: 'text',
-            content: 'The latest version of the Bgee SPARQL endpoint is currently under maintainance.',
+            content: 'It is possible to download result of this query in ',
           },
           {
-            type: 'break_line',
-          },
-          {
-            type: 'text',
-            content: 'We expect it to be back in a couple hours.',
-          },
-          {
-            type: 'break_line',
+            type: 'link_external',
+            path: 'https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+',
+            text: 'JSON format',
           },
           {
             type: 'text',
-            content: 'Until it is back please use the stable programmatic access to this version of the Bgee SPARQL endpoint as described in the next section.',
+            content: ' or in ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bxml&timeout=0&debug=on&run=+Run+Query+',
+            text: 'XML format',
+          },
+          {
+            type: 'text',
+            content: '.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              '(Of note, as opposed to the example below to access an archived version, when accessing the endpoint for the latest version, it is important ',
+          },
+          {
+            type: 'bold',
+            content: 'NOT',
+          },
+          {
+            type: 'text',
+            content:
+              ' to specify the name of a graph to target; otherwise, results will be incorrect)',
           },
         ],
       },
