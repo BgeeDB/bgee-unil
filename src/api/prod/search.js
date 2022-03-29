@@ -128,7 +128,7 @@ const search = {
       }),
     getGeneralInformation: (geneId) =>
       new Promise((resolve, reject) => {
-        // https://bgee.org/bgee_test/?page=gene&action=general_info&gene_id=GENE_ID&display_type=json
+        // https://bgee.org/api/?page=gene&action=general_info&gene_id=GENE_ID&display_type=json
         const params = DEFAULT_PARAMETERS('gene', 'general_info');
         params.append('gene_id', geneId);
         axiosInstance
