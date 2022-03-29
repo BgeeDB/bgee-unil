@@ -107,16 +107,16 @@ const sparql = [
       {
         type: 'pre_code',
         content: `PREFIX orth: <http://purl.org/net/orth#>
-PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 SELECT DISTINCT ?anatEntity ?anatName {
-    ?seq a orth:Gene .
-    ?seq rdfs:label ?geneName .
-    ?seq genex:isExpressedIn ?cond .
-    ?cond genex:hasAnatomicalEntity ?anatEntity .
+    ?seq a orth:Gene;
+         orth:organism ?organism ;
+         rdfs:label ?geneName .
+    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+    ?seq genex:isExpressedIn ?anatEntity.
+    ?anatEntity a genex:AnatomicalEntity .
     ?anatEntity rdfs:label ?anatName .
-    ?cond obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . 
     FILTER (LCASE(?geneName) = LCASE('APOC1'))
 }`,
       },
@@ -196,16 +196,16 @@ SELECT DISTINCT ?anatEntity ?anatName {
       {
         type: 'pre_code',
         content: `PREFIX orth: <http://purl.org/net/orth#>
-PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
-SELECT DISTINCT ?anatEntity ?anatName  FROM <https://bgee.org/rdf_v${APP_VERSION_URL}> {
-    ?seq a orth:Gene .
-    ?seq rdfs:label ?geneName .
-    ?seq genex:isExpressedIn ?cond .
-    ?cond genex:hasAnatomicalEntity ?anatEntity .
+SELECT DISTINCT ?anatEntity ?anatName FROM <https://bgee.org/rdf_v${APP_VERSION_URL}>{
+    ?seq a orth:Gene;
+         orth:organism ?organism ;
+         rdfs:label ?geneName .
+    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+    ?seq genex:isExpressedIn ?anatEntity.
+    ?anatEntity a genex:AnatomicalEntity .
     ?anatEntity rdfs:label ?anatName .
-    ?cond obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . 
     FILTER (LCASE(?geneName) = LCASE('APOC1'))
 }`,
       },
