@@ -106,7 +106,7 @@ const useTopAnat = (flowState, setFlowState) => {
       const fg = dataForm.genes.split('\n');
 
       if (timeoutBg) clearTimeout(timeoutBg);
-      if (!array.equals(fg, bg)) {
+      if (!fg.every(g => bg.includes(g))) {
         timeoutBg = setTimeout(
           () =>
             addNotification({
@@ -119,7 +119,7 @@ const useTopAnat = (flowState, setFlowState) => {
           2000
         );
       }
-      if (e.target.value !== '' && array.equals(fg, bg)) {
+      if (e.target.value !== '' && fg.every(g => bg.includes(g))) {
         timeoutBg = setTimeout(() => {
           api.topAnat
             .autoCompleteGenes(e.target.value, false)
