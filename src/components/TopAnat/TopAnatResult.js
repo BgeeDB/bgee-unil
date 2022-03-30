@@ -263,16 +263,6 @@ const TopAnatResult = ({
       ) : null,
     [fg, results, dataCsvHref, selectedStage, dataDisplay]
   );
-  const ref = useRef();
-  useEffect(() => {
-    if (status === TOP_ANAT_FLOW.GOT_RESULTS && ref.current) {
-      console.log(ref.current.offsetTop);
-
-      ref.current?.scrollIntoView({
-        behavior: 'smooth',
-      });
-    }
-  }, [status, ref]);
 
   if (
     status === TOP_ANAT_FLOW.GOT_RESULTS &&
@@ -291,7 +281,7 @@ const TopAnatResult = ({
      gene expression patterns, topGO, BgeeDB"
           />
         </Helmet>
-        <div ref={ref} className="content has-text-centered">
+        <div className="content has-text-centered">
           <p className="title is-4">{title}</p>
         </div>
         <Table

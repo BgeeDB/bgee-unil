@@ -259,6 +259,9 @@ const TopAnat = () => {
       resetForm();
 
     resetError();
+    if (id) {
+      resetForm();
+    }
     if (id && !jobId) {
       setFlowState(TOP_ANAT_FLOW.GETTING_RESULTS);
       getResults(id);
