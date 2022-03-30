@@ -48,13 +48,6 @@ const TopAnatForm = ({
 
   useEffect(() => {
     if (prevStatus !== status && status === 'gotResults') {
-      console.log(
-        'status',
-        topAnatAdvancedOptsNotDefault(formData),
-        prevStatus,
-        status,
-        formData
-      );
       setExpandOpts(topAnatAdvancedOptsNotDefault(formData));
     }
   }, [prevStatus, status, formData]);

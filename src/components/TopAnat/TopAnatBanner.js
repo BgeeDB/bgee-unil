@@ -7,22 +7,29 @@ import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 const TopAnatBanner = ({ results, status }) => {
   const refLaunching = useRef();
   const refGotJob = useRef();
+  const refGotResult = useRef();
 
   useEffect(() => {
-    if (refGotJob?.current) {
-      console.log(
+    if (refGotResult?.current) {
+      setTimeout(() => {
+        refGotResult.current?.scrollIntoView({
+          behavior: 'smooth',
+        });
+      }, 50);
+    } else if (refGotJob?.current) {
+      setTimeout(() => {
         refGotJob.current?.scrollIntoView({
           behavior: 'smooth',
-        })
-      );
+        });
+      }, 50);
     } else if (refLaunching?.current) {
-      console.log(
+      setTimeout(() => {
         refLaunching.current?.scrollIntoView({
           behavior: 'smooth',
-        })
-      );
+        });
+      }, 50);
     }
-  }, [status, refLaunching, refGotJob]);
+  }, [status, refLaunching, refGotJob, refGotResult]);
 
   switch (status) {
     case TOP_ANAT_FLOW.LOADING:
@@ -95,7 +102,7 @@ const TopAnatBanner = ({ results, status }) => {
       );
       return (
         <Bulma.Notification color="info" className="my-5">
-          <p>
+          <p ref={refGotResult}>
             {`TopAnat request successful. Found ${nbRecords} ${isPlural(
               'record',
               nbRecords
