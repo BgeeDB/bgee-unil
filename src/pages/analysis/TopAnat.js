@@ -49,18 +49,28 @@ const TopAnat = () => {
       .getJob(ID, jobID, requestParams)
       .then((res) => {
         if (res.data.jobResponse.jobStatus === 'UNDEFINED') {
-          setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
+          if (res.data?.jobResponse?.data)
+            history.push(
+              PATHS.ANALYSIS.TOP_ANAT_RESULT.replace(
+                ':id',
+                res.data.jobResponse.data
+              )
+            );
+          else {
+            resetForm();
+            setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
-          getAxiosAddNotif()({
-            id: random.toString(),
-            children: (
-              <p>
-                The job is undefined. Please contact the administrator and give
-                the current url.
-              </p>
-            ),
-            className: `is-danger`,
-          });
+            getAxiosAddNotif()({
+              id: random.toString(),
+              children: (
+                <p>
+                  The job is undefined. Please contact the administrator and
+                  give the current url.
+                </p>
+              ),
+              className: `is-danger`,
+            });
+          }
         } else if (res.data.jobResponse.jobStatus === 'RUNNING') {
           getJobStatusTimeOut = setTimeout(
             () => getJobStatus(ID, jobID, false),

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
@@ -87,8 +87,8 @@ const TopAnatResult = ({
   }, []);
   const onFilter = React.useCallback(
     (search) => (element) =>
-      Boolean(new RegExp(search).test(element.anatEntityId)) ||
-      Boolean(new RegExp(search).test(element.anatEntityName)),
+      Boolean(new RegExp(search).test(element[0])) ||
+      Boolean(new RegExp(search).test(element[1])),
     []
   );
   const dataCsvHref = React.useMemo(() => {
@@ -263,6 +263,16 @@ const TopAnatResult = ({
       ) : null,
     [fg, results, dataCsvHref, selectedStage, dataDisplay]
   );
+  const ref = useRef();
+  useEffect(() => {
+    if (status === TOP_ANAT_FLOW.GOT_RESULTS && ref.current) {
+      console.log(ref.current.offsetTop);
+
+      ref.current?.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  }, [status, ref]);
 
   if (
     status === TOP_ANAT_FLOW.GOT_RESULTS &&
@@ -281,7 +291,7 @@ const TopAnatResult = ({
      gene expression patterns, topGO, BgeeDB"
           />
         </Helmet>
-        <div className="content has-text-centered">
+        <div ref={ref} className="content has-text-centered">
           <p className="title is-4">{title}</p>
         </div>
         <Table

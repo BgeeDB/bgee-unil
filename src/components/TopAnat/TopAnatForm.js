@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Bulma from '../Bulma';
 import InfoIcon from '../InfoIcon';
 import TextArea from '../Form/TextArea';
@@ -7,10 +7,14 @@ import HelpIcon from '../HelpIcon';
 import Toggle from '../Form/Toggle';
 import Input from '../Form/Input';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
-import { topAnatLabelClassNames } from '../../helpers/constants/topAnat';
+import {
+  topAnatAdvancedOptsNotDefault,
+  topAnatLabelClassNames,
+} from '../../helpers/constants/topAnat';
 import GenesDetailsModal from './GenesDetailsModal';
 import classnames from '../../helpers/classnames';
 import imagePath from '../../helpers/imagePath';
+import usePrevious from '../../hooks/usePrevious';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -24,6 +28,7 @@ const TopAnatForm = ({
   },
   status,
 }) => {
+  const prevStatus = usePrevious(status);
   const formAvailable = React.useMemo(() => {
     switch (status) {
       case TOP_ANAT_FLOW.LOADING:
@@ -40,9 +45,21 @@ const TopAnatForm = ({
     [status]
   );
   const [expandOpts, setExpandOpts] = React.useState(false);
-  if (!formAvailable) return null;
 
-  return (
+  useEffect(() => {
+    if (prevStatus !== status && status === 'gotResults') {
+      console.log(
+        'status',
+        topAnatAdvancedOptsNotDefault(formData),
+        prevStatus,
+        status,
+        formData
+      );
+      setExpandOpts(topAnatAdvancedOptsNotDefault(formData));
+    }
+  }, [prevStatus, status, formData]);
+
+  return !formAvailable ? null : (
     <>
       <Bulma.Columns>
         <Bulma.C size={4}>

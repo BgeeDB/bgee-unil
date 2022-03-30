@@ -1,6 +1,6 @@
 const splitWithOccurrences = (str, sub) => {
   const regExp = new RegExp(sub, 'gi');
-  let match = str.split(regExp);
+  let match = str?.split(regExp) || [];
   let occ = RegExp.prototype[Symbol.matchAll].call(regExp, str);
   if (!occ) return [str];
   occ = Array.from(occ);

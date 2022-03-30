@@ -1,10 +1,29 @@
 /* eslint-disable no-case-declarations */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Bulma from '../Bulma';
 import isPlural from '../../helpers/isPlural';
 import { TOP_ANAT_FLOW } from '../../hooks/useTopAnat';
 
 const TopAnatBanner = ({ results, status }) => {
+  const refLaunching = useRef();
+  const refGotJob = useRef();
+
+  useEffect(() => {
+    if (refGotJob?.current) {
+      console.log(
+        refGotJob.current?.scrollIntoView({
+          behavior: 'smooth',
+        })
+      );
+    } else if (refLaunching?.current) {
+      console.log(
+        refLaunching.current?.scrollIntoView({
+          behavior: 'smooth',
+        })
+      );
+    }
+  }, [status, refLaunching, refGotJob]);
+
   switch (status) {
     case TOP_ANAT_FLOW.LOADING:
     case TOP_ANAT_FLOW.GETTING_JOB:
@@ -25,6 +44,7 @@ const TopAnatBanner = ({ results, status }) => {
       return (
         <Bulma.Notification color="warning" className="mt-5">
           <progress
+            ref={refLaunching}
             className="progress is-small"
             max="100"
             style={{ animationDuration: '3s', marginBottom: 12 }}
@@ -44,6 +64,7 @@ const TopAnatBanner = ({ results, status }) => {
       return (
         <Bulma.Notification color="warning" className="mt-5">
           <progress
+            ref={refGotJob}
             className="progress is-small"
             max="100"
             style={{ animationDuration: '3s', marginBottom: 12 }}

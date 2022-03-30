@@ -1,6 +1,6 @@
 {
   "name": "bgee",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
