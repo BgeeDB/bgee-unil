@@ -31,7 +31,7 @@ const NewsPage = () => (
       <Bulma.Title size={5}>News</Bulma.Title>
     </div>
     <div className="content">
-      <NewsItem date="2022-03-29" News={News20220329} />
+      <NewsItem date="2022-03-31" News={News20220329} />
       <div className="separator" />
       <NewsItem date="2021-02-22" News={News20210222} />
       <div className="separator" />

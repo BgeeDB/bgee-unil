@@ -12,7 +12,7 @@ const HomeNewsList = () => (
     </Bulma.Card.Header>
     <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
       <div className="content">
-        <NewsItem date="2022-03-29" News={News20220329} />
+        <NewsItem date="2022-03-31" News={News20220329} />
       </div>
     </Bulma.Card.Body>
   </>
