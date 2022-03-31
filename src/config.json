@@ -4,7 +4,7 @@
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "imageDomain": "https://bgee.org/bgee15_0/img",
-  "apiDomain": "https://bgee.org/bgee_test",
+  "apiDomain": "https://bgee.org/api",
   "ftpDomain": "https://bgee.org/ftp/bgee_v15_0",
   "archivedVersion": [
     {
