@@ -29,9 +29,9 @@ const DataDumps = () => (
           <GaEvent
             category="Data dumps"
             action="download_EasyBgee dump"
-            label={`${config.ftpDomain}/easybgee_dump.tar.gz`}
+            label={`${config.ftpDomain}/easybgee_dump.sql.gz`}
           >
-            <a href={`${config.ftpDomain}/easybgee_dump.tar.gz`}>
+            <a href={`${config.ftpDomain}/easybgee_dump.sql.gz`}>
               <div className={classnames('card custom-card', 'mb-3')}>
                 <div className="card-image">
                   <figure
