@@ -76,7 +76,8 @@ export const topAnatAdvancedOptsNotDefault = (opts) => {
     if (
       (['stages', 'dataQuality', 'decorrelationType'].includes(opt) &&
         opts[opt] !== value) ||
-      parseFloat(opts[opt]) !== parseFloat(value)
+      (!['stages', 'dataQuality', 'decorrelationType'].includes(opt) &&
+        parseFloat(opts[opt]) !== parseFloat(value))
     ) {
       isNotDefault = true;
     }
