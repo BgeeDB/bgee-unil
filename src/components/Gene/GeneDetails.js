@@ -118,6 +118,7 @@ const GeneDetails = ({
               <Bulma.Image
                 className="m-0 mr-2 species-img"
                 src={imagePath(`/species/${species.id}_light.jpg`)}
+                alt={`${species.genus} ${species.speciesName} - ${species.name}`}
               />
               <p className="title is-size-3 has-text-centered">
                 {`Gene : ${name} - ${geneId} - `}
