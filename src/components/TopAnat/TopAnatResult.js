@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';

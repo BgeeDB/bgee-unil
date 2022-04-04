@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../api';
 import useForm from './useForm';
-import array from '../helpers/arrayHelper';
 import PATHS from '../routes/paths';
 import { NotificationContext } from '../contexts/NotificationsContext';
 import {
