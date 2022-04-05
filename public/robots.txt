@@ -5,3 +5,9 @@ Crawl-delay: 10
 Disallow: /search/anatomical-homology
 Disallow: /search/genes/*
 Disallow: /search/species/*
+Disallow: /bgee/bgee
+Disallow: /bgee13/*
+Disallow: /bgee14/*
+Disallow: /bgee14_0/*
+Disallow: /bgee14_1/*
+Disallow: /bgee14_2/*
