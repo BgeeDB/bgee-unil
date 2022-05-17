@@ -8,9 +8,13 @@
 <url><loc>https://bgee.org/about/privacy-policy</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/publications</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/source</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/affymetrix-processed-expression-values</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/data-sets</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/faq</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/gene-expression-calls</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/rnaseq-processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/singlecell-rnaseq-fulllength-processed-expression-values</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/top-anat</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/download/data-dumps</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/download/gene-expression-calls</loc><priority>0.7</priority></url>
