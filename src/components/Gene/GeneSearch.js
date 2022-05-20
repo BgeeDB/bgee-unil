@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from "react";
 import { useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import classnames from '../../helpers/classnames';
@@ -7,6 +7,7 @@ import api from '../../api';
 import PATHS from '../../routes/paths';
 
 const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
+  const inputRef = useRef()
   const history = useHistory();
   const [search, setSearch] = React.useState('');
   const [autocompleteList, setAutocompleteList] = React.useState([]);
@@ -80,6 +81,9 @@ const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
   }, []);
 
   React.useEffect(() => {
+    if (inputRef.current)
+      inputRef.current?.focus()
+
     const onClick = () => {
       setAutocompleteList([]);
     };
@@ -110,6 +114,7 @@ const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
             </label>
             <div className="control">
               <input
+                ref={inputRef}
                 id="gene-input"
                 className="input"
                 type="text"
