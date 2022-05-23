@@ -196,6 +196,7 @@ const Router = () => (
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
+                  PATHS.ABOUT.VIDEOS,
                   PATHS.ABOUT.TEAM,
                   PATHS.ABOUT.PRIVACY_POLICY,
                 ]}

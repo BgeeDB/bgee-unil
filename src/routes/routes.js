@@ -33,6 +33,7 @@ import FaqFile from '../static/support/faq';
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
+import VideoFile from '../markdown/about/videos.md';
 import TeamFile from '../markdown/about/team.md';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
@@ -247,6 +248,15 @@ const ABOUT = {
       description:
         'List of publications about Bgee and related tools to use to cite us.',
       keywords: 'cite us, how to cite us, publications',
+    },
+  },
+  [PATHS.ABOUT.VIDEOS]: {
+    source: VideoFile,
+    title: 'Bgee videos',
+    meta: {
+      title: 'Bgee videos',
+      description: 'Bgee tutorial videos and online courses',
+      keywords: 'The Bgee videos, Bgee videos, Bgee YouTube, Bgee online courses',
     },
   },
   [PATHS.ABOUT.SOURCES]: {

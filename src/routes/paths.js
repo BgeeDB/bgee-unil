@@ -43,6 +43,7 @@ const PATHS = {
     NEWS: '/about/news',
     COLLABORATIONS: '/about/collaborations',
     PUBLICATION: '/about/publications',
+    VIDEOS: '/about/videos',
     SOURCES: '/about/sources',
     TEAM: '/about/team',
     PRIVACY_POLICY: '/about/privacy-policy',
