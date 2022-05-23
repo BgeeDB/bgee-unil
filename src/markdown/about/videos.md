@@ -1,6 +1,9 @@
 The Bgee tutorial videos and online courses
 =============
 
+-TODO embed videos...
+- **Bgee videos playlist** [https://www.youtube.com/playlist?list=PLoCxWrRWjqB3h9HbVGId2aZgzOaRs6Xzw]
+
 - **Exploring gene expression with Bgee v14** Jan 25, 2021 [https://youtu.be/PRj9f1gX_PM]
 - **Bgee - an overview** Apr 21, 2020 [https://youtu.be/hbpEJO2IzxA]
 - **Bgee - Present/absent gene expression calls from transcriptomics data** Apr 21, 2020 [https://youtu.be/70OHZDnmULE]
