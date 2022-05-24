@@ -17,7 +17,7 @@ const source = [
               src: imagePath('/logo/github_logo.png'),
               alt: 'Github logo',
             },
-            link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master',
+            link: 'https://github.com/BgeeDB/bgee_pipeline',
             linkType: 'external',
             classNames: 'mb-3',
           },
