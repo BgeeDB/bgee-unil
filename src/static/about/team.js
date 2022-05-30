@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import imagePath from '../../helpers/imagePath';
 
-const bgeeTeam = [
+const team = [
   {
     type: 'title',
     content: 'The Bgee Team',
@@ -132,4 +132,4 @@ const bgeeTeam = [
   },
 ];
 
-export default bgeeTeam;
+export default team;

@@ -1,8 +1,8 @@
-import config from '../../config.json';
-import imagePath from '../../helpers/imagePath';
+// import config from '../../config.json';
+// import imagePath from '../../helpers/imagePath';
 
 // TODO embed videos ???
-const bgeeVideos = [
+const videos = [
   {
     type: 'title',
     content: 'The Bgee tutorial videos and online courses',
@@ -10,7 +10,7 @@ const bgeeVideos = [
   {
     type: 'text',
     content:
-      '--',
+      '',
   },
   {
     type: 'section',
@@ -134,4 +134,4 @@ const bgeeVideos = [
   },
 ];
 
-export default bgeeVideos;
+export default videos;

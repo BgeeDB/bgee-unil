@@ -30,12 +30,12 @@ import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
-import AboutFile from '../static/about/about';
+import AboutFile          from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
-import PublicationsFile from '../static/about/publications';
-import VideoFile from '../static/about/videos';
-import TeamFile from '../static/about/team';
-import PrivacyPolicyFile from '../static/about/privacyPolicy';
+import PublicationsFile   from '../static/about/publications';
+import VideoFile          from '../static/about/videos';
+import TeamFile           from '../static/about/team';
+import PrivacyPolicyFile  from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
