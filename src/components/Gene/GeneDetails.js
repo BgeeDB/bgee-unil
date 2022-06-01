@@ -125,7 +125,7 @@ const GeneDetails = ({
                 <i>
                   {species.genus} {species.speciesName}
                 </i>
-                {${species.name ? ` (${species.name})` : ''}}
+                {species.name ? ` (${species.name})` : ''}
               </p>
             </div>
           </div>
@@ -163,7 +163,7 @@ const GeneDetails = ({
                       className="internal-link"
                     >
                       <i>{`${species.genus} ${species.speciesName}`}</i>
-                      {${species.name ? ` (${species.name})` : ''}}
+                      {species.name ? ` (${species.name})` : ''}
                     </Link>
                   </p>
                 </Bulma.C>
