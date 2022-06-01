@@ -118,14 +118,14 @@ const GeneDetails = ({
               <Bulma.Image
                 className="m-0 mr-2 species-img"
                 src={imagePath(`/species/${species.id}_light.jpg`)}
-                alt={`${species.genus} ${species.speciesName} - ${species.name}`}
+                alt={`${species.genus} ${species.speciesName}`}
               />
               <p className="title is-size-3 has-text-centered">
                 {`Gene : ${name} - ${geneId} - `}
                 <i>
                   {species.genus} {species.speciesName}
                 </i>
-                {` (${species.name})`}
+                {${species.name ? ` (${species.name})` : ''}}
               </p>
             </div>
           </div>
@@ -163,7 +163,7 @@ const GeneDetails = ({
                       className="internal-link"
                     >
                       <i>{`${species.genus} ${species.speciesName}`}</i>
-                      {` (${species.name})`}
+                      {${species.name ? ` (${species.name})` : ''}}
                     </Link>
                   </p>
                 </Bulma.C>

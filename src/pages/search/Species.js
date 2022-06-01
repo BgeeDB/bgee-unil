@@ -126,7 +126,7 @@ const Species = () => {
         <Bulma.Image
           className="m-0 mr-2 species-img"
           src={imagePath(`/species/${data.species.id}_light.jpg`)}
-          alt={`${data.species.genus} ${data.species.speciesName} - ${data.species.name}`}
+          alt={`${data.species.genus} ${data.species.speciesName}`}
         />
         <Bulma.Title size={3} className="m-0">{`Species: ${
           data.species.genus
