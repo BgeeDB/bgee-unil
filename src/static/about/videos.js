@@ -38,7 +38,7 @@ const videos = [
           {
             type: 'link_external',
             path: 'https://youtu.be/PRj9f1gX_PM',
-            text: 'Exploring gene expression with Bgee v14',
+            text: 'Exploring gene expression with Bgee',
           },
           {
             type: 'text',
