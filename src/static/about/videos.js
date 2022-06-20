@@ -1,7 +1,6 @@
 // import config from '../../config.json';
-// import imagePath from '../../helpers/imagePath';
+import imagePath from '../../helpers/imagePath';
 
-// TODO embed videos ???
 const videos = [
   {
     type: 'title',
@@ -26,6 +25,12 @@ const videos = [
           },
         ],
       },
+      {
+        type: 'link_image',
+        src: imagePath('/videos/playlist.png'),
+        path: 'https://www.youtube.com/playlist?list=PLoCxWrRWjqB3h9HbVGId2aZgzOaRs6Xzw',
+        alt: 'Bgee videos playlist',
+      },
     ],
   },
   {
@@ -47,6 +52,12 @@ const videos = [
         ],
       },
       {
+        type: 'link_image',
+        path: 'https://youtu.be/PRj9f1gX_PM',
+        src: imagePath('/videos/Exploring-gene-expression-with-Bgee.png'),
+        alt: 'Exploring gene expression with Bgee',
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -59,6 +70,12 @@ const videos = [
             content: ' (Apr 21, 2020)',
           },
         ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/hbpEJO2IzxA',
+        src: imagePath('/videos/Bgee--an-overview.png'),
+        alt: 'Bgee - an overview',
       },
       {
         type: 'rich_text',
@@ -75,6 +92,12 @@ const videos = [
         ],
       },
       {
+        type: 'link_image',
+        path: 'https://youtu.be/70OHZDnmULE',
+        src: imagePath('/videos/Bgee--Present_absent-gene-expression-calls-from-transcriptomics-data.png'),
+        alt: 'Bgee - Present/absent gene expression calls from transcriptomics data',
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -87,6 +110,12 @@ const videos = [
             content: ' (Apr 21, 2020)',
           },
         ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/xlLM8mtb5O0',
+        src: imagePath('/videos/Data-integration-in-Bgee.png'),
+        alt: 'Data integration in Bgee',
       },
       {
         type: 'rich_text',
@@ -103,6 +132,12 @@ const videos = [
         ],
       },
       {
+        type: 'link_image',
+        path: 'https://youtu.be/bJV8B5zGI0g',
+        src: imagePath('/videos/Bgee-tools-and-data-access.png'),
+        alt: 'Bgee tools and data access',
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -117,6 +152,12 @@ const videos = [
         ],
       },
       {
+        type: 'link_image',
+        path: 'https://youtu.be/RkbsNzMFUs0',
+        src: imagePath('/videos/Answering-your-biological-questions-right-away.png'),
+        alt: 'Answering your biological questions right away',
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -129,6 +170,12 @@ const videos = [
             content: ' (Sep 16-18, 2020)',
           },
         ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/EHNTlOy14t4',
+        src: imagePath('/videos/Duplication-of-genes-and-genomes--expression.png'),
+        alt: 'Duplication of genes and genomes, expression',
       },
     ],
   },
