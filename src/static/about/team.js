@@ -1,4 +1,3 @@
-import config from '../../config.json';
 import imagePath from '../../helpers/imagePath';
 
 const team = [
@@ -17,28 +16,8 @@ const team = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/oma_logo.png'),
-        path: 'https://omabrowser.org/',
-        alt: 'OMA',
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content: 'The ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://omabrowser.org/oma/home/',
-            text: 'OMA (Orthologous MAtrix) project',
-          },
-          {
-            type: 'text',
-            content:
-              ' is a method and database for the inference of orthologs among complete genomes.',
-          },
-        ],
+        src: imagePath('/team/Bgee-team-062022.png'),
+        alt: 'The current Bgee team',
       },
       {
         type: 'rich_text',
@@ -46,23 +25,53 @@ const team = [
           {
             type: 'text',
             content:
-              'As part of a scientific collaboration with OMA, we generated files containing gene expression in homologous anatomical entities. These files are available on ',
-          },
-          {
-            type: 'link_external',
-            path: `${config.ftpDomain}/collaboration/branch_length_expression_divergence/`,
-            text: 'Bgee FTP',
-          },
-          {
-            type: 'text',
-            content: '. ',
+              'The Bgee team is currently composed of (from left to right):',
           },
         ],
       },
       {
-        type: 'text',
-        content:
-          'The homologous expression files are also available and free to use for other projects or applications.',
+        type: 'unordered_list',
+        children: [
+          {
+            type: 'text',
+            content: 'Tzivanopoulou, Marianna ...',
+          },
+          {
+            type: 'text',
+            content: 'Mendes de Farias, Tarcisio ...',
+          },
+          {
+            type: 'text',
+            content: 'Fonseca Costa, Sara ...',
+          },
+          {
+            type: 'text',
+            content: 'Niknejad, Anne ...',
+          },
+          {
+            type: 'text',
+            content: 'Wollbrett, Julien ...',
+          },
+          {
+            type: 'text',
+            content: 'Moretti, Sébastien ...',
+          },
+          {
+            type: 'text',
+            content: 'Dind, Sagane ...',
+          },
+          {
+            type: 'text',
+            content: 'Bastian, Frédéric ...',
+          },
+          {
+            type: 'text',
+            content: 'Robinson-Rechavi, Marc ...',
+          },
+        ],
+      },
+      {
+        type: 'break_line',
       },
     ],
   },
@@ -71,60 +80,85 @@ const team = [
     title: 'Former Bgee Team members',
     children: [
       {
-        type: 'link_image',
-        src: imagePath('/ONCOMX_logo-thin.png'),
-        path: 'https://www.oncomx.org/',
-        alt: 'OncoMX',
-      },
-      {
         type: 'rich_text',
         content: [
           {
-            type: 'link_external',
-            path: 'https://www.oncomx.org/',
-            text: 'OncoMX',
-          },
-          {
             type: 'text',
             content:
-              ' is a knowledgebase of unified cancer genomics data from integrated mutation, expression, literature, and biomarker databases, accessible through web portal. It is supported by ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://www.cancer.gov/',
-            text: 'NIH NCI',
-          },
-          {
-            type: 'text',
-            content: '.',
+              'Chronological list of former Bgee team members:',
           },
         ],
       },
       {
-        type: 'rich_text',
-        content: [
+        type: 'unordered_list',
+        children: [
           {
             type: 'text',
-            content:
-              'For this project, we generated files containing a subset of calls of presence/absence of expression with expression level categories specific to OncoMX. Files are available on ',
-          },
-          {
-            type: 'link_external',
-            path: `${config.ftpDomain}//collaboration/oncoMX/`,
-            text: 'Bgee FTP',
+            content: 'Vallat, Bastien',
           },
           {
             type: 'text',
-            content: '. You can see the description of these files in ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://github.com/BgeeDB/bgee_pipeline/tree/master/pipeline/collaboration/oncoMX#information-about-the-files-generated-for-oncomx',
-            text: 'Bgee pipeline documentation',
+            content: 'Echchiki, Amina',
           },
           {
             type: 'text',
-            content: '.',
+            content: 'Sanjeev, Komal',
+          },
+          {
+            type: 'text',
+            content: 'Escoriza, Angelique',
+          },
+          {
+            type: 'text',
+            content: 'Rech De Laval, Valentine',
+          },
+          {
+            type: 'text',
+            content: 'Seppey, Mathieu',
+          },
+          {
+            type: 'text',
+            content: 'Person, Emilie',
+          },
+          {
+            type: 'text',
+            content: 'Gonzales-Porta, Mar',
+          },
+          {
+            type: 'text',
+            content: 'Gharib, Walid',
+          },
+          {
+            type: 'text',
+            content: 'Comte, Aurélie',
+          },
+          {
+            type: 'text',
+            content: 'Jarosz, Yohan',
+          },
+          {
+            type: 'text',
+            content: 'Laurenczy, Balazs',
+          },
+          {
+            type: 'text',
+            content: 'Moret, Philippe',
+          },
+          {
+            type: 'text',
+            content: 'Roelli, Patrick',
+          },
+          {
+            type: 'text',
+            content: 'Rosikiewicz, Marta',
+          },
+          {
+            type: 'text',
+            content: 'Roux, Julien',
+          },
+          {
+            type: 'text',
+            content: 'Parmentier, Gilles',
           },
         ],
       },
