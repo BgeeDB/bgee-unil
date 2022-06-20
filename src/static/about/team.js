@@ -162,6 +162,9 @@ const team = [
           },
         ],
       },
+      {
+        type: 'break_line',
+      },
     ],
   },
 ];
