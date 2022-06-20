@@ -30,6 +30,10 @@ const videos = [
         src: imagePath('/videos/playlist.png'),
         path: 'https://www.youtube.com/playlist?list=PLoCxWrRWjqB3h9HbVGId2aZgzOaRs6Xzw',
         alt: 'Bgee videos playlist',
+        classNames: 'youtube-preview-image',
+      },
+      {
+        type: 'break_line',
       },
     ],
   },
@@ -56,7 +60,11 @@ const videos = [
         path: 'https://youtu.be/PRj9f1gX_PM',
         src: imagePath('/videos/Exploring-gene-expression-with-Bgee.png'),
         alt: 'Exploring gene expression with Bgee',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -76,7 +84,11 @@ const videos = [
         path: 'https://youtu.be/hbpEJO2IzxA',
         src: imagePath('/videos/Bgee--an-overview.png'),
         alt: 'Bgee - an overview',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -96,7 +108,11 @@ const videos = [
         path: 'https://youtu.be/70OHZDnmULE',
         src: imagePath('/videos/Bgee--Present_absent-gene-expression-calls-from-transcriptomics-data.png'),
         alt: 'Bgee - Present/absent gene expression calls from transcriptomics data',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -116,7 +132,11 @@ const videos = [
         path: 'https://youtu.be/xlLM8mtb5O0',
         src: imagePath('/videos/Data-integration-in-Bgee.png'),
         alt: 'Data integration in Bgee',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -136,7 +156,11 @@ const videos = [
         path: 'https://youtu.be/bJV8B5zGI0g',
         src: imagePath('/videos/Bgee-tools-and-data-access.png'),
         alt: 'Bgee tools and data access',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -156,7 +180,11 @@ const videos = [
         path: 'https://youtu.be/RkbsNzMFUs0',
         src: imagePath('/videos/Answering-your-biological-questions-right-away.png'),
         alt: 'Answering your biological questions right away',
+        classNames: 'youtube-preview-image',
       },
+{
+    type: 'break_line',
+},
       {
         type: 'rich_text',
         content: [
@@ -176,6 +204,7 @@ const videos = [
         path: 'https://youtu.be/EHNTlOy14t4',
         src: imagePath('/videos/Duplication-of-genes-and-genomes--expression.png'),
         alt: 'Duplication of genes and genomes, expression',
+        classNames: 'youtube-preview-image',
       },
     ],
   },

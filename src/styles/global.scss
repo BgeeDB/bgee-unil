@@ -634,6 +634,11 @@ label.label.not-default,span.not-default {
   margin-left: 0;
   margin-right: 0;
 }
+a.youtube-preview-image img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 @media only screen and (max-width: 600px) {
   .tablet-flex-direction-column {
