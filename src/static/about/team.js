@@ -85,7 +85,7 @@ const team = [
           {
             type: 'text',
             content:
-              'Chronological list of former Bgee team members:',
+              'Alphabetically ordered list of former Bgee team members:',
           },
         ],
       },
@@ -94,7 +94,7 @@ const team = [
         children: [
           {
             type: 'text',
-            content: 'Vallat, Bastien',
+            content: 'Comte, Aurélie',
           },
           {
             type: 'text',
@@ -102,27 +102,7 @@ const team = [
           },
           {
             type: 'text',
-            content: 'Sanjeev, Komal',
-          },
-          {
-            type: 'text',
             content: 'Escoriza, Angelique',
-          },
-          {
-            type: 'text',
-            content: 'Rech De Laval, Valentine',
-          },
-          {
-            type: 'text',
-            content: 'Seppey, Mathieu',
-          },
-          {
-            type: 'text',
-            content: 'Person, Emilie',
-          },
-          {
-            type: 'text',
-            content: 'Gonzales-Porta, Mar',
           },
           {
             type: 'text',
@@ -130,7 +110,7 @@ const team = [
           },
           {
             type: 'text',
-            content: 'Comte, Aurélie',
+            content: 'Gonzales-Porta, Mar',
           },
           {
             type: 'text',
@@ -146,6 +126,18 @@ const team = [
           },
           {
             type: 'text',
+            content: 'Parmentier, Gilles',
+          },
+          {
+            type: 'text',
+            content: 'Person, Emilie',
+          },
+          {
+            type: 'text',
+            content: 'Rech De Laval, Valentine',
+          },
+          {
+            type: 'text',
             content: 'Roelli, Patrick',
           },
           {
@@ -158,7 +150,11 @@ const team = [
           },
           {
             type: 'text',
-            content: 'Parmentier, Gilles',
+            content: 'Sanjeev, Komal',
+          },
+          {
+            type: 'text',
+            content: 'Seppey, Mathieu',
           },
         ],
       },
