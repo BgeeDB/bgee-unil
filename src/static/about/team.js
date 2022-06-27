@@ -34,39 +34,39 @@ const team = [
         children: [
           {
             type: 'text',
-            content: 'Tzivanopoulou, Marianna ...',
+            content: 'Tzivanopoulou, Marianna (Biocurator assistant: single-cell RNA-Seq data annotator and cleaner)',
           },
           {
             type: 'text',
-            content: 'Mendes de Farias, Tarcisio ...',
+            content: 'Mendes de Farias, Tarcisio (Computational biologist: RDF/SPARQL guru, Bgee data disseminator)',
           },
           {
             type: 'text',
-            content: 'Fonseca Costa, Sara ...',
+            content: 'Fonseca Costa, Sara (Bio-Statistician: single-cell RNA-Seq pipeline creator, p-value activist)',
           },
           {
             type: 'text',
-            content: 'Niknejad, Anne ...',
+            content: 'Niknejad, Anne (Lead biocurator: provide "normal", healthy wild-type, expression data: the Bgee core)',
           },
           {
             type: 'text',
-            content: 'Wollbrett, Julien ...',
+            content: 'Wollbrett, Julien (Software Developer: Bgee R packages maintainer, pipeline and Java developer)',
           },
           {
             type: 'text',
-            content: 'Moretti, Sébastien ...',
+            content: 'Moretti, Sébastien (Software Developer: pipeline and container developer, system administrator)',
           },
           {
             type: 'text',
-            content: 'Dind, Sagane ...',
+            content: 'Dind, Sagane (Bioinformatician: pre-filter data before curation, molecular protocol master)',
           },
           {
             type: 'text',
-            content: 'Bastian, Frédéric ...',
+            content: 'Bastian, Frédéric (Associate Director: grant writer, MySQL and Java developer, Bgee howto)',
           },
           {
             type: 'text',
-            content: 'Robinson-Rechavi, Marc ...',
+            content: 'Robinson-Rechavi, Marc (Associate Director: roadmap, idea agitator and provider, Bgee initiator)',
           },
         ],
       },
