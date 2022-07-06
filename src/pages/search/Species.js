@@ -14,7 +14,6 @@ const Species = () => {
   let metaTitle = '';
   let metaDescription = '';
   let metaKeywords = '';
-  let genomeSourceURL = '';
 
   const [data, setData] = React.useState();
   const { id } = useParams();
@@ -108,9 +107,6 @@ const Species = () => {
        ${data.species.genus} ${data.species.speciesName}, 
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
-    /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
-    const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
-    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
   }
 
   return !data ? null : (
@@ -180,7 +176,7 @@ const Species = () => {
               </p>
             </div>
             <div>
-              <LinkExternal to={genomeSourceURL}>
+              <LinkExternal to={data.species.genomeAssemblyXRef}>
                 {data.species.genomeSource.name}
               </LinkExternal>
             </div>
