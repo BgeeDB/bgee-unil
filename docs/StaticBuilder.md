@@ -30,7 +30,7 @@ There is 21 different element, with their properties:
 {
     type: 'bold',
     content: string
-} 
+}
 ```
 - Card
 
@@ -45,7 +45,7 @@ There is 21 different element, with their properties:
     title: string,
     description: string,
     richDescription: Array of Elements,
-} 
+}
 ```
 - Columns
 
@@ -57,7 +57,7 @@ There is 21 different element, with their properties:
         content: Array of Elements,
         classNames: string
    }
-} 
+}
 ```
 - Grid
 
@@ -67,7 +67,7 @@ There is 21 different element, with their properties:
     cols: number, // number of columns by row
     content: Array of Elements,
     fillRow: boolean, // fill the row with empty column or expand elements
-} 
+}
 ```
 - Link Anchor
 
@@ -76,16 +76,16 @@ There is 21 different element, with their properties:
     type: 'link_anchor',
     selector: string,
     text: string
-} 
+}
 ```
-- Link External 
+- Link External
 
 ```
 {
     type: 'link_external',
     path: string,
     text: string
-} 
+}
 ```
 - Link Image
 
@@ -94,7 +94,16 @@ There is 21 different element, with their properties:
     type: 'link_image',
     path: string,
     text: string
-} 
+}
+```
+- Image (only)
+```
+{
+    type: 'only_image',
+    src: string,
+    alt: string,
+    style: string
+}
 ```
 - Link Internal
 
@@ -103,7 +112,7 @@ There is 21 different element, with their properties:
     type: 'link_internal',
     path: string,
     text: string
-} 
+}
 ```
 - Notification
 
@@ -111,7 +120,7 @@ There is 21 different element, with their properties:
 {
     type: 'notification',
     content: string,
-} 
+}
 ```
 - Ordered List
 
@@ -119,7 +128,7 @@ There is 21 different element, with their properties:
 {
     type: 'ordered_list',
     children: Array of Elements,
-} 
+}
 ```
 - Pre-formatted Code
 
@@ -127,7 +136,7 @@ There is 21 different element, with their properties:
 {
     type: 'pre_code',
     content: string,
-} 
+}
 ```
 - Rich Text
 
@@ -135,7 +144,7 @@ There is 21 different element, with their properties:
 {
     type: 'rich_text',
     content: Array of Rich Elements,
-} 
+}
 ```
 - Section
 
@@ -144,14 +153,14 @@ There is 21 different element, with their properties:
     type: 'section',
     title: string,
     children: Array of Elements
-} 
+}
 ```
 - Separator
 
 ```
 {
     type: 'separator',
-} 
+}
 ```
 
 - Table
@@ -169,7 +178,7 @@ For a better understanding, please check the Table component.
         key: cellKey,
         keyRow
         }, defaultRender) => null | string | JSX.Element,
-} 
+}
 ```
 - Text
 
@@ -177,7 +186,7 @@ For a better understanding, please check the Table component.
 {
     type: 'text',
     content: string
-} 
+}
 ```
 - Title
 
@@ -185,7 +194,7 @@ For a better understanding, please check the Table component.
 {
     type: 'title',
     content: string,
-} 
+}
 ```
 - Unordered List
 
@@ -193,7 +202,7 @@ For a better understanding, please check the Table component.
 {
     type: 'unordered_list',
     children: Array of Elements,
-} 
+}
 ```
 
 
