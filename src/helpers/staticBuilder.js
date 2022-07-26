@@ -278,6 +278,10 @@ const staticBuilder = (json, prefixKey = '') =>
             <img src={props.src} alt={props.alt} style={props.style} />
           </a>
         );
+      case 'only_image':
+        return (
+          <img src={props.src} alt={props.alt} style={props.style} />
+        );
       case 'link_internal':
         return (
           <Link
