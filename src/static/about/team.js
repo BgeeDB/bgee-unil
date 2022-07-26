@@ -15,11 +15,9 @@ const team = [
     title: 'Current Bgee Team members',
     children: [
       {
-        type: 'link_image',
+        type: 'only_image',
         src: imagePath('/team/Bgee-team-062022.png'),
-        path: '/about/team',
         alt: 'The current Bgee team',
-        classNames: 'team-picture',
       },
       {
         type: 'rich_text',
