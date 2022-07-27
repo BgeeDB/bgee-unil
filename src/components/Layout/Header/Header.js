@@ -278,7 +278,6 @@ const Header = () => {
   return (
     <nav
       className="navbar is-bgee-inverted"
-      role="navigation"
       aria-label="main navigation"
     >
       <div className="navbar-brand">

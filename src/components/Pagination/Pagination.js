@@ -38,7 +38,6 @@ const Pagination = ({ current, total, setPage }) => {
   return (
     <nav
       className="pagination is-small is-centered"
-      role="navigation"
       aria-label="pagination"
     >
       <a
