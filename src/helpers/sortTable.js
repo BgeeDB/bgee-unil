@@ -42,11 +42,37 @@ export const customGeneListSorter =
     }
     return 0;
   };
+export const topAnatSorter =
+  (sortOpts) => (aNotFormatted, bNotFormatted) => {
+    const KEY_POS = {
+      anatEntityId: 0,
+      anatEntityName: 1,
+      annotated: 2,
+      significant: 3,
+      expected: 4,
+      foldEnrichment: 5,
+      pValue: 6,
+      FDR: 7,
+    }
+
+    const a = {};
+    const b = {};
+    Object.entries(KEY_POS).forEach(([key, value]) => {
+      a[key] = aNotFormatted[value];
+      b[key] = bNotFormatted[value];
+    })
+
+    return (Array.isArray(sortOpts)
+      ?  multiSort
+      :  monoSort)(sortOpts)(a, b);
+  };
 
 export const customAnatomicalHomologySorter = (sortOpts) => (a, b) => {
   if (Array.isArray(sortOpts)) {
     for (let i = 0; i < sortOpts.length; i += 1) {
-      const diff = monoSort({
+      const diff = (Array.isArray(sortOpts)
+        ?  multiSort
+        :  monoSort)({
         ...sortOpts[i],
         key: `${sortOpts[i].key}Sorter`,
       })(a, b);

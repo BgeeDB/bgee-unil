@@ -9,6 +9,7 @@ import LinkExternal from '../LinkExternal';
 import Table from '../Table';
 import config from '../../config.json';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import { topAnatSorter } from "../../helpers/sortTable";
 
 const COLUMNS = [
   {
@@ -96,7 +97,17 @@ const TopAnatResult = ({
       'data:text/tab-separated-values;charset=utf-8,Anat Entity ID\tAnat Entity ID\tAnnotated\tSignificant\tExpected\tFold Enrichment\tP value\tFdr\r\n';
     if (results?.data)
       results?.data.forEach((row) => {
-        csvContent += `${row.anatEntityId}\t${row.anatEntityName}\t${row.annotated}\t${row.significant}\t${row.expected}\t${row.foldEnrichment}\t${row.pValue}\t${row.FDR}\r\n`;
+        csvContent +=
+          `${[
+            row.anatEntityId,
+            row.anatEntityName,
+            row.annotated,
+            row.significant,
+            row.expected,
+            row.foldEnrichment,
+            row.pValue,
+            row.FDR,
+          ].join('\t')}\r\n`;
       });
 
     return csvContent;
@@ -288,6 +299,7 @@ const TopAnatResult = ({
           key={searchId + selectedStage}
           columns={COLUMNS}
           data={dataDisplay}
+          onSortCustom={topAnatSorter}
           onRenderCell={onRenderCell}
           sortable
           multiSortable
