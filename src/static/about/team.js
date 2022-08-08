@@ -25,7 +25,7 @@ const team = [
           {
             type: 'text',
             content:
-              'The Bgee team is currently composed of (from left to right):',
+              'The Bgee team as of June 2022 photo (from left to right):',
           },
         ],
       },
@@ -67,7 +67,11 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Bio-Statistician: single-cell RNA-Seq pipeline creator, p-value activist)',
+                content: ' (Bio-Statistician: single-cell RNA-Seq pipeline creator, p-value activist) ',
+              },
+              {
+                type: 'underline',
+                content: 'left',
               },
             ],
           },
