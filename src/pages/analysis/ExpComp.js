@@ -186,7 +186,7 @@ const onRenderCell = ({ cell, key }, defaultRender, { expandAction }) => {
 };
 const dataToTsv = (data) => {
   let tsv =
-    'Anatomical entities\tConservation score\tMax expression score\tGenes with presence of expression\tGenes with absence of expression\tGenes with no data\tSpecies with presence of expression\tSpecies with absence of expression\tAnatomical entity IDs\tGene count with presence of expression\tGene count with absence of expression\tGene count with no data\tSpecies count with presence of expression\tSpecies count with absence of expression\r\n';
+    'Anatomical entities%09Conservation score%09Max expression score%09Genes with presence of expression%09Genes with absence of expression%09Genes with no data%09Species with presence of expression%09Species with absence of expression%09Anatomical entity IDs%09Gene count with presence of expression%09Gene count with absence of expression%09Gene count with no data%09Species count with presence of expression%09Species count with absence of expression%0D%0A';
 
   data.forEach((d) => {
     let ids = '';
@@ -219,7 +219,7 @@ const dataToTsv = (data) => {
       d.countGenesNoData,
       d.countSpeciesExprPresent,
       d.countSpeciesExprAbsent,
-    ].join('\t')}\r\n`;
+    ].join('%09')}%0D%0A`;
   });
 
   return tsv;
