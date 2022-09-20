@@ -94,7 +94,7 @@ const TopAnatResult = ({
   );
   const dataCsvHref = React.useMemo(() => {
     let csvContent =
-      'data:text/tab-separated-values;charset=utf-8,Anat Entity ID\tAnat Entity ID\tAnnotated\tSignificant\tExpected\tFold Enrichment\tP value\tFdr\r\n';
+      'data:text/tab-separated-values;charset=utf-8,Anat Entity ID%09Anat Entity ID%09Annotated%09Significant%09Expected%09Fold Enrichment%09P value%09Fdr%0D%0A';
     if (results?.data)
       results?.data.forEach((row) => {
         csvContent +=
@@ -107,7 +107,7 @@ const TopAnatResult = ({
             row.foldEnrichment,
             row.pValue,
             row.FDR,
-          ].join('\t')}\r\n`;
+          ].join('%09')}%0D%0A`;
       });
 
     return csvContent;
