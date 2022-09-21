@@ -1,4 +1,4 @@
-single cell RNA-Seq full-length download file documentation: annotations and processed expression values
+Single cell RNA-Seq full-length download file documentation: annotations and processed expression values
 ========================================================================================================
 
 This documentation describes the format of annotation download files (that include the library and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the Bgee [download page](/download/processed-expression-values "Bgee Processed expression values download page") for each species.
