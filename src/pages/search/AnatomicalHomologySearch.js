@@ -256,7 +256,7 @@ const AnatomicalHomologySearch = () => {
                             speciesList.length === selectedSpecies.length
                           }
                         />
-                        <i>Select All</i>
+                        Select All
                       </label>
                       {speciesList?.map(({ id, name }) => (
                         <label
