@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Bulma from '../Bulma';
 import InfoIcon from '../InfoIcon';
 import TextArea from '../Form/TextArea';
@@ -15,6 +15,7 @@ import GenesDetailsModal from './GenesDetailsModal';
 import classnames from '../../helpers/classnames';
 import imagePath from '../../helpers/imagePath';
 import usePrevious from '../../hooks/usePrevious';
+import api from '../../api';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -29,6 +30,18 @@ const TopAnatForm = ({
   status,
 }) => {
   const prevStatus = usePrevious(status);
+
+  const [speciesList, setSpeciesList] = useState([]);
+  React.useEffect(() => {
+    api.search.species.list().then((resp) => {
+      if (resp.code === 200) {
+        setSpeciesList(resp.data.species);
+      } else {
+        setSpeciesList([]);
+      }
+    });
+  }, []);
+
   const formAvailable = React.useMemo(() => {
     switch (status) {
       case TOP_ANAT_FLOW.LOADING:
@@ -55,10 +68,61 @@ const TopAnatForm = ({
   return !formAvailable ? null : (
     <>
       <Bulma.Columns>
+        <Bulma.C size={12}>
+          <article className="message  is-small">
+            <div className="message-header">
+              <p className="is-size-5">Species selection</p>
+            </div>
+          </article>
+          <div className="mt-5">
+            <Bulma.Columns>
+              <Bulma.C size={12}>
+                <div className="control checkboxes analysis">
+                  {speciesList?.map((s) => (
+                    <label
+                      className="checkbox is-size-7 p-1"
+                      key={s.id}
+                      htmlFor={s.id}
+                    >
+                    <input
+                      type="radio"
+                      className="mr-2"
+                      name="speciesSelection"
+                      id={s.id}
+                      checked={formData.speciesSelection}
+                    />
+                    <img
+                      key={s.id}
+                      src={imagePath(`/species/${s.id}_light.jpg`)}
+                      alt={`${s.genus} ${s.speciesName}`}
+                      style={{ width:'28px', verticalAlign:'middle' }}
+                    />
+                    &nbsp;<i>{s.genus} {s.speciesName}</i>
+                    </label>
+                  ))}
+                </div>
+              </Bulma.C>
+            </Bulma.Columns>
+          </div>
+        </Bulma.C>
+      </Bulma.Columns>
+      <Bulma.Columns>
         <Bulma.C size={4}>
           <article className="message is-small">
             <div className="message-header">
               <p className="is-size-6">Gene list</p>
+              <HelpIcon
+                title="Gene list"
+                style={{
+                  position: 'relative',
+                }}
+                content={
+                  <>
+                    Enter a list of gene identifiers, one ID per line,
+                    no quotes, no comma.
+                  </>
+                }
+              />
             </div>
             {rp.fg &&
               rp?.fg?.list?.selectedSpecies &&
@@ -99,7 +163,7 @@ const TopAnatForm = ({
           <div className="field">
             <TextArea
               rows={10}
-              placeholder="Enter a list of gene identifiers, one ID per line, no quotes, no comma."
+              placeholder="Enter a list of gene identifiers, one ID per line, no quotes, no comma"
               onChange={foregroundHandler}
               error={errors.genes}
               value={formData.genes}
