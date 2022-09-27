@@ -282,7 +282,7 @@ const Header = () => {
     >
       <div className="navbar-brand">
         <Link className="navbar-item" to={PATHS.HOME}>
-          <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} />
+          <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} height={40} />
         </Link>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
         <a
