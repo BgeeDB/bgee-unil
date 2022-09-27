@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import useQuery from '../../hooks/useQuery';
 import Bulma from '../../components/Bulma';
+import HelpIcon from '../../components/HelpIcon';
 import api from '../../api';
 import CreativeCommons from '../../components/CreativeCommons';
 import GridSpecies from '../../components/GridSpecies/GridSpecies';
@@ -212,7 +213,22 @@ const GeneExpressionCalls = () => {
                           <div>
                             <div>
                               <p className="has-text-weight-semibold mt-3">
-                                Anatomical entities only
+                                Anatomical entities only&nbsp;
+                                <HelpIcon
+                                  title="Download file information"
+                                  style={{
+                                    position: 'absolute',
+                                  }}
+                                  content={
+                                    <>
+                                      <ul>
+                                        <li>Download files are compressed with gzip, they have to be uncompressed before opening them into a text editor</li>
+                                        <li>Tarball (*.tar.gz) containing TPM values for a species contain gzip files that also need to be uncompressed before opening with a text editor</li>
+                                        <li>Spreadsheets will potentially transform some cell values into dates. Files need to be imported into spreadsheets (e.g. Excel)</li>
+                                      </ul>
+                                    </>
+                                  }
+                                />
                               </p>
                               <div className="field has-addons">
                                 {files?.[species.id.toString()]?.anatSimple && (
