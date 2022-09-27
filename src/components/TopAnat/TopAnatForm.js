@@ -69,9 +69,9 @@ const TopAnatForm = ({
     <>
       <Bulma.Columns>
         <Bulma.C size={12}>
-          <article className="message  is-small">
+          <article className="message is-small">
             <div className="message-header">
-              <p className="is-size-5">Species selection</p>
+              <p className="is-size-6">Species selection</p>
             </div>
           </article>
           <div className="mt-5">
