@@ -1,15 +1,11 @@
-import bgeeLogo from './img/bgee13_hp_logo.png';
-import rLogo from './img/r_logo.png';
-import sibLogo from './img/sib_emblem.png';
-import twitterLogo from './img/twitter_logo.png';
-import unilLogo from './img/unil_logo_noir.png';
+import imagePath from '../helpers/imagePath';
 
 const assets = {
-  bgeeLogo,
-  rLogo,
-  sibLogo,
-  twitterLogo,
-  unilLogo,
+  bgeeLogo: imagePath('/logo/bgee13_hp_logo.png'),
+  rLogo: imagePath('/logo/r_logo.png'),
+  sibLogo: imagePath('/logo/sib_emblem.png'),
+  twitterLogo: imagePath('/logo/twitter_logo.png'),
+  unilLogo: imagePath('/logo/unil_logo_noir.png'),
 };
 
 export default assets;

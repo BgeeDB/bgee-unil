@@ -1,3 +1,6 @@
+import config from '../../config.json';
+import imagePath from '../../helpers/imagePath';
+
 const collaborations = [
   {
     type: 'title',
@@ -12,6 +15,12 @@ const collaborations = [
     type: 'section',
     title: 'Bio-SODA',
     children: [
+      {
+        type: 'link_image',
+        src: imagePath('/biosoda_logo.png'),
+        path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
+        alt: 'Bio-SODA',
+      },
       {
         type: 'rich_text',
         content: [
@@ -46,7 +55,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'ftp://ftp.bgee.org/current/easybgee_dump.tar.gz',
+            path: `${config.ftpDomain}/easybgee_dump.tar.gz`,
             text: 'Bgee FTP',
           },
           {
@@ -82,7 +91,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'http://biosoda.expasy.org/',
+            path: 'https://biosoda.expasy.org/',
             text: 'BioQuery web application',
           },
           {
@@ -104,6 +113,15 @@ const collaborations = [
     title: 'INODE',
     children: [
       {
+        type: 'link_image',
+        src: imagePath('/INODE_Logo--white.png'),
+        path: 'https://www.inode-project.eu/',
+        alt: 'INODE',
+        style: {
+          backgroundColor: 'black',
+        },
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -112,7 +130,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'http://www.inode-project.eu/',
+            path: 'https://www.inode-project.eu/',
             text: 'INODE (Intelligent Open Data Exploration) project',
           },
           {
@@ -143,6 +161,12 @@ const collaborations = [
     title: 'OMA',
     children: [
       {
+        type: 'link_image',
+        src: imagePath('/oma_logo.png'),
+        path: 'https://omabrowser.org/',
+        alt: 'OMA',
+      },
+      {
         type: 'rich_text',
         content: [
           {
@@ -171,7 +195,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'ftp://ftp.bgee.org/current/collaboration/branch_length_expression_divergence/',
+            path: `${config.ftpDomain}/collaboration/branch_length_expression_divergence/`,
             text: 'Bgee FTP',
           },
           {
@@ -191,6 +215,12 @@ const collaborations = [
     type: 'section',
     title: 'OncoMX',
     children: [
+      {
+        type: 'link_image',
+        src: imagePath('/ONCOMX_logo-thin.png'),
+        path: 'https://www.oncomx.org/',
+        alt: 'OncoMX',
+      },
       {
         type: 'rich_text',
         content: [
@@ -225,7 +255,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'ftp://ftp.bgee.org/current//collaboration/oncoMX/',
+            path: `${config.ftpDomain}//collaboration/oncoMX/`,
             text: 'Bgee FTP',
           },
           {

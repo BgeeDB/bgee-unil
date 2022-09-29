@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Requirement
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- NodeJS 16.x.x or fewer
+- Yarn 
 
-## Available Scripts
+# Installation
 
-In the project directory, you can run:
+1. Have the tools asked in the requirement
+2. At the root of the project, run the command:
+````shell
+yarn install
+````
+3. Run the project in dev with the following command:
+````shell
+yarn start
+````
 
-### `yarn start`
+# Build
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+There is 2 commands for building the application.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+````shell
+yarn build
+#or
+yarn archive 
+````
 
-### `yarn test`
+The first command will build the app to be ready for production.
+The second one will prepare the application to de deployed as an archive.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+DO NOT FORGET
+Be careful with the version set in config.json, it will impact the app in production or in archive.
 
-### `yarn build`
+# FAQ
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Where are the images?
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The images are stored externally of the project.
+You will find the path of the images in the config.json at the key `imageDomain`
+Be careful, the image used for the 'external icon' link is directly defined in the SCSS.
+If you are moving it, don't forget to change the path.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Use of Node 17.x.x
 
-### `yarn eject`
+Node 17.x.x doesn't work with create-react-app. So it will be impossible to build the app.
+It's recommended to use 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Font size matrix
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+````
+$size-7: 12px;
+$size-6: 1rem (= 14px)
+$size-5: 1.1rem (= 15.4px)
+$size-4: 1.2rem (= 16.8px)
+$size-3: 1.5rem (= 21px)
+````

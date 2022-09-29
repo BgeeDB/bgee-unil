@@ -1,3 +1,5 @@
+import config from '../../config.json';
+
 const privacyPolicy = [
   {
     type: 'title',
@@ -32,7 +34,7 @@ const privacyPolicy = [
               },
               {
                 type: 'link_mail',
-                email: 'Bgee@sib.swiss',
+                email: config.contactEmail,
                 text: 'email',
               },
               {
@@ -132,10 +134,6 @@ const privacyPolicy = [
                 type: 'link_phone_number',
                 phoneNumber: '+41216924050',
                 text: '+41 21 692 40 50',
-              },
-              {
-                type: 'text',
-                content: ')',
               },
             ],
           },
@@ -464,7 +462,7 @@ const privacyPolicy = [
           },
           {
             type: 'link_mail',
-            email: 'Bgee@sib.swiss',
+            email: config.contactEmail,
             text: 'Bgee e-mail',
           },
           {

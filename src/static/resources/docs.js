@@ -1,9 +1,11 @@
 import PATHS from '../../routes/paths';
+import config from '../../config.json';
+import imagePath from '../../helpers/imagePath';
 
 const docs = [
   {
     type: 'title',
-    content: 'Bgee release 14.2 documentation',
+    content: `Bgee release ${config.version} documentation`,
   },
   {
     type: 'grid',
@@ -15,7 +17,8 @@ const docs = [
             title: 'TopAnat documentation',
             description: undefined,
             image: {
-              src: '/static/img/bgee_access_logo.png',
+              src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee TopAnat logo',
             },
             link: PATHS.SUPPORT.TOP_ANAT,
             linkType: 'internal',
@@ -30,7 +33,8 @@ const docs = [
             title: 'Download file documentation',
             description: undefined,
             image: {
-              src: '/static/img/animals_logo.png',
+              src: imagePath('/logo/download_logo.png'),
+              alt: 'Bgee Download logo',
             },
             link: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
             linkType: 'internal',
@@ -44,7 +48,8 @@ const docs = [
             title: 'Bgee Blog',
             description: undefined,
             image: {
-              src: '/static/img/bgee_access_logo.png',
+              src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee Blog logo',
             },
             link: 'https://bgeedb.wordpress.com/',
             linkType: 'external',
@@ -58,7 +63,8 @@ const docs = [
             title: 'Bgee data sources',
             description: undefined,
             image: {
-              src: '/static/img/bgee_access_logo.png',
+              src: imagePath('/logo/bgee_access_logo.png'),
+              alt: 'Bgee data logo',
             },
             imageClass: 'is-128x128',
             link: PATHS.ABOUT.SOURCES,

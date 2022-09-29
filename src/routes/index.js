@@ -2,156 +2,229 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ROUTES from './routes';
-import Home from '../pages/Home';
-import Error from '../pages/Error';
 import PATHS from './paths';
+import Page from '../components/Page';
+import { ModalProvider } from '../contexts/ModalContext';
+import { NotificationProvider } from '../contexts/NotificationsContext';
+import StaticPage from '../pages/StaticPage';
+import ScrollTop from '../components/ScrollTop';
+import MarkdownReader from '../pages/MarkdownReader';
+import GenericHelmetProvider from '../helpers/GenericHelmetProvider';
+import Error from '../pages/Error';
 
 const Router = () => (
   <BrowserRouter>
-    <Layout>
-      <Switch>
-        <Route exact path={PATHS.HOME} component={Home} />
+    <ScrollTop>
+      <ModalProvider>
+        <NotificationProvider>
+          <Layout>
+            <GenericHelmetProvider />
+            <Switch>
+              <Route
+                exact
+                path={PATHS.HOME}
+                render={(props) => (
+                  <Page {...props} Component={ROUTES[PATHS.HOME].component} />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.ANALYSIS.TOP_ANAT}
-          component={ROUTES.ANALYSIS[PATHS.ANALYSIS.TOP_ANAT].component}
-        />
-        <Route
-          exact
-          path={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-          component={
-            ROUTES.ANALYSIS[PATHS.ANALYSIS.EXPRESSION_COMPARISON].component
-          }
-        />
+              <Route
+                exact
+                path={[
+                  PATHS.ANALYSIS.TOP_ANAT,
+                  PATHS.ANALYSIS.TOP_ANAT_RESULT,
+                  PATHS.ANALYSIS.TOP_ANAT_RESULT_JOB_ID,
+                ]}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    title={ROUTES[PATHS.ANALYSIS.TOP_ANAT].name}
+                    Component={ROUTES[PATHS.ANALYSIS.TOP_ANAT].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.ANALYSIS.TOP_ANAT_RESULT}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ANALYSIS.TOP_ANAT_RESULT].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={[
+                  PATHS.ANALYSIS.EXPRESSION_COMPARISON,
+                  PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT,
+                ]}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={
+                      ROUTES[PATHS.ANALYSIS.EXPRESSION_COMPARISON].component
+                    }
+                  />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.SEARCH.GENE}
-          component={ROUTES.SEARCH[PATHS.SEARCH.GENE].component}
-        />
-        <Route
-          exact
-          path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
-          component={ROUTES.SEARCH[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component}
-        />
-        <Route
-          exact
-          path={PATHS.SEARCH.SPARQL}
-          component={ROUTES.SEARCH[PATHS.SEARCH.SPARQL].component}
-        />
-        <Route
-          exact
-          path={PATHS.SEARCH.SPECIES}
-          component={ROUTES.SEARCH[PATHS.SEARCH.SPECIES].component}
-        />
+              <Route
+                exact
+                path={PATHS.SEARCH.GENE}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.GENE].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={[
+                  PATHS.SEARCH.GENE_ITEM,
+                  PATHS.SEARCH.GENE_ITEM_BY_SPECIES,
+                ]}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.GENE_ITEM].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.SEARCH.ANATOMICAL_HOMOLOGY}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={
+                      ROUTES[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].component
+                    }
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.SEARCH.SPECIES}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.SPECIES].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.SEARCH.SPECIES_ITEM}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.SPECIES_ITEM].component}
+                  />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES}
-          component={
-            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.GENE_EXPRESSION_VALUES].component
-          }
-        />
-        <Route
-          exact
-          path={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
-          component={
-            ROUTES.DOWNLOAD[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
-              .component
-          }
-        />
-        <Route
-          exact
-          path={PATHS.DOWNLOAD.DATA_DUMPS}
-          component={ROUTES.DOWNLOAD[PATHS.DOWNLOAD.DATA_DUMPS].component}
-        />
+              <Route
+                exact
+                path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={
+                      ROUTES[PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS].component
+                    }
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={
+                      ROUTES[PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]
+                        .component
+                    }
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.DOWNLOAD.DATA_DUMPS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.DOWNLOAD.DATA_DUMPS].component}
+                  />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.RESOURCES.DOCS}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.DOCS].component}
-        />
-        <Route
-          exact
-          path={PATHS.RESOURCES.R_PACKAGES}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.R_PACKAGES].component}
-        />
-        <Route
-          exact
-          path={PATHS.RESOURCES.SPARQL}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.SPARQL].component}
-        />
-        <Route
-          exact
-          path={PATHS.RESOURCES.ANNOTATIONS}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.ANNOTATIONS].component}
-        />
-        <Route
-          exact
-          path={PATHS.RESOURCES.ONTOLOGIES}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.ONTOLOGIES].component}
-        />
-        <Route
-          exact
-          path={PATHS.RESOURCES.SOURCE_CODE}
-          component={ROUTES.RESOURCES[PATHS.RESOURCES.SOURCE_CODE].component}
-        />
+              <Route
+                exact
+                path={PATHS.ABOUT.NEWS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ABOUT.NEWS].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.ABOUT.SOURCES}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.ABOUT.SOURCES].component}
+                  />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.SUPPORT.GTEX}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.GTEX].component}
-        />
-        <Route
-          exact
-          path={PATHS.SUPPORT.TOP_ANAT}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.TOP_ANAT].component}
-        />
-        <Route
-          exact
-          path={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
-          component={
-            ROUTES.SUPPORT[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].component
-          }
-        />
-        <Route
-          exact
-          path={PATHS.SUPPORT.FAQ}
-          component={ROUTES.SUPPORT[PATHS.SUPPORT.FAQ].component}
-        />
+              <Route
+                exact
+                path={[
+                  PATHS.RESOURCES.DOCS,
+                  PATHS.RESOURCES.R_PACKAGES,
+                  PATHS.RESOURCES.SPARQL,
+                  PATHS.RESOURCES.ANNOTATIONS,
+                  PATHS.RESOURCES.ONTOLOGIES,
+                  PATHS.RESOURCES.SOURCE_CODE,
+                  PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.FAQ,
+                  PATHS.ABOUT.ABOUT,
+                  PATHS.ABOUT.COLLABORATIONS,
+                  PATHS.ABOUT.PUBLICATION,
+                  PATHS.ABOUT.VIDEOS,
+                  PATHS.ABOUT.TEAM,
+                  PATHS.ABOUT.PRIVACY_POLICY,
+                ]}
+                render={(props) => <Page {...props} Component={StaticPage} />}
+              />
+              <Route
+                exact
+                path={[
+                  PATHS.SUPPORT.GTEX,
+                  PATHS.SUPPORT.TOP_ANAT,
+                  PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
+                  PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
+                ]}
+                render={(props) => (
+                  <Page {...props} Component={MarkdownReader} />
+                )}
+              />
 
-        <Route
-          exact
-          path={PATHS.ABOUT.ABOUT}
-          component={ROUTES.ABOUT[PATHS.ABOUT.ABOUT].component}
-        />
-        <Route
-          exact
-          path={PATHS.ABOUT.COLLABORATIONS}
-          component={ROUTES.ABOUT[PATHS.ABOUT.COLLABORATIONS].component}
-        />
-        <Route
-          exact
-          path={PATHS.ABOUT.PUBLICATION}
-          component={ROUTES.ABOUT[PATHS.ABOUT.PUBLICATION].component}
-        />
-        <Route
-          exact
-          path={PATHS.ABOUT.SOURCES}
-          component={ROUTES.ABOUT[PATHS.ABOUT.SOURCES].component}
-        />
-        <Route
-          exact
-          path={PATHS.ABOUT.PRIVACY_POLICY}
-          component={ROUTES.ABOUT[PATHS.ABOUT.PRIVACY_POLICY].component}
-        />
+              <Route path={PATHS.ERROR} component={Error} />
 
-        <Route path={PATHS.ERROR} component={Error} />
-
-        <Redirect to={PATHS.HOME} />
-      </Switch>
-    </Layout>
+              <Redirect to={PATHS.HOME} />
+            </Switch>
+          </Layout>
+        </NotificationProvider>
+      </ModalProvider>
+    </ScrollTop>
   </BrowserRouter>
 );
 

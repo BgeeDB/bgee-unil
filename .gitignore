@@ -17,6 +17,12 @@
 .env.development.local
 .env.test.local
 .env.production.local
+# Eclipse
+.project
+.settings/
+# Eclipse CodeMix
+.jsbeautifyrc
+.vscode/
 
 npm-debug.log*
 yarn-debug.log*
@@ -44,3 +50,4 @@ yarn-error.log*
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 .idea
+src/styles/global.css

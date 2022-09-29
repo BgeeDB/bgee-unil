@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://bgee.org/</loc><priority>0.8</priority></url>
+<url><loc>https://bgee.org/sparql/</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/collaborations</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/news</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/privacy-policy</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/publications</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/source</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/affymetrix-processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/data-sets</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/faq</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/gene-expression-calls</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/rnaseq-processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/singlecell-rnaseq-fulllength-processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/support/top-anat</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/download/data-dumps</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/download/gene-expression-calls</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/download/processed-expression-values</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/resources/annotations</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/resources/ontologies</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/resources/r-packages</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/resources/source-code</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/resources/sparql</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/analysis/expr-comparison</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/analysis/top-anat</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/search/anatomical-homology</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/search/genes</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/search/species</loc><priority>0.7</priority></url>
+</urlset>

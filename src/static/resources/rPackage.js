@@ -1,4 +1,6 @@
-const docs = [
+import imagePath from '../../helpers/imagePath';
+
+const rPackage = [
   {
     type: 'title',
     content: 'R packages',
@@ -12,7 +14,8 @@ const docs = [
             type: 'card',
             title: 'BgeeDB R package',
             image: {
-              src: '/static/img/r_logo_color.png',
+              src: imagePath('/logo/r_logo_color.png'),
+              alt: 'R logo',
             },
             link: 'https://bioconductor.org/packages/BgeeDB/',
             linkType: 'external',
@@ -30,9 +33,10 @@ const docs = [
         children: [
           {
             type: 'card',
-            title: 'BgeeDB R package',
+            title: 'BgeeCall R package',
             image: {
-              src: '/static/img/r_logo_color.png',
+              src: imagePath('/logo/r_logo_color.png'),
+              alt: 'R logo',
             },
             link: 'https://bioconductor.org/packages/BgeeCall/',
             linkType: 'external',
@@ -52,7 +56,8 @@ const docs = [
             type: 'card',
             title: 'Container for BgeeCall and BgeeDB',
             image: {
-              src: '/static/img/docker_logo.png',
+              src: imagePath('/logo/docker_logo.png'),
+              alt: 'Docker logo',
             },
             link: 'https://hub.docker.com/r/bgeedb/bgee_r',
             linkType: 'external',
@@ -71,4 +76,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default rPackage;

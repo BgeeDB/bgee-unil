@@ -1,52 +1,112 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable no-use-before-define,no-case-declarations,react/no-array-index-key */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import arrayHelper from './array';
+import arrayHelper from './arrayHelper';
+import Accordion from '../components/Accordion';
+import LinkExternal from '../components/LinkExternal';
+import Bulma from '../components/Bulma';
+import classnames from './classnames';
+import obfuscateMailLink from './obfuscateMailLink';
 
-const richTextBuilder = (elements) =>
-  elements.map(({ type, ...props }) => {
+export const richTextBuilder = (elements, prefixKey = '') =>
+  elements.map(({ type, id, classNames, ...props }, key) => {
     switch (type) {
       case 'break_line':
-        return (
-          <>
-            <br />
-          </>
-        );
+        return <br key={`${prefixKey}-${key}`} />;
       case 'bold':
-        return <b>{props.content}</b>;
+        return (
+          <b key={`${prefixKey}-${key}`} id={id} className={classNames}>
+            {props.content}
+          </b>
+        );
       case 'code':
-        return <code>{props.content}</code>;
+        return (
+          <code key={`${prefixKey}-${key}`} className={props.classNames}>
+            {props.content}
+          </code>
+        );
       case 'italic':
-        return <i>{props.content}</i>;
-      case 'text':
-        return props.content;
+        return (
+          <i key={`${prefixKey}-${key}`} id={id} className={classNames}>
+            {props.content}
+          </i>
+        );
+      case 'link_anchor':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={`#${props.selector}`}
+            id={id}
+            className={classnames('internal-link', classNames)}
+          >
+            {props.text}
+          </a>
+        );
       case 'link_internal':
         return (
-          <Link to={props.path} className="internal-link">
+          <Link
+            key={`${prefixKey}-${key}`}
+            to={props.path}
+            id={id}
+            className={classnames('internal-link', classNames)}
+          >
             {props.text}
           </Link>
         );
       case 'link_external':
         return (
           <a
+            key={`${prefixKey}-${key}`}
             href={props.path}
             target="_blank"
             rel="noopener noreferrer"
-            className="external-link"
+            id={id}
+            className={classnames('external-link', classNames)}
           >
             {props.text}
           </a>
         );
       case 'link_mail':
         return (
-          <a className="mail-link" href={`mailto:${props.email}`}>
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+          <a
+            key={`${prefixKey}-${key}`}
+            onClick={obfuscateMailLink(props.email)}
+            id={id}
+            className={classnames('mail-link', classNames)}
+          >
             {props.text}
           </a>
         );
       case 'link_phone_number':
-        return <a href={`tel:${props.phoneNumber}`}>{props.text}</a>;
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={`tel:${props.phoneNumber}`}
+            id={id}
+            className={classNames}
+          >
+            {props.text}
+          </a>
+        );
+      case 'pre_code':
+        return (
+          <pre key={`${prefixKey}-${key}`}>
+            <code id={id} className={classNames}>
+              {props.content}
+            </code>
+          </pre>
+        );
       case 'rich_text':
-        return richTextBuilder(props.content);
+        return richTextBuilder(props.content, `${prefixKey}-${key}`);
+      case 'text':
+        return props.content;
+      case 'underline':
+        return (
+          <u key={`${prefixKey}-${key}`} id={id} className={classNames}>
+            {props.content}
+          </u>
+        );
       default:
         return null;
     }
@@ -60,79 +120,58 @@ const gridBuilder = ({ cols, content, fillRow }) => (
         defaultItemFactory: () => ({ children: [] }),
       })
       .map((tiles) => (
-        <div className="tile is-ancestor">
+        <Bulma.Tile kind="ancestor">
           {tiles.map(({ classNames, children }) => (
-            <div className="tile is-parent">
-              <article className={`tile is-child ${classNames || ''}`}>
+            <Bulma.Tile kind="parent">
+              <Bulma.Tile kind="child" className={classnames(classNames)}>
                 {staticBuilder(children)}
-              </article>
-            </div>
+              </Bulma.Tile>
+            </Bulma.Tile>
           ))}
-        </div>
+        </Bulma.Tile>
       ))}
   </>
 );
 
-const staticBuilder = (json) =>
-  json.map(({ type, ...props }) => {
-    let Component = null;
+/*
+            id={id}
+className={classnames('cardustomcard',classNames)}
+
+ */
+const staticBuilder = (json, prefixKey = '') =>
+  json.map(({ type, id, classNames, ...props }, key) => {
     switch (type) {
+      case 'accordion':
+        const elements = props.children.map(({ title, body }) => {
+          let formattedBody = null;
+          if (typeof body === 'string') formattedBody = body;
+          if (Array.isArray(body))
+            formattedBody = staticBuilder(body, `${prefixKey}-${key}`);
+          return {
+            title,
+            body: formattedBody,
+          };
+        });
+        return <Accordion key={`${prefixKey}-${key}`} elements={elements} />;
       case 'break_line':
-        return (
-          <>
-            <br />
-          </>
-        );
+        return <br key={`${prefixKey}-${key}`} />;
       case 'bold':
-        return <b>{props.content}</b>;
-      case 'text':
-        return <p className={props.classNames}>{props.content}</p>;
-      case 'rich_text':
         return (
-          <p className={props.classNames}>{richTextBuilder(props.content)}</p>
+          <p
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames(classNames)}
+          >
+            <b>{props.content}</b>
+          </p>
         );
-      case 'title':
-        return (
-          <div className="content has-text-centered">
-            <p className="title is-5">{props.content}</p>
-          </div>
-        );
-      case 'link_image':
-        return (
-          <a href={props.path} target="_blank" rel="noopener noreferrer">
-            <img src={props.src} alt={props.alt} style={props.style} />
-          </a>
-        );
-      case 'unordered_list':
-        return (
-          <ul className="unordered">
-            {props.children.map((element) => (
-              <li>{staticBuilder([element])}</li>
-            ))}
-          </ul>
-        );
-      case 'ordered_list':
-        return (
-          <ol className="ordered">
-            {props.children.map((element) => (
-              <li>{staticBuilder([element])}</li>
-            ))}
-          </ol>
-        );
-      case 'section':
-        return (
-          <>
-            <p className="title is-6 gradient-underline">{props.title}</p>
-            <div className="static-section">
-              {staticBuilder(props.children)}
-            </div>
-          </>
-        );
-      case 'grid':
-        return gridBuilder(props);
       case 'card':
-        Component = () => (
-          <div className={`card custom-card ${props.classNames || ''}`}>
+        const Component = () => (
+          <div
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames('card custom-card', classNames)}
+          >
             {props.image && (
               <div className="card-image">
                 <figure
@@ -140,7 +179,7 @@ const staticBuilder = (json) =>
                     props.imageClass ? props.imageClass : 'is-128x128'
                   }`}
                 >
-                  <img {...props.image} />
+                  <img alt={props.image.alt} {...props.image} />
                 </figure>
               </div>
             )}
@@ -171,6 +210,179 @@ const staticBuilder = (json) =>
             </a>
           );
         return <Component />;
+      case 'columns':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames('columns', classNames)}
+          >
+            {props.content.map((col, colKey) => (
+              <div
+                key={`${prefixKey}-${key}-${colKey}`}
+                className={classnames(
+                  'column',
+                  {
+                    [`is-${col.size}`]: col.size,
+                  },
+                  col.classNames
+                )}
+              >
+                {staticBuilder(col.content, `${prefixKey}-${key}-${colKey}`)}
+              </div>
+            ))}
+          </div>
+        );
+      case 'grid':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames(classNames)}
+          >
+            {gridBuilder(props)}
+          </div>
+        );
+      case 'link_anchor':
+        return (
+          <p key={`${prefixKey}-${key}`}>
+            <a
+              href={`#${props.selector}`}
+              id={id}
+              className={classnames('internal-link', classNames)}
+            >
+              {props.text}
+            </a>
+          </p>
+        );
+      case 'link_external':
+        return (
+          <LinkExternal
+            key={`${prefixKey}-${key}`}
+            to={props.path}
+            text={props.text}
+            id={id}
+            className={classNames}
+          />
+        );
+      case 'link_image':
+        return (
+          <a
+            key={`${prefixKey}-${key}`}
+            href={props.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            id={id}
+            className={classnames(classNames)}
+          >
+            <img src={props.src} alt={props.alt} style={props.style} />
+          </a>
+        );
+      case 'only_image':
+        return (
+          <img src={props.src} alt={props.alt} style={props.style} />
+        );
+      case 'link_internal':
+        return (
+          <Link
+            key={`${prefixKey}-${key}`}
+            to={props.path}
+            id={id}
+            className={classnames('internal-link', classNames)}
+          >
+            {props.text}
+          </Link>
+        );
+      case 'notification':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames('notification', classNames)}
+          >
+            {props.content}
+          </div>
+        );
+      case 'ordered_list':
+        return (
+          <ol
+            key={`${prefixKey}-${key}`}
+            id={id}
+            className={classnames('ordered', classNames)}
+          >
+            {props.children.map((element) => (
+              <li>{staticBuilder([element])}</li>
+            ))}
+          </ol>
+        );
+      case 'pre_code':
+        return (
+          <pre key={`${prefixKey}-${key}`}>
+            <code id={id} className={classnames(classNames)}>
+              {props.content}
+            </code>
+          </pre>
+        );
+      case 'rich_text':
+        return (
+          <p
+            id={props.id}
+            className={classnames(classNames)}
+            key={`${prefixKey}-${key}`}
+          >
+            {richTextBuilder(props.content, `${prefixKey}-${key}`)}
+          </p>
+        );
+      case 'section':
+        return (
+          <div
+            id={props.id}
+            key={`${prefixKey}-${key}`}
+            className={classnames(classNames)}
+          >
+            <Bulma.Title size={4} className="gradient-underline">
+              {props.title}
+            </Bulma.Title>
+            <div className="">{staticBuilder(props.children)}</div>
+          </div>
+        );
+      case 'separator':
+        return (
+          <div
+            key={`${prefixKey}-${key}`}
+            className={classnames('separator', classNames)}
+          />
+        );
+      case 'text':
+        return (
+          <p
+            id={props.id}
+            className={classnames(props.classNames)}
+            key={`${prefixKey}-${key}`}
+          >
+            {props.content}
+          </p>
+        );
+      case 'title':
+        return (
+          <div
+            id={id}
+            className={classnames('content has-text-centered', classNames)}
+            key={`${prefixKey}-${key}`}
+          >
+            <p className="title is-3">{props.content}</p>
+          </div>
+        );
+      case 'unordered_list':
+        return (
+          <ul className="unordered" key={`${prefixKey}-${key}`}>
+            {props.children.map((element, eKey) => (
+              <li key={`${prefixKey}-${key}-${eKey}`}>
+                {staticBuilder([element], `ul-${prefixKey}-${key}-${eKey}`)}
+              </li>
+            ))}
+          </ul>
+        );
       default:
         return null;
     }

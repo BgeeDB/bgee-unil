@@ -1,4 +1,6 @@
-const docs = [
+import imagePath from '../../helpers/imagePath';
+
+const source = [
   {
     type: 'title',
     content: 'Source code',
@@ -12,9 +14,10 @@ const docs = [
             type: 'card',
             title: 'Bgee pipeline',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
-            link: 'https://github.com/BgeeDB/bgee_pipeline/tree/master',
+            link: 'https://github.com/BgeeDB/bgee_pipeline',
             linkType: 'external',
             classNames: 'mb-3',
           },
@@ -32,7 +35,8 @@ const docs = [
             type: 'card',
             title: 'BgeeDB R package',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeDB_R',
             linkType: 'external',
@@ -52,7 +56,8 @@ const docs = [
             type: 'card',
             title: 'BgeeCall R package',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/BgeeCall',
             linkType: 'external',
@@ -72,7 +77,8 @@ const docs = [
             type: 'card',
             title: 'IQRay',
             image: {
-              src: '/static/img/github_logo.png',
+              src: imagePath('/logo/github_logo.png'),
+              alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/IQRray',
             linkType: 'external',
@@ -92,4 +98,4 @@ const docs = [
   },
 ];
 
-export default docs;
+export default source;
