@@ -34,6 +34,7 @@ const TopAnat = () => {
       foregroundHandler,
       backgroundHandler,
       checkBoxHandler,
+      radioBoxHandler,
       onSelectCustomStage,
       resetForm,
       resetError,
@@ -84,6 +85,7 @@ const TopAnat = () => {
               genesBg: (res.requestParameters?.bg_list || []).join('\n'),
               email: '',
               jobDescription: res.requestParameters.job_title || '',
+              speciesSelection: res.requestParameters.species_selected,
               stages: res.requestParameters.stage_id || 'all',
               dataQuality: res.requestParameters.data_qual,
               decorrelationType: res.requestParameters.decorr_type,
@@ -286,6 +288,7 @@ const TopAnat = () => {
           backgroundHandler,
           setRP: requestParameters.set,
           onSelectCustomStage,
+          radioBoxHandler,
           checkBoxHandler,
         }}
       />

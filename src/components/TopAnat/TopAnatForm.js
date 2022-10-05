@@ -25,6 +25,7 @@ const TopAnatForm = ({
     backgroundHandler,
     setRP,
     onSelectCustomStage,
+    radioBoxHandler,
     checkBoxHandler,
   },
   status,
@@ -81,15 +82,16 @@ const TopAnatForm = ({
                   {speciesList?.map((s) => (
                     <label
                       className="checkbox is-size-7 p-1"
-                      key={s.id}
-                      htmlFor={s.id}
                     >
                     <input
                       type="radio"
                       className="mr-2"
                       name="speciesSelection"
-                      id={s.id}
+                      value={s.id}
+                      disabled={formDisabled}
                       checked={formData.speciesSelection}
+                      onChange={radioBoxHandler()}
+                      error={errors.speciesSelection}
                     />
                     <img
                       key={s.id}

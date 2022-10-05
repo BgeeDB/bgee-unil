@@ -7,6 +7,7 @@ const ApiReducer = {
     genesBg: (rp.bg_list || []).join('\n'),
     email: '',
     jobDescription: rp.job_title || '',
+    speciesSelection: rp.species_selected,
     stages: rp.stage_Id || 'all',
     dataQuality: rp.data_qual,
     decorrelationType: rp.decorr_type,

@@ -154,6 +154,11 @@ const useTopAnat = (flowState, setFlowState) => {
     },
     [dataForm, requestParameters, flowState]
   );
+  const radioBoxHandler = React.useCallback(
+    (id) => (e) =>
+      propsForm.handleChange(id, (event) => event.target.value)(e),
+    []
+  );
   const checkBoxHandler = React.useCallback(
     (key) => (e) =>
       propsForm.handleChange(key, (event) => event.target.checked)(e),
@@ -238,6 +243,7 @@ const useTopAnat = (flowState, setFlowState) => {
       foregroundHandler,
       backgroundHandler,
       checkBoxHandler,
+      radioBoxHandler,
       onSelectCustomStage,
       resetForm,
     },

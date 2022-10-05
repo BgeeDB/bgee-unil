@@ -57,6 +57,7 @@ const topAnat = {
       const params = DEFAULT_PARAMETERS();
       params.append('action', 'submit_job');
       params.append('display_rp', 1);
+      params.append('species_selected', form.speciesSelection);
       params.append('fg_list', form.genes);
       params.append('bg_list', form.genesBg);
       if (form.rnaSeq) params.append('data_type', 'RNA_SEQ');
