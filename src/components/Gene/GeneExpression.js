@@ -292,15 +292,14 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   )
                   .join(',')
               );
-              console.log()
+              console.log();
               if (
                 JSON.stringify(dataType.sort()) !==
                   JSON.stringify(DATA_TYPES.map((d) => d.key).sort()) &&
                 dataType.length > 0
               )
                 queryParams.set(dataTypeKey, dataType.join(','));
-              else
-                queryParams.delete(dataTypeKey);
+              else queryParams.delete(dataTypeKey);
 
               history.replace(`?${queryParams.toString()}`);
             }}
@@ -490,8 +489,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             (r) => r === 'Anat. entity'
           )
         )
-          if (!notExpressed)
-          schemaDotOrg.setGeneExpressionLdJSON(res.data);
+          if (!notExpressed) schemaDotOrg.setGeneExpressionLdJSON(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -500,8 +498,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
       .finally(() => setIsLoading(false));
 
     return () => {
-      if (!notExpressed)
-      schemaDotOrg.unsetGeneExpressionLdJSON();
+      if (!notExpressed) schemaDotOrg.unsetGeneExpressionLdJSON();
     };
   }, [hashExpr, dataTypeExpr]);
 
@@ -515,6 +512,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             ? GENE_DETAILS_HTML_IDS.EXPRESSION_ABSENT
             : GENE_DETAILS_HTML_IDS.EXPRESSION
         }
+        renderAs="h2"
       >
         {notExpressed ? 'Reported absence of expression' : 'Expression'}
       </Bulma.Title>

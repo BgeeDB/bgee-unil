@@ -120,17 +120,17 @@ const GeneDetails = ({
                 src={imagePath(`/species/${species.id}_light.jpg`)}
                 alt={`${species.genus} ${species.speciesName}`}
               />
-              <p className="title is-size-3 has-text-centered">
+              <h1 className="title is-size-3 has-text-centered m-0">
                 {`Gene : ${name} - ${geneId} - `}
                 <i>
                   {species.genus} {species.speciesName}
                 </i>
                 {species.name ? ` (${species.name})` : ''}
-              </p>
+              </h1>
             </div>
           </div>
           <div id={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}>
-            <Bulma.Title size={4} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
               General information
             </Bulma.Title>
             <div className=" near-columns">
