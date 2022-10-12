@@ -1,14 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
 import PATHS from '../../routes/paths';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import GridSpecies from '../../components/GridSpecies/GridSpecies';
 
 const SpeciesList = () => {
-  const history = useHistory();
   const [speciesList, setSpeciesList] = useState([]);
 
   React.useEffect(() => {
@@ -48,8 +46,8 @@ const SpeciesList = () => {
         <div className="grid-species">
           <GridSpecies
             speciesList={speciesList}
-            onClick={(species) =>
-              history.push(PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id))
+            to={(species) =>
+              PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)
             }
           />
         </div>
