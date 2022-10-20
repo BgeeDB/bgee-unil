@@ -33,7 +33,7 @@ const EXAMPLES = [
 const TopAnatHead = () => (
   <>
     <div className="content has-text-centered">
-      <p className="title is-3">TopAnat - Gene Expression Enrichment</p>
+      <h1 className="title is-3">TopAnat - Gene Expression Enrichment</h1>
     </div>
     <p className="is-size-5">
       GO-like enrichment of anatomical terms, mapped to genes by expression
