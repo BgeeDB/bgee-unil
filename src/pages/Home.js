@@ -14,6 +14,7 @@ import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
 import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
+import GeneSearch from '../components/Gene/GeneSearch';
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -50,6 +51,7 @@ const Home = () => {
           <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
+
       <div className="species-banner is-hidden-touch">
         {speciesList.map((s) => (
           <img
@@ -60,6 +62,42 @@ const Home = () => {
           />
         ))}
       </div>
+
+      <Bulma.Section>
+        <GeneSearch classNames="search-input mx-auto my-3">
+          <p>
+            {`Example: `}
+            <Link
+              className="internal-link"
+              to={`${PATHS.SEARCH.GENE}?search=HBB`}
+            >
+              HBB
+            </Link>
+            {', '}
+            <Link
+              className="internal-link"
+              to={`${PATHS.SEARCH.GENE}?search=Apoc1`}
+            >
+              Apoc1
+            </Link>
+            {', '}
+            <Link
+              className="internal-link"
+              to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}
+            >
+              PDE4DIP
+            </Link>
+            {', '}
+            <Link
+              className="internal-link"
+              to={`${PATHS.SEARCH.GENE}?search=insulin`}
+            >
+              insulin
+            </Link>
+          </p>
+        </GeneSearch>
+      </Bulma.Section>
+
       <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={12}>
@@ -194,7 +232,10 @@ const NavButtons = ({ className }) => (
     )}
   >
     <p className="control">
-      <Link className="button is-primary" to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}>
+      <Link
+        className="button is-primary"
+        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+      >
         <Bulma.IonIcon name="list-outline" />
         <span>Expression comparison</span>
       </Link>
