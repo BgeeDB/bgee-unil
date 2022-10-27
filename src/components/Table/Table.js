@@ -35,6 +35,7 @@ const Table = ({
   name,
   identifierAtFilter = false,
   emptyTableMessage = 'No data',
+  isRequestPerPage = false,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -209,6 +210,7 @@ const Table = ({
         searchInput,
         pageSizeSelector,
         mappingObj,
+        isRequestPerPage,
       }}
     >
       <TableHeader />
