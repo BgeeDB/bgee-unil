@@ -45,9 +45,43 @@ const Home = () => {
               height={100}
             />
           </div>
-          <p className="is-size-4 has-text-uppercase has-text-centered has-text-white mb-6">
+          <p className="is-size-4 has-text-uppercase has-text-centered has-text-white">
             GENE EXPRESSION DATA IN ANIMALS
           </p>
+          <Bulma.Section>
+            <GeneSearch classNames="search-input mx-auto my-3 mb-5">
+              <p>
+                {`Example: `}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=HBB`}
+                >
+                  HBB
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=Apoc1`}
+                >
+                  Apoc1
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}
+                >
+                  PDE4DIP
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=insulin`}
+                >
+                  insulin
+                </Link>
+              </p>
+            </GeneSearch>
+          </Bulma.Section>
           <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
@@ -62,41 +96,6 @@ const Home = () => {
           />
         ))}
       </div>
-
-      <Bulma.Section>
-        <GeneSearch classNames="search-input mx-auto my-3">
-          <p>
-            {`Example: `}
-            <Link
-              className="internal-link"
-              to={`${PATHS.SEARCH.GENE}?search=HBB`}
-            >
-              HBB
-            </Link>
-            {', '}
-            <Link
-              className="internal-link"
-              to={`${PATHS.SEARCH.GENE}?search=Apoc1`}
-            >
-              Apoc1
-            </Link>
-            {', '}
-            <Link
-              className="internal-link"
-              to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}
-            >
-              PDE4DIP
-            </Link>
-            {', '}
-            <Link
-              className="internal-link"
-              to={`${PATHS.SEARCH.GENE}?search=insulin`}
-            >
-              insulin
-            </Link>
-          </p>
-        </GeneSearch>
-      </Bulma.Section>
 
       <Bulma.Section>
         <Bulma.Columns>
