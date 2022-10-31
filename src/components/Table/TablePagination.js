@@ -7,15 +7,8 @@ import Pagination from '../Pagination';
 import { TableContext } from '../../contexts/TableContext';
 
 const TablePagination = () => {
-  const {
-    table,
-    data,
-    usedWidth,
-    pagination,
-    currentPage,
-    setCurrentPage,
-    pageSize,
-  } = useContext(TableContext);
+  const { table, data, usedWidth, pagination, currentPage, pageSize } =
+    useContext(TableContext);
 
   const showEntriesText = React.useMemo(
     () => (
@@ -44,13 +37,7 @@ const TablePagination = () => {
       }`}
     >
       <div>{showEntriesText}</div>
-      {pagination && (
-        <Pagination
-          current={currentPage}
-          total={totalPage}
-          setPage={setCurrentPage}
-        />
-      )}
+      {pagination && <Pagination current={currentPage} total={totalPage} />}
     </div>
   );
 };

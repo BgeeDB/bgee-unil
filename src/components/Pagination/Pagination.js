@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import { usePaginationLink } from '../../hooks/usePagination';
 
-const Pagination = ({ current, total, setPage }) => {
+const Pagination = ({ current, total }) => {
+  const { generatePaginationLink } = usePaginationLink();
+
   const center = React.useMemo(() => {
     const pages = [];
     const pageBtw = total - 2;
@@ -36,20 +39,14 @@ const Pagination = ({ current, total, setPage }) => {
   if (total === 1) return null;
 
   return (
-    <nav
-      className="pagination is-small is-centered"
-      aria-label="pagination"
-    >
+    <nav className="pagination is-small is-centered" aria-label="pagination">
       <a
         className="pagination-previous"
-        onClick={() => current > 1 && setPage(current - 1)}
+        href={generatePaginationLink(current - 1)}
       >
         Previous
       </a>
-      <a
-        className="pagination-next"
-        onClick={() => current + 1 <= total && setPage(current + 1)}
-      >
+      <a className="pagination-next" href={generatePaginationLink(current + 1)}>
         Next
       </a>
       <ul className="pagination-list">
@@ -57,7 +54,7 @@ const Pagination = ({ current, total, setPage }) => {
           <a
             className={`pagination-link  ${current === 1 ? 'is-current' : ''}`}
             aria-label="Goto page 1"
-            onClick={() => current !== 1 && setPage(1)}
+            href={generatePaginationLink(1)}
           >
             1
           </a>
@@ -74,9 +71,7 @@ const Pagination = ({ current, total, setPage }) => {
                 current === page ? 'is-current' : ''
               }`}
               aria-label={`Go to page ${page}`}
-              onClick={() => {
-                if (current !== page) setPage(page);
-              }}
+              href={generatePaginationLink(page)}
             >
               {page}
             </a>
@@ -93,7 +88,7 @@ const Pagination = ({ current, total, setPage }) => {
               current === total ? 'is-current' : ''
             }`}
             aria-label={`Goto page ${total}`}
-            onClick={() => current !== total && setPage(total)}
+            href={generatePaginationLink(total)}
           >
             {total}
           </a>
