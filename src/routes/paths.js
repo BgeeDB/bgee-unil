@@ -14,6 +14,7 @@ const PATHS = {
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homology',
     SPECIES: '/search/species',
     SPECIES_ITEM: '/species/:id',
+    RAW_DATA_ANNOTATIONS: '/search/raw-data-annotations',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expression-calls',

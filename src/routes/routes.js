@@ -7,6 +7,7 @@ import ExpComp from '../pages/analysis/ExpComp';
 
 import GeneList from '../pages/search/GeneList';
 import Gene from '../pages/search/Gene';
+import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
@@ -30,12 +31,12 @@ import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
-import AboutFile          from '../static/about/about';
+import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
-import PublicationsFile   from '../static/about/publications';
-import VideoFile          from '../static/about/videos';
-import TeamFile           from '../static/about/team';
-import PrivacyPolicyFile  from '../static/about/privacyPolicy';
+import PublicationsFile from '../static/about/publications';
+import VideoFile from '../static/about/videos';
+import TeamFile from '../static/about/team';
+import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
@@ -85,6 +86,10 @@ const SEARCH = {
   [PATHS.SEARCH.SPECIES_ITEM]: {
     component: Species,
     title: 'Species',
+  },
+  [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
+    component: RawDataAnnotations,
+    title: 'Raw data annotations',
   },
 };
 const DOWNLOAD = {
@@ -190,7 +195,8 @@ const SUPPORT = {
     title: 'Processed expression values',
     meta: {
       title: 'Processed expression values files documentation',
-      description: 'Documentation of processed expression values download files',
+      description:
+        'Documentation of processed expression values download files',
       keywords: 'Documentation, processed expression values, Download files',
     },
   },
@@ -200,7 +206,8 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
     source: ScRNASeqFLProcExprValFile,
-    title: 'Single cell RNA-Seq full-length annotations and processed expression values',
+    title:
+      'Single cell RNA-Seq full-length annotations and processed expression values',
   },
   [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
     source: AffymetrixProcExprValFile,
@@ -256,7 +263,8 @@ const ABOUT = {
     meta: {
       title: 'Bgee videos',
       description: 'Bgee tutorial videos and online courses',
-      keywords: 'The Bgee videos, Bgee videos, Bgee YouTube, Bgee online courses',
+      keywords:
+        'The Bgee videos, Bgee videos, Bgee YouTube, Bgee online courses',
     },
   },
   [PATHS.ABOUT.SOURCES]: {

@@ -125,6 +125,17 @@ const Router = () => (
                 )}
               />
 
+              <Route 
+                exact
+                path={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
+                render={(props) => (
+                  <Page 
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].component}
+                  />
+                )}
+              />
+
               <Route
                 exact
                 path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}

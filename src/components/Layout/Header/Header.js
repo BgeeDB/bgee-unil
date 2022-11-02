@@ -54,6 +54,12 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.SPECIES,
       },
+      {
+        key: 'page.search.raw-data-annotations',
+        title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
+      },
     ],
   },
   {
