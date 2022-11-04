@@ -12,7 +12,7 @@ import React, {
  * @param {{
  * children?: React.ReactNode | JSX.Element | string;
  * renderOption?: (option: any, search: string) => React.ReactNode | JSX.Element;
- * getOptionsFunction?: (search: string) => Promise<any[]>;
+ * getOptionsFunction?: (search: string) => Promise<any[]> || any[];
  * onSelectOption?: (option: any) => void;
  * searchTerm?: string;
  * label?: string;
@@ -52,9 +52,13 @@ const AutoCompleteSearch = ({
   const searchHandler = useCallback(
     (val) => {
       if (val && getOptionsFunction) {
-        getOptionsFunction(val).then((options) => {
-          setAutocompleteList(options);
-        });
+        if (getOptionsFunction?.constructor?.name === 'AsyncFunction') {
+          getOptionsFunction(val).then((options) => {
+            setAutocompleteList(options);
+          });
+        } else {
+          setAutocompleteList(getOptionsFunction(val));
+        }
       } else {
         setAutocompleteList([]);
       }
@@ -72,7 +76,7 @@ const AutoCompleteSearch = ({
     [autocompleteList, search]
   );
 
-  const GeneList = useMemo(
+  const options = useMemo(
     () =>
       autocompleteList.map((option, index) => (
         <div
@@ -141,7 +145,7 @@ const AutoCompleteSearch = ({
           />
         </div>
       </div>
-      {hasResults && <div className="dropDownSearchForm">{GeneList}</div>}
+      {hasResults && <div className="dropDownSearchForm">{options}</div>}
       {hasSearchButton && (
         <div className="field">
           <div className="control is-flex is-align-items-center">
