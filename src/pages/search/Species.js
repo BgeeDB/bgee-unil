@@ -109,8 +109,15 @@ const Species = () => {
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
     /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
-    const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
-    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
+    const formattedSpeciesName = `${data.species.speciesName.replaceAll(
+      ' ',
+      '_'
+    )}`;
+    genomeSourceURL = `${
+      data.species.genomeSource.name === 'RefSeq'
+        ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}`
+        : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`
+    }`;
   }
 
   return !data ? null : (
@@ -135,7 +142,7 @@ const Species = () => {
         }`}</Bulma.Title>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
           General information
         </Bulma.Title>
         <div className="">
@@ -198,7 +205,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="exp-calls"
+          renderAs="h2"
+        >
           Gene expression call files
         </Bulma.Title>
         <div className="">
@@ -277,7 +289,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="proc-values">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="proc-values"
+          renderAs="h2"
+        >
           Processed expression value files
         </Bulma.Title>
         <div className="">
