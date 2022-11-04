@@ -42,6 +42,8 @@ const AutoCompleteSearch = ({
         onSelectOption(option);
       }
 
+      setSearch(option);
+
       setAutocompleteList([]);
     },
     []
