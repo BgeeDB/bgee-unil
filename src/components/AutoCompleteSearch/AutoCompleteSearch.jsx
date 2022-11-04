@@ -15,14 +15,18 @@ import React, {
  * getOptionsFunction?: (search: string) => Promise<any[]>;
  * onSelectOption?: (option: any) => void;
  * searchTerm?: string;
+ * label?: string;
+ * hasSearchButton?: boolean;
  * placeholder?: string; }} param0
  */
 const AutoCompleteSearch = ({
   renderOption,
   getOptionsFunction,
   onSelectOption,
+  label,
   searchTerm = '',
   placeholder,
+  hasSearchButton,
   children,
 }) => {
   const [search, setSearch] = useState('');
@@ -112,9 +116,11 @@ const AutoCompleteSearch = ({
   return (
     <div className="content">
       <div className="field">
-        <label className="label" htmlFor="autocomplete-search">
-          Search genes
-        </label>
+        {!!label && (
+          <label className="label" htmlFor="autocomplete-search">
+            {label}
+          </label>
+        )}
         <div className="control">
           <input
             ref={inputRef}
@@ -134,18 +140,20 @@ const AutoCompleteSearch = ({
         </div>
       </div>
       {hasResults && <div className="dropDownSearchForm">{GeneList}</div>}
-      <div className="field">
-        <div className="control is-flex is-align-items-center">
-          <button
-            className="button mr-2 search-form"
-            type="button"
-            onClick={onSelectChoice(search)}
-          >
-            Search
-          </button>
-          {children}
+      {hasSearchButton && (
+        <div className="field">
+          <div className="control is-flex is-align-items-center">
+            <button
+              className="button mr-2 search-form"
+              type="button"
+              onClick={onSelectChoice(search)}
+            >
+              Search
+            </button>
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

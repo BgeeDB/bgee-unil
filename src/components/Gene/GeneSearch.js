@@ -55,6 +55,8 @@ const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
     <Bulma.Card className={classnames(classNames, 'form')}>
       <Bulma.Card.Body>
         <AutoCompleteSearch
+          label="Search Genes"
+          hasSearchButton
           searchTerm={searchTerm}
           placeholder="Search Gene"
           renderOption={renderOption}
