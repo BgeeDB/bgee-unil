@@ -12,17 +12,21 @@ import React, {
  * @param {{
  * children?: React.ReactNode | JSX.Element | string;
  * renderOption?: (option: any, search: string) => React.ReactNode | JSX.Element;
- * getOptionsFunction?: (search: string) => Promise<any[]>;
+ * getOptionsFunction?: (search: string) => Promise<any[]> || any[];
  * onSelectOption?: (option: any) => void;
  * searchTerm?: string;
+ * label?: string;
+ * hasSearchButton?: boolean;
  * placeholder?: string; }} param0
  */
 const AutoCompleteSearch = ({
   renderOption,
   getOptionsFunction,
   onSelectOption,
+  label,
   searchTerm = '',
   placeholder,
+  hasSearchButton,
   children,
 }) => {
   const [search, setSearch] = useState('');
@@ -38,6 +42,8 @@ const AutoCompleteSearch = ({
         onSelectOption(option);
       }
 
+      setSearch(option);
+
       setAutocompleteList([]);
     },
     []
@@ -46,9 +52,13 @@ const AutoCompleteSearch = ({
   const searchHandler = useCallback(
     (val) => {
       if (val && getOptionsFunction) {
-        getOptionsFunction(val).then((options) => {
-          setAutocompleteList(options);
-        });
+        if (getOptionsFunction?.constructor?.name === 'AsyncFunction') {
+          getOptionsFunction(val).then((options) => {
+            setAutocompleteList(options);
+          });
+        } else {
+          setAutocompleteList(getOptionsFunction(val));
+        }
       } else {
         setAutocompleteList([]);
       }
@@ -66,7 +76,7 @@ const AutoCompleteSearch = ({
     [autocompleteList, search]
   );
 
-  const GeneList = useMemo(
+  const options = useMemo(
     () =>
       autocompleteList.map((option, index) => (
         <div
@@ -112,9 +122,11 @@ const AutoCompleteSearch = ({
   return (
     <div className="content">
       <div className="field">
-        <label className="label" htmlFor="autocomplete-search">
-          Search genes
-        </label>
+        {!!label && (
+          <label className="label" htmlFor="autocomplete-search">
+            {label}
+          </label>
+        )}
         <div className="control">
           <input
             ref={inputRef}
@@ -133,19 +145,21 @@ const AutoCompleteSearch = ({
           />
         </div>
       </div>
-      {hasResults && <div className="dropDownSearchForm">{GeneList}</div>}
-      <div className="field">
-        <div className="control is-flex is-align-items-center">
-          <button
-            className="button mr-2 search-form"
-            type="button"
-            onClick={onSelectChoice(search)}
-          >
-            Search
-          </button>
-          {children}
+      {hasResults && <div className="dropDownSearchForm">{options}</div>}
+      {hasSearchButton && (
+        <div className="field">
+          <div className="control is-flex is-align-items-center">
+            <button
+              className="button mr-2 search-form"
+              type="button"
+              onClick={onSelectChoice(search)}
+            >
+              Search
+            </button>
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
