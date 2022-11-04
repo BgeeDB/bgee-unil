@@ -45,9 +45,12 @@ const Home = () => {
               height={100}
             />
           </div>
-          <p className="is-size-4 has-text-uppercase has-text-centered has-text-white">
+          <Bulma.Title
+            className="is-size-4 has-text-uppercase has-text-centered has-text-weight-medium mb-0"
+            colorClassName="has-text-white"
+          >
             GENE EXPRESSION DATA IN ANIMALS
-          </p>
+          </Bulma.Title>
           <Bulma.Section>
             <GeneSearch classNames="search-input mx-auto my-3 mb-5">
               <p>
