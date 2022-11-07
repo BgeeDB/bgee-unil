@@ -6,7 +6,7 @@ stages:
   - analyse
   - deploy
 
-Variables:
+variables:
   GIT_DEPTH: 0
   DOCKER_IMAGE: 'build-UnivLausanne-BGEE'
   DOCKER_CONTAINER: 'UnivLausanne-BGEE'
