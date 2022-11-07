@@ -8,7 +8,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0
-  DOCKER_IMAGE: 'build-UnivLausanne-BGEE'
+  DOCKER_IMAGE: 'build-univlausanne-bgee'
   DOCKER_CONTAINER: 'UnivLausanne-BGEE'
   DOCKER_PORT: 35100
 
