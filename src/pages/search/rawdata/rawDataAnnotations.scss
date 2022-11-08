@@ -1,10 +1,14 @@
+.title-form {
+  color: red;
+}
+
 .selector {
-  width: 500px;
+  width: 40%;
   float: left;
 }
 
 .input-form {
-  width: 500px;
+  width: 40%;
   float: right;
 }
 
@@ -22,5 +26,10 @@
 }
 
 .exp-assay {
+  width: 10px;
   float: right;
+}
+
+.search-form {
+  align-items: center;
 }

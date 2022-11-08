@@ -57,7 +57,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
 
   const [speciesList, setSpeciesList] = useState([]);
   const [name, setName] = useState('');
-  const [allData, setAllData] = useState([]);
+  // const [allData, setAllData] = useState([]);
   const [cFields, setCFields] = useState({ anat: true });
   const [dataType, setDataTypes] = useState(DATA_TYPES.map((d) => d.key));
   // const [speciesId, setSpeciesId] = useState([]);
@@ -91,6 +91,8 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
 
   const renderOptionCellType = useCallback((option) => option.object.name, []);
 
+  const renderOptionStrain = useCallback((option) => option.match);
+
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoComplete(search).then((resp) => {
@@ -106,6 +108,18 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const getOptionsFunctionCellTypes = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoCompleteCellTypes(search).then((resp) => {
+        if (resp.code === 200) {
+          return resp.data.result.searchMatches;
+        }
+        return [];
+      });
+    }
+    return [];
+  }, []);
+
+  const getOptionsFunctionStrain = useCallback(async (search) => {
+    if (search) {
+      return api.search.genes.autoCompleteStrain(search).then((resp) => {
         if (resp.code === 200) {
           return resp.data.result.searchMatches;
         }
@@ -135,17 +149,17 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   //   });
   // }, []);
 
-  const handleAdd = () => {
-    if (name.length !== 0) {
-      setAllData((newData) => [...newData, name]);
-      setName('');
-    }
-  };
+  // const handleAdd = () => {
+  //   if (name.length !== 0) {
+  //     setAllData((newData) => [...newData, name]);
+  //     setName('');
+  //   }
+  // };
 
-  const handleDelete = (i) => {
-    allData.splice(i, 1);
-    setAllData([...allData]);
-  };
+  // const handleDelete = (i) => {
+  //   allData.splice(i, 1);
+  //   setAllData([...allData]);
+  // };
 
   const metaKeywords = useMemo(() => {
     const list = speciesList.map((s) => ({
@@ -304,7 +318,14 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                       }
                     />
                   </label>
-                  <Input type="text" placeholder="Search strain" />
+                  <AutoCompleteSearch
+                    searchTerm={searchTerm}
+                    placeholder="Search strain"
+                    renderOption={renderOptionStrain}
+                    getOptionsFunction={getOptionsFunctionStrain}
+                  >
+                    {children}
+                  </AutoCompleteSearch>
                 </div>
                 <div className="mb-2">
                   <label>
@@ -359,13 +380,13 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Search experimentor or assay ID"
                   />
-                  <Button onClick={handleAdd}>Add</Button>
+                  {/* <Button onClick={handleAdd}>Add</Button>
                   {allData.map((val, i) => (
                     <div className="exp-assay">
                       <div>{val}</div>
                       <Button onClick={() => handleDelete(i)}>X</Button>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 <label>
                   Data type
