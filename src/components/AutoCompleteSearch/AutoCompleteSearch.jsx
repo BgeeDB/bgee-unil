@@ -71,7 +71,6 @@ const AutoCompleteSearch = ({
   );
 
   const handleSearchChange = useCallback(({ target: { value } }) => {
-    console.log(value);
     setSearch(value);
     searchHandler(value);
   }, []);
