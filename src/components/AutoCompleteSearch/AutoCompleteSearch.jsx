@@ -42,11 +42,15 @@ const AutoCompleteSearch = ({
         onSelectOption(option);
       }
 
-      setSearch(option);
+      setSearch(
+        typeof option !== 'string' && renderOption
+          ? renderOption(option)
+          : option
+      );
 
       setAutocompleteList([]);
     },
-    []
+    [renderOption]
   );
 
   const searchHandler = useCallback(
@@ -67,6 +71,7 @@ const AutoCompleteSearch = ({
   );
 
   const handleSearchChange = useCallback(({ target: { value } }) => {
+    console.log(value);
     setSearch(value);
     searchHandler(value);
   }, []);
@@ -80,7 +85,8 @@ const AutoCompleteSearch = ({
     () =>
       autocompleteList.map((option, index) => (
         <div
-          key={option}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           onClick={onSelectChoice(option)}
           role="button"
           tabIndex={index}
