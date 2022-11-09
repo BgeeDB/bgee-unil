@@ -33,3 +33,17 @@
 .search-form {
   align-items: center;
 }
+
+.categorie {
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.cat-child {
+  margin-right: 2%;
+  border-radius: 50px;
+  div {
+    border-radius: 20px;
+  }
+}

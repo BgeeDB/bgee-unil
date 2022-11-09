@@ -93,6 +93,8 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
 
   const renderOptionStrain = useCallback((option) => option.match);
 
+  const renderOptionTissue = useCallback((option) => option.match);
+
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoComplete(search).then((resp) => {
@@ -120,6 +122,18 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const getOptionsFunctionStrain = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoCompleteStrain(search).then((resp) => {
+        if (resp.code === 200) {
+          return resp.data.result.searchMatches;
+        }
+        return [];
+      });
+    }
+    return [];
+  }, []);
+
+  const getOptionsFunctionTissue = useCallback(async (search) => {
+    if (search) {
+      return api.search.genes.autoCompleteTissue(search).then((resp) => {
         if (resp.code === 200) {
           return resp.data.result.searchMatches;
         }
@@ -178,6 +192,17 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   //     // label: `${}`
   //   }))
   // )
+
+  const customHeader = (searchElement, pageSizeElement) => (
+    <Bulma.Columns vCentered>
+      <Bulma.C size={6}>
+        <div className="field has-addons">{searchElement}</div>
+      </Bulma.C>
+      <Bulma.C size={6}>
+        <div>{pageSizeElement}</div>
+      </Bulma.C>
+    </Bulma.Columns>
+  );
 
   return (
     <>
@@ -264,7 +289,14 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                         }
                       />
                     </label>
-                    <Input type="text" placeholder="Search tissue" />
+                    <AutoCompleteSearch
+                      searchTerm={searchTerm}
+                      placeholder="Search tissue"
+                      renderOption={renderOptionTissue}
+                      getOptionsFunction={getOptionsFunctionTissue}
+                    >
+                      {children}
+                    </AutoCompleteSearch>
                     <input type="checkbox" /> Including substrcutures
                   </div>
                   <div>
@@ -299,62 +331,66 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
             </div>
             <div className="col-md-6">
               <div className="input-form">
-                <div className="mb-2">
-                  <label>
-                    Strain
-                    <HelpIcon
-                      title="Strain"
-                      style={{
-                        position: 'absolute',
-                      }}
-                      content={
-                        <>
-                          By default, all developmental and life stages are
-                          considered for the enrichment analysis. It is possible
-                          to provide a custom selection of developmental and
-                          life stages, selecting one or several developmental
-                          and life stages.
-                        </>
-                      }
-                    />
-                  </label>
-                  <AutoCompleteSearch
-                    searchTerm={searchTerm}
-                    placeholder="Search strain"
-                    renderOption={renderOptionStrain}
-                    getOptionsFunction={getOptionsFunctionStrain}
-                  >
-                    {children}
-                  </AutoCompleteSearch>
-                </div>
-                <div className="mb-2">
-                  <label>
-                    Gene
-                    <HelpIcon
-                      title="Gene"
-                      style={{
-                        position: 'absolute',
-                      }}
-                      content={
-                        <>
-                          By default, all developmental and life stages are
-                          considered for the enrichment analysis. It is possible
-                          to provide a custom selection of developmental and
-                          life stages, selecting one or several developmental
-                          and life stages.
-                        </>
-                      }
-                    />
-                  </label>
-                  <AutoCompleteSearch
-                    searchTerm={searchTerm}
-                    placeholder="Search Gene"
-                    renderOption={renderOption}
-                    getOptionsFunction={getOptionsFunction}
-                  >
-                    {children}
-                  </AutoCompleteSearch>
-                </div>
+                {speciesValue.value && (
+                  <>
+                    <div className="mb-2">
+                      <label>
+                        Strain
+                        <HelpIcon
+                          title="Strain"
+                          style={{
+                            position: 'absolute',
+                          }}
+                          content={
+                            <>
+                              By default, all developmental and life stages are
+                              considered for the enrichment analysis. It is
+                              possible to provide a custom selection of
+                              developmental and life stages, selecting one or
+                              several developmental and life stages.
+                            </>
+                          }
+                        />
+                      </label>
+                      <AutoCompleteSearch
+                        searchTerm={searchTerm}
+                        placeholder="Search strain"
+                        renderOption={renderOptionStrain}
+                        getOptionsFunction={getOptionsFunctionStrain}
+                      >
+                        {children}
+                      </AutoCompleteSearch>
+                    </div>
+                    <div className="mb-2">
+                      <label>
+                        Gene
+                        <HelpIcon
+                          title="Gene"
+                          style={{
+                            position: 'absolute',
+                          }}
+                          content={
+                            <>
+                              By default, all developmental and life stages are
+                              considered for the enrichment analysis. It is
+                              possible to provide a custom selection of
+                              developmental and life stages, selecting one or
+                              several developmental and life stages.
+                            </>
+                          }
+                        />
+                      </label>
+                      <AutoCompleteSearch
+                        searchTerm={searchTerm}
+                        placeholder="Search Gene"
+                        renderOption={renderOption}
+                        getOptionsFunction={getOptionsFunction}
+                      >
+                        {children}
+                      </AutoCompleteSearch>
+                    </div>
+                  </>
+                )}
                 <div className="mb-2">
                   <label>
                     Experiment or assay ID
@@ -378,7 +414,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Search experimentor or assay ID"
+                    placeholder="Search experiment or assay ID"
                   />
                   {/* <Button onClick={handleAdd}>Add</Button>
                   {allData.map((val, i) => (
@@ -510,19 +546,37 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
           </button>
         </div>
         <label className="title-form">Search for Raw data annotations</label>
+        <div>
+          <div className="categorie">
+            <Select className="cat-child" placeholder="Categorie 1" />
+            <Select className="cat-child" placeholder="Categorie 2" />
+            <Select className="cat-child" placeholder="Categorie 3" />
+            <Select className="cat-child" placeholder="Categorie 4" />
+            <Select className="cat-child" placeholder="Categorie 5" />
+          </div>
+        </div>
         <Table
           pagination
           sortable
           classNamesTable="is-striped"
           columns={[
-            { text: 'Gene', key: 'gene', hide: MEDIA_QUERIES.MOBILE_P },
-            { text: 'Anatomy', key: 'anatomy' },
+            { text: 'Exp ID', key: 'exp', hide: MEDIA_QUERIES.MOBILE_P },
+            { text: 'Library ID', key: 'library' },
+            { text: 'Sample ID', key: 'sample' },
+            { text: 'Cell Type', key: 'cell_type' },
+            { text: 'Tissue', key: 'tissue' },
+            { text: 'Development and life stage', key: 'development' },
             { text: 'Sex', key: 'sex' },
-            { text: 'Strain', key: 'strain' },
-            { text: 'FDR value', key: 'fdr' },
-            { text: 'Data type support', key: 'data' },
+            { text: 'Stain', key: 'strain' },
+            { text: 'Log 2 RPK threshold', key: 'log2_rpk_threshold' },
+            { text: 'Log 2 RPK score', key: 'log2_rpk_score' },
+            { text: 'Anatomical structure ID', key: 'anat_struct_id' },
+            { text: 'Gene ID', key: 'gene_id' },
+            { text: 'Direction Flag', key: 'direction_flag' },
+            { text: 'Quality', key: 'quality' },
           ]}
           data={['test']}
+          customHeader={customHeader}
         />
       </div>
     </>
