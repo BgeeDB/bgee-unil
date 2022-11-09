@@ -17,6 +17,8 @@ export const SEARCH_CANCEL_API = {
     exprCalls: null,
     processedValues: null,
     species: null,
+    autoCompleteCellTypes: null,
+    autoCompleteTissue: null,
   },
 };
 
@@ -102,6 +104,55 @@ const search = {
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.genes.autoComplete = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+
+    autoCompleteCellTypes: (val) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('search', 'cell_type');
+        params.append('query', `${val}`);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.species.autoCompleteCellTypes = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+    autoCompleteStrain: (val) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('search', 'strain');
+        params.append('query', `${val}`);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.species.autoCompleteStrain = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+    autoCompleteTissue: (val) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('search', 'anat_entity');
+        params.append('query', `${val}`);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.species.autoCompleteTissue = c;
             }),
           })
           .then(({ data }) => resolve(data))
