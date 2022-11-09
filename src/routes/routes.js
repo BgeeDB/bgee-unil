@@ -8,6 +8,7 @@ import ExpComp from '../pages/analysis/ExpComp';
 import GeneList from '../pages/search/GeneList';
 import Gene from '../pages/search/Gene';
 import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
+import PresenceExpression from '../pages/search/PresenceExpression/PresenceExpression';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
@@ -90,6 +91,10 @@ const SEARCH = {
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
     component: RawDataAnnotations,
     title: 'Raw data annotations',
+  },
+  [PATHS.SEARCH.PRESENCE_EXPRESSION]: {
+    component: PresenceExpression,
+    title: 'Presence/Absence expression calls',
   },
 };
 const DOWNLOAD = {
