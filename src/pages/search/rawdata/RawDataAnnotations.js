@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Select from 'react-select';
 import api from '../../../api';
-import Input from '../../../components/Form/Input';
 import Button from '../../../components/Bulma/Button/Button';
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
@@ -9,60 +8,23 @@ import HelpIcon from '../../../components/HelpIcon';
 import { MEDIA_QUERIES } from '../../../helpers/constants/mediaQueries';
 import AutoCompleteSearch from '../../../components/AutoCompleteSearch/AutoCompleteSearch';
 import './rawDataAnnotations.scss';
+import TagInput from '../../../components/TagInput/TagInput';
+import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 
 const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
 
 const RawDataAnnotations = ({ children, searchTerm = '' }) => {
-  const CUSTOM_FIELDS = [
-    {
-      key: 'anat',
-      text: 'Anatomy',
-    },
-    {
-      key: 'devStage',
-      text: 'Development and life stage stage',
-    },
-    {
-      key: 'sex',
-      text: 'Sex',
-    },
-    {
-      key: 'strain',
-      text: 'Strain',
-    },
-  ];
-
-  const DATA_TYPES = [
-    {
-      key: 'AFFYMETRIX',
-      text: 'Affymetrix',
-    },
-    {
-      key: 'EST',
-      text: 'EST',
-    },
-    {
-      key: 'IN_SITU',
-      text: 'In Situ hybridization',
-    },
-    {
-      key: 'RNA_SEQ',
-      text: 'scRNA Seq',
-    },
-    {
-      key: 'FULL_LENGTH',
-      text: 'bulk RNA-Seq',
-    },
-  ];
-
   const [speciesList, setSpeciesList] = useState([]);
-  const [name, setName] = useState('');
-  // const [allData, setAllData] = useState([]);
-  const [cFields, setCFields] = useState({ anat: true });
-  const [dataType, setDataTypes] = useState(DATA_TYPES.map((d) => d.key));
-  // const [speciesId, setSpeciesId] = useState([]);
+  const [selectedTissue, setSelectedTissue] = useState([]);
+  const [selectedStrain, setSelectedStrain] = useState([]);
+  const [selectedCellTypes, setSelectedCellTypes] = useState([]);
+  const [selectedGene, setSelectedGene] = useState([]);
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
+
+  useEffect(() => {
+    console.log(speciesValue);
+  }, [speciesValue]);
 
   const renderOption = useCallback((option, search) => {
     let redPart;
@@ -83,17 +45,96 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     return (
       <span>
         {firstPart}
-        <strong className="has-text-primary">{redPart}</strong>
+        <strong className="has-text-primary">
+          {redPart}{' '}
+          {/* <a
+            href={`http://localhost:3000/gene/${option.geneMatches.gene.geneId}`}
+          >
+            test
+          </a> */}
+        </strong>
         {lastPart}
       </span>
     );
   }, []);
 
-  const renderOptionCellType = useCallback((option) => option.object.name, []);
+  const renderOptionCellType = useCallback(
+    (option, search) => {
+      console.log(option.object);
+      return (
+        <div>
+          {option.object.name}{' '}
+          <a href={obolibraryLinkFromID(option.object.id)}>test</a>
+        </div>
+      );
+    }
+    // let redPart;
+    // let firstPart;
+    // let lastPart;
 
-  const renderOptionStrain = useCallback((option) => option.match);
+    // if (search) {
+    //   const firstIndex = option.object.name.indexOf(search);
+    //   if (firstIndex === 0) {
+    //     redPart = option.object.name.substring(firstIndex, search.length);
+    //     lastPart = option.object.name.substring(search.length, option.length);
+    //   } else {
+    //     firstPart = option.object.name.substring(0, firstIndex);
+    //     redPart = option.object.name.substring(firstIndex, search.length + 1);
+    //     lastPart = option.object.name.substring(
+    //       search.length + 1,
+    //       option.object.name.length
+    //     );
+    //   }
+    // }
+    // <span>
+    //   {firstPart}
+    //   <strong className="has-text-primary">{redPart}</strong>
+    //   {lastPart}
+    // </span>
+  );
 
-  const renderOptionTissue = useCallback((option) => option.match);
+  const renderOptionStrain = useCallback((option, search) => (
+    <div>{option.match}</div>
+  ));
+
+  const renderOptionTissue = useCallback(
+    (option, search) => (
+      <div>
+        {option.object.name}{' '}
+        <a
+          href={obolibraryLinkFromID(option.object.id)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          test
+        </a>
+      </div>
+    )
+
+    // let redPart;
+    // let firstPart;
+    // let lastPart;
+
+    // if (search) {
+    //   const firstIndex = option.object.name.indexOf(search);
+    //   if (firstIndex === 0) {
+    //     redPart = option.object.name.substring(firstIndex, search.length);
+    //     lastPart = option.object.name.substring(search.length, option.length);
+    //   } else {
+    //     firstPart = option.object.name.substring(0, firstIndex);
+    //     redPart = option.object.name.substring(firstIndex, search.length + 1);
+    //     lastPart = option.object.name.substring(
+    //       search.length + 1,
+    //       option.object.name.length
+    //     );
+    //   }
+    // }
+    // <span>
+    //   {firstPart}
+    //   <strong className="has-text-primary">{redPart}</strong>
+    //   {lastPart}
+    // </span>
+  );
 
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
@@ -153,56 +194,61 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   api.search.species.species().then((resp) => {
-  //     if (resp.code === 200) {
-  //       setSpeciesId(resp.data.species);
-  //     } else {
-  //       setSpeciesId([]);
-  //     }
-  //   });
-  // }, []);
-
-  // const handleAdd = () => {
-  //   if (name.length !== 0) {
-  //     setAllData((newData) => [...newData, name]);
-  //     setName('');
-  //   }
-  // };
-
-  // const handleDelete = (i) => {
-  //   allData.splice(i, 1);
-  //   setAllData([...allData]);
-  // };
-
   const metaKeywords = useMemo(() => {
     const list = speciesList.map((s) => ({
       label: `${s.genus.substr(0, 1)} ${s.speciesName} ${
         s.name ? `${s.name}` : ''
       }`,
-      value: `${s.genus.substr(0, 1)} ${s.speciesName} ${
-        s.name ? `${s.name}` : ''
-      }`,
+      value: s.id,
     }));
     return [EMPTY_SPECIES_VALUE, ...list];
   }, [speciesList]);
 
-  // const metaKeywordsDevelopment = useMemo (
-  //   () => speciesId.map((s) => ({
-  //     // label: `${}`
-  //   }))
-  // )
-
   const customHeader = (searchElement, pageSizeElement) => (
     <Bulma.Columns vCentered>
-      <Bulma.C size={6}>
-        <div className="field has-addons">{searchElement}</div>
-      </Bulma.C>
-      <Bulma.C size={6}>
+      <Bulma.C>
         <div>{pageSizeElement}</div>
       </Bulma.C>
     </Bulma.Columns>
   );
+
+  const onSelectOptionGene = useCallback((option) => {
+    setSelectedGene((gene) => [...gene, option]);
+  }, []);
+
+  const onRemoveOptionGene = useCallback((option) => {
+    setSelectedGene((gene) => gene.filter((c) => c !== option));
+  });
+
+  const onSelectOptionCellTypes = useCallback((option) => {
+    setSelectedCellTypes((cellTypes) => [...cellTypes, option]);
+  }, []);
+
+  const onRemoveOptionCellTypes = useCallback((option) => {
+    setSelectedCellTypes((cellTypes) =>
+      cellTypes.filter((c) => c.object.id !== option.object.id)
+    );
+  }, []);
+
+  const onSelectOptionTissue = useCallback((option) => {
+    setSelectedTissue((tissue) => [...tissue, option]);
+  }, []);
+
+  const onRemoveOptionTissue = useCallback((option) => {
+    setSelectedTissue((tissue) =>
+      tissue.filter((c) => c.object.id !== option.object.id)
+    );
+  }, []);
+
+  const onSelectOptionStrain = useCallback((option) => {
+    setSelectedStrain((strain) => [...strain, option]);
+  }, []);
+
+  const onRemoveOptionStrain = useCallback((option) => {
+    setSelectedStrain((strain) =>
+      strain.filter((c) => c.object !== option.object)
+    );
+  }, []);
 
   return (
     <>
@@ -210,7 +256,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
         {show && (
           <div className="row">
             <div className="selector col-sm-6">
-              <label className="title-form">
+              <label className="title-raw">
                 Search for Raw data annotations
               </label>
               <div className="mb-2">
@@ -265,6 +311,9 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                       placeholder="Search cell type"
                       renderOption={renderOptionCellType}
                       getOptionsFunction={getOptionsFunctionCellTypes}
+                      onSelectOption={onSelectOptionCellTypes}
+                      onRemoveOption={onRemoveOptionCellTypes}
+                      selectedOptions={selectedCellTypes}
                     >
                       {children}
                     </AutoCompleteSearch>
@@ -294,6 +343,9 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                       placeholder="Search tissue"
                       renderOption={renderOptionTissue}
                       getOptionsFunction={getOptionsFunctionTissue}
+                      onSelectOption={onSelectOptionTissue}
+                      onRemoveOption={onRemoveOptionTissue}
+                      selectedOptions={selectedTissue}
                     >
                       {children}
                     </AutoCompleteSearch>
@@ -357,6 +409,9 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                         placeholder="Search strain"
                         renderOption={renderOptionStrain}
                         getOptionsFunction={getOptionsFunctionStrain}
+                        onSelectOption={onSelectOptionStrain}
+                        onRemoveOption={onRemoveOptionStrain}
+                        selectedOptions={selectedStrain}
                       >
                         {children}
                       </AutoCompleteSearch>
@@ -385,6 +440,9 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                         placeholder="Search Gene"
                         renderOption={renderOption}
                         getOptionsFunction={getOptionsFunction}
+                        onSelectOption={onSelectOptionGene}
+                        onRemoveOption={onRemoveOptionGene}
+                        selectedOptions={selectedGene}
                       >
                         {children}
                       </AutoCompleteSearch>
@@ -410,12 +468,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                       }
                     />
                   </label>
-                  <Input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Search experiment or assay ID"
-                  />
+                  <TagInput />
                   {/* <Button onClick={handleAdd}>Add</Button>
                   {allData.map((val, i) => (
                     <div className="exp-assay">
@@ -423,108 +476,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                       <Button onClick={() => handleDelete(i)}>X</Button>
                     </div>
                   ))} */}
-                </div>
-                <label>
-                  Data type
-                  <HelpIcon
-                    title="Data type"
-                    style={{
-                      position: 'absolute',
-                    }}
-                    content={
-                      <>
-                        By default, all developmental and life stages are
-                        considered for the enrichment analysis. It is possible
-                        to provide a custom selection of developmental and life
-                        stages, selecting one or several developmental and life
-                        stages.
-                      </>
-                    }
-                  />
-                </label>
-
-                <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
-                  {DATA_TYPES.map((c) => (
-                    <label
-                      className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                      key={c.key}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={dataType.find((d) => d === c.key) || false}
-                        onChange={(e) => {
-                          setDataTypes((prev) => {
-                            const curr = [...prev];
-                            if (e.target.checked) {
-                              curr.push(c.key);
-                            } else {
-                              const pos = curr.findIndex((d) => d === c.key);
-                              if (pos >= 0) curr.splice(pos, 1);
-                            }
-                            return curr;
-                          });
-                        }}
-                      />
-                      <b className="mx-1">{c.text}</b>
-                    </label>
-                  ))}
-                  <Bulma.Button
-                    className="search-form"
-                    disabled={
-                      JSON.stringify(dataType.sort()) ===
-                      JSON.stringify(DATA_TYPES.map((d) => d.key).sort())
-                    }
-                    onClick={() => setDataTypes(DATA_TYPES.map((d) => d.key))}
-                  >
-                    Select All
-                  </Bulma.Button>
-                  <Bulma.Button
-                    className="search-form"
-                    disabled={dataType.length === 0}
-                    onClick={() => setDataTypes([])}
-                  >
-                    Unselect All
-                  </Bulma.Button>
-                </div>
-                <div className="mt-4">
-                  <label>
-                    Conditions parameters
-                    <HelpIcon
-                      title="Conditions parameters"
-                      style={{
-                        position: 'absolute',
-                      }}
-                      content={
-                        <>
-                          By default, all developmental and life stages are
-                          considered for the enrichment analysis. It is possible
-                          to provide a custom selection of developmental and
-                          life stages, selecting one or several developmental
-                          and life stages.
-                        </>
-                      }
-                    />
-                  </label>
-                  <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
-                    {CUSTOM_FIELDS.map((c) => (
-                      <label
-                        className="checkbox ml-2 is-size-7 is-flex is-align-items-center"
-                        key={c.key}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={cFields[c.key] || false}
-                          onChange={(e) => {
-                            setCFields((prev) => ({
-                              ...prev,
-                              [c.key]: e.target.checked || undefined,
-                            }));
-                          }}
-                        />
-                        <b className="mx-1">{c.text}</b>
-                      </label>
-                    ))}
-                  </div>
                 </div>
                 <div className="submit-reinit">
                   <Button className="submit" type="submit">
@@ -545,7 +496,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
             {show ? 'Hide Filter' : 'Show Filter'}
           </button>
         </div>
-        <label className="title-form">Search for Raw data annotations</label>
+        <label className="title-raw">Raw data annotations results</label>
         <div>
           <div className="categorie">
             <Select className="cat-child" placeholder="Categorie 1" />

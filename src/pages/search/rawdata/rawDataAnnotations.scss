@@ -1,5 +1,5 @@
-.title-form {
-  color: red;
+.title-raw {
+  color: rgb(0, 187, 255);
 }
 
 .selector {
@@ -46,4 +46,18 @@
   div {
     border-radius: 20px;
   }
+}
+
+.parent-experiment {
+  width: 500px;
+}
+
+.list-input {
+  display: flex;
+  width: 80%;
+}
+
+.lists {
+  display: flex;
+  margin-left: 2px;
 }
