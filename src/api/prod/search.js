@@ -349,6 +349,7 @@ const search = {
     speciesDevelopmentSexe: (speciesId) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data');
+        params.append('detailed_rp', '1');
         params.append('species_id', speciesId);
         axiosInstance
           .get(`/?${params.toString()}`, {

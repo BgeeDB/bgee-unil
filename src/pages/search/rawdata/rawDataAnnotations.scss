@@ -18,7 +18,7 @@
 }
 
 .submit {
-  background-color: blue;
+  // background-color: blue;
 }
 
 .reinit {
@@ -76,4 +76,18 @@
 }
 .section {
   background-color: #eeeeee;
+}
+
+.sex-container {
+  display: flex;
+}
+
+.sex-input-name {
+  display: flex;
+  margin: 4px;
+}
+
+.sex-name {
+  margin-left: 3px;
+  text-transform: capitalize;
 }

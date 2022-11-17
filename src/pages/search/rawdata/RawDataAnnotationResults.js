@@ -21,7 +21,7 @@ const RawDataAnnotationResults = ({
   resultCount = {},
   dataType = '',
 }) => {
-  console.log('results = ', results);
+  // console.log('results = ', results);
 
   const customHeader = (searchElement, pageSizeElement) => (
     <Bulma.Columns vCentered>

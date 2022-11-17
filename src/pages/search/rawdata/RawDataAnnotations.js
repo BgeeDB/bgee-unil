@@ -33,6 +33,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [selectedTissue, setSelectedTissue] = useState([]);
   const [selectedStrain, setSelectedStrain] = useState([]);
   const [selectedCellTypes, setSelectedCellTypes] = useState([]);
+  const [selectExp, setSelectExp] = useState([]);
   const [selectedGene, setSelectedGene] = useState([]);
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
@@ -52,6 +53,28 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
       </a>
     </div>
   ));
+
+  useEffect(() => {
+    if (speciesValue.value !== '') {
+      api.search.species
+        .speciesDevelopmentSexe(speciesValue.value)
+        .then((resp) => {
+          console.log('coucou', resp.data.requestDetails.requestedSpeciesSexes);
+          if (resp.code === 200) {
+            setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
+          } else {
+            setSpeciesSexe([]);
+          }
+        });
+    }
+  }, [speciesValue]);
+
+  useEffect(() => {
+    setSelectedCellTypes([]);
+    setSelectedGene([]);
+    setSelectedStrain([]);
+    setSelectedTissue([]);
+  }, [speciesValue]);
 
   useEffect(() => {
     triggerSearch();
@@ -90,7 +113,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoCompleteGene(search).then((resp) => {
-        console.log(resp.data.result.geneMatches);
         if (resp.code === 200 && resp.data.matchCount !== 0) {
           return resp.data.result.geneMatches;
         }
@@ -183,6 +205,14 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     setSelectedCellTypes((cellTypes) =>
       cellTypes.filter((c) => c.object.id !== option.object.id)
     );
+  }, []);
+
+  const onSelectOptionExp = useCallback((option) => {
+    setSelectExp((exp) => [...exp, option]);
+  }, []);
+
+  const onRemoveOptionExp = useCallback((option) => {
+    setSelectExp((exp) => exp.filter((c) => c.object.id !== option.object.id));
   }, []);
 
   const onSelectOptionTissue = useCallback((option) => {
@@ -328,10 +358,34 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     <Select />
                     <input type="checkbox" /> Including substrcutures
                   </div>
-                  <div>Sex</div>
                   <div>
-                    <input type="checkbox" /> Male <input type="checkbox" />{' '}
-                    Female <input type="checkbox" /> N/A
+                    Sex
+                    <HelpIcon
+                      title="Developmental and life stages"
+                      style={{
+                        position: 'absolute',
+                      }}
+                      content={
+                        <>
+                          By default, all developmental and life stages are
+                          considered for the enrichment analysis. It is possible
+                          to provide a custom selection of developmental and
+                          life stages, selecting one or several developmental
+                          and life stages.
+                        </>
+                      }
+                    />
+                  </div>
+                  <div className="sex-container">
+                    {speciesSexe.map((sex) => {
+                      const isChecked = true;
+                      return (
+                        <div className="sex-input-name">
+                          <input type="checkbox" />
+                          <div className="sex-name">{sex.name}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -426,11 +480,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                   <TagInput />
                 </div>
                 <div className="submit-reinit">
-                  <Button
-                    className="submit"
-                    type="submit"
-                    onClick={triggerSearch}
-                  >
+                  <Button type="submit" onClick={triggerSearch}>
                     Submit
                   </Button>
                   <Button className="reinit">Reinitialize</Button>

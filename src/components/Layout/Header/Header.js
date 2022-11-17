@@ -60,12 +60,12 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
       },
-      {
-        key: 'page.search.presence-expression',
-        title: ROUTES[PATHS.SEARCH.PRESENCE_EXPRESSION].title,
-        type: 'internal',
-        path: PATHS.SEARCH.PRESENCE_EXPRESSION,
-      },
+      // {
+      //   key: 'page.search.presence-expression',
+      //   title: ROUTES[PATHS.SEARCH.PRESENCE_EXPRESSION].title,
+      //   type: 'internal',
+      //   path: PATHS.SEARCH.PRESENCE_EXPRESSION,
+      // },
     ],
   },
   {

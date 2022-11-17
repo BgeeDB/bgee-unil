@@ -574,9 +574,7 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
                   </div>
                 </div>
                 <div className="submit-reinit">
-                  <Button className="submit" type="submit">
-                    Submit
-                  </Button>
+                  <Button type="submit">Submit</Button>
                   <Button className="reinit">Reinitialize</Button>
                 </div>
               </div>
