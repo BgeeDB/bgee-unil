@@ -42,10 +42,6 @@
 
 .cat-child {
   margin-right: 2%;
-  border-radius: 50px;
-  div {
-    border-radius: 20px;
-  }
 }
 
 .parent-experiment {
@@ -60,4 +56,24 @@
 .lists {
   display: flex;
   margin-left: 2px;
+}
+
+.ongletWrapper {
+  margin-top: 0.8rem;
+  background-color: white;
+}
+.onglet {
+  background-color: lightgray;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border: 1px solid white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+.ongletActive {
+  background-color: white;
+}
+.section {
+  background-color: #eeeeee;
 }
