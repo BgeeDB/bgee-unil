@@ -1,17 +1,32 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-use-before-define */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Select from 'react-select';
 import api from '../../../api';
 import Button from '../../../components/Bulma/Button/Button';
 import Bulma from '../../../components/Bulma';
-import Table from '../../../components/Table';
 import HelpIcon from '../../../components/HelpIcon';
-import { MEDIA_QUERIES } from '../../../helpers/constants/mediaQueries';
 import AutoCompleteSearch from '../../../components/AutoCompleteSearch/AutoCompleteSearch';
 import './rawDataAnnotations.scss';
 import TagInput from '../../../components/TagInput/TagInput';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
+import RawDataAnnotationResults from './RawDataAnnotationResults';
 
 const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
+
+const AFFYMETRIX = 'AFFYMETRIX';
+const EST = 'EST';
+const IN_SITU = 'IN_SITU';
+const RNA_SEQ = 'RNA_SEQ';
+const FULL_LENGTH = 'FULL_LENGTH';
+const DATA_TYPES = [
+  { id: FULL_LENGTH, label: 'scRNA-Seq full-length' },
+  { id: RNA_SEQ, label: 'bulk RNA-Seq' },
+  { id: AFFYMETRIX, label: 'Affymetrix data' },
+  { id: IN_SITU, label: 'In situ hybridization' },
+  { id: EST, label: 'EST' },
+];
 
 const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -21,10 +36,16 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [selectedGene, setSelectedGene] = useState([]);
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
+  const [dataType, setDataType] = useState(AFFYMETRIX);
+  const [searchResult, setSearchResult] = useState(null);
 
   useEffect(() => {
     console.log(speciesValue);
   }, [speciesValue]);
+
+  useEffect(() => {
+    triggerSearch();
+  }, [dataType]);
 
   const renderOption = useCallback((option, search) => {
     let redPart;
@@ -147,6 +168,17 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     }
     return [];
   }, []);
+
+  const triggerSearch = useCallback(
+    async () =>
+      api.search.rawData(selectedGene).then((resp) => {
+        if (resp.code === 200) {
+          setSearchResult(resp?.data);
+        }
+        return [];
+      }),
+    []
+  );
 
   const getOptionsFunctionCellTypes = useCallback(async (search) => {
     if (search) {
@@ -478,7 +510,11 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                   ))} */}
                 </div>
                 <div className="submit-reinit">
-                  <Button className="submit" type="submit">
+                  <Button
+                    className="submit"
+                    type="submit"
+                    onClick={triggerSearch}
+                  >
                     Submit
                   </Button>
                   <Button className="reinit">Reinitialize</Button>
@@ -497,38 +533,35 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
           </button>
         </div>
         <label className="title-raw">Raw data annotations results</label>
-        <div>
-          <div className="categorie">
-            <Select className="cat-child" placeholder="Categorie 1" />
-            <Select className="cat-child" placeholder="Categorie 2" />
-            <Select className="cat-child" placeholder="Categorie 3" />
-            <Select className="cat-child" placeholder="Categorie 4" />
-            <Select className="cat-child" placeholder="Categorie 5" />
-          </div>
+        <div className="is-flex columns ongletWrapper is-centered">
+          {DATA_TYPES.map((type) => {
+            const isActive = type.id === dataType;
+            return (
+              <div
+                onClick={() => setDataType(type.id)}
+                className={`onglet column is-centered ${
+                  isActive && 'ongletActive'
+                }`}
+              >
+                <span>{type.label}</span>
+                <span>
+                  (
+                  {searchResult?.resultCount?.[type.id]?.assayCount ||
+                    'No data'}
+                  )
+                </span>
+              </div>
+            );
+          })}
         </div>
-        <Table
-          pagination
-          sortable
-          classNamesTable="is-striped"
-          columns={[
-            { text: 'Exp ID', key: 'exp', hide: MEDIA_QUERIES.MOBILE_P },
-            { text: 'Library ID', key: 'library' },
-            { text: 'Sample ID', key: 'sample' },
-            { text: 'Cell Type', key: 'cell_type' },
-            { text: 'Tissue', key: 'tissue' },
-            { text: 'Development and life stage', key: 'development' },
-            { text: 'Sex', key: 'sex' },
-            { text: 'Stain', key: 'strain' },
-            { text: 'Log 2 RPK threshold', key: 'log2_rpk_threshold' },
-            { text: 'Log 2 RPK score', key: 'log2_rpk_score' },
-            { text: 'Anatomical structure ID', key: 'anat_struct_id' },
-            { text: 'Gene ID', key: 'gene_id' },
-            { text: 'Direction Flag', key: 'direction_flag' },
-            { text: 'Quality', key: 'quality' },
-          ]}
-          data={['test']}
-          customHeader={customHeader}
-        />
+        {!!searchResult && (
+          <RawDataAnnotationResults
+            results={searchResult?.results?.[dataType]}
+            filters={searchResult?.filters?.[dataType]}
+            resultCount={searchResult?.resultCount?.[dataType]}
+            dataType={dataType}
+          />
+        )}
       </div>
     </>
   );

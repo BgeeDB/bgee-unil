@@ -20,6 +20,7 @@ export const SEARCH_CANCEL_API = {
     autoCompleteCellTypes: null,
     autoCompleteTissue: null,
   },
+  rawData: null,
 };
 
 const DEFAULT_PARAMETERS = (page, action) => {
@@ -327,6 +328,28 @@ const search = {
           });
       }),
   },
+  rawData: (selectedGene) =>
+    new Promise((resolve, reject) => {
+      const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+      params.append('get_results', '1');
+      params.append('get_result_count', '1');
+      params.append('get_filters', '1');
+      params.append('data_type', 'AFFYMETRIX');
+      params.append('display_rp', '1');
+      console.log('selectedGene = ', selectedGene);
+      params.append('gene_id', selectedGene);
+      axiosInstance
+        .get(`/?${params.toString()}`, {
+          cancelToken: new axios.CancelToken((c) => {
+            SEARCH_CANCEL_API.rawData = c;
+          }),
+        })
+        .then(({ data }) => resolve(data))
+        .catch((error) => {
+          errorHandler(error);
+          reject(error?.response);
+        });
+    }),
 };
 
 export default search;
