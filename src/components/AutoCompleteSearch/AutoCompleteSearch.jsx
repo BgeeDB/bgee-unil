@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {
   useEffect,
@@ -12,21 +13,25 @@ import React, {
  * @param {{
  * children?: React.ReactNode | JSX.Element | string;
  * renderOption?: (option: any, search: string) => React.ReactNode | JSX.Element;
- * getOptionsFunction?: (search: string) => Promise<any[]> || any[];
+ * getOptionsFunction?: (search: string) => Promise<any[]> | any[];
  * onSelectOption?: (option: any) => void;
+ * onRemoveOption?: (option: any) => void;
  * searchTerm?: string;
  * label?: string;
  * hasSearchButton?: boolean;
+ * selectedOptions?: any[];
  * placeholder?: string; }} param0
  */
 const AutoCompleteSearch = ({
   renderOption,
   getOptionsFunction,
   onSelectOption,
+  onRemoveOption,
   label,
   searchTerm = '',
   placeholder,
   hasSearchButton,
+  selectedOptions,
   children,
 }) => {
   const [search, setSearch] = useState('');
@@ -42,11 +47,29 @@ const AutoCompleteSearch = ({
         onSelectOption(option);
       }
 
-      setSearch(option);
+      // If not multiple selection
+      if (!selectedOptions) {
+        setSearch(
+          typeof option !== 'string' && renderOption
+            ? renderOption(option)
+            : option
+        );
+      } else {
+        setSearch('');
+      }
 
       setAutocompleteList([]);
     },
-    []
+    [selectedOptions, onSelectOption, renderOption]
+  );
+
+  const onRemoveChoice = useCallback(
+    (option) => () => {
+      if (onRemoveOption) {
+        onRemoveOption(option);
+      }
+    },
+    [onRemoveOption]
   );
 
   const searchHandler = useCallback(
@@ -66,10 +89,13 @@ const AutoCompleteSearch = ({
     [getOptionsFunction]
   );
 
-  const handleSearchChange = useCallback(({ target: { value } }) => {
-    setSearch(value);
-    searchHandler(value);
-  }, []);
+  const handleSearchChange = useCallback(
+    ({ target: { value } }) => {
+      setSearch(value);
+      searchHandler(value);
+    },
+    [searchHandler]
+  );
 
   const hasResults = useMemo(
     () => autocompleteList.length > 0 && search.length > 0,
@@ -80,7 +106,8 @@ const AutoCompleteSearch = ({
     () =>
       autocompleteList.map((option, index) => (
         <div
-          key={option}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           onClick={onSelectChoice(option)}
           role="button"
           tabIndex={index}
@@ -146,6 +173,18 @@ const AutoCompleteSearch = ({
         </div>
       </div>
       {hasResults && <div className="dropDownSearchForm">{options}</div>}
+      {!!selectedOptions?.length && (
+        <div>
+          {selectedOptions.map((option) => (
+            <span>
+              {typeof option !== 'string' && renderOption
+                ? renderOption(option)
+                : option}{' '}
+              <span onClick={onRemoveChoice(option)}>X</span>
+            </span>
+          ))}
+        </div>
+      )}
       {hasSearchButton && (
         <div className="field">
           <div className="control is-flex is-align-items-center">

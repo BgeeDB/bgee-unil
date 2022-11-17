@@ -54,6 +54,18 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.SPECIES,
       },
+      {
+        key: 'page.search.raw-data-annotations',
+        title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
+      },
+      {
+        key: 'page.search.presence-expression',
+        title: ROUTES[PATHS.SEARCH.PRESENCE_EXPRESSION].title,
+        type: 'internal',
+        path: PATHS.SEARCH.PRESENCE_EXPRESSION,
+      },
     ],
   },
   {
@@ -276,13 +288,15 @@ const Header = () => {
   }, []);
 
   return (
-    <nav
-      className="navbar is-bgee-inverted"
-      aria-label="main navigation"
-    >
+    <nav className="navbar is-bgee-inverted" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to={PATHS.HOME}>
-          <Bulma.Image alt="Bgee logo" className="logo" src={assets.bgeeLogo} height={40} />
+          <Bulma.Image
+            alt="Bgee logo"
+            className="logo"
+            src={assets.bgeeLogo}
+            height={40}
+          />
         </Link>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
         <a

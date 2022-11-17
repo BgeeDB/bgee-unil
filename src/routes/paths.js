@@ -14,6 +14,8 @@ const PATHS = {
     ANATOMICAL_HOMOLOGY: '/search/anatomical-homology',
     SPECIES: '/search/species',
     SPECIES_ITEM: '/species/:id',
+    RAW_DATA_ANNOTATIONS: '/search/raw-data-annotations',
+    PRESENCE_EXPRESSION: '/search/presence-expression',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expression-calls',
@@ -33,9 +35,12 @@ const PATHS = {
     TOP_ANAT: '/support/top-anat',
     GENE_EXPRESSION_CALLS: '/support/gene-expression-calls',
     PROCESSED_EXPRESSION_VALUES: '/support/processed-expression-values',
-    RNASEQ_PROCESSED_EXPRESSION_VALUES: '/support/rnaseq-processed-expression-values',
-    SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES: '/support/singlecell-rnaseq-fulllength-processed-expression-values',
-    AFFYMETRIX_PROCESSED_EXPRESSION_VALUES: '/support/affymetrix-processed-expression-values',
+    RNASEQ_PROCESSED_EXPRESSION_VALUES:
+      '/support/rnaseq-processed-expression-values',
+    SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES:
+      '/support/singlecell-rnaseq-fulllength-processed-expression-values',
+    AFFYMETRIX_PROCESSED_EXPRESSION_VALUES:
+      '/support/affymetrix-processed-expression-values',
     FAQ: '/support/faq',
   },
   ABOUT: {

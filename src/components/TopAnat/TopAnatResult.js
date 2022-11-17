@@ -9,7 +9,7 @@ import LinkExternal from '../LinkExternal';
 import Table from '../Table';
 import config from '../../config.json';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
-import { topAnatSorter } from "../../helpers/sortTable";
+import { topAnatSorter } from '../../helpers/sortTable';
 
 const COLUMNS = [
   {
@@ -97,17 +97,16 @@ const TopAnatResult = ({
       'data:text/tab-separated-values;charset=utf-8,Anat Entity ID%09Anat Entity ID%09Annotated%09Significant%09Expected%09Fold Enrichment%09P value%09Fdr%0D%0A';
     if (results?.data)
       results?.data.forEach((row) => {
-        csvContent +=
-          `${[
-            row.anatEntityId,
-            row.anatEntityName,
-            row.annotated,
-            row.significant,
-            row.expected,
-            row.foldEnrichment,
-            row.pValue,
-            row.FDR,
-          ].join('%09')}%0D%0A`;
+        csvContent += `${[
+          row.anatEntityId,
+          row.anatEntityName,
+          row.annotated,
+          row.significant,
+          row.expected,
+          row.foldEnrichment,
+          row.pValue,
+          row.FDR,
+        ].join('%09')}%0D%0A`;
       });
 
     return csvContent;
