@@ -8,21 +8,12 @@ import { isEmpty } from '../../../helpers/arrayHelper';
 import { MEDIA_QUERIES } from '../../../helpers/constants/mediaQueries';
 import './rawDataAnnotations.scss';
 
-const AFFYMETRIX = 'AFFYMETRIX';
-const EST = 'EST';
-const IN_SITU = 'IN_SITU';
-const RNA_SEQ = 'RNA_SEQ';
-const FULL_LENGTH = 'FULL_LENGTH';
-const DATA_TYPES = [AFFYMETRIX, EST, IN_SITU, RNA_SEQ, FULL_LENGTH];
-
 const RawDataAnnotationResults = ({
   results = [],
   filters = {},
   resultCount = {},
   dataType = '',
 }) => {
-  // console.log('results = ', results);
-
   const customHeader = (searchElement, pageSizeElement) => (
     <Bulma.Columns vCentered>
       <Bulma.C>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {
@@ -177,8 +178,8 @@ const AutoCompleteSearch = ({
       {hasResults && <div className="dropDownSearchForm">{options}</div>}
       {!!selectedOptions?.length && (
         <div className="result">
-          {selectedOptions.map((option) => (
-            <div className="render">
+          {selectedOptions.map((option, index) => (
+            <div className="render" key={index}>
               {typeof option !== 'string' && renderOption
                 ? renderOption(option)
                 : option}{' '}

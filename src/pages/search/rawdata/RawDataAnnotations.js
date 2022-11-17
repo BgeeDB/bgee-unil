@@ -1,17 +1,18 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import api from '../../../api';
 import Button from '../../../components/Bulma/Button/Button';
-import Bulma from '../../../components/Bulma';
 import HelpIcon from '../../../components/HelpIcon';
 import AutoCompleteSearch from '../../../components/AutoCompleteSearch/AutoCompleteSearch';
 import './rawDataAnnotations.scss';
 import TagInput from '../../../components/TagInput/TagInput';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
+import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 
 const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
 
@@ -110,7 +111,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     </div>
   ));
 
-  const getOptionsFunction = useCallback(async (search) => {
+  const getOptionsFunctionGenes = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoCompleteGene(search).then((resp) => {
         if (resp.code === 200 && resp.data.matchCount !== 0) {
@@ -444,17 +445,14 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                           }
                         />
                       </label>
-                      <AutoCompleteSearch
-                        searchTerm={searchTerm}
+                      <SelectMultipleWithAutoComplete
                         placeholder="Search Gene"
-                        renderOption={renderOption}
-                        getOptionsFunction={getOptionsFunction}
+                        getOptionsFunction={getOptionsFunctionGenes}
                         onSelectOption={onSelectOptionGene}
                         onRemoveOption={onRemoveOptionGene}
                         selectedOptions={selectedGene}
-                      >
-                        {children}
-                      </AutoCompleteSearch>
+                        setValue={setSelectedGene}
+                      />
                     </div>
                   </>
                 )}
@@ -504,6 +502,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
             const isActive = type.id === dataType;
             return (
               <div
+                key={type.id}
                 onClick={() => setDataType(type.id)}
                 className={`onglet column is-centered ${
                   isActive && 'ongletActive'
