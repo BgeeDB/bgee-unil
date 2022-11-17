@@ -12,6 +12,7 @@ export const SEARCH_CANCEL_API = {
     expression: null,
     homologs: null,
     xrefs: null,
+    autoCompleteGene: null,
   },
   species: {
     exprCalls: null,
@@ -19,6 +20,7 @@ export const SEARCH_CANCEL_API = {
     species: null,
     autoCompleteCellTypes: null,
     autoCompleteTissue: null,
+    speciesDevelopmentSexe: null,
   },
 };
 
@@ -104,6 +106,23 @@ const search = {
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.genes.autoComplete = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+
+    autoCompleteGene: (val) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('gene');
+        params.append('query', `${val}`);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.genes.autoCompleteGene = c;
             }),
           })
           .then(({ data }) => resolve(data))
@@ -318,6 +337,22 @@ const search = {
             cancelToken: new axios.CancelToken((c) => {
               // An executor function receives a cancel function as a parameter
               SEARCH_CANCEL_API.species.exprCalls = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+    speciesDevelopmentSexe: (speciesId) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('data');
+        params.append('species_id', speciesId);
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.species.speciesDevelopmentSexe = c;
             }),
           })
           .then(({ data }) => resolve(data))

@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
+import './autoCompleteSearch.scss';
 
 /**
  *
@@ -33,6 +34,7 @@ const AutoCompleteSearch = ({
   hasSearchButton,
   selectedOptions,
   children,
+  autoFocus = false,
 }) => {
   const [search, setSearch] = useState('');
   const [autocompleteList, setAutocompleteList] = useState([]);
@@ -126,7 +128,7 @@ const AutoCompleteSearch = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current?.focus();
+    if (autoFocus && inputRef.current) inputRef.current?.focus();
 
     const onClick = () => {
       setAutocompleteList([]);
@@ -174,14 +176,16 @@ const AutoCompleteSearch = ({
       </div>
       {hasResults && <div className="dropDownSearchForm">{options}</div>}
       {!!selectedOptions?.length && (
-        <div>
+        <div className="result">
           {selectedOptions.map((option) => (
-            <span>
+            <div className="render">
               {typeof option !== 'string' && renderOption
                 ? renderOption(option)
                 : option}{' '}
-              <span onClick={onRemoveChoice(option)}>X</span>
-            </span>
+              <span className="span-x" onClick={onRemoveChoice(option)}>
+                X
+              </span>
+            </div>
           ))}
         </div>
       )}

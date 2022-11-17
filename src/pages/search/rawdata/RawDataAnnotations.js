@@ -21,53 +21,83 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [selectedGene, setSelectedGene] = useState([]);
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
+  const [speciesSexe, setSpeciesSexe] = useState([]);
 
-  useEffect(() => {
-    console.log(speciesValue);
-  }, [speciesValue]);
+  // useEffect(() => {
+  //   api.search.species.speciesDevelopmentSexe().then((resp) => {
+  //     console.log(resp.data.requestedDetails.resquestedSpeciesSexes);
+  //     if (resp.code === 200) {
+  //       setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
+  //     } else {
+  //       setSpeciesSexe([]);
+  //     }
+  //   });
+  // }, [speciesValue]);
 
-  const renderOption = useCallback((option, search) => {
-    let redPart;
-    let firstPart;
-    let lastPart;
+  const renderOption = useCallback(
+    (option, search) => (
+      <div>
+        {option.gene.name}{' '}
+        <a
+          href={`http://localhost:3000/gene/${option.gene.geneId}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <ion-icon name="open-outline" />
+        </a>
+      </div>
+    )
+    // let redPart;
+    // let firstPart;
+    // let lastPart;
+    // const searchedText = option.gene.name;
 
-    if (search) {
-      const firstIndex = option.indexOf(search);
-      if (firstIndex === 0) {
-        redPart = option.substring(firstIndex, search.length);
-        lastPart = option.substring(search.length, option.length);
-      } else {
-        firstPart = option.substring(0, firstIndex);
-        redPart = option.substring(firstIndex, search.length + 1);
-        lastPart = option.substring(search.length + 1, option.length);
-      }
-    }
-    return (
-      <span>
-        {firstPart}
-        <strong className="has-text-primary">
-          {redPart}{' '}
-          {/* <a
-            href={`http://localhost:3000/gene/${option.geneMatches.gene.geneId}`}
-          >
-            test
-          </a> */}
-        </strong>
-        {lastPart}
-      </span>
-    );
-  }, []);
+    // if (search) {
+    //   const firstIndex = searchedText.indexOf(search);
+    //   if (firstIndex === 0) {
+    //     redPart = searchedText.substring(firstIndex, search.length);
+    //     lastPart = searchedText.substring(search.length, searchedText.length);
+    //   } else {
+    //     firstPart = searchedText.substring(0, firstIndex);
+    //     redPart = searchedText.substring(firstIndex, search.length + 1);
+    //     lastPart = searchedText.substring(
+    //       search.length + 1,
+    //       searchedText.length
+    //     );
+    //   }
+    // }
+    // console.log('coucou', searchedText);
+    // return (
+    //   <span>
+    //     {firstPart}
+    //     <strong className="has-text-primary">
+    //       {redPart}{' '}
+    //       <a
+    //         href={`http://localhost:3000/gene/${option.gene.geneId}`}
+    //         target="_blank"
+    //         rel="noreferrer"
+    //       >
+    //         <ion-icon name="open-outline" />
+    //       </a>
+    //     </strong>
+    //     {lastPart}
+    //   </span>
+    // );
+  );
 
   const renderOptionCellType = useCallback(
-    (option, search) => {
-      console.log(option.object);
-      return (
-        <div>
-          {option.object.name}{' '}
-          <a href={obolibraryLinkFromID(option.object.id)}>test</a>
-        </div>
-      );
-    }
+    (option, search) => (
+      <div>
+        {option.object.name}{' '}
+        <a
+          href={obolibraryLinkFromID(option.object.id)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <ion-icon name="open-outline" />
+        </a>
+      </div>
+    )
     // let redPart;
     // let firstPart;
     // let lastPart;
@@ -106,7 +136,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
           target="_blank"
           rel="noreferrer"
         >
-          test
+          <ion-icon name="open-outline" />
         </a>
       </div>
     )
@@ -138,9 +168,10 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
 
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoComplete(search).then((resp) => {
+      return api.search.genes.autoCompleteGene(search).then((resp) => {
+        console.log(resp.data.result.geneMatches);
         if (resp.code === 200 && resp.data.matchCount !== 0) {
-          return resp.data.match;
+          return resp.data.result.geneMatches;
         }
         return [];
       });
@@ -469,13 +500,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     />
                   </label>
                   <TagInput />
-                  {/* <Button onClick={handleAdd}>Add</Button>
-                  {allData.map((val, i) => (
-                    <div className="exp-assay">
-                      <div>{val}</div>
-                      <Button onClick={() => handleDelete(i)}>X</Button>
-                    </div>
-                  ))} */}
                 </div>
                 <div className="submit-reinit">
                   <Button className="submit" type="submit">
