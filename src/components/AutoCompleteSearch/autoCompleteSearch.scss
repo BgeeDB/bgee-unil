@@ -1,0 +1,20 @@
+.content {
+  margin-bottom: 0 !important;
+}
+
+.result {
+  display: flex;
+  align-content: space-around;
+  flex-direction: column;
+}
+
+.render {
+  display: flex;
+}
+
+.span-x {
+  display: flex !important;
+  margin-left: 4px;
+  color: red;
+  cursor: pointer;
+}

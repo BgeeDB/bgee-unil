@@ -21,11 +21,11 @@ const TagInput = () => {
 
   return (
     <div className="div-container">
-      <div className="tag-input-container">
+      <div>
         <input
           onKeyDown={handleKeyDown}
           type="text"
-          className="tag-input"
+          className="input mb-2"
           placeholder="Experiment or assay ID"
         />
       </div>
@@ -35,7 +35,7 @@ const TagInput = () => {
           <div className="tag-item" key={index}>
             <span className="text">{tag}</span>
             <span className="close" onClick={() => removeTag(index)}>
-              &times;
+              X
             </span>
           </div>
         ))}

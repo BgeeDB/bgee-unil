@@ -36,132 +36,63 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [selectedGene, setSelectedGene] = useState([]);
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
+  const [speciesSexe, setSpeciesSexe] = useState([]);
   const [dataType, setDataType] = useState(AFFYMETRIX);
   const [searchResult, setSearchResult] = useState(null);
 
-  useEffect(() => {
-    console.log(speciesValue);
-  }, [speciesValue]);
+  const renderOption = useCallback((option, search) => (
+    <div>
+      {option.gene.name}{' '}
+      <a
+        href={`http://localhost:3000/gene/${option.gene.geneId}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <ion-icon name="open-outline" />
+      </a>
+    </div>
+  ));
 
   useEffect(() => {
     triggerSearch();
   }, [dataType]);
 
-  const renderOption = useCallback((option, search) => {
-    let redPart;
-    let firstPart;
-    let lastPart;
-
-    if (search) {
-      const firstIndex = option.indexOf(search);
-      if (firstIndex === 0) {
-        redPart = option.substring(firstIndex, search.length);
-        lastPart = option.substring(search.length, option.length);
-      } else {
-        firstPart = option.substring(0, firstIndex);
-        redPart = option.substring(firstIndex, search.length + 1);
-        lastPart = option.substring(search.length + 1, option.length);
-      }
-    }
-    return (
-      <span>
-        {firstPart}
-        <strong className="has-text-primary">
-          {redPart}{' '}
-          {/* <a
-            href={`http://localhost:3000/gene/${option.geneMatches.gene.geneId}`}
-          >
-            test
-          </a> */}
-        </strong>
-        {lastPart}
-      </span>
-    );
-  }, []);
-
-  const renderOptionCellType = useCallback(
-    (option, search) => {
-      console.log(option.object);
-      return (
-        <div>
-          {option.object.name}{' '}
-          <a href={obolibraryLinkFromID(option.object.id)}>test</a>
-        </div>
-      );
-    }
-    // let redPart;
-    // let firstPart;
-    // let lastPart;
-
-    // if (search) {
-    //   const firstIndex = option.object.name.indexOf(search);
-    //   if (firstIndex === 0) {
-    //     redPart = option.object.name.substring(firstIndex, search.length);
-    //     lastPart = option.object.name.substring(search.length, option.length);
-    //   } else {
-    //     firstPart = option.object.name.substring(0, firstIndex);
-    //     redPart = option.object.name.substring(firstIndex, search.length + 1);
-    //     lastPart = option.object.name.substring(
-    //       search.length + 1,
-    //       option.object.name.length
-    //     );
-    //   }
-    // }
-    // <span>
-    //   {firstPart}
-    //   <strong className="has-text-primary">{redPart}</strong>
-    //   {lastPart}
-    // </span>
-  );
+  const renderOptionCellType = useCallback((option, search) => (
+    <div>
+      {option.object.name}{' '}
+      <a
+        href={obolibraryLinkFromID(option.object.id)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <ion-icon name="open-outline" />
+      </a>
+    </div>
+  ));
 
   const renderOptionStrain = useCallback((option, search) => (
     <div>{option.match}</div>
   ));
 
-  const renderOptionTissue = useCallback(
-    (option, search) => (
-      <div>
-        {option.object.name}{' '}
-        <a
-          href={obolibraryLinkFromID(option.object.id)}
-          target="_blank"
-          rel="noreferrer"
-        >
-          test
-        </a>
-      </div>
-    )
-
-    // let redPart;
-    // let firstPart;
-    // let lastPart;
-
-    // if (search) {
-    //   const firstIndex = option.object.name.indexOf(search);
-    //   if (firstIndex === 0) {
-    //     redPart = option.object.name.substring(firstIndex, search.length);
-    //     lastPart = option.object.name.substring(search.length, option.length);
-    //   } else {
-    //     firstPart = option.object.name.substring(0, firstIndex);
-    //     redPart = option.object.name.substring(firstIndex, search.length + 1);
-    //     lastPart = option.object.name.substring(
-    //       search.length + 1,
-    //       option.object.name.length
-    //     );
-    //   }
-    // }
-    // <span>
-    //   {firstPart}
-    //   <strong className="has-text-primary">{redPart}</strong>
-    //   {lastPart}
-    // </span>
-  );
+  const renderOptionTissue = useCallback((option, search) => (
+    <div>
+      {option.object.name}{' '}
+      <a
+        href={obolibraryLinkFromID(option.object.id)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <ion-icon name="open-outline" />
+      </a>
+    </div>
+  ));
 
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoComplete(search).then((resp) => {
+      return api.search.genes.autoCompleteGene(search).then((resp) => {
+        console.log(resp.data.result.geneMatches);
         if (resp.code === 200 && resp.data.matchCount !== 0) {
-          return resp.data.match;
+          return resp.data.result.geneMatches;
         }
         return [];
       });
@@ -235,14 +166,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     }));
     return [EMPTY_SPECIES_VALUE, ...list];
   }, [speciesList]);
-
-  const customHeader = (searchElement, pageSizeElement) => (
-    <Bulma.Columns vCentered>
-      <Bulma.C>
-        <div>{pageSizeElement}</div>
-      </Bulma.C>
-    </Bulma.Columns>
-  );
 
   const onSelectOptionGene = useCallback((option) => {
     setSelectedGene((gene) => [...gene, option]);
@@ -501,13 +424,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     />
                   </label>
                   <TagInput />
-                  {/* <Button onClick={handleAdd}>Add</Button>
-                  {allData.map((val, i) => (
-                    <div className="exp-assay">
-                      <div>{val}</div>
-                      <Button onClick={() => handleDelete(i)}>X</Button>
-                    </div>
-                  ))} */}
                 </div>
                 <div className="submit-reinit">
                   <Button
