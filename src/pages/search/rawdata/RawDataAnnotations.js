@@ -60,7 +60,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
       api.search.species
         .speciesDevelopmentSexe(speciesValue.value)
         .then((resp) => {
-          console.log('coucou', resp.data.requestDetails.requestedSpeciesSexes);
           if (resp.code === 200) {
             setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
           } else {
@@ -247,7 +246,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
               </label>
               <div className="mb-2">
                 <label>
-                  Species
+                  Specie
                   <HelpIcon
                     title="Species"
                     style={{
@@ -275,7 +274,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                 <div>
                   <div>
                     <label>
-                      Cell types
+                      Cell type
                       <HelpIcon
                         title="Cell types"
                         style={{
@@ -339,7 +338,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                   </div>
                   <div>
                     <label>
-                      Development and life stages
+                      Developmental and life stage
                       <HelpIcon
                         title="Developmental and life stages"
                         style={{
@@ -525,6 +524,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
             filters={searchResult?.filters?.[dataType]}
             resultCount={searchResult?.resultCount?.[dataType]}
             dataType={dataType}
+            columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
           />
         )}
       </div>

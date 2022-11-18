@@ -5,13 +5,13 @@ import Select, { components } from 'react-select';
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
 import { isEmpty } from '../../../helpers/arrayHelper';
-import { MEDIA_QUERIES } from '../../../helpers/constants/mediaQueries';
 import './rawDataAnnotations.scss';
 
 const RawDataAnnotationResults = ({
   results = [],
   filters = {},
   resultCount = {},
+  columnDescriptions = {},
   dataType = '',
 }) => {
   const customHeader = (searchElement, pageSizeElement) => (
@@ -21,6 +21,15 @@ const RawDataAnnotationResults = ({
       </Bulma.C>
     </Bulma.Columns>
   );
+
+  const buildColumns = () =>
+    Object.keys(columnDescriptions).map((columnDescriptionsKey) => {
+      const column = columnDescriptions[columnDescriptionsKey];
+      return {
+        key: 'test',
+        text: column.title,
+      };
+    });
 
   return (
     <>
@@ -64,29 +73,16 @@ const RawDataAnnotationResults = ({
             })}
         </div>
       </div>
-      <Table
-        pagination
-        sortable
-        classNamesTable="is-striped"
-        columns={[
-          { text: 'Exp ID', key: 'exp', hide: MEDIA_QUERIES.MOBILE_P },
-          { text: 'Library ID', key: 'library' },
-          { text: 'Sample ID', key: 'sample' },
-          { text: 'Cell Type', key: 'cell_type' },
-          { text: 'Tissue', key: 'tissue' },
-          { text: 'Development and life stage', key: 'development' },
-          { text: 'Sex', key: 'sex' },
-          { text: 'Stain', key: 'strain' },
-          { text: 'Log 2 RPK threshold', key: 'log2_rpk_threshold' },
-          { text: 'Log 2 RPK score', key: 'log2_rpk_score' },
-          { text: 'Anatomical structure ID', key: 'anat_struct_id' },
-          { text: 'Gene ID', key: 'gene_id' },
-          { text: 'Direction Flag', key: 'direction_flag' },
-          { text: 'Quality', key: 'quality' },
-        ]}
-        data={['test']}
-        customHeader={customHeader}
-      />
+      {!isEmpty(columnDescriptions) && (
+        <Table
+          pagination
+          sortable
+          classNamesTable="is-striped"
+          columns={buildColumns()}
+          data={['test']}
+          customHeader={customHeader}
+        />
+      )}
     </>
   );
 };

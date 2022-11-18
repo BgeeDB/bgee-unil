@@ -373,6 +373,7 @@ const search = {
       params.append('data_type', 'AFFYMETRIX');
       params.append('display_rp', '1');
       console.log('selectedGene = ', selectedGene);
+      params.append('get_column_definition', '1');
       params.append('gene_id', selectedGene);
       axiosInstance
         .get(`/?${params.toString()}`, {
