@@ -25,35 +25,23 @@ const SelectMultipleWithAutoComplete = ({
   const searchHandler = useCallback(
     (val) => {
       if (val && getOptionsFunction) {
-        if (getOptionsFunction?.constructor?.name === 'AsyncFunction') {
-          setIsLoading(true);
+        setIsLoading(true);
 
-          /**
-           * Les valeurs sont a mapper correctement dans la getOptionsFunction;
-           * Pour un affichage correct voici ce qu'il faut renvoyer :
-           * - label: Label à afficher dans les options
-           * - value: id de la valeur
-           */
-          getOptionsFunction(val).then((options) => {
-            setIsLoading(false);
-            let list = [...options];
-            if (list.length > MAX_OPTIONS_LENGTH) {
-              console.warn(
-                'WARNING Options list length > ',
-                MAX_OPTIONS_LENGTH
-              );
-              list = list.slice(0, MAX_OPTIONS_LENGTH);
-            }
-            setAutocompleteList(list);
-          });
-        } else {
-          let list = getOptionsFunction(val);
+        /**
+         * Les valeurs sont a mapper correctement dans la getOptionsFunction;
+         * Pour un affichage correct voici ce qu'il faut renvoyer :
+         * - label: Label à afficher dans les options
+         * - value: id de la valeur
+         */
+        getOptionsFunction(val).then((options) => {
+          setIsLoading(false);
+          let list = [...options];
           if (list.length > MAX_OPTIONS_LENGTH) {
             console.warn('WARNING Options list length > ', MAX_OPTIONS_LENGTH);
             list = list.slice(0, MAX_OPTIONS_LENGTH);
           }
           setAutocompleteList(list);
-        }
+        });
       } else {
         setAutocompleteList([]);
       }
