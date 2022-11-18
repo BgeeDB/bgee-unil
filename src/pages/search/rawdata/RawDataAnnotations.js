@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import api from '../../../api';
 import Button from '../../../components/Bulma/Button/Button';
 import HelpIcon from '../../../components/HelpIcon';
@@ -34,33 +34,20 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const [selectedTissue, setSelectedTissue] = useState([]);
   const [selectedStrain, setSelectedStrain] = useState([]);
   const [selectedCellTypes, setSelectedCellTypes] = useState([]);
-  const [selectExp, setSelectExp] = useState([]);
+  // const [selectExp, setSelectExp] = useState([]);
   const [selectedGene, setSelectedGene] = useState([]);
+
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
   const [speciesSexe, setSpeciesSexe] = useState([]);
   const [dataType, setDataType] = useState(AFFYMETRIX);
   const [searchResult, setSearchResult] = useState(null);
 
-  const renderOption = useCallback((option, search) => (
-    <div>
-      {option.gene.name}{' '}
-      <a
-        href={`http://localhost:3000/gene/${option.gene.geneId}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <ion-icon name="open-outline" />
-      </a>
-    </div>
-  ));
-
   useEffect(() => {
     if (speciesValue.value !== '') {
       api.search.species
         .speciesDevelopmentSexe(speciesValue.value)
         .then((resp) => {
-          console.log('coucou', resp.data.requestDetails.requestedSpeciesSexes);
           if (resp.code === 200) {
             setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
           } else {
@@ -81,7 +68,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     triggerSearch();
   }, [dataType]);
 
-  const renderOptionCellType = useCallback((option, search) => (
+  const renderOptionCellType = useCallback((option) => (
     <div>
       {option.object.name}{' '}
       <a
@@ -94,11 +81,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     </div>
   ));
 
-  const renderOptionStrain = useCallback((option, search) => (
-    <div>{option.match}</div>
-  ));
-
-  const renderOptionTissue = useCallback((option, search) => (
+  const renderOptionTissue = useCallback((option) => (
     <div>
       {option.object.name}{' '}
       <a
@@ -115,7 +98,13 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     if (search) {
       return api.search.genes.autoCompleteGene(search).then((resp) => {
         if (resp.code === 200 && resp.data.matchCount !== 0) {
-          return resp.data.result.geneMatches;
+          const results = resp.data.result.geneMatches;
+          const list = results.map((o) => ({
+            label: `${o.gene.geneId}${o.gene?.name ? ` - ${o.gene.name}` : ''}`,
+            value: o.gene.geneId,
+            match: o.match,
+          }));
+          return list;
         }
         return [];
       });
@@ -149,8 +138,15 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const getOptionsFunctionStrain = useCallback(async (search) => {
     if (search) {
       return api.search.genes.autoCompleteStrain(search).then((resp) => {
-        if (resp.code === 200) {
-          return resp.data.result.searchMatches;
+        if (resp.code === 200 && resp.data.matchCount !== 0) {
+          const results = resp.data.result.searchMatches;
+          let list = [];
+          list = results.map((o) => ({
+            label: o.object,
+            value: o.object,
+            match: o.match,
+          }));
+          return list;
         }
         return [];
       });
@@ -190,14 +186,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     return [EMPTY_SPECIES_VALUE, ...list];
   }, [speciesList]);
 
-  const onSelectOptionGene = useCallback((option) => {
-    setSelectedGene((gene) => [...gene, option]);
-  }, []);
-
-  const onRemoveOptionGene = useCallback((option) => {
-    setSelectedGene((gene) => gene.filter((c) => c !== option));
-  });
-
   const onSelectOptionCellTypes = useCallback((option) => {
     setSelectedCellTypes((cellTypes) => [...cellTypes, option]);
   }, []);
@@ -208,14 +196,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
     );
   }, []);
 
-  const onSelectOptionExp = useCallback((option) => {
-    setSelectExp((exp) => [...exp, option]);
-  }, []);
-
-  const onRemoveOptionExp = useCallback((option) => {
-    setSelectExp((exp) => exp.filter((c) => c.object.id !== option.object.id));
-  }, []);
-
   const onSelectOptionTissue = useCallback((option) => {
     setSelectedTissue((tissue) => [...tissue, option]);
   }, []);
@@ -223,16 +203,6 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
   const onRemoveOptionTissue = useCallback((option) => {
     setSelectedTissue((tissue) =>
       tissue.filter((c) => c.object.id !== option.object.id)
-    );
-  }, []);
-
-  const onSelectOptionStrain = useCallback((option) => {
-    setSelectedStrain((strain) => [...strain, option]);
-  }, []);
-
-  const onRemoveOptionStrain = useCallback((option) => {
-    setSelectedStrain((strain) =>
-      strain.filter((c) => c.object !== option.object)
     );
   }, []);
 
@@ -381,7 +351,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                     {speciesSexe.map((sex) => {
                       const isChecked = true;
                       return (
-                        <div className="sex-input-name">
+                        <div key={sex.name} className="sex-input-name">
                           <input type="checkbox" />
                           <div className="sex-name">{sex.name}</div>
                         </div>
@@ -414,7 +384,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                           }
                         />
                       </label>
-                      <AutoCompleteSearch
+                      {/* <AutoCompleteSearch
                         searchTerm={searchTerm}
                         placeholder="Search strain"
                         renderOption={renderOptionStrain}
@@ -424,7 +394,13 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                         selectedOptions={selectedStrain}
                       >
                         {children}
-                      </AutoCompleteSearch>
+                      </AutoCompleteSearch> */}
+                      <SelectMultipleWithAutoComplete
+                        placeholder="Search Strain"
+                        getOptionsFunction={getOptionsFunctionStrain}
+                        selectedOptions={selectedStrain}
+                        setSelectedOptions={setSelectedStrain}
+                      />
                     </div>
                     <div className="mb-2">
                       <label>
@@ -446,12 +422,10 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                         />
                       </label>
                       <SelectMultipleWithAutoComplete
-                        placeholder="Search Gene"
+                        placeholder="Search Strain"
                         getOptionsFunction={getOptionsFunctionGenes}
-                        onSelectOption={onSelectOptionGene}
-                        onRemoveOption={onRemoveOptionGene}
                         selectedOptions={selectedGene}
-                        setValue={setSelectedGene}
+                        setSelectedOptions={setSelectedGene}
                       />
                     </div>
                   </>

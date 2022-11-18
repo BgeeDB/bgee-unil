@@ -115,18 +115,28 @@ const search = {
             reject(error?.response);
           });
       }),
-
     autoCompleteGene: (val) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('gene');
         params.append('query', `${val}`);
+
+        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
+        if (SEARCH_CANCEL_API?.genes?.autoCompleteGene !== null) {
+          SEARCH_CANCEL_API.genes?.autoCompleteGene?.(
+            '-- Search was canceled because another search was triggered --'
+          );
+        }
+
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.genes.autoCompleteGene = c;
             }),
           })
-          .then(({ data }) => resolve(data))
+          .then(({ data }) => {
+            SEARCH_CANCEL_API.genes.autoCompleteGene = null;
+            return resolve(data);
+          })
           .catch((error) => {
             errorHandler(error);
             reject(error?.response);
@@ -372,7 +382,7 @@ const search = {
       params.append('get_filters', '1');
       params.append('data_type', 'AFFYMETRIX');
       params.append('display_rp', '1');
-      console.log('selectedGene = ', selectedGene);
+      // console.log('selectedGene = ', selectedGene);
       params.append('gene_id', selectedGene);
       axiosInstance
         .get(`/?${params.toString()}`, {

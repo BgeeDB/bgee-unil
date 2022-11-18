@@ -66,7 +66,7 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
   const [show, setShow] = useState(true);
   const [speciesValue, setSpeciesValue] = useState(EMPTY_SPECIES_VALUE);
 
-  const renderOption = useCallback((option, search) => (
+  const renderOption = useCallback((option) => (
     <div>
       {option.gene.name}{' '}
       <a

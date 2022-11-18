@@ -1,26 +1,20 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './SelectMultipleWithAutoComplete.scss';
 import Select, { components } from 'react-select';
 
-const MAX_OPTIONS_LENGTH = 800;
+const MAX_OPTIONS_LENGTH = 200;
 
 const SelectMultipleWithAutoComplete = ({
   getOptionsFunction,
   label,
   placeholder,
   autoFocus = false,
-  minCharToSearch = 2,
-  setValue,
+  minCharToSearch = 1,
   selectedOptions,
+  setSelectedOptions,
 }) => {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +27,16 @@ const SelectMultipleWithAutoComplete = ({
       if (val && getOptionsFunction) {
         if (getOptionsFunction?.constructor?.name === 'AsyncFunction') {
           setIsLoading(true);
+
+          /**
+           * Les valeurs sont a mapper correctement dans la getOptionsFunction;
+           * Pour un affichage correct voici ce qu'il faut renvoyer :
+           * - label: Label à afficher dans les options
+           * - value: id de la valeur
+           */
           getOptionsFunction(val).then((options) => {
             setIsLoading(false);
-            let list = options.map((o) => ({
-              label: o.gene.name,
-              value: o.gene.geneId,
-              match: o.match,
-            }));
+            let list = [...options];
             if (list.length > MAX_OPTIONS_LENGTH) {
               console.warn(
                 'WARNING Options list length > ',
@@ -67,11 +64,15 @@ const SelectMultipleWithAutoComplete = ({
   useEffect(() => {
     if (search.trim().length >= minCharToSearch) {
       searchHandler(search);
+    } else {
+      setAutocompleteList([]);
     }
   }, [search]);
 
   useEffect(() => {
-    if (autoFocus && inputRef.current) inputRef.current?.focus();
+    if (autoFocus && inputRef.current) {
+      inputRef.current?.focus();
+    }
   }, []);
 
   const renderNoOptions = () => {
@@ -81,8 +82,14 @@ const SelectMultipleWithAutoComplete = ({
     return 'No options available';
   };
 
+  const onInputChange = (query, { action }) => {
+    if (action !== 'set-value') {
+      setSearch(query);
+    }
+  };
+
   const renderOptionWithCheckbox = ({ data, ...otherProps }) => {
-    const optionLabel = data.label.toLowerCase();
+    const optionLabel = data?.label?.toLowerCase() || '';
     const searchedTxt = search.toLowerCase();
     let firstPart = optionLabel;
     let redPart;
@@ -104,16 +111,16 @@ const SelectMultipleWithAutoComplete = ({
     }
     const isSelected = selectedOptions.some((o) => o.value === data.value);
     return (
-      <div>
-        <components.Option {...otherProps}>
-          <input type="checkbox" checked={isSelected} onChange={() => null} />{' '}
-          <span>
+      <components.Option {...otherProps}>
+        <div className="is-flex">
+          <input type="checkbox" checked={isSelected} onChange={() => null} />
+          <span className="checkboxLabel">
             {firstPart}
             <strong className="has-text-primary">{redPart}</strong>
             {lastPart}
           </span>
-        </components.Option>
-      </div>
+        </div>
+      </components.Option>
     );
   };
 
@@ -140,9 +147,12 @@ const SelectMultipleWithAutoComplete = ({
           placeholder={placeholder}
           ref={inputRef}
           onChange={(newValue) => {
-            setValue(newValue);
+            setSelectedOptions(newValue);
           }}
-          onInputChange={(txt) => setSearch(txt)}
+          onInputChange={onInputChange}
+          inputValue={search}
+          blurInputOnSelect={false}
+          input
         />
       </div>
     </div>
