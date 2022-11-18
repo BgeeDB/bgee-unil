@@ -1,3 +1,5 @@
+@import '../../styles/mixinScrollBar.scss';
+
 .content {
   margin-bottom: 0 !important;
 }
@@ -17,4 +19,22 @@
   margin-left: 4px;
   color: red;
   cursor: pointer;
+}
+
+.react-select__value-container {
+  @include scrollbars(0.3rem, #ed2e24);
+  max-height: 4.4rem;
+  overflow-y: auto !important;
+}
+
+.react-select__option {
+  cursor: pointer !important;
+}
+
+.react-select__option--is-selected {
+  background-color: rgba(237, 46, 36, 0.7) !important;
+}
+
+.checkboxLabel {
+  margin-left: 6px;
 }
