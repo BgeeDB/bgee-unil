@@ -227,7 +227,7 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (flowState === TOP_ANAT_FLOW.NEW_JOB && requestParameters.bg) {
       addNotification({
-        id: random.toString(),
+        id: random().toString(),
         children: (
           <p>
             {requestParameters.fg.list.selectedSpecies ===

@@ -230,7 +230,7 @@ const customHeader =
       const table = `Expression Comparison\n\n${dataToTsv(data)}`;
       copyToClipboard(table);
       addNotification({
-        id: random.toString(),
+        id: random().toString(),
         children: <p>Copied {data.length} rows to clipboard.</p>,
         className: `is-success`,
       });
