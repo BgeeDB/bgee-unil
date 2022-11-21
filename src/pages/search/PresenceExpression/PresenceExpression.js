@@ -133,49 +133,49 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
 
   const getOptionsFunction = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoCompleteGene(search).then((resp) => {
-        console.log(resp.data.result.geneMatches);
-        if (resp.code === 200 && resp.data.matchCount !== 0) {
-          return resp.data.result.geneMatches;
-        }
-        return [];
-      });
+      // return api.search.genes.autoCompleteGene(search, 'todo').then((resp) => {
+      //   console.log(resp.data.result.geneMatches);
+      //   if (resp.code === 200 && resp.data.matchCount !== 0) {
+      //     return resp.data.result.geneMatches;
+      //   }
+      //   return [];
+      // });
     }
     return [];
   }, []);
 
   const getOptionsFunctionCellTypes = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoCompleteCellTypes(search).then((resp) => {
-        if (resp.code === 200) {
-          return resp.data.result.searchMatches;
-        }
-        return [];
-      });
+      // return api.search.genes.autoCompleteCellTypes(search).then((resp) => {
+      //   if (resp.code === 200) {
+      //     return resp.data.result.searchMatches;
+      //   }
+      //   return [];
+      // });
     }
     return [];
   }, []);
 
   const getOptionsFunctionStrain = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoCompleteStrain(search).then((resp) => {
-        if (resp.code === 200) {
-          return resp.data.result.searchMatches;
-        }
-        return [];
-      });
+      // return api.search.genes.autoCompleteStrain(search).then((resp) => {
+      //   if (resp.code === 200) {
+      //     return resp.data.result.searchMatches;
+      //   }
+      //   return [];
+      // });
     }
     return [];
   }, []);
 
   const getOptionsFunctionTissue = useCallback(async (search) => {
     if (search) {
-      return api.search.genes.autoCompleteTissue(search).then((resp) => {
-        if (resp.code === 200) {
-          return resp.data.result.searchMatches;
-        }
-        return [];
-      });
+      // return api.search.genes.autoCompleteTissue(search).then((resp) => {
+      //   if (resp.code === 200) {
+      //     return resp.data.result.searchMatches;
+      //   }
+      //   return [];
+      // });
     }
     return [];
   }, []);

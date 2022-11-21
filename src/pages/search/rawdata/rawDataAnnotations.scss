@@ -84,10 +84,36 @@
 
 .sex-input-name {
   display: flex;
-  margin: 4px;
 }
 
 .sex-name {
-  margin-left: 3px;
   text-transform: capitalize;
+  margin-right: 8px;
+}
+
+.checkboxWrapper {
+  display: flex;
+  margin: 4px 0 4px 0;
+  cursor: pointer;
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+}
+
+label[for] {
+  margin-left: 4px;
+  cursor: pointer !important;
+}
+
+.labelWithHelpIcon {
+  display: flex;
+
+  .helpIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}
+.labelWithHelpIcon > span {
+  margin-top: 2px;
 }
