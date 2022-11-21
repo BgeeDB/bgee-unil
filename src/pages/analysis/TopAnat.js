@@ -61,7 +61,7 @@ const TopAnat = () => {
             setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
             getAxiosAddNotif()({
-              id: random.toString(),
+              id: random().toString(),
               children: (
                 <p>
                   The job is undefined. Please contact the administrator and
