@@ -2,8 +2,11 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import Select, { components } from 'react-select';
+import { Link } from 'react-router-dom';
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
+import PATHS from '../../../routes/paths';
+import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 
@@ -22,14 +25,109 @@ const RawDataAnnotationResults = ({
     </Bulma.Columns>
   );
 
+  // keyRow = index de la table ... inutile ?
+
+  // key = key qui vient de la columns
+
+  const renderCells = ({ cell, key, keyRow }, defaultRender) => {
+    console.log('cell[key] = ', cell[key]);
+
+    switch ([cell[key].type]) {
+      case 'INTERNAL_LINK':
+        return (
+          // <Link
+          //   key={`${key}-${keyRow}`}
+          //   className="internal-link"
+          //   to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+          //     ':geneId',
+          //     cell.id
+          //   ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
+          // >
+          //   {cell[key].content}
+          // </Link>
+          <div>
+            [<p>{cell[key].text}</p>]
+          </div>
+        );
+      default:
+        return defaultRender([cell[key]]);
+    }
+
+    // console.log(key);
+
+    // console.log(cell);
+
+    // console.log('_____');
+
+    // return null; // Attention ici la fonction prend un tableau ... Va savoir pourquoi !
+  };
+
   const buildColumns = () =>
-    Object.keys(columnDescriptions).map((columnDescriptionsKey) => {
+    Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
       const column = columnDescriptions[columnDescriptionsKey];
+      console.log(column);
       return {
-        key: 'test',
+        key: index,
         text: column.title,
+        attributes: column.attributes,
+        columnType: column.columnType,
       };
     });
+
+  //   {
+  //     "title": "Experiment name",
+  //     "attributes": [
+  //         "result.experiment.name"
+  //     ],
+  //     "columnType": "STRING"
+  // }
+
+  const buildResults = () => {
+    const a = Object.keys(results).map((resultsKey) => {
+      const result = results[resultsKey];
+      console.log(result);
+      return {
+        0: {
+          type: 'link_external',
+          text: result?.experiment?.id,
+          path: obolibraryLinkFromID(
+            result?.annotation?.rawDataCondition?.anatEntity?.id
+          ),
+        },
+        1: { type: 'STRING', content: result?.experiment?.name },
+        2: { type: 'STRING', content: result?.id },
+        3: {
+          type: 'STRING',
+          content:
+            result?.annotation?.rawDataCondition?.cellType?.id ||
+            result?.annotation?.rawDataCondition?.cellType?.name ||
+            result?.annotation?.rawDataCondition?.anatEntity?.id ||
+            result?.annotation?.rawDataCondition?.anatEntity?.name,
+        },
+        4: {
+          type: 'text',
+          content:
+            result?.annotation?.rawDataCondition?.devStage?.id ||
+            result?.annotation?.rawDataCondition?.devStage?.name,
+        },
+        5: {
+          type: 'STRING',
+          content: result?.annotation?.rawDataCondition?.sex,
+        },
+        6: {
+          type: 'STRING',
+          content: result?.annotation?.rawDataCondition?.strain,
+        },
+        7: {
+          type: 'STRING',
+          content:
+            result?.annotation?.rawDataCondition?.species?.genus ||
+            result?.annotation?.rawDataCondition?.species?.speciesName,
+        },
+      };
+    });
+    return a;
+  };
 
   return (
     <>
@@ -78,9 +176,15 @@ const RawDataAnnotationResults = ({
           pagination
           sortable
           classNamesTable="is-striped"
+          // columns={[
+          //   { text: 'Expérience', key: 'expId' },
+
+          //   { text: 'Status', key: 'status' },
+          // ]}
           columns={buildColumns()}
-          data={['test']}
+          data={buildResults()}
           customHeader={customHeader}
+          onRenderCell={renderCells}
         />
       )}
     </>
