@@ -561,6 +561,7 @@ const RawDataAnnotations = () => {
             filters={searchResult?.filters?.[dataType]}
             resultCount={counts[dataType]}
             dataType={dataType}
+            columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
           />
         )}
       </div>

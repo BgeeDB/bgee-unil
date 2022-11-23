@@ -340,6 +340,7 @@ const search = {
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
         params.append('display_rp', '1'); // in order to deserialize query
+        params.append('get_column_definition', '1'); // in order to get columns
         if (isOnlyCounts) {
           params.append('data_type', 'all');
           params.append('get_result_count', '1');

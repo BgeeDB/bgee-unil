@@ -4,14 +4,15 @@ import React from 'react';
 import Select, { components } from 'react-select';
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
+import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
-import { MEDIA_QUERIES } from '../../../helpers/constants/mediaQueries';
 import './rawDataAnnotations.scss';
 
 const RawDataAnnotationResults = ({
   results = [],
   filters = {},
   resultCount = {},
+  columnDescriptions = {},
   dataType = '',
 }) => {
   const customHeader = (searchElement, pageSizeElement) => (
@@ -21,6 +22,80 @@ const RawDataAnnotationResults = ({
       </Bulma.C>
     </Bulma.Columns>
   );
+
+  const renderCells = ({ cell, key, keyRow }, defaultRender) => {
+    switch ([cell[key].type]) {
+      case 'INTERNAL_LINK':
+        return (
+          // <Link
+          //   key={`${key}-${keyRow}`}
+          //   className="internal-link"
+          //   to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
+          //     ':geneId',
+          //     cell.id
+          //   ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
+          // >
+          //   {cell[key].content}
+          // </Link>
+          <div>
+            [<p>{cell[key].text}</p>]
+          </div>
+        );
+      default:
+        return defaultRender([cell[key]]);
+    }
+  };
+
+  const buildColumns = () =>
+    Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
+      const column = columnDescriptions[columnDescriptionsKey];
+      return {
+        key: index,
+        text: column.title,
+        attributes: column.attributes,
+        columnType: column.columnType,
+      };
+    });
+
+  const buildResults = () => {
+    const a = Object.keys(results).map((resultsKey) => {
+      const result = results[resultsKey];
+      return {
+        0: {
+          type: 'link_external',
+          text: result?.experiment?.id,
+          path: obolibraryLinkFromID(
+            result?.annotation?.rawDataCondition?.anatEntity?.id
+          ),
+        },
+        1: { type: 'text', content: result?.experiment?.name },
+        2: { type: 'text', content: result?.id },
+        3: {
+          type: 'text',
+          content: `${result?.annotation?.rawDataCondition?.cellType} - ${result?.annotation?.rawDataCondition?.anatEntity?.id} - ${result?.annotation?.rawDataCondition?.anatEntity?.name}`,
+        },
+        4: {
+          type: 'text',
+          content: `${result?.annotation?.rawDataCondition?.devStage?.id} -
+            ${result?.annotation?.rawDataCondition?.devStage?.name}`,
+        },
+        5: {
+          type: 'text',
+          content: result?.annotation?.rawDataCondition?.sex,
+        },
+        6: {
+          type: 'text',
+          content: result?.annotation?.rawDataCondition?.strain,
+        },
+        7: {
+          type: 'text',
+          content: `${result?.annotation?.rawDataCondition?.species?.genus} -
+            ${result?.annotation?.rawDataCondition?.species?.speciesName}`,
+        },
+      };
+    });
+    return a;
+  };
 
   return (
     <>
@@ -64,29 +139,17 @@ const RawDataAnnotationResults = ({
             })}
         </div>
       </div>
-      <Table
-        pagination
-        sortable
-        classNamesTable="is-striped"
-        columns={[
-          { text: 'Exp ID', key: 'exp', hide: MEDIA_QUERIES.MOBILE_P },
-          { text: 'Library ID', key: 'library' },
-          { text: 'Sample ID', key: 'sample' },
-          { text: 'Cell Type', key: 'cell_type' },
-          { text: 'Tissue', key: 'tissue' },
-          { text: 'Development and life stage', key: 'development' },
-          { text: 'Sex', key: 'sex' },
-          { text: 'Stain', key: 'strain' },
-          { text: 'Log 2 RPK threshold', key: 'log2_rpk_threshold' },
-          { text: 'Log 2 RPK score', key: 'log2_rpk_score' },
-          { text: 'Anatomical structure ID', key: 'anat_struct_id' },
-          { text: 'Gene ID', key: 'gene_id' },
-          { text: 'Direction Flag', key: 'direction_flag' },
-          { text: 'Quality', key: 'quality' },
-        ]}
-        data={['test']}
-        customHeader={customHeader}
-      />
+      {!isEmpty(columnDescriptions) && (
+        <Table
+          pagination
+          sortable
+          classNamesTable="is-striped"
+          columns={buildColumns()}
+          data={buildResults()}
+          customHeader={customHeader}
+          onRenderCell={renderCells}
+        />
+      )}
     </>
   );
 };
