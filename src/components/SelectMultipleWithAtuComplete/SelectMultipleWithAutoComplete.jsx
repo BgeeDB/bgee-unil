@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -7,13 +8,15 @@ import Select, { components } from 'react-select';
 
 const MAX_OPTIONS_LENGTH = 200;
 
+const escapeRegexp = (str) => str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+
 const SelectMultipleWithAutoComplete = ({
   getOptionsFunction,
   label,
   placeholder,
   autoFocus = false,
   minCharToSearch = 1,
-  selectedOptions,
+  selectedOptions = [], // Tableau des options selectionnées [{label:'', value''}, {label:'', value''}...]
   setSelectedOptions,
 }) => {
   const [search, setSearch] = useState('');
@@ -89,35 +92,44 @@ const SelectMultipleWithAutoComplete = ({
   };
 
   const renderOptionWithCheckbox = ({ data, ...otherProps }) => {
-    const optionLabel = data?.label?.toLowerCase() || '';
-    const searchedTxt = search.toLowerCase();
-    let firstPart = optionLabel;
-    let redPart;
-    let lastPart;
+    const optionLabel = data?.label || '';
 
-    if (searchedTxt.length > 0) {
-      const firstIndex = optionLabel.indexOf(searchedTxt);
-      if (firstIndex > -1) {
-        firstPart = optionLabel.substring(0, firstIndex);
-        redPart = optionLabel.substring(
-          firstIndex,
-          firstIndex + searchedTxt.length
-        );
-        lastPart = optionLabel.substring(
-          firstIndex + searchedTxt.length,
-          optionLabel.length
-        );
-      }
+    // Split la string sur la regexp case insensitive en mode globale
+    // Le tableau retourné est donc la MÊME string découpée aux endroits du match
+    // Il suffit de colorer les index impaires
+    const splitted = optionLabel.split(
+      new RegExp(`(${escapeRegexp(search)})`, 'ig')
+    );
+
+    // Pour le "rare" cas des synonyms retournés par la recherche
+    let matchFrom = '';
+    if (
+      data?.result?.matchSource !== 'name' &&
+      data?.result?.matchSource !== 'id'
+    ) {
+      matchFrom += ' - match from ';
+      matchFrom += data?.result?.matchSource;
+      matchFrom +=
+        data?.result?.match != null ? `: ${data?.result?.match}` : '';
     }
-    const isSelected = selectedOptions.some((o) => o.value === data.value);
+
     return (
       <components.Option {...otherProps}>
         <div className="is-flex">
-          <input type="checkbox" checked={isSelected} onChange={() => null} />
           <span className="checkboxLabel">
-            {firstPart}
-            <strong className="has-text-primary">{redPart}</strong>
-            {lastPart}
+            {splitted.map((txt, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <React.Fragment key={i}>
+                  {isEven ? (
+                    txt
+                  ) : (
+                    <strong className="has-text-primary">{txt}</strong>
+                  )}
+                  {matchFrom}
+                </React.Fragment>
+              );
+            })}
           </span>
         </div>
       </components.Option>
@@ -134,7 +146,7 @@ const SelectMultipleWithAutoComplete = ({
         )}
         <Select
           classNamePrefix="react-select"
-          closeMenuOnSelect={false}
+          closeMenuOnSelect
           hideSelectedOptions={false}
           options={autocompleteList}
           components={{
@@ -146,13 +158,13 @@ const SelectMultipleWithAutoComplete = ({
           isMulti
           placeholder={placeholder}
           ref={inputRef}
-          onChange={(newValue) => {
-            setSelectedOptions(newValue);
+          onChange={(allSelected) => {
+            setSelectedOptions(allSelected);
           }}
+          defaultValue={selectedOptions}
           onInputChange={onInputChange}
           inputValue={search}
           blurInputOnSelect={false}
-          input
         />
       </div>
     </div>

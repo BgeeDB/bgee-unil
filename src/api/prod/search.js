@@ -116,13 +116,19 @@ const search = {
     autoCompleteByType: (searchType, query, speciesId) =>
       new Promise((resolve, reject) => {
         let params = {};
+
+        // /!\ voué à changer après demande au client pour que toutes les search_autocomplete soit
+        // pareil ... il faura donc enlever le if gene ici
         if (searchType === 'gene') {
           params = DEFAULT_PARAMETERS('gene');
         } else {
           params = DEFAULT_PARAMETERS('search', searchType);
         }
+        if (speciesId) {
+          params.append('species_id', speciesId);
+        }
         params.append('query', `${query}`);
-        params.append('species_id', speciesId);
+        params.append('limit', 20);
 
         // Permet de cancel la requête précédente si elle n'a pas encore aboutie
         // (pratique pour un autocomplete triggered à chaque fois qu'on tape un charactère)
@@ -330,10 +336,10 @@ const search = {
       }),
   },
   rawData: {
-    search: (form, isOnlyCounts) =>
+    search: (form, isOnlyCounts, history) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
-        params.append('display_rp', '1'); // for deserialize query ... ?
+        params.append('display_rp', '1'); // in order to deserialize query
         if (isOnlyCounts) {
           params.append('data_type', 'all');
           params.append('get_result_count', '1');
@@ -342,15 +348,32 @@ const search = {
           params.append('get_results', '1');
           params.append('get_filters', '1');
         }
-        if (form.selectedSpecies !== '') {
+
+        if (form.selectedSpecies) {
           params.append('species_id', form.selectedSpecies);
         }
+
         form.selectedGene.forEach((g) => params.append('gene_id', g));
+        form.selectedStrain.forEach((s) => params.append('strain', s));
+        form.selectedTissue.forEach((t) => params.append('anat_entity_id', t));
         form.selectedSexes.forEach((s) => params.append('sex', s));
 
-        params.append('cell_type_descendant', form.hasCellTypeSubStructure);
-        params.append('anat_entity_descendant', form.hasTissueSubStructure);
-        params.append('stage_descendant', form.hasDevStageSubStructure);
+        if (form.hasCellTypeSubStructure) {
+          params.append('cell_type_descendant', form.hasCellTypeSubStructure);
+        }
+        if (form.hasTissueSubStructure) {
+          params.append('anat_entity_descendant', form.hasTissueSubStructure);
+        }
+        if (form.hasDevStageSubStructure) {
+          params.append('stage_descendant', form.hasDevStageSubStructure);
+        }
+
+        // Pour réfleter les valeurs dans l'url
+        if (history) {
+          history.push(
+            `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?${params.toString()}`
+          );
+        }
 
         axiosInstance
           .get(`/?${params.toString()}`, {

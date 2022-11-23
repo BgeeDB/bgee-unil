@@ -82,7 +82,6 @@ const Species = () => {
   }, [data]);
 
   React.useEffect(() => {
-    console.log('MOUNT id', id);
     setData();
     api.search.species
       .species(id)
