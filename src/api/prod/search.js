@@ -12,14 +12,12 @@ export const SEARCH_CANCEL_API = {
     expression: null,
     homologs: null,
     xrefs: null,
-    autoCompleteGene: null,
+    autoCompleteByType: null,
   },
   species: {
     exprCalls: null,
     processedValues: null,
     species: null,
-    autoCompleteCellTypes: null,
-    autoCompleteTissue: null,
     speciesDevelopmentSexe: null,
   },
   rawData: null,
@@ -115,77 +113,40 @@ const search = {
             reject(error?.response);
           });
       }),
-    autoCompleteGene: (val) =>
+    autoCompleteByType: (searchType, query, speciesId) =>
       new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS('gene');
-        params.append('query', `${val}`);
+        let params = {};
+
+        // /!\ voué à changer après demande au client pour que toutes les search_autocomplete soit
+        // pareil ... il faura donc enlever le if gene ici
+        if (searchType === 'gene') {
+          params = DEFAULT_PARAMETERS('gene');
+        } else {
+          params = DEFAULT_PARAMETERS('search', searchType);
+        }
+        if (speciesId) {
+          params.append('species_id', speciesId);
+        }
+        params.append('query', `${query}`);
+        params.append('limit', 20);
 
         // Permet de cancel la requête précédente si elle n'a pas encore aboutie
-        if (SEARCH_CANCEL_API?.genes?.autoCompleteGene !== null) {
-          SEARCH_CANCEL_API.genes?.autoCompleteGene?.(
+        // (pratique pour un autocomplete triggered à chaque fois qu'on tape un charactère)
+        if (SEARCH_CANCEL_API?.genes?.autoCompleteByType !== null) {
+          SEARCH_CANCEL_API.genes?.autoCompleteByType?.(
             '-- Search was canceled because another search was triggered --'
           );
         }
-
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.genes.autoCompleteGene = c;
+              SEARCH_CANCEL_API.species.autoCompleteByType = c;
             }),
           })
           .then(({ data }) => {
-            SEARCH_CANCEL_API.genes.autoCompleteGene = null;
+            SEARCH_CANCEL_API.genes.autoCompleteByType = null;
             return resolve(data);
           })
-          .catch((error) => {
-            errorHandler(error);
-            reject(error?.response);
-          });
-      }),
-
-    autoCompleteCellTypes: (val) =>
-      new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS('search', 'cell_type');
-        params.append('query', `${val}`);
-        axiosInstance
-          .get(`/?${params.toString()}`, {
-            cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.species.autoCompleteCellTypes = c;
-            }),
-          })
-          .then(({ data }) => resolve(data))
-          .catch((error) => {
-            errorHandler(error);
-            reject(error?.response);
-          });
-      }),
-    autoCompleteStrain: (val) =>
-      new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS('search', 'strain');
-        params.append('query', `${val}`);
-        axiosInstance
-          .get(`/?${params.toString()}`, {
-            cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.species.autoCompleteStrain = c;
-            }),
-          })
-          .then(({ data }) => resolve(data))
-          .catch((error) => {
-            errorHandler(error);
-            reject(error?.response);
-          });
-      }),
-    autoCompleteTissue: (val) =>
-      new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS('search', 'anat_entity');
-        params.append('query', `${val}`);
-        axiosInstance
-          .get(`/?${params.toString()}`, {
-            cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.species.autoCompleteTissue = c;
-            }),
-          })
-          .then(({ data }) => resolve(data))
           .catch((error) => {
             errorHandler(error);
             reject(error?.response);
@@ -374,29 +335,60 @@ const search = {
           });
       }),
   },
-  rawData: (selectedGene) =>
-    new Promise((resolve, reject) => {
-      const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
-      params.append('get_results', '1');
-      params.append('get_result_count', '1');
-      params.append('get_filters', '1');
-      params.append('data_type', 'AFFYMETRIX');
-      params.append('display_rp', '1');
-      console.log('selectedGene = ', selectedGene);
-      params.append('get_column_definition', '1');
-      params.append('gene_id', selectedGene);
-      axiosInstance
-        .get(`/?${params.toString()}`, {
-          cancelToken: new axios.CancelToken((c) => {
-            SEARCH_CANCEL_API.rawData = c;
-          }),
-        })
-        .then(({ data }) => resolve(data))
-        .catch((error) => {
-          errorHandler(error);
-          reject(error?.response);
-        });
-    }),
+  rawData: {
+    search: (form, isOnlyCounts, history) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+        params.append('display_rp', '1'); // in order to deserialize query
+        params.append('get_column_definition', '1'); // in order to get columns
+        if (isOnlyCounts) {
+          params.append('data_type', 'all');
+          params.append('get_result_count', '1');
+        } else {
+          params.append('data_type', form.dataType);
+          params.append('get_results', '1');
+          params.append('get_filters', '1');
+        }
+
+        if (form.selectedSpecies) {
+          params.append('species_id', form.selectedSpecies);
+        }
+
+        form.selectedGene.forEach((g) => params.append('gene_id', g));
+        form.selectedStrain.forEach((s) => params.append('strain', s));
+        form.selectedTissue.forEach((t) => params.append('anat_entity_id', t));
+        form.selectedSexes.forEach((s) => params.append('sex', s));
+
+        if (form.hasCellTypeSubStructure) {
+          params.append('cell_type_descendant', form.hasCellTypeSubStructure);
+        }
+        if (form.hasTissueSubStructure) {
+          params.append('anat_entity_descendant', form.hasTissueSubStructure);
+        }
+        if (form.hasDevStageSubStructure) {
+          params.append('stage_descendant', form.hasDevStageSubStructure);
+        }
+
+        // Pour réfleter les valeurs dans l'url
+        if (history) {
+          history.push(
+            `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?${params.toString()}`
+          );
+        }
+
+        axiosInstance
+          .get(`/?${params.toString()}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.rawData = c;
+            }),
+          })
+          .then(({ data }) => resolve(data))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
+  },
 };
 
 export default search;

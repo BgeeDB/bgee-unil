@@ -1,93 +1,121 @@
-.title-raw {
-  color: rgb(0, 187, 255);
-}
+.rawDataAnnotation {
+  .title-raw {
+    color: rgb(0, 187, 255);
+  }
 
-.selector {
-  width: 40%;
-  float: left;
-}
+  .selector {
+    width: 40%;
+    float: left;
+  }
 
-.input-form {
-  width: 40%;
-  float: right;
-}
+  .input-form {
+    width: 40%;
+    float: right;
+  }
 
-.submit-reinit {
-  margin-top: 50px;
-  float: right;
-}
+  .submit-reinit {
+    margin-top: 50px;
+    float: right;
+  }
 
-.submit {
-  // background-color: blue;
-}
+  .submit {
+    // background-color: blue;
+  }
 
-.reinit {
-  margin-left: 10px;
-}
+  .reinit {
+    margin-left: 10px;
+  }
 
-.exp-assay {
-  width: 10px;
-  float: right;
-}
+  .exp-assay {
+    width: 10px;
+    float: right;
+  }
 
-.search-form {
-  align-items: center;
-}
+  .search-form {
+    align-items: center;
+  }
 
-.categorie {
-  display: flex;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
+  .categorie {
+    display: flex;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
 
-.cat-child {
-  margin-right: 2%;
-}
+  .cat-child {
+    margin-right: 2%;
+  }
 
-.parent-experiment {
-  width: 500px;
-}
+  .parent-experiment {
+    width: 500px;
+  }
 
-.list-input {
-  display: flex;
-  width: 80%;
-}
+  .list-input {
+    display: flex;
+    width: 80%;
+  }
 
-.lists {
-  display: flex;
-  margin-left: 2px;
-}
+  .lists {
+    display: flex;
+    margin-left: 2px;
+  }
 
-.ongletWrapper {
-  margin-top: 0.8rem;
-  background-color: white;
-}
-.onglet {
-  background-color: lightgray;
-  padding: 0.5rem;
-  border-radius: 3px;
-  border: 1px solid white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-}
-.ongletActive {
-  background-color: white;
-}
-.section {
-  background-color: #eeeeee;
-}
+  .ongletWrapper {
+    margin-top: 0.8rem;
+    background-color: white;
+  }
+  .onglet {
+    background-color: lightgray;
+    padding: 0.5rem;
+    border-radius: 3px;
+    border: 1px solid white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+  .ongletActive {
+    background-color: white;
+  }
+  .section {
+    background-color: #eeeeee;
+  }
 
-.sex-container {
-  display: flex;
-}
+  .sex-container {
+    display: flex;
+  }
 
-.sex-input-name {
-  display: flex;
-  margin: 4px;
-}
+  .sex-input-name {
+    display: flex;
+  }
 
-.sex-name {
-  margin-left: 3px;
-  text-transform: capitalize;
+  .sex-name {
+    text-transform: capitalize;
+    margin-right: 8px;
+  }
+
+  .checkboxWrapper {
+    display: flex;
+    margin: 4px 0 4px 0;
+    cursor: pointer;
+  }
+
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+
+  label[for] {
+    margin-left: 4px;
+    cursor: pointer !important;
+  }
+
+  .labelWithHelpIcon {
+    display: flex;
+
+    .helpIcon {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+  .labelWithHelpIcon > span {
+    margin-top: 2px;
+  }
 }

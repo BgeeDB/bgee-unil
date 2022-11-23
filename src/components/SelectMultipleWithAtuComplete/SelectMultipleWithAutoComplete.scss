@@ -27,14 +27,23 @@
   overflow-y: auto !important;
 }
 
+.react-select__placeholder {
+  color: #bbbbbb !important;
+}
+
 .react-select__option {
   cursor: pointer !important;
 }
 
 .react-select__option--is-selected {
-  background-color: rgba(237, 46, 36, 0.7) !important;
+  background-color: rgba(237, 46, 36, 0.1) !important;
+  // background-color: #deebff !important;
+  input {
+    accent-color: rgba(237, 46, 36, 1);
+  }
 }
 
 .checkboxLabel {
   margin-left: 6px;
+  color: #626262 !important;
 }

@@ -78,13 +78,18 @@ const AutoCompleteSearch = ({
   const searchHandler = useCallback(
     (val) => {
       if (val && getOptionsFunction) {
-        // if (getOptionsFunction?.constructor?.name === 'AsyncFunction') {
-        getOptionsFunction(val).then((options) => {
-          setAutocompleteList(options);
-        });
-        // } else {
-        //   setAutocompleteList(getOptionsFunction(val));
-        // }
+        const valueOrPromise = getOptionsFunction(val);
+        if (
+          valueOrPromise &&
+          typeof valueOrPromise.then === 'function' &&
+          valueOrPromise[Symbol.toStringTag] === 'Promise'
+        ) {
+          valueOrPromise.then((options) => {
+            setAutocompleteList(options);
+          });
+        } else {
+          setAutocompleteList(valueOrPromise);
+        }
       } else {
         setAutocompleteList([]);
       }

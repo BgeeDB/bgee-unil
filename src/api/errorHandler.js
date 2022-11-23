@@ -23,7 +23,7 @@ const errorHandler = (error) => {
       description: `${error.response.status}_${data.exceptionType}${incorrectParameters}${invalidKey}`,
     });
     getAxiosAddNotif()({
-      id: random.toString(),
+      id: random().toString(),
       children: <p>{error?.response?.data?.message || error.message}</p>,
       className: `is-danger`,
     });

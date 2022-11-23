@@ -176,7 +176,7 @@ const topAnat = {
               'JobResultNotFoundException'
           ) {
             getAxiosAddNotif()({
-              id: random.toString(),
+              id: random().toString(),
               children: (
                 <p>
                   Results were not present on our server, resubmitting the

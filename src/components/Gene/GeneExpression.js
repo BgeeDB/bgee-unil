@@ -292,7 +292,6 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   )
                   .join(',')
               );
-              console.log();
               if (
                 JSON.stringify(dataType.sort()) !==
                   JSON.stringify(DATA_TYPES.map((d) => d.key).sort()) &&
