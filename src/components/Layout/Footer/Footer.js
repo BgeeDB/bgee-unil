@@ -49,7 +49,7 @@ const Footer = () => {
             onClick={() => {
               copyToClipboard(permanentLink);
               addNotification({
-                id: random.toString(),
+                id: random().toString(),
                 children: (
                   <>
                     Copied link <u>{permanentLink}</u>
