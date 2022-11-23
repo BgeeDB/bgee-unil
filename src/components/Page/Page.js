@@ -10,7 +10,7 @@ class Page extends React.PureComponent {
   }
 
   static getDerivedStateFromError(error) {
-    console.log('YOOOO', error);
+    console.error('ERROR (getDerivedStateFromError) :', error);
     // Update state so the next render will show the fallback UI.
     return { hasError: { name: error.name, message: error.message } };
   }

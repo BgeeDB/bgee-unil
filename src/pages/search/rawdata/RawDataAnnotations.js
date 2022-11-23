@@ -5,11 +5,11 @@
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Select from 'react-select';
+import { useHistory, useLocation } from 'react-router-dom';
 import api from '../../../api';
 import Button from '../../../components/Bulma/Button/Button';
 import HelpIcon from '../../../components/HelpIcon';
 import './rawDataAnnotations.scss';
-import TagInput from '../../../components/TagInput/TagInput';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 
@@ -29,9 +29,31 @@ const DATA_TYPES = [
 ];
 
 const RawDataAnnotations = () => {
+  // WIP
+  // Init from URL
+
+  // const loc = useLocation();
+  // const initSearch = new URLSearchParams(loc.search);
+  // const initSpeciesId =
+  //   initSearch.get('species_id') || EMPTY_SPECIES_VALUE.value;
+
+  // const initGene = initSearch.getAll('gene_id') || [];
+  // const initStrain = initSearch.getAll('strain') || [];
+  // const initTissue = initSearch.getAll('anat_entity_id') || [];
+  // const initSex = initSearch.getAll('sex') || [];
+  // const initHasCellTypeSubStructure =
+  //   initSearch.get('cell_type_descendant') || false;
+  // const initHasTissueSubStructure =
+  //   initSearch.get('anat_entity_descendant') || false;
+  // const initHasDevStageSubStructure =
+  //   initSearch.get('stage_descendant') || false;
+
+  const history = useHistory();
+
   // lists
   const [speciesList, setSpeciesList] = useState([]);
   const [speciesSexe, setSpeciesSexe] = useState([]);
+  const [devStage, setDevStage] = useState([]);
 
   // Form
   const [selectedSpecies, setSelectedSpecies] = useState(EMPTY_SPECIES_VALUE);
@@ -40,6 +62,7 @@ const RawDataAnnotations = () => {
   const [selectedCellTypes, setSelectedCellTypes] = useState([]);
   const [selectedGene, setSelectedGene] = useState([]);
   const [selectedSexes, setSelectedSexes] = useState([]);
+  const [selectedExpOrAssay, setSelectedExpOrAssay] = useState([]);
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(false);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(false);
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(false);
@@ -52,53 +75,61 @@ const RawDataAnnotations = () => {
   const [counts, setCounts] = useState({});
 
   useEffect(() => {
-    if (selectedSpecies.value !== '') {
-      updateSexesForSpecies();
+    if (selectedSpecies.value) {
+      getSexesAndDevStageForSpecies();
     }
     setSelectedCellTypes([]);
     setSelectedGene([]);
     setSelectedStrain([]);
     setSelectedTissue([]);
     setSelectedSexes([]);
-  }, [selectedSpecies]);
+  }, [selectedSpecies.value]);
 
   useEffect(() => {
     triggerSearch();
   }, [dataType]);
 
-  const updateSexesForSpecies = () => {
+  const getSexesAndDevStageForSpecies = () => {
     api.search.species
       .speciesDevelopmentSexe(selectedSpecies.value)
       .then((resp) => {
         if (resp.code === 200) {
           setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
+          setDevStage(
+            resp.data.requestDetails.requestedSpeciesDevStageOntology
+          );
         } else {
           setSpeciesSexe([]);
         }
       });
   };
+
   const onSubmit = () => {
     triggerCounts();
     triggerSearch();
   };
 
   const getSearchParams = () => ({
-    selectedSpecies: selectedSpecies.value,
-    selectedGene: selectedGene.map((g) => g.value),
-    selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
     dataType,
+    selectedSpecies: selectedSpecies.value,
+    selectedGene: selectedGene.map((g) => g.id),
+    selectedStrain: selectedStrain.map((s) => s.id),
+    selectedTissue: selectedTissue.map((t) => t.id),
+    selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
     hasCellTypeSubStructure,
     hasDevStageSubStructure,
     hasTissueSubStructure,
   });
 
   const triggerSearch = async () =>
-    api.search.rawData.search(getSearchParams()).then((resp) => {
-      if (resp.code === 200) {
-        setSearchResult(resp?.data);
-      }
-      return [];
-    });
+    api.search.rawData
+      .search(getSearchParams(), false, history)
+      .then((resp) => {
+        if (resp.code === 200) {
+          setSearchResult(resp?.data);
+        }
+        return [];
+      });
 
   const triggerCounts = async () =>
     api.search.rawData.search(getSearchParams(), true).then((resp) => {
@@ -111,7 +142,7 @@ const RawDataAnnotations = () => {
   const autoCompleteByType = (type, mappingFn) =>
     useCallback(
       async (query) => {
-        if (query && selectedSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+        if (query) {
           return api.search.genes
             .autoCompleteByType(type, query, selectedSpecies.value)
             .then((resp) => {
@@ -129,7 +160,7 @@ const RawDataAnnotations = () => {
         console.warn('Empty species or query !');
         return [];
       },
-      [selectedSpecies]
+      [selectedSpecies.value]
     );
 
   const getOptionsFunctionGenes = autoCompleteByType('gene', (result) => ({
@@ -137,26 +168,37 @@ const RawDataAnnotations = () => {
       result.gene?.name ? ` - ${result?.gene?.name}` : ''
     }`,
     value: result?.gene?.geneId,
-    match: result?.match,
+    result,
   }));
 
   const getCellTypeOptions = autoCompleteByType('cell_type', (result) => ({
     label: result?.object?.name,
     value: result?.object?.id,
-    match: result?.match,
+    result,
   }));
 
   const getStrainOptions = autoCompleteByType('strain', (result) => ({
     label: result?.object,
     value: result?.object,
-    match: result?.match,
+    result,
   }));
 
   const getTissueOptions = autoCompleteByType('anat_entity', (result) => ({
     label: result?.object?.name,
     value: result?.object?.id,
-    match: result?.match,
+    result,
   }));
+
+  const getExpOrAssayOptions = autoCompleteByType(
+    'experiment_assay',
+    (result) => ({
+      label: `${result?.object?.id}${
+        result.object?.name ? ` - ${result?.object?.name}` : ''
+      }`,
+      value: result?.object?.id,
+      result,
+    })
+  );
 
   useEffect(() => {
     api.search.species.list().then((resp) => {
@@ -175,11 +217,27 @@ const RawDataAnnotations = () => {
       }`,
       value: s.id,
     }));
+
+    // Pré-sélection de la valeur de l'espèce
+    // if (initSpeciesId) {
+    //   const found = list.find(
+    //     (s) => s.value.toString() === initSpeciesId.toString()
+    //   );
+    //   console.log('selected = ', found);
+    //   if (found) {
+    //     setSelectedSpecies(found.value);
+    //   }
+    // }
+
     return [EMPTY_SPECIES_VALUE, ...list];
   }, [speciesList]);
 
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
+    // Cas particulier du "all"
+    if (selectedSexes.length === 1 && selectedSexes[0] === 'all')
+      setSelectedSexes([sexName]);
+
     if (i === -1) {
       setSelectedSexes([...selectedSexes, sexName]);
     } else {
@@ -191,7 +249,7 @@ const RawDataAnnotations = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container rawDataAnnotation">
         {show && (
           <>
             <label className="title-raw">Search for Raw data annotations</label>
@@ -217,8 +275,8 @@ const RawDataAnnotations = () => {
                   <Select
                     options={metaKeywords}
                     className="form-control"
-                    defaultValue={EMPTY_SPECIES_VALUE}
-                    onChange={(e) => setSelectedSpecies(e)}
+                    value={selectedSpecies}
+                    onChange={setSelectedSpecies}
                   />
                 </div>
                 {selectedSpecies.value && (
@@ -299,7 +357,7 @@ const RawDataAnnotations = () => {
                     </div>
                     <div className="my-2">
                       <label className="labelWithHelpIcon">
-                        <span>Development and life stage</span>
+                        <span>Developmental and life stage</span>
                         <HelpIcon
                           className="helpIcon"
                           title="Developmental and life stage"
@@ -447,7 +505,12 @@ const RawDataAnnotations = () => {
                         }
                       />
                     </label>
-                    <TagInput />
+                    <SelectMultipleWithAutoComplete
+                      placeholder="Search Experiment or Assay ID"
+                      getOptionsFunction={getExpOrAssayOptions}
+                      selectedOptions={selectedExpOrAssay}
+                      setSelectedOptions={setSelectedExpOrAssay}
+                    />
                   </div>
                   <div className="submit-reinit">
                     <Button type="submit" onClick={onSubmit}>

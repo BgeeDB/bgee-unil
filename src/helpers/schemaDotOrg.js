@@ -126,8 +126,7 @@ const fileDownloadProps = (file) => ({
   ],
 });
 
-const datasetToLdJSON = (fake) => {
-  console.log('log for sonar', fake);
+const datasetToLdJSON = () => {
   // const datasetToLdJSON = (species) => {
   //    const datasets = [];
   //    species.forEach((s) => {
