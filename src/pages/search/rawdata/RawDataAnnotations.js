@@ -217,7 +217,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
               </label>
               <div className="mb-2">
                 <label>
-                  Specie
+                  Species
                   <HelpIcon
                     title="Species"
                     style={{
@@ -245,7 +245,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                 <div>
                   <div>
                     <label>
-                      Cell type
+                      Cell types
                       <HelpIcon
                         title="Cell types"
                         style={{
@@ -309,7 +309,7 @@ const RawDataAnnotations = ({ children, searchTerm = '' }) => {
                   </div>
                   <div>
                     <label>
-                      Developmental and life stage
+                      Development and life stage
                       <HelpIcon
                         title="Developmental and life stages"
                         style={{

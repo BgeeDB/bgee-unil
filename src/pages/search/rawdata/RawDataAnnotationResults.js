@@ -68,27 +68,27 @@ const RawDataAnnotationResults = ({
             result?.annotation?.rawDataCondition?.anatEntity?.id
           ),
         },
-        1: { type: 'STRING', content: result?.experiment?.name },
-        2: { type: 'STRING', content: result?.id },
+        1: { type: 'text', content: result?.experiment?.name },
+        2: { type: 'text', content: result?.id },
         3: {
-          type: 'STRING',
+          type: 'text',
           content: `${result?.annotation?.rawDataCondition?.cellType} - ${result?.annotation?.rawDataCondition?.anatEntity?.id} - ${result?.annotation?.rawDataCondition?.anatEntity?.name}`,
         },
         4: {
-          type: 'STRING',
+          type: 'text',
           content: `${result?.annotation?.rawDataCondition?.devStage?.id} -
             ${result?.annotation?.rawDataCondition?.devStage?.name}`,
         },
         5: {
-          type: 'STRING',
+          type: 'text',
           content: result?.annotation?.rawDataCondition?.sex,
         },
         6: {
-          type: 'STRING',
+          type: 'text',
           content: result?.annotation?.rawDataCondition?.strain,
         },
         7: {
-          type: 'STRING',
+          type: 'text',
           content: `${result?.annotation?.rawDataCondition?.species?.genus} -
             ${result?.annotation?.rawDataCondition?.species?.speciesName}`,
         },

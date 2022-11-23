@@ -352,7 +352,6 @@ const staticBuilder = (json, prefixKey = '') =>
           />
         );
       case 'text':
-      case 'STRING':
         return (
           <p
             id={props.id}
