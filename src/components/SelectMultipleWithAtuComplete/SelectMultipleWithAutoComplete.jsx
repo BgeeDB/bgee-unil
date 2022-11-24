@@ -161,7 +161,7 @@ const SelectMultipleWithAutoComplete = ({
           onChange={(allSelected) => {
             setSelectedOptions(allSelected);
           }}
-          defaultValue={selectedOptions}
+          value={selectedOptions}
           onInputChange={onInputChange}
           inputValue={search}
           blurInputOnSelect={false}

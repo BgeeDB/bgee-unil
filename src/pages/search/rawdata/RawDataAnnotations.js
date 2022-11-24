@@ -12,8 +12,11 @@ import HelpIcon from '../../../components/HelpIcon';
 import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
+import PATHS from '../../../routes/paths';
 
 const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
+
+// http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
 
 const AFFYMETRIX = 'AFFYMETRIX';
 const EST = 'EST';
@@ -29,13 +32,13 @@ const DATA_TYPES = [
 ];
 
 const RawDataAnnotations = () => {
-  // WIP
-  // Init from URL
+  const history = useHistory();
 
-  // const loc = useLocation();
-  // const initSearch = new URLSearchParams(loc.search);
-  // const initSpeciesId =
-  //   initSearch.get('species_id') || EMPTY_SPECIES_VALUE.value;
+  // Init from URL
+  const loc = useLocation();
+  const initSearch = new URLSearchParams(loc.search);
+  const initHash = initSearch.get('data');
+  const [hash, setHash] = useState(initHash);
 
   // const initGene = initSearch.getAll('gene_id') || [];
   // const initStrain = initSearch.getAll('strain') || [];
@@ -48,11 +51,9 @@ const RawDataAnnotations = () => {
   // const initHasDevStageSubStructure =
   //   initSearch.get('stage_descendant') || false;
 
-  const history = useHistory();
-
   // lists
   const [speciesList, setSpeciesList] = useState([]);
-  const [speciesSexe, setSpeciesSexe] = useState([]);
+  const [speciesSexes, setSpeciesSexes] = useState([]);
   const [devStage, setDevStage] = useState([]);
 
   // Form
@@ -74,62 +75,180 @@ const RawDataAnnotations = () => {
   const [dataType, setDataType] = useState(AFFYMETRIX);
   const [counts, setCounts] = useState({});
 
-  useEffect(() => {
-    if (selectedSpecies.value) {
-      getSexesAndDevStageForSpecies();
+  const onChangeSpecies = (newSpecies) => {
+    console.log('species changed erase all form');
+    if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+      getSexesAndDevStageForSpecies(newSpecies.value);
     }
+    setSelectedSpecies(newSpecies);
     setSelectedCellTypes([]);
     setSelectedGene([]);
     setSelectedStrain([]);
     setSelectedTissue([]);
     setSelectedSexes([]);
-  }, [selectedSpecies.value]);
+  };
 
   useEffect(() => {
     triggerSearch();
   }, [dataType]);
 
-  const getSexesAndDevStageForSpecies = () => {
-    api.search.species
-      .speciesDevelopmentSexe(selectedSpecies.value)
-      .then((resp) => {
-        if (resp.code === 200) {
-          setSpeciesSexe(resp.data.requestDetails.requestedSpeciesSexes);
-          setDevStage(
-            resp.data.requestDetails.requestedSpeciesDevStageOntology
-          );
-        } else {
-          setSpeciesSexe([]);
-        }
-      });
-  };
+  useEffect(() => {
+    api.search.species.list().then((resp) => {
+      if (resp.code === 200) {
+        setSpeciesList(resp.data.species);
+      } else {
+        setSpeciesList([]);
+      }
+    });
+  }, []);
 
   const onSubmit = () => {
     triggerCounts();
     triggerSearch();
   };
 
+  const setInitDataFromDetailedRP = (resp) => {
+    const { requestParameters, data } = resp;
+    const { requestDetails } = data;
+    setDataType(requestParameters.data_type[0]);
+
+    // Species
+    if (requestDetails?.requestedSpecies) {
+      setSelectedSpecies({
+        label: getSpeciesLabel(requestDetails?.requestedSpecies),
+        value: requestDetails?.requestedSpecies?.id,
+      });
+    }
+
+    // Sexes
+    if (requestDetails?.requestedSpeciesSexes?.length > 0) {
+      setSpeciesSexes(requestDetails?.requestedSpeciesSexes);
+    }
+    if (
+      requestParameters?.sex?.length > 0 &&
+      requestParameters?.sex[0] !== 'all'
+    ) {
+      setSelectedSexes(requestParameters?.sex);
+    }
+
+    // Genes
+    if (requestDetails?.requestedGenes?.length > 0) {
+      const initGenes = requestDetails?.requestedGenes.map((g) => ({
+        label: getGeneLabel(g),
+        value: g.geneId,
+      }));
+      setSelectedGene(initGenes);
+    }
+
+    // Tissues (anatEntities)
+    const cellTypesAndTissues =
+      requestDetails?.requestedAnatEntitesAndCellTypes || [];
+    if (requestParameters?.anat_entity_id?.length > 0) {
+      const initTissues = [];
+      requestParameters?.anat_entity_id.forEach((tissueId) => {
+        const foundTissue = cellTypesAndTissues.find((t) => t.id === tissueId);
+        if (foundTissue) {
+          initTissues.push({ label: foundTissue.name, value: tissueId });
+        }
+      });
+      setSelectedTissue(initTissues);
+    }
+
+    // Celle types
+    if (requestParameters?.cell_type_id?.length > 0) {
+      const initCelleTypes = [];
+      requestParameters?.cell_type_id.forEach((cellTypeId) => {
+        const foundCellType = cellTypesAndTissues.find(
+          (t) => t.id === cellTypeId
+        );
+        if (foundCellType) {
+          initCelleTypes.push({ label: foundCellType.name, value: cellTypeId });
+        }
+      });
+      setSelectedCellTypes(initCelleTypes);
+    }
+
+    // Strain
+    if (requestParameters?.strain?.length > 0) {
+      setSelectedStrain(
+        requestParameters?.strain.map((s) => ({ value: s, label: s }))
+      );
+    }
+
+    // Exp or Assay ID
+    // @TODO
+    if (requestParameters?.exp_assay_id?.length) {
+      console.log('assay = ', requestParameters?.exp_assay_id);
+      // setSelectedExpOrAssay();
+    }
+
+    // SubStructures
+    if (requestParameters?.anat_entity_descendant === 'true') {
+      setHasTissueSubStructure(true);
+    }
+    if (requestParameters?.cell_type_descendant === 'true') {
+      setHasCellTypeSubStructure(true);
+    }
+    if (requestParameters?.stage_descendant === 'true') {
+      setDevStageSubStructure(true);
+    }
+  };
+
   const getSearchParams = () => ({
+    hash,
     dataType,
+    selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
     selectedSpecies: selectedSpecies.value,
-    selectedGene: selectedGene.map((g) => g.id),
-    selectedStrain: selectedStrain.map((s) => s.id),
-    selectedTissue: selectedTissue.map((t) => t.id),
+    selectedCellTypes: selectedCellTypes.map((ct) => ct.value),
+    selectedGene: selectedGene.map((g) => g.value),
+    selectedStrain: selectedStrain.map((s) => s.value),
+    selectedTissue: selectedTissue.map((t) => t.value),
     selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
     hasCellTypeSubStructure,
     hasDevStageSubStructure,
     hasTissueSubStructure,
   });
 
-  const triggerSearch = async () =>
-    api.search.rawData
-      .search(getSearchParams(), false, history)
+  const triggerSearch = async () => {
+    const params = getSearchParams();
+    console.log('[triggerSearch] params =', params);
+    return api.search.rawData
+      .search(params, false)
       .then((resp) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
+          console.log('[triggerSearch] resp = ', resp);
+
+          // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
+          if (hash) {
+            setInitDataFromDetailedRP(resp);
+          }
+
+          // Lors du retour de la requête, si il existe, on met le hash dans l'url
+          const newHash = resp?.requestParameters?.data;
+          if (newHash) {
+            history.push(
+              `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?data=${newHash}`
+            );
+          }
+        }
+        // Quand que ce soit on écrase le hash après une recherche
+        // --> permet l'utilisation des filtres dans la prochaine requête
+        if (hash) {
+          console.log('-- erase hash -- ');
+          setHash(null);
         }
         return [];
+      })
+      .catch((e) => {
+        console.log('catch e = ', e);
+        if (
+          e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
+        ) {
+          history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        }
       });
+  };
 
   const triggerCounts = async () =>
     api.search.rawData.search(getSearchParams(), true).then((resp) => {
@@ -138,6 +257,19 @@ const RawDataAnnotations = () => {
       }
       return [];
     });
+
+  const getSexesAndDevStageForSpecies = (nextSpecieValue) => {
+    api.search.species.speciesDevelopmentSexe(nextSpecieValue).then((resp) => {
+      if (resp.code === 200) {
+        setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
+        setDevStage(
+          resp.data?.requestDetails?.requestedSpeciesDevStageOntology
+        );
+      } else {
+        setSpeciesSexes([]);
+      }
+    });
+  };
 
   const autoCompleteByType = (type, mappingFn) =>
     useCallback(
@@ -163,16 +295,22 @@ const RawDataAnnotations = () => {
       [selectedSpecies.value]
     );
 
+  const getIdAndNameLabel = (obj) =>
+    `${obj?.id}${obj?.name ? ` - ${obj?.name}` : ''}`;
+  const getGeneLabel = (g) => `${g?.geneId}${g?.name ? ` - ${g?.name}` : ''}`;
+  const getSpeciesLabel = (specie) =>
+    `${specie.genus.substr(0, 1)} ${specie.speciesName} ${
+      specie.name ? `${specie.name}` : ''
+    }`;
+
   const getOptionsFunctionGenes = autoCompleteByType('gene', (result) => ({
-    label: `${result?.gene?.geneId}${
-      result.gene?.name ? ` - ${result?.gene?.name}` : ''
-    }`,
+    label: getGeneLabel(result?.gene),
     value: result?.gene?.geneId,
     result,
   }));
 
   const getCellTypeOptions = autoCompleteByType('cell_type', (result) => ({
-    label: result?.object?.name,
+    label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,
   }));
@@ -184,7 +322,7 @@ const RawDataAnnotations = () => {
   }));
 
   const getTissueOptions = autoCompleteByType('anat_entity', (result) => ({
-    label: result?.object?.name,
+    label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,
   }));
@@ -192,42 +330,17 @@ const RawDataAnnotations = () => {
   const getExpOrAssayOptions = autoCompleteByType(
     'experiment_assay',
     (result) => ({
-      label: `${result?.object?.id}${
-        result.object?.name ? ` - ${result?.object?.name}` : ''
-      }`,
+      label: getIdAndNameLabel(result?.object),
       value: result?.object?.id,
       result,
     })
   );
 
-  useEffect(() => {
-    api.search.species.list().then((resp) => {
-      if (resp.code === 200) {
-        setSpeciesList(resp.data.species);
-      } else {
-        setSpeciesList([]);
-      }
-    });
-  }, []);
-
   const metaKeywords = useMemo(() => {
     const list = speciesList.map((s) => ({
-      label: `${s.genus.substr(0, 1)} ${s.speciesName} ${
-        s.name ? `${s.name}` : ''
-      }`,
+      label: getSpeciesLabel(s),
       value: s.id,
     }));
-
-    // Pré-sélection de la valeur de l'espèce
-    // if (initSpeciesId) {
-    //   const found = list.find(
-    //     (s) => s.value.toString() === initSpeciesId.toString()
-    //   );
-    //   console.log('selected = ', found);
-    //   if (found) {
-    //     setSelectedSpecies(found.value);
-    //   }
-    // }
 
     return [EMPTY_SPECIES_VALUE, ...list];
   }, [speciesList]);
@@ -276,7 +389,7 @@ const RawDataAnnotations = () => {
                     options={metaKeywords}
                     className="form-control"
                     value={selectedSpecies}
-                    onChange={setSelectedSpecies}
+                    onChange={onChangeSpecies}
                   />
                 </div>
                 {selectedSpecies.value && (
@@ -405,7 +518,7 @@ const RawDataAnnotations = () => {
                         />
                       </label>
                       <div className="sex-container">
-                        {speciesSexe.map((sex) => {
+                        {speciesSexes.map((sex) => {
                           const isChecked =
                             selectedSexes.indexOf(sex.name) !== -1;
                           return (
