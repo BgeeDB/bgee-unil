@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import useLogic from './useLogic';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
+import obolibraryLinkFromID from '../../../../../../helpers/obolibraryLinkFromID';
 
 const DevelopmentalAndLifeStages = ({
   devStages,
@@ -15,11 +16,11 @@ const DevelopmentalAndLifeStages = ({
   const { getOptionsFunction } = useLogic({ devStages });
 
   const optionActions = useCallback(
-    () => (
+    (option) => (
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="#"
+        href={obolibraryLinkFromID(option.value)}
         className="external-link"
       />
     ),
