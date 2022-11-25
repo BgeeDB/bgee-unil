@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, { useCallback } from 'react';
 import useLogic from './useLogic';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
@@ -11,6 +13,18 @@ const DevelopmentalAndLifeStages = ({
   setSelectedOptions,
 }) => {
   const { getOptionsFunction } = useLogic({ devStages });
+
+  const optionActions = useCallback(
+    () => (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="#"
+        className="external-link"
+      />
+    ),
+    []
+  );
 
   return (
     <>
@@ -30,11 +44,12 @@ const DevelopmentalAndLifeStages = ({
         />
       </label>
       <SelectMultipleWithAutoComplete
+        minCharToSearch={0}
         placeholder="Search Development and life stage"
-        getOptionsFunction={getOptionsFunction}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
-        minCharToSearch={0}
+        getOptionsFunction={getOptionsFunction}
+        optionActions={optionActions}
       />
       <div className="checkboxWrapper">
         <input

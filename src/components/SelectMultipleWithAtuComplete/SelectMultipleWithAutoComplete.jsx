@@ -18,6 +18,7 @@ const SelectMultipleWithAutoComplete = ({
   minCharToSearch = 1,
   selectedOptions = [], // Tableau des options selectionnées [{label:'', value''}, {label:'', value''}...]
   setSelectedOptions,
+  optionActions,
 }) => {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -136,6 +137,7 @@ const SelectMultipleWithAutoComplete = ({
               );
             })}
           </span>
+          {optionActions ? optionActions(data) : null}
         </div>
       </components.Option>
     );
