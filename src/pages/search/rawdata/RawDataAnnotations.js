@@ -13,6 +13,7 @@ import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import PATHS from '../../../routes/paths';
+import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 
 const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
 
@@ -48,13 +49,13 @@ const RawDataAnnotations = () => {
   //   initSearch.get('cell_type_descendant') || false;
   // const initHasTissueSubStructure =
   //   initSearch.get('anat_entity_descendant') || false;
-  // const initHasDevStageSubStructure =
+  // const initHasDevStageSubS  tructure =
   //   initSearch.get('stage_descendant') || false;
 
   // lists
   const [speciesList, setSpeciesList] = useState([]);
   const [speciesSexes, setSpeciesSexes] = useState([]);
-  const [devStage, setDevStage] = useState([]);
+  const [devStages, setDevStages] = useState([]);
 
   // Form
   const [selectedSpecies, setSelectedSpecies] = useState(EMPTY_SPECIES_VALUE);
@@ -64,6 +65,7 @@ const RawDataAnnotations = () => {
   const [selectedGene, setSelectedGene] = useState([]);
   const [selectedSexes, setSelectedSexes] = useState([]);
   const [selectedExpOrAssay, setSelectedExpOrAssay] = useState([]);
+  const [selectedDevStages, setSelectedDevStages] = useState([]);
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(false);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(false);
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(false);
@@ -76,7 +78,6 @@ const RawDataAnnotations = () => {
   const [counts, setCounts] = useState({});
 
   const onChangeSpecies = (newSpecies) => {
-    console.log('species changed erase all form');
     if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
       getSexesAndDevStageForSpecies(newSpecies.value);
     }
@@ -211,13 +212,11 @@ const RawDataAnnotations = () => {
 
   const triggerSearch = async () => {
     const params = getSearchParams();
-    console.log('[triggerSearch] params =', params);
     return api.search.rawData
       .search(params, false)
       .then((resp) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
-          console.log('[triggerSearch] resp = ', resp);
 
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (hash) {
@@ -235,7 +234,6 @@ const RawDataAnnotations = () => {
         // Quand que ce soit on écrase le hash après une recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
         if (hash) {
-          console.log('-- erase hash -- ');
           setHash(null);
         }
         return [];
@@ -262,7 +260,7 @@ const RawDataAnnotations = () => {
     api.search.species.speciesDevelopmentSexe(nextSpecieValue).then((resp) => {
       if (resp.code === 200) {
         setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
-        setDevStage(
+        setDevStages(
           resp.data?.requestDetails?.requestedSpeciesDevStageOntology
         );
       } else {
@@ -469,36 +467,13 @@ const RawDataAnnotations = () => {
                       </div>
                     </div>
                     <div className="my-2">
-                      <label className="labelWithHelpIcon">
-                        <span>Developmental and life stage</span>
-                        <HelpIcon
-                          className="helpIcon"
-                          title="Developmental and life stage"
-                          content={
-                            <>
-                              By default, all developmental and life stages are
-                              considered for the enrichment analysis. It is
-                              possible to provide a custom selection of
-                              developmental and life stages, selecting one or
-                              several developmental and life stages.
-                            </>
-                          }
-                        />
-                      </label>
-                      <Select />
-                      <div className="checkboxWrapper">
-                        <input
-                          id="hasDevStageSubStructure"
-                          type="checkbox"
-                          checked={hasDevStageSubStructure ? 'checked' : ''}
-                          onChange={() =>
-                            setDevStageSubStructure(!hasDevStageSubStructure)
-                          }
-                        />
-                        <label htmlFor="hasDevStageSubStructure">
-                          Including substrcutures
-                        </label>
-                      </div>
+                      <DevelopmentalAndLifeStages
+                        devStages={devStages}
+                        hasDevStageSubStructure={hasDevStageSubStructure}
+                        setDevStageSubStructure={setDevStageSubStructure}
+                        selectedOptions={selectedDevStages}
+                        setSelectedOptions={setSelectedDevStages}
+                      />
                     </div>
                     <div className="my-2">
                       <label className="labelWithHelpIcon">
