@@ -336,7 +336,7 @@ const search = {
       }),
   },
   rawData: {
-    search: (form, isOnlyCounts, history) =>
+    search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
         params.append('display_rp', '1'); // in order to deserialize query
@@ -350,30 +350,38 @@ const search = {
           params.append('get_filters', '1');
         }
 
-        if (form.selectedSpecies) {
-          params.append('species_id', form.selectedSpecies);
-        }
+        if (form.hash) {
+          console.log('Hash présent ! : on utilise pas les params !');
+          params.append('data', form.hash);
+          params.append('detailed_rp', '1');
+        } else {
+          // Si pas de hash on envoie tous les paramètres séparéments
+          if (form.selectedSpecies) {
+            params.append('species_id', form.selectedSpecies);
+          }
 
-        form.selectedGene.forEach((g) => params.append('gene_id', g));
-        form.selectedStrain.forEach((s) => params.append('strain', s));
-        form.selectedTissue.forEach((t) => params.append('anat_entity_id', t));
-        form.selectedSexes.forEach((s) => params.append('sex', s));
-
-        if (form.hasCellTypeSubStructure) {
-          params.append('cell_type_descendant', form.hasCellTypeSubStructure);
-        }
-        if (form.hasTissueSubStructure) {
-          params.append('anat_entity_descendant', form.hasTissueSubStructure);
-        }
-        if (form.hasDevStageSubStructure) {
-          params.append('stage_descendant', form.hasDevStageSubStructure);
-        }
-
-        // Pour réfleter les valeurs dans l'url
-        if (history) {
-          history.push(
-            `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?${params.toString()}`
+          form.selectedCellTypes.forEach((ct) =>
+            params.append('cell_type_id', ct)
           );
+          form.selectedGene.forEach((g) => params.append('gene_id', g));
+          form.selectedStrain.forEach((s) => params.append('strain', s));
+          form.selectedTissue.forEach((t) =>
+            params.append('anat_entity_id', t)
+          );
+          form.selectedExpOrAssay.forEach((exp) =>
+            params.append('exp_assay_id', exp)
+          );
+          form.selectedSexes.forEach((s) => params.append('sex', s));
+
+          if (form.hasCellTypeSubStructure) {
+            params.append('cell_type_descendant', form.hasCellTypeSubStructure);
+          }
+          if (form.hasTissueSubStructure) {
+            params.append('anat_entity_descendant', form.hasTissueSubStructure);
+          }
+          if (form.hasDevStageSubStructure) {
+            params.append('stage_descendant', form.hasDevStageSubStructure);
+          }
         }
 
         axiosInstance
