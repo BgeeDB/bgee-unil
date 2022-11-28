@@ -46,7 +46,7 @@ const Tissues = ({
           checked={hasTissueSubStructure ? 'checked' : ''}
           onChange={() => setHasTissueSubStructure((current) => !current)}
         />
-        <label htmlFor="hasTissueSubStructure">Including substrcutures</label>
+        <label htmlFor="hasTissueSubStructure">Including substructures</label>
       </div>
     </>
   );

@@ -318,7 +318,7 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
                     >
                       {children}
                     </AutoCompleteSearch>
-                    <input type="checkbox" /> Including substrcutures
+                    <input type="checkbox" /> Including substructures
                   </div>
                   <div className="mb-2">
                     <label>
@@ -350,7 +350,7 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
                     >
                       {children}
                     </AutoCompleteSearch>
-                    <input type="checkbox" /> Including substrcutures
+                    <input type="checkbox" /> Including substructures
                   </div>
                   <div>
                     <label>
@@ -372,7 +372,7 @@ const PresenceExpression = ({ children, searchTerm = '' }) => {
                       />
                     </label>
                     <Select />
-                    <input type="checkbox" /> Including substrcutures
+                    <input type="checkbox" /> Including substructures
                   </div>
                   <div>Sex</div>
                   <div>

@@ -59,7 +59,7 @@ const DevelopmentalAndLifeStages = ({
           checked={hasDevStageSubStructure ? 'checked' : ''}
           onChange={() => setDevStageSubStructure((value) => !value)}
         />
-        <label htmlFor="hasDevStageSubStructure">Including substrcutures</label>
+        <label htmlFor="hasDevStageSubStructure">Including substructures</label>
       </div>
     </>
   );

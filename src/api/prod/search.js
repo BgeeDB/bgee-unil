@@ -365,6 +365,7 @@ const search = {
           );
           form.selectedGene.forEach((g) => params.append('gene_id', g));
           form.selectedStrain.forEach((s) => params.append('strain', s));
+          form.selectedDevStages.forEach((ds) => params.append('stage_id', ds));
           form.selectedTissue.forEach((t) =>
             params.append('anat_entity_id', t)
           );

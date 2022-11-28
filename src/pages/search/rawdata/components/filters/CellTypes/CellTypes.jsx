@@ -46,7 +46,7 @@ const CellTypes = ({
           checked={hasCellTypeSubStructure ? 'checked' : ''}
           onChange={() => setHasCellTypeSubStructure((current) => !current)}
         />
-        <label htmlFor="hasCellTypeSubStructure">Including substrcutures</label>
+        <label htmlFor="hasCellTypeSubStructure">Including substructures</label>
       </div>
     </>
   );

@@ -1,14 +1,11 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-
 import React from 'react';
 
 import Button from '../../../components/Bulma/Button/Button';
-
 import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
-
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
 import useLogic, { DATA_TYPES } from './useLogic';
@@ -18,8 +15,6 @@ import Sex from './components/filters/Sex/Sex';
 import Strain from './components/filters/Strain/Strain';
 import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
-
-// http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
 
 const RawDataAnnotations = () => {
   const {
@@ -56,6 +51,7 @@ const RawDataAnnotations = () => {
     setShow,
     autoCompleteByType,
     onSubmit,
+    resetForm,
   } = useLogic();
 
   return (
@@ -143,7 +139,9 @@ const RawDataAnnotations = () => {
                     <Button type="submit" onClick={onSubmit}>
                       Submit
                     </Button>
-                    <Button className="reinit">Reinitialize</Button>
+                    <Button className="reinit" onClick={() => resetForm(false)}>
+                      Reinitialize
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -174,8 +172,9 @@ const RawDataAnnotations = () => {
                 <span>{type.label}</span>
                 <span>
                   (
-                  {searchResult?.resultCount?.[type.id]?.assayCount ||
-                    'No data'}
+                  {counts[type.id]?.assayCount !== undefined
+                    ? counts[type.id]?.assayCount
+                    : 'No data'}
                   )
                 </span>
               </div>

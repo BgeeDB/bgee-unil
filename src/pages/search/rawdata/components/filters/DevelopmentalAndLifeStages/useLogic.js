@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 
 const flattenNode = (node) => {
   const flattenedNodes = [];
@@ -16,16 +17,16 @@ const flattenNode = (node) => {
   return flattenedNodes;
 };
 
-const flattenList = (devStages) => {
+export const flattenDevStagesList = (devStages) => {
   const flattenedNodes = devStages.map((node) => flattenNode(node));
   return flattenedNodes.reduce((acc, list) => [...acc, ...list], []);
 };
 
 const useLogic = ({ devStages }) => {
   const getOptionsFunction = useCallback(() => {
-    const list = flattenList(devStages);
+    const list = flattenDevStagesList(devStages);
     return list.map((item) => ({
-      label: `${item.id} - ${item.name}`,
+      label: getIdAndNameLabel(item),
       value: item.id,
       level: item.level - 1,
     }));

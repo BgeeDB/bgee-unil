@@ -3,7 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import api from '../../../api';
 import { getGeneLabel } from '../../../helpers/gene';
+import { getIdAndNameLabel } from '../../../helpers/selects';
 import PATHS from '../../../routes/paths';
+import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 
 const AFFYMETRIX = 'AFFYMETRIX';
@@ -23,6 +25,8 @@ export const DATA_TYPES = [
 const useLogic = () => {
   const history = useHistory();
 
+  // http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
+
   // Init from URL
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
@@ -37,8 +41,13 @@ const useLogic = () => {
   //   initSearch.get('cell_type_descendant') || false;
   // const initHasTissueSubStructure =
   //   initSearch.get('anat_entity_descendant') || false;
-  // const initHasDevStageSubS  tructure =
+  // const initHasDevStageSubStructure =
   //   initSearch.get('stage_descendant') || false;
+
+  // console.log('initGene = ', initGene);
+  // console.log('initStrain = ', initStrain);
+  // console.log('initTissue = ', initTissue);
+  // console.log('initSex = ', initSex);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -65,9 +74,9 @@ const useLogic = () => {
   const [counts, setCounts] = useState({});
 
   const onChangeSpecies = (newSpecies) => {
-    if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
-      getSexesAndDevStageForSpecies(newSpecies.value);
-    }
+    // if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+    //   getSexesAndDevStageForSpecies(newSpecies.value);
+    // }
     setSelectedSpecies(newSpecies);
     setSelectedCellTypes([]);
     setSelectedGene([]);
@@ -78,7 +87,15 @@ const useLogic = () => {
 
   useEffect(() => {
     triggerSearch();
+    triggerCounts();
   }, [dataType]);
+
+  useEffect(() => {
+    if (selectedSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+      getSexesAndDevStageForSpecies();
+      resetForm(true);
+    }
+  }, [selectedSpecies]);
 
   const onSubmit = () => {
     triggerCounts();
@@ -126,13 +143,16 @@ const useLogic = () => {
       requestParameters?.anat_entity_id.forEach((tissueId) => {
         const foundTissue = cellTypesAndTissues.find((t) => t.id === tissueId);
         if (foundTissue) {
-          initTissues.push({ label: foundTissue.name, value: tissueId });
+          initTissues.push({
+            label: getIdAndNameLabel(foundTissue),
+            value: tissueId,
+          });
         }
       });
       setSelectedTissue(initTissues);
     }
 
-    // Celle types
+    // Cell types
     if (requestParameters?.cell_type_id?.length > 0) {
       const initCelleTypes = [];
       requestParameters?.cell_type_id.forEach((cellTypeId) => {
@@ -140,10 +160,31 @@ const useLogic = () => {
           (t) => t.id === cellTypeId
         );
         if (foundCellType) {
-          initCelleTypes.push({ label: foundCellType.name, value: cellTypeId });
+          initCelleTypes.push({
+            label: getIdAndNameLabel(foundCellType),
+            value: cellTypeId,
+          });
         }
       });
       setSelectedCellTypes(initCelleTypes);
+    }
+
+    // Dev Stage
+    if (requestParameters?.stage_id?.length > 0) {
+      const initDevStage = [];
+      const flattenedList = flattenDevStagesList(
+        requestDetails?.requestedSpeciesDevStageOntology
+      );
+      requestParameters?.stage_id.forEach((devStageId) => {
+        const foundDevStage = flattenedList.find((t) => t.id === devStageId);
+        if (foundDevStage) {
+          initDevStage.push({
+            label: getIdAndNameLabel(foundDevStage),
+            value: devStageId,
+          });
+        }
+      });
+      setSelectedDevStages(initDevStage);
     }
 
     // Strain
@@ -181,6 +222,7 @@ const useLogic = () => {
     selectedGene: selectedGene.map((g) => g.value),
     selectedStrain: selectedStrain.map((s) => s.value),
     selectedTissue: selectedTissue.map((t) => t.value),
+    selectedDevStages: selectedDevStages.map((ds) => ds.value),
     selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
     hasCellTypeSubStructure,
     hasDevStageSubStructure,
@@ -217,11 +259,11 @@ const useLogic = () => {
       })
       .catch((e) => {
         console.log('catch e = ', e);
-        if (
-          e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
-        ) {
-          history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
-        }
+        // if (
+        //   e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
+        // ) {
+        history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        // }
       });
   };
 
@@ -233,17 +275,19 @@ const useLogic = () => {
       return [];
     });
 
-  const getSexesAndDevStageForSpecies = (nextSpecieValue) => {
-    api.search.species.speciesDevelopmentSexe(nextSpecieValue).then((resp) => {
-      if (resp.code === 200) {
-        setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
-        setDevStages(
-          resp.data?.requestDetails?.requestedSpeciesDevStageOntology
-        );
-      } else {
-        setSpeciesSexes([]);
-      }
-    });
+  const getSexesAndDevStageForSpecies = () => {
+    api.search.species
+      .speciesDevelopmentSexe(selectedSpecies.value)
+      .then((resp) => {
+        if (resp.code === 200) {
+          setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
+          setDevStages(
+            resp.data?.requestDetails?.requestedSpeciesDevStageOntology
+          );
+        } else {
+          setSpeciesSexes([]);
+        }
+      });
   };
 
   const autoCompleteByType = (type, mappingFn) =>
@@ -278,8 +322,9 @@ const useLogic = () => {
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
     // Cas particulier du "all"
-    if (selectedSexes.length === 1 && selectedSexes[0] === 'all')
+    if (selectedSexes.length === 1 && selectedSexes[0] === 'all') {
       setSelectedSexes([sexName]);
+    }
 
     if (i === -1) {
       setSelectedSexes([...selectedSexes, sexName]);
@@ -287,6 +332,22 @@ const useLogic = () => {
       const nextSexes = [...selectedSexes];
       nextSexes.splice(i, 1);
       setSelectedSexes(nextSexes);
+    }
+  };
+
+  const resetForm = (isSpeciesChange = false) => {
+    setSelectedCellTypes([]);
+    setSelectedGene([]);
+    setSelectedStrain([]);
+    setSelectedTissue([]);
+    setSelectedSexes([]);
+    setSelectedDevStages([]);
+    setHasCellTypeSubStructure(false);
+    setHasTissueSubStructure(false);
+    setDevStageSubStructure(false);
+    if (!isSpeciesChange) {
+      setSelectedSpecies(EMPTY_SPECIES_VALUE);
+      setSelectedExpOrAssay([]);
     }
   };
 
@@ -324,6 +385,7 @@ const useLogic = () => {
     setShow,
     autoCompleteByType,
     onSubmit,
+    resetForm,
   };
 };
 
