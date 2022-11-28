@@ -55,6 +55,10 @@ const geneHomologsToLdJSON = (homo) => {
       '@context': 'https://schema.org/',
       '@type': 'https://schema.org/Taxon',
       '@id': `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${h.taxon.id}`,
+      'http://purl.org/dc/terms/conformsTo': {
+        '@id': 'https://bioschemas.org/profiles/Taxon/0.6-RELEASE',
+        '@type': 'CreativeWork',
+      },
       identifier: h.taxon.id,
       name: h.taxon.scientificName,
       alternateName: h.taxon.name,
@@ -94,6 +98,7 @@ const geneExpressionToLdJSON = (genes) => {
       });
     else
       ldJson.push({
+        '@context': 'https://schema.org/',
         '@type': 'Gene',
         '@id': window.location.href,
         expressedIn: {
@@ -110,6 +115,10 @@ const geneExpressionToLdJSON = (genes) => {
 
 const fileDownloadProps = (file) => ({
   '@type': 'Dataset',
+  'http://purl.org/dc/terms/conformsTo': {
+    '@id': 'https://bioschemas.org/profiles/Dataset/1.0-RELEASE',
+    '@type': 'CreativeWork',
+  },
   dateModified: config.bioSchemaModifiedData,
   creator: {
     '@type': 'Organization',
@@ -216,7 +225,7 @@ const datasetToLdJSON = () => {
             '@type': 'Dataset',
             '@id': window.location.href,
             'http://purl.org/dc/terms/conformsTo': {
-                '@id': 'https://bioschemas.org/profiles/Dataset/0.3-RELEASE-2019_06_14',
+                '@id': 'https://bioschemas.org/profiles/Dataset/1.0-RELEASE',
                 '@type': 'CreativeWork',
             },
             url: window.location.href,
