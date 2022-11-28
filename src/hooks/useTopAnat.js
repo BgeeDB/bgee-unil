@@ -158,7 +158,7 @@ const useTopAnat = (flowState, setFlowState) => {
     (id) => (e) =>
       propsForm.handleChange(id, (event) => event.target.value)(e),
     []
-  );
+  );  //FIXME
   const checkBoxHandler = React.useCallback(
     (key) => (e) =>
       propsForm.handleChange(key, (event) => event.target.checked)(e),
