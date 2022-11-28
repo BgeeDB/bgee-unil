@@ -121,7 +121,7 @@ const RawDataAnnotationResults = ({
             return {
               type: col.columnType,
               clickableContent: devStageId,
-              content: ` in ${devStageName}`,
+              content: ` ${devStageName}`,
               to: path,
             };
           }
