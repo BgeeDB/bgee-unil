@@ -23,22 +23,29 @@ export const DATA_TYPES = [
 const useLogic = () => {
   const history = useHistory();
 
+  // http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
+
   // Init from URL
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
   const initHash = initSearch.get('data');
   const [hash, setHash] = useState(initHash);
 
-  // const initGene = initSearch.getAll('gene_id') || [];
-  // const initStrain = initSearch.getAll('strain') || [];
-  // const initTissue = initSearch.getAll('anat_entity_id') || [];
-  // const initSex = initSearch.getAll('sex') || [];
+  const initGene = initSearch.getAll('gene_id') || [];
+  const initStrain = initSearch.getAll('strain') || [];
+  const initTissue = initSearch.getAll('anat_entity_id') || [];
+  const initSex = initSearch.getAll('sex') || [];
   // const initHasCellTypeSubStructure =
   //   initSearch.get('cell_type_descendant') || false;
   // const initHasTissueSubStructure =
   //   initSearch.get('anat_entity_descendant') || false;
-  // const initHasDevStageSubS  tructure =
+  // const initHasDevStageSubStructure =
   //   initSearch.get('stage_descendant') || false;
+
+  console.log('initGene = ', initGene);
+  console.log('initStrain = ', initStrain);
+  console.log('initTissue = ', initTissue);
+  console.log('initSex = ', initSex);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -217,11 +224,11 @@ const useLogic = () => {
       })
       .catch((e) => {
         console.log('catch e = ', e);
-        if (
-          e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
-        ) {
-          history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
-        }
+        // if (
+        //   e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
+        // ) {
+        history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        // }
       });
   };
 
@@ -290,6 +297,21 @@ const useLogic = () => {
     }
   };
 
+  const resetForm = (isSpeciesChange = false) => {
+    setSelectedCellTypes([]);
+    setSelectedGene([]);
+    setSelectedStrain([]);
+    setSelectedTissue([]);
+    setSelectedSexes([]);
+    setHasCellTypeSubStructure(false);
+    setHasTissueSubStructure(false);
+    setDevStageSubStructure(false);
+    if (!isSpeciesChange) {
+      setSelectedSpecies(EMPTY_SPECIES_VALUE);
+      setSelectedExpOrAssay([]);
+    }
+  };
+
   return {
     searchResult,
     counts,
@@ -324,6 +346,7 @@ const useLogic = () => {
     setShow,
     autoCompleteByType,
     onSubmit,
+    resetForm,
   };
 };
 
