@@ -370,11 +370,11 @@ const search = {
         }
 
         // Pour réfleter les valeurs dans l'url
-        // if (history) {
-        //   history.push(
-        //     `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?${params.toString()}`
-        //   );
-        // }
+        if (history) {
+          history.push(
+            `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?${params.toString()}`
+          );
+        }
 
         axiosInstance
           .get(`/?${params.toString()}`, {
