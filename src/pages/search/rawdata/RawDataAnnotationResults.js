@@ -10,7 +10,6 @@ import Table from '../../../components/Table';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
-import PATHS from '../../../routes/paths';
 import LinkExternal from '../../../components/LinkExternal';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
