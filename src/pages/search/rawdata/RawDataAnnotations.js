@@ -40,16 +40,21 @@ const RawDataAnnotations = () => {
   const initHash = initSearch.get('data');
   const [hash, setHash] = useState(initHash);
 
-  // const initGene = initSearch.getAll('gene_id') || [];
-  // const initStrain = initSearch.getAll('strain') || [];
-  // const initTissue = initSearch.getAll('anat_entity_id') || [];
-  // const initSex = initSearch.getAll('sex') || [];
+  const initGene = initSearch.getAll('gene_id') || [];
+  const initStrain = initSearch.getAll('strain') || [];
+  const initTissue = initSearch.getAll('anat_entity_id') || [];
+  const initSex = initSearch.getAll('sex') || [];
   // const initHasCellTypeSubStructure =
   //   initSearch.get('cell_type_descendant') || false;
   // const initHasTissueSubStructure =
   //   initSearch.get('anat_entity_descendant') || false;
   // const initHasDevStageSubStructure =
   //   initSearch.get('stage_descendant') || false;
+
+  console.log('initGene = ', initGene);
+  console.log('initStrain = ', initStrain);
+  console.log('initTissue = ', initTissue);
+  console.log('initSex = ', initSex);
 
   // lists
   const [speciesList, setSpeciesList] = useState([]);
@@ -66,7 +71,7 @@ const RawDataAnnotations = () => {
   const [selectedExpOrAssay, setSelectedExpOrAssay] = useState([]);
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(false);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(false);
-  const [hasDevStageSubStructure, setDevStageSubStructure] = useState(false);
+  const [hasDevStageSubStructure, setHasDevStageSubStructure] = useState(false);
   // const [selectExp, setSelectExp] = useState([]);
 
   // results
@@ -75,17 +80,27 @@ const RawDataAnnotations = () => {
   const [dataType, setDataType] = useState(AFFYMETRIX);
   const [counts, setCounts] = useState({});
 
-  const onChangeSpecies = (newSpecies) => {
-    console.log('species changed erase all form');
-    if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
-      getSexesAndDevStageForSpecies(newSpecies.value);
-    }
-    setSelectedSpecies(newSpecies);
+  const resetForm = (isSpeciesChange = false) => {
     setSelectedCellTypes([]);
     setSelectedGene([]);
     setSelectedStrain([]);
     setSelectedTissue([]);
     setSelectedSexes([]);
+    setHasCellTypeSubStructure(false);
+    setHasTissueSubStructure(false);
+    setHasDevStageSubStructure(false);
+    if (!isSpeciesChange) {
+      setSelectedSpecies(EMPTY_SPECIES_VALUE);
+      setSelectedExpOrAssay([]);
+    }
+  };
+
+  const onChangeSpecies = (newSpecies) => {
+    if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+      getSexesAndDevStageForSpecies(newSpecies.value);
+    }
+    setSelectedSpecies(newSpecies);
+    resetForm(true);
   };
 
   useEffect(() => {
@@ -110,7 +125,7 @@ const RawDataAnnotations = () => {
   const setInitDataFromDetailedRP = (resp) => {
     const { requestParameters, data } = resp;
     const { requestDetails } = data;
-    setDataType(requestParameters.data_type[0]);
+    setDataType(requestParameters?.data_type[0]);
 
     // Species
     if (requestDetails?.requestedSpecies) {
@@ -133,39 +148,42 @@ const RawDataAnnotations = () => {
 
     // Genes
     if (requestDetails?.requestedGenes?.length > 0) {
-      const initGenes = requestDetails?.requestedGenes.map((g) => ({
+      const hashInitGenes = requestDetails?.requestedGenes.map((g) => ({
         label: getGeneLabel(g),
         value: g.geneId,
       }));
-      setSelectedGene(initGenes);
+      setSelectedGene(hashInitGenes);
     }
 
     // Tissues (anatEntities)
     const cellTypesAndTissues =
       requestDetails?.requestedAnatEntitesAndCellTypes || [];
     if (requestParameters?.anat_entity_id?.length > 0) {
-      const initTissues = [];
+      const hashInitTissues = [];
       requestParameters?.anat_entity_id.forEach((tissueId) => {
         const foundTissue = cellTypesAndTissues.find((t) => t.id === tissueId);
         if (foundTissue) {
-          initTissues.push({ label: foundTissue.name, value: tissueId });
+          hashInitTissues.push({ label: foundTissue.name, value: tissueId });
         }
       });
-      setSelectedTissue(initTissues);
+      setSelectedTissue(hashInitTissues);
     }
 
     // Celle types
     if (requestParameters?.cell_type_id?.length > 0) {
-      const initCelleTypes = [];
+      const hashInitCelleTypes = [];
       requestParameters?.cell_type_id.forEach((cellTypeId) => {
         const foundCellType = cellTypesAndTissues.find(
           (t) => t.id === cellTypeId
         );
         if (foundCellType) {
-          initCelleTypes.push({ label: foundCellType.name, value: cellTypeId });
+          hashInitCelleTypes.push({
+            label: foundCellType.name,
+            value: cellTypeId,
+          });
         }
       });
-      setSelectedCellTypes(initCelleTypes);
+      setSelectedCellTypes(hashInitCelleTypes);
     }
 
     // Strain
@@ -190,7 +208,7 @@ const RawDataAnnotations = () => {
       setHasCellTypeSubStructure(true);
     }
     if (requestParameters?.stage_descendant === 'true') {
-      setDevStageSubStructure(true);
+      setHasDevStageSubStructure(true);
     }
   };
 
@@ -492,7 +510,7 @@ const RawDataAnnotations = () => {
                           type="checkbox"
                           checked={hasDevStageSubStructure ? 'checked' : ''}
                           onChange={() =>
-                            setDevStageSubStructure(!hasDevStageSubStructure)
+                            setHasDevStageSubStructure(!hasDevStageSubStructure)
                           }
                         />
                         <label htmlFor="hasDevStageSubStructure">
@@ -629,7 +647,9 @@ const RawDataAnnotations = () => {
                     <Button type="submit" onClick={onSubmit}>
                       Submit
                     </Button>
-                    <Button className="reinit">Reinitialize</Button>
+                    <Button className="reinit" onClick={() => resetForm(false)}>
+                      Reinitialize
+                    </Button>
                   </div>
                 </div>
               </div>
