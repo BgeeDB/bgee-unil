@@ -1,19 +1,35 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-shadow */
+/* eslint-disable no-plusplus */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-use-before-define */
-import React from 'react';
+import React, { useMemo } from 'react';
 import Select, { components } from 'react-select';
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
+import LinkExternal from '../../../components/LinkExternal';
+
+// Permet d'aller checher des valeurs enfant de l'objet envoyé
+const getChildValueFromAttribute = (obj, attributes) => {
+  const attributeTab = attributes.split('.'); // ex: ['result', 'experiment', 'name']
+  let current = obj;
+  if (attributeTab[0] === 'result') {
+    attributeTab.splice(0, 1);
+  }
+  for (let i = 0; i < attributeTab.length; i++) {
+    current = current?.[attributeTab[i]];
+  }
+  return current;
+};
 
 const RawDataAnnotationResults = ({
   results = [],
   filters = {},
   resultCount = {},
   columnDescriptions = {},
-  dataType = '',
 }) => {
   const customHeader = (searchElement, pageSizeElement) => (
     <Bulma.Columns vCentered>
@@ -23,79 +39,122 @@ const RawDataAnnotationResults = ({
     </Bulma.Columns>
   );
 
-  const renderCells = ({ cell, key, keyRow }, defaultRender) => {
-    switch ([cell[key].type]) {
+  const renderCells = ({ cell, key }, defaultRender) => {
+    switch (cell[key].type) {
+      case 'STRING':
+        return <div>{cell[key].content}</div>;
+
       case 'INTERNAL_LINK':
+        return <LinkExternal to={cell[key].to} text={cell[key].content} />;
+
+      case 'DEV_STAGE':
         return (
-          // <Link
-          //   key={`${key}-${keyRow}`}
-          //   className="internal-link"
-          //   to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
-          //     ':geneId',
-          //     cell.id
-          //   ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
-          // >
-          //   {cell[key].content}
-          // </Link>
-          <div>
-            [<p>{cell[key].text}</p>]
-          </div>
+          <>
+            <LinkExternal to={cell[key].to} text={cell[key].clickableContent} />
+            {cell[key].content}
+          </>
         );
+
+      case 'ANAT_ENTITY':
+        return <div>{cell[key].content}</div>;
       default:
         return defaultRender([cell[key]]);
     }
   };
 
-  const buildColumns = () =>
-    Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
-      const column = columnDescriptions[columnDescriptionsKey];
-      return {
-        key: index,
-        text: column.title,
-        attributes: column.attributes,
-        columnType: column.columnType,
-      };
-    });
+  const columns = useMemo(
+    () =>
+      Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
+        const column = columnDescriptions[columnDescriptionsKey];
 
-  const buildResults = () => {
-    const a = Object.keys(results).map((resultsKey) => {
-      const result = results[resultsKey];
-      return {
-        0: {
-          type: 'link_external',
-          text: result?.experiment?.id,
-          path: obolibraryLinkFromID(
-            result?.annotation?.rawDataCondition?.anatEntity?.id
-          ),
-        },
-        1: { type: 'text', content: result?.experiment?.name },
-        2: { type: 'text', content: result?.id },
-        3: {
-          type: 'text',
-          content: `${result?.annotation?.rawDataCondition?.cellType} - ${result?.annotation?.rawDataCondition?.anatEntity?.id} - ${result?.annotation?.rawDataCondition?.anatEntity?.name}`,
-        },
-        4: {
-          type: 'text',
-          content: `${result?.annotation?.rawDataCondition?.devStage?.id} -
-            ${result?.annotation?.rawDataCondition?.devStage?.name}`,
-        },
-        5: {
-          type: 'text',
-          content: result?.annotation?.rawDataCondition?.sex,
-        },
-        6: {
-          type: 'text',
-          content: result?.annotation?.rawDataCondition?.strain,
-        },
-        7: {
-          type: 'text',
-          content: `${result?.annotation?.rawDataCondition?.species?.genus} -
-            ${result?.annotation?.rawDataCondition?.species?.speciesName}`,
-        },
-      };
+        return {
+          key: index,
+          text: column.title,
+          attributes: column.attributes,
+          columnType: column.columnType,
+        };
+      }),
+    [columnDescriptions]
+  );
+
+  const buildResults = () =>
+    results.map((result) => {
+      const row = columns.map((col) => {
+        const attribute0 = col.attributes[0];
+        switch (col.columnType) {
+          case 'STRING': {
+            if (col.attributes.length === 1) {
+              return {
+                type: col.columnType,
+                content: getChildValueFromAttribute(result, attribute0),
+              };
+            }
+            const genus = getChildValueFromAttribute(result, col.attributes[0]);
+            const name = getChildValueFromAttribute(result, col.attributes[1]);
+            return {
+              type: col.columnType,
+              content: `${genus} - ${name}`,
+            };
+          }
+          case 'INTERNAL_LINK': {
+            const path = obolibraryLinkFromID(
+              result.annotation.rawDataCondition.anatEntity.id
+            );
+            return {
+              type: col.columnType,
+              content: getChildValueFromAttribute(result, attribute0),
+              to: path,
+            };
+          }
+          case 'DEV_STAGE': {
+            const path = obolibraryLinkFromID(
+              result.annotation.rawDataCondition.devStage.id
+            );
+            const devStageId = getChildValueFromAttribute(
+              result,
+              col.attributes[0]
+            );
+            const devStageName = getChildValueFromAttribute(
+              result,
+              col.attributes[1]
+            );
+            return {
+              type: col.columnType,
+              clickableContent: devStageId,
+              content: ` ${devStageName}`,
+              to: path,
+            };
+          }
+          case 'ANAT_ENTITY': {
+            const cellId = getChildValueFromAttribute(
+              result,
+              col.attributes[0]
+            );
+            const cellName = getChildValueFromAttribute(
+              result,
+              col.attributes[1]
+            );
+            const anatId = getChildValueFromAttribute(
+              result,
+              col.attributes[2]
+            );
+            const anatName = getChildValueFromAttribute(
+              result,
+              col.attributes[3]
+            );
+            return {
+              type: col.columnType,
+              content: `${cellId || 'NA'} - ${
+                cellName || 'NA'
+              } ${anatId} - ${anatName}`,
+            };
+          }
+          default:
+            return {};
+        }
+      });
+      return row;
     });
-    return a;
-  };
 
   return (
     <>
@@ -144,7 +203,7 @@ const RawDataAnnotationResults = ({
           pagination
           sortable
           classNamesTable="is-striped"
-          columns={buildColumns()}
+          columns={columns}
           data={buildResults()}
           customHeader={customHeader}
           onRenderCell={renderCells}
