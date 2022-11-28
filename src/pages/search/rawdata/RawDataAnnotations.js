@@ -170,7 +170,13 @@ const RawDataAnnotations = () => {
                 }`}
               >
                 <span>{type.label}</span>
-                <span>({counts[type.id]?.assayCount || 'No data'})</span>
+                <span>
+                  (
+                  {counts[type.id]?.assayCount !== undefined
+                    ? counts[type.id]?.assayCount
+                    : 'No data'}
+                  )
+                </span>
               </div>
             );
           })}
