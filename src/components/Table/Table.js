@@ -36,6 +36,8 @@ const Table = ({
   identifierAtFilter = false,
   emptyTableMessage = 'No data',
   isRequestPerPage = false,
+  paginationParamPageKey = null,
+  paginationResultCountKey = null,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -107,7 +109,11 @@ const Table = ({
     pageSize,
     onPageChange,
     onPageSizeChange,
-  } = usePagination(pagination ? defaultPaginationSize : mappedData.length);
+  } = usePagination(
+    pagination ? defaultPaginationSize : mappedData.length,
+    paginationParamPageKey,
+    paginationResultCountKey
+  );
 
   const setCurrentPage = React.useCallback(
     (page) => {
@@ -211,6 +217,8 @@ const Table = ({
         pageSizeSelector,
         mappingObj,
         isRequestPerPage,
+        paginationParamPageKey,
+        paginationResultCountKey,
       }}
     >
       <TableHeader />
