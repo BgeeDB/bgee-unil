@@ -2,6 +2,9 @@
 import React, { useContext } from 'react';
 import { isHideMediaQuery } from '../../helpers/constants/mediaQueries';
 import { TableContext } from '../../contexts/TableContext';
+import HelpIcon from '../HelpIcon';
+import './override.scss';
+import classnames from '../../helpers/classnames';
 
 const cssSortOption = (key, sortOpts) => {
   let pos;
@@ -56,6 +59,7 @@ const TableHead = () => {
             if (isHideMediaQuery(usedWidth, item.hide)) return null;
             return (
               <th
+                className={classnames(!!item.infoBubble && 'hasInfoBubble')}
                 key={item.key}
                 onClick={
                   sortable && !item.noSort
@@ -66,6 +70,13 @@ const TableHead = () => {
               >
                 {item.text}
                 {cssSortOption(item.key, sortOption)}
+                {item.infoBubble && (
+                  <HelpIcon
+                    title={item.text}
+                    className="helpIcon"
+                    content={item.infoBubble}
+                  />
+                )}
               </th>
             );
           }
