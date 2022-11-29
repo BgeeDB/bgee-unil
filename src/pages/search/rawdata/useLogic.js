@@ -246,7 +246,7 @@ const useLogic = () => {
     setIsLoading(true);
     return api.search.rawData
       .search(params, false)
-      .then((resp) => {
+      .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
 
@@ -256,12 +256,35 @@ const useLogic = () => {
           }
 
           // Lors du retour de la requête, si il existe, on met le hash dans l'url
+          // @todo : clean les autres paramètres qui seront alors dans le hash ?
           const newHash = resp?.requestParameters?.data;
+          const searchParams = new URLSearchParams(paramsURLCalled);
+          const sp = Object.fromEntries(searchParams.entries());
+          let nextSearchURL = paramsURLCalled;
           if (newHash) {
-            history.push(
-              `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?data=${newHash}`
-            );
+            // vu qu'il existe un hash, ces données sont dedans...
+            // On peut donc "clean" le hash de ces valeurs :
+            console.warn('HASH CLEAN');
+            delete sp.species_id;
+            delete sp.cell_type_id;
+            delete sp.gene_id;
+            delete sp.strain;
+            delete sp.stage_id;
+            delete sp.anat_entity_id;
+            delete sp.exp_assay_id;
+            delete sp.cell_type_descendant;
+            delete sp.anat_entity_descendant;
+            delete sp.stage_descendant;
+
+            nextSearchURL = new URLSearchParams({
+              ...sp,
+              data: newHash,
+            }).toString();
           }
+
+          history.replace({
+            search: nextSearchURL,
+          });
         }
         // Quand que ce soit on écrase le hash après une recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
@@ -271,11 +294,11 @@ const useLogic = () => {
         return [];
       })
       .catch((e) => {
-        console.log('catch e = ', e);
+        console.log('[error triggerSearch] e = ', e);
         // if (
         //   e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
         // ) {
-        history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
         // }
       })
       .finally(() => {

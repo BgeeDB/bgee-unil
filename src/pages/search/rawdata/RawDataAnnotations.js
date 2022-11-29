@@ -191,9 +191,10 @@ const RawDataAnnotations = () => {
           })}
         </div>
         <div className="resultPart">
-          {!!searchResult && (
+          {!!searchResult && dataType && (
             <RawDataAnnotationsFilters
               dataFilters={searchResult?.filters?.[dataType]}
+              dataType={dataType}
             />
           )}
           {!isLoading ? (

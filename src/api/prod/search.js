@@ -385,13 +385,14 @@ const search = {
           }
         }
 
+        const paramsURLCalled = params.toString();
         axiosInstance
-          .get(`/?${params.toString()}`, {
+          .get(`/?${paramsURLCalled}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.rawData = c;
             }),
           })
-          .then(({ data }) => resolve(data))
+          .then(({ data }) => resolve({ resp: data, paramsURLCalled }))
           .catch((error) => {
             errorHandler(error);
             reject(error?.response);
