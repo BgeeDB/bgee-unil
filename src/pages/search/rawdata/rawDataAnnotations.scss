@@ -3,6 +3,12 @@
     color: rgb(0, 187, 255);
   }
 
+  // redefine global css ....
+  button,
+  .button {
+    font-size: 1rem !important;
+  }
+
   .selector {
     width: 40%;
     float: left;
@@ -35,10 +41,22 @@
     align-items: center;
   }
 
-  .categorie {
+  .resultPart {
+    background-color: #efefef;
+    padding: 1rem;
+  }
+
+  .filters {
     display: flex;
     margin-top: 4px;
     margin-bottom: 4px;
+    padding-bottom: 0.3rem;
+    align-items: flex-end;
+  }
+  .filterSelect {
+    margin: 0 4px;
+    flex: 1;
+    min-width: 3rem;
   }
 
   .cat-child {
@@ -65,15 +83,17 @@
   }
   .onglet {
     background-color: lightgray;
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 3px;
     border: 1px solid white;
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .ongletActive {
     background-color: white;
+    border: 1px solid lightgray;
   }
   .section {
     background-color: #eeeeee;
@@ -117,5 +137,11 @@
   }
   .labelWithHelpIcon > span {
     margin-top: 2px;
+  }
+
+  .progressWrapper {
+    display: flex;
+    justify-content: center;
+    $progress-bar-background-color: grey;
   }
 }

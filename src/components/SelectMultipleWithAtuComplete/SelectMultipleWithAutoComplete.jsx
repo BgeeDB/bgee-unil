@@ -19,6 +19,8 @@ const SelectMultipleWithAutoComplete = ({
   selectedOptions = [], // Tableau des options selectionnées [{label:'', value''}, {label:'', value''}...]
   setSelectedOptions,
   optionActions,
+  className,
+  style,
 }) => {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -144,7 +146,7 @@ const SelectMultipleWithAutoComplete = ({
   };
 
   return (
-    <div className="content">
+    <div className={`content ${className}`} style={style}>
       <div className="field">
         {!!label && (
           <label className="label" htmlFor="autocomplete-search">

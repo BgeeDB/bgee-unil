@@ -68,6 +68,7 @@ const useLogic = () => {
   // const [selectExp, setSelectExp] = useState([]);
 
   // results
+  const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
   const [dataType, setDataType] = useState(AFFYMETRIX);
@@ -195,10 +196,21 @@ const useLogic = () => {
     }
 
     // Exp or Assay ID
-    // @TODO
-    if (requestParameters?.exp_assay_id?.length) {
-      console.log('assay = ', requestParameters?.exp_assay_id);
-      // setSelectedExpOrAssay();
+    if (requestParameters?.exp_assay_id?.length > 0) {
+      const initExpOrAssay = [];
+      requestParameters?.exp_assay_id.forEach((expOrAssayId) => {
+        const foundExpOrAssay =
+          requestDetails?.requestedExperimentAndAssays?.find(
+            (t) => t.id === expOrAssayId
+          );
+        if (foundExpOrAssay) {
+          initExpOrAssay.push({
+            label: getIdAndNameLabel(foundExpOrAssay),
+            value: expOrAssayId,
+          });
+        }
+      });
+      setSelectedExpOrAssay(initExpOrAssay);
     }
 
     // SubStructures
@@ -231,6 +243,7 @@ const useLogic = () => {
 
   const triggerSearch = async () => {
     const params = getSearchParams();
+    setIsLoading(true);
     return api.search.rawData
       .search(params, false)
       .then((resp) => {
@@ -264,6 +277,9 @@ const useLogic = () => {
         // ) {
         history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
         // }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -369,6 +385,8 @@ const useLogic = () => {
     selectedTissue,
     speciesSexes,
     selectedSexes,
+    isLoading,
+    setIsLoading,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,

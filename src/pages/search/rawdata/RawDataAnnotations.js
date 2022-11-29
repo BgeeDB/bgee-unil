@@ -15,6 +15,7 @@ import Sex from './components/filters/Sex/Sex';
 import Strain from './components/filters/Strain/Strain';
 import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
+import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 
 const RawDataAnnotations = () => {
   const {
@@ -35,6 +36,7 @@ const RawDataAnnotations = () => {
     selectedTissue,
     speciesSexes,
     selectedSexes,
+    isLoading,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -136,10 +138,17 @@ const RawDataAnnotations = () => {
                     />
                   </div>
                   <div className="submit-reinit">
-                    <Button type="submit" onClick={onSubmit}>
+                    <Button
+                      className="button is-success is-light is-outlined"
+                      type="submit"
+                      onClick={onSubmit}
+                    >
                       Submit
                     </Button>
-                    <Button className="reinit" onClick={() => resetForm(false)}>
+                    <Button
+                      className="reinit is-warning is-light is-outlined"
+                      onClick={() => resetForm(false)}
+                    >
                       Reinitialize
                     </Button>
                   </div>
@@ -158,7 +167,7 @@ const RawDataAnnotations = () => {
           </button>
         </div>
         <label className="title-raw">Raw data annotations results</label>
-        <div className="is-flex columns ongletWrapper is-centered">
+        <div className="is-flex ongletWrapper is-centered">
           {DATA_TYPES.map((type) => {
             const isActive = type.id === dataType;
             return (
@@ -181,15 +190,31 @@ const RawDataAnnotations = () => {
             );
           })}
         </div>
-        {!!searchResult && (
-          <RawDataAnnotationResults
-            results={searchResult?.results?.[dataType]}
-            filters={searchResult?.filters?.[dataType]}
-            resultCount={counts[dataType]}
-            dataType={dataType}
-            columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
-          />
-        )}
+        <div className="resultPart">
+          {!!searchResult && (
+            <RawDataAnnotationsFilters
+              dataFilters={searchResult?.filters?.[dataType]}
+            />
+          )}
+          {!isLoading ? (
+            <RawDataAnnotationResults
+              results={searchResult?.results?.[dataType]}
+              resultCount={counts[dataType]}
+              dataType={dataType}
+              columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
+            />
+          ) : (
+            <div className="progressWrapper">
+              <progress
+                className="progress is-small is-primary m-5"
+                style={{
+                  animationDuration: '2s',
+                  width: '80%',
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
