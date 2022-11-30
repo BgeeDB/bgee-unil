@@ -1,3 +1,3 @@
-import SelectMultipleWithAtuComplete from './SelectMultipleWithAtuComplete';
+import SelectMultipleWithAtuComplete from './SelectMultipleWithAutoComplete';
 
 export default SelectMultipleWithAtuComplete;
