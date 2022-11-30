@@ -99,6 +99,6 @@ docker-deploy:
   needs:
     - build
   only:
-    - /^[Ss][Pp][Rr][Ii][Nn][Tt].*/
+    - /^sprint.*/i
     - develop
     - master
