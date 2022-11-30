@@ -66,6 +66,12 @@ const NAVBAR_LEFT = [
       //   type: 'internal',
       //   path: PATHS.SEARCH.PRESENCE_EXPRESSION,
       // },
+      // {
+      //   key: 'page.search.experiments',
+      //   title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
+      //   type: 'internal',
+      //   path: PATHS.SEARCH.EXPERIMENTS,
+      // },
     ],
   },
   {
