@@ -420,6 +420,20 @@ const search = {
           });
       }),
   },
+  experiments: {
+    getExperiment: (experimentId) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('data');
+        params.append('exp_id', experimentId);
+        axiosInstance
+          .get(`/?${params.toString()}`)
+          .then((response) => resolve(response))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error);
+          });
+      }),
+  },
 };
 
 export default search;
