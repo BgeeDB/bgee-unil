@@ -2,16 +2,19 @@ import React from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
-import useLogic from './useLogic';
 
-const RawDataAnnotationsFilters = ({ dataFilters = {}, dataType }) => {
-  const { filters, setFilters, triggerSearch, triggerCounts } = useLogic();
+const RawDataAnnotationsFilters = ({
+  filters,
+  setFilters,
+  triggerSearch,
+  dataFilters = {},
+  dataType,
+}) => {
   const eraseFilters = () => {
     setFilters((old) => ({ ...old, [dataType]: {} }));
   };
 
   const onApplyFilter = () => {
-    triggerCounts();
     triggerSearch();
   };
 
