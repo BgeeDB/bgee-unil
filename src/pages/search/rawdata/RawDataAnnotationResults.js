@@ -39,6 +39,8 @@ const RawDataAnnotationResults = ({
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
       case 'STRING':
+      case 'NUMERIC':
+      case 'ANAT_ENTITY':
         return <div>{cell[key].content}</div>;
 
       case 'INTERNAL_LINK':
@@ -51,9 +53,6 @@ const RawDataAnnotationResults = ({
             {cell[key].content}
           </>
         );
-
-      case 'ANAT_ENTITY':
-        return <div>{cell[key].content}</div>;
       default:
         return defaultRender([cell[key]]);
     }
@@ -69,6 +68,7 @@ const RawDataAnnotationResults = ({
           text: column.title,
           attributes: column.attributes,
           columnType: column.columnType,
+          infoBubble: column.infoBubble,
         };
       }),
     [columnDescriptions]
@@ -144,6 +144,12 @@ const RawDataAnnotationResults = ({
               content: `${cellId || 'NA'} - ${
                 cellName || 'NA'
               } ${anatId} - ${anatName}`,
+            };
+          }
+          case 'NUMERIC': {
+            return {
+              type: col.columnType,
+              content: getChildValueFromAttribute(result, attribute0),
             };
           }
           default:

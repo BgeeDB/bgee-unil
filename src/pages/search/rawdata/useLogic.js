@@ -366,7 +366,7 @@ const useLogic = () => {
     );
 
   const getSpeciesLabel = (specie) =>
-    `${specie.genus.substr(0, 1)} ${specie.speciesName} ${
+    `${specie.genus} ${specie.speciesName} - ${
       specie.name ? `${specie.name}` : ''
     }`;
 
