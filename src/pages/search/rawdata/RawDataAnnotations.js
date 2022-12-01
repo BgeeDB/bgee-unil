@@ -37,6 +37,7 @@ const RawDataAnnotations = () => {
     speciesSexes,
     selectedSexes,
     isLoading,
+    filters,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -54,8 +55,12 @@ const RawDataAnnotations = () => {
     autoCompleteByType,
     onSubmit,
     resetForm,
+    setFilters,
+    triggerSearch,
+    triggerCounts,
   } = useLogic();
 
+  const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
   return (
     <>
       <div className="container rawDataAnnotation">
@@ -181,8 +186,8 @@ const RawDataAnnotations = () => {
                 <span>{type.label}</span>
                 <span>
                   (
-                  {counts[type.id]?.assayCount !== undefined
-                    ? counts[type.id]?.assayCount
+                  {counts?.[type.id]?.assayCount !== undefined
+                    ? counts?.[type.id]?.assayCount
                     : 'No data'}
                   )
                 </span>
@@ -191,10 +196,28 @@ const RawDataAnnotations = () => {
           })}
         </div>
         <div className="resultPart">
+          <div className="resultCounts">
+            {detailedDataType.experimentCountLabel &&
+              `${counts?.[dataType]?.experimentCount || 0} ${
+                detailedDataType.experimentCountLabel
+              }`}
+            {detailedDataType.assayCountLabel &&
+              ` / ${counts?.[dataType]?.assayCount || 0} ${
+                detailedDataType.assayCountLabel
+              }`}
+            {detailedDataType.libraryCountLabel &&
+              ` / ${counts?.[dataType]?.libraryCount || 0} ${
+                detailedDataType.libraryCountLabel
+              }`}
+          </div>
           {!!searchResult && dataType && (
             <RawDataAnnotationsFilters
               dataFilters={searchResult?.filters?.[dataType]}
               dataType={dataType}
+              filters={filters}
+              setFilters={setFilters}
+              triggerSearch={triggerSearch}
+              triggerCounts={triggerCounts}
             />
           )}
           {!isLoading ? (
