@@ -10,6 +10,7 @@ import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
+import { customRawListSorter } from '../../../helpers/sortTable';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj, attributes) => {
@@ -40,7 +41,6 @@ const RawDataAnnotationResults = ({
     switch (cell[key].type) {
       case 'STRING':
       case 'NUMERIC':
-      case 'ANAT_ENTITY':
         return <div>{cell[key].content}</div>;
 
       case 'INTERNAL_LINK':
@@ -51,6 +51,16 @@ const RawDataAnnotationResults = ({
           <>
             <LinkExternal to={cell[key].to} text={cell[key].clickableContent} />
             {cell[key].content}
+          </>
+        );
+      case 'ANAT_ENTITY':
+        return (
+          <>
+            {cell[key].contentCellType}
+            <p>
+              <em>in</em>
+            </p>
+            {cell[key].contentAnat}
           </>
         );
       default:
@@ -90,7 +100,7 @@ const RawDataAnnotationResults = ({
             const name = getChildValueFromAttribute(result, col.attributes[1]);
             return {
               type: col.columnType,
-              content: `${genus} - ${name}`,
+              content: `${genus} ${name}`,
             };
           }
           case 'INTERNAL_LINK': {
@@ -141,9 +151,8 @@ const RawDataAnnotationResults = ({
             );
             return {
               type: col.columnType,
-              content: `${cellId || 'NA'} - ${
-                cellName || 'NA'
-              } ${anatId} - ${anatName}`,
+              contentCellType: `${cellId || 'NA'} - ${cellName || 'NA'} `,
+              contentAnat: ` ${anatId} - ${anatName}`,
             };
           }
           case 'NUMERIC': {
@@ -168,6 +177,7 @@ const RawDataAnnotationResults = ({
       pagination
       sortable
       classNamesTable="is-striped"
+      onSortCustom={customRawListSorter}
       columns={columns}
       data={buildResults()}
       customHeader={customHeader}
