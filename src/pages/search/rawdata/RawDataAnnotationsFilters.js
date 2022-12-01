@@ -1,6 +1,5 @@
 import React from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
-import { getIdAndNameLabel } from '../../../helpers/selects';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
 import useLogic from './useLogic';
@@ -22,13 +21,17 @@ const RawDataAnnotationsFilters = ({ dataFilters = {}, dataType }) => {
         Object.keys(dataFilters).map((filterKey) => {
           const dataFilter = dataFilters[filterKey];
           const keyAPI = dataFilter?.urlParameterName;
+          const shouldPrintId = dataFilter?.informativeId;
+          const shouldPrintName = dataFilter?.informativeName;
+          const shouldPrintBoth = shouldPrintId && shouldPrintName;
           const filterByDataType = filters[dataType];
-          const isOnlyId = dataFilter?.values.every((v) => v?.id === v?.name);
           const options = dataFilter?.values?.map((v) => ({
-            label: isOnlyId ? v.id : getIdAndNameLabel(v),
+            label: `${shouldPrintId ? v.id : ''}${
+              shouldPrintBoth ? ' - ' : ''
+            }${shouldPrintName && v.name}`,
             value: v.id,
           }));
-          const specificStyle = isOnlyId ? { flex: 0.6 } : {};
+          const specificStyle = !shouldPrintBoth ? { flex: 0.6 } : {};
           return (
             <SelectMultipleWithAutoComplete
               key={filterKey}
