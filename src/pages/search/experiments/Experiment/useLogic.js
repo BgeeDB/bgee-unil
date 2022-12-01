@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../../../api';
+import LinkExternal from '../../../../components/LinkExternal';
+import { COLUMN_TYPES } from '../../../../helpers/constants/columnDescriptions';
+import obolibraryLinkFromID from '../../../../helpers/obolibraryLinkFromID';
 
 const useLogic = () => {
   const [data, setData] = useState();
@@ -30,15 +33,34 @@ const useLogic = () => {
         return null;
       }
 
-      const { attributes } = data.columnDescriptions[key];
+      const { attributes, columnType } = data.columnDescriptions[key];
 
-      return attributes
+      const values = attributes
         .map((attribute) => {
           const attributeParts = attribute.split('.');
           attributeParts.shift();
           return attributeParts.reduce((result, attr) => result[attr], cell);
         })
-        .join(' ');
+        .filter((x) => x !== undefined);
+
+      switch (columnType) {
+        case COLUMN_TYPES.DEV_STAGE:
+        case COLUMN_TYPES.ANAT_ENTITY:
+          return values.map((value, i) =>
+            i % 2 === 0 ? (
+              <span key={value}>
+                <LinkExternal to={obolibraryLinkFromID(value)}>
+                  {value}
+                </LinkExternal>
+                &nbsp;
+              </span>
+            ) : (
+              value
+            )
+          );
+        default:
+          return values.join(' ');
+      }
     },
     [data?.columnDescriptions]
   );
