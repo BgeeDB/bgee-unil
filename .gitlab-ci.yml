@@ -99,6 +99,7 @@ docker-deploy:
   needs:
     - build
   only:
+    - merge_requests
     - /^sprint.*/i
     - develop
     - master
