@@ -74,21 +74,21 @@ const RawDataAnnotations = () => {
                 {selectedSpecies.value && (
                   <div>
                     <div className="my-2">
-                      <CellTypes
-                        selectedCellTypes={selectedCellTypes}
-                        setSelectedCellTypes={setSelectedCellTypes}
-                        autoCompleteByType={autoCompleteByType}
-                        hasCellTypeSubStructure={hasCellTypeSubStructure}
-                        setHasCellTypeSubStructure={setHasCellTypeSubStructure}
-                      />
-                    </div>
-                    <div className="my-2">
                       <Tissues
                         selectedTissue={selectedTissue}
                         setSelectedTissue={setSelectedTissue}
                         autoCompleteByType={autoCompleteByType}
                         hasTissueSubStructure={hasTissueSubStructure}
                         setHasTissueSubStructure={setHasTissueSubStructure}
+                      />
+                    </div>
+                    <div className="my-2">
+                      <CellTypes
+                        selectedCellTypes={selectedCellTypes}
+                        setSelectedCellTypes={setSelectedCellTypes}
+                        autoCompleteByType={autoCompleteByType}
+                        hasCellTypeSubStructure={hasCellTypeSubStructure}
+                        setHasCellTypeSubStructure={setHasCellTypeSubStructure}
                       />
                     </div>
                     <div className="my-2">
