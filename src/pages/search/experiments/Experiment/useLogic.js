@@ -43,7 +43,15 @@ const useLogic = () => {
     [data?.columnDescriptions]
   );
 
-  return { data, columns, onRenderCell };
+  const onFilter = useCallback(
+    (keyword) => (row) => {
+      const regExp = new RegExp(keyword, 'gi');
+      return regExp.test(row?.id) || regExp.test(row?.library?.id);
+    },
+    []
+  );
+
+  return { data, columns, onRenderCell, onFilter };
 };
 
 export default useLogic;
