@@ -338,8 +338,7 @@ const search = {
   rawData: {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
-        const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
-        params.append('display_rp', '1'); // in order to deserialize query
+        let params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
         if (isOnlyCounts) {
           params.append('data_type', 'all');
           params.append('get_result_count', '1');
@@ -347,13 +346,26 @@ const search = {
           params.append('data_type', form.dataType);
           params.append('get_results', '1');
           params.append('get_filters', '1');
-          params.append('get_column_definition', '1'); // in order to get columns
+          params.append('get_column_definition', '1');
+          params.append('display_rp', '1'); // in order to get request parameters
         }
 
-        if (form.hash) {
-          console.log('Hash présent ! : on utilise pas les params !');
-          params.append('data', form.hash);
-          params.append('detailed_rp', '1');
+        if (form.isFirstSearch && !isOnlyCounts) {
+          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          if (form.hash) {
+            // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
+            console.log("hash présent dans l'url : on envoie que le hash");
+            params.append('data', form.hash);
+          } else {
+            // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
+            // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
+            // de première arrivée sur la page
+            const mergedParams = {
+              ...Object.fromEntries(form.initSearch),
+              ...Object.fromEntries(params),
+            };
+            params = new URLSearchParams(mergedParams);
+          }
         } else {
           // Si pas de hash on envoie tous les paramètres séparéments
           if (form.selectedSpecies) {
@@ -384,7 +396,7 @@ const search = {
           }
 
           // Application des filtres ! (VS form)
-          if (form?.filters) {
+          if (form?.filters && !isOnlyCounts) {
             // eslint-disable-next-line no-restricted-syntax
             for (const [key, values] of Object.entries(form.filters)) {
               // console.log('key = ', key);
@@ -405,6 +417,20 @@ const search = {
           .catch((error) => {
             errorHandler(error);
             reject(error?.response);
+          });
+      }),
+  },
+  experiments: {
+    getExperiment: (experimentId) =>
+      new Promise((resolve, reject) => {
+        const params = DEFAULT_PARAMETERS('data');
+        params.append('exp_id', experimentId);
+        axiosInstance
+          .get(`/?${params.toString()}`)
+          .then((response) => resolve(response))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error);
           });
       }),
   },

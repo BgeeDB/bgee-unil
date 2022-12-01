@@ -16,6 +16,8 @@ const PATHS = {
     SPECIES_ITEM: '/species/:id',
     RAW_DATA_ANNOTATIONS: '/search/raw-data-annotations',
     PRESENCE_EXPRESSION: '/search/presence-expression',
+    EXPERIMENTS: '/search/experiments',
+    EXPERIMENT: '/experiment/:id',
   },
   DOWNLOAD: {
     GENE_EXPRESSION_CALLS: '/download/gene-expression-calls',

@@ -12,6 +12,8 @@ import PresenceExpression from '../pages/search/PresenceExpression/PresenceExpre
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
+import Experiments from '../pages/search/experiments/Experiments';
+import Experiment from '../pages/search/experiments/Experiment';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
@@ -61,6 +63,7 @@ const ANALYSIS = {
     },
   },
 };
+
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
     title: 'Gene search',
@@ -96,7 +99,16 @@ const SEARCH = {
     component: PresenceExpression,
     title: 'Presence/Absence expression calls',
   },
+  [PATHS.SEARCH.EXPERIMENTS]: {
+    component: Experiments,
+    title: 'List of experiments',
+  },
+  [PATHS.SEARCH.EXPERIMENT]: {
+    component: Experiment,
+    title: 'Experiment informations',
+  },
 };
+
 const DOWNLOAD = {
   [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
     component: GeneExpressionCallsDownload,
@@ -111,6 +123,7 @@ const DOWNLOAD = {
     title: 'Data dumps',
   },
 };
+
 const RESOURCES = {
   [PATHS.RESOURCES.DOCS]: {
     source: ResourcesFile,
@@ -169,6 +182,7 @@ const RESOURCES = {
     },
   },
 };
+
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
     source: GtexFile,
@@ -228,6 +242,7 @@ const SUPPORT = {
     },
   },
 };
+
 const ABOUT = {
   [PATHS.ABOUT.ABOUT]: {
     source: AboutFile,

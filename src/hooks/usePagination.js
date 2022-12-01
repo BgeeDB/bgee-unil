@@ -57,8 +57,6 @@ const usePagination = (
   const onPageChange = useCallback(
     (newPage) => {
       const sp = Object.fromEntries(searchParams.entries());
-      console.log('keyForPage = ', keyForPage);
-      console.log('newPage = ', newPage);
       push({
         search: new URLSearchParams({
           ...sp,
@@ -72,8 +70,6 @@ const usePagination = (
   const onPageSizeChange = useCallback(
     (newPageSize) => {
       const sp = Object.fromEntries(searchParams.entries());
-      console.log('keyForPage = ', keyForPageSize);
-      console.log('newPage = ', newPageSize);
       push({
         search: new URLSearchParams({
           ...sp,

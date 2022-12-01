@@ -15,11 +15,36 @@ const RNA_SEQ = 'RNA_SEQ';
 const FULL_LENGTH = 'FULL_LENGTH';
 
 export const DATA_TYPES = [
-  { id: FULL_LENGTH, label: 'scRNA-Seq full-length' },
-  { id: RNA_SEQ, label: 'bulk RNA-Seq' },
-  { id: AFFYMETRIX, label: 'Affymetrix data' },
-  { id: IN_SITU, label: 'In situ hybridization' },
-  { id: EST, label: 'EST' },
+  {
+    id: FULL_LENGTH,
+    label: 'scRNA-Seq full-length',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+    libraryCountLabel: 'libraries',
+  },
+  {
+    id: RNA_SEQ,
+    label: 'bulk RNA-Seq',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+  },
+  {
+    id: AFFYMETRIX,
+    label: 'Affymetrix data',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'chips',
+  },
+  {
+    id: IN_SITU,
+    label: 'In situ hybridization',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'evidences lines',
+  },
+  {
+    id: EST,
+    label: 'EST',
+    assayCountLabel: 'libraries',
+  },
 ];
 
 const useLogic = () => {
@@ -31,7 +56,8 @@ const useLogic = () => {
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
   const initHash = initSearch.get('data');
-  const [hash, setHash] = useState(initHash);
+
+  const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const initDataType = initSearch.get('data_type') || RNA_SEQ;
   // const initGene = initSearch.getAll('gene_id') || [];
@@ -66,7 +92,6 @@ const useLogic = () => {
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(true);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(true);
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
-  // const [selectExp, setSelectExp] = useState([]);
 
   // results
   const [isLoading, setIsLoading] = useState(false);
@@ -79,9 +104,6 @@ const useLogic = () => {
   const [filters, setFilters] = useState({});
 
   const onChangeSpecies = (newSpecies) => {
-    // if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
-    //   getSexesAndDevStageForSpecies(newSpecies.value);
-    // }
     setSelectedSpecies(newSpecies);
     setSelectedCellTypes([]);
     setSelectedGene([]);
@@ -107,9 +129,12 @@ const useLogic = () => {
     triggerSearch();
   };
 
-  const setInitDataFromDetailedRP = (resp) => {
+  const initFormFromDetailedRP = (resp) => {
     const { requestParameters, data } = resp;
     const { requestDetails } = data;
+    // console.log('initForm ! current datatype = ', dataType);
+    // console.log('initForm ! new datatype = ', requestParameters.data_type[0]);
+    // console.log(' === ? ', dataType === requestParameters.data_type[0]);
     setDataType(requestParameters.data_type[0]);
 
     // Species
@@ -121,9 +146,11 @@ const useLogic = () => {
     }
 
     // Sexes
+    // les possibles
     if (requestDetails?.requestedSpeciesSexes?.length > 0) {
       setSpeciesSexes(requestDetails?.requestedSpeciesSexes);
     }
+    // les sélectionnés
     if (
       requestParameters?.sex?.length > 0 &&
       requestParameters?.sex[0] !== 'all'
@@ -236,7 +263,9 @@ const useLogic = () => {
   };
 
   const getSearchParams = () => ({
-    hash,
+    hash: initHash,
+    isFirstSearch,
+    initSearch,
     dataType,
     selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
     selectedSpecies: selectedSpecies.value,
@@ -260,22 +289,22 @@ const useLogic = () => {
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
+          // setTest((old) => old + 1);
 
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
-          if (hash) {
-            setInitDataFromDetailedRP(resp);
+          if (isFirstSearch) {
+            initFormFromDetailedRP(resp);
           }
 
           // Lors du retour de la requête, si il existe, on met le hash dans l'url
-          // @todo : clean les autres paramètres qui seront alors dans le hash ?
           const newHash = resp?.requestParameters?.data;
           const searchParams = new URLSearchParams(paramsURLCalled);
           const sp = Object.fromEntries(searchParams.entries());
           let nextSearchURL = paramsURLCalled;
           if (newHash) {
-            // vu qu'il existe un hash, ces données sont dedans...
-            // On peut donc "clean" le hash de ces valeurs :
-            console.warn('HASH CLEAN');
+            // vu qu'il existe un hash, les données suivantes sont inclues dedans...
+            // On peut donc "clean" le hash de ces valeurs : @Todo "storableParameters"
+            console.warn('>> CLEANING HASH <<');
             delete sp.species_id;
             delete sp.cell_type_id;
             delete sp.gene_id;
@@ -297,20 +326,14 @@ const useLogic = () => {
             search: nextSearchURL,
           });
         }
-        // Quand que ce soit on écrase le hash après une recherche
+        // Qu'il y ai une erreur ou non, on change le flag de première recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
-        if (hash) {
-          setHash(null);
-        }
-        return [];
+        setIsFirstSearch(false);
       })
       .catch((e) => {
         console.log('[error triggerSearch] e = ', e);
-        // if (
-        //   e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
-        // ) {
+        // On enlève tous les paramètres qu'on a pu envoyer
         history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
-        // }
       })
       .finally(() => {
         setIsLoading(false);
@@ -322,7 +345,6 @@ const useLogic = () => {
       if (resp.code === 200) {
         setCounts(resp?.data?.resultCount);
       }
-      return [];
     });
   };
 
