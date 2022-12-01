@@ -4,8 +4,13 @@ import { useHistory, useLocation } from 'react-router-dom';
 export const PARAM_PAGE_KEY = 'page';
 export const RESULTS_COUNT_KEY = 'results';
 
-export const usePaginationLink = () => {
+export const usePaginationLink = (
+  paginationParamPageKey,
+  paginationResultCountKey
+) => {
   const { pathname, search } = useLocation();
+  const keyForPage = paginationParamPageKey || PARAM_PAGE_KEY;
+  const keyForPageSize = paginationResultCountKey || RESULTS_COUNT_KEY;
 
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
@@ -21,10 +26,10 @@ export const usePaginationLink = () => {
     });
 
     if (page) {
-      newSp.set(PARAM_PAGE_KEY, page);
+      newSp.set(keyForPage, page);
     }
     if (count) {
-      newSp.set(RESULTS_COUNT_KEY, count);
+      newSp.set(keyForPageSize, count);
     }
 
     return `${pathname}?${newSp.toString()}`;
@@ -33,22 +38,31 @@ export const usePaginationLink = () => {
   return { generatePaginationLink };
 };
 
-const usePagination = (perPage = 10) => {
+const usePagination = (
+  perPage = 10,
+  paginationParamPageKey = PARAM_PAGE_KEY,
+  paginationResultCountKey = RESULTS_COUNT_KEY
+) => {
   const { search } = useLocation();
   const { push } = useHistory();
 
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
-  const page = +(searchParams.get(PARAM_PAGE_KEY) || 1);
-  const pageSize = +(searchParams.get(RESULTS_COUNT_KEY) || perPage);
+  const keyForPage = paginationParamPageKey || PARAM_PAGE_KEY;
+  const keyForPageSize = paginationResultCountKey || RESULTS_COUNT_KEY;
+
+  const page = +(searchParams.get(keyForPage) || 1);
+  const pageSize = +(searchParams.get(keyForPageSize) || perPage);
 
   const onPageChange = useCallback(
     (newPage) => {
       const sp = Object.fromEntries(searchParams.entries());
+      console.log('keyForPage = ', keyForPage);
+      console.log('newPage = ', newPage);
       push({
         search: new URLSearchParams({
           ...sp,
-          [PARAM_PAGE_KEY]: newPage,
+          [keyForPage]: newPage,
         }).toString(),
       });
     },
@@ -58,10 +72,12 @@ const usePagination = (perPage = 10) => {
   const onPageSizeChange = useCallback(
     (newPageSize) => {
       const sp = Object.fromEntries(searchParams.entries());
+      console.log('keyForPage = ', keyForPageSize);
+      console.log('newPage = ', newPageSize);
       push({
         search: new URLSearchParams({
           ...sp,
-          [RESULTS_COUNT_KEY]: newPageSize,
+          [keyForPageSize]: newPageSize,
         }).toString(),
       });
     },

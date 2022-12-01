@@ -33,6 +33,7 @@ const useLogic = () => {
   const initHash = initSearch.get('data');
   const [hash, setHash] = useState(initHash);
 
+  const initDataType = initSearch.get('data_type') || RNA_SEQ;
   // const initGene = initSearch.getAll('gene_id') || [];
   // const initStrain = initSearch.getAll('strain') || [];
   // const initTissue = initSearch.getAll('anat_entity_id') || [];
@@ -62,17 +63,20 @@ const useLogic = () => {
   const [selectedSexes, setSelectedSexes] = useState([]);
   const [selectedExpOrAssay, setSelectedExpOrAssay] = useState([]);
   const [selectedDevStages, setSelectedDevStages] = useState([]);
-  const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(false);
-  const [hasTissueSubStructure, setHasTissueSubStructure] = useState(false);
-  const [hasDevStageSubStructure, setDevStageSubStructure] = useState(false);
+  const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(true);
+  const [hasTissueSubStructure, setHasTissueSubStructure] = useState(true);
+  const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
   // const [selectExp, setSelectExp] = useState([]);
 
   // results
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
-  const [dataType, setDataType] = useState(AFFYMETRIX);
+  const [dataType, setDataType] = useState(initDataType);
   const [counts, setCounts] = useState({});
+
+  // filters
+  const [filters, setFilters] = useState({});
 
   const onChangeSpecies = (newSpecies) => {
     // if (newSpecies.value !== EMPTY_SPECIES_VALUE.value) {
@@ -216,12 +220,18 @@ const useLogic = () => {
     // SubStructures
     if (requestParameters?.anat_entity_descendant === 'true') {
       setHasTissueSubStructure(true);
+    } else {
+      setHasTissueSubStructure(false);
     }
     if (requestParameters?.cell_type_descendant === 'true') {
       setHasCellTypeSubStructure(true);
+    } else {
+      setHasCellTypeSubStructure(false);
     }
     if (requestParameters?.stage_descendant === 'true') {
       setDevStageSubStructure(true);
+    } else {
+      setDevStageSubStructure(false);
     }
   };
 
@@ -239,6 +249,7 @@ const useLogic = () => {
     hasCellTypeSubStructure,
     hasDevStageSubStructure,
     hasTissueSubStructure,
+    filters: filters[dataType],
   });
 
   const triggerSearch = async () => {
@@ -246,7 +257,7 @@ const useLogic = () => {
     setIsLoading(true);
     return api.search.rawData
       .search(params, false)
-      .then((resp) => {
+      .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
 
@@ -256,12 +267,35 @@ const useLogic = () => {
           }
 
           // Lors du retour de la requête, si il existe, on met le hash dans l'url
+          // @todo : clean les autres paramètres qui seront alors dans le hash ?
           const newHash = resp?.requestParameters?.data;
+          const searchParams = new URLSearchParams(paramsURLCalled);
+          const sp = Object.fromEntries(searchParams.entries());
+          let nextSearchURL = paramsURLCalled;
           if (newHash) {
-            history.push(
-              `${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}/?data=${newHash}`
-            );
+            // vu qu'il existe un hash, ces données sont dedans...
+            // On peut donc "clean" le hash de ces valeurs :
+            console.warn('HASH CLEAN');
+            delete sp.species_id;
+            delete sp.cell_type_id;
+            delete sp.gene_id;
+            delete sp.strain;
+            delete sp.stage_id;
+            delete sp.anat_entity_id;
+            delete sp.exp_assay_id;
+            delete sp.cell_type_descendant;
+            delete sp.anat_entity_descendant;
+            delete sp.stage_descendant;
+
+            nextSearchURL = new URLSearchParams({
+              ...sp,
+              data: newHash,
+            }).toString();
           }
+
+          history.replace({
+            search: nextSearchURL,
+          });
         }
         // Quand que ce soit on écrase le hash après une recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
@@ -271,11 +305,11 @@ const useLogic = () => {
         return [];
       })
       .catch((e) => {
-        console.log('catch e = ', e);
+        console.log('[error triggerSearch] e = ', e);
         // if (
         //   e?.data?.data?.exceptionType === 'RequestParametersNotFoundException'
         // ) {
-        history.push(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
         // }
       })
       .finally(() => {
@@ -283,13 +317,14 @@ const useLogic = () => {
       });
   };
 
-  const triggerCounts = async () =>
-    api.search.rawData.search(getSearchParams(), true).then((resp) => {
+  const triggerCounts = async () => {
+    api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
       if (resp.code === 200) {
         setCounts(resp?.data?.resultCount);
       }
       return [];
     });
+  };
 
   const getSexesAndDevStageForSpecies = () => {
     api.search.species
@@ -358,9 +393,9 @@ const useLogic = () => {
     setSelectedTissue([]);
     setSelectedSexes([]);
     setSelectedDevStages([]);
-    setHasCellTypeSubStructure(false);
-    setHasTissueSubStructure(false);
-    setDevStageSubStructure(false);
+    setHasCellTypeSubStructure(true);
+    setHasTissueSubStructure(true);
+    setDevStageSubStructure(true);
     if (!isSpeciesChange) {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
@@ -386,6 +421,8 @@ const useLogic = () => {
     speciesSexes,
     selectedSexes,
     isLoading,
+    filters,
+    setFilters,
     setIsLoading,
     onChangeSpecies,
     getSpeciesLabel,
@@ -404,6 +441,8 @@ const useLogic = () => {
     autoCompleteByType,
     onSubmit,
     resetForm,
+    triggerSearch,
+    triggerCounts,
   };
 };
 

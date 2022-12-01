@@ -44,17 +44,17 @@ install:
 #    - merge_requests
 #    - develop
 #    - master
-  # Makes tests visible from gitlab pipelines !
-  #artifacts:
-  #  when: always
-  #  expire_in: 1 hour
-  #  reports:
-  #    junit:
-  #      - junit.xml
-  #  # Save reports for sonar analysis
-  #  paths:
-  #    - test-report.xml
-  #    - coverage/lcov.info
+# Makes tests visible from gitlab pipelines !
+#artifacts:
+#  when: always
+#  expire_in: 1 hour
+#  reports:
+#    junit:
+#      - junit.xml
+#  # Save reports for sonar analysis
+#  paths:
+#    - test-report.xml
+#    - coverage/lcov.info
 
 build:
   stage: build
@@ -99,6 +99,6 @@ docker-deploy:
   needs:
     - build
   only:
-    - merge_requests
+    - /^sprint.*/i
     - develop
     - master

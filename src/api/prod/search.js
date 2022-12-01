@@ -340,7 +340,6 @@ const search = {
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
         params.append('display_rp', '1'); // in order to deserialize query
-        params.append('get_column_definition', '1'); // in order to get columns
         if (isOnlyCounts) {
           params.append('data_type', 'all');
           params.append('get_result_count', '1');
@@ -348,6 +347,7 @@ const search = {
           params.append('data_type', form.dataType);
           params.append('get_results', '1');
           params.append('get_filters', '1');
+          params.append('get_column_definition', '1'); // in order to get columns
         }
 
         if (form.hash) {
@@ -359,7 +359,6 @@ const search = {
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
-
           form.selectedCellTypes.forEach((ct) =>
             params.append('cell_type_id', ct)
           );
@@ -383,15 +382,26 @@ const search = {
           if (form.hasDevStageSubStructure) {
             params.append('stage_descendant', form.hasDevStageSubStructure);
           }
+
+          // Application des filtres ! (VS form)
+          if (form?.filters) {
+            // eslint-disable-next-line no-restricted-syntax
+            for (const [key, values] of Object.entries(form.filters)) {
+              // console.log('key = ', key);
+              // console.log('values = ', values);
+              values.forEach((obj) => params.append(key, obj.value));
+            }
+          }
         }
 
+        const paramsURLCalled = params.toString();
         axiosInstance
-          .get(`/?${params.toString()}`, {
+          .get(`/?${paramsURLCalled}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.rawData = c;
             }),
           })
-          .then(({ data }) => resolve(data))
+          .then(({ data }) => resolve({ resp: data, paramsURLCalled }))
           .catch((error) => {
             errorHandler(error);
             reject(error?.response);

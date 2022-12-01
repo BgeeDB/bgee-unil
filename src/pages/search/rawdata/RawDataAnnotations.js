@@ -74,21 +74,21 @@ const RawDataAnnotations = () => {
                 {selectedSpecies.value && (
                   <div>
                     <div className="my-2">
-                      <CellTypes
-                        selectedCellTypes={selectedCellTypes}
-                        setSelectedCellTypes={setSelectedCellTypes}
-                        autoCompleteByType={autoCompleteByType}
-                        hasCellTypeSubStructure={hasCellTypeSubStructure}
-                        setHasCellTypeSubStructure={setHasCellTypeSubStructure}
-                      />
-                    </div>
-                    <div className="my-2">
                       <Tissues
                         selectedTissue={selectedTissue}
                         setSelectedTissue={setSelectedTissue}
                         autoCompleteByType={autoCompleteByType}
                         hasTissueSubStructure={hasTissueSubStructure}
                         setHasTissueSubStructure={setHasTissueSubStructure}
+                      />
+                    </div>
+                    <div className="my-2">
+                      <CellTypes
+                        selectedCellTypes={selectedCellTypes}
+                        setSelectedCellTypes={setSelectedCellTypes}
+                        autoCompleteByType={autoCompleteByType}
+                        hasCellTypeSubStructure={hasCellTypeSubStructure}
+                        setHasCellTypeSubStructure={setHasCellTypeSubStructure}
                       />
                     </div>
                     <div className="my-2">
@@ -191,9 +191,10 @@ const RawDataAnnotations = () => {
           })}
         </div>
         <div className="resultPart">
-          {!!searchResult && (
+          {!!searchResult && dataType && (
             <RawDataAnnotationsFilters
               dataFilters={searchResult?.filters?.[dataType]}
+              dataType={dataType}
             />
           )}
           {!isLoading ? (

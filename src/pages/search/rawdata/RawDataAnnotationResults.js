@@ -166,6 +166,8 @@ const RawDataAnnotationResults = ({
       data={buildResults()}
       customHeader={customHeader}
       onRenderCell={renderCells}
+      paginationParamPageKey="nbPage"
+      paginationResultCountKey="limit"
     />
   );
 };

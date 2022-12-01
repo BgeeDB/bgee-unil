@@ -52,11 +52,12 @@
     margin-bottom: 4px;
     padding-bottom: 0.3rem;
     align-items: flex-end;
+    flex-wrap: wrap;
   }
   .filterSelect {
     margin: 0 4px;
     flex: 1;
-    min-width: 3rem;
+    min-width: 14rem;
   }
 
   .cat-child {
@@ -65,6 +66,10 @@
 
   .parent-experiment {
     width: 500px;
+  }
+
+  .marginAutoBtn {
+    margin-left: auto;
   }
 
   .list-input {
@@ -92,8 +97,8 @@
     align-items: center;
   }
   .ongletActive {
-    background-color: white;
-    border: 1px solid lightgray;
+    background-color: #efefef;
+    border: 1px solid #efefef;
   }
   .section {
     background-color: #eeeeee;

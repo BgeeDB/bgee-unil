@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
-import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
+import React from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import { getIdAndNameLabel } from '../../../helpers/selects';
-
+import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
 import useLogic from './useLogic';
 
-const RawDataAnnotationsFilters = ({ dataFilters = {} }) => {
-  const { resetForm } = useLogic();
-  const [filters, setFilters] = useState({});
+const RawDataAnnotationsFilters = ({ dataFilters = {}, dataType }) => {
+  const { filters, setFilters, triggerSearch, triggerCounts } = useLogic();
+  const eraseFilters = () => {
+    setFilters((old) => ({ ...old, [dataType]: {} }));
+  };
+
+  const onApplyFilter = () => {
+    triggerCounts();
+    triggerSearch();
+  };
 
   return (
     <div className="filters">
       {!isEmpty(dataFilters) &&
         Object.keys(dataFilters).map((filterKey) => {
-          const filter = dataFilters[filterKey];
-          const firstElement = filter?.values[0];
-          const isOnlyId =
-            !!firstElement && firstElement?.id === firstElement?.name;
-          const options = filter?.values?.map((v) => ({
+          const dataFilter = dataFilters[filterKey];
+          const keyAPI = dataFilter?.urlParameterName;
+          const filterByDataType = filters[dataType];
+          const isOnlyId = dataFilter?.values.every((v) => v?.id === v?.name);
+          const options = dataFilter?.values?.map((v) => ({
             label: isOnlyId ? v.id : getIdAndNameLabel(v),
             value: v.id,
           }));
@@ -27,22 +33,38 @@ const RawDataAnnotationsFilters = ({ dataFilters = {} }) => {
             <SelectMultipleWithAutoComplete
               key={filterKey}
               style={specificStyle}
-              label={filter.filterName}
+              label={dataFilter.filterName}
               minCharToSearch={0}
-              placeholder={filter.filterName}
+              placeholder={dataFilter.filterName}
               getOptionsFunction={() => options}
-              selectedOptions={filters[filterKey] || []}
+              selectedOptions={filterByDataType?.[keyAPI] || []}
               setSelectedOptions={(newSelected) =>
-                setFilters((old) => ({ ...old, [filterKey]: newSelected }))
+                setFilters((old) => ({
+                  ...old,
+                  [dataType]: { ...old[dataType], [keyAPI]: newSelected },
+                }))
               }
-              className="filterSelect"
+              className="filterSelect my-2"
             />
           );
         })}
       {!isEmpty(dataFilters) && (
-        <button className="button is-small is-info is-light" type="button">
-          Apply filters
-        </button>
+        <>
+          <button
+            className="marginAutoBtn button is-small is-info is-light mt-2"
+            type="button"
+            onClick={onApplyFilter}
+          >
+            Apply filters
+          </button>
+          <button
+            className="button is-small is-danger is-light mt-2 ml-2"
+            type="button"
+            onClick={eraseFilters}
+          >
+            <ion-icon name="trash" tooltop />
+          </button>
+        </>
       )}
     </div>
   );
