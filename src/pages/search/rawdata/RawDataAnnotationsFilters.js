@@ -2,6 +2,7 @@ import React from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
+import { getOptionsForFilter } from '../../../helpers/selects';
 
 const RawDataAnnotationsFilters = ({
   filters,
@@ -24,17 +25,16 @@ const RawDataAnnotationsFilters = ({
         Object.keys(dataFilters).map((filterKey) => {
           const dataFilter = dataFilters[filterKey];
           const keyAPI = dataFilter?.urlParameterName;
-          const shouldPrintId = dataFilter?.informativeId;
-          const shouldPrintName = dataFilter?.informativeName;
-          const shouldPrintBoth = shouldPrintId && shouldPrintName;
           const filterByDataType = filters[dataType];
-          const options = dataFilter?.values?.map((v) => ({
-            label: `${shouldPrintId ? v.id : ''}${
-              shouldPrintBoth ? ' - ' : ''
-            }${shouldPrintName && v.name}`,
-            value: v.id,
-          }));
-          const specificStyle = !shouldPrintBoth ? { flex: 0.6 } : {};
+          const options = getOptionsForFilter(
+            dataFilter?.values,
+            dataFilter?.informativeId,
+            dataFilter?.informativeName
+          );
+          const specificStyle =
+            dataFilter.filterName === 'sex' || dataFilter.filterName === ''
+              ? { flex: 0.6 }
+              : {};
           return (
             <SelectMultipleWithAutoComplete
               key={filterKey}

@@ -3,7 +3,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import api from '../../../api';
 import { getGeneLabel } from '../../../helpers/gene';
-import { getIdAndNameLabel } from '../../../helpers/selects';
+import {
+  getIdAndNameLabel,
+  getOptionsForFilter,
+} from '../../../helpers/selects';
 import PATHS from '../../../routes/paths';
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
@@ -17,7 +20,7 @@ const FULL_LENGTH = 'FULL_LENGTH';
 export const DATA_TYPES = [
   {
     id: FULL_LENGTH,
-    label: 'scRNA-Seq full-length',
+    label: 'scRNA-Seq',
     experimentCountLabel: 'experiments',
     assayCountLabel: 'samples',
     libraryCountLabel: 'libraries',
@@ -46,12 +49,11 @@ export const DATA_TYPES = [
     assayCountLabel: 'libraries',
   },
 ];
+const BASE_PAGE_NUMBER = 1;
+const BASE_LIMIT = 10;
 
 const useLogic = () => {
   const history = useHistory();
-
-  // http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
-
   // Init from URL
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
@@ -60,21 +62,8 @@ const useLogic = () => {
   const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const initDataType = initSearch.get('data_type') || RNA_SEQ;
-  // const initGene = initSearch.getAll('gene_id') || [];
-  // const initStrain = initSearch.getAll('strain') || [];
-  // const initTissue = initSearch.getAll('anat_entity_id') || [];
-  // const initSex = initSearch.getAll('sex') || [];
-  // const initHasCellTypeSubStructure =
-  //   initSearch.get('cell_type_descendant') || false;
-  // const initHasTissueSubStructure =
-  //   initSearch.get('anat_entity_descendant') || false;
-  // const initHasDevStageSubStructure =
-  //   initSearch.get('stage_descendant') || false;
-
-  // console.log('initGene = ', initGene);
-  // console.log('initStrain = ', initStrain);
-  // console.log('initTissue = ', initTissue);
-  // console.log('initSex = ', initSex);
+  const initLimit = initSearch.get('limit') || BASE_LIMIT;
+  const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -98,10 +87,27 @@ const useLogic = () => {
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
   const [dataType, setDataType] = useState(initDataType);
-  const [counts, setCounts] = useState({});
+  // Store all counts per dataType
+  const [allCounts, setAllCounts] = useState({});
+  // Store only the count of the current DataType ( to match the filters)
+  const [localCount, setLocalCount] = useState({});
+  const [limit, setLimit] = useState(initLimit);
+  const [pageNumber, setPageNumber] = useState(initPageNumber);
 
   // filters
   const [filters, setFilters] = useState({});
+
+  useEffect(() => {
+    const sp = new URLSearchParams(loc.search);
+    const nextLimit = sp.get('limit');
+    const nextPageNumber = sp.get('pageNumber');
+    if (nextLimit !== null) {
+      setLimit(nextLimit);
+    }
+    if (nextPageNumber !== null) {
+      setPageNumber(nextPageNumber);
+    }
+  }, [loc.search]);
 
   const onChangeSpecies = (newSpecies) => {
     setSelectedSpecies(newSpecies);
@@ -111,6 +117,15 @@ const useLogic = () => {
     setSelectedTissue([]);
     setSelectedSexes([]);
   };
+
+  useEffect(() => {
+    if (
+      (limit !== BASE_LIMIT || pageNumber !== BASE_PAGE_NUMBER) &&
+      !isFirstSearch
+    ) {
+      triggerSearch();
+    }
+  }, [pageNumber, limit]);
 
   useEffect(() => {
     triggerSearch();
@@ -126,16 +141,16 @@ const useLogic = () => {
 
   const onSubmit = () => {
     triggerCounts();
-    triggerSearch();
+    triggerSearch(true);
   };
 
   const initFormFromDetailedRP = (resp) => {
     const { requestParameters, data } = resp;
     const { requestDetails } = data;
-    // console.log('initForm ! current datatype = ', dataType);
-    // console.log('initForm ! new datatype = ', requestParameters.data_type[0]);
-    // console.log(' === ? ', dataType === requestParameters.data_type[0]);
-    setDataType(requestParameters.data_type[0]);
+
+    // Data type
+    const nextDataType = requestParameters.data_type[0];
+    setDataType(nextDataType);
 
     // Species
     if (requestDetails?.requestedSpecies) {
@@ -260,6 +275,23 @@ const useLogic = () => {
     } else {
       setDevStageSubStructure(false);
     }
+
+    // Filters
+    const filtersToCheck = data.filters[nextDataType];
+    const searchParams = new URLSearchParams(requestParameters);
+    const initFilters = {};
+    // eslint-disable-next-line no-unused-vars
+    Object.entries(filtersToCheck).forEach(([_, f]) => {
+      const ids = searchParams.getAll(f.urlParameterName);
+      const nextValues = f.values.filter((v) => ids.includes(v.id));
+      const nextValuesMapped = getOptionsForFilter(
+        nextValues,
+        f?.informativeId,
+        f?.informativeName
+      );
+      initFilters[f.urlParameterName] = nextValuesMapped;
+    });
+    setFilters({ [nextDataType]: initFilters });
   };
 
   const getSearchParams = () => ({
@@ -279,51 +311,63 @@ const useLogic = () => {
     hasDevStageSubStructure,
     hasTissueSubStructure,
     filters: filters[dataType],
+    pageNumber,
+    limit,
   });
 
-  const triggerSearch = async () => {
+  const triggerSearch = async (cleanFilters = false) => {
     const params = getSearchParams();
+    if (cleanFilters) {
+      params.filters = {};
+      setFilters({});
+    }
+    console.log('[TRIGGER SEARCH] params = ', params);
     setIsLoading(true);
     return api.search.rawData
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
           setSearchResult(resp?.data);
-          // setTest((old) => old + 1);
+          setLocalCount(resp?.data?.resultCount?.[dataType]);
 
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (isFirstSearch) {
             initFormFromDetailedRP(resp);
           }
 
-          // Lors du retour de la requête, si il existe, on met le hash dans l'url
-          const newHash = resp?.requestParameters?.data;
           const searchParams = new URLSearchParams(paramsURLCalled);
           const sp = Object.fromEntries(searchParams.entries());
-          let nextSearchURL = paramsURLCalled;
-          if (newHash) {
-            // vu qu'il existe un hash, les données suivantes sont inclues dedans...
-            // On peut donc "clean" le hash de ces valeurs : @Todo "storableParameters"
-            console.warn('>> CLEANING HASH <<');
-            delete sp.species_id;
-            delete sp.cell_type_id;
-            delete sp.gene_id;
-            delete sp.strain;
-            delete sp.stage_id;
-            delete sp.anat_entity_id;
-            delete sp.exp_assay_id;
-            delete sp.cell_type_descendant;
-            delete sp.anat_entity_descendant;
-            delete sp.stage_descendant;
 
-            nextSearchURL = new URLSearchParams({
-              ...sp,
-              data: newHash,
-            }).toString();
+          // Si il existe un hash on le met dans l'url
+          // Et comme les données suivantes sont "codés" dans ce hash...
+          // On peut donc "clean" l'url de ces valeurs (aka storableParams)
+          const newHash = resp?.requestParameters?.data;
+          if (newHash) {
+            console.warn('>> clean values in hash <<');
+            resp?.requestParameters?.storableParameters?.forEach(
+              (key) => delete sp[key]
+            );
+
+            // Rajout du hash (dans la key "data")
+            sp.data = newHash;
           }
 
-          history.replace({
-            search: nextSearchURL,
+          // Dans tous les cas on clean aussi les paramètres "tech" de l'url :
+          delete sp.display_type;
+          delete sp.page;
+          delete sp.action;
+          delete sp.get_results;
+          delete sp.get_column_definition;
+          delete sp.get_filters;
+          delete sp.display_rp;
+          delete sp.detailed_rp;
+          delete sp.offset;
+          delete sp.get_result_count;
+
+          const replaceSP = new URLSearchParams(sp).toString();
+          console.log('PUSH new URL !');
+          history.push({
+            search: replaceSP,
           });
         }
         // Qu'il y ai une erreur ou non, on change le flag de première recherche
@@ -343,7 +387,7 @@ const useLogic = () => {
   const triggerCounts = async () => {
     api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
       if (resp.code === 200) {
-        setCounts(resp?.data?.resultCount);
+        setAllCounts(resp?.data?.resultCount);
       }
     });
   };
@@ -353,6 +397,10 @@ const useLogic = () => {
       .speciesDevelopmentSexe(selectedSpecies.value)
       .then((resp) => {
         if (resp.code === 200) {
+          console.log(
+            'resp.data?.requestDetails?.requestedSpeciesSexes = ',
+            resp.data?.requestDetails?.requestedSpeciesSexes
+          );
           setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
           setDevStages(
             resp.data?.requestDetails?.requestedSpeciesDevStageOntology
@@ -426,7 +474,7 @@ const useLogic = () => {
 
   return {
     searchResult,
-    counts,
+    allCounts,
     dataType,
     show,
     devStages,
@@ -444,6 +492,8 @@ const useLogic = () => {
     selectedSexes,
     isLoading,
     filters,
+    limit,
+    localCount,
     setFilters,
     setIsLoading,
     onChangeSpecies,

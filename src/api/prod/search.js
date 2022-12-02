@@ -339,15 +339,21 @@ const search = {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
         let params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+        params.append('get_result_count', '1');
         if (isOnlyCounts) {
           params.append('data_type', 'all');
-          params.append('get_result_count', '1');
         } else {
           params.append('data_type', form.dataType);
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
-          params.append('display_rp', '1'); // in order to get request parameters
+          params.append('display_rp', '1'); // in order to get request parameter
+
+          const offset = form?.limit * (form?.pageNumber - 1);
+          params.append('offset', offset);
+          params.append('limit', form?.limit);
+          // Warning : useless for API call but usefull for prefilling pagination
+          params.append('pageNumber', form?.pageNumber);
         }
 
         if (form.isFirstSearch && !isOnlyCounts) {
