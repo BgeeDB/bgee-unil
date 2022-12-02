@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable import/order */
 /* eslint-disable no-empty */
 /* eslint-disable no-shadow */
@@ -55,23 +56,40 @@ const RawDataAnnotationResults = ({
             {cell[key].content}
           </>
         );
-      case 'ANAT_ENTITY':
+      case 'ANAT_ENTITY': {
+        const cellTypeId = cell[key].cellId;
+        const cellTypeName = cell[key].cellName;
+        const anatId = cell[key].anatId;
+        const anatName = cell[key].anatName;
+
+        const renderCellId =
+          cellTypeId && cellTypeId.toLowerCase() !== 'na' ? cellTypeId : '';
+        const renderCellTypeName =
+          cellTypeName && cellTypeName.toLowerCase() !== 'na'
+            ? cellTypeName
+            : '';
+
+        const renderAnatId =
+          anatId && anatId.toLowerCase() !== 'na' ? anatId : '';
+        const renderAnatName =
+          anatName && anatName.toLowerCase() !== 'na' ? anatName : '';
+
         return (
           <>
-            {cell[key].contentCellType === 'NA - NA ' && (
-              <div>{cell[key].contentAnat}</div>
-            )}
-            {cell[key].contentCellType !== 'NA - NA ' && (
-              <div>
-                {cell[key].contentCellType}
-                <p>
-                  <em>in</em>
-                </p>
-                {cell[key].contentAnat}
-              </div>
-            )}
+            {renderCellId}
+            {renderCellTypeName && renderCellId ? ' - ' : ''}
+            {renderCellTypeName}
+            {!!renderCellId && !!renderCellTypeName ? (
+              <p>
+                <em>in</em>
+              </p>
+            ) : null}
+            {renderAnatId}
+            {renderAnatId && renderAnatName ? ' - ' : ''}
+            {renderAnatName}
           </>
         );
+      }
       default:
         return defaultRender([cell[key]]);
     }
@@ -113,7 +131,10 @@ const RawDataAnnotationResults = ({
             };
           }
           case 'INTERNAL_LINK': {
-            const path = `/experiment/${result?.experiment?.id}`;
+            const path = `/experiment/${getChildValueFromAttribute(
+              result,
+              attribute0
+            )}`;
             return {
               type: col.columnType,
               content: getChildValueFromAttribute(result, attribute0),
@@ -156,10 +177,13 @@ const RawDataAnnotationResults = ({
               result,
               col.attributes[3]
             );
+            console.log('filter me because too much log', col);
             return {
               type: col.columnType,
-              contentCellType: `${cellId || 'NA'} - ${cellName || 'NA'} `,
-              contentAnat: ` ${anatId} - ${anatName}`,
+              cellId,
+              cellName,
+              anatId,
+              anatName,
             };
           }
           case 'NUMERIC': {
