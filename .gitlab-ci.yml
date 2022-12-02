@@ -103,6 +103,8 @@ docker-deploy:
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^sprint.*/i || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"
       when: on_success
-    # --> Toujours true : donc ne lance le job si on n'est pas entrer dans la condition précédente
+    # --> comme si on avait if(true)
+    # Permet de toujours pouvoir lancer le build manuellement si nécessaire
     - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
       when: manual
+      allow_failure: true
