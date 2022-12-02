@@ -31,14 +31,9 @@ const RawDataAnnotationsFilters = ({
             dataFilter?.informativeId,
             dataFilter?.informativeName
           );
-          const specificStyle =
-            dataFilter.filterName === 'sex' || dataFilter.filterName === ''
-              ? { flex: 0.6 }
-              : {};
           return (
             <SelectMultipleWithAutoComplete
               key={filterKey}
-              style={specificStyle}
               label={dataFilter.filterName}
               minCharToSearch={0}
               placeholder={dataFilter.filterName}
