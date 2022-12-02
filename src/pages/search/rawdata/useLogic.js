@@ -1,0 +1,471 @@
+/* eslint-disable no-use-before-define */
+import { useState, useEffect, useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import api from '../../../api';
+import { getGeneLabel } from '../../../helpers/gene';
+import { getIdAndNameLabel } from '../../../helpers/selects';
+import PATHS from '../../../routes/paths';
+import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
+import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
+
+const AFFYMETRIX = 'AFFYMETRIX';
+const EST = 'EST';
+const IN_SITU = 'IN_SITU';
+const RNA_SEQ = 'RNA_SEQ';
+const FULL_LENGTH = 'FULL_LENGTH';
+
+export const DATA_TYPES = [
+  {
+    id: FULL_LENGTH,
+    label: 'scRNA-Seq full-length',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+    libraryCountLabel: 'libraries',
+  },
+  {
+    id: RNA_SEQ,
+    label: 'bulk RNA-Seq',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+  },
+  {
+    id: AFFYMETRIX,
+    label: 'Affymetrix data',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'chips',
+  },
+  {
+    id: IN_SITU,
+    label: 'In situ hybridization',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'evidences lines',
+  },
+  {
+    id: EST,
+    label: 'EST',
+    assayCountLabel: 'libraries',
+  },
+];
+
+const useLogic = () => {
+  const history = useHistory();
+
+  // http://localhost:3000/search/raw-data-annotations/?data=cec94e401483b2364953832916cf1410a756e7f8
+
+  // Init from URL
+  const loc = useLocation();
+  const initSearch = new URLSearchParams(loc.search);
+  const initHash = initSearch.get('data');
+
+  const [isFirstSearch, setIsFirstSearch] = useState(true);
+
+  const initDataType = initSearch.get('data_type') || RNA_SEQ;
+  // const initGene = initSearch.getAll('gene_id') || [];
+  // const initStrain = initSearch.getAll('strain') || [];
+  // const initTissue = initSearch.getAll('anat_entity_id') || [];
+  // const initSex = initSearch.getAll('sex') || [];
+  // const initHasCellTypeSubStructure =
+  //   initSearch.get('cell_type_descendant') || false;
+  // const initHasTissueSubStructure =
+  //   initSearch.get('anat_entity_descendant') || false;
+  // const initHasDevStageSubStructure =
+  //   initSearch.get('stage_descendant') || false;
+
+  // console.log('initGene = ', initGene);
+  // console.log('initStrain = ', initStrain);
+  // console.log('initTissue = ', initTissue);
+  // console.log('initSex = ', initSex);
+
+  // lists
+  const [speciesSexes, setSpeciesSexes] = useState([]);
+  const [devStages, setDevStages] = useState([]);
+
+  // Form
+  const [selectedSpecies, setSelectedSpecies] = useState(EMPTY_SPECIES_VALUE);
+  const [selectedTissue, setSelectedTissue] = useState([]);
+  const [selectedStrain, setSelectedStrain] = useState([]);
+  const [selectedCellTypes, setSelectedCellTypes] = useState([]);
+  const [selectedGene, setSelectedGene] = useState([]);
+  const [selectedSexes, setSelectedSexes] = useState([]);
+  const [selectedExpOrAssay, setSelectedExpOrAssay] = useState([]);
+  const [selectedDevStages, setSelectedDevStages] = useState([]);
+  const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(true);
+  const [hasTissueSubStructure, setHasTissueSubStructure] = useState(true);
+  const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
+
+  // results
+  const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(true);
+  const [searchResult, setSearchResult] = useState(null);
+  const [dataType, setDataType] = useState(initDataType);
+  const [counts, setCounts] = useState({});
+
+  // filters
+  const [filters, setFilters] = useState({});
+
+  const onChangeSpecies = (newSpecies) => {
+    setSelectedSpecies(newSpecies);
+    setSelectedCellTypes([]);
+    setSelectedGene([]);
+    setSelectedStrain([]);
+    setSelectedTissue([]);
+    setSelectedSexes([]);
+  };
+
+  useEffect(() => {
+    triggerSearch();
+    triggerCounts();
+  }, [dataType]);
+
+  useEffect(() => {
+    if (selectedSpecies.value !== EMPTY_SPECIES_VALUE.value) {
+      getSexesAndDevStageForSpecies();
+      resetForm(true);
+    }
+  }, [selectedSpecies]);
+
+  const onSubmit = () => {
+    triggerCounts();
+    triggerSearch();
+  };
+
+  const initFormFromDetailedRP = (resp) => {
+    const { requestParameters, data } = resp;
+    const { requestDetails } = data;
+    // console.log('initForm ! current datatype = ', dataType);
+    // console.log('initForm ! new datatype = ', requestParameters.data_type[0]);
+    // console.log(' === ? ', dataType === requestParameters.data_type[0]);
+    setDataType(requestParameters.data_type[0]);
+
+    // Species
+    if (requestDetails?.requestedSpecies) {
+      setSelectedSpecies({
+        label: getSpeciesLabel(requestDetails?.requestedSpecies),
+        value: requestDetails?.requestedSpecies?.id,
+      });
+    }
+
+    // Sexes
+    // les possibles
+    if (requestDetails?.requestedSpeciesSexes?.length > 0) {
+      setSpeciesSexes(requestDetails?.requestedSpeciesSexes);
+    }
+    // les sélectionnés
+    if (
+      requestParameters?.sex?.length > 0 &&
+      requestParameters?.sex[0] !== 'all'
+    ) {
+      setSelectedSexes(requestParameters?.sex);
+    }
+
+    // Genes
+    if (requestDetails?.requestedGenes?.length > 0) {
+      const initGenes = requestDetails?.requestedGenes.map((g) => ({
+        label: getGeneLabel(g),
+        value: g.geneId,
+      }));
+      setSelectedGene(initGenes);
+    }
+
+    // Tissues (anatEntities)
+    const cellTypesAndTissues =
+      requestDetails?.requestedAnatEntitesAndCellTypes || [];
+    if (requestParameters?.anat_entity_id?.length > 0) {
+      const initTissues = [];
+      requestParameters?.anat_entity_id.forEach((tissueId) => {
+        const foundTissue = cellTypesAndTissues.find((t) => t.id === tissueId);
+        if (foundTissue) {
+          initTissues.push({
+            label: getIdAndNameLabel(foundTissue),
+            value: tissueId,
+          });
+        }
+      });
+      setSelectedTissue(initTissues);
+    }
+
+    // Cell types
+    if (requestParameters?.cell_type_id?.length > 0) {
+      const initCelleTypes = [];
+      requestParameters?.cell_type_id.forEach((cellTypeId) => {
+        const foundCellType = cellTypesAndTissues.find(
+          (t) => t.id === cellTypeId
+        );
+        if (foundCellType) {
+          initCelleTypes.push({
+            label: getIdAndNameLabel(foundCellType),
+            value: cellTypeId,
+          });
+        }
+      });
+      setSelectedCellTypes(initCelleTypes);
+    }
+
+    // Dev Stage
+    if (requestParameters?.stage_id?.length > 0) {
+      const initDevStage = [];
+      const flattenedList = flattenDevStagesList(
+        requestDetails?.requestedSpeciesDevStageOntology
+      );
+      requestParameters?.stage_id.forEach((devStageId) => {
+        const foundDevStage = flattenedList.find((t) => t.id === devStageId);
+        if (foundDevStage) {
+          initDevStage.push({
+            label: getIdAndNameLabel(foundDevStage),
+            value: devStageId,
+          });
+        }
+      });
+      setSelectedDevStages(initDevStage);
+    }
+
+    // Strain
+    if (requestParameters?.strain?.length > 0) {
+      setSelectedStrain(
+        requestParameters?.strain.map((s) => ({ value: s, label: s }))
+      );
+    }
+
+    // Exp or Assay ID
+    if (requestParameters?.exp_assay_id?.length > 0) {
+      const initExpOrAssay = [];
+      requestParameters?.exp_assay_id.forEach((expOrAssayId) => {
+        const foundExpOrAssay =
+          requestDetails?.requestedExperimentAndAssays?.find(
+            (t) => t.id === expOrAssayId
+          );
+        if (foundExpOrAssay) {
+          initExpOrAssay.push({
+            label: getIdAndNameLabel(foundExpOrAssay),
+            value: expOrAssayId,
+          });
+        }
+      });
+      setSelectedExpOrAssay(initExpOrAssay);
+    }
+
+    // SubStructures
+    if (requestParameters?.anat_entity_descendant === 'true') {
+      setHasTissueSubStructure(true);
+    } else {
+      setHasTissueSubStructure(false);
+    }
+    if (requestParameters?.cell_type_descendant === 'true') {
+      setHasCellTypeSubStructure(true);
+    } else {
+      setHasCellTypeSubStructure(false);
+    }
+    if (requestParameters?.stage_descendant === 'true') {
+      setDevStageSubStructure(true);
+    } else {
+      setDevStageSubStructure(false);
+    }
+  };
+
+  const getSearchParams = () => ({
+    hash: initHash,
+    isFirstSearch,
+    initSearch,
+    dataType,
+    selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
+    selectedSpecies: selectedSpecies.value,
+    selectedCellTypes: selectedCellTypes.map((ct) => ct.value),
+    selectedGene: selectedGene.map((g) => g.value),
+    selectedStrain: selectedStrain.map((s) => s.value),
+    selectedTissue: selectedTissue.map((t) => t.value),
+    selectedDevStages: selectedDevStages.map((ds) => ds.value),
+    selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
+    hasCellTypeSubStructure,
+    hasDevStageSubStructure,
+    hasTissueSubStructure,
+    filters: filters[dataType],
+  });
+
+  const triggerSearch = async () => {
+    const params = getSearchParams();
+    setIsLoading(true);
+    return api.search.rawData
+      .search(params, false)
+      .then(({ resp, paramsURLCalled }) => {
+        if (resp.code === 200) {
+          setSearchResult(resp?.data);
+          // setTest((old) => old + 1);
+
+          // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
+          if (isFirstSearch) {
+            initFormFromDetailedRP(resp);
+          }
+
+          // Lors du retour de la requête, si il existe, on met le hash dans l'url
+          const newHash = resp?.requestParameters?.data;
+          const searchParams = new URLSearchParams(paramsURLCalled);
+          const sp = Object.fromEntries(searchParams.entries());
+          let nextSearchURL = paramsURLCalled;
+          if (newHash) {
+            // vu qu'il existe un hash, les données suivantes sont inclues dedans...
+            // On peut donc "clean" le hash de ces valeurs : @Todo "storableParameters"
+            console.warn('>> CLEANING HASH <<');
+            delete sp.species_id;
+            delete sp.cell_type_id;
+            delete sp.gene_id;
+            delete sp.strain;
+            delete sp.stage_id;
+            delete sp.anat_entity_id;
+            delete sp.exp_assay_id;
+            delete sp.cell_type_descendant;
+            delete sp.anat_entity_descendant;
+            delete sp.stage_descendant;
+
+            nextSearchURL = new URLSearchParams({
+              ...sp,
+              data: newHash,
+            }).toString();
+          }
+
+          history.replace({
+            search: nextSearchURL,
+          });
+        }
+        // Qu'il y ai une erreur ou non, on change le flag de première recherche
+        // --> permet l'utilisation des filtres dans la prochaine requête
+        setIsFirstSearch(false);
+      })
+      .catch((e) => {
+        console.log('[error triggerSearch] e = ', e);
+        // On enlève tous les paramètres qu'on a pu envoyer
+        history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const triggerCounts = async () => {
+    api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
+      if (resp.code === 200) {
+        setCounts(resp?.data?.resultCount);
+      }
+    });
+  };
+
+  const getSexesAndDevStageForSpecies = () => {
+    api.search.species
+      .speciesDevelopmentSexe(selectedSpecies.value)
+      .then((resp) => {
+        if (resp.code === 200) {
+          setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
+          setDevStages(
+            resp.data?.requestDetails?.requestedSpeciesDevStageOntology
+          );
+        } else {
+          setSpeciesSexes([]);
+        }
+      });
+  };
+
+  const autoCompleteByType = (type, mappingFn) =>
+    useCallback(
+      async (query) => {
+        if (query) {
+          return api.search.genes
+            .autoCompleteByType(type, query, selectedSpecies.value)
+            .then((resp) => {
+              if (resp.code === 200) {
+                const results =
+                  resp.data.result.searchMatches ||
+                  resp.data.result.geneMatches;
+                let list = [];
+                list = results.map(mappingFn);
+                return list;
+              }
+              return [];
+            });
+        }
+        console.warn('Empty species or query !');
+        return [];
+      },
+      [selectedSpecies.value]
+    );
+
+  const getSpeciesLabel = (specie) =>
+    `${specie.genus} ${specie.speciesName} - ${
+      specie.name ? `${specie.name}` : ''
+    }`;
+
+  const toggleSex = (sexName) => {
+    const i = selectedSexes.indexOf(sexName);
+    // Cas particulier du "all"
+    if (selectedSexes.length === 1 && selectedSexes[0] === 'all') {
+      setSelectedSexes([sexName]);
+    }
+
+    if (i === -1) {
+      setSelectedSexes([...selectedSexes, sexName]);
+    } else {
+      const nextSexes = [...selectedSexes];
+      nextSexes.splice(i, 1);
+      setSelectedSexes(nextSexes);
+    }
+  };
+
+  const resetForm = (isSpeciesChange = false) => {
+    setSelectedCellTypes([]);
+    setSelectedGene([]);
+    setSelectedStrain([]);
+    setSelectedTissue([]);
+    setSelectedSexes([]);
+    setSelectedDevStages([]);
+    setHasCellTypeSubStructure(true);
+    setHasTissueSubStructure(true);
+    setDevStageSubStructure(true);
+    if (!isSpeciesChange) {
+      setSelectedSpecies(EMPTY_SPECIES_VALUE);
+      setSelectedExpOrAssay([]);
+    }
+  };
+
+  return {
+    searchResult,
+    counts,
+    dataType,
+    show,
+    devStages,
+    hasDevStageSubStructure,
+    selectedDevStages,
+    selectedSpecies,
+    selectedCellTypes,
+    hasTissueSubStructure,
+    hasCellTypeSubStructure,
+    selectedStrain,
+    selectedGene,
+    selectedExpOrAssay,
+    selectedTissue,
+    speciesSexes,
+    selectedSexes,
+    isLoading,
+    filters,
+    setFilters,
+    setIsLoading,
+    onChangeSpecies,
+    getSpeciesLabel,
+    setSelectedCellTypes,
+    setSelectedTissue,
+    toggleSex,
+    setSelectedStrain,
+    setSelectedGene,
+    setSelectedExpOrAssay,
+    setHasTissueSubStructure,
+    setSelectedDevStages,
+    setDevStageSubStructure,
+    setHasCellTypeSubStructure,
+    setDataType,
+    setShow,
+    autoCompleteByType,
+    onSubmit,
+    resetForm,
+    triggerSearch,
+    triggerCounts,
+  };
+};
+
+export default useLogic;

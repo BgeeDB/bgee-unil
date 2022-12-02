@@ -3,6 +3,12 @@
     color: rgb(0, 187, 255);
   }
 
+  // redefine global css ....
+  button,
+  .button {
+    font-size: 1rem !important;
+  }
+
   .selector {
     width: 40%;
     float: left;
@@ -35,10 +41,23 @@
     align-items: center;
   }
 
-  .categorie {
+  .resultPart {
+    background-color: #efefef;
+    padding: 1rem;
+  }
+
+  .filters {
     display: flex;
     margin-top: 4px;
     margin-bottom: 4px;
+    padding-bottom: 0.3rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  .filterSelect {
+    margin: 0 4px;
+    flex: 1;
+    min-width: 14rem;
   }
 
   .cat-child {
@@ -47,6 +66,10 @@
 
   .parent-experiment {
     width: 500px;
+  }
+
+  .marginAutoBtn {
+    margin-left: auto;
   }
 
   .list-input {
@@ -65,18 +88,25 @@
   }
   .onglet {
     background-color: lightgray;
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 3px;
     border: 1px solid white;
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .ongletActive {
-    background-color: white;
+    background-color: #efefef;
+    border: 1px solid #efefef;
   }
   .section {
     background-color: #eeeeee;
+  }
+
+  .resultCounts {
+    text-align: right;
+    color: #8484dd;
   }
 
   .sex-container {
@@ -117,5 +147,11 @@
   }
   .labelWithHelpIcon > span {
     margin-top: 2px;
+  }
+
+  .progressWrapper {
+    display: flex;
+    justify-content: center;
+    $progress-bar-background-color: grey;
   }
 }

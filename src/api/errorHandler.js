@@ -8,26 +8,22 @@ const errorHandler = (error) => {
   if (axios.isCancel(error)) {
     console.error(error.message);
   }
-  if (error.response) {
-    const {
-      response: {
-        data: { data },
-      },
-    } = error;
-    const incorrectParameters = data.incorrectParameters
-      ? `_${data.incorrectParameters}`
+  if (error?.response) {
+    const data = error?.response?.data?.data;
+    const incorrectParameters = data?.incorrectParameters
+      ? `_${data?.incorrectParameters}`
       : '';
-    const invalidKey = data.invalidKey ? `_${data.invalidKey}` : '';
+    const invalidKey = data?.invalidKey ? `_${data?.invalidKey}` : '';
     // response falls out of the range of 2xx
     ReactGA.exception({
-      description: `${error.response.status}_${data.exceptionType}${incorrectParameters}${invalidKey}`,
+      description: `${error?.response?.status}_${data?.exceptionType}${incorrectParameters}${invalidKey}`,
     });
     getAxiosAddNotif()({
       id: random().toString(),
-      children: <p>{error?.response?.data?.message || error.message}</p>,
+      children: <p>{error?.response?.data?.message || error?.message}</p>,
       className: `is-danger`,
     });
-  } else if (error.request) {
+  } else if (error?.request) {
     // The request was made but no response was received
     console.debug('Error api request', error.request);
   } else {

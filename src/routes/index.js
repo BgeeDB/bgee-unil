@@ -153,6 +153,28 @@ const Router = () => (
 
               <Route
                 exact
+                path={PATHS.SEARCH.EXPERIMENTS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.EXPERIMENTS].component}
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path={PATHS.SEARCH.EXPERIMENT}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.EXPERIMENT].component}
+                  />
+                )}
+              />
+
+              <Route
+                exact
                 path={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}
                 render={(props) => (
                   <Page

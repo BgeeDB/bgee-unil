@@ -1,9 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useContext } from 'react';
+import { TableContext } from '../../contexts/TableContext';
 import { usePaginationLink } from '../../hooks/usePagination';
 
 const Pagination = ({ current, total }) => {
-  const { generatePaginationLink } = usePaginationLink();
+  const { paginationParamPageKey, paginationResultCountKey } =
+    useContext(TableContext);
+  const { generatePaginationLink } = usePaginationLink(
+    paginationParamPageKey,
+    paginationResultCountKey
+  );
 
   const center = React.useMemo(() => {
     const pages = [];

@@ -18,6 +18,9 @@ const SelectMultipleWithAutoComplete = ({
   minCharToSearch = 1,
   selectedOptions = [], // Tableau des options selectionnées [{label:'', value''}, {label:'', value''}...]
   setSelectedOptions,
+  optionActions,
+  className,
+  style,
 }) => {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +30,7 @@ const SelectMultipleWithAutoComplete = ({
 
   const searchHandler = useCallback(
     (val) => {
-      if (val && getOptionsFunction) {
+      if ((val || !minCharToSearch) && getOptionsFunction) {
         setIsLoading(true);
 
         /**
@@ -37,6 +40,7 @@ const SelectMultipleWithAutoComplete = ({
          * - value: id de la valeur
          */
         const valueOrPromise = getOptionsFunction(val);
+
         if (
           valueOrPromise &&
           typeof valueOrPromise.then === 'function' &&
@@ -55,13 +59,14 @@ const SelectMultipleWithAutoComplete = ({
             setAutocompleteList(list);
           });
         } else {
+          setIsLoading(false);
           setAutocompleteList(valueOrPromise);
         }
       } else {
         setAutocompleteList([]);
       }
     },
-    [getOptionsFunction]
+    [minCharToSearch, getOptionsFunction]
   );
 
   useEffect(() => {
@@ -70,7 +75,7 @@ const SelectMultipleWithAutoComplete = ({
     } else {
       setAutocompleteList([]);
     }
-  }, [search]);
+  }, [search, searchHandler]);
 
   useEffect(() => {
     if (autoFocus && inputRef.current) {
@@ -97,13 +102,14 @@ const SelectMultipleWithAutoComplete = ({
     // Split la string sur la regexp case insensitive en mode globale
     // Le tableau retourné est donc la MÊME string découpée aux endroits du match
     // Il suffit de colorer les index impaires
-    const splitted = optionLabel.split(
-      new RegExp(`(${escapeRegexp(search)})`, 'ig')
-    );
+    const splitted = search
+      ? optionLabel.split(new RegExp(`(${escapeRegexp(search)})`, 'ig'))
+      : [optionLabel];
 
     // Pour le "rare" cas des synonyms retournés par la recherche
     let matchFrom = '';
     if (
+      data?.result &&
       data?.result?.matchSource !== 'name' &&
       data?.result?.matchSource !== 'id'
     ) {
@@ -113,10 +119,12 @@ const SelectMultipleWithAutoComplete = ({
         data?.result?.match != null ? `: ${data?.result?.match}` : '';
     }
 
+    const level = data.level || 0;
+
     return (
       <components.Option {...otherProps}>
         <div className="is-flex">
-          <span className="checkboxLabel">
+          <span className="checkboxLabel" style={{ paddingLeft: level * 16 }}>
             {splitted.map((txt, i) => {
               const isEven = i % 2 === 0;
               return (
@@ -131,13 +139,14 @@ const SelectMultipleWithAutoComplete = ({
               );
             })}
           </span>
+          {optionActions ? optionActions(data) : null}
         </div>
       </components.Option>
     );
   };
 
   return (
-    <div className="content">
+    <div className={`content ${className}`} style={style}>
       <div className="field">
         {!!label && (
           <label className="label" htmlFor="autocomplete-search">
@@ -161,7 +170,7 @@ const SelectMultipleWithAutoComplete = ({
           onChange={(allSelected) => {
             setSelectedOptions(allSelected);
           }}
-          defaultValue={selectedOptions}
+          value={selectedOptions}
           onInputChange={onInputChange}
           inputValue={search}
           blurInputOnSelect={false}
