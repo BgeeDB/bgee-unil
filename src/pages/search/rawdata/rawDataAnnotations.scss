@@ -9,23 +9,9 @@
     font-size: 1rem !important;
   }
 
-  .selector {
-    width: 40%;
-    float: left;
-  }
-
-  .input-form {
-    width: 40%;
-    float: right;
-  }
-
   .submit-reinit {
     margin-top: 50px;
     float: right;
-  }
-
-  .submit {
-    // background-color: blue;
   }
 
   .reinit {
@@ -85,6 +71,7 @@
   .ongletWrapper {
     margin-top: 0.8rem;
     background-color: white;
+    overflow: auto;
   }
   .onglet {
     background-color: lightgray;
