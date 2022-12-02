@@ -99,6 +99,7 @@ docker-deploy:
   needs:
     - build
   only:
-    - /^sprint.*/i
-    - develop
-    - master
+    refs:
+      - /^sprint.*/i
+      - develop
+      - master
