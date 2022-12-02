@@ -7,8 +7,16 @@ import Pagination from '../Pagination';
 import { TableContext } from '../../contexts/TableContext';
 
 const TablePagination = () => {
-  const { table, data, usedWidth, pagination, currentPage, pageSize } =
-    useContext(TableContext);
+  const {
+    table,
+    data,
+    usedWidth,
+    pagination,
+    currentPage,
+    pageSize,
+    manualMaxPage,
+    isRequestPerPage,
+  } = useContext(TableContext);
 
   const showEntriesText = React.useMemo(
     () => (
@@ -24,8 +32,9 @@ const TablePagination = () => {
     [data, currentPage, pageSize]
   );
   const totalPage = React.useMemo(
-    () => Math.ceil(data.length / pageSize) || 1,
-    [data, pageSize]
+    () =>
+      isRequestPerPage ? manualMaxPage : Math.ceil(data.length / pageSize) || 1,
+    [data, pageSize, isRequestPerPage, manualMaxPage]
   );
 
   if (data.length === 0) return null;

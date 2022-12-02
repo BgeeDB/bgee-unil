@@ -27,6 +27,8 @@ const getChildValueFromAttribute = (obj, attributes) => {
 const RawDataAnnotationResults = ({
   results = [],
   columnDescriptions = {},
+  limit,
+  count,
 }) => {
   const customHeader = (searchElement, pageSizeElement) => (
     <Bulma.Columns vCentered>
@@ -172,8 +174,10 @@ const RawDataAnnotationResults = ({
       data={buildResults()}
       customHeader={customHeader}
       onRenderCell={renderCells}
-      paginationParamPageKey="nbPage"
+      paginationParamPageKey="pageNumber"
       paginationResultCountKey="limit"
+      isRequestPerPage
+      manualMaxPage={Math.ceil((count?.assayCount || 0) / limit)}
     />
   );
 };

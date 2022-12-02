@@ -14,26 +14,29 @@ export const usePaginationLink = (
 
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
-  const generatePaginationLink = useCallback((page, count) => {
-    if (page < 1 || count < 0) {
-      return '#';
-    }
+  const generatePaginationLink = useCallback(
+    (page, count) => {
+      if (page < 1 || count < 0) {
+        return '#';
+      }
 
-    const sp = Object.fromEntries(searchParams.entries());
+      const sp = Object.fromEntries(searchParams.entries());
 
-    const newSp = new URLSearchParams({
-      ...sp,
-    });
+      const newSp = new URLSearchParams({
+        ...sp,
+      });
 
-    if (page) {
-      newSp.set(keyForPage, page);
-    }
-    if (count) {
-      newSp.set(keyForPageSize, count);
-    }
+      if (page) {
+        newSp.set(keyForPage, page);
+      }
+      if (count) {
+        newSp.set(keyForPageSize, count);
+      }
 
-    return `${pathname}?${newSp.toString()}`;
-  }, []);
+      return `${pathname}?${newSp.toString()}`;
+    },
+    [searchParams]
+  );
 
   return { generatePaginationLink };
 };
@@ -57,11 +60,12 @@ const usePagination = (
   const onPageChange = useCallback(
     (newPage) => {
       const sp = Object.fromEntries(searchParams.entries());
+      const newParams = {
+        ...sp,
+        [keyForPage]: newPage,
+      };
       push({
-        search: new URLSearchParams({
-          ...sp,
-          [keyForPage]: newPage,
-        }).toString(),
+        search: new URLSearchParams(newParams).toString(),
       });
     },
     [searchParams]
@@ -70,16 +74,17 @@ const usePagination = (
   const onPageSizeChange = useCallback(
     (newPageSize) => {
       const sp = Object.fromEntries(searchParams.entries());
+      const params = {
+        ...sp,
+        [keyForPageSize]: newPageSize,
+        [keyForPage]: 1, // reset de toute manière la page quand on change le page size
+      };
       push({
-        search: new URLSearchParams({
-          ...sp,
-          [keyForPageSize]: newPageSize,
-        }).toString(),
+        search: new URLSearchParams(params).toString(),
       });
     },
     [searchParams]
   );
-
   return { page, pageSize, onPageChange, onPageSizeChange };
 };
 

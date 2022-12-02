@@ -38,6 +38,7 @@ const Table = ({
   isRequestPerPage = false,
   paginationParamPageKey = null,
   paginationResultCountKey = null,
+  manualMaxPage = -1,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -159,7 +160,8 @@ const Table = ({
             value={pageSize}
             options={[10, 20, 50, { value: 100, text: 100 }]}
             onChange={(p) => {
-              setCurrentPage(1);
+              // déjà éffectué dans le onPageSizeChange
+              // setCurrentPage(1);
               onPageSizeChange(parseInt(p, 10));
             }}
           />
@@ -219,6 +221,7 @@ const Table = ({
         isRequestPerPage,
         paginationParamPageKey,
         paginationResultCountKey,
+        manualMaxPage,
       }}
     >
       <TableHeader />

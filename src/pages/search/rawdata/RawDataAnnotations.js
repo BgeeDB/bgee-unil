@@ -20,7 +20,8 @@ import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 const RawDataAnnotations = () => {
   const {
     searchResult,
-    counts,
+    allCounts,
+    localCount,
     dataType,
     show,
     devStages,
@@ -38,6 +39,7 @@ const RawDataAnnotations = () => {
     selectedSexes,
     isLoading,
     filters,
+    limit,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -63,12 +65,12 @@ const RawDataAnnotations = () => {
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
   return (
     <>
-      <div className="container rawDataAnnotation">
+      <div className="rawDataAnnotation">
         {show && (
           <>
             <label className="title-raw">Search for Raw data annotations</label>
-            <div className="row">
-              <div className="selector col-sm-6">
+            <div className="columns is-8">
+              <div className="column mr-6">
                 <div className="mb-2">
                   <Species
                     selectedSpecies={selectedSpecies}
@@ -115,8 +117,8 @@ const RawDataAnnotations = () => {
                   </div>
                 )}
               </div>
-              <div className="col-md-6 my-2">
-                <div className="input-form">
+              <div className="column">
+                <div>
                   {selectedSpecies.value && (
                     <>
                       <div className="mb-2">
@@ -186,8 +188,8 @@ const RawDataAnnotations = () => {
                 <span>{type.label}</span>
                 <span>
                   (
-                  {counts?.[type.id]?.assayCount !== undefined
-                    ? counts?.[type.id]?.assayCount
+                  {allCounts?.[type.id]?.assayCount !== undefined
+                    ? allCounts?.[type.id]?.assayCount
                     : 'No data'}
                   )
                 </span>
@@ -198,15 +200,15 @@ const RawDataAnnotations = () => {
         <div className="resultPart">
           <div className="resultCounts">
             {detailedDataType.experimentCountLabel &&
-              `${counts?.[dataType]?.experimentCount || 0} ${
+              `${localCount?.experimentCount || 0} ${
                 detailedDataType.experimentCountLabel
               }`}
             {detailedDataType.assayCountLabel &&
-              ` / ${counts?.[dataType]?.assayCount || 0} ${
+              ` / ${localCount?.assayCount || 0} ${
                 detailedDataType.assayCountLabel
               }`}
             {detailedDataType.libraryCountLabel &&
-              ` / ${counts?.[dataType]?.libraryCount || 0} ${
+              ` / ${localCount?.libraryCount || 0} ${
                 detailedDataType.libraryCountLabel
               }`}
           </div>
@@ -220,14 +222,7 @@ const RawDataAnnotations = () => {
               triggerCounts={triggerCounts}
             />
           )}
-          {!isLoading ? (
-            <RawDataAnnotationResults
-              results={searchResult?.results?.[dataType]}
-              resultCount={counts[dataType]}
-              dataType={dataType}
-              columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
-            />
-          ) : (
+          {isLoading && (
             <div className="progressWrapper">
               <progress
                 className="progress is-small is-primary m-5"
@@ -238,6 +233,14 @@ const RawDataAnnotations = () => {
               />
             </div>
           )}
+          <RawDataAnnotationResults
+            results={searchResult?.results?.[dataType]}
+            resultCount={allCounts[dataType]}
+            dataType={dataType}
+            columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
+            limit={limit}
+            count={localCount}
+          />
         </div>
       </div>
     </>
