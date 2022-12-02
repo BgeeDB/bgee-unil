@@ -98,8 +98,9 @@ docker-deploy:
     - docker -H $DOCKER_HOST run -d -p ${DOCKER_PORT}:80 --name $DOCKER_CONTAINER $DOCKER_IMAGE
   needs:
     - build
-  only:
-    refs:
-      - /^sprint.*/i
-      - develop
-      - master
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^sprint.*/i || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    # --> Toujours true : donc ne lance le job si on n'est pas entrer dans la condition précédente
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+      when: manual
