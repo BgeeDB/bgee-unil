@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable no-empty */
 /* eslint-disable no-shadow */
 /* eslint-disable no-plusplus */
@@ -11,6 +12,7 @@ import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
 import { customRawListSorter } from '../../../helpers/sortTable';
+import { Link } from 'react-router-dom';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj, attributes) => {
@@ -44,7 +46,7 @@ const RawDataAnnotationResults = ({
         return <div>{cell[key].content}</div>;
 
       case 'INTERNAL_LINK':
-        return <LinkExternal to={cell[key].to} text={cell[key].content} />;
+        return <Link to={cell[key].to}>{cell[key].content}</Link>;
 
       case 'DEV_STAGE':
         return (
@@ -56,11 +58,18 @@ const RawDataAnnotationResults = ({
       case 'ANAT_ENTITY':
         return (
           <>
-            {cell[key].contentCellType}
-            <p>
-              <em>in</em>
-            </p>
-            {cell[key].contentAnat}
+            {cell[key].contentCellType === 'NA - NA ' && (
+              <div>{cell[key].contentAnat}</div>
+            )}
+            {cell[key].contentCellType !== 'NA - NA ' && (
+              <div>
+                {cell[key].contentCellType}
+                <p>
+                  <em>in</em>
+                </p>
+                {cell[key].contentAnat}
+              </div>
+            )}
           </>
         );
       default:
@@ -104,9 +113,7 @@ const RawDataAnnotationResults = ({
             };
           }
           case 'INTERNAL_LINK': {
-            const path = obolibraryLinkFromID(
-              result.annotation.rawDataCondition.anatEntity.id
-            );
+            const path = `/experiment/${result?.experiment?.id}`;
             return {
               type: col.columnType,
               content: getChildValueFromAttribute(result, attribute0),
