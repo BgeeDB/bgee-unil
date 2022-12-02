@@ -1,3 +1,5 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable import/order */
 /* eslint-disable no-empty */
 /* eslint-disable no-shadow */
 /* eslint-disable no-plusplus */
@@ -10,6 +12,8 @@ import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
+import { customRawListSorter } from '../../../helpers/sortTable';
+import { Link } from 'react-router-dom';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj, attributes) => {
@@ -42,11 +46,10 @@ const RawDataAnnotationResults = ({
     switch (cell[key].type) {
       case 'STRING':
       case 'NUMERIC':
-      case 'ANAT_ENTITY':
         return <div>{cell[key].content}</div>;
 
       case 'INTERNAL_LINK':
-        return <LinkExternal to={cell[key].to} text={cell[key].content} />;
+        return <Link to={cell[key].to}>{cell[key].content}</Link>;
 
       case 'DEV_STAGE':
         return (
@@ -55,6 +58,48 @@ const RawDataAnnotationResults = ({
             {cell[key].content}
           </>
         );
+      case 'ANAT_ENTITY': {
+        const cellTypeId = cell[key].cellId;
+        const cellTypeName = cell[key].cellName;
+        const anatId = cell[key].anatId;
+        const anatName = cell[key].anatName;
+
+        const renderCellId =
+          cellTypeId && cellTypeId.toLowerCase() !== 'na' ? (
+            <LinkExternal to={cell[key]?.toCellTypes} text={cellTypeId} />
+          ) : (
+            ''
+          );
+        const renderCellTypeName =
+          cellTypeName && cellTypeName.toLowerCase() !== 'na'
+            ? cellTypeName
+            : '';
+
+        const renderAnatId =
+          anatId && anatId.toLowerCase() !== 'na' ? (
+            <LinkExternal to={cell[key]?.toAnat} text={anatId} />
+          ) : (
+            ''
+          );
+        const renderAnatName =
+          anatName && anatName.toLowerCase() !== 'na' ? anatName : '';
+
+        return (
+          <>
+            {renderCellId}
+            {renderCellTypeName && renderCellId ? ' - ' : ''}
+            {renderCellTypeName}
+            {!!renderCellId && !!renderCellTypeName ? (
+              <p>
+                <em>in</em>
+              </p>
+            ) : null}
+            {renderAnatId}
+            {renderAnatId && renderAnatName ? ' - ' : ''}
+            {renderAnatName}
+          </>
+        );
+      }
       default:
         return defaultRender([cell[key]]);
     }
@@ -92,13 +137,14 @@ const RawDataAnnotationResults = ({
             const name = getChildValueFromAttribute(result, col.attributes[1]);
             return {
               type: col.columnType,
-              content: `${genus} - ${name}`,
+              content: `${genus} ${name}`,
             };
           }
           case 'INTERNAL_LINK': {
-            const path = obolibraryLinkFromID(
-              result.annotation.rawDataCondition.anatEntity.id
-            );
+            const path = `/experiment/${getChildValueFromAttribute(
+              result,
+              attribute0
+            )}`;
             return {
               type: col.columnType,
               content: getChildValueFromAttribute(result, attribute0),
@@ -106,13 +152,11 @@ const RawDataAnnotationResults = ({
             };
           }
           case 'DEV_STAGE': {
-            const path = obolibraryLinkFromID(
-              result.annotation.rawDataCondition.devStage.id
-            );
             const devStageId = getChildValueFromAttribute(
               result,
               col.attributes[0]
             );
+            const path = obolibraryLinkFromID(devStageId);
             const devStageName = getChildValueFromAttribute(
               result,
               col.attributes[1]
@@ -129,6 +173,7 @@ const RawDataAnnotationResults = ({
               result,
               col.attributes[0]
             );
+            const pathCellTypes = obolibraryLinkFromID(cellId || '');
             const cellName = getChildValueFromAttribute(
               result,
               col.attributes[1]
@@ -137,15 +182,19 @@ const RawDataAnnotationResults = ({
               result,
               col.attributes[2]
             );
+            const pathAnat = obolibraryLinkFromID(anatId || '');
             const anatName = getChildValueFromAttribute(
               result,
               col.attributes[3]
             );
             return {
               type: col.columnType,
-              content: `${cellId || 'NA'} - ${
-                cellName || 'NA'
-              } ${anatId} - ${anatName}`,
+              toCellTypes: pathCellTypes,
+              toAnat: pathAnat,
+              cellId,
+              cellName,
+              anatId,
+              anatName,
             };
           }
           case 'NUMERIC': {
@@ -170,6 +219,7 @@ const RawDataAnnotationResults = ({
       pagination
       sortable
       classNamesTable="is-striped"
+      onSortCustom={customRawListSorter}
       columns={columns}
       data={buildResults()}
       customHeader={customHeader}
