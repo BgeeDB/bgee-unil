@@ -63,14 +63,22 @@ const RawDataAnnotationResults = ({
         const anatName = cell[key].anatName;
 
         const renderCellId =
-          cellTypeId && cellTypeId.toLowerCase() !== 'na' ? cellTypeId : '';
+          cellTypeId && cellTypeId.toLowerCase() !== 'na' ? (
+            <LinkExternal to={cell[key]?.toCellTypes} text={cellTypeId} />
+          ) : (
+            ''
+          );
         const renderCellTypeName =
           cellTypeName && cellTypeName.toLowerCase() !== 'na'
             ? cellTypeName
             : '';
 
         const renderAnatId =
-          anatId && anatId.toLowerCase() !== 'na' ? anatId : '';
+          anatId && anatId.toLowerCase() !== 'na' ? (
+            <LinkExternal to={cell[key]?.toAnat} text={anatId} />
+          ) : (
+            ''
+          );
         const renderAnatName =
           anatName && anatName.toLowerCase() !== 'na' ? anatName : '';
 
@@ -142,13 +150,11 @@ const RawDataAnnotationResults = ({
             };
           }
           case 'DEV_STAGE': {
-            const path = obolibraryLinkFromID(
-              result.annotation.rawDataCondition.devStage.id
-            );
             const devStageId = getChildValueFromAttribute(
               result,
               col.attributes[0]
             );
+            const path = obolibraryLinkFromID(devStageId);
             const devStageName = getChildValueFromAttribute(
               result,
               col.attributes[1]
@@ -165,6 +171,7 @@ const RawDataAnnotationResults = ({
               result,
               col.attributes[0]
             );
+            const pathCellTypes = obolibraryLinkFromID(cellId || '');
             const cellName = getChildValueFromAttribute(
               result,
               col.attributes[1]
@@ -173,13 +180,15 @@ const RawDataAnnotationResults = ({
               result,
               col.attributes[2]
             );
+            const pathAnat = obolibraryLinkFromID(anatId || '');
             const anatName = getChildValueFromAttribute(
               result,
               col.attributes[3]
             );
-            console.log('filter me because too much log', col);
             return {
               type: col.columnType,
+              toCellTypes: pathCellTypes,
+              toAnat: pathAnat,
               cellId,
               cellName,
               anatId,
