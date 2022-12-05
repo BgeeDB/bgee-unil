@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -49,8 +50,8 @@ export const DATA_TYPES = [
     assayCountLabel: 'libraries',
   },
 ];
-const BASE_PAGE_NUMBER = 1;
-const BASE_LIMIT = 10;
+const BASE_PAGE_NUMBER = '1';
+const BASE_LIMIT = '10';
 
 const useLogic = () => {
   const history = useHistory();
@@ -315,13 +316,20 @@ const useLogic = () => {
     limit,
   });
 
-  const triggerSearch = async (cleanFilters = false) => {
+  const triggerSearch = async (
+    cleanFilters = false,
+    cleanPagination = false
+  ) => {
     const params = getSearchParams();
+    if (cleanPagination) {
+      params.pageNumber = BASE_PAGE_NUMBER;
+      params.limit = BASE_LIMIT;
+    }
     if (cleanFilters) {
       params.filters = {};
       setFilters({});
     }
-    console.log('[TRIGGER SEARCH] params = ', params);
+    // console.log('[TRIGGER SEARCH] params = ', params);
     setIsLoading(true);
     return api.search.rawData
       .search(params, false)
@@ -343,7 +351,7 @@ const useLogic = () => {
           // On peut donc "clean" l'url de ces valeurs (aka storableParams)
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
-            console.warn('>> clean values in hash <<');
+            // console.warn('>> clean values in hash <<');
             resp?.requestParameters?.storableParameters?.forEach(
               (key) => delete sp[key]
             );
@@ -365,12 +373,11 @@ const useLogic = () => {
           delete sp.get_result_count;
 
           const replaceSP = new URLSearchParams(sp).toString();
-          console.log('PUSH new URL !');
           history.push({
             search: replaceSP,
           });
         }
-        // Qu'il y ai une erreur ou non, on change le flag de première recherche
+        // On change le flag de première recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
         setIsFirstSearch(false);
       })
@@ -397,10 +404,6 @@ const useLogic = () => {
       .speciesDevelopmentSexe(selectedSpecies.value)
       .then((resp) => {
         if (resp.code === 200) {
-          console.log(
-            'resp.data?.requestDetails?.requestedSpeciesSexes = ',
-            resp.data?.requestDetails?.requestedSpeciesSexes
-          );
           setSpeciesSexes(resp.data?.requestDetails?.requestedSpeciesSexes);
           setDevStages(
             resp.data?.requestDetails?.requestedSpeciesDevStageOntology
