@@ -158,7 +158,7 @@ const Table = ({
           <p className="mr-2">Show</p>
           <Select
             value={pageSize}
-            options={[10, 20, 50, { value: 100, text: 100 }]}
+            options={[10, 20, 50, { value: 100, text: 100 }, 500, 1000]}
             onChange={(p) => {
               // déjà éffectué dans le onPageSizeChange
               // setCurrentPage(1);
