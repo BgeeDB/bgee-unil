@@ -50,6 +50,26 @@ export const DATA_TYPES = [
     assayCountLabel: 'libraries',
   },
 ];
+
+const RAW_DATA_ANNOTS = 'RAW_DATA_ANNOTS';
+const PROC_EXPR_VALUES = 'PROC_EXPR_VALUES';
+const EXPR_CALLS = 'EXPR_CALLS';
+
+export const TAB_PAGE = [
+  {
+    id: RAW_DATA_ANNOTS,
+    label: 'Raw data annotations',
+  },
+  {
+    id: PROC_EXPR_VALUES,
+    label: 'Processed expresion values',
+  },
+  {
+    id: EXPR_CALLS,
+    label: 'Present/absent expression calls',
+  },
+];
+
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '10';
 
@@ -65,6 +85,10 @@ const useLogic = () => {
   const initDataType = initSearch.get('data_type') || RNA_SEQ;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
+  const initTabPage = RAW_DATA_ANNOTS;
+
+  // page
+  const [tabPage, setTabPage] = useState(initTabPage);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -479,6 +503,7 @@ const useLogic = () => {
     searchResult,
     allCounts,
     dataType,
+    tabPage,
     show,
     devStages,
     hasDevStageSubStructure,
@@ -512,6 +537,7 @@ const useLogic = () => {
     setDevStageSubStructure,
     setHasCellTypeSubStructure,
     setDataType,
+    setTabPage,
     setShow,
     autoCompleteByType,
     onSubmit,
