@@ -65,6 +65,7 @@ const RawDataAnnotations = () => {
   } = useLogic();
 
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
+  const detailedData = TAB_PAGE.find((d) => d.id === tabPage);
   return (
     <>
       <div className="rawDataAnnotation">
@@ -76,7 +77,7 @@ const RawDataAnnotations = () => {
                 key={type.id}
                 onClick={() => setTabPage(type.id)}
                 className={`onglet column is-centered ${
-                  isActive && 'ongletActive'
+                  isActive && 'pageActive'
                 }`}
               >
                 <span>{type.label}</span>
@@ -84,13 +85,11 @@ const RawDataAnnotations = () => {
             );
           })}
         </div>
-        {tabPage === 'RAW_DATA_ANNOTS' && (
+        {tabPage && (
           <div>
             {show && (
               <>
-                <label className="title-raw">
-                  Search for Raw data annotations
-                </label>
+                <label className="title-raw">{detailedData.searchLabel}</label>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2">
@@ -197,7 +196,7 @@ const RawDataAnnotations = () => {
                 {show ? 'Hide Filter' : 'Show Filter'}
               </button>
             </div>
-            <label className="title-raw">Raw data annotations results</label>
+            <label className="title-raw">{detailedData.resultLabel}</label>
             <div className="is-flex ongletWrapper is-centered">
               {DATA_TYPES.map((type) => {
                 const isActive = type.id === dataType;

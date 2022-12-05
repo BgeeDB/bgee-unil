@@ -51,22 +51,28 @@ export const DATA_TYPES = [
   },
 ];
 
-const RAW_DATA_ANNOTS = 'RAW_DATA_ANNOTS';
-const PROC_EXPR_VALUES = 'PROC_EXPR_VALUES';
-const EXPR_CALLS = 'EXPR_CALLS';
+const RAW_DATA_ANNOTS = 'raw_data_annots';
+const PROC_EXPR_VALUES = 'proc_expr_values';
+const EXPR_CALLS = 'expr_calls';
 
 export const TAB_PAGE = [
   {
     id: RAW_DATA_ANNOTS,
     label: 'Raw data annotations',
+    searchLabel: 'Search for Raw data annotations',
+    resultLabel: 'Raw data annotations results',
   },
   {
     id: PROC_EXPR_VALUES,
     label: 'Processed expresion values',
+    searchLabel: 'Search for Processed expresion values',
+    resultLabel: 'Processed expresion values results',
   },
   {
     id: EXPR_CALLS,
     label: 'Present/absent expression calls',
+    searchLabel: 'Search for Present/absent expression calls',
+    resultLabel: 'Present/absent expression calls results',
   },
 ];
 
@@ -323,6 +329,7 @@ const useLogic = () => {
     hash: initHash,
     isFirstSearch,
     initSearch,
+    tabPage,
     dataType,
     selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
     selectedSpecies: selectedSpecies.value,

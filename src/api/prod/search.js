@@ -338,7 +338,8 @@ const search = {
   rawData: {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
-        let params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+        // let params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+        let params = DEFAULT_PARAMETERS('data', form.tabPage);
         params.append('get_result_count', '1');
         if (isOnlyCounts) {
           params.append('data_type', 'all');
