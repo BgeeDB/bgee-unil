@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
@@ -11,12 +11,22 @@ const RawDataAnnotationsFilters = ({
   dataFilters = {},
   dataType,
 }) => {
+  const [hasChanged, setHasChanged] = useState(false);
   const eraseFilters = () => {
     setFilters((old) => ({ ...old, [dataType]: {} }));
   };
 
   const onApplyFilter = () => {
-    triggerSearch();
+    triggerSearch(false, true);
+    setHasChanged(false);
+  };
+
+  const onSelect = (keyAPI, newSelected) => {
+    setHasChanged(true);
+    setFilters((old) => ({
+      ...old,
+      [dataType]: { ...old[dataType], [keyAPI]: newSelected },
+    }));
   };
 
   return (
@@ -40,10 +50,7 @@ const RawDataAnnotationsFilters = ({
               getOptionsFunction={() => options}
               selectedOptions={filterByDataType?.[keyAPI] || []}
               setSelectedOptions={(newSelected) =>
-                setFilters((old) => ({
-                  ...old,
-                  [dataType]: { ...old[dataType], [keyAPI]: newSelected },
-                }))
+                onSelect(keyAPI, newSelected)
               }
               className="filterSelect my-2"
             />
@@ -55,6 +62,7 @@ const RawDataAnnotationsFilters = ({
             className="marginAutoBtn button is-small is-info is-light mt-2"
             type="button"
             onClick={onApplyFilter}
+            disabled={!hasChanged}
           >
             Apply filters
           </button>
