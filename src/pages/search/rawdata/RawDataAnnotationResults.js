@@ -228,6 +228,8 @@ const RawDataAnnotationResults = ({
       paginationResultCountKey="limit"
       isRequestPerPage
       manualMaxPage={Math.ceil((count?.assayCount || 0) / limit)}
+      fullwidth={false}
+      minThWidth="7rem"
     />
   );
 };
