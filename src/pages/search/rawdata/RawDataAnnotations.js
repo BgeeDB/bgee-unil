@@ -16,6 +16,8 @@ import Strain from './components/filters/Strain/Strain';
 import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
 import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
+import DataType from './components/filters/DataType/DataType';
+import ConditionParameter from './components/filters/ConditionParameter';
 
 const RawDataAnnotations = ({ pageType }) => {
   const {
@@ -71,14 +73,15 @@ const RawDataAnnotations = ({ pageType }) => {
           {TAB_PAGE.map((type) => {
             const isActive = type.id === pageType;
             return (
-              <div
+              <a
+                href={type.href}
                 key={type.id}
-                className={`onglet column is-centered ${
+                className={`ongletPages tabs is-centered ${
                   isActive && 'pageActive'
                 }`}
               >
-                <span>{type.label}</span>
-              </div>
+                <h1>{type.label}</h1>
+              </a>
             );
           })}
         </div>
@@ -164,6 +167,12 @@ const RawDataAnnotations = ({ pageType }) => {
                           autoCompleteByType={autoCompleteByType}
                         />
                       </div>
+                      {detailedData.id === 'expr_calls' && (
+                        <>
+                          <DataType />
+                          <ConditionParameter />
+                        </>
+                      )}
                       <div className="submit-reinit">
                         <Button
                           className="button is-success is-light is-outlined"
@@ -194,29 +203,31 @@ const RawDataAnnotations = ({ pageType }) => {
               </button>
             </div>
             <label className="title-raw">{detailedData.resultLabel}</label>
-            <div className="is-flex ongletWrapper is-centered">
-              {DATA_TYPES.map((type) => {
-                const isActive = type.id === dataType;
-                return (
-                  <div
-                    key={type.id}
-                    onClick={() => setDataType(type.id)}
-                    className={`onglet column is-centered ${
-                      isActive && 'ongletActive'
-                    }`}
-                  >
-                    <span>{type.label}</span>
-                    <span>
-                      (
-                      {allCounts?.[type.id]?.assayCount !== undefined
-                        ? allCounts?.[type.id]?.assayCount
-                        : 'No data'}
-                      )
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+            {detailedData.id !== 'expr_calls' && (
+              <div className="is-flex ongletWrapper is-centered">
+                {DATA_TYPES.map((type) => {
+                  const isActive = type.id === dataType;
+                  return (
+                    <div
+                      key={type.id}
+                      onClick={() => setDataType(type.id)}
+                      className={`onglet column is-centered ${
+                        isActive && 'ongletActive'
+                      }`}
+                    >
+                      <span>{type.label}</span>
+                      <span>
+                        (
+                        {allCounts?.[type.id]?.assayCount !== undefined
+                          ? allCounts?.[type.id]?.assayCount
+                          : 'No data'}
+                        )
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div className="resultPart">
               <div className="resultCounts">
                 {detailedDataType.experimentCountLabel &&

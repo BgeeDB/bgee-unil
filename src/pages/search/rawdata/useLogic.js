@@ -10,6 +10,7 @@ import {
 } from '../../../helpers/selects';
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
+import PATHS from '../../../routes/paths';
 
 const AFFYMETRIX = 'AFFYMETRIX';
 const EST = 'EST';
@@ -53,6 +54,9 @@ export const DATA_TYPES = [
 export const RAW_DATA_ANNOTS = 'raw_data_annots';
 export const PROC_EXPR_VALUES = 'proc_expr_values';
 export const EXPR_CALLS = 'expr_calls';
+const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
+const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
+const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
 
 export const TAB_PAGE = [
   {
@@ -60,18 +64,21 @@ export const TAB_PAGE = [
     label: 'Raw data annotations',
     searchLabel: 'Search for Raw data annotations',
     resultLabel: 'Raw data annotations results',
+    href: pathRawDataAnnots,
   },
   {
     id: PROC_EXPR_VALUES,
     label: 'Processed expresion values',
     searchLabel: 'Search for Processed expresion values',
     resultLabel: 'Processed expresion values results',
+    href: pathProcExprValues,
   },
   {
     id: EXPR_CALLS,
     label: 'Present/absent expression calls',
     searchLabel: 'Search for Present/absent expression calls',
     resultLabel: 'Present/absent expression calls results',
+    href: pathExprCalls,
   },
 ];
 

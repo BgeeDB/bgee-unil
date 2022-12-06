@@ -90,6 +90,13 @@
   .pageActive {
     color: red;
   }
+  .ongletPages {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
   .section {
     background-color: #eeeeee;
   }
