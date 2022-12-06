@@ -505,7 +505,6 @@ const useLogic = (pageType) => {
     searchResult,
     allCounts,
     dataType,
-    tabPage,
     show,
     devStages,
     hasDevStageSubStructure,
