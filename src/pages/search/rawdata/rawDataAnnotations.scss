@@ -151,4 +151,12 @@
     justify-content: center;
     $progress-bar-background-color: grey;
   }
+  a:link,
+  a:visited {
+    color: #626262;
+  }
+  a:active,
+  a:hover {
+    color: red;
+  }
 }

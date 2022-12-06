@@ -69,7 +69,7 @@ const RawDataAnnotations = ({ pageType }) => {
   return (
     <>
       <div className="rawDataAnnotation">
-        <div className="is-flex ongletWrapper is-centered">
+        <div className="columns is-8">
           {TAB_PAGE.map((type) => {
             const isActive = type.id === pageType;
             return (
