@@ -23,7 +23,6 @@ const RawDataAnnotations = ({ pageType }) => {
     allCounts,
     localCount,
     dataType,
-    tabPage,
     show,
     devStages,
     hasDevStageSubStructure,
@@ -64,13 +63,13 @@ const RawDataAnnotations = ({ pageType }) => {
   } = useLogic(pageType);
 
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
-  const detailedData = TAB_PAGE.find((d) => d.id === tabPage);
+  const detailedData = TAB_PAGE.find((d) => d.id === pageType);
   return (
     <>
       <div className="rawDataAnnotation">
         <div className="is-flex ongletWrapper is-centered">
           {TAB_PAGE.map((type) => {
-            const isActive = type.id === tabPage;
+            const isActive = type.id === pageType;
             return (
               <div
                 key={type.id}
@@ -83,7 +82,7 @@ const RawDataAnnotations = ({ pageType }) => {
             );
           })}
         </div>
-        {tabPage && (
+        {pageType && (
           <div>
             {show && (
               <>
