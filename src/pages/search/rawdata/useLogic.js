@@ -8,7 +8,6 @@ import {
   getIdAndNameLabel,
   getOptionsForFilter,
 } from '../../../helpers/selects';
-import PATHS from '../../../routes/paths';
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 
@@ -51,9 +50,9 @@ export const DATA_TYPES = [
   },
 ];
 
-const RAW_DATA_ANNOTS = 'raw_data_annots';
-const PROC_EXPR_VALUES = 'proc_expr_values';
-const EXPR_CALLS = 'expr_calls';
+export const RAW_DATA_ANNOTS = 'raw_data_annots';
+export const PROC_EXPR_VALUES = 'proc_expr_values';
+export const EXPR_CALLS = 'expr_calls';
 
 export const TAB_PAGE = [
   {
@@ -79,7 +78,7 @@ export const TAB_PAGE = [
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '10';
 
-const useLogic = () => {
+const useLogic = (pageType) => {
   const history = useHistory();
   // Init from URL
   const loc = useLocation();
@@ -91,10 +90,6 @@ const useLogic = () => {
   const initDataType = initSearch.get('data_type') || RNA_SEQ;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
-  const initTabPage = RAW_DATA_ANNOTS;
-
-  // page
-  const [tabPage, setTabPage] = useState(initTabPage);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -329,7 +324,7 @@ const useLogic = () => {
     hash: initHash,
     isFirstSearch,
     initSearch,
-    tabPage,
+    pageType,
     dataType,
     selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
     selectedSpecies: selectedSpecies.value,
@@ -415,7 +410,7 @@ const useLogic = () => {
       .catch((e) => {
         console.log('[error triggerSearch] e = ', e);
         // On enlève tous les paramètres qu'on a pu envoyer
-        history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        history.replace(loc.pathname);
       })
       .finally(() => {
         setIsLoading(false);
@@ -544,7 +539,6 @@ const useLogic = () => {
     setDevStageSubStructure,
     setHasCellTypeSubStructure,
     setDataType,
-    setTabPage,
     setShow,
     autoCompleteByType,
     onSubmit,

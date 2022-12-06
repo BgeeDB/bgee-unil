@@ -17,7 +17,7 @@ import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
 import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 
-const RawDataAnnotations = () => {
+const RawDataAnnotations = ({ pageType }) => {
   const {
     searchResult,
     allCounts,
@@ -54,7 +54,6 @@ const RawDataAnnotations = () => {
     setDevStageSubStructure,
     setHasCellTypeSubStructure,
     setDataType,
-    setTabPage,
     setShow,
     autoCompleteByType,
     onSubmit,
@@ -62,7 +61,7 @@ const RawDataAnnotations = () => {
     setFilters,
     triggerSearch,
     triggerCounts,
-  } = useLogic();
+  } = useLogic(pageType);
 
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
   const detailedData = TAB_PAGE.find((d) => d.id === tabPage);
@@ -75,7 +74,6 @@ const RawDataAnnotations = () => {
             return (
               <div
                 key={type.id}
-                onClick={() => setTabPage(type.id)}
                 className={`onglet column is-centered ${
                   isActive && 'pageActive'
                 }`}
