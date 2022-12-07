@@ -5,6 +5,15 @@ import LinkExternal from '../../../../components/LinkExternal';
 import { COLUMN_TYPES } from '../../../../helpers/constants/columnDescriptions';
 import obolibraryLinkFromID from '../../../../helpers/obolibraryLinkFromID';
 
+const getColumnValues = (cell, attributes) =>
+  attributes
+    .map((attribute) => {
+      const attributeParts = attribute.split('.');
+      attributeParts.shift();
+      return attributeParts.reduce((result, attr) => result[attr], cell);
+    })
+    .filter((x) => x !== undefined);
+
 const useLogic = () => {
   const [data, setData] = useState();
 
@@ -35,13 +44,7 @@ const useLogic = () => {
 
       const { attributes, columnType } = data.columnDescriptions[key];
 
-      const values = attributes
-        .map((attribute) => {
-          const attributeParts = attribute.split('.');
-          attributeParts.shift();
-          return attributeParts.reduce((result, attr) => result[attr], cell);
-        })
-        .filter((x) => x !== undefined);
+      const values = getColumnValues(cell, attributes);
 
       switch (columnType) {
         case COLUMN_TYPES.DEV_STAGE:
@@ -67,10 +70,14 @@ const useLogic = () => {
 
   const onFilter = useCallback(
     (keyword) => (row) => {
-      const regExp = new RegExp(keyword, 'gi');
-      return regExp.test(row?.id) || regExp.test(row?.library?.id);
+      const regExp = new RegExp(keyword.trim(), 'gi');
+
+      return (data?.columnDescriptions || []).some(({ attributes }) => {
+        const values = getColumnValues(row, attributes)?.join('');
+        return regExp.test(values);
+      });
     },
-    []
+    [data?.columnDescriptions]
   );
 
   return { data, columns, onRenderCell, onFilter };
