@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable consistent-return */
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback } from 'react';
@@ -471,10 +472,12 @@ const useLogic = (pageType) => {
       [selectedSpecies.value]
     );
 
-  const getSpeciesLabel = (specie) =>
-    `${specie.genus} ${specie.speciesName} - ${
-      specie.name ? `${specie.name}` : ''
-    }`;
+  const getSpeciesLabel = (specie) => {
+    if (specie.name !== '') {
+      return `${specie.genus} ${specie.speciesName} - ${specie.name}`;
+    }
+    return `${specie.genus} ${specie.speciesName}`;
+  };
 
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
