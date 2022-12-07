@@ -72,12 +72,12 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.EXPRESSION_CALLS,
       },
-      // {
-      //   key: 'page.search.experiments',
-      //   title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
-      //   type: 'internal',
-      //   path: PATHS.SEARCH.EXPERIMENTS,
-      // },
+      {
+        key: 'page.search.experiments',
+        title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.EXPERIMENTS,
+      },
     ],
   },
   {
