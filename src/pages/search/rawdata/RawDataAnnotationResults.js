@@ -49,7 +49,11 @@ const RawDataAnnotationResults = ({
         return <div>{cell[key].content}</div>;
 
       case 'INTERNAL_LINK':
-        return <Link to={cell[key].to}>{cell[key].content}</Link>;
+        return (
+          <Link className="external-link" to={cell[key].to}>
+            {cell[key].content}
+          </Link>
+        );
 
       case 'DEV_STAGE':
         return (

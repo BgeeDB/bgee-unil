@@ -153,10 +153,7 @@ const useLogic = (pageType) => {
   };
 
   useEffect(() => {
-    if (
-      (limit !== BASE_LIMIT || pageNumber !== BASE_PAGE_NUMBER) &&
-      !isFirstSearch
-    ) {
+    if (!isFirstSearch) {
       triggerSearch();
     }
   }, [pageNumber, limit]);

@@ -69,18 +69,18 @@ const RawDataAnnotations = ({ pageType }) => {
   return (
     <>
       <div className="rawDataAnnotation">
-        <div className="columns is-8">
+        <div className="columns is-8 ongletPageWrapper">
           {TAB_PAGE.map((type) => {
             const isActive = type.id === pageType;
             return (
               <a
                 href={type.href}
                 key={type.id}
-                className={`ongletPages tabs is-centered ${
-                  isActive && 'pageActive'
+                className={`ongletPages is-centered py-2 px-5 ${
+                  isActive ? 'pageActive' : ''
                 }`}
               >
-                <h1>{type.label}</h1>
+                {type.label}
               </a>
             );
           })}
@@ -233,9 +233,9 @@ const RawDataAnnotations = ({ pageType }) => {
                 {detailedDataType.experimentCountLabel &&
                   `${localCount?.experimentCount || 0} ${
                     detailedDataType.experimentCountLabel
-                  }`}
+                  } / `}
                 {detailedDataType.assayCountLabel &&
-                  ` / ${localCount?.assayCount || 0} ${
+                  `${localCount?.assayCount || 0} ${
                     detailedDataType.assayCountLabel
                   }`}
                 {detailedDataType.libraryCountLabel &&

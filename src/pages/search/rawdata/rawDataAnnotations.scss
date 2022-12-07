@@ -88,14 +88,27 @@
     border: 1px solid #efefef;
   }
   .pageActive {
-    color: red;
+    color: red !important;
+  }
+  .ongletPageWrapper {
+    border-bottom: 1px solid grey;
   }
   .ongletPages {
     padding-right: 1rem;
     padding-left: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
     cursor: pointer;
     display: flex;
     justify-content: center;
+  }
+  a.ongletPages:link,
+  a.ongletPages:visited {
+    color: #626262;
+  }
+  a.ongletPages:active,
+  a.ongletPages:hover {
+    color: red;
   }
   .section {
     background-color: #eeeeee;
@@ -150,14 +163,6 @@
     display: flex;
     justify-content: center;
     $progress-bar-background-color: grey;
-  }
-  a:link,
-  a:visited {
-    color: #626262;
-  }
-  a:active,
-  a:hover {
-    color: red;
   }
   .react-select__multi-value__label {
     max-width: 20rem;
