@@ -46,7 +46,7 @@ const DevelopmentalAndLifeStages = ({
       </label>
       <SelectMultipleWithAutoComplete
         minCharToSearch={0}
-        placeholder="Search Development and life stage"
+        placeholder="Search Developmental and life stage"
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
         getOptionsFunction={getOptionsFunction}

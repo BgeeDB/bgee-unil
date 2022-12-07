@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable consistent-return */
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback } from 'react';
@@ -8,9 +9,9 @@ import {
   getIdAndNameLabel,
   getOptionsForFilter,
 } from '../../../helpers/selects';
-import PATHS from '../../../routes/paths';
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
+import PATHS from '../../../routes/paths';
 
 const AFFYMETRIX = 'AFFYMETRIX';
 const EST = 'EST';
@@ -50,10 +51,42 @@ export const DATA_TYPES = [
     assayCountLabel: 'libraries',
   },
 ];
+
+export const RAW_DATA_ANNOTS = 'raw_data_annots';
+export const PROC_EXPR_VALUES = 'proc_expr_values';
+export const EXPR_CALLS = 'expr_calls';
+const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
+const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
+const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
+
+export const TAB_PAGE = [
+  {
+    id: RAW_DATA_ANNOTS,
+    label: 'Raw data annotations',
+    searchLabel: 'Search for Raw data annotations',
+    resultLabel: 'Raw data annotations results',
+    href: pathRawDataAnnots,
+  },
+  {
+    id: PROC_EXPR_VALUES,
+    label: 'Processed expresion values',
+    searchLabel: 'Search for Processed expresion values',
+    resultLabel: 'Processed expresion values results',
+    href: pathProcExprValues,
+  },
+  {
+    id: EXPR_CALLS,
+    label: 'Present/absent expression calls',
+    searchLabel: 'Search for Present/absent expression calls',
+    resultLabel: 'Present/absent expression calls results',
+    href: pathExprCalls,
+  },
+];
+
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '10';
 
-const useLogic = () => {
+const useLogic = (pageType) => {
   const history = useHistory();
   // Init from URL
   const loc = useLocation();
@@ -120,10 +153,7 @@ const useLogic = () => {
   };
 
   useEffect(() => {
-    if (
-      (limit !== BASE_LIMIT || pageNumber !== BASE_PAGE_NUMBER) &&
-      !isFirstSearch
-    ) {
+    if (!isFirstSearch) {
       triggerSearch();
     }
   }, [pageNumber, limit]);
@@ -299,6 +329,7 @@ const useLogic = () => {
     hash: initHash,
     isFirstSearch,
     initSearch,
+    pageType,
     dataType,
     selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
     selectedSpecies: selectedSpecies.value,
@@ -384,7 +415,7 @@ const useLogic = () => {
       .catch((e) => {
         console.log('[error triggerSearch] e = ', e);
         // On enlève tous les paramètres qu'on a pu envoyer
-        history.replace(PATHS.SEARCH.RAW_DATA_ANNOTATIONS);
+        history.replace(loc.pathname);
       })
       .finally(() => {
         setIsLoading(false);
@@ -438,10 +469,12 @@ const useLogic = () => {
       [selectedSpecies.value]
     );
 
-  const getSpeciesLabel = (specie) =>
-    `${specie.genus} ${specie.speciesName} - ${
-      specie.name ? `${specie.name}` : ''
-    }`;
+  const getSpeciesLabel = (specie) => {
+    if (specie.name !== '') {
+      return `${specie.genus} ${specie.speciesName} - ${specie.name}`;
+    }
+    return `${specie.genus} ${specie.speciesName}`;
+  };
 
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
