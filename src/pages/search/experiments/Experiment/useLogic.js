@@ -32,6 +32,7 @@ const useLogic = () => {
       (data?.columnDescriptions || []).map((column, index) => ({
         key: index,
         text: column.title,
+        infoBubble: column.infoBubble,
       })),
     [data?.columnDescriptions]
   );
