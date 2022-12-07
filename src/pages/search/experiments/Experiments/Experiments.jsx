@@ -20,7 +20,7 @@ const Experiments = () => {
     // setFilters,
     // triggerSearch,
     // triggerCounts,
-  } = useLogic();
+  } = useLogic('experiments');
 
   return (
     <>
