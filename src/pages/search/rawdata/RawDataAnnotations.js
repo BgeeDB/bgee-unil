@@ -8,7 +8,7 @@ import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
-import useLogic, { DATA_TYPES, TAB_PAGE } from './useLogic';
+import useLogic, { DATA_TYPES, EXPR_CALLS, TAB_PAGE } from './useLogic';
 import CellTypes from './components/filters/CellTypes';
 import Tissues from './components/filters/Tissues/Tissues';
 import Sex from './components/filters/Sex/Sex';
@@ -64,6 +64,8 @@ const RawDataAnnotations = ({ pageType }) => {
     triggerCounts,
   } = useLogic(pageType);
 
+  const results = searchResult?.results?.[dataType] || [];
+  const columnsDesc = searchResult?.columnDescriptions?.[dataType] || [];
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
   const detailedData = TAB_PAGE.find((d) => d.id === pageType);
   return (
@@ -167,7 +169,7 @@ const RawDataAnnotations = ({ pageType }) => {
                           autoCompleteByType={autoCompleteByType}
                         />
                       </div>
-                      {detailedData.id === 'expr_calls' && (
+                      {detailedData.id === EXPR_CALLS && (
                         <>
                           <DataType />
                           <ConditionParameter />
@@ -265,12 +267,10 @@ const RawDataAnnotations = ({ pageType }) => {
                 </div>
               )}
               <RawDataAnnotationResults
-                results={searchResult?.results?.[dataType]}
+                results={results}
                 resultCount={allCounts[dataType]}
                 dataType={dataType}
-                columnDescriptions={
-                  searchResult?.columnDescriptions?.[dataType]
-                }
+                columnDescriptions={columnsDesc}
                 limit={limit}
                 count={localCount}
               />
