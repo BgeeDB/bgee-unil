@@ -340,6 +340,18 @@ const search = {
       new Promise((resolve, reject) => {
         let params = DEFAULT_PARAMETERS('data', form.pageType);
         params.append('get_result_count', '1');
+
+        // @TODO : delete gene forcé si aucun présent !
+        if (
+          form.pageType === 'proc_expr_values' &&
+          form.selectedGene?.length === 0
+        ) {
+          console.warn('FAKE FILTER GENE ACTIVATED !');
+          // gène humain pour éviter les requêtes trop longues quand aucun précisé !
+          params.append('gene_id', 'ENSG00000158813');
+          params.append('species_id', '9606'); // on précise aussi l'espèce humaine sinon la requête marche pas
+        }
+
         if (isOnlyCounts) {
           params.append('data_type', 'all');
         } else {
@@ -374,6 +386,9 @@ const search = {
           }
         } else {
           // Si pas de hash on envoie tous les paramètres séparéments
+          console.log('________________');
+          console.log('search selectedSpecies = ', form?.selectedSpecies);
+          console.log('isOnlyCounts = ', isOnlyCounts);
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
