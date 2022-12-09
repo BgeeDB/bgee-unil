@@ -55,9 +55,12 @@ export const DATA_TYPES = [
 export const RAW_DATA_ANNOTS = 'raw_data_annots';
 export const PROC_EXPR_VALUES = 'proc_expr_values';
 export const EXPR_CALLS = 'expr_calls';
+export const EXPERIMENTS = 'experiments';
+
 const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
 const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
 const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
+const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
 
 export const TAB_PAGE = [
   {
@@ -80,6 +83,13 @@ export const TAB_PAGE = [
     searchLabel: 'Search for Present/absent expression calls',
     resultLabel: 'Present/absent expression calls results',
     href: pathExprCalls,
+  },
+  {
+    id: EXPERIMENTS,
+    label: 'Experiments',
+    searchLabel: 'Search for experiments',
+    resultLabel: 'Experiments',
+    href: pathExperiments,
   },
 ];
 

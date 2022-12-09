@@ -14,6 +14,7 @@ import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
 import { customRawListSorter } from '../../../helpers/sortTable';
 import { Link } from 'react-router-dom';
+import { EXPERIMENTS } from './useLogic';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj = {}, attributes = '') => {
@@ -36,18 +37,24 @@ const replaceNAOrUndefined = (txt) => {
   return txt;
 };
 
+const customHeader = (searchElement, pageSizeElement) => (
+  <Bulma.Columns vCentered>
+    <Bulma.C>
+      <div>{pageSizeElement}</div>
+    </Bulma.C>
+  </Bulma.Columns>
+);
+
 const RawDataAnnotationResults = ({
   results = [],
   columnDescriptions = {},
   limit,
   count,
+  pageType,
 }) => {
-  const customHeader = (searchElement, pageSizeElement) => (
-    <Bulma.Columns vCentered>
-      <Bulma.C>
-        <div>{pageSizeElement}</div>
-      </Bulma.C>
-    </Bulma.Columns>
+  const countResultKey = useMemo(
+    () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
+    [pageType]
   );
 
   const renderCells = ({ cell, key }, defaultRender) => {
@@ -261,7 +268,9 @@ const RawDataAnnotationResults = ({
         paginationParamPageKey="pageNumber"
         paginationResultCountKey="limit"
         isRequestPerPage
-        manualMaxPage={Math.ceil((count?.assayCount || 0) / limit)}
+        manualMaxPage={Math.ceil((count?.[countResultKey] || 0) / limit)}
+        fullwidth={false}
+        minThWidth="7rem"
       />
     </>
   );

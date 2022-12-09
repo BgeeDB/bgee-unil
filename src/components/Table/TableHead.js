@@ -40,7 +40,7 @@ const cssSortOption = (key, sortOpts) => {
 
   return null;
 };
-const TableHead = () => {
+const TableHead = ({ minThWidth }) => {
   const {
     columns,
     sortable,
@@ -49,12 +49,15 @@ const TableHead = () => {
     showTableModalButton,
     usedWidth,
   } = useContext(TableContext);
+  const minWidthStyle = minThWidth ? { minWidth: minThWidth } : {};
   return (
     <thead>
       <tr>
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         {showTableModalButton && <th />}
         {columns.map((item, key) => {
+          const itemStyle = item.style ? item.style : {};
+          const thStyle = { ...itemStyle, ...minWidthStyle };
           if (typeof item === 'object') {
             if (isHideMediaQuery(usedWidth, item.hide)) return null;
             return (
@@ -66,7 +69,7 @@ const TableHead = () => {
                     ? defineSortOption(item.key)
                     : undefined
                 }
-                style={item.style}
+                style={thStyle}
               >
                 {item.text}
                 {cssSortOption(item.key, sortOption)}

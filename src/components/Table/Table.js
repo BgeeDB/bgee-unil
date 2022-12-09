@@ -39,6 +39,7 @@ const Table = ({
   paginationParamPageKey = null,
   paginationResultCountKey = null,
   manualMaxPage = -1,
+  minThWidth = null,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -236,7 +237,7 @@ const Table = ({
               classNames
             )}
           >
-            <TableHead />
+            <TableHead minThWidth={minThWidth} />
             <TableBody />
           </table>
         </div>
