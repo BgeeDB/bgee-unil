@@ -88,7 +88,7 @@ export const TAB_PAGE = [
     id: EXPERIMENTS,
     label: 'Experiments',
     searchLabel: 'Search for experiments',
-    resultLabel: 'Experiments results',
+    resultLabel: 'Experiments',
     href: pathExperiments,
   },
 ];

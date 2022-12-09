@@ -28,8 +28,8 @@ const ResultTabs = ({
             }`}
           >
             <span>{type.label}</span>
-            <span>
-              (
+            <span className="has-text-danger">
+              &nbsp;(
               {allCounts?.[type.id]?.[resultKey] !== undefined
                 ? allCounts?.[type.id]?.[resultKey]
                 : 'No data'}
