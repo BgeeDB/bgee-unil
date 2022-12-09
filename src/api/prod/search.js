@@ -386,6 +386,9 @@ const search = {
           }
         } else {
           // Si pas de hash on envoie tous les paramètres séparéments
+          console.log('________________');
+          console.log('search selectedSpecies = ', form?.selectedSpecies);
+          console.log('isOnlyCounts = ', isOnlyCounts);
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
