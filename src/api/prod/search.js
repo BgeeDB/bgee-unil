@@ -33,107 +33,6 @@ const DEFAULT_PARAMETERS = (page, action) => {
   return params;
 };
 
-const searchForm = (form, isOnlyCounts) =>
-  new Promise((resolve, reject) => {
-    let params = DEFAULT_PARAMETERS('data', form.pageType);
-    params.append('get_result_count', '1');
-
-    // @TODO : delete gene forcé si aucun présent !
-    if (
-      form.pageType === 'proc_expr_values' &&
-      form.selectedGene?.length === 0
-    ) {
-      console.warn('FAKE FILTER GENE ACTIVATED !');
-      // gène humain pour éviter les requêtes trop longues quand aucun précisé !
-      params.append('gene_id', 'ENSG00000158813');
-      params.append('species_id', '9606'); // on précise aussi l'espèce humaine sinon la requête marche pas
-    }
-
-    if (isOnlyCounts) {
-      params.append('data_type', 'all');
-    } else {
-      params.append('data_type', form.dataType);
-      params.append('get_results', '1');
-      params.append('get_filters', '1');
-      params.append('get_column_definition', '1');
-      params.append('display_rp', '1'); // in order to get request parameter
-
-      const offset = form?.limit * (form?.pageNumber - 1);
-      params.append('offset', offset);
-      params.append('limit', form?.limit);
-      // Warning : useless for API call but usefull for prefilling pagination
-      params.append('pageNumber', form?.pageNumber);
-    }
-
-    if (form.isFirstSearch && !isOnlyCounts) {
-      params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
-      if (form.hash) {
-        // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
-        console.log("hash présent dans l'url : on envoie que le hash");
-        params.append('data', form.hash);
-      } else {
-        // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
-        // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
-        // de première arrivée sur la page
-        const mergedParams = {
-          ...Object.fromEntries(form.initSearch),
-          ...Object.fromEntries(params),
-        };
-        params = new URLSearchParams(mergedParams);
-      }
-    } else {
-      // Si pas de hash on envoie tous les paramètres séparéments
-      console.log('________________');
-      console.log('search selectedSpecies = ', form?.selectedSpecies);
-      console.log('isOnlyCounts = ', isOnlyCounts);
-      if (form.selectedSpecies) {
-        params.append('species_id', form.selectedSpecies);
-      }
-      form.selectedCellTypes.forEach((ct) => params.append('cell_type_id', ct));
-      form.selectedGene.forEach((g) => params.append('gene_id', g));
-      form.selectedStrain.forEach((s) => params.append('strain', s));
-      form.selectedDevStages.forEach((ds) => params.append('stage_id', ds));
-      form.selectedTissue.forEach((t) => params.append('anat_entity_id', t));
-      form.selectedExpOrAssay.forEach((exp) =>
-        params.append('exp_assay_id', exp)
-      );
-      form.selectedSexes.forEach((s) => params.append('sex', s));
-
-      if (form.hasCellTypeSubStructure) {
-        params.append('cell_type_descendant', form.hasCellTypeSubStructure);
-      }
-      if (form.hasTissueSubStructure) {
-        params.append('anat_entity_descendant', form.hasTissueSubStructure);
-      }
-      if (form.hasDevStageSubStructure) {
-        params.append('stage_descendant', form.hasDevStageSubStructure);
-      }
-
-      // Application des filtres ! (VS form)
-      if (form?.filters && !isOnlyCounts) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key, values] of Object.entries(form.filters)) {
-          // console.log('key = ', key);
-          // console.log('values = ', values);
-          values.forEach((obj) => params.append(key, obj.value));
-        }
-      }
-    }
-
-    const paramsURLCalled = params.toString();
-    axiosInstance
-      .get(`/?${paramsURLCalled}`, {
-        cancelToken: new axios.CancelToken((c) => {
-          SEARCH_CANCEL_API.rawData = c;
-        }),
-      })
-      .then(({ data }) => resolve({ resp: data, paramsURLCalled }))
-      .catch((error) => {
-        errorHandler(error);
-        reject(error?.response);
-      });
-  });
-
 const search = {
   anatomicalHomology: (
     { type, query },
@@ -437,10 +336,112 @@ const search = {
       }),
   },
   rawData: {
-    search: searchForm,
+    search: (form, isOnlyCounts) =>
+      new Promise((resolve, reject) => {
+        let params = DEFAULT_PARAMETERS('data', form.pageType);
+        params.append('get_result_count', '1');
+
+        // @TODO : delete gene forcé si aucun présent !
+        if (
+          form.pageType === 'proc_expr_values' &&
+          form.selectedGene?.length === 0
+        ) {
+          console.warn('FAKE FILTER GENE ACTIVATED !');
+          // gène humain pour éviter les requêtes trop longues quand aucun précisé !
+          params.append('gene_id', 'ENSG00000158813');
+          params.append('species_id', '9606'); // on précise aussi l'espèce humaine sinon la requête marche pas
+        }
+
+        if (isOnlyCounts) {
+          params.append('data_type', 'all');
+        } else {
+          params.append('data_type', form.dataType);
+          params.append('get_results', '1');
+          params.append('get_filters', '1');
+          params.append('get_column_definition', '1');
+          params.append('display_rp', '1'); // in order to get request parameter
+
+          const offset = form?.limit * (form?.pageNumber - 1);
+          params.append('offset', offset);
+          params.append('limit', form?.limit);
+          // Warning : useless for API call but usefull for prefilling pagination
+          params.append('pageNumber', form?.pageNumber);
+        }
+
+        if (form.isFirstSearch && !isOnlyCounts) {
+          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          if (form.hash) {
+            // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
+            console.log("hash présent dans l'url : on envoie que le hash");
+            params.append('data', form.hash);
+          } else {
+            // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
+            // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
+            // de première arrivée sur la page
+            const mergedParams = {
+              ...Object.fromEntries(form.initSearch),
+              ...Object.fromEntries(params),
+            };
+            params = new URLSearchParams(mergedParams);
+          }
+        } else {
+          // Si pas de hash on envoie tous les paramètres séparéments
+          console.log('________________');
+          console.log('search selectedSpecies = ', form?.selectedSpecies);
+          console.log('isOnlyCounts = ', isOnlyCounts);
+          if (form.selectedSpecies) {
+            params.append('species_id', form.selectedSpecies);
+          }
+          form.selectedCellTypes.forEach((ct) =>
+            params.append('cell_type_id', ct)
+          );
+          form.selectedGene.forEach((g) => params.append('gene_id', g));
+          form.selectedStrain.forEach((s) => params.append('strain', s));
+          form.selectedDevStages.forEach((ds) => params.append('stage_id', ds));
+          form.selectedTissue.forEach((t) =>
+            params.append('anat_entity_id', t)
+          );
+          form.selectedExpOrAssay.forEach((exp) =>
+            params.append('exp_assay_id', exp)
+          );
+          form.selectedSexes.forEach((s) => params.append('sex', s));
+
+          if (form.hasCellTypeSubStructure) {
+            params.append('cell_type_descendant', form.hasCellTypeSubStructure);
+          }
+          if (form.hasTissueSubStructure) {
+            params.append('anat_entity_descendant', form.hasTissueSubStructure);
+          }
+          if (form.hasDevStageSubStructure) {
+            params.append('stage_descendant', form.hasDevStageSubStructure);
+          }
+
+          // Application des filtres ! (VS form)
+          if (form?.filters && !isOnlyCounts) {
+            // eslint-disable-next-line no-restricted-syntax
+            for (const [key, values] of Object.entries(form.filters)) {
+              // console.log('key = ', key);
+              // console.log('values = ', values);
+              values.forEach((obj) => params.append(key, obj.value));
+            }
+          }
+        }
+
+        const paramsURLCalled = params.toString();
+        axiosInstance
+          .get(`/?${paramsURLCalled}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.rawData = c;
+            }),
+          })
+          .then(({ data }) => resolve({ resp: data, paramsURLCalled }))
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response);
+          });
+      }),
   },
   experiments: {
-    search: searchForm,
     getExperiment: (experimentId) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data');

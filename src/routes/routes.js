@@ -12,7 +12,7 @@ import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
-import Experiments from '../pages/search/experiments/Experiments';
+
 import Experiment from '../pages/search/experiments/Experiment';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
@@ -49,6 +49,7 @@ import {
   EXPR_CALLS,
   PROC_EXPR_VALUES,
   RAW_DATA_ANNOTS,
+  EXPERIMENTS,
 } from '../pages/search/rawdata/useLogic';
 
 const ANALYSIS = {
@@ -109,7 +110,7 @@ const SEARCH = {
     title: 'Presence/absence expression calls',
   },
   [PATHS.SEARCH.EXPERIMENTS]: {
-    component: Experiments,
+    component: () => <RawDataAnnotations pageType={EXPERIMENTS} />,
     title: 'List of experiments',
   },
   [PATHS.SEARCH.EXPERIMENT]: {
