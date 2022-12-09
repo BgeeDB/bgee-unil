@@ -18,6 +18,7 @@ import ExperimentOrAssay from './components/filters/ExperimentOrAssay/Experiment
 import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 import DataType from './components/filters/DataType/DataType';
 import ConditionParameter from './components/filters/ConditionParameter';
+import ResultTabs from './components/ResultTabs';
 
 const RawDataAnnotations = ({ pageType }) => {
   const {
@@ -66,6 +67,7 @@ const RawDataAnnotations = ({ pageType }) => {
 
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
   const detailedData = TAB_PAGE.find((d) => d.id === pageType);
+
   return (
     <>
       <div className="rawDataAnnotation">
@@ -204,29 +206,13 @@ const RawDataAnnotations = ({ pageType }) => {
             </div>
             <label className="title-raw">{detailedData.resultLabel}</label>
             {detailedData.id !== 'expr_calls' && (
-              <div className="is-flex ongletWrapper is-centered">
-                {DATA_TYPES.map((type) => {
-                  const isActive = type.id === dataType;
-                  return (
-                    <div
-                      key={type.id}
-                      onClick={() => setDataType(type.id)}
-                      className={`onglet column is-centered ${
-                        isActive && 'ongletActive'
-                      }`}
-                    >
-                      <span>{type.label}</span>
-                      <span>
-                        (
-                        {allCounts?.[type.id]?.assayCount !== undefined
-                          ? allCounts?.[type.id]?.assayCount
-                          : 'No data'}
-                        )
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+              <ResultTabs
+                dataTypes={DATA_TYPES}
+                dataType={dataType}
+                setDataType={setDataType}
+                allCounts={allCounts}
+                pageType={pageType}
+              />
             )}
             <div className="resultPart">
               <div className="resultCounts">
