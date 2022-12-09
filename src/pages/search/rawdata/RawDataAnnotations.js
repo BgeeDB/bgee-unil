@@ -259,6 +259,7 @@ const RawDataAnnotations = ({ pageType }) => {
                 }
                 limit={limit}
                 count={localCount}
+                pageType={pageType}
               />
             </div>
           </div>
