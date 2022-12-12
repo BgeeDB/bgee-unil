@@ -43,6 +43,7 @@ const RawDataAnnotations = ({ pageType }) => {
     isLoading,
     filters,
     limit,
+    isCountLoading,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -214,6 +215,7 @@ const RawDataAnnotations = ({ pageType }) => {
                 setDataType={setDataType}
                 allCounts={allCounts}
                 pageType={pageType}
+                isCountLoading={isCountLoading}
               />
             )}
             <div className="resultPart">

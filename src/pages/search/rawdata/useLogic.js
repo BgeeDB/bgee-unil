@@ -128,6 +128,7 @@ const useLogic = (pageType) => {
 
   // results
   const [isLoading, setIsLoading] = useState(false);
+  const [isCountLoading, setIsCountLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
   const [dataType, setDataType] = useState(initDataType);
@@ -169,8 +170,11 @@ const useLogic = (pageType) => {
   }, [pageNumber, limit]);
 
   useEffect(() => {
-    triggerSearch();
     triggerCounts();
+  }, []);
+
+  useEffect(() => {
+    triggerSearch();
   }, [dataType]);
 
   useEffect(() => {
@@ -433,11 +437,18 @@ const useLogic = (pageType) => {
   };
 
   const triggerCounts = async () => {
-    api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
-      if (resp.code === 200) {
-        setAllCounts(resp?.data?.resultCount);
-      }
-    });
+    setIsCountLoading(true);
+    api.search.rawData
+      .search(getSearchParams(), true)
+      .then(({ resp }) => {
+        if (resp.code === 200) {
+          setAllCounts(resp?.data?.resultCount);
+        }
+      })
+      .finally(() => {
+        setIsCountLoading(false);
+        console.log('cc');
+      });
   };
 
   const getSexesAndDevStageForSpecies = () => {
@@ -540,6 +551,7 @@ const useLogic = (pageType) => {
     filters,
     limit,
     localCount,
+    isCountLoading,
     setFilters,
     setIsLoading,
     onChangeSpecies,
