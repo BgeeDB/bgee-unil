@@ -447,7 +447,6 @@ const useLogic = (pageType) => {
       })
       .finally(() => {
         setIsCountLoading(false);
-        console.log('cc');
       });
   };
 
