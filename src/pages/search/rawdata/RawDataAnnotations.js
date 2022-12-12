@@ -94,7 +94,9 @@ const RawDataAnnotations = ({ pageType }) => {
           <div>
             {show && (
               <>
-                <label className="title-raw">{detailedData.searchLabel}</label>
+                <h2 className="gradient-underline title is-size-5 has-text-primary">
+                  {detailedData.searchLabel}
+                </h2>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2">
@@ -207,7 +209,9 @@ const RawDataAnnotations = ({ pageType }) => {
                 {show ? 'Hide Filter' : 'Show Filter'}
               </button>
             </div>
-            <label className="title-raw">{detailedData.resultLabel}</label>
+            <h2 className="gradient-underline title is-size-5 has-text-primary">
+              {detailedData.resultLabel}
+            </h2>
             {detailedData.id !== 'expr_calls' && (
               <ResultTabs
                 dataTypes={DATA_TYPES}
