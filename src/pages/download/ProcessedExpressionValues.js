@@ -312,7 +312,7 @@ const ProcessedExpressionValues = () => {
                                           Download experiments/chips info
                                           {` (${readableFileSize(
                                             files[species.id.toString()]
-                                              ?.rnaSeqData.size
+                                              ?.affymetrixAnnot.size
                                           )})`}
                                         </span>
                                       </button>
