@@ -349,7 +349,8 @@ const search = {
           console.warn('FAKE FILTER GENE ACTIVATED !');
           // gène humain pour éviter les requêtes trop longues quand aucun précisé !
           params.append('gene_id', 'ENSG00000158813');
-          params.append('species_id', '9606'); // on précise aussi l'espèce humaine sinon la requête marche pas
+          // on précise aussi l'espèce humaine sinon la requête marche pas
+          params.append('species_id', '9606');
         }
 
         if (isOnlyCounts) {
@@ -359,7 +360,8 @@ const search = {
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
-          params.append('display_rp', '1'); // in order to get request parameter
+          // Pour pouvoir extraire les paire de clés-valeur à pré-remplir dans le formulaire
+          params.append('display_rp', '1');
 
           const offset = form?.limit * (form?.pageNumber - 1);
           params.append('offset', offset);
@@ -368,8 +370,10 @@ const search = {
           params.append('pageNumber', form?.pageNumber);
         }
 
-        if (form.isFirstSearch && !isOnlyCounts) {
-          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+        if (form.isFirstSearch) {
+          if (!isOnlyCounts) {
+            params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          }
           if (form.hash) {
             // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
             console.log("hash présent dans l'url : on envoie que le hash");
@@ -386,9 +390,6 @@ const search = {
           }
         } else {
           // Si pas de hash on envoie tous les paramètres séparéments
-          console.log('________________');
-          console.log('search selectedSpecies = ', form?.selectedSpecies);
-          console.log('isOnlyCounts = ', isOnlyCounts);
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
@@ -426,6 +427,10 @@ const search = {
             }
           }
         }
+
+        console.log('______SEARCH______');
+        console.log('isOnlyCount = ', isOnlyCounts);
+        console.log('form = ', form);
 
         const paramsURLCalled = params.toString();
         axiosInstance

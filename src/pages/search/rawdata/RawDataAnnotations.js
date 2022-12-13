@@ -43,6 +43,7 @@ const RawDataAnnotations = ({ pageType }) => {
     isLoading,
     filters,
     limit,
+    isCountLoading,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -93,7 +94,9 @@ const RawDataAnnotations = ({ pageType }) => {
           <div>
             {show && (
               <>
-                <label className="title-raw">{detailedData.searchLabel}</label>
+                <h2 className="gradient-underline title is-size-5 has-text-primary">
+                  {detailedData.searchLabel}
+                </h2>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2">
@@ -203,10 +206,12 @@ const RawDataAnnotations = ({ pageType }) => {
                 type="button"
                 onClick={() => setShow(!show)}
               >
-                {show ? 'Hide Filter' : 'Show Filter'}
+                {show ? 'Hide Form' : 'Show Form'}
               </button>
             </div>
-            <label className="title-raw">{detailedData.resultLabel}</label>
+            <h2 className="gradient-underline title is-size-5 has-text-primary">
+              {detailedData.resultLabel}
+            </h2>
             {detailedData.id !== 'expr_calls' && (
               <ResultTabs
                 dataTypes={DATA_TYPES}
@@ -214,6 +219,7 @@ const RawDataAnnotations = ({ pageType }) => {
                 setDataType={setDataType}
                 allCounts={allCounts}
                 pageType={pageType}
+                isCountLoading={isCountLoading}
               />
             )}
             <div className="resultPart">

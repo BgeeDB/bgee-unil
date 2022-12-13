@@ -9,6 +9,7 @@ const ResultTabs = ({
   allCounts,
   setDataType,
   pageType,
+  isCountLoading,
 }) => {
   const resultKey = useMemo(
     () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
@@ -28,13 +29,25 @@ const ResultTabs = ({
             }`}
           >
             <span>{type.label}</span>
-            <span className="has-text-danger">
-              &nbsp;(
-              {allCounts?.[type.id]?.[resultKey] !== undefined
-                ? allCounts?.[type.id]?.[resultKey]
-                : 'No data'}
-              )
-            </span>
+            {isCountLoading ? (
+              <progress
+                className="progress is-small is-primary"
+                style={{
+                  animationDuration: '2s',
+                  width: '25px',
+                  marginLeft: '8px',
+                  height: '5px',
+                }}
+              />
+            ) : (
+              <span className="has-text-danger">
+                &nbsp;(
+                {allCounts?.[type.id]?.[resultKey] !== undefined
+                  ? allCounts?.[type.id]?.[resultKey]
+                  : 'No data'}
+                )
+              </span>
+            )}
           </div>
         );
       })}

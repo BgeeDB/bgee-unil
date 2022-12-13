@@ -51,6 +51,7 @@ const RawDataAnnotationResults = ({
   limit,
   count,
   pageType,
+  dataType,
 }) => {
   const countResultKey = useMemo(
     () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
@@ -246,7 +247,7 @@ const RawDataAnnotationResults = ({
           className="ml-2 py-0"
           href={buildTSVhref}
           renderAs="a"
-          download="expression comparison.tsv"
+          download={`${pageType}_${dataType}.tsv`}
           target="_blank"
           rel="noreferrer"
         >

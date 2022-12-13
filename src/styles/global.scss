@@ -530,6 +530,10 @@ figure.image {
     z-index: 1;
     top: 100%;
     left: 0;
+    &.isLeft {
+      right: 0;
+      left: unset;
+    }
   }
   &:hover .tooltip-content {
     visibility: visible;
