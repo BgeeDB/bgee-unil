@@ -75,6 +75,7 @@ const TableHead = ({ minThWidth }) => {
                 {cssSortOption(item.key, sortOption)}
                 {item.infoBubble && (
                   <HelpIcon
+                    isLeft={key > columns.length / 2}
                     title={item.text}
                     className="helpIcon"
                     content={item.infoBubble}

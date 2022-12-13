@@ -206,7 +206,7 @@ const RawDataAnnotations = ({ pageType }) => {
                 type="button"
                 onClick={() => setShow(!show)}
               >
-                {show ? 'Hide Filter' : 'Show Filter'}
+                {show ? 'Hide Form' : 'Show Form'}
               </button>
             </div>
             <h2 className="gradient-underline title is-size-5 has-text-primary">
