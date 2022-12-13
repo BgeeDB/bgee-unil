@@ -347,10 +347,15 @@ const search = {
           form.selectedGene?.length === 0
         ) {
           console.warn('FAKE FILTER GENE ACTIVATED !');
-          // gène humain pour éviter les requêtes trop longues quand aucun précisé !
+          // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
           params.append('gene_id', 'ENSG00000158813');
-          // on précise aussi l'espèce humaine sinon la requête marche pas
-          params.append('species_id', '9606');
+
+          // et si jamais il n'y a pas d'espèce selectionnée...
+          // ( ce qui est obligatoire pour mettre un filtre de gène)
+          // on force aussi à l'espèce humaine
+          if (!form.selectedSpecies) {
+            params.append('species_id', '9606');
+          }
         }
 
         if (isOnlyCounts) {
