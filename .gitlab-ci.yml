@@ -101,7 +101,7 @@ docker-deploy:
   needs:
     - build
   rules:
-    - if: $CI_COMMIT_BRANCH =~ /^sprint.*/i || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"
+    - if: ($CI_COMMIT_BRANCH =~ /^sprint.*/i && $CI_PIPELINE_SOURCE == 'merge_request_event') || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"
       when: on_success
     # --> comme si on avait if(true)
     # Permet de toujours pouvoir lancer le build manuellement si nécessaire
