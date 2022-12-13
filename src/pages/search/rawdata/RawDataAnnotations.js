@@ -8,7 +8,7 @@ import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
-import useLogic, { DATA_TYPES } from './useLogic';
+import useLogic, { DATA_TYPES, EXPR_CALLS, TAB_PAGE } from './useLogic';
 import CellTypes from './components/filters/CellTypes';
 import Tissues from './components/filters/Tissues/Tissues';
 import Sex from './components/filters/Sex/Sex';
@@ -16,11 +16,15 @@ import Strain from './components/filters/Strain/Strain';
 import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
 import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
+import DataType from './components/filters/DataType/DataType';
+import ConditionParameter from './components/filters/ConditionParameter';
+import ResultTabs from './components/ResultTabs';
 
-const RawDataAnnotations = () => {
+const RawDataAnnotations = ({ pageType }) => {
   const {
     searchResult,
-    counts,
+    allCounts,
+    localCount,
     dataType,
     show,
     devStages,
@@ -38,6 +42,8 @@ const RawDataAnnotations = () => {
     selectedSexes,
     isLoading,
     filters,
+    limit,
+    isCountLoading,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -58,187 +64,212 @@ const RawDataAnnotations = () => {
     setFilters,
     triggerSearch,
     triggerCounts,
-  } = useLogic();
+  } = useLogic(pageType);
 
+  const results = searchResult?.results?.[dataType] || [];
+  const columnsDesc = searchResult?.columnDescriptions?.[dataType] || [];
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
+  const detailedData = TAB_PAGE.find((d) => d.id === pageType);
+
   return (
     <>
-      <div className="container rawDataAnnotation">
-        {show && (
-          <>
-            <label className="title-raw">Search for Raw data annotations</label>
-            <div className="row">
-              <div className="selector col-sm-6">
-                <div className="mb-2">
-                  <Species
-                    selectedSpecies={selectedSpecies}
-                    onChangeSpecies={onChangeSpecies}
-                    getSpeciesLabel={getSpeciesLabel}
-                  />
-                </div>
-                {selectedSpecies.value && (
-                  <div>
-                    <div className="my-2">
-                      <Tissues
-                        selectedTissue={selectedTissue}
-                        setSelectedTissue={setSelectedTissue}
-                        autoCompleteByType={autoCompleteByType}
-                        hasTissueSubStructure={hasTissueSubStructure}
-                        setHasTissueSubStructure={setHasTissueSubStructure}
-                      />
-                    </div>
-                    <div className="my-2">
-                      <CellTypes
-                        selectedCellTypes={selectedCellTypes}
-                        setSelectedCellTypes={setSelectedCellTypes}
-                        autoCompleteByType={autoCompleteByType}
-                        hasCellTypeSubStructure={hasCellTypeSubStructure}
-                        setHasCellTypeSubStructure={setHasCellTypeSubStructure}
-                      />
-                    </div>
-                    <div className="my-2">
-                      <DevelopmentalAndLifeStages
-                        devStages={devStages}
-                        hasDevStageSubStructure={hasDevStageSubStructure}
-                        setDevStageSubStructure={setDevStageSubStructure}
-                        selectedOptions={selectedDevStages}
-                        setSelectedOptions={setSelectedDevStages}
-                      />
-                    </div>
-                    <div className="my-2">
-                      <Sex
-                        speciesSexes={speciesSexes}
-                        selectedSexes={selectedSexes}
-                        toggleSex={toggleSex}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="col-md-6 my-2">
-                <div className="input-form">
-                  {selectedSpecies.value && (
-                    <>
-                      <div className="mb-2">
-                        <Strain
-                          selectedStrain={selectedStrain}
-                          setSelectedStrain={setSelectedStrain}
-                          autoCompleteByType={autoCompleteByType}
-                        />
-                      </div>
-                      <div className="mb-2">
-                        <Gene
-                          selectedGene={selectedGene}
-                          setSelectedGene={setSelectedGene}
-                          autoCompleteByType={autoCompleteByType}
-                        />
-                      </div>
-                    </>
-                  )}
-                  <div className="mb-2">
-                    <ExperimentOrAssay
-                      selectedExpOrAssay={selectedExpOrAssay}
-                      setSelectedExpOrAssay={setSelectedExpOrAssay}
-                      autoCompleteByType={autoCompleteByType}
-                    />
-                  </div>
-                  <div className="submit-reinit">
-                    <Button
-                      className="button is-success is-light is-outlined"
-                      type="submit"
-                      onClick={onSubmit}
-                    >
-                      Submit
-                    </Button>
-                    <Button
-                      className="reinit is-warning is-light is-outlined"
-                      onClick={() => resetForm(false)}
-                    >
-                      Reinitialize
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        <div className="control is-flex is-align-items-center">
-          <button
-            className="button mr-2 mb-5"
-            type="button"
-            onClick={() => setShow(!show)}
-          >
-            {show ? 'Hide Filter' : 'Show Filter'}
-          </button>
-        </div>
-        <label className="title-raw">Raw data annotations results</label>
-        <div className="is-flex ongletWrapper is-centered">
-          {DATA_TYPES.map((type) => {
-            const isActive = type.id === dataType;
+      <div className="rawDataAnnotation">
+        <div className="columns is-8 ongletPageWrapper">
+          {TAB_PAGE.map((type) => {
+            const isActive = type.id === pageType;
             return (
-              <div
+              <a
+                href={type.href}
                 key={type.id}
-                onClick={() => setDataType(type.id)}
-                className={`onglet column is-centered ${
-                  isActive && 'ongletActive'
+                className={`ongletPages is-centered py-2 px-5 ${
+                  isActive ? 'pageActive' : ''
                 }`}
               >
-                <span>{type.label}</span>
-                <span>
-                  (
-                  {counts?.[type.id]?.assayCount !== undefined
-                    ? counts?.[type.id]?.assayCount
-                    : 'No data'}
-                  )
-                </span>
-              </div>
+                {type.label}
+              </a>
             );
           })}
         </div>
-        <div className="resultPart">
-          <div className="resultCounts">
-            {detailedDataType.experimentCountLabel &&
-              `${counts?.[dataType]?.experimentCount || 0} ${
-                detailedDataType.experimentCountLabel
-              }`}
-            {detailedDataType.assayCountLabel &&
-              ` / ${counts?.[dataType]?.assayCount || 0} ${
-                detailedDataType.assayCountLabel
-              }`}
-            {detailedDataType.libraryCountLabel &&
-              ` / ${counts?.[dataType]?.libraryCount || 0} ${
-                detailedDataType.libraryCountLabel
-              }`}
-          </div>
-          {!!searchResult && dataType && (
-            <RawDataAnnotationsFilters
-              dataFilters={searchResult?.filters?.[dataType]}
-              dataType={dataType}
-              filters={filters}
-              setFilters={setFilters}
-              triggerSearch={triggerSearch}
-              triggerCounts={triggerCounts}
-            />
-          )}
-          {!isLoading ? (
-            <RawDataAnnotationResults
-              results={searchResult?.results?.[dataType]}
-              resultCount={counts[dataType]}
-              dataType={dataType}
-              columnDescriptions={searchResult?.columnDescriptions?.[dataType]}
-            />
-          ) : (
-            <div className="progressWrapper">
-              <progress
-                className="progress is-small is-primary m-5"
-                style={{
-                  animationDuration: '2s',
-                  width: '80%',
-                }}
+        {pageType && (
+          <div>
+            {show && (
+              <>
+                <h2 className="gradient-underline title is-size-5 has-text-primary">
+                  {detailedData.searchLabel}
+                </h2>
+                <div className="columns is-8">
+                  <div className="column mr-6">
+                    <div className="mb-2">
+                      <Species
+                        selectedSpecies={selectedSpecies}
+                        onChangeSpecies={onChangeSpecies}
+                        getSpeciesLabel={getSpeciesLabel}
+                      />
+                    </div>
+                    {selectedSpecies.value && (
+                      <div>
+                        <div className="my-2">
+                          <Tissues
+                            selectedTissue={selectedTissue}
+                            setSelectedTissue={setSelectedTissue}
+                            autoCompleteByType={autoCompleteByType}
+                            hasTissueSubStructure={hasTissueSubStructure}
+                            setHasTissueSubStructure={setHasTissueSubStructure}
+                          />
+                        </div>
+                        <div className="my-2">
+                          <CellTypes
+                            selectedCellTypes={selectedCellTypes}
+                            setSelectedCellTypes={setSelectedCellTypes}
+                            autoCompleteByType={autoCompleteByType}
+                            hasCellTypeSubStructure={hasCellTypeSubStructure}
+                            setHasCellTypeSubStructure={
+                              setHasCellTypeSubStructure
+                            }
+                          />
+                        </div>
+                        <div className="my-2">
+                          <DevelopmentalAndLifeStages
+                            devStages={devStages}
+                            hasDevStageSubStructure={hasDevStageSubStructure}
+                            setDevStageSubStructure={setDevStageSubStructure}
+                            selectedOptions={selectedDevStages}
+                            setSelectedOptions={setSelectedDevStages}
+                          />
+                        </div>
+                        <div className="my-2">
+                          <Sex
+                            speciesSexes={speciesSexes}
+                            selectedSexes={selectedSexes}
+                            toggleSex={toggleSex}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="column">
+                    <div>
+                      {selectedSpecies.value && (
+                        <>
+                          <div className="mb-2">
+                            <Strain
+                              selectedStrain={selectedStrain}
+                              setSelectedStrain={setSelectedStrain}
+                              autoCompleteByType={autoCompleteByType}
+                            />
+                          </div>
+                          <div className="mb-2">
+                            <Gene
+                              selectedGene={selectedGene}
+                              setSelectedGene={setSelectedGene}
+                              autoCompleteByType={autoCompleteByType}
+                            />
+                          </div>
+                        </>
+                      )}
+                      <div className="mb-2">
+                        <ExperimentOrAssay
+                          selectedExpOrAssay={selectedExpOrAssay}
+                          setSelectedExpOrAssay={setSelectedExpOrAssay}
+                          autoCompleteByType={autoCompleteByType}
+                        />
+                      </div>
+                      {detailedData.id === EXPR_CALLS && (
+                        <>
+                          <DataType />
+                          <ConditionParameter />
+                        </>
+                      )}
+                      <div className="submit-reinit">
+                        <Button
+                          className="button is-success is-light is-outlined"
+                          type="submit"
+                          onClick={onSubmit}
+                        >
+                          Submit
+                        </Button>
+                        <Button
+                          className="reinit is-warning is-light is-outlined"
+                          onClick={() => resetForm(false)}
+                        >
+                          Reinitialize
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="control is-flex is-align-items-center">
+              <button
+                className="button mr-2 mb-5"
+                type="button"
+                onClick={() => setShow(!show)}
+              >
+                {show ? 'Hide Form' : 'Show Form'}
+              </button>
+            </div>
+            <h2 className="gradient-underline title is-size-5 has-text-primary">
+              {detailedData.resultLabel}
+            </h2>
+            {detailedData.id !== 'expr_calls' && (
+              <ResultTabs
+                dataTypes={DATA_TYPES}
+                dataType={dataType}
+                setDataType={setDataType}
+                allCounts={allCounts}
+                pageType={pageType}
+                isCountLoading={isCountLoading}
+              />
+            )}
+            <div className="resultPart">
+              <div className="resultCounts">
+                {detailedDataType.experimentCountLabel &&
+                  `${localCount?.experimentCount || 0} ${
+                    detailedDataType.experimentCountLabel
+                  } / `}
+                {detailedDataType.assayCountLabel &&
+                  `${localCount?.assayCount || 0} ${
+                    detailedDataType.assayCountLabel
+                  }`}
+                {detailedDataType.libraryCountLabel &&
+                  ` / ${localCount?.libraryCount || 0} ${
+                    detailedDataType.libraryCountLabel
+                  }`}
+              </div>
+              {!!searchResult && dataType && (
+                <RawDataAnnotationsFilters
+                  dataFilters={searchResult?.filters?.[dataType]}
+                  dataType={dataType}
+                  filters={filters}
+                  setFilters={setFilters}
+                  triggerSearch={triggerSearch}
+                  triggerCounts={triggerCounts}
+                />
+              )}
+              {isLoading && (
+                <div className="progressWrapper">
+                  <progress
+                    className="progress is-small is-primary m-5"
+                    style={{
+                      animationDuration: '2s',
+                      width: '80%',
+                    }}
+                  />
+                </div>
+              )}
+              <RawDataAnnotationResults
+                results={results}
+                resultCount={allCounts[dataType]}
+                dataType={dataType}
+                columnDescriptions={columnsDesc}
+                limit={limit}
+                count={localCount}
+                pageType={pageType}
               />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+import React from 'react';
 import PATHS from './paths';
 
 import Home from '../pages/Home';
@@ -8,11 +9,10 @@ import ExpComp from '../pages/analysis/ExpComp';
 import GeneList from '../pages/search/GeneList';
 import Gene from '../pages/search/Gene';
 import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
-import PresenceExpression from '../pages/search/PresenceExpression/PresenceExpression';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
-import Experiments from '../pages/search/experiments/Experiments';
+
 import Experiment from '../pages/search/experiments/Experiment';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
@@ -45,6 +45,12 @@ import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
+import {
+  EXPR_CALLS,
+  PROC_EXPR_VALUES,
+  RAW_DATA_ANNOTS,
+  EXPERIMENTS,
+} from '../pages/search/rawdata/useLogic';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -92,15 +98,19 @@ const SEARCH = {
     title: 'Species',
   },
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
-    component: RawDataAnnotations,
+    component: () => <RawDataAnnotations pageType={RAW_DATA_ANNOTS} />,
     title: 'Raw data annotations',
   },
-  [PATHS.SEARCH.PRESENCE_EXPRESSION]: {
-    component: PresenceExpression,
-    title: 'Presence/Absence expression calls',
+  [PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES]: {
+    component: () => <RawDataAnnotations pageType={PROC_EXPR_VALUES} />,
+    title: 'Processed expression values',
+  },
+  [PATHS.SEARCH.EXPRESSION_CALLS]: {
+    component: () => <RawDataAnnotations pageType={EXPR_CALLS} />,
+    title: 'Presence/absence expression calls',
   },
   [PATHS.SEARCH.EXPERIMENTS]: {
-    component: Experiments,
+    component: () => <RawDataAnnotations pageType={EXPERIMENTS} />,
     title: 'List of experiments',
   },
   [PATHS.SEARCH.EXPERIMENT]: {

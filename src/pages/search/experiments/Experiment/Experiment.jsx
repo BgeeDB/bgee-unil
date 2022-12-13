@@ -70,6 +70,9 @@ const Experiment = () => {
           onRenderCell={onRenderCell}
           onFilter={onFilter}
           customHeader={customHeader}
+          fullwidth={false}
+          minThWidth="7rem"
+          classNamesTable="is-striped"
         />
       </div>
     </>

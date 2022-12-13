@@ -7,11 +7,28 @@ import Pagination from '../Pagination';
 import { TableContext } from '../../contexts/TableContext';
 
 const TablePagination = () => {
-  const { table, data, usedWidth, pagination, currentPage, pageSize } =
-    useContext(TableContext);
+  const {
+    table,
+    data,
+    usedWidth,
+    pagination,
+    currentPage,
+    pageSize,
+    manualMaxPage,
+    isRequestPerPage,
+  } = useContext(TableContext);
 
-  const showEntriesText = React.useMemo(
-    () => (
+  const showEntriesText = React.useMemo(() => {
+    if (isRequestPerPage) {
+      const start = data.length ? (currentPage - 1) * pageSize + 1 : 0;
+      const end =
+        currentPage === manualMaxPage
+          ? start + data.length - 1
+          : start + pageSize - 1;
+      return <p className="has-text-right">{`Showing ${start} to ${end}`}</p>;
+    }
+
+    return (
       <p className="has-text-right">
         {`Showing ${
           data.length ? ((currentPage - 1) * pageSize + 1).toString(10) : '0'
@@ -20,12 +37,13 @@ const TablePagination = () => {
           : pageSize * currentPage
         ).toString(10)} of ${data.length} entries`}
       </p>
-    ),
-    [data, currentPage, pageSize]
-  );
+    );
+  }, [data, currentPage, pageSize, isRequestPerPage, manualMaxPage]);
+
   const totalPage = React.useMemo(
-    () => Math.ceil(data.length / pageSize) || 1,
-    [data, pageSize]
+    () =>
+      isRequestPerPage ? manualMaxPage : Math.ceil(data.length / pageSize) || 1,
+    [data, pageSize, isRequestPerPage, manualMaxPage]
   );
 
   if (data.length === 0) return null;

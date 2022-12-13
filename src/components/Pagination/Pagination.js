@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */
 import React, { useContext } from 'react';
 import { TableContext } from '../../contexts/TableContext';
@@ -44,15 +45,24 @@ const Pagination = ({ current, total }) => {
 
   if (total === 1) return null;
 
+  const disabledPrevious = current === 1;
+  const disabledNext = current === total;
   return (
     <nav className="pagination is-small is-centered" aria-label="pagination">
       <a
         className="pagination-previous"
-        href={generatePaginationLink(current - 1)}
+        role="link"
+        disabled={disabledPrevious}
+        href={disabledPrevious ? null : generatePaginationLink(current - 1)}
       >
         Previous
       </a>
-      <a className="pagination-next" href={generatePaginationLink(current + 1)}>
+      <a
+        className="pagination-next"
+        role="link"
+        disabled={disabledNext}
+        href={disabledNext ? null : generatePaginationLink(current + 1)}
+      >
         Next
       </a>
       <ul className="pagination-list">

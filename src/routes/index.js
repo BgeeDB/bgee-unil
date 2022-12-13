@@ -140,13 +140,24 @@ const Router = () => (
 
               <Route
                 exact
-                path={PATHS.SEARCH.PRESENCE_EXPRESSION}
+                path={PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES}
                 render={(props) => (
                   <Page
                     {...props}
                     Component={
-                      ROUTES[PATHS.SEARCH.PRESENCE_EXPRESSION].component
+                      ROUTES[PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES].component
                     }
+                  />
+                )}
+              />
+
+              <Route
+                exact
+                path={PATHS.SEARCH.EXPRESSION_CALLS}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.EXPRESSION_CALLS].component}
                   />
                 )}
               />

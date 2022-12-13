@@ -338,20 +338,47 @@ const search = {
   rawData: {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
-        let params = DEFAULT_PARAMETERS('data', 'raw_data_annots');
+        let params = DEFAULT_PARAMETERS('data', form.pageType);
+        params.append('get_result_count', '1');
+
+        // @TODO : delete gene forcé si aucun présent !
+        if (
+          form.pageType === 'proc_expr_values' &&
+          form.selectedGene?.length === 0
+        ) {
+          console.warn('FAKE FILTER GENE ACTIVATED !');
+          // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
+          params.append('gene_id', 'ENSG00000158813');
+
+          // et si jamais il n'y a pas d'espèce selectionnée...
+          // ( ce qui est obligatoire pour mettre un filtre de gène)
+          // on force aussi à l'espèce humaine
+          if (!form.selectedSpecies) {
+            params.append('species_id', '9606');
+          }
+        }
+
         if (isOnlyCounts) {
           params.append('data_type', 'all');
-          params.append('get_result_count', '1');
         } else {
           params.append('data_type', form.dataType);
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
-          params.append('display_rp', '1'); // in order to get request parameters
+          // Pour pouvoir extraire les paire de clés-valeur à pré-remplir dans le formulaire
+          params.append('display_rp', '1');
+
+          const offset = form?.limit * (form?.pageNumber - 1);
+          params.append('offset', offset);
+          params.append('limit', form?.limit);
+          // Warning : useless for API call but usefull for prefilling pagination
+          params.append('pageNumber', form?.pageNumber);
         }
 
-        if (form.isFirstSearch && !isOnlyCounts) {
-          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+        if (form.isFirstSearch) {
+          if (!isOnlyCounts) {
+            params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          }
           if (form.hash) {
             // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
             console.log("hash présent dans l'url : on envoie que le hash");
@@ -405,6 +432,10 @@ const search = {
             }
           }
         }
+
+        console.log('______SEARCH______');
+        console.log('isOnlyCount = ', isOnlyCounts);
+        console.log('form = ', form);
 
         const paramsURLCalled = params.toString();
         axiosInstance

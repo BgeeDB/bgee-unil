@@ -61,6 +61,8 @@ build:
   image: node:16
   script:
     - echo "Building the app ..."
+    - echo "WTFFFF - $CI_COMMIT_BRANCH ..."
+    - echo $CI_COMMIT_BRANCH
     - yarn run build
     - echo "Build successfull !"
     - echo "Creating artifact of build/"
@@ -98,8 +100,11 @@ docker-deploy:
     - docker -H $DOCKER_HOST run -d -p ${DOCKER_PORT}:80 --name $DOCKER_CONTAINER $DOCKER_IMAGE
   needs:
     - build
-  only:
-    - merge_requests
-    - /^sprint.*/i
-    - develop
-    - master
+  rules:
+    - if: ($CI_COMMIT_BRANCH =~ /^sprint.*/i && $CI_PIPELINE_SOURCE == 'merge_request_event') || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master"
+      when: on_success
+    # --> comme si on avait if(true)
+    # Permet de toujours pouvoir lancer le build manuellement si nécessaire
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+      when: manual
+      allow_failure: true

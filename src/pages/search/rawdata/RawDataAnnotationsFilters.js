@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
+import { getOptionsForFilter } from '../../../helpers/selects';
 
 const RawDataAnnotationsFilters = ({
   filters,
@@ -10,12 +11,22 @@ const RawDataAnnotationsFilters = ({
   dataFilters = {},
   dataType,
 }) => {
+  const [hasChanged, setHasChanged] = useState(false);
   const eraseFilters = () => {
     setFilters((old) => ({ ...old, [dataType]: {} }));
   };
 
   const onApplyFilter = () => {
-    triggerSearch();
+    triggerSearch(false, true);
+    setHasChanged(false);
+  };
+
+  const onSelect = (keyAPI, newSelected) => {
+    setHasChanged(true);
+    setFilters((old) => ({
+      ...old,
+      [dataType]: { ...old[dataType], [keyAPI]: newSelected },
+    }));
   };
 
   return (
@@ -24,31 +35,22 @@ const RawDataAnnotationsFilters = ({
         Object.keys(dataFilters).map((filterKey) => {
           const dataFilter = dataFilters[filterKey];
           const keyAPI = dataFilter?.urlParameterName;
-          const shouldPrintId = dataFilter?.informativeId;
-          const shouldPrintName = dataFilter?.informativeName;
-          const shouldPrintBoth = shouldPrintId && shouldPrintName;
           const filterByDataType = filters[dataType];
-          const options = dataFilter?.values?.map((v) => ({
-            label: `${shouldPrintId ? v.id : ''}${
-              shouldPrintBoth ? ' - ' : ''
-            }${shouldPrintName && v.name}`,
-            value: v.id,
-          }));
-          const specificStyle = !shouldPrintBoth ? { flex: 0.6 } : {};
+          const options = getOptionsForFilter(
+            dataFilter?.values,
+            dataFilter?.informativeId,
+            dataFilter?.informativeName
+          );
           return (
             <SelectMultipleWithAutoComplete
               key={filterKey}
-              style={specificStyle}
               label={dataFilter.filterName}
               minCharToSearch={0}
               placeholder={dataFilter.filterName}
               getOptionsFunction={() => options}
               selectedOptions={filterByDataType?.[keyAPI] || []}
               setSelectedOptions={(newSelected) =>
-                setFilters((old) => ({
-                  ...old,
-                  [dataType]: { ...old[dataType], [keyAPI]: newSelected },
-                }))
+                onSelect(keyAPI, newSelected)
               }
               className="filterSelect my-2"
             />
@@ -60,6 +62,7 @@ const RawDataAnnotationsFilters = ({
             className="marginAutoBtn button is-small is-info is-light mt-2"
             type="button"
             onClick={onApplyFilter}
+            disabled={!hasChanged}
           >
             Apply filters
           </button>

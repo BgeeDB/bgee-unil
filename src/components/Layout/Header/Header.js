@@ -60,18 +60,24 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
       },
-      // {
-      //   key: 'page.search.presence-expression',
-      //   title: ROUTES[PATHS.SEARCH.PRESENCE_EXPRESSION].title,
-      //   type: 'internal',
-      //   path: PATHS.SEARCH.PRESENCE_EXPRESSION,
-      // },
-      // {
-      //   key: 'page.search.experiments',
-      //   title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
-      //   type: 'internal',
-      //   path: PATHS.SEARCH.EXPERIMENTS,
-      // },
+      {
+        key: 'page.search.processed-expression-values',
+        title: ROUTES[PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES].title,
+        type: 'internal',
+        path: PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES,
+      },
+      {
+        key: 'page.search.presence-absence-expression-calls',
+        title: ROUTES[PATHS.SEARCH.EXPRESSION_CALLS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.EXPRESSION_CALLS,
+      },
+      {
+        key: 'page.search.experiments',
+        title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.EXPERIMENTS,
+      },
     ],
   },
   {
