@@ -62,8 +62,10 @@ const main = async () => {
     console.log(
       '\x1b[31m%s\x1b[0m',
       'CATCH ! Error occured when building : ',
+      '\x1b[31m%s\x1b[0m',
       err
     );
+    process.exit(1);
   }
 };
 
