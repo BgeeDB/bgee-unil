@@ -59,12 +59,8 @@ const main = async () => {
     execSync('yarn build:cra', { stdio: 'inherit' });
     console.log('\x1b[31m%s\x1b[0m\n', 'App built successfully');
   } catch (err) {
-    console.log(
-      '\x1b[31m%s\x1b[0m',
-      'CATCH ! Error occured when building : ',
-      '\x1b[31m%s\x1b[0m',
-      err
-    );
+    console.log('\x1b[31m%s\x1b[0m', 'CATCH ! Error occured when building');
+    console.log('\x1b[31m%s\x1b[0m', err);
     process.exit(1);
   }
 };
