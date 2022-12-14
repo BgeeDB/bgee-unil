@@ -47,6 +47,7 @@ const Species = ({ selectedSpecies, onChangeSpecies, getSpeciesLabel }) => {
       <Select
         options={speciesOptions}
         className="form-control"
+        classNamePrefix="react-select"
         value={selectedSpecies}
         onChange={onChangeSpecies}
       />
