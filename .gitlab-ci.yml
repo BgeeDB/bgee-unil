@@ -61,7 +61,6 @@ build:
   image: node:16
   script:
     - echo "Building the app ..."
-    - echo "WTFFFF - $CI_COMMIT_BRANCH ..."
     - echo $CI_COMMIT_BRANCH
     - yarn run build
     - echo "Build successfull !"
