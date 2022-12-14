@@ -433,10 +433,6 @@ const search = {
           }
         }
 
-        console.log('______SEARCH______');
-        console.log('isOnlyCount = ', isOnlyCounts);
-        console.log('form = ', form);
-
         const paramsURLCalled = params.toString();
         axiosInstance
           .get(`/?${paramsURLCalled}`, {
