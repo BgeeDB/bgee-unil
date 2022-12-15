@@ -140,7 +140,7 @@ const search = {
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.species.autoCompleteByType = c;
+              SEARCH_CANCEL_API.genes.autoCompleteByType = c;
             }),
           })
           .then(({ data }) => {
