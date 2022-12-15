@@ -40,6 +40,7 @@ const Table = ({
   paginationResultCountKey = null,
   manualMaxPage = -1,
   minThWidth = null,
+  hasPaginationTop = false,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -227,6 +228,7 @@ const Table = ({
     >
       <TableHeader />
       <TableTitle />
+      {hasPaginationTop && <TablePagination />}
       {processedData.length > 0 ? (
         <div className="table-container">
           <table

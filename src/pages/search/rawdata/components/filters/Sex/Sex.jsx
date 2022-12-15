@@ -1,24 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import HelpIcon from '../../../../../../components/HelpIcon';
 
 const Sex = ({ speciesSexes, selectedSexes, toggleSex }) => (
   <>
     <label className="labelWithHelpIcon">
       <span>Sex</span>
-      <HelpIcon
-        className="helpIcon"
-        title="Developmental and life stages"
-        content={
-          <>
-            By default, all developmental and life stages are considered for the
-            enrichment analysis. It is possible to provide a custom selection of
-            developmental and life stages, selecting one or several
-            developmental and life stages.
-          </>
-        }
-      />
     </label>
     <div className="sex-container">
       {speciesSexes.map((sex) => {

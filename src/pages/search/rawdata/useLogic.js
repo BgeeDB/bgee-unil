@@ -21,17 +21,17 @@ const FULL_LENGTH = 'FULL_LENGTH';
 
 export const DATA_TYPES = [
   {
+    id: RNA_SEQ,
+    label: 'bulk RNA-Seq',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+  },
+  {
     id: FULL_LENGTH,
     label: 'scRNA-Seq',
     experimentCountLabel: 'experiments',
     assayCountLabel: 'samples',
     libraryCountLabel: 'libraries',
-  },
-  {
-    id: RNA_SEQ,
-    label: 'bulk RNA-Seq',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'samples',
   },
   {
     id: AFFYMETRIX,
@@ -64,6 +64,13 @@ const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
 
 export const TAB_PAGE = [
   {
+    id: EXPERIMENTS,
+    label: 'Experiments',
+    searchLabel: 'Search for experiments',
+    resultLabel: 'Experiments',
+    href: pathExperiments,
+  },
+  {
     id: RAW_DATA_ANNOTS,
     label: 'Raw data annotations',
     searchLabel: 'Search for Raw data annotations',
@@ -83,13 +90,6 @@ export const TAB_PAGE = [
     searchLabel: 'Search for Present/absent expression calls',
     resultLabel: 'Present/absent expression calls results',
     href: pathExprCalls,
-  },
-  {
-    id: EXPERIMENTS,
-    label: 'Experiments',
-    searchLabel: 'Search for experiments',
-    resultLabel: 'Experiments',
-    href: pathExperiments,
   },
 ];
 
@@ -551,6 +551,7 @@ const useLogic = (pageType) => {
     limit,
     localCount,
     isCountLoading,
+    pageNumber,
     setFilters,
     setIsLoading,
     onChangeSpecies,

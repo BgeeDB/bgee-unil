@@ -50,7 +50,7 @@ const TablePagination = () => {
   return (
     <div
       ref={table}
-      className={`complex-table-footer is-flex is-justify-content-space-between${
+      className={`complex-table-footer my-3 is-flex is-justify-content-space-between${
         usedWidth <= MEDIA_QUERIES_SIZE[MEDIA_QUERIES.TABLET] ? ' tablet' : ''
       }`}
     >

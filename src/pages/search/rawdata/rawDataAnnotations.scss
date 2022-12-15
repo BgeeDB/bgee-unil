@@ -3,6 +3,11 @@
     color: rgb(0, 187, 255);
   }
 
+  //Couleur de l'icone info sur le header des columns
+  .helpIcon .icon {
+    color: #d4d4d4;
+  }
+
   // changement de couleur du background du react-select ( que pour species )
   .react-select__option--is-selected,
   .react-select__option--is-focused,
@@ -127,7 +132,7 @@
 
   .resultCounts {
     text-align: right;
-    color: #8484dd;
+    color: #920209;
   }
 
   .sex-container {
@@ -177,5 +182,9 @@
   }
   .react-select__multi-value__label {
     max-width: 20rem;
+  }
+
+  .download-btn {
+    margin-left: auto;
   }
 }

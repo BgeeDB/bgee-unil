@@ -43,6 +43,7 @@ export const customGeneListSorter =
     return 0;
   };
 
+// TODO : delete if unused
 export const customRawListSorter =
   (sortOpts) => (aNotFormatted, bNotFormatted) => {
     const a = { [sortOpts.key]: aNotFormatted[sortOpts.key].content };
