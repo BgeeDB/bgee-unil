@@ -18,6 +18,11 @@
   .react-select__option:hover {
     cursor: pointer;
   }
+  .react-select__control--menu-is-open,
+  .react-select__control--is-focused {
+    border-color: #dc3d35 !important;
+    box-shadow: 0 0 0 1px #f7544c !important;
+  }
 
   // redefine global css ....
   button,
@@ -104,7 +109,7 @@
     border: 1px solid #efefef;
   }
   .pageActive {
-    color: red !important;
+    color: #ed2e24 !important;
   }
   .ongletPageWrapper {
     border-bottom: 1px solid grey;
@@ -124,7 +129,7 @@
   }
   a.ongletPages:active,
   a.ongletPages:hover {
-    color: red;
+    color: #ed2e24;
   }
   .section {
     background-color: #eeeeee;

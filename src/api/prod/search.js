@@ -20,7 +20,10 @@ export const SEARCH_CANCEL_API = {
     species: null,
     speciesDevelopmentSexe: null,
   },
-  rawData: null,
+  rawData: {
+    search: null,
+    count: null,
+  },
 };
 
 const DEFAULT_PARAMETERS = (page, action) => {
@@ -338,7 +341,7 @@ const search = {
   rawData: {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
-        let params = DEFAULT_PARAMETERS('data', form.pageType);
+        const params = DEFAULT_PARAMETERS('data', form.pageType);
         params.append('get_result_count', '1');
 
         // @TODO : delete gene forcé si aucun présent !
@@ -387,11 +390,17 @@ const search = {
             // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
             // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
             // de première arrivée sur la page
-            const mergedParams = {
-              ...Object.fromEntries(form.initSearch),
-              ...Object.fromEntries(params),
-            };
-            params = new URLSearchParams(mergedParams);
+            // eslint-disable-next-line no-restricted-syntax
+            for (const [key, val] of form?.initSearch) {
+              if (
+                key !== 'data_type' &&
+                key !== 'offset' &&
+                key !== 'limit' &&
+                key !== 'pageNumber'
+              ) {
+                params.append(key, val);
+              }
+            }
           }
         } else {
           // Si pas de hash on envoie tous les paramètres séparéments
@@ -433,17 +442,34 @@ const search = {
           }
         }
 
+        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
+        // Pour ne pas avoir de "recouvrement de données en changeant trop vite d'onglet"
+        let typeToken = '';
+        if (isOnlyCounts) {
+          typeToken = 'count';
+        } else {
+          typeToken = 'search';
+        }
+        if (SEARCH_CANCEL_API?.rawData?.[typeToken] !== null) {
+          SEARCH_CANCEL_API?.rawData?.[typeToken]?.(
+            '-- Search was canceled because another search was triggered --'
+          );
+        }
+
         const paramsURLCalled = params.toString();
         axiosInstance
           .get(`/?${paramsURLCalled}`, {
             cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.rawData = c;
+              SEARCH_CANCEL_API.rawData[typeToken] = c;
             }),
           })
-          .then(({ data }) => resolve({ resp: data, paramsURLCalled }))
+          .then(({ data }) => {
+            SEARCH_CANCEL_API.rawData[typeToken] = null;
+            return resolve({ resp: data, paramsURLCalled });
+          })
           .catch((error) => {
             errorHandler(error);
-            reject(error?.response);
+            reject(error?.response || error?.message);
           });
       }),
   },

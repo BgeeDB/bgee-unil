@@ -18,6 +18,7 @@ const Strain = ({ selectedStrain, setSelectedStrain, autoCompleteByType }) => {
         getOptionsFunction={getStrainOptions}
         selectedOptions={selectedStrain}
         setSelectedOptions={setSelectedStrain}
+        minCharToSearch={2}
       />
     </>
   );

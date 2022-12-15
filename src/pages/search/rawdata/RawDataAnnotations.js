@@ -186,6 +186,7 @@ const RawDataAnnotations = ({ pageType }) => {
                           className="button is-success is-light is-outlined"
                           type="submit"
                           onClick={onSubmit}
+                          disabled={isLoading}
                         >
                           Submit
                         </Button>
