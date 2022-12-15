@@ -400,7 +400,7 @@ const useLogic = (pageType) => {
           // On peut donc "clean" l'url de ces valeurs (aka storableParams)
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
-            console.warn('>> clean values in hash <<');
+            // console.warn('>> clean values in hash <<');
             resp?.requestParameters?.storableParameters?.forEach((key) =>
               searchParams.delete(key)
             );

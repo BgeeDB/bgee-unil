@@ -14,7 +14,6 @@ const RawDataAnnotationsFilters = ({
 }) => {
   const [hasChanged, setHasChanged] = useState(false);
   const eraseFilters = () => {
-    console.log('filters[dataType] = ', filters[dataType]);
     if (filters[dataType] !== {} && filters[dataType] !== undefined) {
       setFilters((old) => ({ ...old, [dataType]: {} }));
       triggerSearch(true, true);
