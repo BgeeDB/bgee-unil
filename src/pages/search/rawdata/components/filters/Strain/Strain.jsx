@@ -14,7 +14,7 @@ const Strain = ({ selectedStrain, setSelectedStrain, autoCompleteByType }) => {
         <span>Strain and ethnicity</span>
       </label>
       <SelectMultipleWithAutoComplete
-        placeholder="Search Strain"
+        placeholder="Search Strain and ethnicity"
         getOptionsFunction={getStrainOptions}
         selectedOptions={selectedStrain}
         setSelectedOptions={setSelectedStrain}

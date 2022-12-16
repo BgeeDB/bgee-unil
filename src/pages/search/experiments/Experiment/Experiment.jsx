@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Bulma from '../../../../components/Bulma';
 import Table from '../../../../components/Table';
 import useLogic from './useLogic';
+import './ExperimentStyles.scss';
 
 const Experiment = () => {
   const { data, columns, onRenderCell, onFilter } = useLogic();
@@ -36,33 +37,47 @@ const Experiment = () => {
         />
       </Helmet>
 
-      <div>
+      <div className="experimentPage">
         <div>
           <Bulma.Title className="has-text-centered">
             {data.experiment.name}
           </Bulma.Title>
         </div>
 
-        <div className="mt-6 mb-5 near-columns">
-          <div>
-            <span className="has-text-weight-semibold">Experiment ID:</span>
-            &nbsp;
-            <span>{data.experiment.id}</span>
-          </div>
-          <div>
-            <span className="has-text-weight-semibold">Technology:</span>
-            &nbsp;
-            <span>{data.dataType}</span>
-          </div>
-          <div>
-            <span className="has-text-weight-semibold">
-              Experiment description:
-            </span>
-            &nbsp;
-            <span>{data.experiment.description}</span>
+        <div className="is-flex is-justify-content-center	">
+          <div className="mt-6 mb-5 near-columns is-flex encartTop">
+            <div className="is-flex is-flex-direction-column mr-2">
+              <span className="has-text-weight-semibold my-1">
+                Experiment&nbsp;ID:
+              </span>
+              <span className="has-text-weight-semibold my-1">Technology:</span>
+              <span className="has-text-weight-semibold my-1">
+                Experiment&nbsp;description:
+              </span>
+            </div>
+            <div className="is-flex is-flex-direction-column">
+              <span className="my-1">{data.experiment.id}</span>
+              <span className="my-1">{data.dataType}</span>
+              <span className="my-1">{data.experiment.description}</span>
+              <div className="is-flex is-justify-content-flex-end">
+                <Bulma.Button
+                  className="download-btn is-small mt-2"
+                  // href={hreflinkfromAPI} @todo
+                  // eslint-disable-next-line no-alert
+                  onClick={() => alert('W.I.P')}
+                  renderAs="a"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Export all libraries
+                  <span className="icon is-small ml-1">
+                    <ion-icon name="download-outline" />
+                  </span>
+                </Bulma.Button>
+              </div>
+            </div>
           </div>
         </div>
-
         <Table
           pagination
           columns={columns}
