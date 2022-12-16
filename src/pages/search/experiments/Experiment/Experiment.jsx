@@ -63,6 +63,8 @@ const Experiment = () => {
                 <Bulma.Button
                   className="download-btn is-small mt-2"
                   // href={hreflinkfromAPI} @todo
+                  // eslint-disable-next-line no-alert
+                  onClick={() => alert('W.I.P')}
                   renderAs="a"
                   target="_blank"
                   rel="noreferrer"
