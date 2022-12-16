@@ -1,5 +1,4 @@
 import React from 'react';
-import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 
 const Strain = ({ selectedStrain, setSelectedStrain, autoCompleteByType }) => {
@@ -12,25 +11,14 @@ const Strain = ({ selectedStrain, setSelectedStrain, autoCompleteByType }) => {
   return (
     <>
       <label className="labelWithHelpIcon">
-        <span>Strain</span>
-        <HelpIcon
-          title="Strain"
-          className="helpIcon"
-          content={
-            <>
-              By default, all developmental and life stages are considered for
-              the enrichment analysis. It is possible to provide a custom
-              selection of developmental and life stages, selecting one or
-              several developmental and life stages.
-            </>
-          }
-        />
+        <span>Strain and ethnicity</span>
       </label>
       <SelectMultipleWithAutoComplete
         placeholder="Search Strain"
         getOptionsFunction={getStrainOptions}
         selectedOptions={selectedStrain}
         setSelectedOptions={setSelectedStrain}
+        minCharToSearch={2}
       />
     </>
   );

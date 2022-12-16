@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Select from 'react-select';
 import api from '../../../../../../api';
-import HelpIcon from '../../../../../../components/HelpIcon';
 
 export const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
 
@@ -31,18 +30,6 @@ const Species = ({ selectedSpecies, onChangeSpecies, getSpeciesLabel }) => {
     <>
       <label className="labelWithHelpIcon">
         <span>Species</span>
-        <HelpIcon
-          className="helpIcon"
-          title="Species"
-          content={
-            <>
-              By default, all developmental and life stages are considered for
-              the enrichment analysis. It is possible to provide a custom
-              selection of developmental and life stages, selecting one or
-              several developmental and life stages.
-            </>
-          }
-        />
       </label>
       <Select
         options={speciesOptions}

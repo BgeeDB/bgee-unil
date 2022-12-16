@@ -3,6 +3,7 @@ import { isEmpty } from '../../../helpers/arrayHelper';
 import SelectMultipleWithAutoComplete from '../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import './rawDataAnnotations.scss';
 import { getOptionsForFilter } from '../../../helpers/selects';
+import classnames from '../../../helpers/classnames';
 
 const RawDataAnnotationsFilters = ({
   filters,
@@ -13,7 +14,11 @@ const RawDataAnnotationsFilters = ({
 }) => {
   const [hasChanged, setHasChanged] = useState(false);
   const eraseFilters = () => {
-    setFilters((old) => ({ ...old, [dataType]: {} }));
+    if (filters[dataType] !== {} && filters[dataType] !== undefined) {
+      setFilters((old) => ({ ...old, [dataType]: {} }));
+      triggerSearch(true, true);
+      setHasChanged(false);
+    }
   };
 
   const onApplyFilter = () => {
@@ -57,9 +62,12 @@ const RawDataAnnotationsFilters = ({
           );
         })}
       {!isEmpty(dataFilters) && (
-        <>
+        <div className="marginAutoBtn">
           <button
-            className="marginAutoBtn button is-small is-info is-light mt-2"
+            className={classnames(
+              ' button is-small is-info mt-2',
+              !hasChanged && 'is-light'
+            )}
             type="button"
             onClick={onApplyFilter}
             disabled={!hasChanged}
@@ -73,7 +81,7 @@ const RawDataAnnotationsFilters = ({
           >
             <ion-icon name="trash" tooltop />
           </button>
-        </>
+        </div>
       )}
     </div>
   );

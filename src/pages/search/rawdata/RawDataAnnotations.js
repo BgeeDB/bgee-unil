@@ -44,6 +44,7 @@ const RawDataAnnotations = ({ pageType }) => {
     filters,
     limit,
     isCountLoading,
+    pageNumber,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -185,6 +186,7 @@ const RawDataAnnotations = ({ pageType }) => {
                           className="button is-success is-light is-outlined"
                           type="submit"
                           onClick={onSubmit}
+                          disabled={isLoading}
                         >
                           Submit
                         </Button>
@@ -266,6 +268,7 @@ const RawDataAnnotations = ({ pageType }) => {
                 limit={limit}
                 count={localCount}
                 pageType={pageType}
+                pageNumber={pageNumber}
               />
             </div>
           </div>

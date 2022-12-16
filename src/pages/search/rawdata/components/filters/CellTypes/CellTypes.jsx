@@ -1,5 +1,4 @@
 import React from 'react';
-import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 
@@ -20,18 +19,6 @@ const CellTypes = ({
     <>
       <label className="labelWithHelpIcon">
         <span>Cell type</span>
-        <HelpIcon
-          className="helpIcon"
-          title="Cell type"
-          content={
-            <>
-              By default, all developmental and life stages are considered for
-              the enrichment analysis. It is possible to provide a custom
-              selection of developmental and life stages, selecting one or
-              several developmental and life stages.
-            </>
-          }
-        />
       </label>
       <SelectMultipleWithAutoComplete
         placeholder="Search Cell Type"

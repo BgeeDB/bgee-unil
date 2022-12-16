@@ -21,17 +21,17 @@ const FULL_LENGTH = 'FULL_LENGTH';
 
 export const DATA_TYPES = [
   {
+    id: RNA_SEQ,
+    label: 'bulk RNA-Seq',
+    experimentCountLabel: 'experiments',
+    assayCountLabel: 'samples',
+  },
+  {
     id: FULL_LENGTH,
     label: 'scRNA-Seq',
     experimentCountLabel: 'experiments',
     assayCountLabel: 'samples',
     libraryCountLabel: 'libraries',
-  },
-  {
-    id: RNA_SEQ,
-    label: 'bulk RNA-Seq',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'samples',
   },
   {
     id: AFFYMETRIX,
@@ -64,6 +64,13 @@ const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
 
 export const TAB_PAGE = [
   {
+    id: EXPERIMENTS,
+    label: 'Experiments',
+    searchLabel: 'Search for experiments',
+    resultLabel: 'Experiments',
+    href: pathExperiments,
+  },
+  {
     id: RAW_DATA_ANNOTS,
     label: 'Raw data annotations',
     searchLabel: 'Search for Raw data annotations',
@@ -84,17 +91,10 @@ export const TAB_PAGE = [
     resultLabel: 'Present/absent expression calls results',
     href: pathExprCalls,
   },
-  {
-    id: EXPERIMENTS,
-    label: 'Experiments',
-    searchLabel: 'Search for experiments',
-    resultLabel: 'Experiments',
-    href: pathExperiments,
-  },
 ];
 
 const BASE_PAGE_NUMBER = '1';
-const BASE_LIMIT = '10';
+const BASE_LIMIT = '50';
 
 const useLogic = (pageType) => {
   const history = useHistory();
@@ -171,10 +171,14 @@ const useLogic = (pageType) => {
 
   useEffect(() => {
     triggerCounts();
+    triggerSearch();
   }, []);
 
   useEffect(() => {
-    triggerSearch();
+    if (!isFirstSearch) {
+      setLocalCount({});
+      triggerSearch(true, true);
+    }
   }, [dataType]);
 
   useEffect(() => {
@@ -380,6 +384,7 @@ const useLogic = (pageType) => {
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
+          setIsLoading(false);
           setSearchResult(resp?.data);
           setLocalCount(resp?.data?.resultCount?.[dataType]);
 
@@ -389,7 +394,6 @@ const useLogic = (pageType) => {
           }
 
           const searchParams = new URLSearchParams(paramsURLCalled);
-          const sp = Object.fromEntries(searchParams.entries());
 
           // Si il existe un hash on le met dans l'url
           // Et comme les données suivantes sont "codés" dans ce hash...
@@ -397,57 +401,50 @@ const useLogic = (pageType) => {
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
             // console.warn('>> clean values in hash <<');
-            resp?.requestParameters?.storableParameters?.forEach(
-              (key) => delete sp[key]
+            resp?.requestParameters?.storableParameters?.forEach((key) =>
+              searchParams.delete(key)
             );
 
             // Rajout du hash (dans la key "data")
-            sp.data = newHash;
+            searchParams.append('data', newHash);
           }
 
           // Dans tous les cas on clean aussi les paramètres "tech" de l'url :
-          delete sp.display_type;
-          delete sp.page;
-          delete sp.action;
-          delete sp.get_results;
-          delete sp.get_column_definition;
-          delete sp.get_filters;
-          delete sp.display_rp;
-          delete sp.detailed_rp;
-          delete sp.offset;
-          delete sp.get_result_count;
+          searchParams.delete('display_type');
+          searchParams.delete('page');
+          searchParams.delete('action');
+          searchParams.delete('get_results');
+          searchParams.delete('get_column_definition');
+          searchParams.delete('get_filters');
+          searchParams.delete('display_rp');
+          searchParams.delete('detailed_rp');
+          searchParams.delete('offset');
+          searchParams.delete('get_result_count');
 
-          const replaceSP = new URLSearchParams(sp).toString();
           history.push({
-            search: replaceSP,
+            search: searchParams.toString(),
           });
         }
         // On change le flag de première recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
         setIsFirstSearch(false);
       })
-      .catch((e) => {
-        console.log('[error triggerSearch] e = ', e);
+      .catch(() => {
+        // console.log('[error triggerSearch] e = ', e);
         // On enlève tous les paramètres qu'on a pu envoyer
         history.replace(loc.pathname);
-      })
-      .finally(() => {
         setIsLoading(false);
       });
   };
 
   const triggerCounts = async () => {
     setIsCountLoading(true);
-    api.search.rawData
-      .search(getSearchParams(), true)
-      .then(({ resp }) => {
-        if (resp.code === 200) {
-          setAllCounts(resp?.data?.resultCount);
-        }
-      })
-      .finally(() => {
+    api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
+      if (resp.code === 200) {
         setIsCountLoading(false);
-      });
+        setAllCounts(resp?.data?.resultCount);
+      }
+    });
   };
 
   const getSexesAndDevStageForSpecies = () => {
@@ -551,6 +548,7 @@ const useLogic = (pageType) => {
     limit,
     localCount,
     isCountLoading,
+    pageNumber,
     setFilters,
     setIsLoading,
     onChangeSpecies,

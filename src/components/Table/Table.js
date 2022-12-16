@@ -13,6 +13,7 @@ import Select from '../Select';
 import { monoSort, multiSort } from '../../helpers/sortTable';
 import TablePagination from './TablePagination';
 import usePagination from '../../hooks/usePagination';
+import TablePaginationWithoutRefresh from './TablePaginationWithoutRefresh';
 
 const Table = ({
   fullwidth = true,
@@ -40,6 +41,7 @@ const Table = ({
   paginationResultCountKey = null,
   manualMaxPage = -1,
   minThWidth = null,
+  hasPaginationTop = false,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -193,6 +195,10 @@ const Table = ({
     return filtered;
   }, [mappedData, search, sortOption, onSortCustom]);
 
+  const PaginationComponent = isRequestPerPage
+    ? TablePaginationWithoutRefresh
+    : TablePagination;
+
   return (
     <TableProvider
       data={{
@@ -227,6 +233,7 @@ const Table = ({
     >
       <TableHeader />
       <TableTitle />
+      {hasPaginationTop && <PaginationComponent />}
       {processedData.length > 0 ? (
         <div className="table-container">
           <table
@@ -244,7 +251,7 @@ const Table = ({
       ) : (
         emptyTableMessage
       )}
-      <TablePagination />
+      <PaginationComponent />
     </TableProvider>
   );
 };

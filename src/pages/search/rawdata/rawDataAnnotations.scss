@@ -3,6 +3,11 @@
     color: rgb(0, 187, 255);
   }
 
+  //Couleur de l'icone info sur le header des columns
+  .helpIcon .icon {
+    color: #d4d4d4;
+  }
+
   // changement de couleur du background du react-select ( que pour species )
   .react-select__option--is-selected,
   .react-select__option--is-focused,
@@ -12,6 +17,11 @@
   }
   .react-select__option:hover {
     cursor: pointer;
+  }
+  .react-select__control--menu-is-open,
+  .react-select__control--is-focused {
+    border-color: #dc3d35 !important;
+    box-shadow: 0 0 0 1px #f7544c !important;
   }
 
   // redefine global css ....
@@ -99,7 +109,7 @@
     border: 1px solid #efefef;
   }
   .pageActive {
-    color: red !important;
+    color: #ed2e24 !important;
   }
   .ongletPageWrapper {
     border-bottom: 1px solid grey;
@@ -119,7 +129,7 @@
   }
   a.ongletPages:active,
   a.ongletPages:hover {
-    color: red;
+    color: #ed2e24;
   }
   .section {
     background-color: #eeeeee;
@@ -127,7 +137,7 @@
 
   .resultCounts {
     text-align: right;
-    color: #8484dd;
+    color: #920209;
   }
 
   .sex-container {
@@ -177,5 +187,9 @@
   }
   .react-select__multi-value__label {
     max-width: 20rem;
+  }
+
+  .download-btn {
+    margin-left: auto;
   }
 }

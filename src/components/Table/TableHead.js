@@ -78,6 +78,7 @@ const TableHead = ({ minThWidth }) => {
                     isLeft={key > columns.length / 2}
                     title={item.text}
                     className="helpIcon"
+                    iconName="information-circle"
                     content={item.infoBubble}
                   />
                 )}

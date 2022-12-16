@@ -5,6 +5,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './SelectMultipleWithAutoComplete.scss';
 import Select, { components } from 'react-select';
+import useDebounce from '../../hooks/useDebounce';
 
 const MAX_OPTIONS_LENGTH = 200;
 
@@ -23,6 +24,7 @@ const SelectMultipleWithAutoComplete = ({
   style,
 }) => {
   const [search, setSearch] = useState('');
+  const searchDebounced = useDebounce(search, 300);
   const [isLoading, setIsLoading] = useState(false);
   const [autocompleteList, setAutocompleteList] = useState([]);
 
@@ -70,12 +72,12 @@ const SelectMultipleWithAutoComplete = ({
   );
 
   useEffect(() => {
-    if (search.trim().length >= minCharToSearch) {
-      searchHandler(search);
+    if (searchDebounced.trim().length >= minCharToSearch) {
+      searchHandler(searchDebounced);
     } else {
       setAutocompleteList([]);
     }
-  }, [search, searchHandler]);
+  }, [searchDebounced, searchHandler]);
 
   useEffect(() => {
     if (autoFocus && inputRef.current) {

@@ -50,12 +50,18 @@ const TablePagination = () => {
   return (
     <div
       ref={table}
-      className={`complex-table-footer is-flex is-justify-content-space-between${
+      className={`complex-table-footer my-3 is-flex is-justify-content-space-between${
         usedWidth <= MEDIA_QUERIES_SIZE[MEDIA_QUERIES.TABLET] ? ' tablet' : ''
       }`}
     >
       <div>{showEntriesText}</div>
-      {pagination && <Pagination current={currentPage} total={totalPage} />}
+      {pagination && (
+        <Pagination
+          current={currentPage}
+          total={totalPage}
+          isRequestPerPage={isRequestPerPage}
+        />
+      )}
     </div>
   );
 };
