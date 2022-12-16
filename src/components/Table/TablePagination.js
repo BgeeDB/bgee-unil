@@ -55,7 +55,13 @@ const TablePagination = () => {
       }`}
     >
       <div>{showEntriesText}</div>
-      {pagination && <Pagination current={currentPage} total={totalPage} />}
+      {pagination && (
+        <Pagination
+          current={currentPage}
+          total={totalPage}
+          isRequestPerPage={isRequestPerPage}
+        />
+      )}
     </div>
   );
 };

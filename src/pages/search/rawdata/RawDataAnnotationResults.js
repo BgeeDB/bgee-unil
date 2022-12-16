@@ -177,7 +177,7 @@ const RawDataAnnotationResults = ({
       {results?.length > 0 && (
         <div className="my-2 is-flex is-justify-content-flex-end">
           <Bulma.Button
-            className="download-btn is-warning is-light"
+            className="download-btn is-small"
             href={buildTSVhref}
             renderAs="a"
             download={`${pageType}_${dataType}_${pageNumber}.tsv`}
