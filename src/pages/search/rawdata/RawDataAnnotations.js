@@ -69,7 +69,7 @@ const RawDataAnnotations = ({ pageType }) => {
 
   const results = searchResult?.results?.[dataType] || [];
   const columnsDesc = searchResult?.columnDescriptions?.[dataType] || [];
-  const detailedDataType = DATA_TYPES.find((d) => d.id === dataType);
+  const detailedDataType = DATA_TYPES.find((d) => d.id === dataType) || {};
   const detailedData = TAB_PAGE.find((d) => d.id === pageType);
 
   return (

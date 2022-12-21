@@ -12,86 +12,116 @@ import {
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 import PATHS from '../../../routes/paths';
+import config from '../../../config.json';
 
+// building the page_type array depending on config.json
+export const RAW_DATA_ANNOTS = 'raw_data_annots';
+export const PROC_EXPR_VALUES = 'proc_expr_values';
+export const EXPR_CALLS = 'expr_calls';
+export const EXPERIMENTS = 'experiments';
+const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
+const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
+const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
+const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
+
+const TEMP_TAB_PAGE = [];
+if (config.hasSearchExperiments) {
+  TEMP_TAB_PAGE.push({
+    id: EXPERIMENTS,
+    label: 'Experiments',
+    searchLabel: 'Search for experiments',
+    resultLabel: 'Experiments',
+    href: pathExperiments,
+  });
+}
+if (config.hasSearchRawData) {
+  TEMP_TAB_PAGE.push({
+    id: RAW_DATA_ANNOTS,
+    label: 'Raw data annotations',
+    searchLabel: 'Search for Raw data annotations',
+    resultLabel: 'Raw data annotations results',
+    href: pathRawDataAnnots,
+  });
+}
+if (config.hasSearchProcExprValues) {
+  TEMP_TAB_PAGE.push({
+    id: PROC_EXPR_VALUES,
+    label: 'Processed expresion values',
+    searchLabel: 'Search for Processed expresion values',
+    resultLabel: 'Processed expresion values results',
+    href: pathProcExprValues,
+  });
+}
+if (config.hasSearchExprCalls) {
+  TEMP_TAB_PAGE.push({
+    id: EXPR_CALLS,
+    label: 'Present/absent expression calls',
+    searchLabel: 'Search for Present/absent expression calls',
+    resultLabel: 'Present/absent expression calls results',
+    href: pathExprCalls,
+  });
+}
+export const TAB_PAGE = TEMP_TAB_PAGE;
+
+// building dataTypes depending on config.json
 const AFFYMETRIX = 'AFFYMETRIX';
 const EST = 'EST';
 const IN_SITU = 'IN_SITU';
 const RNA_SEQ = 'RNA_SEQ';
 const FULL_LENGTH = 'FULL_LENGTH';
 
-export const DATA_TYPES = [
+const dataTypeConf = [
   {
-    id: RNA_SEQ,
-    label: 'bulk RNA-Seq',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'samples',
+    position: config.dataType_RNA_SEQ,
+    type: {
+      id: RNA_SEQ,
+      label: 'bulk RNA-Seq',
+      experimentCountLabel: 'experiments',
+      assayCountLabel: 'samples',
+    },
   },
   {
-    id: FULL_LENGTH,
-    label: 'scRNA-Seq',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'samples',
-    libraryCountLabel: 'libraries',
+    position: config.dataType_FULL_LENGTH,
+    type: {
+      id: FULL_LENGTH,
+      label: 'scRNA-Seq',
+      experimentCountLabel: 'experiments',
+      assayCountLabel: 'samples',
+      libraryCountLabel: 'libraries',
+    },
   },
   {
-    id: AFFYMETRIX,
-    label: 'Affymetrix data',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'chips',
+    position: config.dataType_AFFYMETRIX,
+    type: {
+      id: AFFYMETRIX,
+      label: 'Affymetrix data',
+      experimentCountLabel: 'experiments',
+      assayCountLabel: 'chips',
+    },
   },
   {
-    id: IN_SITU,
-    label: 'In situ hybridization',
-    experimentCountLabel: 'experiments',
-    assayCountLabel: 'evidences lines',
+    position: config.dataType_IN_SITU,
+    type: {
+      id: IN_SITU,
+      label: 'In situ hybridization',
+      experimentCountLabel: 'experiments',
+      assayCountLabel: 'evidences lines',
+    },
   },
   {
-    id: EST,
-    label: 'EST',
-    assayCountLabel: 'libraries',
-  },
-];
-
-export const RAW_DATA_ANNOTS = 'raw_data_annots';
-export const PROC_EXPR_VALUES = 'proc_expr_values';
-export const EXPR_CALLS = 'expr_calls';
-export const EXPERIMENTS = 'experiments';
-
-const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
-const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
-const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
-const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
-
-export const TAB_PAGE = [
-  {
-    id: EXPERIMENTS,
-    label: 'Experiments',
-    searchLabel: 'Search for experiments',
-    resultLabel: 'Experiments',
-    href: pathExperiments,
-  },
-  {
-    id: RAW_DATA_ANNOTS,
-    label: 'Raw data annotations',
-    searchLabel: 'Search for Raw data annotations',
-    resultLabel: 'Raw data annotations results',
-    href: pathRawDataAnnots,
-  },
-  {
-    id: PROC_EXPR_VALUES,
-    label: 'Processed expresion values',
-    searchLabel: 'Search for Processed expresion values',
-    resultLabel: 'Processed expresion values results',
-    href: pathProcExprValues,
-  },
-  {
-    id: EXPR_CALLS,
-    label: 'Present/absent expression calls',
-    searchLabel: 'Search for Present/absent expression calls',
-    resultLabel: 'Present/absent expression calls results',
-    href: pathExprCalls,
+    position: config.dataType_EST,
+    type: {
+      id: EST,
+      label: 'EST',
+      assayCountLabel: 'libraries',
+    },
   },
 ];
+const sortedDataTypes = dataTypeConf
+  .filter((t) => !!t.position)
+  .sort((a, b) => a.position - b.position)
+  .map((data) => data.type);
+export const DATA_TYPES = sortedDataTypes;
 
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '50';
