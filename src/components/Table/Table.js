@@ -42,6 +42,7 @@ const Table = ({
   manualMaxPage = -1,
   minThWidth = null,
   hasPaginationTop = false,
+  hasScrollTop = false,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -235,12 +236,19 @@ const Table = ({
       <TableTitle />
       {hasPaginationTop && <PaginationComponent />}
       {processedData.length > 0 ? (
-        <div className="table-container">
+        <div
+          className={`table-container ${hasScrollTop ? 'isTableFlipped' : ''}`}
+        >
           <table
             ref={table}
             className={classnames(
               'table',
-              { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+              {
+                sortable,
+                'is-fullwidth': fullwidth,
+                'is-striped': striped,
+                isTableFlipped: hasScrollTop,
+              },
               classNames
             )}
           >

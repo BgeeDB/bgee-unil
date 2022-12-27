@@ -19,10 +19,10 @@ const ExperimentOrAssay = ({
   return (
     <>
       <label className="labelWithHelpIcon">
-        <span>Experiment or assay ID</span>
+        <span className="boldTitle">Experiment or assay ID</span>
       </label>
       <SelectMultipleWithAutoComplete
-        placeholder="Search Experiment or Assay ID"
+        placeholder="Examples: 'GTEx', 'GSE30611'"
         getOptionsFunction={getExpOrAssayOptions}
         selectedOptions={selectedExpOrAssay}
         setSelectedOptions={setSelectedExpOrAssay}

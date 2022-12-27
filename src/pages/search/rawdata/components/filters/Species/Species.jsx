@@ -29,7 +29,7 @@ const Species = ({ selectedSpecies, onChangeSpecies, getSpeciesLabel }) => {
   return (
     <>
       <label className="labelWithHelpIcon">
-        <span>Species</span>
+        <span className="boldTitle">Species</span>
       </label>
       <Select
         options={speciesOptions}

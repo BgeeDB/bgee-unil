@@ -20,7 +20,7 @@ import DataType from './components/filters/DataType/DataType';
 import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 
-const RawDataAnnotations = ({ pageType }) => {
+const RawDataAnnotations = () => {
   const {
     searchResult,
     allCounts,
@@ -45,6 +45,7 @@ const RawDataAnnotations = ({ pageType }) => {
     limit,
     isCountLoading,
     pageNumber,
+    pageType,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -65,12 +66,19 @@ const RawDataAnnotations = ({ pageType }) => {
     setFilters,
     triggerSearch,
     triggerCounts,
-  } = useLogic(pageType);
+    setPageType,
+  } = useLogic();
 
   const results = searchResult?.results?.[dataType] || [];
   const columnsDesc = searchResult?.columnDescriptions?.[dataType] || [];
   const detailedDataType = DATA_TYPES.find((d) => d.id === dataType) || {};
   const detailedData = TAB_PAGE.find((d) => d.id === pageType);
+
+  const changePageType = (e, newPageType) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPageType(newPageType);
+  };
 
   return (
     <>
@@ -80,7 +88,7 @@ const RawDataAnnotations = ({ pageType }) => {
             const isActive = type.id === pageType;
             return (
               <a
-                href={type.href}
+                onClick={(e) => changePageType(e, type.id)}
                 key={type.id}
                 className={`ongletPages is-centered py-2 px-5 ${
                   isActive ? 'pageActive' : ''
@@ -93,11 +101,11 @@ const RawDataAnnotations = ({ pageType }) => {
         </div>
         {pageType && (
           <div>
+            <h2 className="gradient-underline title is-size-5 has-text-primary">
+              {detailedData.searchLabel}
+            </h2>
             {show && (
               <>
-                <h2 className="gradient-underline title is-size-5 has-text-primary">
-                  {detailedData.searchLabel}
-                </h2>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2">
@@ -109,6 +117,13 @@ const RawDataAnnotations = ({ pageType }) => {
                     </div>
                     {selectedSpecies.value && (
                       <div>
+                        <div className="my-2">
+                          <Gene
+                            selectedGene={selectedGene}
+                            setSelectedGene={setSelectedGene}
+                            autoCompleteByType={autoCompleteByType}
+                          />
+                        </div>
                         <div className="my-2">
                           <Tissues
                             selectedTissue={selectedTissue}
@@ -139,6 +154,13 @@ const RawDataAnnotations = ({ pageType }) => {
                           />
                         </div>
                         <div className="my-2">
+                          <Strain
+                            selectedStrain={selectedStrain}
+                            setSelectedStrain={setSelectedStrain}
+                            autoCompleteByType={autoCompleteByType}
+                          />
+                        </div>
+                        <div className="my-2">
                           <Sex
                             speciesSexes={speciesSexes}
                             selectedSexes={selectedSexes}
@@ -150,24 +172,6 @@ const RawDataAnnotations = ({ pageType }) => {
                   </div>
                   <div className="column">
                     <div>
-                      {selectedSpecies.value && (
-                        <>
-                          <div className="mb-2">
-                            <Strain
-                              selectedStrain={selectedStrain}
-                              setSelectedStrain={setSelectedStrain}
-                              autoCompleteByType={autoCompleteByType}
-                            />
-                          </div>
-                          <div className="mb-2">
-                            <Gene
-                              selectedGene={selectedGene}
-                              setSelectedGene={setSelectedGene}
-                              autoCompleteByType={autoCompleteByType}
-                            />
-                          </div>
-                        </>
-                      )}
                       <div className="mb-2">
                         <ExperimentOrAssay
                           selectedExpOrAssay={selectedExpOrAssay}
@@ -225,20 +229,32 @@ const RawDataAnnotations = ({ pageType }) => {
               />
             )}
             <div className="resultPart">
-              <div className="resultCounts">
-                {detailedDataType.experimentCountLabel &&
-                  `${localCount?.experimentCount || 0} ${
-                    detailedDataType.experimentCountLabel
-                  } / `}
-                {detailedDataType.assayCountLabel &&
-                  `${localCount?.assayCount || 0} ${
-                    detailedDataType.assayCountLabel
-                  }`}
-                {detailedDataType.libraryCountLabel &&
-                  ` / ${localCount?.libraryCount || 0} ${
-                    detailedDataType.libraryCountLabel
-                  }`}
-              </div>
+              {isLoading ? (
+                <div className="progressWrapper is-justify-content-flex-end	">
+                  <progress
+                    className="progress is-small is-primary"
+                    style={{
+                      animationDuration: '2s',
+                      width: '10%',
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="resultCounts">
+                  {detailedDataType.experimentCountLabel &&
+                    `${localCount?.experimentCount || 0} ${
+                      detailedDataType.experimentCountLabel
+                    } / `}
+                  {detailedDataType.assayCountLabel &&
+                    `${localCount?.assayCount || 0} ${
+                      detailedDataType.assayCountLabel
+                    }`}
+                  {detailedDataType.libraryCountLabel &&
+                    ` / ${localCount?.libraryCount || 0} ${
+                      detailedDataType.libraryCountLabel
+                    }`}
+                </div>
+              )}
               {!!searchResult && dataType && (
                 <RawDataAnnotationsFilters
                   dataFilters={searchResult?.filters?.[dataType]}
@@ -249,7 +265,7 @@ const RawDataAnnotations = ({ pageType }) => {
                   triggerCounts={triggerCounts}
                 />
               )}
-              {isLoading && (
+              {isLoading ? (
                 <div className="progressWrapper">
                   <progress
                     className="progress is-small is-primary m-5"
@@ -259,17 +275,18 @@ const RawDataAnnotations = ({ pageType }) => {
                     }}
                   />
                 </div>
+              ) : (
+                <RawDataAnnotationResults
+                  results={results}
+                  resultCount={allCounts[dataType]}
+                  dataType={dataType}
+                  columnDescriptions={columnsDesc}
+                  limit={limit}
+                  count={localCount}
+                  pageType={pageType}
+                  pageNumber={pageNumber}
+                />
               )}
-              <RawDataAnnotationResults
-                results={results}
-                resultCount={allCounts[dataType]}
-                dataType={dataType}
-                columnDescriptions={columnsDesc}
-                limit={limit}
-                count={localCount}
-                pageType={pageType}
-                pageNumber={pageNumber}
-              />
             </div>
           </div>
         )}

@@ -15,9 +15,7 @@ const PATHS = {
     SPECIES: '/search/species',
     SPECIES_ITEM: '/species/:id',
     RAW_DATA_ANNOTATIONS: '/search/raw-data-annotations',
-    PROCESSED_EXPRESSION_VALUES: '/search/processed-expression-values',
     EXPRESSION_CALLS: '/search/expression-calls',
-    EXPERIMENTS: '/search/experiments',
     EXPERIMENT: '/experiment/:id',
   },
   DOWNLOAD: {

@@ -15,7 +15,7 @@ const Gene = ({ selectedGene, setSelectedGene, autoCompleteByType }) => {
         <span>Gene</span>
       </label>
       <SelectMultipleWithAutoComplete
-        placeholder="Search Gene"
+        placeholder="Examples: 'dlx', 'ENSG00000254647' (for human)"
         getOptionsFunction={getOptionsFunctionGenes}
         selectedOptions={selectedGene}
         setSelectedOptions={setSelectedGene}

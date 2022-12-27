@@ -11,27 +11,21 @@ import {
 } from '../../../helpers/selects';
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
-import PATHS from '../../../routes/paths';
 import config from '../../../config.json';
 
 // building the page_type array depending on config.json
+export const EXPERIMENTS = 'experiments';
 export const RAW_DATA_ANNOTS = 'raw_data_annots';
 export const PROC_EXPR_VALUES = 'proc_expr_values';
 export const EXPR_CALLS = 'expr_calls';
-export const EXPERIMENTS = 'experiments';
-const pathRawDataAnnots = PATHS.SEARCH.RAW_DATA_ANNOTATIONS;
-const pathProcExprValues = PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES;
-const pathExprCalls = PATHS.SEARCH.EXPRESSION_CALLS;
-const pathExperiments = PATHS.SEARCH.EXPERIMENTS;
 
 const TEMP_TAB_PAGE = [];
 if (config.hasSearchExperiments) {
   TEMP_TAB_PAGE.push({
     id: EXPERIMENTS,
     label: 'Experiments',
-    searchLabel: 'Search for experiments',
+    searchLabel: 'Search for Experiments',
     resultLabel: 'Experiments',
-    href: pathExperiments,
   });
 }
 if (config.hasSearchRawData) {
@@ -40,25 +34,14 @@ if (config.hasSearchRawData) {
     label: 'Raw data annotations',
     searchLabel: 'Search for Raw data annotations',
     resultLabel: 'Raw data annotations results',
-    href: pathRawDataAnnots,
   });
 }
 if (config.hasSearchProcExprValues) {
   TEMP_TAB_PAGE.push({
     id: PROC_EXPR_VALUES,
-    label: 'Processed expresion values',
-    searchLabel: 'Search for Processed expresion values',
-    resultLabel: 'Processed expresion values results',
-    href: pathProcExprValues,
-  });
-}
-if (config.hasSearchExprCalls) {
-  TEMP_TAB_PAGE.push({
-    id: EXPR_CALLS,
-    label: 'Present/absent expression calls',
-    searchLabel: 'Search for Present/absent expression calls',
-    resultLabel: 'Present/absent expression calls results',
-    href: pathExprCalls,
+    label: 'Processed expression values',
+    searchLabel: 'Search for Processed expression values',
+    resultLabel: 'Processed expression values results',
   });
 }
 export const TAB_PAGE = TEMP_TAB_PAGE;
@@ -126,7 +109,7 @@ export const DATA_TYPES = sortedDataTypes;
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '50';
 
-const useLogic = (pageType) => {
+const useLogic = () => {
   const history = useHistory();
   // Init from URL
   const loc = useLocation();
@@ -138,6 +121,12 @@ const useLogic = (pageType) => {
   const initDataType = initSearch.get('data_type') || RNA_SEQ;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
+  const initPageType = initSearch.get('pageType') || EXPERIMENTS;
+
+  // Page Type / Data Type
+  // Page type = data in search params !
+  const [pageType, setPageType] = useState(initPageType);
+  const [dataType, setDataType] = useState(initDataType);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -161,7 +150,6 @@ const useLogic = (pageType) => {
   const [isCountLoading, setIsCountLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
-  const [dataType, setDataType] = useState(initDataType);
   // Store all counts per dataType
   const [allCounts, setAllCounts] = useState({});
   // Store only the count of the current DataType ( to match the filters)
@@ -212,6 +200,14 @@ const useLogic = (pageType) => {
   }, [dataType]);
 
   useEffect(() => {
+    if (!isFirstSearch) {
+      setLocalCount({});
+      triggerCounts();
+      triggerSearch(true, true);
+    }
+  }, [pageType]);
+
+  useEffect(() => {
     if (selectedSpecies.value !== EMPTY_SPECIES_VALUE.value) {
       getSexesAndDevStageForSpecies();
       resetForm(true);
@@ -220,7 +216,8 @@ const useLogic = (pageType) => {
 
   const onSubmit = () => {
     triggerCounts();
-    triggerSearch(true);
+    triggerSearch(true, true);
+    setShow(!show);
   };
 
   const initFormFromDetailedRP = (resp) => {
@@ -469,12 +466,19 @@ const useLogic = (pageType) => {
 
   const triggerCounts = async () => {
     setIsCountLoading(true);
-    api.search.rawData.search(getSearchParams(), true).then(({ resp }) => {
-      if (resp.code === 200) {
+    api.search.rawData
+      .search(getSearchParams(), true)
+      .then(({ resp }) => {
+        if (resp.code === 200) {
+          setIsCountLoading(false);
+          setAllCounts(resp?.data?.resultCount);
+        }
+      })
+      .catch(() => {
+        // gène not found or some errors !
         setIsCountLoading(false);
-        setAllCounts(resp?.data?.resultCount);
-      }
-    });
+        setAllCounts({});
+      });
   };
 
   const getSexesAndDevStageForSpecies = () => {
@@ -579,6 +583,8 @@ const useLogic = (pageType) => {
     localCount,
     isCountLoading,
     pageNumber,
+    pageType,
+    setPageType,
     setFilters,
     setIsLoading,
     onChangeSpecies,

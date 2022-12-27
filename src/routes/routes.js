@@ -45,12 +45,6 @@ import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
-import {
-  EXPR_CALLS,
-  PROC_EXPR_VALUES,
-  RAW_DATA_ANNOTS,
-  EXPERIMENTS,
-} from '../pages/search/rawdata/useLogic';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -98,20 +92,12 @@ const SEARCH = {
     title: 'Species',
   },
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
-    component: () => <RawDataAnnotations pageType={RAW_DATA_ANNOTS} />,
-    title: 'Raw data annotations',
-  },
-  [PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES]: {
-    component: () => <RawDataAnnotations pageType={PROC_EXPR_VALUES} />,
-    title: 'Processed expression values',
+    component: () => <RawDataAnnotations />,
+    title: 'Raw data annotated and processed',
   },
   [PATHS.SEARCH.EXPRESSION_CALLS]: {
-    component: () => <RawDataAnnotations pageType={EXPR_CALLS} />,
-    title: 'Presence/absence expression calls',
-  },
-  [PATHS.SEARCH.EXPERIMENTS]: {
-    component: () => <RawDataAnnotations pageType={EXPERIMENTS} />,
-    title: 'List of experiments',
+    component: () => <RawDataAnnotations />,
+    title: 'Present/absent expression calls',
   },
   [PATHS.SEARCH.EXPERIMENT]: {
     component: Experiment,

@@ -7,61 +7,6 @@ import config from '../../../config.json';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import ROUTES from '../../../routes/routes';
 
-const defaultSearchChildren = [
-  {
-    key: 'page.search.gene-search',
-    title: ROUTES[PATHS.SEARCH.GENE].title,
-    type: 'internal',
-    path: PATHS.SEARCH.GENE,
-  },
-  {
-    key: 'page.search.anatomical-homology-search',
-    title: ROUTES[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].title,
-    type: 'internal',
-    path: PATHS.SEARCH.ANATOMICAL_HOMOLOGY,
-  },
-  {
-    key: 'page.resources.sparql',
-    title: 'SPARQL endpoint',
-    path: '/sparql/',
-    type: 'external',
-  },
-  {
-    key: 'page.search.species',
-    title: ROUTES[PATHS.SEARCH.SPECIES].title,
-    type: 'internal',
-    path: PATHS.SEARCH.SPECIES,
-  },
-];
-
-const searchPages = [
-  ...defaultSearchChildren,
-  config.hasSearchExperiments && {
-    key: 'page.search.experiments',
-    title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
-    type: 'internal',
-    path: PATHS.SEARCH.EXPERIMENTS,
-  },
-  config.hasSearchRawData && {
-    key: 'page.search.raw-data-annotations',
-    title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
-    type: 'internal',
-    path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
-  },
-  config.hasSearchProcExprValues && {
-    key: 'page.search.processed-expression-values',
-    title: ROUTES[PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES].title,
-    type: 'internal',
-    path: PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES,
-  },
-  config.hasSearchProcExprValues && {
-    key: 'page.search.presence-absence-expression-calls',
-    title: ROUTES[PATHS.SEARCH.EXPRESSION_CALLS].title,
-    type: 'internal',
-    path: PATHS.SEARCH.EXPRESSION_CALLS,
-  },
-].filter((page) => !!page);
-
 const NAVBAR_LEFT = [
   {
     key: 'menu.analysis',
@@ -84,7 +29,44 @@ const NAVBAR_LEFT = [
   {
     key: 'menu.search',
     title: 'Search',
-    children: searchPages,
+    children: [
+      {
+        key: 'page.search.gene-search',
+        title: ROUTES[PATHS.SEARCH.GENE].title,
+        type: 'internal',
+        path: PATHS.SEARCH.GENE,
+      },
+      {
+        key: 'page.search.anatomical-homology-search',
+        title: ROUTES[PATHS.SEARCH.ANATOMICAL_HOMOLOGY].title,
+        type: 'internal',
+        path: PATHS.SEARCH.ANATOMICAL_HOMOLOGY,
+      },
+      {
+        key: 'page.resources.sparql',
+        title: 'SPARQL endpoint',
+        path: '/sparql/',
+        type: 'external',
+      },
+      {
+        key: 'page.search.species',
+        title: ROUTES[PATHS.SEARCH.SPECIES].title,
+        type: 'internal',
+        path: PATHS.SEARCH.SPECIES,
+      },
+      {
+        key: 'page.search.raw-data-annotations',
+        title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
+      },
+      {
+        key: 'page.search.presence-absence-expression-calls',
+        title: ROUTES[PATHS.SEARCH.EXPRESSION_CALLS].title,
+        type: 'internal',
+        path: PATHS.SEARCH.EXPRESSION_CALLS,
+      },
+    ],
   },
   {
     key: 'menu.download',

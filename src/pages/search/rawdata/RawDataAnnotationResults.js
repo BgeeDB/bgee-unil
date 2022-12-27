@@ -206,6 +206,7 @@ const RawDataAnnotationResults = ({
         fullwidth={false}
         minThWidth="10rem"
         hasPaginationTop
+        hasScrollTop
       />
     </>
   );

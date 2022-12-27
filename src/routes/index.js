@@ -137,20 +137,6 @@ const Router = () => (
                   />
                 )}
               />
-
-              <Route
-                exact
-                path={PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES}
-                render={(props) => (
-                  <Page
-                    {...props}
-                    Component={
-                      ROUTES[PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES].component
-                    }
-                  />
-                )}
-              />
-
               <Route
                 exact
                 path={PATHS.SEARCH.EXPRESSION_CALLS}
@@ -161,18 +147,6 @@ const Router = () => (
                   />
                 )}
               />
-
-              <Route
-                exact
-                path={PATHS.SEARCH.EXPERIMENTS}
-                render={(props) => (
-                  <Page
-                    {...props}
-                    Component={ROUTES[PATHS.SEARCH.EXPERIMENTS].component}
-                  />
-                )}
-              />
-
               <Route
                 exact
                 path={PATHS.SEARCH.EXPERIMENT}

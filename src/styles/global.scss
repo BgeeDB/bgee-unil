@@ -1112,3 +1112,7 @@ h1.title,
 h1.title.in-md {
   color: $title-color;
 }
+
+.isTableFlipped {
+  transform: rotate(180deg);
+}
