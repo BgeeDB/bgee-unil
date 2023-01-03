@@ -342,9 +342,16 @@ const search = {
     search: (form, isOnlyCounts) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', form.pageType);
+
+        // Ici on force le pageType dans l'url pour le retrouver
+        // ( en effet "data" est utilisé par le hash aussi donc on ne peut pas l'utilisé comme key)
+        params.append('pageType', form.pageType);
+
+        // On demande le count des résultats (pour le "localCount")
         params.append('get_result_count', '1');
 
-        // @TODO : delete gene forcé si aucun présent !
+        // @TODO : [delete me] : gene forcé si aucun présent !
+        // _____________________________________________________________________________
         if (
           form.pageType === 'proc_expr_values' &&
           form.selectedGene?.length === 0
@@ -360,6 +367,7 @@ const search = {
             params.append('species_id', '9606');
           }
         }
+        // _____________________________________________________________________________
 
         if (isOnlyCounts) {
           params.append('data_type', 'all');
@@ -396,6 +404,7 @@ const search = {
                 key !== 'data_type' &&
                 key !== 'offset' &&
                 key !== 'limit' &&
+                key !== 'pageType' &&
                 key !== 'pageNumber'
               ) {
                 params.append(key, val);

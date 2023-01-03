@@ -1,4 +1,5 @@
 import React from 'react';
+import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 
@@ -21,7 +22,7 @@ const CellTypes = ({
         <span>Cell type</span>
       </label>
       <SelectMultipleWithAutoComplete
-        placeholder="Search Cell Type"
+        placeholder="Examples: 'neuron', 'CL:0000187'"
         getOptionsFunction={getCellTypeOptions}
         selectedOptions={selectedCellTypes}
         setSelectedOptions={setSelectedCellTypes}
@@ -34,6 +35,17 @@ const CellTypes = ({
           onChange={() => setHasCellTypeSubStructure((current) => !current)}
         />
         <label htmlFor="hasCellTypeSubStructure">Including substructures</label>
+        <HelpIcon
+          style={{
+            height: '21px',
+          }}
+          content={
+            <>
+              Retrieve data in the substructures of the selected terms, for
+              instance to retrieve data in all sub-cell-types of neuron cell.
+            </>
+          }
+        />
       </div>
     </>
   );

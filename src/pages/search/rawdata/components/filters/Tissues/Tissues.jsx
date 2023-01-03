@@ -1,4 +1,5 @@
 import React from 'react';
+import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 
@@ -21,7 +22,7 @@ const Tissues = ({
         <span>Tissue</span>
       </label>
       <SelectMultipleWithAutoComplete
-        placeholder="Search Tissue"
+        placeholder="Examples: 'brain', 'UBERON:0000948'"
         getOptionsFunction={getTissueOptions}
         selectedOptions={selectedTissue}
         setSelectedOptions={setSelectedTissue}
@@ -34,6 +35,17 @@ const Tissues = ({
           onChange={() => setHasTissueSubStructure((current) => !current)}
         />
         <label htmlFor="hasTissueSubStructure">Including substructures</label>
+        <HelpIcon
+          style={{
+            height: '21px',
+          }}
+          content={
+            <>
+              Retrieve data in the substructures of the selected terms, for
+              instance to retrieve data in all subparts of the brain.
+            </>
+          }
+        />
       </div>
     </>
   );

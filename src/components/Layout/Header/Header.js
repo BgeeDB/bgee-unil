@@ -55,22 +55,10 @@ const NAVBAR_LEFT = [
         path: PATHS.SEARCH.SPECIES,
       },
       {
-        key: 'page.search.experiments',
-        title: ROUTES[PATHS.SEARCH.EXPERIMENTS].title,
-        type: 'internal',
-        path: PATHS.SEARCH.EXPERIMENTS,
-      },
-      {
         key: 'page.search.raw-data-annotations',
         title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
         type: 'internal',
         path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
-      },
-      {
-        key: 'page.search.processed-expression-values',
-        title: ROUTES[PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES].title,
-        type: 'internal',
-        path: PATHS.SEARCH.PROCESSED_EXPRESSION_VALUES,
       },
       {
         key: 'page.search.presence-absence-expression-calls',

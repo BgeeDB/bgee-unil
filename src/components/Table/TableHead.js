@@ -71,17 +71,19 @@ const TableHead = ({ minThWidth }) => {
                 }
                 style={thStyle}
               >
-                {item.text}
-                {cssSortOption(item.key, sortOption)}
-                {item.infoBubble && (
-                  <HelpIcon
-                    isLeft={key > columns.length / 2}
-                    title={item.text}
-                    className="helpIcon"
-                    iconName="information-circle"
-                    content={item.infoBubble}
-                  />
-                )}
+                <div style={{ display: 'flex' }}>
+                  {item.text}
+                  {cssSortOption(item.key, sortOption)}
+                  {item.infoBubble && (
+                    <HelpIcon
+                      isLeft={key > columns.length / 2}
+                      title={item.text}
+                      className="helpIcon"
+                      iconName="information-circle"
+                      content={item.infoBubble}
+                    />
+                  )}
+                </div>
               </th>
             );
           }
