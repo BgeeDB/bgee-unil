@@ -3,10 +3,7 @@
 import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import Bulma from '../../../../../../components/Bulma';
-import {
-  ALL_DATA_TYPES,
-  ALL_DATA_TYPES_ID,
-} from '../../../../rawdata/useLogic';
+import { ALL_DATA_TYPES, ALL_DATA_TYPES_ID } from '../../../useLogic';
 
 const DataType = ({ dataTypes, setDataTypes }) => {
   const allDisabled =

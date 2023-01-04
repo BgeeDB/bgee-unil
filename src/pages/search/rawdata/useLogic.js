@@ -45,6 +45,12 @@ if (config.hasSearchProcExprValues) {
   });
 }
 export const TAB_PAGE = TEMP_TAB_PAGE;
+export const TAB_PAGE_EXPR_CALL = {
+  id: EXPR_CALLS,
+  label: 'Present/absent expression calls',
+  searchLabel: 'Search for present/absent expression calls',
+  resultLabel: 'Present/absent expression calls',
+};
 
 // building dataTypes depending on config.json
 const AFFYMETRIX = 'AFFYMETRIX';
@@ -61,6 +67,7 @@ const dataTypeConf = [
       label: 'bulk RNA-Seq',
       experimentCountLabel: 'experiments',
       assayCountLabel: 'samples',
+      sourceLetter: 'R',
     },
   },
   {
@@ -71,6 +78,7 @@ const dataTypeConf = [
       experimentCountLabel: 'experiments',
       assayCountLabel: 'samples',
       libraryCountLabel: 'libraries',
+      sourceLetter: 'FL',
     },
   },
   {
@@ -80,6 +88,7 @@ const dataTypeConf = [
       label: 'Affymetrix data',
       experimentCountLabel: 'experiments',
       assayCountLabel: 'chips',
+      sourceLetter: 'A',
     },
   },
   {
@@ -89,6 +98,7 @@ const dataTypeConf = [
       label: 'In situ hybridization',
       experimentCountLabel: 'experiments',
       assayCountLabel: 'evidences lines',
+      sourceLetter: 'I',
     },
   },
   {
@@ -97,6 +107,7 @@ const dataTypeConf = [
       id: EST,
       label: 'EST',
       assayCountLabel: 'libraries',
+      sourceLetter: 'E',
     },
   },
 ];
@@ -105,11 +116,50 @@ const sortedDataTypes = dataTypeConf
   .sort((a, b) => a.position - b.position)
   .map((data) => data.type);
 export const DATA_TYPES = sortedDataTypes;
+export const ALL_DATA_TYPES = dataTypeConf.map((data) => data.type);
+export const ALL_DATA_TYPES_ID = ALL_DATA_TYPES.map((d) => d.id);
+const BRONZE = 'BRONZE';
+const SILVER = 'SILVER';
+const GOLD = 'GOLD';
+export const ALL_DATA_QUALITIES = [
+  { id: BRONZE, label: 'Bronze' },
+  { id: SILVER, label: 'Silver' },
+  { id: GOLD, label: 'Gold' },
+];
+const ANAT_KEY = 'anat_entity';
+const DEVSTAGE_KEY = 'dev_stage';
+const SEX_KEY = 'sex';
+const STRAIN_KEY = 'strain';
+export const COND_PARAM2 = [
+  {
+    id: ANAT_KEY,
+    label: 'Anatomical localization',
+  },
+  {
+    id: DEVSTAGE_KEY,
+    label: 'Development and life stage',
+  },
+  {
+    id: SEX_KEY,
+    label: 'Sex',
+  },
+  {
+    id: STRAIN_KEY,
+    label: 'Strain',
+  },
+];
+
+export const EXPRESSED = 'EXPRESSED';
+export const NOT_EXPRESSED = 'NOT_EXPRESSED';
+export const ALL_CALL_TYPE = [
+  { id: EXPRESSED, label: 'Present' },
+  { id: NOT_EXPRESSED, label: 'Absent' },
+];
 
 const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '50';
 
-const useLogic = () => {
+const useLogic = (isExprCalls) => {
   const history = useHistory();
   // Init from URL
   const loc = useLocation();
@@ -118,15 +168,20 @@ const useLogic = () => {
 
   const [isFirstSearch, setIsFirstSearch] = useState(true);
 
-  const initDataType = initSearch.get('data_type') || RNA_SEQ;
+  const initDataType = initSearch.get('data_type') || DATA_TYPES[0].id;
+  const initDataTypeExpCalls = ALL_DATA_TYPES_ID;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
   const initPageType = initSearch.get('pageType') || EXPERIMENTS;
 
   // Page Type / Data Type
   // Page type = data in search params !
-  const [pageType, setPageType] = useState(initPageType);
+  const [pageType, setPageType] = useState(
+    isExprCalls ? EXPR_CALLS : initPageType
+  );
   const [dataType, setDataType] = useState(initDataType);
+  const [dataTypesExpCalls, setDataTypesExpCalls] =
+    useState(initDataTypeExpCalls);
 
   // lists
   const [speciesSexes, setSpeciesSexes] = useState([]);
@@ -144,6 +199,14 @@ const useLogic = () => {
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(true);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(true);
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
+  const [dataQuality, setDataQuality] = useState(BRONZE);
+  const [callTypes, setCallTypes] = useState([NOT_EXPRESSED, EXPRESSED]);
+  const [conditionalParam2, setConditionalParam2] = useState([
+    ANAT_KEY,
+    DEVSTAGE_KEY,
+    SEX_KEY,
+    STRAIN_KEY,
+  ]);
 
   // results
   const [isLoading, setIsLoading] = useState(false);
@@ -193,7 +256,7 @@ const useLogic = () => {
   }, []);
 
   useEffect(() => {
-    if (!isFirstSearch) {
+    if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
       triggerSearch(true, true);
     }
@@ -217,7 +280,6 @@ const useLogic = () => {
   const onSubmit = () => {
     triggerCounts();
     triggerSearch(true, true);
-    setShow(!show);
   };
 
   const initFormFromDetailedRP = (resp) => {
@@ -353,13 +415,15 @@ const useLogic = () => {
     }
 
     // Filters
-    const filtersToCheck = data.filters[nextDataType];
+    // @todo : filter for exp calls
+    const filtersToCheck = data?.filters?.[nextDataType] || {};
     const searchParams = new URLSearchParams(requestParameters);
     const initFilters = {};
     // eslint-disable-next-line no-unused-vars
     Object.entries(filtersToCheck).forEach(([_, f]) => {
       const ids = searchParams.getAll(f.urlParameterName);
       const nextValues = f.values.filter((v) => ids.includes(v.id));
+
       const nextValuesMapped = getOptionsForFilter(
         nextValues,
         f?.informativeId,
@@ -368,29 +432,62 @@ const useLogic = () => {
       initFilters[f.urlParameterName] = nextValuesMapped;
     });
     setFilters({ [nextDataType]: initFilters });
+
+    if (isExprCalls) {
+      console.log('populate search form expr calls');
+      // Call types
+      if (requestParameters?.expr_type?.length > 0) {
+        setCallTypes(requestParameters?.expr_type);
+      }
+
+      // data_type expres calls
+      if (requestParameters?.data_type?.length > 0) {
+        setDataTypesExpCalls(requestParameters?.data_type);
+      }
+
+      // Data quality
+      if (requestParameters?.data_qual?.length > 0) {
+        setDataQuality(requestParameters?.data_qual);
+      }
+
+      // Conditonal parameter 2
+      if (requestParameters?.cond_param2?.length > 0) {
+        setConditionalParam2(requestParameters?.cond_param2);
+      }
+    }
   };
 
-  const getSearchParams = () => ({
-    hash: initHash,
-    isFirstSearch,
-    initSearch,
-    pageType,
-    dataType,
-    selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
-    selectedSpecies: selectedSpecies.value,
-    selectedCellTypes: selectedCellTypes.map((ct) => ct.value),
-    selectedGene: selectedGene.map((g) => g.value),
-    selectedStrain: selectedStrain.map((s) => s.value),
-    selectedTissue: selectedTissue.map((t) => t.value),
-    selectedDevStages: selectedDevStages.map((ds) => ds.value),
-    selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
-    hasCellTypeSubStructure,
-    hasDevStageSubStructure,
-    hasTissueSubStructure,
-    filters: filters[dataType],
-    pageNumber,
-    limit,
-  });
+  const getSearchParams = () => {
+    let params = {
+      hash: initHash,
+      isFirstSearch,
+      initSearch,
+      pageType,
+      dataType: [dataType],
+      selectedExpOrAssay: selectedExpOrAssay.map((exp) => exp.value),
+      selectedSpecies: selectedSpecies.value,
+      selectedCellTypes: selectedCellTypes.map((ct) => ct.value),
+      selectedGene: selectedGene.map((g) => g.value),
+      selectedStrain: selectedStrain.map((s) => s.value),
+      selectedTissue: selectedTissue.map((t) => t.value),
+      selectedDevStages: selectedDevStages.map((ds) => ds.value),
+      selectedSexes: selectedSexes.length > 0 ? selectedSexes : ['all'],
+      hasCellTypeSubStructure,
+      hasDevStageSubStructure,
+      hasTissueSubStructure,
+      filters: filters[dataType],
+      pageNumber,
+      limit,
+    };
+
+    if (isExprCalls) {
+      const dataTypeForExpCalls =
+        dataTypesExpCalls.length === 0 ? ALL_DATA_TYPES_ID : dataTypesExpCalls;
+      params.dataType = dataTypeForExpCalls;
+      params = { ...params, dataQuality, callTypes, conditionalParam2 };
+    }
+    return params;
+  };
 
   const triggerSearch = async (
     cleanFilters = false,
@@ -413,13 +510,22 @@ const useLogic = () => {
         if (resp.code === 200) {
           setIsLoading(false);
           setSearchResult(resp?.data);
-          setLocalCount(resp?.data?.resultCount?.[dataType]);
+
+          // Pas de data type en exp_calls !! @todo
+          setLocalCount(
+            isExprCalls
+              ? { assayCount: resp?.data?.expressionCallCount }
+              : resp?.data?.resultCount?.[dataType]
+          );
 
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (isFirstSearch) {
-            initFormFromDetailedRP(resp);
+            try {
+              initFormFromDetailedRP(resp);
+            } catch (e) {
+              console.error('Error when parsing URL e = ', e);
+            }
           }
-
           const searchParams = new URLSearchParams(paramsURLCalled);
 
           // Si il existe un hash on le met dans l'url
@@ -452,6 +558,12 @@ const useLogic = () => {
             search: searchParams.toString(),
           });
         }
+
+        // On ferme le search form si jamais ce n'est pas l'arrivée sur la page
+        if (!isFirstSearch) {
+          setShow(false);
+        }
+
         // On change le flag de première recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
         setIsFirstSearch(false);
@@ -465,20 +577,22 @@ const useLogic = () => {
   };
 
   const triggerCounts = async () => {
-    setIsCountLoading(true);
-    api.search.rawData
-      .search(getSearchParams(), true)
-      .then(({ resp }) => {
-        if (resp.code === 200) {
+    if (!isExprCalls) {
+      setIsCountLoading(true);
+      api.search.rawData
+        .search(getSearchParams(), true)
+        .then(({ resp }) => {
+          if (resp.code === 200) {
+            setIsCountLoading(false);
+            setAllCounts(resp?.data?.resultCount);
+          }
+        })
+        .catch(() => {
+          // gène not found or some errors !
           setIsCountLoading(false);
-          setAllCounts(resp?.data?.resultCount);
-        }
-      })
-      .catch(() => {
-        // gène not found or some errors !
-        setIsCountLoading(false);
-        setAllCounts({});
-      });
+          setAllCounts({});
+        });
+    }
   };
 
   const getSexesAndDevStageForSpecies = () => {
@@ -584,6 +698,14 @@ const useLogic = () => {
     isCountLoading,
     pageNumber,
     pageType,
+    dataTypesExpCalls,
+    dataQuality,
+    conditionalParam2,
+    callTypes,
+    setCallTypes,
+    setConditionalParam2,
+    setDataQuality,
+    setDataTypesExpCalls,
     setPageType,
     setFilters,
     setIsLoading,

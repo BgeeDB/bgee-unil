@@ -9,7 +9,7 @@ import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
-import { EXPERIMENTS } from './useLogic';
+import TagSource from '../../../components/TagSource/TagSource';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj = {}, attributes = '') => {
@@ -43,17 +43,11 @@ const customHeader = (searchElement, pageSizeElement) => (
 const RawDataAnnotationResults = ({
   results = [],
   columnDescriptions = {},
-  limit,
-  count,
+  maxPage,
   pageType,
   dataType,
   pageNumber,
 }) => {
-  const countResultKey = useMemo(
-    () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
-    [pageType]
-  );
-
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
       case 'STRING':
@@ -76,6 +70,10 @@ const RawDataAnnotationResults = ({
         );
 
         return <>{renderAnatLink}</>;
+      }
+      case 'DATA_TYPE_SOURCE': {
+        const sourceObject = cell[key].sourceObject;
+        return <TagSource source={sourceObject} />;
       }
       default:
         return defaultRender([cell[key]]);
@@ -141,6 +139,23 @@ const RawDataAnnotationResults = ({
                 content: getChildValueFromAttribute(result, attribute0),
               };
             }
+            case 'DATA_TYPE_SOURCE': {
+              const sourceObject = getChildValueFromAttribute(
+                result,
+                attribute0
+              );
+              let source = '';
+              Object.entries(sourceObject).forEach(([key, value]) => {
+                if (value) {
+                  source += `${key}, `;
+                }
+              });
+              return {
+                type: col.columnType,
+                content: source.slice(0, -2),
+                sourceObject,
+              };
+            }
             default:
               return {};
           }
@@ -202,7 +217,7 @@ const RawDataAnnotationResults = ({
         paginationParamPageKey="pageNumber"
         paginationResultCountKey="limit"
         isRequestPerPage
-        manualMaxPage={Math.ceil((count?.[countResultKey] || 0) / limit)}
+        manualMaxPage={maxPage}
         fullwidth={false}
         minThWidth="10rem"
         hasPaginationTop

@@ -372,7 +372,8 @@ const search = {
         if (isOnlyCounts) {
           params.append('data_type', 'all');
         } else {
-          params.append('data_type', form.dataType);
+          form.dataType.forEach((type) => params.append('data_type', type));
+
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
@@ -438,6 +439,19 @@ const search = {
           }
           if (form.hasDevStageSubStructure) {
             params.append('stage_descendant', form.hasDevStageSubStructure);
+          }
+
+          // Search form for Expression calls
+          if (form?.dataQuality) {
+            params.append('data_qual', form?.dataQuality);
+          }
+          if (form?.callTypes) {
+            form.callTypes.forEach((ct) => params.append('expr_type', ct));
+          }
+          if (form?.conditionalParam2) {
+            form.conditionalParam2.forEach((cp) =>
+              params.append('cond_param2', cp)
+            );
           }
 
           // Application des filtres ! (VS form)
