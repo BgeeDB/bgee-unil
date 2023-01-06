@@ -63,7 +63,7 @@ const TableHead = ({ minThWidth }) => {
             return (
               <th
                 className={classnames(!!item.infoBubble && 'hasInfoBubble')}
-                key={item.key}
+                key={key}
                 onClick={
                   sortable && !item.noSort
                     ? defineSortOption(item.key)
@@ -72,7 +72,7 @@ const TableHead = ({ minThWidth }) => {
                 style={thStyle}
               >
                 <div style={{ display: 'flex' }}>
-                  {item.text}
+                  {item?.text || item?.title}
                   {cssSortOption(item.key, sortOption)}
                   {item.infoBubble && (
                     <HelpIcon

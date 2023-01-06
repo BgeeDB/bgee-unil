@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
@@ -10,6 +10,10 @@ import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
 import TagSource from '../../../components/TagSource/TagSource';
+import { PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
+
+const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
+const LINK_TO_PROC_EXPR_VALUES = 'LINK_TO_PROC_EXPR_VALUES';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj = {}, attributes = '') => {
@@ -42,12 +46,14 @@ const customHeader = (searchElement, pageSizeElement) => (
 
 const RawDataAnnotationResults = ({
   results = [],
-  columnDescriptions = {},
+  columnDescriptions = [],
   maxPage,
   pageType,
   dataType,
   pageNumber,
 }) => {
+  const loc = useLocation();
+
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
       case 'STRING':
@@ -59,6 +65,9 @@ const RawDataAnnotationResults = ({
             {cell[key].content}
           </Link>
         );
+      case LINK_TO_RAW_DATA_ANNOTS:
+      case LINK_TO_PROC_EXPR_VALUES:
+        return <a href={cell[key].to}>{cell[key].content}</a>;
       case 'DEV_STAGE':
       case 'ANAT_ENTITY': {
         const content = cell[key].content;
@@ -80,27 +89,15 @@ const RawDataAnnotationResults = ({
     }
   };
 
-  const columns = useMemo(
-    () =>
-      Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
-        const column = columnDescriptions[columnDescriptionsKey];
-
-        return {
-          key: index,
-          text: column.title,
-          attributes: column.attributes,
-          columnType: column.columnType,
-          infoBubble: column.infoBubble,
-        };
-      }),
-    [columnDescriptions]
-  );
-
   const mappedResults = useMemo(
     () =>
       results.map((result) => {
-        const row = columns.map((col) => {
-          const attribute0 = col.attributes[0];
+        const row = columnDescriptions.map((col) => {
+          const attribute0 = col?.attributes?.[0];
+          const valueFromFirstAttribute = getChildValueFromAttribute(
+            result,
+            attribute0
+          );
           switch (col.columnType) {
             case 'STRING': {
               return {
@@ -111,21 +108,16 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              const path = `/experiment/${getChildValueFromAttribute(
-                result,
-                attribute0
-              )}`;
+              const path = `/experiment/${valueFromFirstAttribute}`;
               return {
                 type: col.columnType,
-                content: getChildValueFromAttribute(result, attribute0),
+                content: valueFromFirstAttribute,
                 to: path,
               };
             }
             case 'ANAT_ENTITY':
             case 'DEV_STAGE': {
-              const id = replaceNAOrUndefined(
-                getChildValueFromAttribute(result, col.attributes[0])
-              );
+              const id = replaceNAOrUndefined(valueFromFirstAttribute);
               const path = obolibraryLinkFromID(id || '');
               return {
                 type: col.columnType,
@@ -136,24 +128,45 @@ const RawDataAnnotationResults = ({
             case 'NUMERIC': {
               return {
                 type: col.columnType,
-                content: getChildValueFromAttribute(result, attribute0),
+                content: valueFromFirstAttribute,
               };
             }
             case 'DATA_TYPE_SOURCE': {
-              const sourceObject = getChildValueFromAttribute(
-                result,
-                attribute0
-              );
               let source = '';
-              Object.entries(sourceObject).forEach(([key, value]) => {
-                if (value) {
-                  source += `${key}, `;
+              Object.entries(valueFromFirstAttribute).forEach(
+                ([key, value]) => {
+                  if (value) {
+                    source += `${key}, `;
+                  }
                 }
-              });
+              );
               return {
                 type: col.columnType,
                 content: source.slice(0, -2),
-                sourceObject,
+                sourceObject: valueFromFirstAttribute,
+              };
+            }
+            case LINK_TO_RAW_DATA_ANNOTS:
+            case LINK_TO_PROC_EXPR_VALUES: {
+              const goToRawData = col.columnType === LINK_TO_RAW_DATA_ANNOTS;
+              const currentSP = new URLSearchParams(loc.search);
+              col?.filterTargets?.forEach((filter) => {
+                currentSP.append(
+                  filter?.urlParameterName,
+                  getChildValueFromAttribute(result, filter?.valueAttributeName)
+                );
+              });
+              currentSP.delete('pageType');
+              currentSP.append(
+                'pageType',
+                goToRawData ? RAW_DATA_ANNOTS : PROC_EXPR_VALUES
+              );
+              currentSP.delete('data_type');
+              currentSP.append('data_type', dataType);
+              return {
+                type: col.columnType,
+                content: 'Browse results',
+                to: `${loc.pathname}?${currentSP.toString()}`,
               };
             }
             default:
@@ -162,22 +175,31 @@ const RawDataAnnotationResults = ({
         });
         return row;
       }),
-    [results, columns]
+    [results, columnDescriptions]
   );
 
   const buildTSVhref = useMemo(() => {
     const base = `data:text/tab-separated-values;charset=utf-8,`;
     const colHeaders = [];
-    Object.keys(columnDescriptions).forEach((colIndex) => {
-      const column = columnDescriptions[colIndex];
-      colHeaders.push(column.title);
-    });
+
+    // On créer les header des columns en filtrant les export = false
+    columnDescriptions
+      .filter((col) => col.export)
+      .forEach((column) => {
+        colHeaders.push(column.title);
+      });
     let tsv = colHeaders.join('%09');
-    tsv += '%0D%0A';
+    tsv += '%0D%0A'; // carriage return
+
+    const columnsToExport = columnDescriptions
+      .map((c, i) => ({ ...c, indexForExport: i })) // ajout d'index pour savoir OÙ récupere la valeur dans result
+      .filter((col) => col.export); // filtres les export = false
 
     mappedResults.forEach((row) => {
-      const rowTxt = row.map((r) => r.content).join('%09');
-      tsv += `${rowTxt}%0D%0A`;
+      const rowTxt = columnsToExport
+        .map((col) => row[col.indexForExport].content) // ne récupère QUe les résultats des colums à exporter
+        .join('%09');
+      tsv += `${rowTxt}%0D%0A`; // carriage return
     });
 
     return `${base}${tsv}`;
@@ -210,7 +232,7 @@ const RawDataAnnotationResults = ({
         pagination
         classNamesTable="is-striped"
         // onSortCustom={customRawListSorter}
-        columns={columns}
+        columns={columnDescriptions}
         data={mappedResults}
         customHeader={customHeader}
         onRenderCell={renderCells}

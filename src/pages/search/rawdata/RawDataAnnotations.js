@@ -230,14 +230,14 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                             setConditionalParam2={setConditionalParam2}
                           />
                           <hr />
-                          <DataQualityParameter
-                            dataQuality={dataQuality}
-                            setDataQuality={setDataQuality}
-                          />
-                          <hr />
                           <CallType
                             callTypes={callTypes}
                             setCallTypes={setCallTypes}
+                          />
+                          <hr />
+                          <DataQualityParameter
+                            dataQuality={dataQuality}
+                            setDataQuality={setDataQuality}
                           />
                         </>
                       ) : (

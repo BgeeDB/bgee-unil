@@ -258,7 +258,7 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
-      triggerSearch(true, true);
+      triggerSearch(false, true);
     }
   }, [dataType]);
 
@@ -508,16 +508,6 @@ const useLogic = (isExprCalls) => {
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
-          setIsLoading(false);
-          setSearchResult(resp?.data);
-
-          // Pas de data type en exp_calls !! @todo
-          setLocalCount(
-            isExprCalls
-              ? { assayCount: resp?.data?.expressionCallCount }
-              : resp?.data?.resultCount?.[dataType]
-          );
-
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (isFirstSearch) {
             try {
@@ -526,8 +516,9 @@ const useLogic = (isExprCalls) => {
               console.error('Error when parsing URL e = ', e);
             }
           }
-          const searchParams = new URLSearchParams(paramsURLCalled);
 
+          // Gestion du "miroitage" des paramètres dans l'url ( avec et sans hash )
+          const searchParams = new URLSearchParams(paramsURLCalled);
           // Si il existe un hash on le met dans l'url
           // Et comme les données suivantes sont "codés" dans ce hash...
           // On peut donc "clean" l'url de ces valeurs (aka storableParams)
@@ -559,7 +550,7 @@ const useLogic = (isExprCalls) => {
           });
         }
 
-        // On ferme le search form si jamais ce n'est pas l'arrivée sur la page
+        // On collapse le search form si jamais ce n'est pas l'arrivée sur la page
         if (!isFirstSearch) {
           setShow(false);
         }
@@ -567,6 +558,15 @@ const useLogic = (isExprCalls) => {
         // On change le flag de première recherche
         // --> permet l'utilisation des filtres dans la prochaine requête
         setIsFirstSearch(false);
+
+        // Enfin on set les valeurs qui nous interesse :
+        setIsLoading(false);
+        setSearchResult(resp?.data);
+        setLocalCount(
+          isExprCalls
+            ? { assayCount: resp?.data?.expressionCallCount }
+            : resp?.data?.resultCount?.[dataType]
+        );
       })
       .catch(() => {
         // console.log('[error triggerSearch] e = ', e);

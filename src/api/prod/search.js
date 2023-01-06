@@ -363,7 +363,7 @@ const search = {
           // et si jamais il n'y a pas d'espèce selectionnée...
           // ( ce qui est obligatoire pour mettre un filtre de gène)
           // on force aussi à l'espèce humaine
-          if (!form.selectedSpecies) {
+          if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
             params.append('species_id', '9606');
           }
         }
@@ -393,7 +393,7 @@ const search = {
           }
           if (form.hash) {
             // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
-            console.log("hash présent dans l'url : on envoie que le hash");
+            // console.log("hash présent dans l'url : on envoie que le hash");
             params.append('data', form.hash);
           } else {
             // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
