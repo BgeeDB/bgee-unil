@@ -58,7 +58,7 @@ const GeneSearch = ({ classNames, children, searchTerm = '' }) => {
           label="Search Genes"
           hasSearchButton
           searchTerm={searchTerm}
-          placeholder="Search Gene"
+          placeholder="Examples: dlx, ENSG00000254647"
           renderOption={renderOption}
           getOptionsFunction={getOptionsFunction}
           onSelectOption={onSelectOption}
