@@ -355,6 +355,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                   columnDescriptions={columnsDesc}
                   pageType={pageType}
                   pageNumber={pageNumber}
+                  isExprCalls={isExprCalls}
                 />
               )}
             </div>

@@ -51,6 +51,7 @@ const RawDataAnnotationResults = ({
   pageType,
   dataType,
   pageNumber,
+  isExprCalls,
 }) => {
   const loc = useLocation();
 
@@ -108,7 +109,7 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              const path = `/experiment/${valueFromFirstAttribute}`;
+              const path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
               return {
                 type: col.columnType,
                 content: valueFromFirstAttribute,
@@ -217,7 +218,9 @@ const RawDataAnnotationResults = ({
             className="download-btn is-small"
             href={buildTSVhref}
             renderAs="a"
-            download={`${pageType}_${dataType}_${pageNumber}.tsv`}
+            download={`${pageType}_${
+              isExprCalls ? '' : `${dataType}_`
+            }${pageNumber}.tsv`}
             target="_blank"
             rel="noreferrer"
           >
