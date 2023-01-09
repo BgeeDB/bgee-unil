@@ -126,25 +126,25 @@ export const ALL_DATA_QUALITIES = [
   { id: SILVER, label: 'Silver' },
   { id: GOLD, label: 'Gold' },
 ];
-const ANAT_KEY = 'anat_entity';
-const DEVSTAGE_KEY = 'dev_stage';
-const SEX_KEY = 'sex';
-const STRAIN_KEY = 'strain';
+export const COND_PARAM2_ANAT_KEY = 'anat_entity';
+export const COND_PARAM2_DEVSTAGE_KEY = 'dev_stage';
+export const COND_PARAM2_SEX_KEY = 'sex';
+export const COND_PARAM2_STRAIN_KEY = 'strain';
 export const COND_PARAM2 = [
   {
-    id: ANAT_KEY,
+    id: COND_PARAM2_ANAT_KEY,
     label: 'Anatomical localization',
   },
   {
-    id: DEVSTAGE_KEY,
+    id: COND_PARAM2_DEVSTAGE_KEY,
     label: 'Development and life stage',
   },
   {
-    id: SEX_KEY,
+    id: COND_PARAM2_SEX_KEY,
     label: 'Sex',
   },
   {
-    id: STRAIN_KEY,
+    id: COND_PARAM2_STRAIN_KEY,
     label: 'Strain',
   },
 ];
@@ -202,10 +202,10 @@ const useLogic = (isExprCalls) => {
   const [dataQuality, setDataQuality] = useState(BRONZE);
   const [callTypes, setCallTypes] = useState([NOT_EXPRESSED, EXPRESSED]);
   const [conditionalParam2, setConditionalParam2] = useState([
-    ANAT_KEY,
-    DEVSTAGE_KEY,
-    SEX_KEY,
-    STRAIN_KEY,
+    COND_PARAM2_ANAT_KEY,
+    COND_PARAM2_DEVSTAGE_KEY,
+    COND_PARAM2_SEX_KEY,
+    COND_PARAM2_STRAIN_KEY,
   ]);
 
   // results
@@ -280,6 +280,13 @@ const useLogic = (isExprCalls) => {
   const onSubmit = () => {
     triggerCounts();
     triggerSearch(true, true);
+  };
+
+  const addConditionalParam = (id) => {
+    const indexOfValue = conditionalParam2.indexOf(id);
+    if (indexOfValue === -1) {
+      setConditionalParam2([...conditionalParam2, id]);
+    }
   };
 
   const initFormFromDetailedRP = (resp) => {
@@ -729,6 +736,7 @@ const useLogic = (isExprCalls) => {
     resetForm,
     triggerSearch,
     triggerCounts,
+    addConditionalParam,
   };
 };
 

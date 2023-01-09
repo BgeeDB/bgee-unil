@@ -2,6 +2,7 @@ import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getIdAndNameLabel } from '../../../../../../helpers/selects';
+import { COND_PARAM2_ANAT_KEY } from '../../../useLogic';
 
 const CellTypes = ({
   selectedCellTypes,
@@ -9,12 +10,18 @@ const CellTypes = ({
   autoCompleteByType,
   hasCellTypeSubStructure,
   setHasCellTypeSubStructure,
+  addConditionalParam,
 }) => {
   const getCellTypeOptions = autoCompleteByType('cell_type', (result) => ({
     label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,
   }));
+
+  const onSelect = (nextValue) => {
+    setSelectedCellTypes(nextValue);
+    addConditionalParam(COND_PARAM2_ANAT_KEY);
+  };
 
   return (
     <>
@@ -25,7 +32,7 @@ const CellTypes = ({
         placeholder="Examples: 'neuron', 'CL:0000187'"
         getOptionsFunction={getCellTypeOptions}
         selectedOptions={selectedCellTypes}
-        setSelectedOptions={setSelectedCellTypes}
+        setSelectedOptions={onSelect}
       />
       <div className="checkboxWrapper">
         <input

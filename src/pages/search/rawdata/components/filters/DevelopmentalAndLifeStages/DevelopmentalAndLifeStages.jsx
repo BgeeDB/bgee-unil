@@ -4,6 +4,7 @@ import React from 'react';
 import useLogic from './useLogic';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import HelpIcon from '../../../../../../components/HelpIcon';
+import { COND_PARAM2_DEVSTAGE_KEY } from '../../../useLogic';
 
 const DevelopmentalAndLifeStages = ({
   devStages,
@@ -11,8 +12,14 @@ const DevelopmentalAndLifeStages = ({
   setDevStageSubStructure,
   selectedOptions,
   setSelectedOptions,
+  addConditionalParam,
 }) => {
   const { getOptionsFunction } = useLogic({ devStages });
+
+  const onSelect = (nextValue) => {
+    setSelectedOptions(nextValue);
+    addConditionalParam(COND_PARAM2_DEVSTAGE_KEY);
+  };
 
   return (
     <>
@@ -23,7 +30,7 @@ const DevelopmentalAndLifeStages = ({
         minCharToSearch={0}
         placeholder="Select a term in the simplified tree view"
         selectedOptions={selectedOptions}
-        setSelectedOptions={setSelectedOptions}
+        setSelectedOptions={onSelect}
         getOptionsFunction={getOptionsFunction}
       />
       <div className="checkboxWrapper">

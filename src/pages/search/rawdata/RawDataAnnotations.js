@@ -82,6 +82,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     triggerSearch,
     triggerCounts,
     setPageType,
+    addConditionalParam,
   } = useLogic(isExprCalls);
 
   const defaultResults = searchResult?.results?.[dataType] || [];
@@ -183,6 +184,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 setHasCellTypeSubStructure={
                                   setHasCellTypeSubStructure
                                 }
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                             <div className="my-2">
@@ -196,6 +198,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 }
                                 selectedOptions={selectedDevStages}
                                 setSelectedOptions={setSelectedDevStages}
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                             <div className="my-2">
@@ -203,6 +206,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 selectedStrain={selectedStrain}
                                 setSelectedStrain={setSelectedStrain}
                                 autoCompleteByType={autoCompleteByType}
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                             <div className="my-2">
@@ -210,6 +214,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 speciesSexes={speciesSexes}
                                 selectedSexes={selectedSexes}
                                 toggleSex={toggleSex}
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                           </>
