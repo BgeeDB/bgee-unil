@@ -22,7 +22,20 @@ const ConditionParameter = ({ conditionalParam2, setConditionalParam2 }) => {
           style={{
             position: 'absolute',
           }}
-          content={<>TODO: Help condition parameters</>}
+          content={
+            <>
+              {`Select the condition parameters to consider, that were used to
+              produce the expression calls. For instance, if you only select
+              "Anatomical localization", each expression call will have been
+              produced for a specific organ or cell type, integrating data at
+              all stages, sexes, and strains available for this organ. If you
+              select "Anatomical localization" and "Development and life stage",
+              expression calls will have been produced for this organ at this
+              stage, integrating data from all sexes and strains available.
+              Therefore the calls have different FDR, call type, etc, depending
+              on this selection of condition parameters.`}
+            </>
+          }
         />
       </label>
       <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">

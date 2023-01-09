@@ -555,10 +555,6 @@ const useLogic = (isExprCalls) => {
           setShow(false);
         }
 
-        // On change le flag de première recherche
-        // --> permet l'utilisation des filtres dans la prochaine requête
-        setIsFirstSearch(false);
-
         // Enfin on set les valeurs qui nous interesse :
         setIsLoading(false);
         setSearchResult(resp?.data);
@@ -573,6 +569,11 @@ const useLogic = (isExprCalls) => {
         // On enlève tous les paramètres qu'on a pu envoyer
         history.replace(loc.pathname);
         setIsLoading(false);
+      })
+      .finally(() => {
+        // On change le flag de première recherche
+        // --> permet l'utilisation des filtres dans la prochaine requête
+        setIsFirstSearch(false);
       });
   };
 

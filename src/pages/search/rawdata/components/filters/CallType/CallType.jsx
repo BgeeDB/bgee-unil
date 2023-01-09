@@ -26,7 +26,14 @@ const CallType = ({ callTypes = [], setCallTypes }) => {
           style={{
             position: 'absolute',
           }}
-          content={<>TODO: Help Call type</>}
+          content={
+            <>
+              Retrieve present expression calls, indicating significant
+              expression of a gene in a condition, and/or absent expression
+              calls, indicating reported absence of expression of a gene in a
+              condition.
+            </>
+          }
         />
       </label>
       <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">

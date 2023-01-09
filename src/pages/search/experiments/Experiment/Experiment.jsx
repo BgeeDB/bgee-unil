@@ -45,36 +45,57 @@ const Experiment = () => {
         </div>
 
         <div className="is-flex is-justify-content-center	">
-          <div className="mt-6 mb-5 near-columns is-flex encartTop">
-            <div className="is-flex is-flex-direction-column mr-2">
-              <span className="has-text-weight-semibold my-1">
+          <div className="mt-6 mb-5 near-columns is-flex-direction-column is-flex encartTop">
+            <div className="is-flex is-flex-direction-row mr-2">
+              <span className="has-text-weight-semibold my-1 labelsLeft">
                 Experiment&nbsp;ID:
               </span>
-              <span className="has-text-weight-semibold my-1">Technology:</span>
-              <span className="has-text-weight-semibold my-1">
-                Experiment&nbsp;description:
+              <span className="my-1 is-flex-grow-1">
+                {data?.experiment?.id}
               </span>
             </div>
-            <div className="is-flex is-flex-direction-column">
-              <span className="my-1">{data.experiment.id}</span>
-              <span className="my-1">{data.dataType}</span>
-              <span className="my-1">{data.experiment.description}</span>
-              <div className="is-flex is-justify-content-flex-end">
-                <Bulma.Button
-                  className="download-btn is-small mt-2"
-                  // href={hreflinkfromAPI} @todo
-                  // eslint-disable-next-line no-alert
-                  onClick={() => alert('W.I.P')}
-                  renderAs="a"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Export all libraries
-                  <span className="icon is-small ml-1">
-                    <ion-icon name="download-outline" />
-                  </span>
-                </Bulma.Button>
-              </div>
+
+            <div className="is-flex is-flex-direction-row mr-2">
+              <span className="has-text-weight-semibold my-1 labelsLeft">
+                Technology:
+              </span>
+              <span className="my-1 is-flex-grow-1">{data?.dataType}</span>
+            </div>
+
+            <div className="is-flex is-flex-direction-row mr-2">
+              <span className="has-text-weight-semibold my-1 labelsLeft">
+                Experiment&nbsp;description:
+              </span>
+              <span className="my-1 is-flex-grow-1 ml-2">
+                {data?.experiment?.description}
+              </span>
+            </div>
+
+            <div className="is-flex is-flex-direction-row mr-2">
+              <span className="has-text-weight-semibold my-1 labelsLeft">
+                Source: {data?.experiment?.xRef?.source?.name}
+              </span>
+              <span className="my-1 is-flex-grow-1">
+                <a href={data?.experiment?.xRef?.xRefURL}>
+                  {data.experiment.id}
+                </a>
+              </span>
+            </div>
+            <div className="is-flex is-justify-content-flex-end">
+              <Bulma.Button
+                className="download-btn is-small mt-2"
+                // href={hreflinkfromAPI} @todo
+                // eslint-disable-next-line no-alert
+                onClick={() => alert('W.I.P')}
+                renderAs="a"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Export all libraries
+                <span className="icon is-small ml-1">
+                  <ion-icon name="download-outline" />
+                </span>
+              </Bulma.Button>
             </div>
           </div>
         </div>

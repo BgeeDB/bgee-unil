@@ -158,7 +158,8 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                             autoCompleteByType={autoCompleteByType}
                           />
                         </div>
-                        {isExprCalls && selectedGene.length > 0 && (
+                        {((isExprCalls && selectedGene.length > 0) ||
+                          !isExprCalls) && (
                           <>
                             <div className="my-2">
                               <Tissues

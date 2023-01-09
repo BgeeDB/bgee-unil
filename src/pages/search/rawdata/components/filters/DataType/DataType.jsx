@@ -34,7 +34,14 @@ const DataType = ({ dataTypes, setDataTypes }) => {
           style={{
             position: 'absolute',
           }}
-          content={<>TODO: Help Data type ?...</>}
+          content={
+            <>
+              Select the data types to consider, that were used to produce the
+              expression calls: expression calls are produced by integrating any
+              combination of these data types, you can select here the
+              combination to use for your query.
+            </>
+          }
         />
       </label>
       <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">

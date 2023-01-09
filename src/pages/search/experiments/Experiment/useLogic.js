@@ -5,7 +5,7 @@ import LinkExternal from '../../../../components/LinkExternal';
 import { COLUMN_TYPES } from '../../../../helpers/constants/columnDescriptions';
 import obolibraryLinkFromID from '../../../../helpers/obolibraryLinkFromID';
 
-const getColumnValues = (cell, attributes) =>
+const getColumnValues = (cell, attributes = []) =>
   attributes
     .map((attribute) => {
       const attributeParts = attribute.split('.');
