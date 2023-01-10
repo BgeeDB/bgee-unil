@@ -11,9 +11,11 @@ import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
 import TagSource from '../../../components/TagSource/TagSource';
 import { PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
+import PATHS from '../../../routes/paths';
 
 const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
 const LINK_TO_PROC_EXPR_VALUES = 'LINK_TO_PROC_EXPR_VALUES';
+const LINK_CALL_TO_PROC_EXPR_VALUES = 'LINK_CALL_TO_PROC_EXPR_VALUES';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj = {}, attributes = '') => {
@@ -67,6 +69,7 @@ const RawDataAnnotationResults = ({
           </Link>
         );
       case LINK_TO_RAW_DATA_ANNOTS:
+      case LINK_CALL_TO_PROC_EXPR_VALUES:
       case LINK_TO_PROC_EXPR_VALUES:
         return <a href={cell[key].to}>{cell[key].content}</a>;
       case 'DEV_STAGE':
@@ -148,26 +151,32 @@ const RawDataAnnotationResults = ({
               };
             }
             case LINK_TO_RAW_DATA_ANNOTS:
-            case LINK_TO_PROC_EXPR_VALUES: {
-              const goToRawData = col.columnType === LINK_TO_RAW_DATA_ANNOTS;
+            case LINK_TO_PROC_EXPR_VALUES:
+            case LINK_CALL_TO_PROC_EXPR_VALUES: {
+              const nextPageType =
+                col.columnType === LINK_TO_RAW_DATA_ANNOTS
+                  ? RAW_DATA_ANNOTS
+                  : PROC_EXPR_VALUES;
               const currentSP = new URLSearchParams(loc.search);
               col?.filterTargets?.forEach((filter) => {
-                currentSP.append(
-                  filter?.urlParameterName,
-                  getChildValueFromAttribute(result, filter?.valueAttributeName)
+                const filterValue = getChildValueFromAttribute(
+                  result,
+                  filter?.valueAttributeName
                 );
+                if (filterValue) {
+                  currentSP.append(filter?.urlParameterName, filterValue);
+                }
               });
               currentSP.delete('pageType');
-              currentSP.append(
-                'pageType',
-                goToRawData ? RAW_DATA_ANNOTS : PROC_EXPR_VALUES
-              );
+              currentSP.append('pageType', nextPageType);
               currentSP.delete('data_type');
               currentSP.append('data_type', dataType);
               return {
                 type: col.columnType,
                 content: 'Browse results',
-                to: `${loc.pathname}?${currentSP.toString()}`,
+                to: `${
+                  PATHS.SEARCH.RAW_DATA_ANNOTATIONS
+                }?${currentSP.toString()}`,
               };
             }
             default:

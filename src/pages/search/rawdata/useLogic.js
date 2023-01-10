@@ -374,6 +374,11 @@ const useLogic = (isExprCalls) => {
             label: getIdAndNameLabel(foundDevStage),
             value: devStageId,
           });
+        } else {
+          console.log(
+            '[FILLING SEARCH FORM] Dev stage NOT FOUND  : ',
+            devStageId
+          );
         }
       });
       setSelectedDevStages(initDevStage);
@@ -491,7 +496,13 @@ const useLogic = (isExprCalls) => {
       const dataTypeForExpCalls =
         dataTypesExpCalls.length === 0 ? ALL_DATA_TYPES_ID : dataTypesExpCalls;
       params.dataType = dataTypeForExpCalls;
-      params = { ...params, dataQuality, callTypes, conditionalParam2 };
+      params = {
+        ...params,
+        dataQuality,
+        callTypes,
+        conditionalParam2,
+        isExprCalls,
+      };
     }
     return params;
   };
@@ -531,6 +542,9 @@ const useLogic = (isExprCalls) => {
           // On peut donc "clean" l'url de ces valeurs (aka storableParams)
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
+            // Delete du potentiel ancien hash :
+            searchParams.delete('data');
+
             // console.warn('>> clean values in hash <<');
             resp?.requestParameters?.storableParameters?.forEach((key) =>
               searchParams.delete(key)

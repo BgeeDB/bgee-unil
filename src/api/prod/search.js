@@ -391,25 +391,24 @@ const search = {
           if (!isOnlyCounts) {
             params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
           }
-          if (form.hash) {
-            // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
-            // console.log("hash présent dans l'url : on envoie que le hash");
-            params.append('data', form.hash);
-          } else {
-            // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
-            // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
-            // de première arrivée sur la page
-            // eslint-disable-next-line no-restricted-syntax
-            for (const [key, val] of form?.initSearch) {
-              if (
-                key !== 'data_type' &&
-                key !== 'offset' &&
-                key !== 'limit' &&
-                key !== 'pageType' &&
-                key !== 'pageNumber'
-              ) {
-                params.append(key, val);
-              }
+
+          // sur la page present/asbsent (expr calls) à la première recherche il ne faut pas envoyer get_filter ! ...
+          if (form.isExprCalls) {
+            params.delete('get_filters');
+          }
+          // On envoie toutes les valeurs contenu dans l'url
+          // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
+          // de première arrivée sur la page
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [key, val] of form?.initSearch) {
+            if (
+              key !== 'data_type' &&
+              key !== 'offset' &&
+              key !== 'limit' &&
+              key !== 'pageType' &&
+              key !== 'pageNumber'
+            ) {
+              params.append(key, val);
             }
           }
         } else {
