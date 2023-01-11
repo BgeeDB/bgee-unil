@@ -566,9 +566,15 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('offset');
           searchParams.delete('get_result_count');
 
-          history.push({
-            search: searchParams.toString(),
-          });
+          if (isFirstSearch) {
+            history.replace({
+              search: searchParams.toString(),
+            });
+          } else {
+            history.push({
+              search: searchParams.toString(),
+            });
+          }
         }
 
         // On collapse le search form si jamais ce n'est pas l'arrivée sur la page
