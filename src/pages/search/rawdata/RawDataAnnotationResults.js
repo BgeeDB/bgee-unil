@@ -10,7 +10,7 @@ import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
 import TagSource from '../../../components/TagSource/TagSource';
-import { PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
+import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
 import PATHS from '../../../routes/paths';
 
 const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
@@ -170,7 +170,10 @@ const RawDataAnnotationResults = ({
               currentSP.delete('pageType');
               currentSP.append('pageType', nextPageType);
               currentSP.delete('data_type');
-              currentSP.append('data_type', dataType);
+              currentSP.append(
+                'data_type',
+                isExprCalls ? DATA_TYPES[0].id : dataType
+              );
               return {
                 type: col.columnType,
                 content: 'Browse results',
