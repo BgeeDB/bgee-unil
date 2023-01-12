@@ -137,7 +137,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
         {pageType && (
           <div>
             <h2 className="gradient-underline title is-size-5 has-text-primary">
-              {detailedData.searchLabel}
+              {detailedData?.searchLabel}
             </h2>
             {show && (
               <>
@@ -226,25 +226,30 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                     <div>
                       {isExprCalls ? (
                         <>
-                          <DataType
-                            dataTypes={dataTypesExpCalls}
-                            setDataTypes={setDataTypesExpCalls}
-                          />
-                          <hr />
-                          <ConditionParameter
-                            conditionalParam2={conditionalParam2}
-                            setConditionalParam2={setConditionalParam2}
-                          />
-                          <hr />
-                          <CallType
-                            callTypes={callTypes}
-                            setCallTypes={setCallTypes}
-                          />
-                          <hr />
-                          <DataQualityParameter
-                            dataQuality={dataQuality}
-                            setDataQuality={setDataQuality}
-                          />
+                          {((isExprCalls && selectedGene.length > 0) ||
+                            !isExprCalls) && (
+                            <>
+                              <DataType
+                                dataTypes={dataTypesExpCalls}
+                                setDataTypes={setDataTypesExpCalls}
+                              />
+                              <hr />
+                              <ConditionParameter
+                                conditionalParam2={conditionalParam2}
+                                setConditionalParam2={setConditionalParam2}
+                              />
+                              <hr />
+                              <CallType
+                                callTypes={callTypes}
+                                setCallTypes={setCallTypes}
+                              />
+                              <hr />
+                              <DataQualityParameter
+                                dataQuality={dataQuality}
+                                setDataQuality={setDataQuality}
+                              />
+                            </>
+                          )}
                         </>
                       ) : (
                         <div className="mb-2">
@@ -286,7 +291,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               </button>
             </div>
             <h2 className="gradient-underline title is-size-5 has-text-primary">
-              {detailedData.resultLabel}
+              {detailedData?.resultLabel}
             </h2>
             {!isExprCalls && (
               <ResultTabs

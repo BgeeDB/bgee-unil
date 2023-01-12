@@ -19,32 +19,27 @@ export const RAW_DATA_ANNOTS = 'raw_data_annots';
 export const PROC_EXPR_VALUES = 'proc_expr_values';
 export const EXPR_CALLS = 'expr_calls';
 
-const TEMP_TAB_PAGE = [];
-if (config.hasSearchExperiments) {
-  TEMP_TAB_PAGE.push({
+export const TAB_PAGE = [
+  {
     id: EXPERIMENTS,
     label: 'Experiments',
     searchLabel: 'Search for Experiments',
     resultLabel: 'Experiments',
-  });
-}
-if (config.hasSearchRawData) {
-  TEMP_TAB_PAGE.push({
+  },
+  {
     id: RAW_DATA_ANNOTS,
     label: 'Raw data annotations',
     searchLabel: 'Search for Raw data annotations',
     resultLabel: 'Raw data annotations results',
-  });
-}
-if (config.hasSearchProcExprValues) {
-  TEMP_TAB_PAGE.push({
+  },
+  {
     id: PROC_EXPR_VALUES,
     label: 'Processed expression values',
     searchLabel: 'Search for Processed expression values',
     resultLabel: 'Processed expression values results',
-  });
-}
-export const TAB_PAGE = TEMP_TAB_PAGE;
+  },
+];
+
 export const TAB_PAGE_EXPR_CALL = {
   id: EXPR_CALLS,
   label: 'Present/absent expression calls',
@@ -375,6 +370,10 @@ const useLogic = (isExprCalls) => {
             value: devStageId,
           });
         } else {
+          initDevStage.push({
+            label: devStageId,
+            value: devStageId,
+          });
           console.log(
             '[FILLING SEARCH FORM] Dev stage NOT FOUND  : ',
             devStageId
@@ -446,7 +445,6 @@ const useLogic = (isExprCalls) => {
     setFilters({ [nextDataType]: initFilters });
 
     if (isExprCalls) {
-      console.log('populate search form expr calls');
       // Call types
       if (requestParameters?.expr_type?.length > 0) {
         setCallTypes(requestParameters?.expr_type);

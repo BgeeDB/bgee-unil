@@ -140,7 +140,7 @@ const RawDataAnnotationResults = ({
               Object.entries(valueFromFirstAttribute).forEach(
                 ([key, value]) => {
                   if (value) {
-                    source += `${key}, `;
+                    source += `${key} - `;
                   }
                 }
               );

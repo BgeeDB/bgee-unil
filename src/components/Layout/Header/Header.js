@@ -298,107 +298,112 @@ const Header = () => {
             height={40}
           />
         </Link>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */}
-        <a
-          role="button"
-          className="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-          onClick={() => setHamburgerActive(!hamburgerActive)}
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
+
+        {!config?.isRawDataOnly && (
+          /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus */
+          <a
+            role="button"
+            className="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+            onClick={() => setHamburgerActive(!hamburgerActive)}
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
+        )}
       </div>
 
-      <div className={`navbar-menu ${hamburgerActive ? 'is-active' : ''}`}>
-        <div className="navbar-start">
-          {NAVBAR_LEFT.map(({ key, children, title }) => (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-            <div
-              key={key}
-              className={`navbar-item has-dropdown ${
-                key === openedMenuId ? 'is-open' : ''
-              }`}
-              onClick={toggleOpenMenu(key)}
-            >
-              <a className="navbar-link">{title}</a>
-
+      {!config?.isRawDataOnly && (
+        <div className={`navbar-menu ${hamburgerActive ? 'is-active' : ''}`}>
+          <div className="navbar-start">
+            {NAVBAR_LEFT.map(({ key, children, title }) => (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
               <div
-                className={`navbar-dropdown ${
-                  key === openedMenuId ? 'open' : ''
+                key={key}
+                className={`navbar-item has-dropdown ${
+                  key === openedMenuId ? 'is-open' : ''
                 }`}
+                onClick={toggleOpenMenu(key)}
               >
-                {children.map(
-                  ({
-                    key: keyChild,
-                    type,
-                    title: pageTitle,
-                    ...childProps
-                  }) => {
-                    switch (type) {
-                      case 'mail':
-                        return (
-                          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                          <a
-                            key={keyChild}
-                            className="navbar-item custom"
-                            onClick={obfuscateMailLink(childProps.mail)}
-                          >
-                            {pageTitle}
-                          </a>
-                        );
-                      case 'external':
-                        return (
-                          <a
-                            key={keyChild}
-                            className="navbar-item custom"
-                            href={childProps.path}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {pageTitle}
-                          </a>
-                        );
-                      case 'internal':
-                      default:
-                        return (
-                          <Link
-                            key={keyChild}
-                            to={childProps.path}
-                            className="navbar-item custom"
-                            onClick={(event) => {
-                              event.target.blur();
-                              setHamburgerActive(false);
-                            }}
-                          >
-                            {pageTitle}
-                          </Link>
-                        );
-                    }
-                  }
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+                <a className="navbar-link">{title}</a>
 
-        <div className="navbar-end">
-          {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
-            <a
-              key={href}
-              className="navbar-item"
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Bulma.Image alt={alt} {...imgProps} />
-            </a>
-          ))}
+                <div
+                  className={`navbar-dropdown ${
+                    key === openedMenuId ? 'open' : ''
+                  }`}
+                >
+                  {children.map(
+                    ({
+                      key: keyChild,
+                      type,
+                      title: pageTitle,
+                      ...childProps
+                    }) => {
+                      switch (type) {
+                        case 'mail':
+                          return (
+                            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+                            <a
+                              key={keyChild}
+                              className="navbar-item custom"
+                              onClick={obfuscateMailLink(childProps.mail)}
+                            >
+                              {pageTitle}
+                            </a>
+                          );
+                        case 'external':
+                          return (
+                            <a
+                              key={keyChild}
+                              className="navbar-item custom"
+                              href={childProps.path}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {pageTitle}
+                            </a>
+                          );
+                        case 'internal':
+                        default:
+                          return (
+                            <Link
+                              key={keyChild}
+                              to={childProps.path}
+                              className="navbar-item custom"
+                              onClick={(event) => {
+                                event.target.blur();
+                                setHamburgerActive(false);
+                              }}
+                            >
+                              {pageTitle}
+                            </Link>
+                          );
+                      }
+                    }
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="navbar-end">
+            {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
+              <a
+                key={href}
+                className="navbar-item"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Bulma.Image alt={alt} {...imgProps} />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };

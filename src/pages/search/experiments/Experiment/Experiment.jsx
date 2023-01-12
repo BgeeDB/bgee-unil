@@ -76,27 +76,32 @@ const Experiment = () => {
                 Source: {data?.experiment?.xRef?.source?.name}
               </span>
               <span className="my-1 is-flex-grow-1">
-                <a href={data?.experiment?.xRef?.xRefURL}>
+                <a
+                  href={data?.experiment?.xRef?.xRefURL}
+                  className="external-link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {data.experiment.id}
                 </a>
               </span>
             </div>
-            <div className="is-flex is-justify-content-flex-end">
-              <Bulma.Button
-                className="download-btn is-small mt-2"
-                // href={hreflinkfromAPI} @todo
-                // eslint-disable-next-line no-alert
-                onClick={() => alert('W.I.P')}
-                renderAs="a"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Export all libraries
-                <span className="icon is-small ml-1">
-                  <ion-icon name="download-outline" />
-                </span>
-              </Bulma.Button>
-            </div>
+            {data?.experiment?.downloadUrl?.length > 0 && (
+              <div className="is-flex is-justify-content-flex-end">
+                <Bulma.Button
+                  className="download-btn is-small mt-2"
+                  href={data?.experiment?.downloadUrl}
+                  renderAs="a"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Download all assays
+                  <span className="icon is-small ml-1">
+                    <ion-icon name="download-outline" />
+                  </span>
+                </Bulma.Button>
+              </div>
+            )}
           </div>
         </div>
         <Table
