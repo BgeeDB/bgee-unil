@@ -1113,6 +1113,7 @@ h1.title.in-md {
   color: $title-color;
 }
 
+/** Tricks CSS pour avoir la scrollbar en haut du tableau **/
 .isTableFlipped {
-  transform: rotate(180deg);
+  transform: rotate(180deg) scaleX(-1);
 }

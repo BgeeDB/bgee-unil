@@ -4,7 +4,7 @@
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "imageDomain": "/img",
-  "apiDomain": "https://bgee.org/bgee_test_dec_21",
+  "apiDomain": "https://bgee.org/bgee_test_jan_11",
   "ftpDomain": "https://bgee.org/ftp/current",
   "archivedVersion": [
     {
@@ -30,10 +30,7 @@
   "bioSchemaModifiedData": "2021-07-01",
   "oboLibraryOboPath": "http://purl.obolibrary.org/obo/",
   "oboLibraryNCBITaxonPath": "http://purl.obolibrary.org/obo/NCBITaxon_",
-  "hasSearchExperiments": true,
-  "hasSearchRawData": true,
-  "hasSearchProcExprValues": true,
-  "hasSearchExprCalls": true,
+  "isRawDataOnly": false,
   "dataType_RNA_SEQ": 1,
   "dataType_FULL_LENGTH": 2,
   "dataType_AFFYMETRIX": 3,

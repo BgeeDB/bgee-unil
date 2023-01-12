@@ -3,10 +3,7 @@
 import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import Bulma from '../../../../../../components/Bulma';
-import {
-  ALL_DATA_TYPES,
-  ALL_DATA_TYPES_ID,
-} from '../../../../rawdata/useLogic';
+import { ALL_DATA_TYPES, ALL_DATA_TYPES_ID } from '../../../useLogic';
 
 const DataType = ({ dataTypes, setDataTypes }) => {
   const allDisabled =
@@ -34,14 +31,7 @@ const DataType = ({ dataTypes, setDataTypes }) => {
           style={{
             position: 'absolute',
           }}
-          content={
-            <>
-              Select the data types to consider, that were used to produce the
-              expression calls: expression calls are produced by integrating any
-              combination of these data types, you can select here the
-              combination to use for your query.
-            </>
-          }
+          content={<>TODO: Help Data type ?...</>}
         />
       </label>
       <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">

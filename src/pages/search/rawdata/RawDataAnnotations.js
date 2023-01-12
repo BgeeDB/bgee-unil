@@ -8,7 +8,12 @@ import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
-import useLogic, { DATA_TYPES, EXPR_CALLS, TAB_PAGE } from './useLogic';
+import useLogic, {
+  DATA_TYPES,
+  EXPERIMENTS,
+  TAB_PAGE,
+  TAB_PAGE_EXPR_CALL,
+} from './useLogic';
 import CellTypes from './components/filters/CellTypes';
 import Tissues from './components/filters/Tissues/Tissues';
 import Sex from './components/filters/Sex/Sex';
@@ -19,8 +24,10 @@ import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 import DataType from './components/filters/DataType/DataType';
 import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
+import DataQualityParameter from './components/filters/DataQualityParameter';
+import CallType from './components/filters/CallType';
 
-const RawDataAnnotations = () => {
+const RawDataAnnotations = ({ isExprCalls = false }) => {
   const {
     searchResult,
     allCounts,
@@ -46,6 +53,14 @@ const RawDataAnnotations = () => {
     isCountLoading,
     pageNumber,
     pageType,
+    dataTypesExpCalls,
+    dataQuality,
+    conditionalParam2,
+    callTypes,
+    setCallTypes,
+    setConditionalParam2,
+    setDataQuality,
+    setDataTypesExpCalls,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -67,12 +82,26 @@ const RawDataAnnotations = () => {
     triggerSearch,
     triggerCounts,
     setPageType,
-  } = useLogic();
+    addConditionalParam,
+  } = useLogic(isExprCalls);
 
-  const results = searchResult?.results?.[dataType] || [];
-  const columnsDesc = searchResult?.columnDescriptions?.[dataType] || [];
-  const detailedDataType = DATA_TYPES.find((d) => d.id === dataType) || {};
-  const detailedData = TAB_PAGE.find((d) => d.id === pageType);
+  const defaultResults = searchResult?.results?.[dataType] || [];
+  const resultExprsCall = searchResult?.expressionData?.expressionCalls || [];
+  const results = isExprCalls ? resultExprsCall : defaultResults;
+
+  const defaultColumDesc = searchResult?.columnDescriptions?.[dataType] || [];
+  const columnDescExprsCall = searchResult?.columnDescriptions || [];
+  const columnsDesc = isExprCalls ? columnDescExprsCall : defaultColumDesc;
+
+  const countLabels = DATA_TYPES.find((d) => d.id === dataType) || {};
+
+  const countResultKey =
+    pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount';
+  const maxPage = Math.ceil((localCount?.[countResultKey] || 0) / limit);
+
+  const detailedData = isExprCalls
+    ? TAB_PAGE_EXPR_CALL
+    : TAB_PAGE.find((d) => d.id === pageType);
 
   const changePageType = (e, newPageType) => {
     e.preventDefault();
@@ -84,25 +113,31 @@ const RawDataAnnotations = () => {
     <>
       <div className="rawDataAnnotation">
         <div className="columns is-8 ongletPageWrapper">
-          {TAB_PAGE.map((type) => {
-            const isActive = type.id === pageType;
-            return (
-              <a
-                onClick={(e) => changePageType(e, type.id)}
-                key={type.id}
-                className={`ongletPages is-centered py-2 px-5 ${
-                  isActive ? 'pageActive' : ''
-                }`}
-              >
-                {type.label}
-              </a>
-            );
-          })}
+          {isExprCalls ? (
+            <span className="ongletPages pageActive">
+              {TAB_PAGE_EXPR_CALL.label}
+            </span>
+          ) : (
+            TAB_PAGE.map((type) => {
+              const isActive = type.id === pageType;
+              return (
+                <a
+                  onClick={(e) => changePageType(e, type.id)}
+                  key={type.id}
+                  className={`ongletPages is-centered py-2 px-5 ${
+                    isActive ? 'pageActive' : ''
+                  }`}
+                >
+                  {type.label}
+                </a>
+              );
+            })
+          )}
         </div>
         {pageType && (
           <div>
             <h2 className="gradient-underline title is-size-5 has-text-primary">
-              {detailedData.searchLabel}
+              {detailedData?.searchLabel}
             </h2>
             {show && (
               <>
@@ -124,66 +159,106 @@ const RawDataAnnotations = () => {
                             autoCompleteByType={autoCompleteByType}
                           />
                         </div>
-                        <div className="my-2">
-                          <Tissues
-                            selectedTissue={selectedTissue}
-                            setSelectedTissue={setSelectedTissue}
-                            autoCompleteByType={autoCompleteByType}
-                            hasTissueSubStructure={hasTissueSubStructure}
-                            setHasTissueSubStructure={setHasTissueSubStructure}
-                          />
-                        </div>
-                        <div className="my-2">
-                          <CellTypes
-                            selectedCellTypes={selectedCellTypes}
-                            setSelectedCellTypes={setSelectedCellTypes}
-                            autoCompleteByType={autoCompleteByType}
-                            hasCellTypeSubStructure={hasCellTypeSubStructure}
-                            setHasCellTypeSubStructure={
-                              setHasCellTypeSubStructure
-                            }
-                          />
-                        </div>
-                        <div className="my-2">
-                          <DevelopmentalAndLifeStages
-                            devStages={devStages}
-                            hasDevStageSubStructure={hasDevStageSubStructure}
-                            setDevStageSubStructure={setDevStageSubStructure}
-                            selectedOptions={selectedDevStages}
-                            setSelectedOptions={setSelectedDevStages}
-                          />
-                        </div>
-                        <div className="my-2">
-                          <Strain
-                            selectedStrain={selectedStrain}
-                            setSelectedStrain={setSelectedStrain}
-                            autoCompleteByType={autoCompleteByType}
-                          />
-                        </div>
-                        <div className="my-2">
-                          <Sex
-                            speciesSexes={speciesSexes}
-                            selectedSexes={selectedSexes}
-                            toggleSex={toggleSex}
-                          />
-                        </div>
+                        {((isExprCalls && selectedGene.length > 0) ||
+                          !isExprCalls) && (
+                          <>
+                            <div className="my-2">
+                              <Tissues
+                                selectedTissue={selectedTissue}
+                                setSelectedTissue={setSelectedTissue}
+                                autoCompleteByType={autoCompleteByType}
+                                hasTissueSubStructure={hasTissueSubStructure}
+                                setHasTissueSubStructure={
+                                  setHasTissueSubStructure
+                                }
+                              />
+                            </div>
+                            <div className="my-2">
+                              <CellTypes
+                                selectedCellTypes={selectedCellTypes}
+                                setSelectedCellTypes={setSelectedCellTypes}
+                                autoCompleteByType={autoCompleteByType}
+                                hasCellTypeSubStructure={
+                                  hasCellTypeSubStructure
+                                }
+                                setHasCellTypeSubStructure={
+                                  setHasCellTypeSubStructure
+                                }
+                                addConditionalParam={addConditionalParam}
+                              />
+                            </div>
+                            <div className="my-2">
+                              <DevelopmentalAndLifeStages
+                                devStages={devStages}
+                                hasDevStageSubStructure={
+                                  hasDevStageSubStructure
+                                }
+                                setDevStageSubStructure={
+                                  setDevStageSubStructure
+                                }
+                                selectedOptions={selectedDevStages}
+                                setSelectedOptions={setSelectedDevStages}
+                                addConditionalParam={addConditionalParam}
+                              />
+                            </div>
+                            <div className="my-2">
+                              <Strain
+                                selectedStrain={selectedStrain}
+                                setSelectedStrain={setSelectedStrain}
+                                autoCompleteByType={autoCompleteByType}
+                                addConditionalParam={addConditionalParam}
+                              />
+                            </div>
+                            <div className="my-2">
+                              <Sex
+                                speciesSexes={speciesSexes}
+                                selectedSexes={selectedSexes}
+                                toggleSex={toggleSex}
+                                addConditionalParam={addConditionalParam}
+                              />
+                            </div>
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
                   <div className="column">
                     <div>
-                      <div className="mb-2">
-                        <ExperimentOrAssay
-                          selectedExpOrAssay={selectedExpOrAssay}
-                          setSelectedExpOrAssay={setSelectedExpOrAssay}
-                          autoCompleteByType={autoCompleteByType}
-                        />
-                      </div>
-                      {detailedData.id === EXPR_CALLS && (
+                      {isExprCalls ? (
                         <>
-                          <DataType />
-                          <ConditionParameter />
+                          {((isExprCalls && selectedGene.length > 0) ||
+                            !isExprCalls) && (
+                            <>
+                              <DataType
+                                dataTypes={dataTypesExpCalls}
+                                setDataTypes={setDataTypesExpCalls}
+                              />
+                              <hr />
+                              <ConditionParameter
+                                conditionalParam2={conditionalParam2}
+                                setConditionalParam2={setConditionalParam2}
+                              />
+                              <hr />
+                              <CallType
+                                callTypes={callTypes}
+                                setCallTypes={setCallTypes}
+                              />
+                              <hr />
+                              <DataQualityParameter
+                                dataQuality={dataQuality}
+                                setDataQuality={setDataQuality}
+                              />
+                            </>
+                          )}
                         </>
+                      ) : (
+                        <div className="mb-2">
+                          <ExperimentOrAssay
+                            selectedExpOrAssay={selectedExpOrAssay}
+                            setSelectedExpOrAssay={setSelectedExpOrAssay}
+                            autoCompleteByType={autoCompleteByType}
+                          />
+                        </div>
                       )}
                       <div className="submit-reinit">
                         <Button
@@ -216,9 +291,9 @@ const RawDataAnnotations = () => {
               </button>
             </div>
             <h2 className="gradient-underline title is-size-5 has-text-primary">
-              {detailedData.resultLabel}
+              {detailedData?.resultLabel}
             </h2>
-            {detailedData.id !== 'expr_calls' && (
+            {!isExprCalls && (
               <ResultTabs
                 dataTypes={DATA_TYPES}
                 dataType={dataType}
@@ -241,18 +316,24 @@ const RawDataAnnotations = () => {
                 </div>
               ) : (
                 <div className="resultCounts">
-                  {detailedDataType.experimentCountLabel &&
-                    `${localCount?.experimentCount || 0} ${
-                      detailedDataType.experimentCountLabel
-                    } / `}
-                  {detailedDataType.assayCountLabel &&
-                    `${localCount?.assayCount || 0} ${
-                      detailedDataType.assayCountLabel
-                    }`}
-                  {detailedDataType.libraryCountLabel &&
-                    ` / ${localCount?.libraryCount || 0} ${
-                      detailedDataType.libraryCountLabel
-                    }`}
+                  {isExprCalls ? (
+                    <>{`${localCount?.assayCount || 0} expressions`}</>
+                  ) : (
+                    <>
+                      {countLabels.experimentCountLabel &&
+                        `${localCount?.experimentCount || 0} ${
+                          countLabels.experimentCountLabel
+                        } / `}
+                      {countLabels.assayCountLabel &&
+                        `${localCount?.assayCount || 0} ${
+                          countLabels.assayCountLabel
+                        }`}
+                      {countLabels.libraryCountLabel &&
+                        ` / ${localCount?.libraryCount || 0} ${
+                          countLabels.libraryCountLabel
+                        }`}
+                    </>
+                  )}
                 </div>
               )}
               {!!searchResult && dataType && (
@@ -280,11 +361,11 @@ const RawDataAnnotations = () => {
                   results={results}
                   resultCount={allCounts[dataType]}
                   dataType={dataType}
+                  maxPage={maxPage}
                   columnDescriptions={columnsDesc}
-                  limit={limit}
-                  count={localCount}
                   pageType={pageType}
                   pageNumber={pageNumber}
+                  isExprCalls={isExprCalls}
                 />
               )}
             </div>

@@ -54,7 +54,7 @@ const Home = () => {
           <Bulma.Section>
             <GeneSearch classNames="search-input mx-auto my-3 mb-5">
               <p>
-                {`Example: `}
+                {`Examples: `}
                 <Link
                   className="internal-link"
                   to={`${PATHS.SEARCH.GENE}?search=HBB`}
@@ -233,27 +233,40 @@ const NavButtons = ({ className }) => (
       className
     )}
   >
-    <p className="control">
+    <div className="is-flex is-flex-direction-column is-justify-content-center">
+      <span className="m-1 color-white">Analysis</span>
       <Link
-        className="button is-primary"
+        className="button is-primary m-1 is-justify-content-start"
         to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
       >
         <Bulma.IonIcon name="list-outline" />
         <span>Expression comparison</span>
       </Link>
-    </p>
-    <p className="control">
-      <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.ANALYSIS.TOP_ANAT}
+      >
         <Bulma.IonIcon name="stats-chart-outline" />
         <span>Expression enrichment analysis</span>
       </Link>
-    </p>
-    <p className="control">
-      <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
+    </div>
+    <div className="is-flex is-flex-direction-column is-justify-content-center">
+      <span className="m-1 color-white">Browse</span>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
+      >
         <Bulma.IonIcon name="search-outline" />
-        <span>Gene search</span>
+        <span>Raw data annotations</span>
       </Link>
-    </p>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.SEARCH.EXPRESSION_CALLS}
+      >
+        <Bulma.IonIcon name="search-outline" />
+        <span>Expression calls</span>
+      </Link>
+    </div>
   </div>
 );
 

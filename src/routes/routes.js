@@ -96,7 +96,7 @@ const SEARCH = {
     title: 'Raw data annotated and processed',
   },
   [PATHS.SEARCH.EXPRESSION_CALLS]: {
-    component: () => <RawDataAnnotations />,
+    component: () => <RawDataAnnotations isExprCalls />,
     title: 'Present/absent expression calls',
   },
   [PATHS.SEARCH.EXPERIMENT]: {

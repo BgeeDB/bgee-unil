@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Bulma from '../../../components/Bulma';
 import Table from '../../../components/Table';
@@ -9,7 +9,13 @@ import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import './rawDataAnnotations.scss';
 import LinkExternal from '../../../components/LinkExternal';
-import { EXPERIMENTS } from './useLogic';
+import TagSource from '../../../components/TagSource/TagSource';
+import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
+import PATHS from '../../../routes/paths';
+
+const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
+const LINK_TO_PROC_EXPR_VALUES = 'LINK_TO_PROC_EXPR_VALUES';
+const LINK_CALL_TO_PROC_EXPR_VALUES = 'LINK_CALL_TO_PROC_EXPR_VALUES';
 
 // Permet d'aller checher des valeurs enfant de l'objet envoyé
 const getChildValueFromAttribute = (obj = {}, attributes = '') => {
@@ -42,17 +48,14 @@ const customHeader = (searchElement, pageSizeElement) => (
 
 const RawDataAnnotationResults = ({
   results = [],
-  columnDescriptions = {},
-  limit,
-  count,
+  columnDescriptions = [],
+  maxPage,
   pageType,
   dataType,
   pageNumber,
+  isExprCalls,
 }) => {
-  const countResultKey = useMemo(
-    () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
-    [pageType]
-  );
+  const loc = useLocation();
 
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
@@ -65,6 +68,10 @@ const RawDataAnnotationResults = ({
             {cell[key].content}
           </Link>
         );
+      case LINK_TO_RAW_DATA_ANNOTS:
+      case LINK_CALL_TO_PROC_EXPR_VALUES:
+      case LINK_TO_PROC_EXPR_VALUES:
+        return <a href={cell[key].to}>{cell[key].content}</a>;
       case 'DEV_STAGE':
       case 'ANAT_ENTITY': {
         const content = cell[key].content;
@@ -77,32 +84,24 @@ const RawDataAnnotationResults = ({
 
         return <>{renderAnatLink}</>;
       }
+      case 'DATA_TYPE_SOURCE': {
+        const sourceObject = cell[key].sourceObject;
+        return <TagSource source={sourceObject} />;
+      }
       default:
         return defaultRender([cell[key]]);
     }
   };
 
-  const columns = useMemo(
-    () =>
-      Object.keys(columnDescriptions).map((columnDescriptionsKey, index) => {
-        const column = columnDescriptions[columnDescriptionsKey];
-
-        return {
-          key: index,
-          text: column.title,
-          attributes: column.attributes,
-          columnType: column.columnType,
-          infoBubble: column.infoBubble,
-        };
-      }),
-    [columnDescriptions]
-  );
-
   const mappedResults = useMemo(
     () =>
       results.map((result) => {
-        const row = columns.map((col) => {
-          const attribute0 = col.attributes[0];
+        const row = columnDescriptions.map((col) => {
+          const attribute0 = col?.attributes?.[0];
+          const valueFromFirstAttribute = getChildValueFromAttribute(
+            result,
+            attribute0
+          );
           switch (col.columnType) {
             case 'STRING': {
               return {
@@ -113,21 +112,16 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              const path = `/experiment/${getChildValueFromAttribute(
-                result,
-                attribute0
-              )}`;
+              const path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
               return {
                 type: col.columnType,
-                content: getChildValueFromAttribute(result, attribute0),
+                content: valueFromFirstAttribute,
                 to: path,
               };
             }
             case 'ANAT_ENTITY':
             case 'DEV_STAGE': {
-              const id = replaceNAOrUndefined(
-                getChildValueFromAttribute(result, col.attributes[0])
-              );
+              const id = replaceNAOrUndefined(valueFromFirstAttribute);
               const path = obolibraryLinkFromID(id || '');
               return {
                 type: col.columnType,
@@ -138,7 +132,54 @@ const RawDataAnnotationResults = ({
             case 'NUMERIC': {
               return {
                 type: col.columnType,
-                content: getChildValueFromAttribute(result, attribute0),
+                content: valueFromFirstAttribute,
+              };
+            }
+            case 'DATA_TYPE_SOURCE': {
+              let source = '';
+              Object.entries(valueFromFirstAttribute).forEach(
+                ([key, value]) => {
+                  if (value) {
+                    source += `${key} - `;
+                  }
+                }
+              );
+              return {
+                type: col.columnType,
+                content: source.slice(0, -2),
+                sourceObject: valueFromFirstAttribute,
+              };
+            }
+            case LINK_TO_RAW_DATA_ANNOTS:
+            case LINK_TO_PROC_EXPR_VALUES:
+            case LINK_CALL_TO_PROC_EXPR_VALUES: {
+              const nextPageType =
+                col.columnType === LINK_TO_RAW_DATA_ANNOTS
+                  ? RAW_DATA_ANNOTS
+                  : PROC_EXPR_VALUES;
+              const currentSP = new URLSearchParams(loc.search);
+              col?.filterTargets?.forEach((filter) => {
+                const filterValue = getChildValueFromAttribute(
+                  result,
+                  filter?.valueAttributeName
+                );
+                if (filterValue) {
+                  currentSP.append(filter?.urlParameterName, filterValue);
+                }
+              });
+              currentSP.delete('pageType');
+              currentSP.append('pageType', nextPageType);
+              currentSP.delete('data_type');
+              currentSP.append(
+                'data_type',
+                isExprCalls ? DATA_TYPES[0].id : dataType
+              );
+              return {
+                type: col.columnType,
+                content: 'Browse results',
+                to: `${
+                  PATHS.SEARCH.RAW_DATA_ANNOTATIONS
+                }?${currentSP.toString()}`,
               };
             }
             default:
@@ -147,22 +188,31 @@ const RawDataAnnotationResults = ({
         });
         return row;
       }),
-    [results, columns]
+    [results, columnDescriptions]
   );
 
   const buildTSVhref = useMemo(() => {
     const base = `data:text/tab-separated-values;charset=utf-8,`;
     const colHeaders = [];
-    Object.keys(columnDescriptions).forEach((colIndex) => {
-      const column = columnDescriptions[colIndex];
-      colHeaders.push(column.title);
-    });
+
+    // On créer les header des columns en filtrant les export = false
+    columnDescriptions
+      .filter((col) => col.export)
+      .forEach((column) => {
+        colHeaders.push(column.title);
+      });
     let tsv = colHeaders.join('%09');
-    tsv += '%0D%0A';
+    tsv += '%0D%0A'; // carriage return
+
+    const columnsToExport = columnDescriptions
+      .map((c, i) => ({ ...c, indexForExport: i })) // ajout d'index pour savoir OÙ récupere la valeur dans result
+      .filter((col) => col.export); // filtres les export = false
 
     mappedResults.forEach((row) => {
-      const rowTxt = row.map((r) => r.content).join('%09');
-      tsv += `${rowTxt}%0D%0A`;
+      const rowTxt = columnsToExport
+        .map((col) => row[col.indexForExport].content) // ne récupère QUe les résultats des colums à exporter
+        .join('%09');
+      tsv += `${rowTxt}%0D%0A`; // carriage return
     });
 
     return `${base}${tsv}`;
@@ -180,7 +230,9 @@ const RawDataAnnotationResults = ({
             className="download-btn is-small"
             href={buildTSVhref}
             renderAs="a"
-            download={`${pageType}_${dataType}_${pageNumber}.tsv`}
+            download={`${pageType}_${
+              isExprCalls ? '' : `${dataType}_`
+            }${pageNumber}.tsv`}
             target="_blank"
             rel="noreferrer"
           >
@@ -195,14 +247,14 @@ const RawDataAnnotationResults = ({
         pagination
         classNamesTable="is-striped"
         // onSortCustom={customRawListSorter}
-        columns={columns}
+        columns={columnDescriptions}
         data={mappedResults}
         customHeader={customHeader}
         onRenderCell={renderCells}
         paginationParamPageKey="pageNumber"
         paginationResultCountKey="limit"
         isRequestPerPage
-        manualMaxPage={Math.ceil((count?.[countResultKey] || 0) / limit)}
+        manualMaxPage={maxPage}
         fullwidth={false}
         minThWidth="10rem"
         hasPaginationTop

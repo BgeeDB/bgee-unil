@@ -363,7 +363,7 @@ const search = {
           // et si jamais il n'y a pas d'espèce selectionnée...
           // ( ce qui est obligatoire pour mettre un filtre de gène)
           // on force aussi à l'espèce humaine
-          if (!form.selectedSpecies) {
+          if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
             params.append('species_id', '9606');
           }
         }
@@ -372,7 +372,8 @@ const search = {
         if (isOnlyCounts) {
           params.append('data_type', 'all');
         } else {
-          params.append('data_type', form.dataType);
+          form.dataType.forEach((type) => params.append('data_type', type));
+
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
@@ -390,25 +391,24 @@ const search = {
           if (!isOnlyCounts) {
             params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
           }
-          if (form.hash) {
-            // comme il y a un hash dans l'url : on envoie que le hash qui contient tous les filtres / form
-            console.log("hash présent dans l'url : on envoie que le hash");
-            params.append('data', form.hash);
-          } else {
-            // Ici on a pas de hash donc il faut envoyer toutes les valeurs contenu dans l'url
-            // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
-            // de première arrivée sur la page
-            // eslint-disable-next-line no-restricted-syntax
-            for (const [key, val] of form?.initSearch) {
-              if (
-                key !== 'data_type' &&
-                key !== 'offset' &&
-                key !== 'limit' &&
-                key !== 'pageType' &&
-                key !== 'pageNumber'
-              ) {
-                params.append(key, val);
-              }
+
+          // sur la page present/asbsent (expr calls) à la première recherche il ne faut pas envoyer get_filter ! ...
+          if (form.isExprCalls) {
+            params.delete('get_filters');
+          }
+          // On envoie toutes les valeurs contenu dans l'url
+          // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
+          // de première arrivée sur la page
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [key, val] of form?.initSearch) {
+            if (
+              key !== 'data_type' &&
+              key !== 'offset' &&
+              key !== 'limit' &&
+              key !== 'pageType' &&
+              key !== 'pageNumber'
+            ) {
+              params.append(key, val);
             }
           }
         } else {
@@ -438,6 +438,19 @@ const search = {
           }
           if (form.hasDevStageSubStructure) {
             params.append('stage_descendant', form.hasDevStageSubStructure);
+          }
+
+          // Search form for Expression calls
+          if (form?.dataQuality) {
+            params.append('data_qual', form?.dataQuality);
+          }
+          if (form?.callTypes) {
+            form.callTypes.forEach((ct) => params.append('expr_type', ct));
+          }
+          if (form?.conditionalParam2) {
+            form.conditionalParam2.forEach((cp) =>
+              params.append('cond_param2', cp)
+            );
           }
 
           // Application des filtres ! (VS form)
