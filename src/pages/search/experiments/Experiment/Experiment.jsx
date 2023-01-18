@@ -104,6 +104,9 @@ const Experiment = () => {
             )}
           </div>
         </div>
+        <h2 className="gradient-underline title is-size-5 has-text-primary">
+          List of assays
+        </h2>
         <Table
           pagination
           columns={columns}
@@ -112,8 +115,10 @@ const Experiment = () => {
           onFilter={onFilter}
           customHeader={customHeader}
           fullwidth={false}
-          minThWidth="7rem"
+          minThWidth="10rem"
           classNamesTable="is-striped"
+          hasPaginationTop
+          hasScrollTop
         />
       </div>
     </>

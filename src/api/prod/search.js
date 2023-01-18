@@ -392,10 +392,6 @@ const search = {
             params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
           }
 
-          // sur la page present/asbsent (expr calls) à la première recherche il ne faut pas envoyer get_filter ! ...
-          if (form.isExprCalls) {
-            params.delete('get_filters');
-          }
           // On envoie toutes les valeurs contenu dans l'url
           // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
           // de première arrivée sur la page

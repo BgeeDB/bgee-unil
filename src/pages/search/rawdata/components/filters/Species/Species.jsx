@@ -2,7 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Select from 'react-select';
 import api from '../../../../../../api';
 
-export const EMPTY_SPECIES_VALUE = { label: 'Any species', value: '' };
+export const EMPTY_SPECIES_VALUE = {
+  label: 'Choose a species for more filters',
+  value: '',
+};
 
 const Species = ({ selectedSpecies, onChangeSpecies, getSpeciesLabel }) => {
   const [speciesList, setSpeciesList] = useState([]);

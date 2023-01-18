@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import api from '../../../../api';
 import LinkExternal from '../../../../components/LinkExternal';
 import { COLUMN_TYPES } from '../../../../helpers/constants/columnDescriptions';
 import obolibraryLinkFromID from '../../../../helpers/obolibraryLinkFromID';
+import { getChildValueFromAttribute } from '../../../../helpers/selects';
+import PATHS from '../../../../routes/paths';
+import { DATA_TYPES, PROC_EXPR_VALUES } from '../../rawdata/useLogic';
 
 const getColumnValues = (cell, attributes = []) =>
   attributes
@@ -18,6 +21,7 @@ const useLogic = () => {
   const [data, setData] = useState();
 
   const { id: experimentId } = useParams();
+  const loc = useLocation();
 
   useEffect(() => {
     api.search.experiments.getExperiment(experimentId).then((response) => {
@@ -31,7 +35,7 @@ const useLogic = () => {
     () =>
       (data?.columnDescriptions || []).map((column, index) => ({
         key: index,
-        text: column.title,
+        title: column.title,
         infoBubble: column.infoBubble,
       })),
     [data?.columnDescriptions]
@@ -43,7 +47,8 @@ const useLogic = () => {
         return null;
       }
 
-      const { attributes, columnType } = data.columnDescriptions[key];
+      const { attributes, columnType, filterTargets } =
+        data.columnDescriptions[key];
 
       const values = getColumnValues(cell, attributes);
 
@@ -62,6 +67,31 @@ const useLogic = () => {
               value
             )
           );
+        case COLUMN_TYPES.LINK_TO_PROC_EXPR_VALUES: {
+          const currentSP = new URLSearchParams(loc.search);
+          filterTargets?.forEach((filter) => {
+            const filterValue = getChildValueFromAttribute(
+              cell,
+              filter?.valueAttributeName
+            );
+            if (filterValue) {
+              currentSP.append(filter?.urlParameterName, filterValue);
+            }
+          });
+          currentSP.delete('pageType');
+          currentSP.append('pageType', PROC_EXPR_VALUES);
+          currentSP.delete('data_type');
+          currentSP.append('data_type', DATA_TYPES[0].id);
+          return (
+            <a
+              href={`${
+                PATHS.SEARCH.RAW_DATA_ANNOTATIONS
+              }?${currentSP.toString()}`}
+            >
+              Browse results
+            </a>
+          );
+        }
         default:
           return values.join(' ');
       }

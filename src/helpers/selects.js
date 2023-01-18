@@ -16,3 +16,18 @@ export const getOptionsForFilter = (
   }));
   return options;
 };
+
+// Permet d'aller checher des valeurs enfant de l'objet envoyé
+export const getChildValueFromAttribute = (obj = {}, attributes = '') => {
+  // ex: ['result', 'experiment', 'name']
+  const attributeTab = attributes.split('.');
+  let current = obj;
+  if (attributeTab[0] === 'result') {
+    attributeTab.splice(0, 1);
+  }
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < attributeTab.length; i++) {
+    current = current?.[attributeTab[i]];
+  }
+  return current;
+};
