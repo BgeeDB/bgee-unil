@@ -88,10 +88,13 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const defaultResults = searchResult?.results?.[dataType] || [];
   const resultExprsCall = searchResult?.expressionData?.expressionCalls || [];
   const results = isExprCalls ? resultExprsCall : defaultResults;
-
   const defaultColumDesc = searchResult?.columnDescriptions?.[dataType] || [];
   const columnDescExprsCall = searchResult?.columnDescriptions || [];
   const columnsDesc = isExprCalls ? columnDescExprsCall : defaultColumDesc;
+
+  const defaultdataFilters = searchResult?.filters?.[dataType] || {};
+  const dataFiltersExprCall = searchResult?.filters || {};
+  const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
   const countLabels = DATA_TYPES.find((d) => d.id === dataType) || {};
 
@@ -338,7 +341,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               )}
               {!!searchResult && dataType && (
                 <RawDataAnnotationsFilters
-                  dataFilters={searchResult?.filters?.[dataType]}
+                  dataFilters={dataFilters}
                   dataType={dataType}
                   filters={filters}
                   setFilters={setFilters}
