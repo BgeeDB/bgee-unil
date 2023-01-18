@@ -735,6 +735,12 @@ ion-icon {
 .select select {
   font-size: 14px !important;
 }
+
+/* Corrige le bug d'affichage de bulma (https://github.com/jgthms/bulma/issues/2611) */
+.select::after {
+  z-index: unset !important;
+}
+
 .table-search {
   max-width: 200px;
   p {
