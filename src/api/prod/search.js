@@ -350,23 +350,24 @@ const search = {
         // On demande le count des résultats (pour le "localCount")
         params.append('get_result_count', '1');
 
-        // @TODO : [delete me] : gene forcé si aucun présent !
+        // Patch qui servait à forcer un gène dans les paramètres d'envoie pour éviter des
+        // requêtes exessivement longues ( du cache côté server à été mis en place depuis )
         // _____________________________________________________________________________
-        if (
-          form.pageType === 'proc_expr_values' &&
-          form.selectedGene?.length === 0
-        ) {
-          console.warn('FAKE FILTER GENE ACTIVATED !');
-          // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
-          params.append('gene_id', 'ENSG00000158813');
+        // if (
+        //   form.pageType === 'proc_expr_values' &&
+        //   form.selectedGene?.length === 0
+        // ) {
+        //   console.warn('FAKE FILTER GENE ACTIVATED !');
+        //   // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
+        //   params.append('gene_id', 'ENSG00000158813');
 
-          // et si jamais il n'y a pas d'espèce selectionnée...
-          // ( ce qui est obligatoire pour mettre un filtre de gène)
-          // on force aussi à l'espèce humaine
-          if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
-            params.append('species_id', '9606');
-          }
-        }
+        //   // et si jamais il n'y a pas d'espèce selectionnée...
+        //   // ( ce qui est obligatoire pour mettre un filtre de gène)
+        //   // on force aussi à l'espèce humaine
+        //   if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
+        //     params.append('species_id', '9606');
+        //   }
+        // }
         // _____________________________________________________________________________
 
         if (isOnlyCounts) {
