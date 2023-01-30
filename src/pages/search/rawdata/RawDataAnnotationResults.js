@@ -231,6 +231,11 @@ const RawDataAnnotationResults = ({
         </div>
       )}
       <Table
+        title={
+          isExprCalls
+            ? 'Order of results is independent of expression level'
+            : null
+        }
         pagination
         classNamesTable="is-striped"
         // onSortCustom={customRawListSorter}

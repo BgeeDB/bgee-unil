@@ -320,7 +320,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               ) : (
                 <div className="resultCounts">
                   {isExprCalls ? (
-                    <>{`${localCount?.assayCount || 0} expressions`}</>
+                    <>{`${localCount?.assayCount || 0} expressions calls`}</>
                   ) : (
                     <>
                       {countLabels.experimentCountLabel &&
