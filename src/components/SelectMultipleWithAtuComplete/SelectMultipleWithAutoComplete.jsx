@@ -156,7 +156,7 @@ const SelectMultipleWithAutoComplete = ({
           </label>
         )}
         <Select
-          classNamePrefix="react-select"
+          classNamePrefix="react-select-autoComplete"
           closeMenuOnSelect
           hideSelectedOptions={false}
           options={autocompleteList}
