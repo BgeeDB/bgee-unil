@@ -229,6 +229,14 @@ const NAVBAR_RIGHT = [
     className: 'no-responsive',
   },
   {
+    href: 'https://genomic.social/@bgeedb',
+    src: assets.mastodonLogo,
+    alt: 'Mastodon Bgee',
+    height: '20',
+    width: '19',
+    className: 'no-responsive',
+  },
+  {
     href: 'https://twitter.com/Bgeedb',
     src: assets.twitterLogo,
     alt: 'Twitter Bgee',
@@ -239,7 +247,7 @@ const NAVBAR_RIGHT = [
   {
     href: 'https://www.unil.ch/central/en/home.html',
     src: assets.unilLogo,
-    alt: 'Unil',
+    alt: 'UNIL',
     height: '35',
     width: '100',
     className: 'no-responsive',
@@ -247,7 +255,7 @@ const NAVBAR_RIGHT = [
   {
     href: 'https://www.sib.swiss/',
     src: assets.sibLogo,
-    alt: 'Sib',
+    alt: 'SIB',
     height: '35',
     width: '46',
     className: 'no-responsive',
