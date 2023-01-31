@@ -426,8 +426,8 @@ const useLogic = (isExprCalls) => {
     }
 
     // Filters
-    // @todo : filter for exp calls
-    const filtersToCheck = data?.filters?.[nextDataType] || {};
+    const filtersToCheck =
+      (isExprCalls ? data?.filters : data?.filters?.[nextDataType]) || {};
     const searchParams = new URLSearchParams(requestParameters);
     const initFilters = {};
     // eslint-disable-next-line no-unused-vars

@@ -8,22 +8,6 @@
     color: #d4d4d4;
   }
 
-  // changement de couleur du background du react-select ( que pour species )
-  .react-select__option--is-selected,
-  .react-select__option--is-focused,
-  .react-select__option:active {
-    background-color: rgba(237, 46, 36, 0.1);
-    color: inherit;
-  }
-  .react-select__option:hover {
-    cursor: pointer;
-  }
-  .react-select__control--menu-is-open,
-  .react-select__control--is-focused {
-    border-color: #dc3d35 !important;
-    box-shadow: 0 0 0 1px #f7544c !important;
-  }
-
   // redefine global css ....
   button,
   .button {

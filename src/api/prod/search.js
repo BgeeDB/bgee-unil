@@ -350,23 +350,24 @@ const search = {
         // On demande le count des résultats (pour le "localCount")
         params.append('get_result_count', '1');
 
-        // @TODO : [delete me] : gene forcé si aucun présent !
+        // Patch qui servait à forcer un gène dans les paramètres d'envoie pour éviter des
+        // requêtes exessivement longues ( du cache côté server à été mis en place depuis )
         // _____________________________________________________________________________
-        if (
-          form.pageType === 'proc_expr_values' &&
-          form.selectedGene?.length === 0
-        ) {
-          console.warn('FAKE FILTER GENE ACTIVATED !');
-          // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
-          params.append('gene_id', 'ENSG00000158813');
+        // if (
+        //   form.pageType === 'proc_expr_values' &&
+        //   form.selectedGene?.length === 0
+        // ) {
+        //   console.warn('FAKE FILTER GENE ACTIVATED !');
+        //   // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
+        //   params.append('gene_id', 'ENSG00000158813');
 
-          // et si jamais il n'y a pas d'espèce selectionnée...
-          // ( ce qui est obligatoire pour mettre un filtre de gène)
-          // on force aussi à l'espèce humaine
-          if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
-            params.append('species_id', '9606');
-          }
-        }
+        //   // et si jamais il n'y a pas d'espèce selectionnée...
+        //   // ( ce qui est obligatoire pour mettre un filtre de gène)
+        //   // on force aussi à l'espèce humaine
+        //   if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
+        //     params.append('species_id', '9606');
+        //   }
+        // }
         // _____________________________________________________________________________
 
         if (isOnlyCounts) {
@@ -392,10 +393,6 @@ const search = {
             params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
           }
 
-          // sur la page present/asbsent (expr calls) à la première recherche il ne faut pas envoyer get_filter ! ...
-          if (form.isExprCalls) {
-            params.delete('get_filters');
-          }
           // On envoie toutes les valeurs contenu dans l'url
           // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
           // de première arrivée sur la page

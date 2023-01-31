@@ -12,24 +12,11 @@ import LinkExternal from '../../../components/LinkExternal';
 import TagSource from '../../../components/TagSource/TagSource';
 import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
 import PATHS from '../../../routes/paths';
+import { getChildValueFromAttribute } from '../../../helpers/selects';
 
 const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
 const LINK_TO_PROC_EXPR_VALUES = 'LINK_TO_PROC_EXPR_VALUES';
 const LINK_CALL_TO_PROC_EXPR_VALUES = 'LINK_CALL_TO_PROC_EXPR_VALUES';
-
-// Permet d'aller checher des valeurs enfant de l'objet envoyé
-const getChildValueFromAttribute = (obj = {}, attributes = '') => {
-  // ex: ['result', 'experiment', 'name']
-  const attributeTab = attributes.split('.');
-  let current = obj;
-  if (attributeTab[0] === 'result') {
-    attributeTab.splice(0, 1);
-  }
-  for (let i = 0; i < attributeTab.length; i++) {
-    current = current?.[attributeTab[i]];
-  }
-  return current;
-};
 
 const replaceNAOrUndefined = (txt) => {
   if (!txt || txt?.toLowerCase() === 'na') {
@@ -244,6 +231,11 @@ const RawDataAnnotationResults = ({
         </div>
       )}
       <Table
+        title={
+          isExprCalls
+            ? 'Order of results is independent of expression level'
+            : null
+        }
         pagination
         classNamesTable="is-striped"
         // onSortCustom={customRawListSorter}
