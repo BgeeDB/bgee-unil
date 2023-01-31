@@ -15,3 +15,5 @@ export const setAxiosAddNotif = (fct) => {
 export const getAxiosAddNotif = () => axiosAddNotif || (() => () => {});
 
 export default axiosInstance;
+
+export const FULL_LENGTH_LABEL = config.dataTypeLabels.FULL_LENGTH;

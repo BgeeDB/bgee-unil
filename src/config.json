@@ -35,5 +35,8 @@
   "dataType_FULL_LENGTH": 2,
   "dataType_AFFYMETRIX": 3,
   "dataType_IN_SITU": 4,
-  "dataType_EST": 5
+  "dataType_EST": 5,
+  "dataTypeLabels": {
+    "FULL_LENGTH": "scRNA TEST"
+  }
 }
