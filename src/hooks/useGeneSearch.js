@@ -3,10 +3,12 @@ import api from '../api';
 
 const useGeneSearch = (searchText) => {
   const [resResultListGenes, setResResultListGenes] = React.useState();
+  const [isLoading, setIsLoading] = React.useState();
 
   const searchResultHandler = React.useCallback(
     (val) => {
       if (val !== '') {
+        setIsLoading(true);
         api.search.genes
           .geneSearchResult(val)
           .then((resp) => {
@@ -18,6 +20,9 @@ const useGeneSearch = (searchText) => {
           })
           .catch(() => {
             setResResultListGenes();
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
       } else {
         setResResultListGenes(null);
@@ -30,6 +35,7 @@ const useGeneSearch = (searchText) => {
     resResultListGenes,
     searchResultHandler,
     setResults: setResResultListGenes,
+    isLoading,
   };
 };
 
