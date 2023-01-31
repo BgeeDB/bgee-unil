@@ -228,6 +228,14 @@ const NAVBAR_RIGHT = [
     width: '20',
     className: 'no-responsive',
   },
+//  {
+//    href: 'https://www.linkedin.com/company/bgee/',
+//    src: assets.linkedinLogo,
+//    alt: 'LinkedIn Bgee',
+//    height: '20',
+//    width: '20',
+//    className: 'no-responsive',
+//  },
   {
     href: 'https://genomic.social/@bgeedb',
     src: assets.mastodonLogo,
