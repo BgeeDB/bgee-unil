@@ -11,6 +11,7 @@ import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import PATHS from '../../routes/paths';
 
 const DATA_TYPES = [
   {
@@ -97,7 +98,7 @@ const columnsGenerator = (cFields, data) => () => {
     },
     {
       key: 'proc_expr_values',
-      text: 'Link to proc. expr. values',
+      text: 'Link to source data',
       hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
@@ -360,7 +361,29 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
         case 'fdr':
           return defaultRender(cell.fdr, key);
         case 'proc_expr_values':
-          return <Link to="test">Browse results</Link>;
+          let searchParams = `gene_id=${geneId}&species_id=${speciesId}`;
+          if (
+            data.requestedConditionParameters.find((r) => r === 'Anat. entity')
+          ) {
+            searchParams += `&anat_entity_id=${cell?.condition?.anatEntity?.id}`;
+          }
+          if (
+            data.requestedConditionParameters.find((r) => r === 'Dev. stage')
+          ) {
+            searchParams += `&stage_id=${cell?.condition?.devStage?.id}`;
+          }
+
+          if (data.requestedConditionParameters.find((r) => r === 'Sex')) {
+            searchParams += `&sex=${cell?.condition?.sex}`;
+          }
+          if (data.requestedConditionParameters.find((r) => r === 'Strain')) {
+            searchParams += `&strain=${cell?.condition?.strain}`;
+          }
+          return (
+            <Link to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?${searchParams}`}>
+              See source data
+            </Link>
+          );
         case 'strain':
           return defaultRender(cell.condition.strain, key);
         case 'sex':
