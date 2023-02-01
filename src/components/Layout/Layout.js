@@ -57,6 +57,11 @@ const Layout = ({ children }) => {
           </span>
         </Alert>
       )}
+      {config.globalMessageInfo && (
+        <Alert type="warning" light>
+          <span>{config.globalMessageInfo}</span>
+        </Alert>
+      )}
       {body}
       <Footer />
       <CookieMessage />
