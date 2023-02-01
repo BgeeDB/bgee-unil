@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Button from '../../../components/Bulma/Button/Button';
 import './rawDataAnnotations.scss';
@@ -9,8 +9,12 @@ import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
 import useLogic, {
+  AFFYMETRIX,
   DATA_TYPES,
+  EST,
   EXPERIMENTS,
+  PROC_EXPR_VALUES,
+  RAW_DATA_ANNOTS,
   TAB_PAGE,
   TAB_PAGE_EXPR_CALL,
 } from './useLogic';
@@ -96,8 +100,6 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
-  const countLabels = DATA_TYPES.find((d) => d.id === dataType) || {};
-
   const countResultKey =
     pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount';
   const maxPage = Math.ceil((localCount?.[countResultKey] || 0) / limit);
@@ -111,6 +113,37 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     e.stopPropagation();
     setPageType(newPageType);
   };
+
+  const resultCountLabel = useMemo(() => {
+    switch (pageType) {
+      case EXPERIMENTS:
+        return `${localCount.experimentCount || 0} ${
+          dataType === EST ? 'libraries' : 'experiments'
+        }`;
+      case RAW_DATA_ANNOTS: {
+        if (dataType === EST) {
+          return `${localCount.assayCount || 0} libraries`;
+        }
+        return `${localCount.experimentCount || 0} experiments /  ${
+          localCount.assayCount || 0
+        } ${dataType === AFFYMETRIX ? 'chips' : 'assays'}`;
+      }
+      case PROC_EXPR_VALUES: {
+        if (dataType === EST) {
+          return `${localCount.assayCount || 0} libraries / ${
+            localCount.callCount
+          } gene expression values`;
+        }
+        return `${localCount.experimentCount || 0} experiments /  ${
+          localCount.assayCount || 0
+        } ${dataType === AFFYMETRIX ? 'chips' : 'assays'} / ${
+          localCount.callCount
+        } gene expression values`;
+      }
+      default:
+        return '';
+    }
+  }, [pageType, localCount, dataType]);
 
   return (
     <>
@@ -322,20 +355,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                   {isExprCalls ? (
                     <>{`${localCount?.assayCount || 0} expressions calls`}</>
                   ) : (
-                    <>
-                      {countLabels.experimentCountLabel &&
-                        `${localCount?.experimentCount || 0} ${
-                          countLabels.experimentCountLabel
-                        } / `}
-                      {countLabels.assayCountLabel &&
-                        `${localCount?.assayCount || 0} ${
-                          countLabels.assayCountLabel
-                        }`}
-                      {countLabels.libraryCountLabel &&
-                        ` / ${localCount?.libraryCount || 0} ${
-                          countLabels.libraryCountLabel
-                        }`}
-                    </>
+                    resultCountLabel
                   )}
                 </div>
               )}
