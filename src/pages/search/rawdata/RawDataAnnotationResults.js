@@ -100,6 +100,15 @@ const RawDataAnnotationResults = ({
             }
             case 'INTERNAL_LINK': {
               const path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
+              if (col?.linkTarget === 'gene') {
+                // console.log('col = ', col);
+                console.log('result = ', result);
+                // @ TODO add specieId
+                //   } &&
+                //   result?.rawCall?.gene?.geneMappedToSameGeneIdCount > 1
+                // ) {
+                //   console.log('linkTarget = ', col.linkTarget);
+              }
               return {
                 type: col.columnType,
                 content: valueFromFirstAttribute,

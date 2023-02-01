@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
@@ -93,6 +93,11 @@ const columnsGenerator = (cFields, data) => () => {
       key: 'fdr',
       text: 'FDR',
       style: { width: 100 },
+      hide: MEDIA_QUERIES.MOBILE_L,
+    },
+    {
+      key: 'proc_expr_values',
+      text: 'Link to proc. expr. values',
       hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
@@ -354,6 +359,8 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           );
         case 'fdr':
           return defaultRender(cell.fdr, key);
+        case 'proc_expr_values':
+          return <Link to="test">Browse results</Link>;
         case 'strain':
           return defaultRender(cell.condition.strain, key);
         case 'sex':
