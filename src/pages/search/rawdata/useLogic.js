@@ -238,6 +238,14 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     triggerCounts();
     triggerSearch();
+
+    // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
+    history.listen(() => {
+      if (history.action === 'POP') {
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -559,7 +567,7 @@ const useLogic = (isExprCalls) => {
               search: searchParams.toString(),
             });
           } else {
-            history.replace({
+            history.push({
               search: searchParams.toString(),
             });
           }
