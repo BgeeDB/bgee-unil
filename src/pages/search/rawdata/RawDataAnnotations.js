@@ -131,7 +131,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
       case PROC_EXPR_VALUES: {
         if (dataType === EST) {
           return `${localCount.assayCount || 0} libraries / ${
-            localCount.callCount
+            localCount.callCount || 0
           } gene expression values`;
         }
         return `${localCount.experimentCount || 0} experiments /  ${
