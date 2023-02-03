@@ -99,15 +99,21 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              const path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
+              let path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
               if (col?.linkTarget === 'gene') {
-                // console.log('col = ', col);
-                console.log('result = ', result);
-                // @ TODO add specieId
-                //   } &&
-                //   result?.rawCall?.gene?.geneMappedToSameGeneIdCount > 1
-                // ) {
-                //   console.log('linkTarget = ', col.linkTarget);
+                const geneMappedToSameGeneIdCount = getChildValueFromAttribute(
+                  result,
+                  col?.geneMappedToSameGeneIdCountResultAttribute
+                );
+
+                if (geneMappedToSameGeneIdCount > 1) {
+                  const specieId = getChildValueFromAttribute(
+                    result,
+                    col?.geneSpeciesIdResultAttribute
+                  );
+
+                  path += `/${specieId}`;
+                }
               }
               return {
                 type: col.columnType,
