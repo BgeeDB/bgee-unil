@@ -405,7 +405,10 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              params.append(key, val);
+              // Pour la première recherche on ne met pas les "filter_*" dans le count !
+              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) {
+                params.append(key, val);
+              }
             }
           }
         } else {

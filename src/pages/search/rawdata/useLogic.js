@@ -559,7 +559,7 @@ const useLogic = (isExprCalls) => {
               search: searchParams.toString(),
             });
           } else {
-            history.push({
+            history.replace({
               search: searchParams.toString(),
             });
           }
