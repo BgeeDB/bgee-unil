@@ -48,11 +48,11 @@ export const TAB_PAGE_EXPR_CALL = {
 };
 
 // building dataTypes depending on config.json
-const AFFYMETRIX = 'AFFYMETRIX';
-const EST = 'EST';
-const IN_SITU = 'IN_SITU';
-const RNA_SEQ = 'RNA_SEQ';
-const FULL_LENGTH = 'FULL_LENGTH';
+export const AFFYMETRIX = 'AFFYMETRIX';
+export const EST = 'EST';
+export const IN_SITU = 'IN_SITU';
+export const RNA_SEQ = 'RNA_SEQ';
+export const FULL_LENGTH = 'FULL_LENGTH';
 
 const dataTypeConf = [
   {
@@ -60,8 +60,6 @@ const dataTypeConf = [
     type: {
       id: RNA_SEQ,
       label: 'bulk RNA-Seq',
-      experimentCountLabel: 'experiments',
-      assayCountLabel: 'samples',
       sourceLetter: 'R',
     },
   },
@@ -70,9 +68,6 @@ const dataTypeConf = [
     type: {
       id: FULL_LENGTH,
       label: 'scRNA-Seq',
-      experimentCountLabel: 'experiments',
-      assayCountLabel: 'samples',
-      libraryCountLabel: 'libraries',
       sourceLetter: 'FL',
     },
   },
@@ -81,8 +76,6 @@ const dataTypeConf = [
     type: {
       id: AFFYMETRIX,
       label: 'Affymetrix data',
-      experimentCountLabel: 'experiments',
-      assayCountLabel: 'chips',
       sourceLetter: 'A',
     },
   },
@@ -91,8 +84,6 @@ const dataTypeConf = [
     type: {
       id: IN_SITU,
       label: 'In situ hybridization',
-      experimentCountLabel: 'experiments',
-      assayCountLabel: 'evidences lines',
       sourceLetter: 'I',
     },
   },
@@ -101,7 +92,6 @@ const dataTypeConf = [
     type: {
       id: EST,
       label: 'EST',
-      assayCountLabel: 'libraries',
       sourceLetter: 'E',
     },
   },
@@ -248,6 +238,14 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     triggerCounts();
     triggerSearch();
+
+    // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
+    history.listen(() => {
+      if (history.action === 'POP') {
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -442,7 +440,22 @@ const useLogic = (isExprCalls) => {
       );
       initFilters[f.urlParameterName] = nextValuesMapped;
     });
-    setFilters({ [nextDataType]: initFilters });
+
+    const currentSP = new URLSearchParams(loc?.search);
+    const applyFilterForAllDataTypes = currentSP.get(
+      'apply_filters_for_all_data_types'
+    );
+    if (applyFilterForAllDataTypes === '1') {
+      setFilters({
+        [FULL_LENGTH]: initFilters,
+        [RNA_SEQ]: initFilters,
+        [AFFYMETRIX]: initFilters,
+        [EST]: initFilters,
+        [IN_SITU]: initFilters,
+      });
+    } else {
+      setFilters({ [nextDataType]: initFilters });
+    }
 
     if (isExprCalls) {
       // Call types
@@ -563,6 +576,7 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('detailed_rp');
           searchParams.delete('offset');
           searchParams.delete('get_result_count');
+          searchParams.delete('apply_filters_for_all_data_types');
 
           if (isFirstSearch) {
             history.replace({

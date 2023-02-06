@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useMemo } from 'react';
-import { EXPERIMENTS } from '../useLogic';
+import { EXPERIMENTS, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from '../useLogic';
 
 const ResultTabs = ({
   dataTypes,
@@ -11,11 +11,18 @@ const ResultTabs = ({
   pageType,
   isCountLoading,
 }) => {
-  // expressionCallCount
-  const resultKey = useMemo(
-    () => (pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount'),
-    [pageType]
-  );
+  const resultKey = useMemo(() => {
+    switch (pageType) {
+      case EXPERIMENTS:
+        return 'experimentCount';
+      case RAW_DATA_ANNOTS:
+        return 'assayCount';
+      case PROC_EXPR_VALUES:
+        return 'callCount';
+      default:
+        return 'experimentCount';
+    }
+  }, [pageType]);
 
   return (
     <div className="is-flex ongletWrapper is-centered">
