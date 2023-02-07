@@ -213,7 +213,7 @@ const RawDataAnnotationResults = ({
 
     mappedResults.forEach((row) => {
       const rowTxt = columnsToExport
-        .map((col) => row[col.indexForExport].content) // ne récupère QUe les résultats des colums à exporter
+        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // ne récupère QUe les résultats des colums à exporter
         .join('%09');
       tsv += `${rowTxt}%0D%0A`; // carriage return
     });
