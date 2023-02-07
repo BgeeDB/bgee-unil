@@ -201,6 +201,7 @@ const datasetToLdJSON = () => {
             logo: 'https://bgee.org/img/logo/bgee13_hp_logo.png',
             sameAs: [
                 'https://twitter.com/Bgeedb',
+                'https://genomic.social/@bgeedb',
                 'https://bgeedb.wordpress.com/',
             ],
             parentOrganization: [{
