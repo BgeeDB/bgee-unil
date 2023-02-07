@@ -12,6 +12,7 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 import PATHS from '../../routes/paths';
+import { PROC_EXPR_VALUES } from '../../pages/search/rawdata/useLogic';
 
 const DATA_TYPES = [
   {
@@ -361,7 +362,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
         case 'fdr':
           return defaultRender(cell.fdr, key);
         case 'proc_expr_values':
-          let searchParams = `gene_id=${geneId}&species_id=${speciesId}`;
+          let searchParams = `pageType=${PROC_EXPR_VALUES}&gene_id=${geneId}&species_id=${speciesId}`;
           if (
             data.requestedConditionParameters.find((r) => r === 'Anat. entity')
           ) {
