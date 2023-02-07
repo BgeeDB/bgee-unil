@@ -9,6 +9,7 @@ import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const Species = () => {
   let metaTitle = '';
@@ -376,7 +377,7 @@ const Species = () => {
               className="is-size-5 has-text-primary has-text-weight-semibold"
               id="proc-values-fl-scrna-seq"
             >
-              Single cell full length RNA-Seq
+              {FULL_LENGTH_LABEL}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (
               <ul className="unordered">

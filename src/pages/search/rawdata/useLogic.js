@@ -12,6 +12,7 @@ import {
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 import config from '../../../config.json';
+import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
 
 // building the page_type array depending on config.json
 export const EXPERIMENTS = 'experiments';
@@ -67,7 +68,7 @@ const dataTypeConf = [
     position: config.dataType_FULL_LENGTH,
     type: {
       id: FULL_LENGTH,
-      label: 'scRNA-Seq',
+      label: FULL_LENGTH_LABEL,
       sourceLetter: 'FL',
     },
   },

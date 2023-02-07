@@ -12,6 +12,16 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 import PATHS from '../../routes/paths';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
+import {
+  AFFYMETRIX,
+  ALL_DATA_TYPES,
+  EST,
+  FULL_LENGTH,
+  IN_SITU,
+  RNA_SEQ,
+} from '../../pages/search/rawdata/useLogic';
+import TagSource from '../TagSource/TagSource';
 
 const DATA_TYPES = [
   {
@@ -32,7 +42,7 @@ const DATA_TYPES = [
   },
   {
     key: 'FULL_LENGTH',
-    text: 'Full Length single cell RNA-Seq',
+    text: FULL_LENGTH_LABEL,
   },
 ];
 const CUSTOM_FIELDS = [
@@ -390,78 +400,35 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           return defaultRender(cell.condition.sex, key);
         case 'sources':
           const col = columns.find((c) => c.key === key);
+          console.log('cell = ', cell);
+          const source = {};
+          ALL_DATA_TYPES.forEach((dt) => {
+            source[dt.id] = false;
+          });
+          cell.dataTypesWithData.forEach((dataTypeString) => {
+            switch (dataTypeString) {
+              case 'Affymetrix':
+                source[AFFYMETRIX] = true;
+                break;
+              case 'EST':
+                source[EST] = true;
+                break;
+              case 'in situ hybridization':
+                source[IN_SITU] = true;
+                break;
+              case 'RNA-Seq':
+                source[RNA_SEQ] = true;
+                break;
+              case 'full length single cell RNA-Seq': // @Don't change Full-length
+                source[FULL_LENGTH] = true;
+                break;
+              default:
+                break;
+            }
+          });
           return (
             <div className="tags tags-source" style={col?.style}>
-              <span
-                title={`Affymetrix: ${
-                  cell.dataTypesWithData.find((d) => d === 'Affymetrix')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'Affymetrix'
-                  ),
-                })}
-              >
-                A
-              </span>
-              <span
-                title={`EST: ${
-                  cell.dataTypesWithData.find((d) => d === 'EST')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find((d) => d === 'EST'),
-                })}
-              >
-                E
-              </span>
-              <span
-                title={`In Situ: ${
-                  cell.dataTypesWithData.find(
-                    (d) => d === 'in situ hybridization'
-                  )
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'in situ hybridization'
-                  ),
-                })}
-              >
-                I
-              </span>
-              <span
-                title={`RNA-Seq: ${
-                  cell.dataTypesWithData.find((d) => d === 'RNA-Seq')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find((d) => d === 'RNA-Seq'),
-                })}
-              >
-                R
-              </span>
-              <span
-                title={`full length single cell RNA-Seq: ${
-                  cell.dataTypesWithData.find(
-                    (d) => d === 'full length single cell RNA-Seq'
-                  )
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'full length single cell RNA-Seq'
-                  ),
-                })}
-              >
-                FL
-              </span>
+              <TagSource source={source} />
             </div>
           );
         default:
@@ -613,7 +580,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   <Bulma.C>
                     <span>
                       <b>FL</b>
-                      <span className="is-size-7"> scRNA-Seq Full Length</span>
+                      <span className="is-size-7"> {FULL_LENGTH_LABEL}</span>
                     </span>
                   </Bulma.C>
                   <Bulma.C className="is-flex is-align-items-center">
