@@ -182,7 +182,7 @@ const RawDataAnnotationResults = ({
                 content: 'Browse results',
                 to: `${
                   PATHS.SEARCH.RAW_DATA_ANNOTATIONS
-                }?${currentSP.toString()}`,
+                }?${currentSP.toString()}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`,
               };
             }
             default:

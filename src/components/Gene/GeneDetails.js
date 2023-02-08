@@ -221,7 +221,7 @@ const GeneDetails = ({
                 <Bulma.C size={9}>
                   <Link
                     className="internal-link"
-                    to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=${PROC_EXPR_VALUES}&species_id=${species.id}&gene_id=${geneId}`}
+                    to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=${PROC_EXPR_VALUES}&species_id=${species.id}&gene_id=${geneId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`}
                   >
                     Retrieve all processed expression values for that gene
                   </Link>
