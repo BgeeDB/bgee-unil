@@ -187,6 +187,7 @@ const useLogic = (isExprCalls) => {
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
   const [dataQuality, setDataQuality] = useState(BRONZE);
   const [callTypes, setCallTypes] = useState([NOT_EXPRESSED, EXPRESSED]);
+  const [condObserved, setCondObserved] = useState(false);
   const [conditionalParam2, setConditionalParam2] = useState([
     COND_PARAM2_ANAT_KEY,
     COND_PARAM2_DEVSTAGE_KEY,
@@ -478,6 +479,13 @@ const useLogic = (isExprCalls) => {
       if (requestParameters?.cond_param2?.length > 0) {
         setConditionalParam2(requestParameters?.cond_param2);
       }
+
+      // Conditions observed
+      if (requestParameters?.cond_observed === 'true') {
+        setCondObserved(true);
+      } else {
+        setCondObserved(false);
+      }
     }
   };
 
@@ -514,6 +522,7 @@ const useLogic = (isExprCalls) => {
         callTypes,
         conditionalParam2,
         isExprCalls,
+        condObserved,
       };
     }
     return params;
@@ -743,6 +752,8 @@ const useLogic = (isExprCalls) => {
     dataQuality,
     conditionalParam2,
     callTypes,
+    condObserved,
+    setCondObserved,
     setCallTypes,
     setConditionalParam2,
     setDataQuality,
