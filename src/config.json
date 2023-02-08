@@ -38,6 +38,6 @@
   "dataType_EST": 5,
   "globalMessageInfo": "",
   "dataTypeLabels": {
-    "FULL_LENGTH": "scRNA TEST"
+    "FULL_LENGTH": "scRNA-Seq"
   }
 }
