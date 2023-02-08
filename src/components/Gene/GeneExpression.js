@@ -20,6 +20,7 @@ import {
   FULL_LENGTH,
   IN_SITU,
   RNA_SEQ,
+  PROC_EXPR_VALUES,
 } from '../../pages/search/rawdata/useLogic';
 import TagSource from '../TagSource/TagSource';
 
@@ -371,7 +372,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
         case 'fdr':
           return defaultRender(cell.fdr, key);
         case 'proc_expr_values':
-          let searchParams = `gene_id=${geneId}&species_id=${speciesId}`;
+          let searchParams = `pageType=${PROC_EXPR_VALUES}&gene_id=${geneId}&species_id=${speciesId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`;
           if (
             data.requestedConditionParameters.find((r) => r === 'Anat. entity')
           ) {
