@@ -179,7 +179,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               <>
                 <div className="columns is-8">
                   <div className="column mr-6">
-                    <div className="mb-2">
+                    <div className="mb-2 maxWidth50">
                       <Species
                         selectedSpecies={selectedSpecies}
                         onChangeSpecies={onChangeSpecies}
@@ -188,7 +188,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                     </div>
                     {selectedSpecies.value && (
                       <div>
-                        <div className="my-2">
+                        <div className="my-2 maxWidth50">
                           <Gene
                             selectedGene={selectedGene}
                             setSelectedGene={setSelectedGene}
@@ -198,7 +198,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                         {((isExprCalls && selectedGene.length > 0) ||
                           !isExprCalls) && (
                           <>
-                            <div className="my-2">
+                            <div className="my-2 maxWidth50">
                               <Tissues
                                 selectedTissue={selectedTissue}
                                 setSelectedTissue={setSelectedTissue}
@@ -209,7 +209,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 }
                               />
                             </div>
-                            <div className="my-2">
+                            <div className="my-2 maxWidth50">
                               <CellTypes
                                 selectedCellTypes={selectedCellTypes}
                                 setSelectedCellTypes={setSelectedCellTypes}
@@ -223,7 +223,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
-                            <div className="my-2">
+                            <div className="my-2 maxWidth50">
                               <DevelopmentalAndLifeStages
                                 devStages={devStages}
                                 hasDevStageSubStructure={
@@ -288,7 +288,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           )}
                         </>
                       ) : (
-                        <div className="mb-2">
+                        <div className="mb-2 maxWidth50">
                           <ExperimentOrAssay
                             selectedExpOrAssay={selectedExpOrAssay}
                             setSelectedExpOrAssay={setSelectedExpOrAssay}
