@@ -99,7 +99,22 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              const path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
+              let path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
+              if (col?.linkTarget === 'gene') {
+                const geneMappedToSameGeneIdCount = getChildValueFromAttribute(
+                  result,
+                  col?.geneMappedToSameGeneIdCountResultAttribute
+                );
+
+                if (geneMappedToSameGeneIdCount > 1) {
+                  const specieId = getChildValueFromAttribute(
+                    result,
+                    col?.geneSpeciesIdResultAttribute
+                  );
+
+                  path += `/${specieId}`;
+                }
+              }
               return {
                 type: col.columnType,
                 content: valueFromFirstAttribute,
@@ -156,6 +171,7 @@ const RawDataAnnotationResults = ({
               });
               currentSP.delete('pageType');
               currentSP.append('pageType', nextPageType);
+              currentSP.append('apply_filters_for_all_data_types', '1');
               currentSP.delete('data_type');
               currentSP.append(
                 'data_type',
@@ -166,7 +182,7 @@ const RawDataAnnotationResults = ({
                 content: 'Browse results',
                 to: `${
                   PATHS.SEARCH.RAW_DATA_ANNOTATIONS
-                }?${currentSP.toString()}`,
+                }?${currentSP.toString()}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`,
               };
             }
             default:
@@ -197,7 +213,7 @@ const RawDataAnnotationResults = ({
 
     mappedResults.forEach((row) => {
       const rowTxt = columnsToExport
-        .map((col) => row[col.indexForExport].content) // ne récupère QUe les résultats des colums à exporter
+        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // ne récupère QUe les résultats des colums à exporter
         .join('%09');
       tsv += `${rowTxt}%0D%0A`; // carriage return
     });

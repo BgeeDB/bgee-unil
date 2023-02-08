@@ -14,6 +14,7 @@ import schemaDotOrg from '../../helpers/schemaDotOrg';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import imagePath from '../../helpers/imagePath';
 import GeneDetailsSideMenu from './GeneDetailsSideMenu';
+import { PROC_EXPR_VALUES } from '../../pages/search/rawdata/useLogic';
 
 const GeneDetails = ({
   details,
@@ -216,6 +217,16 @@ const GeneDetails = ({
                   </Bulma.C>
                 </Bulma.Columns>
               )}
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={9}>
+                  <Link
+                    className="internal-link"
+                    to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=${PROC_EXPR_VALUES}&species_id=${species.id}&gene_id=${geneId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`}
+                  >
+                    Retrieve all processed expression values for that gene
+                  </Link>
+                </Bulma.C>
+              </Bulma.Columns>
             </div>
           </div>
           <GeneExpression geneId={geneId} speciesId={species.id} />

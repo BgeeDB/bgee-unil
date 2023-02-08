@@ -84,6 +84,7 @@ const GeneList = () => {
     resResultListGenes: results,
     searchResultHandler,
     setResults,
+    isLoading,
   } = useGeneSearch(search);
 
   const objMapping = React.useCallback(
@@ -189,32 +190,42 @@ const GeneList = () => {
                 : `${count} gene(s) found for '${search}'`}
             </p>
           )}
-          <Table
-            pagination
-            sortable
-            classNamesTable="is-striped"
-            columns={[
-              { text: 'Gene ID', key: 'id', hide: MEDIA_QUERIES.MOBILE_P },
-              { text: 'Name', key: 'name' },
-              {
-                text: 'Description',
-                key: 'description',
-                hide: MEDIA_QUERIES.TABLET,
-              },
-              {
-                text: 'Organism',
-                key: 'organism',
-                hide: MEDIA_QUERIES.MOBILE_L,
-              },
-              { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
-            ]}
-            onSortCustom={customGeneListSorter}
-            data={results?.geneMatches}
-            onFilter={onFilter}
-            customHeader={customHeader}
-            onRenderCell={onRenderCell(search)}
-            mappingObj={objMapping}
-          />
+          {isLoading ? (
+            <progress
+              className="progress is-small"
+              max="100"
+              style={{ animationDuration: '1.5s' }}
+            >
+              80%
+            </progress>
+          ) : (
+            <Table
+              pagination
+              sortable
+              classNamesTable="is-striped"
+              columns={[
+                { text: 'Gene ID', key: 'id', hide: MEDIA_QUERIES.MOBILE_P },
+                { text: 'Name', key: 'name' },
+                {
+                  text: 'Description',
+                  key: 'description',
+                  hide: MEDIA_QUERIES.TABLET,
+                },
+                {
+                  text: 'Organism',
+                  key: 'organism',
+                  hide: MEDIA_QUERIES.MOBILE_L,
+                },
+                { text: 'Match', key: 'match', hide: MEDIA_QUERIES.TABLET },
+              ]}
+              onSortCustom={customGeneListSorter}
+              data={results?.geneMatches}
+              onFilter={onFilter}
+              customHeader={customHeader}
+              onRenderCell={onRenderCell(search)}
+              mappingObj={objMapping}
+            />
+          )}
         </div>
       )}
     </>

@@ -238,6 +238,14 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     triggerCounts();
     triggerSearch();
+
+    // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
+    history.listen(() => {
+      if (history.action === 'POP') {
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -432,7 +440,22 @@ const useLogic = (isExprCalls) => {
       );
       initFilters[f.urlParameterName] = nextValuesMapped;
     });
-    setFilters({ [nextDataType]: initFilters });
+
+    const currentSP = new URLSearchParams(loc?.search);
+    const applyFilterForAllDataTypes = currentSP.get(
+      'apply_filters_for_all_data_types'
+    );
+    if (applyFilterForAllDataTypes === '1') {
+      setFilters({
+        [FULL_LENGTH]: initFilters,
+        [RNA_SEQ]: initFilters,
+        [AFFYMETRIX]: initFilters,
+        [EST]: initFilters,
+        [IN_SITU]: initFilters,
+      });
+    } else {
+      setFilters({ [nextDataType]: initFilters });
+    }
 
     if (isExprCalls) {
       // Call types
@@ -553,6 +576,7 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('detailed_rp');
           searchParams.delete('offset');
           searchParams.delete('get_result_count');
+          searchParams.delete('apply_filters_for_all_data_types');
 
           if (isFirstSearch) {
             history.replace({
