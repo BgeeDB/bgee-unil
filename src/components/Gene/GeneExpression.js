@@ -12,12 +12,15 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 import PATHS from '../../routes/paths';
-import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
+import {
+  FULL_LENGTH_LABEL,
+  SOURCE_LETTER_FULL_LENGTH,
+} from '../../api/prod/constant';
 import {
   AFFYMETRIX,
   ALL_DATA_TYPES,
   EST,
-  FULL_LENGTH,
+  ID_FULL_LENGTH,
   IN_SITU,
   RNA_SEQ,
   PROC_EXPR_VALUES,
@@ -42,7 +45,7 @@ const DATA_TYPES = [
     text: 'RNA Seq',
   },
   {
-    key: 'FULL_LENGTH',
+    key: ID_FULL_LENGTH,
     text: FULL_LENGTH_LABEL,
   },
 ];
@@ -421,7 +424,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                 source[RNA_SEQ] = true;
                 break;
               case 'full length single cell RNA-Seq': // @Don't change Full-length
-                source[FULL_LENGTH] = true;
+                source[ID_FULL_LENGTH] = true;
                 break;
               default:
                 break;
@@ -580,7 +583,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   </Bulma.C>
                   <Bulma.C>
                     <span>
-                      <b>FL</b>
+                      <b>{SOURCE_LETTER_FULL_LENGTH}</b>
                       <span className="is-size-7"> {FULL_LENGTH_LABEL}</span>
                     </span>
                   </Bulma.C>

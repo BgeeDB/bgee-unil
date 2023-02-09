@@ -39,5 +39,11 @@
   "globalMessageInfo": "",
   "dataTypeLabels": {
     "FULL_LENGTH": "scRNA-Seq"
+  },
+  "dataTypeIds": {
+    "ID_FULL_LENGTH": "FULL_LENGTH"
+  },
+  "dataTypeSourceLetter": {
+    "SL_FULL_LENGTH": "FL"
   }
 }

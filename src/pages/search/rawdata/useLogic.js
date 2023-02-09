@@ -53,7 +53,7 @@ export const AFFYMETRIX = 'AFFYMETRIX';
 export const EST = 'EST';
 export const IN_SITU = 'IN_SITU';
 export const RNA_SEQ = 'RNA_SEQ';
-export const FULL_LENGTH = 'FULL_LENGTH';
+export const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 const dataTypeConf = [
   {
@@ -67,9 +67,9 @@ const dataTypeConf = [
   {
     position: config.dataType_FULL_LENGTH,
     type: {
-      id: FULL_LENGTH,
+      id: ID_FULL_LENGTH,
       label: FULL_LENGTH_LABEL,
-      sourceLetter: 'FL',
+      sourceLetter: config.dataTypeSourceLetter.SL_FULL_LENGTH,
     },
   },
   {
@@ -449,7 +449,7 @@ const useLogic = (isExprCalls) => {
     );
     if (applyFilterForAllDataTypes === '1') {
       setFilters({
-        [FULL_LENGTH]: initFilters,
+        [ID_FULL_LENGTH]: initFilters,
         [RNA_SEQ]: initFilters,
         [AFFYMETRIX]: initFilters,
         [EST]: initFilters,
