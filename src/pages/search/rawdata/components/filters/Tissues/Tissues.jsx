@@ -18,10 +18,8 @@ const Tissues = ({
 
   return (
     <>
-      <label className="labelWithHelpIcon">
-        <span>Tissue</span>
-      </label>
       <SelectMultipleWithAutoComplete
+        label="Tissue"
         placeholder="Examples: 'brain', 'UBERON:0000948'"
         getOptionsFunction={getTissueOptions}
         selectedOptions={selectedTissue}

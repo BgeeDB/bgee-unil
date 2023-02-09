@@ -23,10 +23,8 @@ const DevelopmentalAndLifeStages = ({
 
   return (
     <>
-      <label className="labelWithHelpIcon">
-        <span>Developmental and life stage</span>
-      </label>
       <SelectMultipleWithAutoComplete
+        label="Developmental and life stage"
         minCharToSearch={0}
         placeholder="Select a term in the simplified tree view"
         selectedOptions={selectedOptions}

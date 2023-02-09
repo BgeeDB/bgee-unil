@@ -10,17 +10,13 @@ const Gene = ({ selectedGene, setSelectedGene, autoCompleteByType }) => {
   }));
 
   return (
-    <>
-      <label className="labelWithHelpIcon">
-        <span>Gene</span>
-      </label>
-      <SelectMultipleWithAutoComplete
-        placeholder="Examples: 'dlx', 'ENSG00000254647' (for human)"
-        getOptionsFunction={getOptionsFunctionGenes}
-        selectedOptions={selectedGene}
-        setSelectedOptions={setSelectedGene}
-      />
-    </>
+    <SelectMultipleWithAutoComplete
+      label="Gene"
+      placeholder="Examples: 'dlx', 'ENSG00000254647' (for human)"
+      getOptionsFunction={getOptionsFunctionGenes}
+      selectedOptions={selectedGene}
+      setSelectedOptions={setSelectedGene}
+    />
   );
 };
 

@@ -161,6 +161,7 @@ const Table = ({
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
           <p className="mr-2">Show</p>
           <Select
+            title="show-entries-select"
             value={pageSize}
             options={[10, 20, 50, { value: 100, text: 100 }, 500, 1000]}
             onChange={(p) => {

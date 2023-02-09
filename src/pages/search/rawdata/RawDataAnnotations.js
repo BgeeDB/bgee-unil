@@ -314,6 +314,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           Submit
                         </Button>
                         <Button
+                          type="button"
                           className="reinit is-warning is-light is-outlined"
                           onClick={() => resetForm(false)}
                         >
