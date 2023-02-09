@@ -6,7 +6,7 @@ import { COLUMN_TYPES } from '../../../../helpers/constants/columnDescriptions';
 import obolibraryLinkFromID from '../../../../helpers/obolibraryLinkFromID';
 import { getChildValueFromAttribute } from '../../../../helpers/selects';
 import PATHS from '../../../../routes/paths';
-import { DATA_TYPES, PROC_EXPR_VALUES } from '../../rawdata/useLogic';
+import { PROC_EXPR_VALUES } from '../../rawdata/useLogic';
 
 const getColumnValues = (cell, attributes = []) =>
   attributes
@@ -81,7 +81,7 @@ const useLogic = () => {
           currentSP.delete('pageType');
           currentSP.append('pageType', PROC_EXPR_VALUES);
           currentSP.delete('data_type');
-          currentSP.append('data_type', DATA_TYPES[0].id); // @Todo
+          currentSP.append('data_type', data?.dataType);
           currentSP.append('apply_filters_for_all_data_types', '1');
           return (
             <a
