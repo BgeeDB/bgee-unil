@@ -50,3 +50,27 @@ The base url of the obolibrary obo.
 ## oboLibraryNCBITaxonPath
 
 The base url of the obolibrary NCBI Taxon.
+
+## isRawDataOnly
+
+Allow (mainly on mirror websites) to hide menu. (And with server redirect allow to only have raw data nnotion pages)
+
+## dataType\_\*
+
+Allow to set the order of the data type in the tabs in raw data annotions pages
+
+## globalMessageInfo
+
+Prints a global message under the Menu on all pages
+
+## dataTypeLabels.FULL_LENGTH
+
+Define the label for the "Full length" data type
+
+## dataTypeIds.ID_FULL_LENGTH
+
+Define the id for the "Full length" data type
+
+## dataTypeSourceLetter.SL_FULL_LENGTH
+
+Define the Tag letters for "Full length" in the "supported data type" column (TagSource component)
