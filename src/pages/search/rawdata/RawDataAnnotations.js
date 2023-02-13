@@ -30,6 +30,7 @@ import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
+import CondObservedParameter from './components/filters/CondObservedParameter/CondObservedParameter';
 
 const RawDataAnnotations = ({ isExprCalls = false }) => {
   const {
@@ -61,6 +62,8 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     dataQuality,
     conditionalParam2,
     callTypes,
+    condObserved,
+    setCondObserved,
     setCallTypes,
     setConditionalParam2,
     setDataQuality,
@@ -284,6 +287,11 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 dataQuality={dataQuality}
                                 setDataQuality={setDataQuality}
                               />
+                              <hr />
+                              <CondObservedParameter
+                                condObserved={condObserved}
+                                setCondObserved={setCondObserved}
+                              />
                             </>
                           )}
                         </>
@@ -306,6 +314,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           Submit
                         </Button>
                         <Button
+                          type="button"
                           className="reinit is-warning is-light is-outlined"
                           onClick={() => resetForm(false)}
                         >

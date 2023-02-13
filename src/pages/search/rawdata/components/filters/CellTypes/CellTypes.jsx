@@ -25,10 +25,8 @@ const CellTypes = ({
 
   return (
     <>
-      <label className="labelWithHelpIcon">
-        <span>Cell type</span>
-      </label>
       <SelectMultipleWithAutoComplete
+        label="Cell type"
         placeholder="Examples: 'neuron', 'CL:0000187'"
         getOptionsFunction={getCellTypeOptions}
         selectedOptions={selectedCellTypes}

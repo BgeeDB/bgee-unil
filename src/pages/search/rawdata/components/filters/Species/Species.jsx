@@ -32,10 +32,11 @@ const Species = ({ selectedSpecies, onChangeSpecies, getSpeciesLabel }) => {
 
   return (
     <>
-      <label className="labelWithHelpIcon">
+      <label className="labelWithHelpIcon" htmlFor="specied-id-select">
         <span className="boldTitle">Species</span>
       </label>
       <Select
+        inputId="specied-id-select"
         options={speciesOptions}
         className="form-control"
         classNamePrefix="react-select-species"

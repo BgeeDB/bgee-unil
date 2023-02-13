@@ -3,7 +3,13 @@ import React from 'react';
 /*
 options {Array} of string or {value, text}
  */
-const Select = ({ defaultValue, options, onChange, value }) => {
+const Select = ({
+  title = 'defaultTitle',
+  defaultValue,
+  options,
+  onChange,
+  value,
+}) => {
   const [active, setActive] = React.useState(defaultValue || '');
 
   const hasValueProps = typeof value !== 'undefined' && value !== null;
@@ -20,7 +26,11 @@ const Select = ({ defaultValue, options, onChange, value }) => {
 
   return (
     <div className="select">
-      <select value={hasValueProps ? value : active} onChange={onChangeSelect}>
+      <select
+        title={title}
+        value={hasValueProps ? value : active}
+        onChange={onChangeSelect}
+      >
         {options.map((opt) =>
           // eslint-disable-next-line valid-typeof
           ['string', 'number'].find((t) => t === typeof opt) ? (

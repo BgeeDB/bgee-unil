@@ -10,6 +10,14 @@
   flex-direction: column;
 }
 
+label.labelSelect[for] {
+  margin-left: 0;
+}
+label.labelSelect.isBold[for] {
+  font-weight: bold;
+  color: black;
+}
+
 .render {
   display: flex;
 }

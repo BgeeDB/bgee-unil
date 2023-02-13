@@ -452,6 +452,9 @@ const search = {
               params.append('cond_param2', cp)
             );
           }
+          if (form?.condObserved !== undefined) {
+            params.append('cond_observed', form?.condObserved);
+          }
 
           // Application des filtres ! (VS form)
           if (form?.filters && !isOnlyCounts) {

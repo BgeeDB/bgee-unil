@@ -4,6 +4,31 @@ import Bulma from '../../../../components/Bulma';
 import Table from '../../../../components/Table';
 import useLogic from './useLogic';
 import './ExperimentStyles.scss';
+import {
+  AFFYMETRIX,
+  EST,
+  ID_FULL_LENGTH,
+  IN_SITU,
+  RNA_SEQ,
+} from '../../rawdata/useLogic';
+import { FULL_LENGTH_LABEL } from '../../../../api/prod/constant';
+
+const getUserFriendlyDataType = (dataType) => {
+  switch (dataType) {
+    case RNA_SEQ:
+      return 'RNA-Seq';
+    case ID_FULL_LENGTH:
+      return FULL_LENGTH_LABEL;
+    case IN_SITU:
+      return 'In situ';
+    case AFFYMETRIX:
+      return 'Affymetrix';
+    case EST:
+      return 'Est';
+    default:
+      return '-';
+  }
+};
 
 const Experiment = () => {
   const { data, columns, onRenderCell, onFilter } = useLogic();
@@ -59,7 +84,9 @@ const Experiment = () => {
               <span className="has-text-weight-semibold my-1 labelsLeft">
                 Technology:
               </span>
-              <span className="my-1 is-flex-grow-1">{data?.dataType}</span>
+              <span className="my-1 is-flex-grow-1">
+                {getUserFriendlyDataType(data?.dataType)}
+              </span>
             </div>
 
             <div className="is-flex is-flex-direction-row mr-2">

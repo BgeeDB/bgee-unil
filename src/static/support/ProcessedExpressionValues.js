@@ -1,3 +1,4 @@
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 import imagePath from '../../helpers/imagePath';
 import PATHS from '../../routes/paths';
 
@@ -38,8 +39,7 @@ const expressionValues = [
               },
               {
                 type: 'text',
-                content:
-                  ' for each species.',
+                content: ' for each species.',
               },
             ],
           },
@@ -49,7 +49,7 @@ const expressionValues = [
         children: [
           {
             type: 'card',
-            title: 'Single cell RNA-Seq full-length processed expression values',
+            title: `${FULL_LENGTH_LABEL} processed expression values`,
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Github logo',
@@ -64,8 +64,7 @@ const expressionValues = [
             content: [
               {
                 type: 'text',
-                content:
-                  'Description of the format of annotation download files (that include the chips and experiment files) as well as the processed expression values download files for single cell RNA-Seq full-length data. The files can be found in the ',
+                content: `Description of the format of annotation download files (that include the chips and experiment files) as well as the processed expression values download files for ${FULL_LENGTH_LABEL} data. The files can be found in the `,
               },
               {
                 type: 'link_internal',
@@ -74,8 +73,7 @@ const expressionValues = [
               },
               {
                 type: 'text',
-                content:
-                  ' for each species.',
+                content: ' for each species.',
               },
             ],
           },
@@ -110,8 +108,7 @@ const expressionValues = [
               },
               {
                 type: 'text',
-                content:
-                  ' for each species.',
+                content: ' for each species.',
               },
             ],
           },

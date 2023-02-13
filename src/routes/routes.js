@@ -45,6 +45,7 @@ import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
+import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -221,8 +222,7 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
     source: ScRNASeqFLProcExprValFile,
-    title:
-      'Single cell RNA-Seq full-length annotations and processed expression values',
+    title: `${FULL_LENGTH_LABEL} annotations and processed expression values`,
   },
   [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
     source: AffymetrixProcExprValFile,

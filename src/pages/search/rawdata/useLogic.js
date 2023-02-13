@@ -12,6 +12,7 @@ import {
 import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeStages/useLogic';
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 import config from '../../../config.json';
+import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
 
 // building the page_type array depending on config.json
 export const EXPERIMENTS = 'experiments';
@@ -52,7 +53,7 @@ export const AFFYMETRIX = 'AFFYMETRIX';
 export const EST = 'EST';
 export const IN_SITU = 'IN_SITU';
 export const RNA_SEQ = 'RNA_SEQ';
-export const FULL_LENGTH = 'FULL_LENGTH';
+export const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 const dataTypeConf = [
   {
@@ -66,9 +67,9 @@ const dataTypeConf = [
   {
     position: config.dataType_FULL_LENGTH,
     type: {
-      id: FULL_LENGTH,
-      label: 'scRNA-Seq',
-      sourceLetter: 'FL',
+      id: ID_FULL_LENGTH,
+      label: FULL_LENGTH_LABEL,
+      sourceLetter: config.dataTypeSourceLetter.SL_FULL_LENGTH,
     },
   },
   {
@@ -186,6 +187,7 @@ const useLogic = (isExprCalls) => {
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
   const [dataQuality, setDataQuality] = useState(BRONZE);
   const [callTypes, setCallTypes] = useState([NOT_EXPRESSED, EXPRESSED]);
+  const [condObserved, setCondObserved] = useState(false);
   const [conditionalParam2, setConditionalParam2] = useState([
     COND_PARAM2_ANAT_KEY,
     COND_PARAM2_DEVSTAGE_KEY,
@@ -447,7 +449,7 @@ const useLogic = (isExprCalls) => {
     );
     if (applyFilterForAllDataTypes === '1') {
       setFilters({
-        [FULL_LENGTH]: initFilters,
+        [ID_FULL_LENGTH]: initFilters,
         [RNA_SEQ]: initFilters,
         [AFFYMETRIX]: initFilters,
         [EST]: initFilters,
@@ -476,6 +478,13 @@ const useLogic = (isExprCalls) => {
       // Conditonal parameter 2
       if (requestParameters?.cond_param2?.length > 0) {
         setConditionalParam2(requestParameters?.cond_param2);
+      }
+
+      // Conditions observed
+      if (requestParameters?.cond_observed === 'true') {
+        setCondObserved(true);
+      } else {
+        setCondObserved(false);
       }
     }
   };
@@ -513,6 +522,7 @@ const useLogic = (isExprCalls) => {
         callTypes,
         conditionalParam2,
         isExprCalls,
+        condObserved,
       };
     }
     return params;
@@ -742,6 +752,8 @@ const useLogic = (isExprCalls) => {
     dataQuality,
     conditionalParam2,
     callTypes,
+    condObserved,
+    setCondObserved,
     setCallTypes,
     setConditionalParam2,
     setDataQuality,

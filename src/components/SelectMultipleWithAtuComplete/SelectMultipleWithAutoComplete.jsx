@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './SelectMultipleWithAutoComplete.scss';
 import Select, { components } from 'react-select';
 import useDebounce from '../../hooks/useDebounce';
+import classnames from '../../helpers/classnames';
 
 const MAX_OPTIONS_LENGTH = 200;
 
@@ -22,6 +23,7 @@ const SelectMultipleWithAutoComplete = ({
   optionActions,
   className,
   style,
+  hasBoldLabel,
 }) => {
   const [search, setSearch] = useState('');
   const searchDebounced = useDebounce(search, 300);
@@ -151,11 +153,15 @@ const SelectMultipleWithAutoComplete = ({
     <div className={`content ${className}`} style={style}>
       <div className="field">
         {!!label && (
-          <label className="label" htmlFor="autocomplete-search">
+          <label
+            className={classnames('labelSelect', hasBoldLabel && 'isBold')}
+            htmlFor={`autocomplete-search-${label}`}
+          >
             {label}
           </label>
         )}
         <Select
+          inputId={`autocomplete-search-${label}`}
           classNamePrefix="react-select-autoComplete"
           closeMenuOnSelect
           hideSelectedOptions={false}

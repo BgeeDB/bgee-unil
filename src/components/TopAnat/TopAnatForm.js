@@ -15,6 +15,7 @@ import GenesDetailsModal from './GenesDetailsModal';
 import classnames from '../../helpers/classnames';
 import imagePath from '../../helpers/imagePath';
 import usePrevious from '../../hooks/usePrevious';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const TopAnatForm = ({
   form: { handleChange, data: formData, errors },
@@ -251,7 +252,7 @@ const TopAnatForm = ({
                         'not-default': !formData.full,
                       })}
                     >
-                      scRNA-Seq full-length
+                      {FULL_LENGTH_LABEL}
                     </span>
                   </label>
                 </div>

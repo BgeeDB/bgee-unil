@@ -4,7 +4,7 @@
   "genericDomain": "https://bgee.org",
   "permanentVersionedDomain": "https://bgee.org/bgee15_0",
   "imageDomain": "/img",
-  "apiDomain": "https://bgee.org/bgee_test_feb_02",
+  "apiDomain": "https://bgee.org/bgee_test_feb_09",
   "ftpDomain": "https://bgee.org/ftp/current",
   "archivedVersion": [
     {
@@ -36,5 +36,14 @@
   "dataType_AFFYMETRIX": 3,
   "dataType_IN_SITU": 4,
   "dataType_EST": 5,
-  "globalMessageInfo": ""
+  "globalMessageInfo": "",
+  "dataTypeLabels": {
+    "FULL_LENGTH": "scRNA-Seq"
+  },
+  "dataTypeIds": {
+    "ID_FULL_LENGTH": "SC_RNA_SEQ"
+  },
+  "dataTypeSourceLetter": {
+    "SL_FULL_LENGTH": "FL"
+  }
 }

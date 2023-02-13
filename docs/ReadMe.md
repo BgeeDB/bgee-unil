@@ -1,26 +1,26 @@
 ### Project structure
 
-````
+```
     / docs
-    
+
     / public
 
     / src
-    
+
         / assets
     Provides all the assets needed as a dictionnary object
 
         / components
-        
+
         / helpers
     Logical functions
-     
+
         / hooks
     Custom React hooks
-    
+
         / i18n
     Lightweight internationalization controller
-    
+
         / pages
     Page components used by the routes
 
@@ -33,7 +33,7 @@
         / styles
     SCSS and CSS style files
 
-````
+```
 
 ### Libraries used
 
@@ -71,6 +71,10 @@ React-Helmet will manage all of your changes to the document head.
 React routing library
 [MIT license] (https://github.com/remix-run/react-router/blob/main/LICENSE)
 
+- react-select
+
+React select allow a lot of features with select box [MIT Licensed] (https://react-select.com/home)
+
 ### Styles
 
 - node-sass
@@ -90,5 +94,5 @@ Performs automated scans of your JavaScript files for common syntax and style er
 
 - Prettier
 
-Scans files for style issues and automatically reformats the code to ensure 
+Scans files for style issues and automatically reformats the code to ensure
 consistent rules are being followed on the project.
