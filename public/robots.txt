@@ -2,8 +2,9 @@
 Sitemap: https://bgee.org/sitemap.xml
 User-agent: *
 Crawl-delay: 10
-Disallow: /search/anatomical-homology
+Disallow: /search/anatomical-homology?
 Disallow: /search/genes/*
+Disallow: /api
 Disallow: /bgee/bgee
 Disallow: /bgee13/*
 Disallow: /bgee14/*
