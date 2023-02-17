@@ -447,6 +447,7 @@ const useLogic = (isExprCalls) => {
     const applyFilterForAllDataTypes = currentSP.get(
       'apply_filters_for_all_data_types'
     );
+
     if (applyFilterForAllDataTypes === '1') {
       setFilters({
         [ID_FULL_LENGTH]: initFilters,
