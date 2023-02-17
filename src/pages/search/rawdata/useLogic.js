@@ -445,6 +445,7 @@ const useLogic = (isExprCalls) => {
     const applyFilterForAllDataTypes = currentSP.get(
       'apply_filters_for_all_data_types'
     );
+    console.log('Apply for all data types = ', applyFilterForAllDataTypes);
     if (applyFilterForAllDataTypes === '1') {
       setFilters({
         [FULL_LENGTH]: initFilters,

@@ -171,18 +171,27 @@ const RawDataAnnotationResults = ({
               });
               currentSP.delete('pageType');
               currentSP.append('pageType', nextPageType);
+
               currentSP.append('apply_filters_for_all_data_types', '1');
+
               currentSP.delete('data_type');
               currentSP.append(
                 'data_type',
                 isExprCalls ? DATA_TYPES[0].id : dataType
               );
+
+              currentSP.delete('cell_type_descendant');
+              currentSP.append('cell_type_descendant', true);
+              currentSP.delete('stage_descendant');
+              currentSP.append('stage_descendant', true);
+              currentSP.delete('anat_entity_descendant');
+              currentSP.append('anat_entity_descendant', true);
               return {
                 type: col.columnType,
                 content: 'Browse results',
                 to: `${
                   PATHS.SEARCH.RAW_DATA_ANNOTATIONS
-                }?${currentSP.toString()}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`,
+                }?${currentSP.toString()}`,
               };
             }
             default:

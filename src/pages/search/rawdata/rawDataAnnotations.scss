@@ -52,7 +52,7 @@
   .filterSelect {
     margin: 0 4px;
     flex: 1;
-    min-width: 18rem;
+    min-width: 14rem;
     max-width: 30rem;
   }
 
@@ -110,7 +110,6 @@
     font-weight: bold;
     cursor: pointer;
     display: flex;
-    justify-content: center;
   }
   a.ongletPages:link,
   a.ongletPages:visited {
