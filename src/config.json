@@ -44,6 +44,6 @@
     "ID_FULL_LENGTH": "SC_RNA_SEQ"
   },
   "dataTypeSourceLetter": {
-    "SL_FULL_LENGTH": "FL"
+    "SL_FULL_LENGTH": "TS"
   }
 }
