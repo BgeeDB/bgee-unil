@@ -1,3 +1,4 @@
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 import imagePath from '../../helpers/imagePath';
 
 const annotations = [
@@ -54,7 +55,7 @@ const annotations = [
         children: [
           {
             type: 'card',
-            title: 'single-cell RNA-Seq annotations',
+            title: `${FULL_LENGTH_LABEL} annotations`,
             image: {
               src: imagePath('/logo/github_logo.png'),
               alt: 'Github logo',
@@ -66,8 +67,7 @@ const annotations = [
           {
             type: 'text',
             classNames: 'has-text-centered',
-            content:
-              'Annotations of single-cell RNA-Seq experiments, libraries and platforms used to generate the last version of Bgee.',
+            content: `Annotations of ${FULL_LENGTH_LABEL} experiments, libraries and platforms used to generate the last version of Bgee.`,
           },
         ],
       },
