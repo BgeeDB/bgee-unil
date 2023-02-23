@@ -2,6 +2,7 @@ import React from 'react';
 import config from '../../config.json';
 import api from '../../api';
 import Bulma from '../../components/Bulma';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const CATEGORIES = [
   {
@@ -14,7 +15,7 @@ const CATEGORIES = [
   },
   {
     key: 'SC_RNA_SEQ',
-    title: 'Single-cell RNA-Seq data sources',
+    title: `${FULL_LENGTH_LABEL} data sources`,
   },
   {
     key: 'RNA_SEQ',

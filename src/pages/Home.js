@@ -15,6 +15,7 @@ import GridSpecies from '../components/GridSpecies/GridSpecies';
 import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
 import GeneSearch from '../components/Gene/GeneSearch';
+import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -120,7 +121,7 @@ const Home = () => {
               <p className="is-size-3">GENE EXPRESSION DATA</p>
               Bgee is a database for retrieval and comparison of gene expression
               patterns across multiple animal species, produced from multiple
-              data types (bulk RNA-Seq, single-cell RNA-Seq, Affymetrix, in situ
+              data types (bulk RNA-Seq, {FULL_LENGTH_LABEL}, Affymetrix, in situ
               hybridization, and EST data) and from multiple data sets
               (including{' '}
               <LinkExternal to="https://www.gtexportal.org/home/">
