@@ -38,12 +38,12 @@
   "dataType_EST": 5,
   "globalMessageInfo": "",
   "dataTypeLabels": {
-    "FULL_LENGTH": "TEST LABEL"
+    "FULL_LENGTH": "scRNA-Seq"
   },
   "dataTypeIds": {
     "ID_FULL_LENGTH": "SC_RNA_SEQ"
   },
   "dataTypeSourceLetter": {
-    "SL_FULL_LENGTH": "TS"
+    "SL_FULL_LENGTH": "SC"
   }
 }
