@@ -523,7 +523,7 @@ const useLogic = (isExprCalls) => {
       Object.entries(wantedFilters)
         .filter(([wantedFilterKey]) => {
           const filterExists = Object.entries(dataFilters).some(
-            ([_, existingFilter]) =>
+            ([, existingFilter]) =>
               wantedFilterKey === existingFilter?.urlParameterName
           );
           return filterExists;
