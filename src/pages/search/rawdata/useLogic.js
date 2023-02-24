@@ -13,6 +13,7 @@ import { flattenDevStagesList } from './components/filters/DevelopmentalAndLifeS
 import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 import config from '../../../config.json';
 import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
+import { isEmpty } from '../../../helpers/arrayHelper';
 
 // building the page_type array depending on config.json
 export const EXPERIMENTS = 'experiments';
@@ -444,9 +445,7 @@ const useLogic = (isExprCalls) => {
     });
 
     const currentSP = new URLSearchParams(loc?.search);
-    const applyFilterForAllDataTypes = currentSP.get(
-      'apply_filters_for_all_data_types'
-    );
+    const applyFilterForAllDataTypes = currentSP.get('filters_for_all');
 
     if (applyFilterForAllDataTypes === '1') {
       setFilters({
@@ -508,10 +507,35 @@ const useLogic = (isExprCalls) => {
       hasCellTypeSubStructure,
       hasDevStageSubStructure,
       hasTissueSubStructure,
-      filters: filters[dataType],
       pageNumber,
       limit,
     };
+
+    // Ici on filtre les filtres ! (*BADUM Tss*)
+    // On n'envoie pas au back les filtres n'ayant pas de liste correspondante dans l'objet filters de la précédente recherche
+    const defaultdataFilters = searchResult?.filters?.[dataType] || {};
+    const dataFiltersExprCall = searchResult?.filters || {};
+    const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
+    const wantedFilters = filters[dataType] || {};
+    // ( si précédente il y a )
+    if (!isEmpty(dataFilters)) {
+      const myFilters = {};
+      Object.entries(wantedFilters)
+        .filter(([wantedFilterKey]) => {
+          const filterExists = Object.entries(dataFilters).some(
+            ([_, existingFilter]) =>
+              wantedFilterKey === existingFilter?.urlParameterName
+          );
+          return filterExists;
+        })
+        .forEach(([key, values]) => {
+          myFilters[key] = values;
+        });
+
+      params.filters = myFilters;
+    } else {
+      params.filters = filters[dataType];
+    }
 
     if (isExprCalls) {
       const dataTypeForExpCalls =
@@ -568,9 +592,11 @@ const useLogic = (isExprCalls) => {
             searchParams.delete('data');
 
             // console.warn('>> clean values in hash <<');
-            resp?.requestParameters?.storableParameters?.forEach((key) =>
-              searchParams.delete(key)
-            );
+            resp?.requestParameters?.storableParameters?.forEach((key) => {
+              if (key !== 'data_type') {
+                searchParams.delete(key);
+              }
+            });
 
             // Rajout du hash (dans la key "data")
             searchParams.append('data', newHash);
@@ -587,7 +613,7 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('detailed_rp');
           searchParams.delete('offset');
           searchParams.delete('get_result_count');
-          searchParams.delete('apply_filters_for_all_data_types');
+          searchParams.delete('filters_for_all');
 
           if (isFirstSearch) {
             history.replace({

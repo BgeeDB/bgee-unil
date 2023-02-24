@@ -346,6 +346,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                 allCounts={allCounts}
                 pageType={pageType}
                 isCountLoading={isCountLoading}
+                localCount={localCount}
               />
             )}
             <div className="resultPart">

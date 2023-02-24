@@ -82,7 +82,7 @@ const useLogic = () => {
           currentSP.append('pageType', PROC_EXPR_VALUES);
           currentSP.delete('data_type');
           currentSP.append('data_type', data?.dataType);
-          currentSP.append('apply_filters_for_all_data_types', '1');
+          currentSP.append('filters_for_all', '1');
           return (
             <a
               href={`${

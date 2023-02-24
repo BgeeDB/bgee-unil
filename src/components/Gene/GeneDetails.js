@@ -218,6 +218,9 @@ const GeneDetails = ({
                 </Bulma.Columns>
               )}
               <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Source data</p>
+                </Bulma.C>
                 <Bulma.C size={9}>
                   <Link
                     className="internal-link"
