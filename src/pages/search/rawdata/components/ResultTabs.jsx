@@ -10,6 +10,7 @@ const ResultTabs = ({
   setDataType,
   pageType,
   isCountLoading,
+  localCount,
 }) => {
   const resultKey = useMemo(() => {
     switch (pageType) {
@@ -28,6 +29,11 @@ const ResultTabs = ({
     <div className="is-flex ongletWrapper is-centered">
       {dataTypes.map((type) => {
         const isActive = type.id === dataType;
+        const inactiveCount =
+          allCounts?.[type.id]?.[resultKey] !== undefined
+            ? allCounts?.[type.id]?.[resultKey]
+            : 'No data';
+        const nb = isActive ? localCount?.[resultKey] : inactiveCount;
         return (
           <div
             key={type.id}
@@ -37,7 +43,7 @@ const ResultTabs = ({
             }`}
           >
             <span>{type.label}</span>
-            {isCountLoading ? (
+            {isCountLoading || nb === undefined ? (
               <progress
                 className="progress is-small is-primary"
                 style={{
@@ -50,10 +56,7 @@ const ResultTabs = ({
             ) : (
               <span className="has-text-danger">
                 &nbsp;(
-                {allCounts?.[type.id]?.[resultKey] !== undefined
-                  ? allCounts?.[type.id]?.[resultKey]
-                  : 'No data'}
-                )
+                {nb})
               </span>
             )}
           </div>

@@ -172,7 +172,7 @@ const RawDataAnnotationResults = ({
               currentSP.delete('pageType');
               currentSP.append('pageType', nextPageType);
 
-              currentSP.append('apply_filters_for_all_data_types', '1');
+              currentSP.append('filters_for_all', '1');
 
               currentSP.delete('data_type');
               currentSP.append(
