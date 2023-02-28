@@ -1,4 +1,7 @@
 import isPlural from './isPlural';
+import config from '../config.json';
+
+const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 const ApiReducer = {
   topAnatForm: (rp) => (prev) => ({
@@ -15,7 +18,7 @@ const ApiReducer = {
     fdrThreshold: rp.fdr_thr || '',
     pValueThreshold: rp.p_value_thr || '',
     rnaSeq: Boolean(rp.data_type.find((f) => f === 'RNA_SEQ')),
-    full: Boolean(rp.data_type.find((f) => f === 'FULL_LENGTH')),
+    full: Boolean(rp.data_type.find((f) => f === ID_FULL_LENGTH)),
     affymetrix: Boolean(rp.data_type.find((f) => f === 'AFFYMETRIX')),
     inSitu: Boolean(rp.data_type.find((f) => f === 'IN_SITU')),
     est: Boolean(rp.data_type.find((f) => f === 'EST')),

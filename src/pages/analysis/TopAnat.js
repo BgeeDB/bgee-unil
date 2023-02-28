@@ -15,6 +15,9 @@ import { getAxiosAddNotif } from '../../api/prod/constant';
 import random from '../../helpers/random';
 import ApiReducer from '../../helpers/ApiReducer';
 import { TOP_ANAT_DEFAULT_RP } from '../../helpers/constants/topAnat';
+import config from '../../config.json';
+
+const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 let getJobStatusTimeOut;
 
@@ -104,7 +107,7 @@ const TopAnat = () => {
               ),
               full: Boolean(
                 res?.requestParameters?.data_type?.find(
-                  (f) => f === 'FULL_LENGTH'
+                  (f) => f === ID_FULL_LENGTH
                 )
               ),
               est: Boolean(
