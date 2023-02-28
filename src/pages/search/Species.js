@@ -110,7 +110,9 @@ const Species = () => {
        species, taxon`;
     /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
     const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
-    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
+    /* Issue with naked mole rat in Ensembl because two assemblies, female and male, so different URLs! */
+	const extendedSpeciesName = `${data.species.speciesName === 'glaber' && data.species.genus === 'Heterocephalus' ? `${formattedSpeciesName}_female` : `${formattedSpeciesName}`}`;
+    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${extendedSpeciesName}/`}`;
   }
 
   return !data ? null : (
