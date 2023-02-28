@@ -30,7 +30,7 @@ const GeneXRefs = ({ isLoading, data }) => (
                 items={xref.xRefs}
                 renderElement={(ref, key, elements) => (
                   <span key={ref.xRefId}>
-                    <LinkExternal to={ref.xRefURL}>{ref.xRefId}</LinkExternal>
+                    <LinkExternal to={ref.xRefURL.replace('ensembl.org/Heterocephalus_glaber/', 'ensembl.org/Heterocephalus_glaber_female/')}>{ref.xRefId}</LinkExternal>
                     {ref.xRefName && <>{` (${ref.xRefName})`}</>}
                     {key !== elements.length - 1 ? (
                       <span className="mr-1">,</span>
