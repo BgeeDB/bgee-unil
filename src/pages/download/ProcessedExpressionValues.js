@@ -270,7 +270,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/rna_seq/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   RNA-Seq data directory
                                 </a>
@@ -353,7 +353,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/affymetrix/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   Affymetrix data directory
                                 </a>
@@ -436,7 +436,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   Full length single cell RNA-Seq data directory
                                 </a>
