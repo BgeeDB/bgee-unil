@@ -15,6 +15,9 @@ import { getAxiosAddNotif } from '../../api/prod/constant';
 import random from '../../helpers/random';
 import ApiReducer from '../../helpers/ApiReducer';
 import { TOP_ANAT_DEFAULT_RP } from '../../helpers/constants/topAnat';
+import config from '../../config.json';
+
+const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 let getJobStatusTimeOut;
 
@@ -61,7 +64,7 @@ const TopAnat = () => {
             setFlowState(TOP_ANAT_FLOW.ERROR_GET_JOB);
 
             getAxiosAddNotif()({
-              id: random.toString(),
+              id: random().toString(),
               children: (
                 <p>
                   The job is undefined. Please contact the administrator and
@@ -104,7 +107,7 @@ const TopAnat = () => {
               ),
               full: Boolean(
                 res?.requestParameters?.data_type?.find(
-                  (f) => f === 'FULL_LENGTH'
+                  (f) => f === ID_FULL_LENGTH
                 )
               ),
               est: Boolean(
@@ -227,7 +230,7 @@ const TopAnat = () => {
   React.useEffect(() => {
     if (flowState === TOP_ANAT_FLOW.NEW_JOB && requestParameters.bg) {
       addNotification({
-        id: random.toString(),
+        id: random().toString(),
         children: (
           <p>
             {requestParameters.fg.list.selectedSpecies ===

@@ -192,6 +192,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             size={4}
             className="gradient-underline"
             id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
+            renderAs="h2"
           >
             Orthologs
           </Bulma.Title>
@@ -265,6 +266,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             size={4}
             className="gradient-underline"
             id={GENE_DETAILS_HTML_IDS.PARALOGS}
+            renderAs="h2"
           >
             Paralogs (same species)
           </Bulma.Title>

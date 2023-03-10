@@ -14,6 +14,8 @@ import classnames from '../helpers/classnames';
 import GridSpecies from '../components/GridSpecies/GridSpecies';
 import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
+import GeneSearch from '../components/Gene/GeneSearch';
+import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -44,12 +46,50 @@ const Home = () => {
               height={100}
             />
           </div>
-          <p className="is-size-4 has-text-uppercase has-text-centered has-text-white mb-6">
+          <Bulma.Title
+            className="is-size-4 has-text-uppercase has-text-centered has-text-weight-medium mb-0"
+            colorClassName="has-text-white"
+          >
             GENE EXPRESSION DATA IN ANIMALS
-          </p>
+          </Bulma.Title>
+          <Bulma.Section>
+            <GeneSearch classNames="search-input mx-auto my-3 mb-5">
+              <p>
+                {`Examples: `}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=HBB`}
+                >
+                  HBB
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=Apoc1`}
+                >
+                  Apoc1
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}
+                >
+                  PDE4DIP
+                </Link>
+                {', '}
+                <Link
+                  className="internal-link"
+                  to={`${PATHS.SEARCH.GENE}?search=insulin`}
+                >
+                  insulin
+                </Link>
+              </p>
+            </GeneSearch>
+          </Bulma.Section>
           <NavButtons />
         </Bulma.Hero.Body>
       </Bulma.Hero>
+
       <div className="species-banner is-hidden-touch">
         {speciesList.map((s) => (
           <img
@@ -60,6 +100,7 @@ const Home = () => {
           />
         ))}
       </div>
+
       <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={12}>
@@ -80,7 +121,7 @@ const Home = () => {
               <p className="is-size-3">GENE EXPRESSION DATA</p>
               Bgee is a database for retrieval and comparison of gene expression
               patterns across multiple animal species, produced from multiple
-              data types (bulk RNA-Seq, single-cell RNA-Seq, Affymetrix, in situ
+              data types (bulk RNA-Seq, {FULL_LENGTH_LABEL}, Affymetrix, in situ
               hybridization, and EST data) and from multiple data sets
               (including{' '}
               <LinkExternal to="https://www.gtexportal.org/home/">
@@ -193,24 +234,40 @@ const NavButtons = ({ className }) => (
       className
     )}
   >
-    <p className="control">
-      <Link className="button is-primary" to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}>
+    <div className="is-flex is-flex-direction-column is-justify-content-center">
+      <span className="m-1 color-white">Analysis</span>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+      >
         <Bulma.IonIcon name="list-outline" />
         <span>Expression comparison</span>
       </Link>
-    </p>
-    <p className="control">
-      <Link className="button is-primary" to={PATHS.ANALYSIS.TOP_ANAT}>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.ANALYSIS.TOP_ANAT}
+      >
         <Bulma.IonIcon name="stats-chart-outline" />
         <span>Expression enrichment analysis</span>
       </Link>
-    </p>
-    <p className="control">
-      <Link className="button is-primary" to={PATHS.SEARCH.GENE}>
+    </div>
+    <div className="is-flex is-flex-direction-column is-justify-content-center">
+      <span className="m-1 color-white">Browse</span>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
+      >
         <Bulma.IonIcon name="search-outline" />
-        <span>Gene search</span>
+        <span>Raw data annotations</span>
       </Link>
-    </p>
+      <Link
+        className="button is-primary m-1 is-justify-content-start"
+        to={PATHS.SEARCH.EXPRESSION_CALLS}
+      >
+        <Bulma.IonIcon name="search-outline" />
+        <span>Expression calls</span>
+      </Link>
+    </div>
   </div>
 );
 

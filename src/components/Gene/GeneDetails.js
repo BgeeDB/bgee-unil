@@ -14,6 +14,7 @@ import schemaDotOrg from '../../helpers/schemaDotOrg';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import imagePath from '../../helpers/imagePath';
 import GeneDetailsSideMenu from './GeneDetailsSideMenu';
+import { PROC_EXPR_VALUES } from '../../pages/search/rawdata/useLogic';
 
 const GeneDetails = ({
   details,
@@ -120,17 +121,17 @@ const GeneDetails = ({
                 src={imagePath(`/species/${species.id}_light.jpg`)}
                 alt={`${species.genus} ${species.speciesName}`}
               />
-              <p className="title is-size-3 has-text-centered">
+              <h1 className="title is-size-3 has-text-centered m-0">
                 {`Gene : ${name} - ${geneId} - `}
                 <i>
                   {species.genus} {species.speciesName}
                 </i>
                 {species.name ? ` (${species.name})` : ''}
-              </p>
+              </h1>
             </div>
           </div>
           <div id={GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION}>
-            <Bulma.Title size={4} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
               General information
             </Bulma.Title>
             <div className=" near-columns">
@@ -216,6 +217,19 @@ const GeneDetails = ({
                   </Bulma.C>
                 </Bulma.Columns>
               )}
+              <Bulma.Columns className="my-0">
+                <Bulma.C size={3}>
+                  <p className="has-text-weight-semibold">Source data</p>
+                </Bulma.C>
+                <Bulma.C size={9}>
+                  <Link
+                    className="internal-link"
+                    to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=${PROC_EXPR_VALUES}&species_id=${species.id}&gene_id=${geneId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`}
+                  >
+                    Retrieve all processed expression values for that gene
+                  </Link>
+                </Bulma.C>
+              </Bulma.Columns>
             </div>
           </div>
           <GeneExpression geneId={geneId} speciesId={species.id} />

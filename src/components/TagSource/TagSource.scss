@@ -1,0 +1,33 @@
+/*
+ Dupliqué pour le moment dans global.scss mais si on change la page gène pour utiliser ce composant
+ il faudrait supprimer cette duplication du coup
+*/
+.tags-source {
+  .tag.tag-source:not(:last-child) {
+    margin-right: 0.15rem;
+  }
+}
+.tag-source {
+  padding: 0.2em 0.5em;
+  margin: 0 0.15em 0 0 !important;
+  border-radius: 0.4em;
+  width: 1em;
+  line-height: 1em;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 0.8em;
+  font-family: monospace;
+  text-align: center;
+  background: #dedede !important;
+  color: #b8b8b8 !important;
+  border-color: #b8b8b8 !important;
+  &.legend {
+    width: auto;
+  }
+  &.present {
+    background: #9efa9e !important;
+    border-color: #0df20d !important;
+    color: #067906 !important;
+  }
+}

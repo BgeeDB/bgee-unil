@@ -9,6 +9,7 @@ import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const Species = () => {
   let metaTitle = '';
@@ -82,7 +83,6 @@ const Species = () => {
   }, [data]);
 
   React.useEffect(() => {
-    console.log('MOUNT id', id);
     setData();
     api.search.species
       .species(id)
@@ -137,7 +137,7 @@ const Species = () => {
         }`}</Bulma.Title>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
           General information
         </Bulma.Title>
         <div className="">
@@ -200,7 +200,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="exp-calls"
+          renderAs="h2"
+        >
           Gene expression call files
         </Bulma.Title>
         <div className="">
@@ -279,7 +284,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="proc-values">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="proc-values"
+          renderAs="h2"
+        >
           Processed expression value files
         </Bulma.Title>
         <div className="">
@@ -362,7 +372,7 @@ const Species = () => {
               className="is-size-5 has-text-primary has-text-weight-semibold"
               id="proc-values-fl-scrna-seq"
             >
-              Single cell full length RNA-Seq
+              {FULL_LENGTH_LABEL}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (
               <ul className="unordered">

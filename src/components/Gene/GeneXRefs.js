@@ -7,7 +7,7 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const GeneXRefs = ({ isLoading, data }) => (
   <div id={GENE_DETAILS_HTML_IDS.XREFS}>
-    <Bulma.Title size={4} className="gradient-underline">
+    <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
       Cross-references
     </Bulma.Title>
     <div>

@@ -3,16 +3,34 @@ import React from 'react';
 /*
 options {Array} of string or {value, text}
  */
-const Select = ({ defaultValue, options, onChange }) => {
+const Select = ({
+  title = 'defaultTitle',
+  defaultValue,
+  options,
+  onChange,
+  value,
+}) => {
   const [active, setActive] = React.useState(defaultValue || '');
-  const onChangeSelect = React.useCallback((e) => {
-    setActive(e.target.value);
-    if (onChange) onChange(e.target.value);
-  }, []);
+
+  const hasValueProps = typeof value !== 'undefined' && value !== null;
+
+  const onChangeSelect = React.useCallback(
+    (e) => {
+      if (!hasValueProps) {
+        setActive(e.target.value);
+      }
+      if (onChange) onChange(e.target.value);
+    },
+    [hasValueProps, onChange]
+  );
 
   return (
     <div className="select">
-      <select value={active} onChange={onChangeSelect}>
+      <select
+        title={title}
+        value={hasValueProps ? value : active}
+        onChange={onChangeSelect}
+      >
         {options.map((opt) =>
           // eslint-disable-next-line valid-typeof
           ['string', 'number'].find((t) => t === typeof opt) ? (

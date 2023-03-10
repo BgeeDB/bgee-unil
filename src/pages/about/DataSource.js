@@ -1,6 +1,8 @@
 import React from 'react';
 import config from '../../config.json';
 import api from '../../api';
+import Bulma from '../../components/Bulma';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const CATEGORIES = [
   {
@@ -13,7 +15,7 @@ const CATEGORIES = [
   },
   {
     key: 'SC_RNA_SEQ',
-    title: 'Single-cell RNA-Seq data sources',
+    title: `${FULL_LENGTH_LABEL} data sources`,
   },
   {
     key: 'RNA_SEQ',
@@ -67,7 +69,7 @@ const DataSource = () => {
   return (
     <>
       <div className="content has-text-centered">
-        <p className="title is-3">Data sources</p>
+        <Bulma.Title className="title is-3">Data sources</Bulma.Title>
       </div>
       <p className="">
         This page provides information about the data sources used in Bgee{' '}
@@ -85,9 +87,12 @@ const DataSource = () => {
       {CATEGORIES.map((c) =>
         sources[c.key] ? (
           <React.Fragment key={c.key}>
-            <h1 className="gradient-underline title is-size-4 has-text-primary">
+            <Bulma.Title
+              className="gradient-underline title is-size-4 has-text-primary"
+              renderAs="h2"
+            >
               {c.title}
-            </h1>
+            </Bulma.Title>
             {sources[c.key].map((s, key) => (
               <React.Fragment key={s.id}>
                 <div className="columns mt-2">

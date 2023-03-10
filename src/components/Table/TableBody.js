@@ -71,6 +71,7 @@ const TableBody = () => {
     usedWidth,
     currentPage,
     pageSize,
+    isRequestPerPage,
   } = useContext(TableContext);
   const defaultRender = React.useCallback(
     (cell, key) => {
@@ -97,11 +98,13 @@ const TableBody = () => {
 
   const dataToDisplay = React.useMemo(
     () =>
-      data?.slice(
-        (currentPage - 1) * pageSize,
-        (currentPage - 1) * pageSize + pageSize
-      ),
-    [data, currentPage, pageSize]
+      !isRequestPerPage
+        ? data?.slice(
+            (currentPage - 1) * pageSize,
+            (currentPage - 1) * pageSize + pageSize
+          )
+        : data,
+    [data, currentPage, pageSize, isRequestPerPage]
   );
 
   return (

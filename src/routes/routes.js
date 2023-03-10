@@ -1,3 +1,4 @@
+import React from 'react';
 import PATHS from './paths';
 
 import Home from '../pages/Home';
@@ -7,9 +8,12 @@ import ExpComp from '../pages/analysis/ExpComp';
 
 import GeneList from '../pages/search/GeneList';
 import Gene from '../pages/search/Gene';
+import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
+
+import Experiment from '../pages/search/experiments/Experiment';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
@@ -30,17 +34,18 @@ import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import FaqFile from '../static/support/faq';
 
-import AboutFile          from '../static/about/about';
+import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
-import PublicationsFile   from '../static/about/publications';
-import VideoFile          from '../static/about/videos';
-import TeamFile           from '../static/about/team';
-import PrivacyPolicyFile  from '../static/about/privacyPolicy';
+import PublicationsFile from '../static/about/publications';
+import VideoFile from '../static/about/videos';
+import TeamFile from '../static/about/team';
+import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
+import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -59,6 +64,7 @@ const ANALYSIS = {
     },
   },
 };
+
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
     title: 'Gene search',
@@ -86,7 +92,20 @@ const SEARCH = {
     component: Species,
     title: 'Species',
   },
+  [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
+    component: () => <RawDataAnnotations />,
+    title: 'Raw data annotated and processed',
+  },
+  [PATHS.SEARCH.EXPRESSION_CALLS]: {
+    component: () => <RawDataAnnotations isExprCalls />,
+    title: 'Present/absent expression calls',
+  },
+  [PATHS.SEARCH.EXPERIMENT]: {
+    component: Experiment,
+    title: 'Experiment informations',
+  },
 };
+
 const DOWNLOAD = {
   [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
     component: GeneExpressionCallsDownload,
@@ -101,6 +120,7 @@ const DOWNLOAD = {
     title: 'Data dumps',
   },
 };
+
 const RESOURCES = {
   [PATHS.RESOURCES.DOCS]: {
     source: ResourcesFile,
@@ -159,6 +179,7 @@ const RESOURCES = {
     },
   },
 };
+
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
     source: GtexFile,
@@ -190,7 +211,8 @@ const SUPPORT = {
     title: 'Processed expression values',
     meta: {
       title: 'Processed expression values files documentation',
-      description: 'Documentation of processed expression values download files',
+      description:
+        'Documentation of processed expression values download files',
       keywords: 'Documentation, processed expression values, Download files',
     },
   },
@@ -200,7 +222,7 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
     source: ScRNASeqFLProcExprValFile,
-    title: 'Single cell RNA-Seq full-length annotations and processed expression values',
+    title: `${FULL_LENGTH_LABEL} annotations and processed expression values`,
   },
   [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
     source: AffymetrixProcExprValFile,
@@ -216,6 +238,7 @@ const SUPPORT = {
     },
   },
 };
+
 const ABOUT = {
   [PATHS.ABOUT.ABOUT]: {
     source: AboutFile,
@@ -256,7 +279,8 @@ const ABOUT = {
     meta: {
       title: 'Bgee videos',
       description: 'Bgee tutorial videos and online courses',
-      keywords: 'The Bgee videos, Bgee videos, Bgee YouTube, Bgee online courses',
+      keywords:
+        'The Bgee videos, Bgee videos, Bgee YouTube, Bgee online courses',
     },
   },
   [PATHS.ABOUT.SOURCES]: {

@@ -3,6 +3,9 @@ import React from 'react';
 import axiosInstance, { getAxiosAddNotif } from './constant';
 import errorHandler from '../errorHandler';
 import random from '../../helpers/random';
+import config from '../../config.json';
+
+const { ID_FULL_LENGTH } = config.dataTypeIds;
 
 export const TOP_ANAT_CANCEL_API = {
   autoCompleteGenes: null,
@@ -60,7 +63,7 @@ const topAnat = {
       params.append('fg_list', form.genes);
       params.append('bg_list', form.genesBg);
       if (form.rnaSeq) params.append('data_type', 'RNA_SEQ');
-      if (form.full) params.append('data_type', 'FULL_LENGTH');
+      if (form.full) params.append('data_type', ID_FULL_LENGTH);
       if (form.affymetrix) params.append('data_type', 'AFFYMETRIX');
       if (form.inSitu) params.append('data_type', 'IN_SITU');
       if (form.est) params.append('data_type', 'EST');
@@ -176,7 +179,7 @@ const topAnat = {
               'JobResultNotFoundException'
           ) {
             getAxiosAddNotif()({
-              id: random.toString(),
+              id: random().toString(),
               children: (
                 <p>
                   Results were not present on our server, resubmitting the

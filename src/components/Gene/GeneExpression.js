@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary,jsx-a11y/label-has-associated-control,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions, no-case-declarations, react/no-array-index-key */
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Bulma from '../Bulma';
 import api from '../../api';
 import classnames from '../../helpers/classnames';
@@ -11,6 +11,21 @@ import { MEDIA_QUERIES } from '../../helpers/constants/mediaQueries';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import Table from '../Table';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import PATHS from '../../routes/paths';
+import {
+  FULL_LENGTH_LABEL,
+  SOURCE_LETTER_FULL_LENGTH,
+} from '../../api/prod/constant';
+import {
+  AFFYMETRIX,
+  ALL_DATA_TYPES,
+  EST,
+  ID_FULL_LENGTH,
+  IN_SITU,
+  RNA_SEQ,
+  PROC_EXPR_VALUES,
+} from '../../pages/search/rawdata/useLogic';
+import TagSource from '../TagSource/TagSource';
 
 const DATA_TYPES = [
   {
@@ -30,8 +45,8 @@ const DATA_TYPES = [
     text: 'RNA Seq',
   },
   {
-    key: 'FULL_LENGTH',
-    text: 'Full Length single cell RNA-Seq',
+    key: ID_FULL_LENGTH,
+    text: FULL_LENGTH_LABEL,
   },
 ];
 const CUSTOM_FIELDS = [
@@ -93,6 +108,11 @@ const columnsGenerator = (cFields, data) => () => {
       key: 'fdr',
       text: 'FDR',
       style: { width: 100 },
+      hide: MEDIA_QUERIES.MOBILE_L,
+    },
+    {
+      key: 'proc_expr_values',
+      text: 'Link to source data',
       hide: MEDIA_QUERIES.MOBILE_L,
     },
     {
@@ -292,15 +312,13 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   )
                   .join(',')
               );
-              console.log()
               if (
                 JSON.stringify(dataType.sort()) !==
                   JSON.stringify(DATA_TYPES.map((d) => d.key).sort()) &&
                 dataType.length > 0
               )
                 queryParams.set(dataTypeKey, dataType.join(','));
-              else
-                queryParams.delete(dataTypeKey);
+              else queryParams.delete(dataTypeKey);
 
               history.replace(`?${queryParams.toString()}`);
             }}
@@ -356,84 +374,65 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           );
         case 'fdr':
           return defaultRender(cell.fdr, key);
+        case 'proc_expr_values':
+          let searchParams = `pageType=${PROC_EXPR_VALUES}&gene_id=${geneId}&species_id=${speciesId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`;
+          if (
+            data.requestedConditionParameters.find((r) => r === 'Anat. entity')
+          ) {
+            searchParams += `&anat_entity_id=${cell?.condition?.anatEntity?.id}`;
+          }
+          if (
+            data.requestedConditionParameters.find((r) => r === 'Dev. stage')
+          ) {
+            searchParams += `&stage_id=${cell?.condition?.devStage?.id}`;
+          }
+
+          if (data.requestedConditionParameters.find((r) => r === 'Sex')) {
+            searchParams += `&sex=${cell?.condition?.sex}`;
+          }
+          if (data.requestedConditionParameters.find((r) => r === 'Strain')) {
+            searchParams += `&strain=${cell?.condition?.strain}`;
+          }
+          return (
+            <Link to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?${searchParams}`}>
+              See source data
+            </Link>
+          );
         case 'strain':
           return defaultRender(cell.condition.strain, key);
         case 'sex':
           return defaultRender(cell.condition.sex, key);
         case 'sources':
           const col = columns.find((c) => c.key === key);
+          console.log('cell = ', cell);
+          const source = {};
+          ALL_DATA_TYPES.forEach((dt) => {
+            source[dt.id] = false;
+          });
+          cell.dataTypesWithData.forEach((dataTypeString) => {
+            switch (dataTypeString) {
+              case 'Affymetrix':
+                source[AFFYMETRIX] = true;
+                break;
+              case 'EST':
+                source[EST] = true;
+                break;
+              case 'in situ hybridization':
+                source[IN_SITU] = true;
+                break;
+              case 'RNA-Seq':
+                source[RNA_SEQ] = true;
+                break;
+              case 'full length single cell RNA-Seq': // @Don't change Full-length
+                source[ID_FULL_LENGTH] = true;
+                break;
+              default:
+                break;
+            }
+          });
           return (
             <div className="tags tags-source" style={col?.style}>
-              <span
-                title={`Affymetrix: ${
-                  cell.dataTypesWithData.find((d) => d === 'Affymetrix')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'Affymetrix'
-                  ),
-                })}
-              >
-                A
-              </span>
-              <span
-                title={`EST: ${
-                  cell.dataTypesWithData.find((d) => d === 'EST')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find((d) => d === 'EST'),
-                })}
-              >
-                E
-              </span>
-              <span
-                title={`In Situ: ${
-                  cell.dataTypesWithData.find(
-                    (d) => d === 'in situ hybridization'
-                  )
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'in situ hybridization'
-                  ),
-                })}
-              >
-                I
-              </span>
-              <span
-                title={`RNA-Seq: ${
-                  cell.dataTypesWithData.find((d) => d === 'RNA-Seq')
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find((d) => d === 'RNA-Seq'),
-                })}
-              >
-                R
-              </span>
-              <span
-                title={`full length single cell RNA-Seq: ${
-                  cell.dataTypesWithData.find(
-                    (d) => d === 'full length single cell RNA-Seq'
-                  )
-                    ? 'presence'
-                    : 'absence'
-                }`}
-                className={classnames('tag tag-source', {
-                  present: cell.dataTypesWithData.find(
-                    (d) => d === 'full length single cell RNA-Seq'
-                  ),
-                })}
-              >
-                FL
-              </span>
+              <TagSource source={source} />
             </div>
           );
         default:
@@ -490,8 +489,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             (r) => r === 'Anat. entity'
           )
         )
-          if (!notExpressed)
-          schemaDotOrg.setGeneExpressionLdJSON(res.data);
+          if (!notExpressed) schemaDotOrg.setGeneExpressionLdJSON(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -500,8 +498,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
       .finally(() => setIsLoading(false));
 
     return () => {
-      if (!notExpressed)
-      schemaDotOrg.unsetGeneExpressionLdJSON();
+      if (!notExpressed) schemaDotOrg.unsetGeneExpressionLdJSON();
     };
   }, [hashExpr, dataTypeExpr]);
 
@@ -515,6 +512,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
             ? GENE_DETAILS_HTML_IDS.EXPRESSION_ABSENT
             : GENE_DETAILS_HTML_IDS.EXPRESSION
         }
+        renderAs="h2"
       >
         {notExpressed ? 'Reported absence of expression' : 'Expression'}
       </Bulma.Title>
@@ -585,8 +583,8 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                   </Bulma.C>
                   <Bulma.C>
                     <span>
-                      <b>FL</b>
-                      <span className="is-size-7"> scRNA-Seq Full Length</span>
+                      <b>{SOURCE_LETTER_FULL_LENGTH}</b>
+                      <span className="is-size-7"> {FULL_LENGTH_LABEL}</span>
                     </span>
                   </Bulma.C>
                   <Bulma.C className="is-flex is-align-items-center">

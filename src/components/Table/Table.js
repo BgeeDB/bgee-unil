@@ -12,6 +12,8 @@ import Input from '../Form/Input';
 import Select from '../Select';
 import { monoSort, multiSort } from '../../helpers/sortTable';
 import TablePagination from './TablePagination';
+import usePagination from '../../hooks/usePagination';
+import TablePaginationWithoutRefresh from './TablePaginationWithoutRefresh';
 
 const Table = ({
   fullwidth = true,
@@ -34,6 +36,13 @@ const Table = ({
   name,
   identifierAtFilter = false,
   emptyTableMessage = 'No data',
+  isRequestPerPage = false,
+  paginationParamPageKey = null,
+  paginationResultCountKey = null,
+  manualMaxPage = -1,
+  minThWidth = null,
+  hasPaginationTop = false,
+  hasScrollTop = false,
 }) => {
   const mappedData = React.useMemo(
     () =>
@@ -50,6 +59,7 @@ const Table = ({
   );
 
   const [sortOption, setSortOption] = React.useState(initialSorting);
+
   const defineSortOption = React.useCallback(
     (key) => (event) => {
       if (sortable) {
@@ -84,6 +94,7 @@ const Table = ({
   );
 
   const [isExpanded, setIsExpanded] = React.useState({});
+
   const expandAction = React.useCallback(
     (key) => () =>
       setIsExpanded((prev) => ({
@@ -98,16 +109,27 @@ const Table = ({
     [usedWidth, columns]
   );
 
-  const [currentPage, setPage] = React.useState(1);
-  const setCurrentPage = React.useCallback((page) => {
-    setPage(page);
-    setIsExpanded({});
-  }, []);
-  const [pageSize, setPageSize] = React.useState(
-    pagination ? defaultPaginationSize : mappedData.length
+  const {
+    page: currentPage,
+    pageSize,
+    onPageChange,
+    onPageSizeChange,
+  } = usePagination(
+    pagination ? defaultPaginationSize : mappedData.length,
+    paginationParamPageKey,
+    paginationResultCountKey
+  );
+
+  const setCurrentPage = React.useCallback(
+    (page) => {
+      onPageChange(page);
+      setIsExpanded({});
+    },
+    [onPageChange]
   );
 
   const [search, setSearch] = React.useState('');
+
   const definiteColumns = React.useMemo(
     () =>
       search !== '' && identifierAtFilter
@@ -115,6 +137,7 @@ const Table = ({
         : [...columns],
     [identifierAtFilter, columns, search]
   );
+
   const searchInput = React.useMemo(
     () => (
       <div className="control table-search is-flex is-flex-direction-row is-align-items-center">
@@ -123,13 +146,13 @@ const Table = ({
         <Input
           value={search}
           onChange={(e) => {
-            if (currentPage !== 1) setCurrentPage(1);
             setSearch(e.target.value);
+            if (currentPage !== 1) setCurrentPage(1);
           }}
         />
       </div>
     ),
-    [search, currentPage]
+    [search, currentPage, setCurrentPage]
   );
 
   const pageSizeSelector = React.useMemo(
@@ -138,18 +161,28 @@ const Table = ({
         <div className="is-flex is-flex-direction-row is-align-items-center is-justify-content-flex-end">
           <p className="mr-2">Show</p>
           <Select
-            defaultValue={pageSize}
-            options={[10, 20, 50, { value: 100, text: 100 }]}
+            title="show-entries-select"
+            value={pageSize}
+            options={[10, 20, 50, { value: 100, text: 100 }, 500, 1000]}
             onChange={(p) => {
-              setCurrentPage(1);
-              setPageSize(parseInt(p, 10));
+              // déjà éffectué dans le onPageSizeChange
+              // setCurrentPage(1);
+              onPageSizeChange(parseInt(p, 10));
             }}
           />
           <p className="ml-2">entries</p>
         </div>
       ) : null,
-    [pageSize, currentPage, mappedData, pagination]
+    [
+      pageSize,
+      currentPage,
+      mappedData,
+      pagination,
+      setCurrentPage,
+      onPageSizeChange,
+    ]
   );
+
   const processedData = React.useMemo(() => {
     const clone = JSON.parse(JSON.stringify(mappedData));
     const filtered =
@@ -163,6 +196,10 @@ const Table = ({
     }
     return filtered;
   }, [mappedData, search, sortOption, onSortCustom]);
+
+  const PaginationComponent = isRequestPerPage
+    ? TablePaginationWithoutRefresh
+    : TablePagination;
 
   return (
     <TableProvider
@@ -185,33 +222,45 @@ const Table = ({
         currentPage,
         setCurrentPage,
         pageSize,
-        setPageSize,
+        setPageSize: onPageSizeChange,
         customHeader,
         searchInput,
         pageSizeSelector,
         mappingObj,
+        isRequestPerPage,
+        paginationParamPageKey,
+        paginationResultCountKey,
+        manualMaxPage,
       }}
     >
       <TableHeader />
       <TableTitle />
+      {hasPaginationTop && <PaginationComponent />}
       {processedData.length > 0 ? (
-        <div className="table-container">
+        <div
+          className={`table-container ${hasScrollTop ? 'isTableFlipped' : ''}`}
+        >
           <table
             ref={table}
             className={classnames(
               'table',
-              { sortable, 'is-fullwidth': fullwidth, 'is-striped': striped },
+              {
+                sortable,
+                'is-fullwidth': fullwidth,
+                'is-striped': striped,
+                isTableFlipped: hasScrollTop,
+              },
               classNames
             )}
           >
-            <TableHead />
+            <TableHead minThWidth={minThWidth} />
             <TableBody />
           </table>
         </div>
       ) : (
         emptyTableMessage
       )}
-      <TablePagination />
+      <PaginationComponent />
     </TableProvider>
   );
 };

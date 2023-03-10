@@ -10,6 +10,7 @@ const Title = ({
   weight,
   spaced,
   heading,
+  colorClassName,
   ...props
 }) => (
   <Element
@@ -24,7 +25,7 @@ const Title = ({
         [`has-text-weight-${weight}`]: weight,
         'is-spaced': spaced && !subtitle,
       },
-      'has-text-primary'
+      colorClassName || 'has-text-primary'
     )}
   >
     {children}
