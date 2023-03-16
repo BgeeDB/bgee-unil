@@ -239,8 +239,8 @@ const useLogic = (isExprCalls) => {
   }, [pageNumber, limit]);
 
   useEffect(() => {
-    triggerCounts();
     triggerSearch();
+    triggerCounts();
 
     // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
     history.listen(() => {
@@ -261,8 +261,8 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch) {
       setLocalCount({});
-      triggerCounts();
       triggerSearch(true, true);
+      triggerCounts();
     }
   }, [pageType]);
 
@@ -274,8 +274,8 @@ const useLogic = (isExprCalls) => {
   }, [selectedSpecies]);
 
   const onSubmit = () => {
-    triggerCounts();
     triggerSearch(true, true);
+    triggerCounts();
   };
 
   const addConditionalParam = (id) => {
@@ -568,9 +568,11 @@ const useLogic = (isExprCalls) => {
     }
     // console.log('[TRIGGER SEARCH] params = ', params);
     setIsLoading(true);
+    console.log(`params Search : ${  JSON.stringify(params)}`)
     return api.search.rawData
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
+        console.log(`search api : ${  JSON.stringify(paramsURLCalled)}`)
         if (resp.code === 200) {
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (isFirstSearch) {
@@ -615,6 +617,23 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('get_result_count');
           searchParams.delete('filters_for_all');
 
+          // The following code clean the url of any default value
+
+          if (searchParams.get('limit') === '50') {
+            searchParams.delete('limit');
+          }
+          if (searchParams.get('pageType') === 'experiments') {
+            searchParams.delete('pageType');
+          }
+          if (searchParams.get('data_type') === 'RNA_SEQ') {
+            searchParams.delete('data_type');
+          }
+          if (searchParams.get('pageNumber') === '1') {
+            searchParams.delete('pageNumber');
+          }
+          if (searchParams.get('sex') === 'all') {
+            searchParams.delete('sex');
+          }
           if (isFirstSearch) {
             history.replace({
               search: searchParams.toString(),
@@ -639,6 +658,7 @@ const useLogic = (isExprCalls) => {
             ? { assayCount: resp?.data?.expressionCallCount }
             : resp?.data?.resultCount?.[dataType]
         );
+        console.log(resp?.data)
       })
       .catch(() => {
         // console.log('[error triggerSearch] e = ', e);
@@ -653,15 +673,24 @@ const useLogic = (isExprCalls) => {
       });
   };
 
-  const triggerCounts = async () => {
+  const triggerCounts = async (    
+    cleanFilters = false,) => {
+      if (cleanFilters) {
+        params.filters = {};
+        setFilters({});
+      }
+    const params = getSearchParams();
+    console.log(`params Counts : ${  JSON.stringify(params)}`)
     if (!isExprCalls) {
       setIsCountLoading(true);
       api.search.rawData
-        .search(getSearchParams(), true)
-        .then(({ resp }) => {
+        .search(params, true)
+        .then(({ resp, paramsURLCalled }) => {
+          console.log(`Counts api : ${  JSON.stringify(paramsURLCalled)}`)
           if (resp.code === 200) {
             setIsCountLoading(false);
             setAllCounts(resp?.data?.resultCount);
+            console.log(resp)
           }
         })
         .catch(() => {

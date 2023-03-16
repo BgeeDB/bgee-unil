@@ -372,6 +372,7 @@ const search = {
 
         if (isOnlyCounts) {
           params.append('data_type', 'all');
+          params.append('get_filters', '1');
         } else {
           form.dataType.forEach((type) => params.append('data_type', type));
 
@@ -389,9 +390,7 @@ const search = {
         }
 
         if (form.isFirstSearch) {
-          if (!isOnlyCounts) {
-            params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
-          }
+          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
 
           // On envoie toutes les valeurs contenu dans l'url
           // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
@@ -405,10 +404,10 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              // Pour la première recherche on ne met pas les "filter_*" dans le count !
-              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) {
+              /* Pour la première recherche on ne met pas les "filter_*" dans le count !
+              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) { */
                 params.append(key, val);
-              }
+              // }
             }
           }
         } else {
