@@ -634,6 +634,15 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('sex') === 'all') {
             searchParams.delete('sex');
           }
+          if (searchParams.get('cell_type_descendant') === 'true') {
+            searchParams.delete('cell_type_descendant');
+          }
+          if (searchParams.get('stage_descendant') === 'true') {
+            searchParams.delete('stage_descendant');
+          }
+          if (searchParams.get('anat_entity_descendant') === 'true') {
+            searchParams.delete('anat_entity_descendant');
+          }
           if (isFirstSearch) {
             history.replace({
               search: searchParams.toString(),
