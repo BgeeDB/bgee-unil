@@ -61,7 +61,7 @@ const customHeader = (searchElement, pageSizeElement) => (
 );
 
 const onFilter = (search) => (element) => {
-  const regExp = new RegExp(search, 'gi');
+  const regExp = new RegExp(search);
   let matchFilter = regExp.test(element?.ancestralTaxon);
   if (!matchFilter) {
     for (let i = 0; i < element.anatEntities.length; i += 1) {

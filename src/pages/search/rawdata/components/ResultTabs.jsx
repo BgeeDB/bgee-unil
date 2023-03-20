@@ -42,7 +42,11 @@ const ResultTabs = ({
               isActive && 'ongletActive'
             }`}
           >
-            <span>{type.label}</span>
+            {nb > 0 ? (
+              <span style={{fontWeight: 'bold'}}>{type.label}</span>
+            ) : (
+              <span>{type.label}</span>
+            )}
             {isCountLoading || nb === undefined ? (
               <progress
                 className="progress is-small is-primary"

@@ -7,12 +7,12 @@ import { COND_PARAM2_ANAT_KEY } from '../../../useLogic';
 const CellTypes = ({
   selectedCellTypes,
   setSelectedCellTypes,
-  autoCompleteByType,
+  AutoCompleteByType,
   hasCellTypeSubStructure,
   setHasCellTypeSubStructure,
   addConditionalParam,
 }) => {
-  const getCellTypeOptions = autoCompleteByType('cell_type', (result) => ({
+  const getCellTypeOptions = AutoCompleteByType('cell_type', (result) => ({
     label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,

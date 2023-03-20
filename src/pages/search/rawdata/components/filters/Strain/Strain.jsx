@@ -5,10 +5,10 @@ import { COND_PARAM2_STRAIN_KEY } from '../../../useLogic';
 const Strain = ({
   selectedStrain,
   setSelectedStrain,
-  autoCompleteByType,
+  AutoCompleteByType,
   addConditionalParam,
 }) => {
-  const getStrainOptions = autoCompleteByType('strain', (result) => ({
+  const getStrainOptions = AutoCompleteByType('strain', (result) => ({
     label: result?.object,
     value: result?.object,
     result,
