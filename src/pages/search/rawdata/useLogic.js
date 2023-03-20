@@ -725,12 +725,12 @@ const useLogic = (isExprCalls) => {
       });
   };
 
-  const AutoCompleteByType = (type, mappingFn) =>
+  const autoCompleteByType = (type, mappingFn) =>
     useCallback(
       async (query) => {
         if (query) {
           return api.search.genes
-            .AutoCompleteByType(type, query, selectedSpecies.value)
+            .autoCompleteByType(type, query, selectedSpecies.value)
             .then((resp) => {
               if (resp.code === 200) {
                 const results =
@@ -840,7 +840,7 @@ const useLogic = (isExprCalls) => {
     setHasCellTypeSubStructure,
     setDataType,
     setShow,
-    AutoCompleteByType,
+    autoCompleteByType,
     onSubmit,
     resetForm,
     triggerSearch,
