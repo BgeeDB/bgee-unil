@@ -2,8 +2,8 @@ import React from 'react';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getGeneLabel } from '../../../../../../helpers/gene';
 
-const Gene = ({ selectedGene, setSelectedGene, autoCompleteByType }) => {
-  const getOptionsFunctionGenes = autoCompleteByType('gene', (result) => ({
+const Gene = ({ selectedGene, setSelectedGene, AutoCompleteByType }) => {
+  const getOptionsFunctionGenes = AutoCompleteByType('gene', (result) => ({
     label: getGeneLabel(result?.gene),
     value: result?.gene?.geneId,
     result,

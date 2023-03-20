@@ -82,7 +82,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     setHasCellTypeSubStructure,
     setDataType,
     setShow,
-    autoCompleteByType,
+    AutoCompleteByType,
     onSubmit,
     resetForm,
     setFilters,
@@ -195,7 +195,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           <Gene
                             selectedGene={selectedGene}
                             setSelectedGene={setSelectedGene}
-                            autoCompleteByType={autoCompleteByType}
+                            AutoCompleteByType={AutoCompleteByType}
                           />
                         </div>
                         {((isExprCalls && selectedGene.length > 0) ||
@@ -205,7 +205,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                               <Tissues
                                 selectedTissue={selectedTissue}
                                 setSelectedTissue={setSelectedTissue}
-                                autoCompleteByType={autoCompleteByType}
+                                AutoCompleteByType={AutoCompleteByType}
                                 hasTissueSubStructure={hasTissueSubStructure}
                                 setHasTissueSubStructure={
                                   setHasTissueSubStructure
@@ -216,7 +216,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                               <CellTypes
                                 selectedCellTypes={selectedCellTypes}
                                 setSelectedCellTypes={setSelectedCellTypes}
-                                autoCompleteByType={autoCompleteByType}
+                                AutoCompleteByType={AutoCompleteByType}
                                 hasCellTypeSubStructure={
                                   hasCellTypeSubStructure
                                 }
@@ -244,7 +244,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                               <Strain
                                 selectedStrain={selectedStrain}
                                 setSelectedStrain={setSelectedStrain}
-                                autoCompleteByType={autoCompleteByType}
+                                AutoCompleteByType={AutoCompleteByType}
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
@@ -300,7 +300,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           <ExperimentOrAssay
                             selectedExpOrAssay={selectedExpOrAssay}
                             setSelectedExpOrAssay={setSelectedExpOrAssay}
-                            autoCompleteByType={autoCompleteByType}
+                            AutoCompleteByType={AutoCompleteByType}
                           />
                         </div>
                       )}
