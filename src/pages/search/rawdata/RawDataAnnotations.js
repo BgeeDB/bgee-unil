@@ -162,6 +162,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               return (
                 <a
                   onClick={(e) => changePageType(e, type.id)}
+                  href={`/search/raw-data?pageType=${type.id}`}
                   key={type.id}
                   className={`ongletPages is-centered py-2 px-5 ${
                     isActive ? 'pageActive' : ''
