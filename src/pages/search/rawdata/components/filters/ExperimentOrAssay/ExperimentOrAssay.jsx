@@ -5,9 +5,9 @@ import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 const ExperimentOrAssay = ({
   selectedExpOrAssay,
   setSelectedExpOrAssay,
-  autoCompleteByType,
+  AutoCompleteByType,
 }) => {
-  const getExpOrAssayOptions = autoCompleteByType(
+  const getExpOrAssayOptions = AutoCompleteByType(
     'experiment_assay',
     (result) => ({
       label: getIdAndNameLabel(result?.object),

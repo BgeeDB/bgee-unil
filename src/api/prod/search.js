@@ -12,7 +12,7 @@ export const SEARCH_CANCEL_API = {
     expression: null,
     homologs: null,
     xrefs: null,
-    autoCompleteByType: null,
+    AutoCompleteByType: null,
   },
   species: {
     exprCalls: null,
@@ -116,7 +116,7 @@ const search = {
             reject(error?.response);
           });
       }),
-    autoCompleteByType: (searchType, query, speciesId) =>
+    AutoCompleteByType: (searchType, query, speciesId) =>
       new Promise((resolve, reject) => {
         let params = {};
 
@@ -135,19 +135,19 @@ const search = {
 
         // Permet de cancel la requête précédente si elle n'a pas encore aboutie
         // (pratique pour un autocomplete triggered à chaque fois qu'on tape un charactère)
-        if (SEARCH_CANCEL_API?.genes?.autoCompleteByType !== null) {
-          SEARCH_CANCEL_API.genes?.autoCompleteByType?.(
+        if (SEARCH_CANCEL_API?.genes?.AutoCompleteByType !== null) {
+          SEARCH_CANCEL_API.genes?.AutoCompleteByType?.(
             '-- Search was canceled because another search was triggered --'
           );
         }
         axiosInstance
           .get(`/?${params.toString()}`, {
             cancelToken: new axios.CancelToken((c) => {
-              SEARCH_CANCEL_API.genes.autoCompleteByType = c;
+              SEARCH_CANCEL_API.genes.AutoCompleteByType = c;
             }),
           })
           .then(({ data }) => {
-            SEARCH_CANCEL_API.genes.autoCompleteByType = null;
+            SEARCH_CANCEL_API.genes.AutoCompleteByType = null;
             return resolve(data);
           })
           .catch((error) => {

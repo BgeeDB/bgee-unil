@@ -6,11 +6,11 @@ import { getIdAndNameLabel } from '../../../../../../helpers/selects';
 const Tissues = ({
   selectedTissue,
   setSelectedTissue,
-  autoCompleteByType,
+  AutoCompleteByType,
   hasTissueSubStructure,
   setHasTissueSubStructure,
 }) => {
-  const getTissueOptions = autoCompleteByType('anat_entity', (result) => ({
+  const getTissueOptions = AutoCompleteByType('anat_entity', (result) => ({
     label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,
