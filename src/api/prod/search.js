@@ -390,8 +390,9 @@ const search = {
         }
 
         if (form.isFirstSearch) {
-          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
-
+          if (!isOnlyCounts) {
+            params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          }
           // On envoie toutes les valeurs contenu dans l'url
           // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
           // de première arrivée sur la page
