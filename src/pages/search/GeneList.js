@@ -104,7 +104,7 @@ const GeneList = () => {
 
   const onFilter = React.useCallback(
     (searchReg) => (element) => {
-      const regExp = new RegExp(searchReg, 'gi');
+      const regExp = new RegExp(searchReg);
       return (
         Boolean(regExp.test(element.gene.geneId)) ||
         Boolean(

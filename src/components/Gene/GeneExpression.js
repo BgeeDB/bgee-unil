@@ -443,7 +443,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
   );
   const onFilter = React.useCallback(
     (search) => (element) => {
-      const regExp = new RegExp(search, 'gi');
+      const regExp = new RegExp(search);
       return (
         regExp.test(element?.condition?.anatEntity?.id) ||
         regExp.test(element?.condition?.anatEntity?.name) ||
