@@ -211,6 +211,10 @@ const useLogic = (isExprCalls) => {
   // filters
   const [filters, setFilters] = useState({});
 
+  // Will determine if the User clicked on a link to come on Raw-Data page even though he is already on it
+  // The page will reset to it default state
+  const [needToResetThePage, setNeedToResetThePage] = useState(false);
+
   useEffect(() => {
     const sp = new URLSearchParams(loc.search);
     const nextLimit = sp.get('limit');
@@ -221,7 +225,31 @@ const useLogic = (isExprCalls) => {
     if (nextPageNumber !== null) {
       setPageNumber(nextPageNumber);
     }
+
+    // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
+    // If there is no search variable we set back the page to it default state.
+    if(!loc.search && !isFirstSearch){
+      resetForm(false, true);
+    }
+
   }, [loc.search]);
+
+  useEffect(() => {
+    if (needToResetThePage) {
+      // We set FirstSearch at TRUE so we don't trigger all the useEffect that checks for it
+      setIsFirstSearch(true);
+      setDataType(initDataType);
+      setDataTypesExpCalls(initDataTypeExpCalls);
+      setPageType(isExprCalls ? EXPR_CALLS : initPageType);
+
+      setIsFirstSearch(false);
+      setLocalCount({});
+      triggerCounts();
+      triggerSearch(true, true);
+
+      setNeedToResetThePage(false);
+    }
+  }, [needToResetThePage]);
 
   const onChangeSpecies = (newSpecies) => {
     setSelectedSpecies(newSpecies);
@@ -734,7 +762,7 @@ const useLogic = (isExprCalls) => {
     }
   };
 
-  const resetForm = (isSpeciesChange = false) => {
+  const resetForm = (isSpeciesChange = false, pageWillBeReset = false) => {
     setSelectedCellTypes([]);
     setSelectedGene([]);
     setSelectedStrain([]);
@@ -747,6 +775,9 @@ const useLogic = (isExprCalls) => {
     if (!isSpeciesChange) {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
+    }
+    if (pageWillBeReset) {
+      setNeedToResetThePage(true);
     }
   };
 
