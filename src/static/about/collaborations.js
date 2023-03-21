@@ -55,7 +55,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: `${config.ftpDomain}/easybgee_dump.tar.gz`,
+            path: `${config.ftpDomain}/easybgee_dump.sql.gz`,
             text: 'Bgee FTP',
           },
           {
@@ -195,7 +195,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: `${config.ftpDomain}/collaboration/branch_length_expression_divergence/`,
+            path: `${config.genericDomain}/ftp/bgee_v14_1/collaboration/branch_length_expression_divergence/`,
             text: 'Bgee FTP',
           },
           {
@@ -255,7 +255,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: `${config.ftpDomain}//collaboration/oncoMX/`,
+            path: `${config.genericDomain}/ftp/bgee_v14_2/collaboration/oncoMX/`,
             text: 'Bgee FTP',
           },
           {
