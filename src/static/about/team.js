@@ -110,7 +110,7 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Moretti, Sébastien',
+                content: 'Moretti, S&eacute;bastien',
               },
               {
                 type: 'text',
@@ -138,7 +138,7 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Bastian, Frédéric',
+                content: 'Bastian, Fr&eacute;d&eacute;ric',
               },
               {
                 type: 'text',
@@ -186,7 +186,7 @@ const team = [
         children: [
           {
             type: 'text',
-            content: 'Comte, Aurélie',
+            content: 'Comte, Aur&eacute;lie',
           },
           {
             type: 'text',

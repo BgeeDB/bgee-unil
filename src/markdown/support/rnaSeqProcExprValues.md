@@ -337,7 +337,7 @@ $ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 12)_{Gene ID (column 4)})
 
 Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 
-The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value ≤ \alpha$.
+The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value &#8804; \alpha$.
 In the download files we used $\alpha = 0.05$.
 
 ##### <a name="state-in-bgee-column-17"></a>State in Bgee (column 17)

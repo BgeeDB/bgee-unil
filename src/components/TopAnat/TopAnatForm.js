@@ -620,7 +620,7 @@ const TopAnatForm = ({
                   >
                     p-value threshold
                     <HelpIcon
-                      title="p‑value threshold"
+                      title="p-value threshold"
                       style={{
                         position: 'absolute',
                       }}

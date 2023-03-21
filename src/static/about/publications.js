@@ -42,7 +42,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  ' Nucleic Acids Research, Volume 49, Issue D1, 8 January 2021, Pages D831–D847. ',
+                  ' Nucleic Acids Research, Volume 49, Issue D1, 8 January 2021, Pages D831-D847. ',
               },
               {
                 type: 'link_external',
@@ -244,7 +244,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Scornavacca, Celine; Delsuc, Frédéric; Galtier, Nicolas. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
+                  'Scornavacca, Celine; Delsuc, Fr&eacute;d&eacute;ric; Galtier, Nicolas. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
               },
             ],
           },
@@ -318,7 +318,7 @@ const publications = [
               },
               {
                 type: 'link_external',
-                text: 'The SIB Swiss Institute of Bioinformatics’ resources: focus on curated databases',
+                text: 'The SIB Swiss Institute of Bioinformatics\' resources: focus on curated databases',
                 path: 'https://doi.org/10.1093/nar/gkv1310',
               },
               {
@@ -331,7 +331,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Nucleic Acids Research.Volume 44, Issue D1, 4 January 2016, Pages D27–D37.',
+                  'Nucleic Acids Research.Volume 44, Issue D1, 4 January 2016, Pages D27-D37.',
               },
             ],
           },
@@ -389,7 +389,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bioinformatics. Volume 30, Issue 10, 15 May 2014, Pages 1392–1399.',
+                  'Bioinformatics. Volume 30, Issue 10, 15 May 2014, Pages 1392-1399.',
               },
             ],
           },
@@ -419,7 +419,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bioinformatics.Volume 28, Issue 7, 1 April 2012, Pages 1017–1020.',
+                  'Bioinformatics.Volume 28, Issue 7, 1 April 2012, Pages 1017-1020.',
               },
             ],
           },
