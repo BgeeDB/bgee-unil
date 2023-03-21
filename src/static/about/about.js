@@ -56,7 +56,7 @@ const about = [
               },
               {
                 text: 'gene search',
-                path: '/search/gene',
+                path: '/search/genes',
                 type: 'link_internal',
               },
               {
@@ -161,7 +161,7 @@ const about = [
             content: [
               {
                 text: 'gene expression calls',
-                path: '/download/gene-expr-calls',
+                path: '/download/gene-expression-calls',
                 type: 'link_internal',
               },
               {
@@ -176,7 +176,7 @@ const about = [
             content: [
               {
                 text: 'processed expression values',
-                path: '/download/proc-values',
+                path: '/download/processed-expression-values',
                 type: 'link_internal',
               },
               {
@@ -358,7 +358,7 @@ const about = [
           {
             type: 'text',
             content:
-              ' from Switzerland. Although CC0 doesn’t legally require users of the data to cite the source, if you intend to use data from Bgee, it would be nice to cite us.',
+              ' from Switzerland. Although CC0 doesn\'t legally require users of the data to cite the source, if you intend to use data from Bgee, it would be nice to cite us.',
           },
         ],
       },
