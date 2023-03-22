@@ -423,6 +423,9 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
               case 'RNA-Seq':
                 source[RNA_SEQ] = true;
                 break;
+              case 'single-cell RNA-Seq':
+                source[ID_FULL_LENGTH] = true;
+                break;
               case 'full length single cell RNA-Seq': // @Don't change Full-length
                 source[ID_FULL_LENGTH] = true;
                 break;
