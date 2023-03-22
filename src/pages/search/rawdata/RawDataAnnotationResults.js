@@ -207,7 +207,7 @@ const RawDataAnnotationResults = ({
     const base = `data:text/tab-separated-values;charset=utf-8,`;
     const colHeaders = [];
 
-    // On créer les header des columns en filtrant les export = false
+    // We create column headers by filtering the export = false
     columnDescriptions
       .filter((col) => col.export)
       .forEach((column) => {
@@ -217,12 +217,12 @@ const RawDataAnnotationResults = ({
     tsv += '%0D%0A'; // carriage return
 
     const columnsToExport = columnDescriptions
-      .map((c, i) => ({ ...c, indexForExport: i })) // ajout d'index pour savoir OÙ récupere la valeur dans result
-      .filter((col) => col.export); // filtres les export = false
+      .map((c, i) => ({ ...c, indexForExport: i })) // Add indexes to know where to get the value in result
+      .filter((col) => col.export); // Filter the export = false
 
     mappedResults.forEach((row) => {
       const rowTxt = columnsToExport
-        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // ne récupère QUe les résultats des colums à exporter
+        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // Get ONLY results of columns to export
         .join('%09');
       tsv += `${rowTxt}%0D%0A`; // carriage return
     });

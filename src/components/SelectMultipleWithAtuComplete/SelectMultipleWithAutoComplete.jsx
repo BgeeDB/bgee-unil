@@ -18,7 +18,7 @@ const SelectMultipleWithAutoComplete = ({
   placeholder,
   autoFocus = false,
   minCharToSearch = 1,
-  selectedOptions = [], // Tableau des options selectionnées [{label:'', value''}, {label:'', value''}...]
+  selectedOptions = [], // Table of selected options [{label:'', value''}, {label:'', value''}...]
   setSelectedOptions,
   optionActions,
   className,
@@ -38,10 +38,10 @@ const SelectMultipleWithAutoComplete = ({
         setIsLoading(true);
 
         /**
-         * Les valeurs sont a mapper correctement dans la getOptionsFunction;
-         * Pour un affichage correct voici ce qu'il faut renvoyer :
-         * - label: Label à afficher dans les options
-         * - value: id de la valeur
+         * Values have to be mapped properly in getOptionsFunction;
+		 * For a proper display here are what need to be sent:
+		 * - label: Label to display in options
+		 * - value: value id
          */
         const valueOrPromise = getOptionsFunction(val);
 
@@ -103,14 +103,14 @@ const SelectMultipleWithAutoComplete = ({
   const renderOptionWithCheckbox = ({ data, ...otherProps }) => {
     const optionLabel = data?.label || '';
 
-    // Split la string sur la regexp case insensitive en mode globale
-    // Le tableau retourné est donc la MÊME string découpée aux endroits du match
-    // Il suffit de colorer les index impaires
+    // Split the string based on the regexp, globally and case insensitively
+    // The returned table is the SAME string, split at matched points
+    // Odd indexes need to be colored
     const splitted = search
       ? optionLabel.split(new RegExp(`(${escapeRegexp(search)})`, 'ig'))
       : [optionLabel];
 
-    // Pour le "rare" cas des synonyms retournés par la recherche
+    // For "rare" cases of synonyms returned by the search
     let matchFrom = '';
     if (
       data?.result &&

@@ -120,8 +120,8 @@ const search = {
       new Promise((resolve, reject) => {
         let params = {};
 
-        // /!\ voué à changer après demande au client pour que toutes les search_autocomplete soit
-        // pareil ... il faura donc enlever le if gene ici
+        // /!\ will change after asking to the client that all search_autocomplete are the same
+        // The "if gene" here will then be removed
         if (searchType === 'gene') {
           params = DEFAULT_PARAMETERS('gene');
         } else {
@@ -133,8 +133,8 @@ const search = {
         params.append('query', `${query}`);
         params.append('limit', 20);
 
-        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
-        // (pratique pour un autocomplete triggered à chaque fois qu'on tape un charactère)
+        // Allow to cancel the previous request if it is not yet completed
+        // (convinient for an autocomplete triggered everytime a character is taped)
         if (SEARCH_CANCEL_API?.genes?.AutoCompleteByType !== null) {
           SEARCH_CANCEL_API.genes?.AutoCompleteByType?.(
             '-- Search was canceled because another search was triggered --'
@@ -343,27 +343,27 @@ const search = {
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', form.pageType);
 
-        // Ici on force le pageType dans l'url pour le retrouver
-        // ( en effet "data" est utilisé par le hash aussi donc on ne peut pas l'utilisé comme key)
+        // Here we force the pageType in the URL to retrieve it
+        // ("data" is used by the hash too, so we cannot use it as key)
         params.append('pageType', form.pageType);
 
-        // On demande le count des résultats (pour le "localCount")
+        // We ask for the result count (for the "localCount")
         params.append('get_result_count', '1');
 
-        // Patch qui servait à forcer un gène dans les paramètres d'envoie pour éviter des
-        // requêtes exessivement longues ( du cache côté server à été mis en place depuis )
+        // Patch used to force a gene in the query parameters to avoid too long requests
+        // (A server cache has been set since)
         // _____________________________________________________________________________
         // if (
         //   form.pageType === 'proc_expr_values' &&
         //   form.selectedGene?.length === 0
         // ) {
         //   console.warn('FAKE FILTER GENE ACTIVATED !');
-        //   // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
+        //   // human gene to avoid too long requests when no gene specified!
         //   params.append('gene_id', 'ENSG00000158813');
 
-        //   // et si jamais il n'y a pas d'espèce selectionnée...
-        //   // ( ce qui est obligatoire pour mettre un filtre de gène)
-        //   // on force aussi à l'espèce humaine
+        //   // and if there is no selected species...
+        //   // (this is mandatory to use a gene filter)
+        //   // we also force human as species
         //   if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
         //     params.append('species_id', '9606');
         //   }
@@ -379,7 +379,7 @@ const search = {
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
-          // Pour pouvoir extraire les paire de clés-valeur à pré-remplir dans le formulaire
+          // To be able to extract key-value pairs to pre-fill the form
           params.append('display_rp', '1');
 
           const offset = form?.limit * (form?.pageNumber - 1);
@@ -390,11 +390,11 @@ const search = {
         }
 
         if (form.isFirstSearch) {
-          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          params.append('detailed_rp', '1'); // To get filters initial values
 
-          // On envoie toutes les valeurs contenu dans l'url
-          // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
-          // de première arrivée sur la page
+          // We send all values contained in the URL
+          // that is to say the initSearch combined with "base" parameters which are the only parameters
+          // in case of first arrival on the page
           // eslint-disable-next-line no-restricted-syntax
           for (const [key, val] of form?.initSearch) {
             if (
@@ -404,14 +404,14 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              /* Pour la première recherche on ne met pas les "filter_*" dans le count !
+              /* For the 1st search we don't put "filter_*" in the count!
               if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) { */
                 params.append(key, val);
               // }
             }
           }
         } else {
-          // Si pas de hash on envoie tous les paramètres séparéments
+          // If no hash, we send all parameters separately
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
@@ -455,7 +455,7 @@ const search = {
             params.append('cond_observed', form?.condObserved);
           }
 
-          // Application des filtres ! (VS form)
+          // Application of filters! (VS form)
           if (form?.filters && !isOnlyCounts) {
             // eslint-disable-next-line no-restricted-syntax
             for (const [key, values] of Object.entries(form.filters)) {
@@ -466,8 +466,8 @@ const search = {
           }
         }
 
-        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
-        // Pour ne pas avoir de "recouvrement de données en changeant trop vite d'onglet"
+        // Allow to cancel the previous request if it is not yet completed
+        // to not have a "recovery of data when changing tab too quickly"
         let typeToken = '';
         if (isOnlyCounts) {
           typeToken = 'count';
