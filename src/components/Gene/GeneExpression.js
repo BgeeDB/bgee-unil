@@ -393,6 +393,12 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           if (data.requestedConditionParameters.find((r) => r === 'Strain')) {
             searchParams += `&strain=${cell?.condition?.strain}`;
           }
+          if (data.requestedConditionParameters.find((r) => r === 'Cell type')) {
+            // cellType can sometimes be undefined
+            if (cell?.condition?.cellType?.id) {
+              searchParams += `&cell_type_id=${cell?.condition?.cellType?.id}`;   
+            }
+          }
           return (
             <Link to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?${searchParams}`}>
               See source data
@@ -404,7 +410,6 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           return defaultRender(cell.condition.sex, key);
         case 'sources':
           const col = columns.find((c) => c.key === key);
-          console.log('cell = ', cell);
           const source = {};
           ALL_DATA_TYPES.forEach((dt) => {
             source[dt.id] = false;
