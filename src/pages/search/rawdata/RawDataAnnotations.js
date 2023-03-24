@@ -90,6 +90,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     triggerCounts,
     setPageType,
     addConditionalParam,
+    getSearchParams,
   } = useLogic(isExprCalls);
 
   const defaultResults = searchResult?.results?.[dataType] || [];
@@ -148,6 +149,44 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     }
   }, [pageType, localCount, dataType]);
 
+  const parameterFromForm = (() => {
+    // When the user right-click and 'open new' we need to pass only the parameter from the form, not those from the filters
+    const params = getSearchParams();
+    let urlParamsWithoutPageType = '';
+    if (params.dataType) {
+      urlParamsWithoutPageType += `&data_type=${params.dataType}`;
+    }
+    if (params.selectedSpecies) {
+      urlParamsWithoutPageType += `&species_id=${params.selectedSpecies}`;
+    }
+    params.selectedGene.forEach(gene => {
+      urlParamsWithoutPageType += `&gene_id=${gene}`;
+    });
+    params.selectedTissue.forEach(tissue => {
+      urlParamsWithoutPageType += `&anat_entity_id=${tissue}`;
+    });
+    params.selectedCellTypes.forEach(cell => {
+      urlParamsWithoutPageType += `&cell_type_id=${cell}`;
+    });
+    params.selectedDevStages.forEach(stage => {
+      urlParamsWithoutPageType += `&stage_id=${stage}`;
+    });
+    params.selectedStrain.forEach(strain => {
+      urlParamsWithoutPageType += `&strain=${strain}`;
+    });
+    params.selectedExpOrAssay.forEach(expOrAssay => {
+      urlParamsWithoutPageType += `&exp_assay_id=${expOrAssay}`;
+    });
+    params.selectedSexes.forEach(sexe => {
+      urlParamsWithoutPageType += `&sex=${sexe}`;
+    });
+    urlParamsWithoutPageType += `&anat_entity_descendant=${params.hasTissueSubStructure}`;
+    urlParamsWithoutPageType += `&cell_type_descendant=${params.hasCellTypeSubStructure}`;
+    urlParamsWithoutPageType += `&stage_descendant=${params.hasDevStageSubStructure}`;
+
+    return urlParamsWithoutPageType;
+  });
+
   return (
     <>
       <div className="rawDataAnnotation">
@@ -162,7 +201,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               return (
                 <a
                   onClick={(e) => changePageType(e, type.id)}
-                  href={`/search/raw-data?pageType=${type.id}`}
+                  href={`/search/raw-data?pageType=${type.id}${parameterFromForm()}`}
                   key={type.id}
                   className={`ongletPages is-centered py-2 px-5 ${
                     isActive ? 'pageActive' : ''

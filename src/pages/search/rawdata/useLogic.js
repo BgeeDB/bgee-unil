@@ -228,7 +228,7 @@ const useLogic = (isExprCalls) => {
 
     // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
     // If there is no search variable we set back the page to it default state.
-    if(!loc.search && !isFirstSearch){
+    if(!loc.search && !isFirstSearch && !isLoading){
       resetForm(false, true);
     }
 
@@ -403,10 +403,6 @@ const useLogic = (isExprCalls) => {
             label: devStageId,
             value: devStageId,
           });
-          console.log(
-            '[FILLING SEARCH FORM] Dev stage NOT FOUND  : ',
-            devStageId
-          );
         }
       });
       setSelectedDevStages(initDevStage);
@@ -594,13 +590,10 @@ const useLogic = (isExprCalls) => {
       params.filters = {};
       setFilters({});
     }
-    // console.log('[TRIGGER SEARCH] params = ', params);
     setIsLoading(true);
-    console.log(`params Search : ${  JSON.stringify(params)}`)
     return api.search.rawData
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
-        console.log(`search api : ${  JSON.stringify(paramsURLCalled)}`)
         if (resp.code === 200) {
           // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
           if (isFirstSearch) {
@@ -695,10 +688,8 @@ const useLogic = (isExprCalls) => {
             ? { assayCount: resp?.data?.expressionCallCount }
             : resp?.data?.resultCount?.[dataType]
         );
-        console.log(resp?.data)
       })
       .catch(() => {
-        // console.log('[error triggerSearch] e = ', e);
         // On enlève tous les paramètres qu'on a pu envoyer
         history.replace(loc.pathname);
         setIsLoading(false);
@@ -717,17 +708,14 @@ const useLogic = (isExprCalls) => {
         setFilters({});
       }
     const params = getSearchParams();
-    console.log(`params Counts : ${  JSON.stringify(params)}`)
     if (!isExprCalls) {
       setIsCountLoading(true);
       api.search.rawData
         .search(params, true)
-        .then(({ resp, paramsURLCalled }) => {
-          console.log(`Counts api : ${  JSON.stringify(paramsURLCalled)}`)
+        .then(({ resp }) => {
           if (resp.code === 200) {
             setIsCountLoading(false);
             setAllCounts(resp?.data?.resultCount);
-            console.log(resp)
           }
         })
         .catch(() => {
@@ -877,6 +865,7 @@ const useLogic = (isExprCalls) => {
     triggerSearch,
     triggerCounts,
     addConditionalParam,
+    getSearchParams,
   };
 };
 
