@@ -87,11 +87,11 @@ Advanced file information:
 |18|[Affymetrix call quality](#affymetrix-call-quality-column-18 "See Affymetrix call quality column description")|No|Yes|No|Yes|NA|
 |19|[Affymetrix FDR](#affymetrix-fdr-column-19 "See Affymetrix FDR column description")|No|Yes|No|Yes|NA|
 |20|[Affymetrix expression score](#affymetrix-expression-score-column-20 "See Affymetrix expression score column description")|No|Yes|No|Yes|NA|
-|21|[Affymetrix expression rank](#affymetrix-expression-rank-column-17 "See Affymetrix expression rank column description")|No|Yes|No|Yes|NA|
-|22|[Affymetrix weight for expression rank and score](#affymetrix-weight-column-17 "See Affymetrix weight for expression rank and score column description")|No|Yes|No|Yes|NA|
-|23|[Including Affymetrix observed data](#including-affymetrix-observed-data-column-17 "See Including Affymetrix observed data column description")|No|Yes|No|Yes|no|
-|24|[Self observation count Affymetrix](#self-observation-count-affymetrix-column-17 "See Self observation count Affymetrix column description")|No|Yes|No|Yes|0|
-|25|[Descendant observation count Affymetrix](#descendant-observation-count-affymetrix-column-17 "See Descendant observation count Affymetrix column description")|No|Yes|No|Yes|0|
+|21|[Affymetrix expression rank](#affymetrix-expression-rank-column-21 "See Affymetrix expression rank column description")|No|Yes|No|Yes|NA|
+|22|[Affymetrix weight for expression rank and score](#affymetrix-weight-column-22 "See Affymetrix weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|23|[Including Affymetrix observed data](#including-affymetrix-observed-data-column-23 "See Including Affymetrix observed data column description")|No|Yes|No|Yes|no|
+|24|[Self observation count Affymetrix](#self-observation-count-affymetrix-column-24 "See Self observation count Affymetrix column description")|No|Yes|No|Yes|0|
+|25|[Descendant observation count Affymetrix](#descendant-observation-count-affymetrix-column-25 "See Descendant observation count Affymetrix column description")|No|Yes|No|Yes|0|
 |26|[EST expression](#est-expression-column-26 "See EST expression column description")|No|Yes|No|Yes|no data|
 |27|[EST call quality](#est-call-quality-column-27 "See EST call quality column description")|No|Yes|No|Yes|NA|
 |28|[EST FDR](#est-fdr-column-28 "See EST FDR column description")|No|Yes|No|Yes|NA|
@@ -218,27 +218,27 @@ Score of expression to the call from Affymetrix data. The score uses the minimum
 
 Low score means that the gene is lowly expressed in the condition.
 
-##### <a name="affymetrix-expression-rank-column-17"></a>Affymetrix expression rank (column 21)
+##### <a name="affymetrix-expression-rank-column-21"></a>Affymetrix expression rank (column 21)
 
 Rank score associated to the call from Affymetrix data. Rank scores of expression calls are normalized across genes, conditions and species.
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="affymetrix-weight-column-17"></a>Affymetrix weight for expression rank and score (column 22)
+##### <a name="affymetrix-weight-column-22"></a>Affymetrix weight for expression rank and score (column 22)
 
 The weight given to Affymetrix expression ranks and scores when computing the weighted mean over several data types.
 
-##### <a name="including-affymetrix-observed-data-column-17"></a>Including Affymetrix observed data (column 23)
+##### <a name="including-affymetrix-observed-data-column-23"></a>Including Affymetrix observed data (column 23)
 
 Information about the calls actually coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
 
 Permitted value: `yes` or `no`
 
-##### <a name="self-observation-count-affymetrix-column-17"></a>Self observation count Affymetrix (column 24)
+##### <a name="self-observation-count-affymetrix-column-24"></a>Self observation count Affymetrix (column 24)
 
 Number of observation coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
 
-##### <a name="descendant-observation-count-affymetrix-column-17"></a>Descendant observation count Affymetrix (column 25)
+##### <a name="descendant-observation-count-affymetrix-column-25"></a>Descendant observation count Affymetrix (column 25)
 
 Number of observation coming from experimental Affymetrix data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
