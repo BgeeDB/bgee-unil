@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Button from '../../../components/Bulma/Button/Button';
 import './rawDataAnnotations.scss';
@@ -93,6 +94,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     getSearchParams,
   } = useLogic(isExprCalls);
 
+  const loc = useLocation();
   const defaultResults = searchResult?.results?.[dataType] || [];
   const resultExprsCall = searchResult?.expressionData?.expressionCalls || [];
   const results = isExprCalls ? resultExprsCall : defaultResults;
@@ -187,6 +189,15 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     return urlParamsWithoutPageType;
   });
 
+  const parameterInCurrentUrlWithoutPageType = (() => {
+    const params = new URLSearchParams( loc.search );
+    params.delete('pageType');
+    if (params) {
+      return `&${params.toString()}`;
+    }
+    return '';
+  });
+
   return (
     <>
       <div className="rawDataAnnotation">
@@ -201,7 +212,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               return (
                 <a
                   onClick={(e) => changePageType(e, type.id)}
-                  href={`/search/raw-data?pageType=${type.id}${parameterFromForm()}`}
+                  href={`/search/raw-data?pageType=${type.id}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
                   key={type.id}
                   className={`ongletPages is-centered py-2 px-5 ${
                     isActive ? 'pageActive' : ''
