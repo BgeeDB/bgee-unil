@@ -339,7 +339,7 @@ const search = {
       }),
   },
   rawData: {
-    search: (form, isOnlyCounts) =>
+    search: (form, isOnlyCounts, bypassInitSearchParam = false) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', form.pageType);
 
@@ -389,7 +389,7 @@ const search = {
           params.append('pageNumber', form?.pageNumber);
         }
 
-        if (form.isFirstSearch) {
+        if (form.isFirstSearch && !bypassInitSearchParam) {
           params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
 
           // On envoie toutes les valeurs contenu dans l'url
@@ -404,10 +404,12 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              /* Pour la première recherche on ne met pas les "filter_*" dans le count !
-              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) { */
+              // Pour la première recherche on n'envoit pas les filtres si on demande OnlyCount
+              // onlyCount => tous les paramètres sauf les filtres
+              //! Ce système ne marche que lorsque l'url ne contient pas de Hash
+              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) {
                 params.append(key, val);
-              // }
+              }
             }
           }
         } else {
@@ -456,11 +458,10 @@ const search = {
           }
 
           // Application des filtres ! (VS form)
-          if (form?.filters && !isOnlyCounts) {
+          // Si filters_for_all on applique les filtres mêmes si OnlyCount
+          if ( (form?.filters && !isOnlyCounts) || (isOnlyCounts && form?.initSearch.get('filters_for_all')) ) {
             // eslint-disable-next-line no-restricted-syntax
             for (const [key, values] of Object.entries(form.filters)) {
-              // console.log('key = ', key);
-              // console.log('values = ', values);
               values.forEach((obj) => params.append(key, obj.value));
             }
           }
