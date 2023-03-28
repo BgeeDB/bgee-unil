@@ -127,7 +127,22 @@ const columnsGenerator = (cFields, data) => () => {
   return c;
 };
 const AnatEntityCell = ({ cell }) => {
-  const cellInfo = [
+  const cellInfo = [];
+
+  if (cell.condition.cellType) {
+    cellInfo.push(
+      <LinkExternal
+      key={`link-${cell.condition.cellType.id}`}
+      to={obolibraryLinkFromID(cell.condition.cellType.id)}
+      className="mr-1"
+      >
+        {cell.condition.cellType.id}
+      </LinkExternal>
+    );
+    cellInfo.push(<i key="link-in"> in </i>);
+  }
+
+  cellInfo.push(
     <LinkExternal
       key={`link-${cell.condition.anatEntity.id}`}
       to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
@@ -135,19 +150,7 @@ const AnatEntityCell = ({ cell }) => {
     >
       {cell.condition.anatEntity.id}
     </LinkExternal>,
-  ];
-  if (cell.condition.cellType) {
-    cellInfo.push(<i key="link-in"> in </i>);
-    cellInfo.push(
-      <LinkExternal
-        key={`link-${cell.condition.cellType.id}`}
-        to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
-        className="mr-1"
-      >
-        {cell.condition.cellType.id}
-      </LinkExternal>
-    );
-  }
+  );
 
   if (cell.condition.cellType) {
     cellInfo.push(
