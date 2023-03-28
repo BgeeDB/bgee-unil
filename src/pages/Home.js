@@ -204,7 +204,14 @@ const Home = () => {
             See all news
           </Link>
         </div>
-        <NavButtons className="my-6 " />
+      </Bulma.Section>
+      <Bulma.Hero className="home-hero-banner">
+        <Bulma.Hero.Body className="pt-3">
+          <NavButtons />
+        </Bulma.Hero.Body>
+      </Bulma.Hero>
+
+      <Bulma.Section>
         <Bulma.Columns>
           <Bulma.C size={config.archive ? 12 : 9}>
             <CreativeCommons />
