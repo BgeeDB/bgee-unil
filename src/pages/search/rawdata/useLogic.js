@@ -215,6 +215,9 @@ const useLogic = (isExprCalls) => {
   // The page will reset to it default state
   const [needToResetThePage, setNeedToResetThePage] = useState(false);
 
+
+  const [pageCanLoadFirstCount, setPageCanLoadFirstCount] = useState(false);
+
   useEffect(() => {
     const sp = new URLSearchParams(loc.search);
     const nextLimit = sp.get('limit');
@@ -251,6 +254,12 @@ const useLogic = (isExprCalls) => {
     }
   }, [needToResetThePage]);
 
+  useEffect(() => {
+    if (pageCanLoadFirstCount) {
+      triggerCounts(false, true);
+    }
+  }, [pageCanLoadFirstCount])
+
   const onChangeSpecies = (newSpecies) => {
     setSelectedSpecies(newSpecies);
     setSelectedCellTypes([]);
@@ -268,7 +277,7 @@ const useLogic = (isExprCalls) => {
 
   useEffect(() => {
     triggerSearch();
-    triggerCounts();
+    setIsCountLoading(true);
 
     // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
     history.listen(() => {
@@ -511,6 +520,8 @@ const useLogic = (isExprCalls) => {
         setCondObserved(false);
       }
     }
+
+    setPageCanLoadFirstCount(true);
   };
 
   const getSearchParams = () => {
@@ -702,16 +713,19 @@ const useLogic = (isExprCalls) => {
   };
 
   const triggerCounts = async (    
-    cleanFilters = false,) => {
-      if (cleanFilters) {
-        params.filters = {};
-        setFilters({});
-      }
+    cleanFilters = false,
+    bypassInitSearchParam = false
+  ) => {
     const params = getSearchParams();
+    if (cleanFilters) {
+      params.filters = {};
+      setFilters({});
+    }
+
     if (!isExprCalls) {
       setIsCountLoading(true);
       api.search.rawData
-        .search(params, true)
+        .search(params, true, bypassInitSearchParam)
         .then(({ resp }) => {
           if (resp.code === 200) {
             setIsCountLoading(false);
