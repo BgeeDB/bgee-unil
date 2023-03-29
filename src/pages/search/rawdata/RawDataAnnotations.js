@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Button from '../../../components/Bulma/Button/Button';
@@ -95,6 +95,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   } = useLogic(isExprCalls);
 
   const loc = useLocation();
+  const [pageIsBrowseResult, setPageIsBrowseResult] = useState(false);
   const defaultResults = searchResult?.results?.[dataType] || [];
   const resultExprsCall = searchResult?.expressionData?.expressionCalls || [];
   const results = isExprCalls ? resultExprsCall : defaultResults;
@@ -114,9 +115,17 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     ? TAB_PAGE_EXPR_CALL
     : TAB_PAGE.find((d) => d.id === pageType);
 
+  useEffect(() => {
+    const params = getSearchParams();
+    if (params?.initSearch?.get('filters_for_all') === '1') {
+      setPageIsBrowseResult(true);
+    }
+  }, [])
+
   const changePageType = (e, newPageType) => {
     e.preventDefault();
     e.stopPropagation();
+    setPageIsBrowseResult(false);
     setPageType(newPageType);
   };
 
@@ -198,6 +207,13 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     return '';
   });
 
+  const filterForAllParameter = (() => {
+    if (pageIsBrowseResult) {
+      return "&filters_for_all=1";
+    }
+    return '';
+  });
+
   return (
     <>
       <div className="rawDataAnnotation">
@@ -212,7 +228,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               return (
                 <a
                   onClick={(e) => changePageType(e, type.id)}
-                  href={`/search/raw-data?pageType=${type.id}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
+                  href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
                   key={type.id}
                   className={`ongletPages is-centered py-2 px-5 ${
                     isActive ? 'pageActive' : ''
