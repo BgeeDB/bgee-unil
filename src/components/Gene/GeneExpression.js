@@ -127,7 +127,22 @@ const columnsGenerator = (cFields, data) => () => {
   return c;
 };
 const AnatEntityCell = ({ cell }) => {
-  const cellInfo = [
+  const cellInfo = [];
+
+  if (cell.condition.cellType) {
+    cellInfo.push(
+      <LinkExternal
+      key={`link-${cell.condition.cellType.id}`}
+      to={obolibraryLinkFromID(cell.condition.cellType.id)}
+      className="mr-1"
+      >
+        {cell.condition.cellType.id}
+      </LinkExternal>
+    );
+    cellInfo.push(<i key="link-in"> in </i>);
+  }
+
+  cellInfo.push(
     <LinkExternal
       key={`link-${cell.condition.anatEntity.id}`}
       to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
@@ -135,19 +150,7 @@ const AnatEntityCell = ({ cell }) => {
     >
       {cell.condition.anatEntity.id}
     </LinkExternal>,
-  ];
-  if (cell.condition.cellType) {
-    cellInfo.push(<i key="link-in"> in </i>);
-    cellInfo.push(
-      <LinkExternal
-        key={`link-${cell.condition.cellType.id}`}
-        to={obolibraryLinkFromID(cell.condition.anatEntity.id)}
-        className="mr-1"
-      >
-        {cell.condition.cellType.id}
-      </LinkExternal>
-    );
-  }
+  );
 
   if (cell.condition.cellType) {
     cellInfo.push(
@@ -393,6 +396,12 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           if (data.requestedConditionParameters.find((r) => r === 'Strain')) {
             searchParams += `&strain=${cell?.condition?.strain}`;
           }
+          if (data.requestedConditionParameters.find((r) => r === 'Cell type')) {
+            // cellType can sometimes be undefined
+            if (cell?.condition?.cellType?.id) {
+              searchParams += `&cell_type_id=${cell?.condition?.cellType?.id}`;   
+            }
+          }
           return (
             <Link to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?${searchParams}`}>
               See source data
@@ -404,7 +413,6 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           return defaultRender(cell.condition.sex, key);
         case 'sources':
           const col = columns.find((c) => c.key === key);
-          console.log('cell = ', cell);
           const source = {};
           ALL_DATA_TYPES.forEach((dt) => {
             source[dt.id] = false;
@@ -422,6 +430,9 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                 break;
               case 'RNA-Seq':
                 source[RNA_SEQ] = true;
+                break;
+              case 'single-cell RNA-Seq':
+                source[ID_FULL_LENGTH] = true;
                 break;
               case 'full length single cell RNA-Seq': // @Don't change Full-length
                 source[ID_FULL_LENGTH] = true;

@@ -339,7 +339,7 @@ const search = {
       }),
   },
   rawData: {
-    search: (form, isOnlyCounts) =>
+    search: (form, isOnlyCounts, bypassInitSearchParam = false) =>
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', form.pageType);
 
@@ -389,7 +389,7 @@ const search = {
           params.append('pageNumber', form?.pageNumber);
         }
 
-        if (form.isFirstSearch) {
+        if (form.isFirstSearch && !bypassInitSearchParam) {
           params.append('detailed_rp', '1'); // To get filters initial values
 
           // We send all values contained in the URL
@@ -404,10 +404,12 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              /* For the 1st search we don't put "filter_*" in the count!
-              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) { */
+              // For the 1st search we don't send the filters if we request OnlyCount
+              // onlyCount => all parameters but the filters
+              //! this approach works only when the URL does not contain a hash
+              if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) {
                 params.append(key, val);
-              // }
+              }
             }
           }
         } else {
@@ -455,12 +457,11 @@ const search = {
             params.append('cond_observed', form?.condObserved);
           }
 
-          // Application of filters! (VS form)
-          if (form?.filters && !isOnlyCounts) {
+          // Applying filters! (VS form)
+          // If filters_for_all we apply the filters even if OnlyCount
+          if ( (form?.filters && !isOnlyCounts) || (isOnlyCounts && form?.initSearch.get('filters_for_all')) ) {
             // eslint-disable-next-line no-restricted-syntax
             for (const [key, values] of Object.entries(form.filters)) {
-              // console.log('key = ', key);
-              // console.log('values = ', values);
               values.forEach((obj) => params.append(key, obj.value));
             }
           }

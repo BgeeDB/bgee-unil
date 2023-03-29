@@ -211,6 +211,13 @@ const useLogic = (isExprCalls) => {
   // filters
   const [filters, setFilters] = useState({});
 
+  // Will determine if the User clicked on a link to come on Raw-Data page even though he is already on it
+  // The page will reset to it default state
+  const [needToResetThePage, setNeedToResetThePage] = useState(false);
+
+
+  const [pageCanLoadFirstCount, setPageCanLoadFirstCount] = useState(false);
+
   useEffect(() => {
     const sp = new URLSearchParams(loc.search);
     const nextLimit = sp.get('limit');
@@ -221,7 +228,37 @@ const useLogic = (isExprCalls) => {
     if (nextPageNumber !== null) {
       setPageNumber(nextPageNumber);
     }
+
+    // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
+    // If there is no search variable we set back the page to it default state.
+    if(!loc.search && !isFirstSearch && !isLoading){
+      resetForm(false, true);
+    }
+
   }, [loc.search]);
+
+  useEffect(() => {
+    if (needToResetThePage) {
+      // We set FirstSearch at TRUE so we don't trigger all the useEffect that checks for it
+      setIsFirstSearch(true);
+      setDataType(initDataType);
+      setDataTypesExpCalls(initDataTypeExpCalls);
+      setPageType(isExprCalls ? EXPR_CALLS : initPageType);
+
+      setIsFirstSearch(false);
+      setLocalCount({});
+      triggerCounts();
+      triggerSearch(true, true);
+
+      setNeedToResetThePage(false);
+    }
+  }, [needToResetThePage]);
+
+  useEffect(() => {
+    if (pageCanLoadFirstCount) {
+      triggerCounts(false, true);
+    }
+  }, [pageCanLoadFirstCount])
 
   const onChangeSpecies = (newSpecies) => {
     setSelectedSpecies(newSpecies);
@@ -240,7 +277,7 @@ const useLogic = (isExprCalls) => {
 
   useEffect(() => {
     triggerSearch();
-    triggerCounts();
+    setIsCountLoading(true);
 
     // Allow to detect a browser back btn pressed and force all the worflow to work again by forcing reload @ugly
     history.listen(() => {
@@ -375,10 +412,6 @@ const useLogic = (isExprCalls) => {
             label: devStageId,
             value: devStageId,
           });
-          console.log(
-            '[FILLING SEARCH FORM] Dev stage NOT FOUND  : ',
-            devStageId
-          );
         }
       });
       setSelectedDevStages(initDevStage);
@@ -487,6 +520,8 @@ const useLogic = (isExprCalls) => {
         setCondObserved(false);
       }
     }
+
+    setPageCanLoadFirstCount(true);
   };
 
   const getSearchParams = () => {
@@ -566,13 +601,10 @@ const useLogic = (isExprCalls) => {
       params.filters = {};
       setFilters({});
     }
-    // console.log('[TRIGGER SEARCH] params = ', params);
     setIsLoading(true);
-    console.log(`params Search : ${  JSON.stringify(params)}`)
     return api.search.rawData
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
-        console.log(`search api : ${  JSON.stringify(paramsURLCalled)}`)
         if (resp.code === 200) {
           // post 1st search ( => hash !== null ) we update filters via the detailed_rp
           if (isFirstSearch) {
@@ -667,11 +699,9 @@ const useLogic = (isExprCalls) => {
             ? { assayCount: resp?.data?.expressionCallCount }
             : resp?.data?.resultCount?.[dataType]
         );
-        console.log(resp?.data)
       })
       .catch(() => {
-        // console.log('[error triggerSearch] e = ', e);
-        // We remove all parameters we were not able to send
+        // We remove all parameters we could send
         history.replace(loc.pathname);
         setIsLoading(false);
       })
@@ -683,23 +713,23 @@ const useLogic = (isExprCalls) => {
   };
 
   const triggerCounts = async (    
-    cleanFilters = false,) => {
-      if (cleanFilters) {
-        params.filters = {};
-        setFilters({});
-      }
+    cleanFilters = false,
+    bypassInitSearchParam = false
+  ) => {
     const params = getSearchParams();
-    console.log(`params Counts : ${  JSON.stringify(params)}`)
+    if (cleanFilters) {
+      params.filters = {};
+      setFilters({});
+    }
+
     if (!isExprCalls) {
       setIsCountLoading(true);
       api.search.rawData
-        .search(params, true)
-        .then(({ resp, paramsURLCalled }) => {
-          console.log(`Counts api : ${  JSON.stringify(paramsURLCalled)}`)
+        .search(params, true, bypassInitSearchParam)
+        .then(({ resp }) => {
           if (resp.code === 200) {
             setIsCountLoading(false);
             setAllCounts(resp?.data?.resultCount);
-            console.log(resp)
           }
         })
         .catch(() => {
@@ -772,7 +802,7 @@ const useLogic = (isExprCalls) => {
     }
   };
 
-  const resetForm = (isSpeciesChange = false) => {
+  const resetForm = (isSpeciesChange = false, pageWillBeReset = false) => {
     setSelectedCellTypes([]);
     setSelectedGene([]);
     setSelectedStrain([]);
@@ -785,6 +815,9 @@ const useLogic = (isExprCalls) => {
     if (!isSpeciesChange) {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
+    }
+    if (pageWillBeReset) {
+      setNeedToResetThePage(true);
     }
   };
 
@@ -846,6 +879,7 @@ const useLogic = (isExprCalls) => {
     triggerSearch,
     triggerCounts,
     addConditionalParam,
+    getSearchParams,
   };
 };
 
