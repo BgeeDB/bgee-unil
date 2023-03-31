@@ -277,6 +277,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 setHasTissueSubStructure={
                                   setHasTissueSubStructure
                                 }
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                             <div className="my-2 maxWidth50">
