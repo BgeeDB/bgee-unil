@@ -262,8 +262,8 @@ const RawDataAnnotationResults = ({
             : null
         }
         pagination
+        defaultPaginationSize={50}
         classNamesTable="is-striped"
-        // onSortCustom={customRawListSorter}
         columns={columnDescriptions}
         data={mappedResults}
         customHeader={customHeader}
