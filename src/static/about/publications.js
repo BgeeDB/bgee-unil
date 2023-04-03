@@ -244,7 +244,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Scornavacca, Celine; Delsuc, Fr&eacute;d&eacute;ric; Galtier, Nicolas. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
+                  'Scornavacca C, Delsuc F, Galtier N. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
               },
             ],
           },
