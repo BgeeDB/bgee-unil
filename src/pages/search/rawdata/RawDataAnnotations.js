@@ -467,6 +467,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                   pageType={pageType}
                   pageNumber={pageNumber}
                   isExprCalls={isExprCalls}
+                  searchParams={getSearchParams}
                 />
               )}
             </div>
