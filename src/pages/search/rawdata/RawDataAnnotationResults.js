@@ -41,8 +41,11 @@ const RawDataAnnotationResults = ({
   dataType,
   pageNumber,
   isExprCalls,
+  searchParams
 }) => {
   const loc = useLocation();
+
+  console.log(searchParams());
 
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
@@ -181,11 +184,11 @@ const RawDataAnnotationResults = ({
               );
 
               currentSP.delete('cell_type_descendant');
-              currentSP.append('cell_type_descendant', true);
+              currentSP.append('cell_type_descendant', searchParams().hasCellTypeSubStructure ?? false);
               currentSP.delete('stage_descendant');
-              currentSP.append('stage_descendant', true);
+              currentSP.append('stage_descendant', searchParams().hasDevStageSubStructure ?? false);
               currentSP.delete('anat_entity_descendant');
-              currentSP.append('anat_entity_descendant', true);
+              currentSP.append('anat_entity_descendant', searchParams().hasTissueSubStructure ?? false);
               return {
                 type: col.columnType,
                 content: 'Browse results',
