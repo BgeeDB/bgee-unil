@@ -39,6 +39,7 @@ import CollaborationsFile from '../static/about/collaborations';
 import PublicationsFile from '../static/about/publications';
 import VideoFile from '../static/about/videos';
 import TeamFile from '../static/about/team';
+import SABFile from '../static/about/bgeesab';
 import PrivacyPolicyFile from '../static/about/privacyPolicy';
 
 import Error from '../pages/Error';
@@ -300,6 +301,15 @@ const ABOUT = {
       title: 'Bgee team',
       description: 'The Bgee team from SIB/UNIL',
       keywords: 'The Bgee team, Bgee team, SIB bgee, UNIL bgee',
+    },
+  },
+  [PATHS.ABOUT.BGEESAB]: {
+    source: SABFile,
+    title: 'Bgee Scientific Advisory Board',
+    meta: {
+      title: 'Bgee Scientific Advisory Board',
+      description: 'The Bgee Scientific Advisory Board (SAB)',
+      keywords: 'Scientific Advisory Board, SAB',
     },
   },
   [PATHS.ABOUT.PRIVACY_POLICY]: {

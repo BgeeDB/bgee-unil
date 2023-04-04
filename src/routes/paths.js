@@ -52,6 +52,7 @@ const PATHS = {
     VIDEOS: '/about/videos',
     SOURCES: '/about/sources',
     TEAM: '/about/team',
+    BGEESAB: '/about/bgeesab',
     PRIVACY_POLICY: '/about/privacy-policy',
   },
   ERROR: '/error',

@@ -231,6 +231,7 @@ const Router = () => (
                   PATHS.ABOUT.PUBLICATION,
                   PATHS.ABOUT.VIDEOS,
                   PATHS.ABOUT.TEAM,
+                  PATHS.ABOUT.BGEESAB,
                   PATHS.ABOUT.PRIVACY_POLICY,
                 ]}
                 render={(props) => <Page {...props} Component={StaticPage} />}

@@ -223,6 +223,12 @@ const NAVBAR_LEFT = [
         path: PATHS.ABOUT.TEAM,
       },
       {
+        key: 'page.about.bgeesab',
+        title: ROUTES[PATHS.ABOUT.BGEESAB].title,
+        type: 'internal',
+        path: PATHS.ABOUT.BGEESAB,
+      },
+      {
         key: 'page.about.privacy-policy',
         title: ROUTES[PATHS.ABOUT.PRIVACY_POLICY].title,
         type: 'internal',
