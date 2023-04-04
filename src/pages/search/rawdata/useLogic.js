@@ -152,11 +152,10 @@ const useLogic = (isExprCalls) => {
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
   const initHash = initSearch.get('data');
-
   const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const initDataType = initSearch.get('data_type') || DATA_TYPES[0].id;
-  const initDataTypeExpCalls = ALL_DATA_TYPES_ID;
+  const initDataTypeExpCalls = initSearch.getAll('data_type') || ALL_DATA_TYPES_ID;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
   const initPageType = initSearch.get('pageType') || EXPERIMENTS;
@@ -571,7 +570,6 @@ const useLogic = (isExprCalls) => {
     } else {
       params.filters = filters[dataType];
     }
-
     if (isExprCalls) {
       const dataTypeForExpCalls =
         dataTypesExpCalls.length === 0 ? ALL_DATA_TYPES_ID : dataTypesExpCalls;
