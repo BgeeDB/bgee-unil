@@ -7,7 +7,10 @@
 <url><loc>https://bgee.org/about/news</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/privacy-policy</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/publications</loc><priority>0.7</priority></url>
-<url><loc>https://bgee.org/about/source</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/sources</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/videos</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/team</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/sab</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/affymetrix-processed-expression-values</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/data-sets</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/faq</loc><priority>0.7</priority></url>
@@ -29,4 +32,6 @@
 <url><loc>https://bgee.org/search/anatomical-homology</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/search/genes</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/search/species</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/search/expression-calls</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/search/raw-data</loc><priority>0.7</priority></url>
 </urlset>
