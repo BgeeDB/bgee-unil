@@ -81,6 +81,7 @@ const useLogic = () => {
           currentSP.delete('pageType');
           currentSP.append('pageType', PROC_EXPR_VALUES);
           currentSP.delete('data_type');
+          currentSP.delete('pageNumber');
           currentSP.append('data_type', data?.dataType);
           currentSP.append('filters_for_all', '1');
           return (

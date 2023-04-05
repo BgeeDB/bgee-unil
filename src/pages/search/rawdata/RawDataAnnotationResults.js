@@ -186,6 +186,7 @@ const RawDataAnnotationResults = ({
               currentSP.delete('stage_descendant');
               currentSP.append('stage_descendant', searchParams().hasDevStageSubStructure ?? false);
               currentSP.delete('anat_entity_descendant');
+              currentSP.delete('pageNumber');
               currentSP.append('anat_entity_descendant', searchParams().hasTissueSubStructure ?? false);
               return {
                 type: col.columnType,
