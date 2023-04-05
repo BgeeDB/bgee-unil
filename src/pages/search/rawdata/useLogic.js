@@ -442,21 +442,15 @@ const useLogic = (isExprCalls) => {
     }
 
     // SubStructures
-    if (requestParameters?.anat_entity_descendant === 'true') {
-      setHasTissueSubStructure(true);
-    } else {
+    setHasTissueSubStructure(true);
+    setHasCellTypeSubStructure(true);
+    setDevStageSubStructure(true);
+    if (requestParameters?.anat_entity_descendant === 'false')
       setHasTissueSubStructure(false);
-    }
-    if (requestParameters?.cell_type_descendant === 'true') {
-      setHasCellTypeSubStructure(true);
-    } else {
+    if (requestParameters?.cell_type_descendant === 'false')
       setHasCellTypeSubStructure(false);
-    }
-    if (requestParameters?.stage_descendant === 'true') {
-      setDevStageSubStructure(true);
-    } else {
+    if (requestParameters?.stage_descendant === 'false')
       setDevStageSubStructure(false);
-    }
 
     // Filters
     const filtersToCheck =
