@@ -45,8 +45,6 @@ const RawDataAnnotationResults = ({
 }) => {
   const loc = useLocation();
 
-  console.log(searchParams());
-
   const renderCells = ({ cell, key }, defaultRender) => {
     switch (cell[key].type) {
       case 'STRING':
