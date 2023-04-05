@@ -10,7 +10,7 @@
 <url><loc>https://bgee.org/about/sources</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/videos</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/about/team</loc><priority>0.7</priority></url>
-<url><loc>https://bgee.org/about/sab</loc><priority>0.7</priority></url>
+<url><loc>https://bgee.org/about/bgeesab</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/affymetrix-processed-expression-values</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/data-sets</loc><priority>0.7</priority></url>
 <url><loc>https://bgee.org/support/faq</loc><priority>0.7</priority></url>
