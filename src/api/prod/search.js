@@ -431,15 +431,9 @@ const search = {
           );
           form.selectedSexes.forEach((s) => params.append('sex', s));
 
-          if (form.hasCellTypeSubStructure) {
-            params.append('cell_type_descendant', form.hasCellTypeSubStructure);
-          }
-          if (form.hasTissueSubStructure) {
-            params.append('anat_entity_descendant', form.hasTissueSubStructure);
-          }
-          if (form.hasDevStageSubStructure) {
-            params.append('stage_descendant', form.hasDevStageSubStructure);
-          }
+          params.append('cell_type_descendant', form.hasCellTypeSubStructure);
+          params.append('anat_entity_descendant', form.hasTissueSubStructure);
+          params.append('stage_descendant', form.hasDevStageSubStructure);
 
           // Search form for Expression calls
           if (form?.dataQuality) {
