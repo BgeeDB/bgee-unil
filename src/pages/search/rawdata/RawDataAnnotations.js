@@ -107,9 +107,16 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
-  const countResultKey =
-    pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount';
-  const maxPage = Math.ceil((localCount?.[countResultKey] || 0) / limit);
+  const countResultKey = () => {
+    if (pageType === EXPERIMENTS)
+      return 'experimentCount';
+    if (pageType === PROC_EXPR_VALUES)
+      return 'callCount';
+    // Return AssayCount if pageType==RAW_DATA_ANNOTS or pageType==EXPR_CALLS
+    return 'assayCount';
+  }
+
+  const maxPage = Math.ceil((localCount?.[countResultKey()] || 0) / limit);
 
   const detailedData = isExprCalls
     ? TAB_PAGE_EXPR_CALL
