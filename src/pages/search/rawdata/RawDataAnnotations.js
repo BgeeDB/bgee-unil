@@ -226,23 +226,26 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
       <div className="rawDataAnnotation">
         <div className="columns is-8 ongletPageWrapper">
           {isExprCalls ? (
-            <span className="ongletPages pageActive">
+            <h1 className="ongletPages pageActive">
               {TAB_PAGE_EXPR_CALL.label}
-            </span>
+            </h1>
           ) : (
             TAB_PAGE.map((type) => {
               const isActive = type.id === pageType;
               return (
-                <a
-                  onClick={(e) => changePageType(e, type.id)}
-                  href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
-                  key={type.id}
-                  className={`ongletPages is-centered py-2 px-5 ${
-                    isActive ? 'pageActive' : ''
-                  }`}
-                >
-                  {type.label}
-                </a>
+                <h1>
+                  <a
+                    onClick={(e) => changePageType(e, type.id)}
+                    href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
+                    key={type.id}
+                    className={`ongletPages is-centered py-2 px-5 ${
+                      isActive ? 'pageActive' : ''
+                    }`}
+                  >
+                    {type.label}
+                  </a>
+                </h1>
+
               );
             })
           )}
