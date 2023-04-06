@@ -338,11 +338,11 @@ const useLogic = (isExprCalls) => {
     }
 
     // Sexes
-    // les possibles
+    // Possible sexes
     if (requestDetails?.requestedSpeciesSexes?.length > 0) {
       setSpeciesSexes(requestDetails?.requestedSpeciesSexes);
     }
-    // les sélectionnés
+    // Selected sexes
     if (
       requestParameters?.sex?.length > 0 &&
       requestParameters?.sex[0] !== 'all'
@@ -539,13 +539,13 @@ const useLogic = (isExprCalls) => {
       limit,
     };
 
-    // Ici on filtre les filtres ! (*BADUM Tss*)
-    // On n'envoie pas au back les filtres n'ayant pas de liste correspondante dans l'objet filters de la précédente recherche
+    // Here we are filtering the filters themself
+    // We don't send to the backend the filters that have no corresponding list in the filters object from last research
     const defaultdataFilters = searchResult?.filters?.[dataType] || {};
     const dataFiltersExprCall = searchResult?.filters || {};
     const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
     const wantedFilters = filters[dataType] || {};
-    // ( si précédente il y a )
+    // ( if there is any filters that have been set before )
     if (!isEmpty(dataFilters)) {
       const myFilters = {};
       Object.entries(wantedFilters)
@@ -598,7 +598,7 @@ const useLogic = (isExprCalls) => {
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
-          // post première recherche ( => hash !== null ) on met à jour les filtres via le detailed_rp
+          // After First search ( => hash !== null ) we update the filters via detailed_rp
           if (isFirstSearch) {
             try {
               initFormFromDetailedRP(resp);
@@ -607,28 +607,27 @@ const useLogic = (isExprCalls) => {
             }
           }
 
-          // Gestion du "miroitage" des paramètres dans l'url ( avec et sans hash )
+          // "Mirroring" management in URL's parameter (with & without hash)
           const searchParams = new URLSearchParams(paramsURLCalled);
-          // Si il existe un hash on le met dans l'url
-          // Et comme les données suivantes sont "codés" dans ce hash...
-          // On peut donc "clean" l'url de ces valeurs (aka storableParams)
+          // If there is a hash we put it in the URL
+          // And as all next datas are "coded" in the Hash...
+          // We can clear the URL from those (aka storableParams)
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
-            // Delete du potentiel ancien hash :
+            // We delete the potential old hash
             searchParams.delete('data');
 
-            // console.warn('>> clean values in hash <<');
             resp?.requestParameters?.storableParameters?.forEach((key) => {
               if (key !== 'data_type') {
                 searchParams.delete(key);
               }
             });
 
-            // Rajout du hash (dans la key "data")
+            // Adding Hash (in "data" key)
             searchParams.append('data', newHash);
           }
 
-          // Dans tous les cas on clean aussi les paramètres "tech" de l'url :
+          // We can always clean those "tech" parameters from the URL
           searchParams.delete('display_type');
           searchParams.delete('page');
           searchParams.delete('action');
@@ -642,7 +641,6 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('filters_for_all');
 
           // The following code clean the url of any default value
-
           if (searchParams.get('limit') === '50') {
             searchParams.delete('limit');
           }
@@ -678,12 +676,12 @@ const useLogic = (isExprCalls) => {
           }
         }
 
-        // On collapse le search form si jamais ce n'est pas l'arrivée sur la page
+        // The search form will be collapsed if this is not the first time we're on the page
         if (!isFirstSearch) {
           setShow(false);
         }
 
-        // Enfin on set les valeurs qui nous interesse :
+        // Finally, we set the values that are interesting to us
         setIsLoading(false);
         setSearchResult(resp?.data);
         setLocalCount(
@@ -693,13 +691,13 @@ const useLogic = (isExprCalls) => {
         );
       })
       .catch(() => {
-        // On enlève tous les paramètres qu'on a pu envoyer
+        // We remove all the parameters that we may have sent
         history.replace(loc.pathname);
         setIsLoading(false);
       })
       .finally(() => {
-        // On change le flag de première recherche
-        // --> permet l'utilisation des filtres dans la prochaine requête
+        // The next searches will not be considered as the first
+        // --> Filters will now be used for the next requests
         setIsFirstSearch(false);
       });
   };
@@ -725,7 +723,7 @@ const useLogic = (isExprCalls) => {
           }
         })
         .catch(() => {
-          // gène not found or some errors !
+          // gene not found or some errors !
           setIsCountLoading(false);
           setAllCounts({});
         });
@@ -780,7 +778,7 @@ const useLogic = (isExprCalls) => {
 
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
-    // Cas particulier du "all"
+    // Edge case where "all" is set
     if (selectedSexes.length === 1 && selectedSexes[0] === 'all') {
       setSelectedSexes([sexName]);
     }

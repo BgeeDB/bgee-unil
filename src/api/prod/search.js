@@ -120,8 +120,8 @@ const search = {
       new Promise((resolve, reject) => {
         let params = {};
 
-        // /!\ voué à changer après demande au client pour que toutes les search_autocomplete soit
-        // pareil ... il faura donc enlever le if gene ici
+        //! /!\ Destined to change once all search_autcomplete are the same
+        //! The (if gene...) should be removed at this moment        
         if (searchType === 'gene') {
           params = DEFAULT_PARAMETERS('gene');
         } else {
@@ -133,8 +133,8 @@ const search = {
         params.append('query', `${query}`);
         params.append('limit', 20);
 
-        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
-        // (pratique pour un autocomplete triggered à chaque fois qu'on tape un charactère)
+        // Allows to cancel last request if the wasn't finished
+        // (practical for an autocomplete that trigger at each character)
         if (SEARCH_CANCEL_API?.genes?.AutoCompleteByType !== null) {
           SEARCH_CANCEL_API.genes?.AutoCompleteByType?.(
             '-- Search was canceled because another search was triggered --'
@@ -343,32 +343,12 @@ const search = {
       new Promise((resolve, reject) => {
         const params = DEFAULT_PARAMETERS('data', form.pageType);
 
-        // Ici on force le pageType dans l'url pour le retrouver
-        // ( en effet "data" est utilisé par le hash aussi donc on ne peut pas l'utilisé comme key)
+        // Here we force PageType in the URL to find it easily
+        // (The "data" key is already used for the Hash so we can't count on it)
         params.append('pageType', form.pageType);
 
-        // On demande le count des résultats (pour le "localCount")
+        // We get the results count for "localCount"
         params.append('get_result_count', '1');
-
-        // Patch qui servait à forcer un gène dans les paramètres d'envoie pour éviter des
-        // requêtes exessivement longues ( du cache côté server à été mis en place depuis )
-        // _____________________________________________________________________________
-        // if (
-        //   form.pageType === 'proc_expr_values' &&
-        //   form.selectedGene?.length === 0
-        // ) {
-        //   console.warn('FAKE FILTER GENE ACTIVATED !');
-        //   // gène humain pour éviter les requêtes trop longues quand aucun gène n'est précisé !
-        //   params.append('gene_id', 'ENSG00000158813');
-
-        //   // et si jamais il n'y a pas d'espèce selectionnée...
-        //   // ( ce qui est obligatoire pour mettre un filtre de gène)
-        //   // on force aussi à l'espèce humaine
-        //   if (!form.selectedSpecies && !form?.initSearch?.get('species_id')) {
-        //     params.append('species_id', '9606');
-        //   }
-        // }
-        // _____________________________________________________________________________
 
         if (isOnlyCounts) {
           params.append('data_type', 'all');
@@ -379,7 +359,7 @@ const search = {
           params.append('get_results', '1');
           params.append('get_filters', '1');
           params.append('get_column_definition', '1');
-          // Pour pouvoir extraire les paire de clés-valeur à pré-remplir dans le formulaire
+          // display-rp is needed to extract key-value pair in order to pre-fill the form
           params.append('display_rp', '1');
 
           const offset = form?.limit * (form?.pageNumber - 1);
@@ -390,11 +370,11 @@ const search = {
         }
 
         if (form.isFirstSearch && !bypassInitSearchParam) {
-          params.append('detailed_rp', '1'); // Pour obtenir les valeurs initiales des filtres
+          params.append('detailed_rp', '1'); // Needed to obtain initial value for the form
 
-          // On envoie toutes les valeurs contenu dans l'url
-          // soit le initSearch combiné aux paramètres "de base" qui seront les seuls paramètres en cas
-          // de première arrivée sur la page
+          // We send all value contained in the URL
+          // => InitSearch combined with the basics parameters
+          // (Basics parameters are the one originally filled when opening the page for the first time)
           // eslint-disable-next-line no-restricted-syntax
           for (const [key, val] of form?.initSearch) {
             if (
@@ -404,16 +384,16 @@ const search = {
               key !== 'pageType' &&
               key !== 'pageNumber'
             ) {
-              // Pour la première recherche on n'envoit pas les filtres si on demande OnlyCount
-              // onlyCount => tous les paramètres sauf les filtres
-              //! Ce système ne marche que lorsque l'url ne contient pas de Hash
+              //  For the first search we dno't send the filters if we ask for onlyCount
+              //  onlyCount => allParameter but the filters
+              //! This system only work when the URL does not contain an Hash
               if (!isOnlyCounts || (isOnlyCounts && !key.includes('filter_'))) {
                 params.append(key, val);
               }
             }
           }
         } else {
-          // Si pas de hash on envoie tous les paramètres séparéments
+          // If there is no Hash we send all parameters separately
           if (form.selectedSpecies) {
             params.append('species_id', form.selectedSpecies);
           }
@@ -451,8 +431,8 @@ const search = {
             params.append('cond_observed', form?.condObserved);
           }
 
-          // Application des filtres ! (VS form)
-          // Si filters_for_all on applique les filtres mêmes si OnlyCount
+          // We apply the filters
+          // If filters_for_all we apply all filters EVEN IF there is OnlyCount
           if ( (form?.filters && !isOnlyCounts) || (isOnlyCounts && form?.initSearch.get('filters_for_all')) ) {
             // eslint-disable-next-line no-restricted-syntax
             for (const [key, values] of Object.entries(form.filters)) {
@@ -461,8 +441,8 @@ const search = {
           }
         }
 
-        // Permet de cancel la requête précédente si elle n'a pas encore aboutie
-        // Pour ne pas avoir de "recouvrement de données en changeant trop vite d'onglet"
+        // Allows to cancel a pending request if it is not finished already
+        // Avoid cases where unwanted data are loaded even though they are not wanted anymore
         let typeToken = '';
         if (isOnlyCounts) {
           typeToken = 'count';
