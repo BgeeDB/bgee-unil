@@ -77,7 +77,7 @@ const usePagination = (
       const params = {
         ...sp,
         [keyForPageSize]: newPageSize,
-        [keyForPage]: 1, // reset de toute manière la page quand on change le page size
+        [keyForPage]: 1, // We always reset the page on page size change anyway
       };
       push({
         search: new URLSearchParams(params).toString(),

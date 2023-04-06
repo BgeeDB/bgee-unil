@@ -736,7 +736,7 @@ ion-icon {
   font-size: 14px !important;
 }
 
-/* Corrige le bug d'affichage de bulma (https://github.com/jgthms/bulma/issues/2611) */
+/* Fix an UI Bug from Bulma (https://github.com/jgthms/bulma/issues/2611) */
 .select::after {
   z-index: unset !important;
 }
@@ -1119,7 +1119,7 @@ h1.title.in-md {
   color: $title-color;
 }
 
-/** Tricks CSS pour avoir la scrollbar en haut du tableau **/
+/** CSS Tricks to have the scrollbar at the top of an array **/
 .isTableFlipped {
   transform: rotate(180deg) scaleX(-1);
 }
