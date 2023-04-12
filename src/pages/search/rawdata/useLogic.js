@@ -224,8 +224,10 @@ const useLogic = (isExprCalls) => {
     if (nextLimit !== null) {
       setLimit(nextLimit);
     }
-    if (nextPageNumber !== null) {
+    if (nextPageNumber) {
       setPageNumber(nextPageNumber);
+    } else {
+      setPageNumber(1);
     }
 
     // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
