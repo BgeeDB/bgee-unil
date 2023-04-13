@@ -292,7 +292,7 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
-      triggerSearch(false, true);
+      triggerSearch(false, false);
     }
   }, [dataType]);
 
