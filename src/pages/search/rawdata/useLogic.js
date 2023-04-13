@@ -649,9 +649,6 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
           }
-          if (searchParams.get('data_type') === 'RNA_SEQ') {
-            searchParams.delete('data_type');
-          }
           if (searchParams.get('pageNumber') === '1') {
             searchParams.delete('pageNumber');
           }
