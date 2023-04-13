@@ -20,7 +20,8 @@ const Tissues = ({
 
   const onSelect = (nextValue) => {
     setSelectedTissue(nextValue);
-    addConditionalParam(COND_PARAM2_ANAT_KEY);
+    if(nextValue.length > 0)
+      addConditionalParam(COND_PARAM2_ANAT_KEY);
   };
 
   return (
