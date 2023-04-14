@@ -18,7 +18,8 @@ const DevelopmentalAndLifeStages = ({
 
   const onSelect = (nextValue) => {
     setSelectedOptions(nextValue);
-    addConditionalParam(COND_PARAM2_DEVSTAGE_KEY);
+    if(nextValue.length > 0)
+      addConditionalParam(COND_PARAM2_DEVSTAGE_KEY);
   };
 
   return (
