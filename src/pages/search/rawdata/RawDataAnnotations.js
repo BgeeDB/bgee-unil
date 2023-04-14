@@ -107,9 +107,16 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
-  const countResultKey =
-    pageType === EXPERIMENTS ? 'experimentCount' : 'assayCount';
-  const maxPage = Math.ceil((localCount?.[countResultKey] || 0) / limit);
+  const countResultKey = () => {
+    if (pageType === EXPERIMENTS)
+      return 'experimentCount';
+    if (pageType === PROC_EXPR_VALUES)
+      return 'callCount';
+    // Return AssayCount if pageType==RAW_DATA_ANNOTS or pageType==EXPR_CALLS
+    return 'assayCount';
+  }
+
+  const maxPage = Math.ceil((localCount?.[countResultKey()] || 0) / limit);
 
   const detailedData = isExprCalls
     ? TAB_PAGE_EXPR_CALL
@@ -219,23 +226,26 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
       <div className="rawDataAnnotation">
         <div className="columns is-8 ongletPageWrapper">
           {isExprCalls ? (
-            <span className="ongletPages pageActive">
+            <h1 className="ongletPages pageActive">
               {TAB_PAGE_EXPR_CALL.label}
-            </span>
+            </h1>
           ) : (
             TAB_PAGE.map((type) => {
               const isActive = type.id === pageType;
               return (
-                <a
-                  onClick={(e) => changePageType(e, type.id)}
-                  href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
-                  key={type.id}
-                  className={`ongletPages is-centered py-2 px-5 ${
-                    isActive ? 'pageActive' : ''
-                  }`}
-                >
-                  {type.label}
-                </a>
+                <h1>
+                  <a
+                    onClick={(e) => changePageType(e, type.id)}
+                    href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
+                    key={type.id}
+                    className={`ongletPages is-centered py-2 px-5 ${
+                      isActive ? 'pageActive' : ''
+                    }`}
+                  >
+                    {type.label}
+                  </a>
+                </h1>
+
               );
             })
           )}
@@ -277,6 +287,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 setHasTissueSubStructure={
                                   setHasTissueSubStructure
                                 }
+                                addConditionalParam={addConditionalParam}
                               />
                             </div>
                             <div className="my-2 maxWidth50">
@@ -466,6 +477,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                   pageType={pageType}
                   pageNumber={pageNumber}
                   isExprCalls={isExprCalls}
+                  searchParams={getSearchParams}
                 />
               )}
             </div>

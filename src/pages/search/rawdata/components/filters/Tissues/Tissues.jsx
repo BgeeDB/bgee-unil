@@ -2,6 +2,7 @@ import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getIdAndNameLabel } from '../../../../../../helpers/selects';
+import { COND_PARAM2_ANAT_KEY } from '../../../useLogic';
 
 const Tissues = ({
   selectedTissue,
@@ -9,12 +10,19 @@ const Tissues = ({
   AutoCompleteByType,
   hasTissueSubStructure,
   setHasTissueSubStructure,
+  addConditionalParam
 }) => {
   const getTissueOptions = AutoCompleteByType('anat_entity', (result) => ({
     label: getIdAndNameLabel(result?.object),
     value: result?.object?.id,
     result,
   }));
+
+  const onSelect = (nextValue) => {
+    setSelectedTissue(nextValue);
+    if(nextValue.length > 0)
+      addConditionalParam(COND_PARAM2_ANAT_KEY);
+  };
 
   return (
     <>
@@ -23,7 +31,7 @@ const Tissues = ({
         placeholder="Examples: 'brain', 'UBERON:0000948'"
         getOptionsFunction={getTissueOptions}
         selectedOptions={selectedTissue}
-        setSelectedOptions={setSelectedTissue}
+        setSelectedOptions={onSelect}
       />
       <div className="checkboxWrapper">
         <input

@@ -152,11 +152,10 @@ const useLogic = (isExprCalls) => {
   const loc = useLocation();
   const initSearch = new URLSearchParams(loc.search);
   const initHash = initSearch.get('data');
-
   const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const initDataType = initSearch.get('data_type') || DATA_TYPES[0].id;
-  const initDataTypeExpCalls = ALL_DATA_TYPES_ID;
+  const initDataTypeExpCalls = initSearch.getAll('data_type') || ALL_DATA_TYPES_ID;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
   const initPageType = initSearch.get('pageType') || EXPERIMENTS;
@@ -225,8 +224,10 @@ const useLogic = (isExprCalls) => {
     if (nextLimit !== null) {
       setLimit(nextLimit);
     }
-    if (nextPageNumber !== null) {
+    if (nextPageNumber) {
       setPageNumber(nextPageNumber);
+    } else {
+      setPageNumber(1);
     }
 
     // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
@@ -291,7 +292,7 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
-      triggerSearch(false, true);
+      triggerSearch(false, false);
     }
   }, [dataType]);
 
@@ -339,11 +340,11 @@ const useLogic = (isExprCalls) => {
     }
 
     // Sexes
-    // possible ones
+    // Possible sexes
     if (requestDetails?.requestedSpeciesSexes?.length > 0) {
       setSpeciesSexes(requestDetails?.requestedSpeciesSexes);
     }
-    // selected ones
+    // Selected sexes
     if (
       requestParameters?.sex?.length > 0 &&
       requestParameters?.sex[0] !== 'all'
@@ -443,21 +444,15 @@ const useLogic = (isExprCalls) => {
     }
 
     // SubStructures
-    if (requestParameters?.anat_entity_descendant === 'true') {
-      setHasTissueSubStructure(true);
-    } else {
+    setHasTissueSubStructure(true);
+    setHasCellTypeSubStructure(true);
+    setDevStageSubStructure(true);
+    if (requestParameters?.anat_entity_descendant === 'false')
       setHasTissueSubStructure(false);
-    }
-    if (requestParameters?.cell_type_descendant === 'true') {
-      setHasCellTypeSubStructure(true);
-    } else {
+    if (requestParameters?.cell_type_descendant === 'false')
       setHasCellTypeSubStructure(false);
-    }
-    if (requestParameters?.stage_descendant === 'true') {
-      setDevStageSubStructure(true);
-    } else {
+    if (requestParameters?.stage_descendant === 'false')
       setDevStageSubStructure(false);
-    }
 
     // Filters
     const filtersToCheck =
@@ -546,13 +541,13 @@ const useLogic = (isExprCalls) => {
       limit,
     };
 
-    // Here we filter filters! (*BADUM Tss*)
-    // We don't send to the backend filters having no matching list in the filtered object in the previous search
+    // Here we are filtering the filters themself
+    // We don't send to the backend the filters that have no corresponding list in the filters object from last research
     const defaultdataFilters = searchResult?.filters?.[dataType] || {};
     const dataFiltersExprCall = searchResult?.filters || {};
     const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
     const wantedFilters = filters[dataType] || {};
-    // ( if there is a previous one )
+    // ( if there is any filters that have been set before )
     if (!isEmpty(dataFilters)) {
       const myFilters = {};
       Object.entries(wantedFilters)
@@ -571,7 +566,6 @@ const useLogic = (isExprCalls) => {
     } else {
       params.filters = filters[dataType];
     }
-
     if (isExprCalls) {
       const dataTypeForExpCalls =
         dataTypesExpCalls.length === 0 ? ALL_DATA_TYPES_ID : dataTypesExpCalls;
@@ -606,7 +600,7 @@ const useLogic = (isExprCalls) => {
       .search(params, false)
       .then(({ resp, paramsURLCalled }) => {
         if (resp.code === 200) {
-          // post 1st search ( => hash !== null ) we update filters via the detailed_rp
+          // After First search ( => hash !== null ) we update the filters via detailed_rp
           if (isFirstSearch) {
             try {
               initFormFromDetailedRP(resp);
@@ -615,28 +609,27 @@ const useLogic = (isExprCalls) => {
             }
           }
 
-          // Manage "mirroring" of parameters in the URL (with and without hash)
+          // "Mirroring" management in URL's parameter (with & without hash)
           const searchParams = new URLSearchParams(paramsURLCalled);
-          // If it exists a hash, we put it in the URL
-          // And as next data are "coded" in this hash...
-          // So we can "clean" the URL of these values (aka storableParams)
+          // If there is a hash we put it in the URL
+          // And as all next data are "coded" in the Hash...
+          // We can clear the URL from those (aka storableParams)
           const newHash = resp?.requestParameters?.data;
           if (newHash) {
-            // Delete the potential former hash
+            // We delete the potential old hash
             searchParams.delete('data');
 
-            // console.warn('>> clean values in hash <<');
             resp?.requestParameters?.storableParameters?.forEach((key) => {
               if (key !== 'data_type') {
                 searchParams.delete(key);
               }
             });
 
-            // Append the hash (in the "data" key)
+            // Adding Hash (in "data" key)
             searchParams.append('data', newHash);
           }
 
-          // In all cases we clean the parameters "tech" from the URL too
+          // We can always clean those "tech" parameters from the URL
           searchParams.delete('display_type');
           searchParams.delete('page');
           searchParams.delete('action');
@@ -650,15 +643,11 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('filters_for_all');
 
           // The following code clean the url of any default value
-
           if (searchParams.get('limit') === '50') {
             searchParams.delete('limit');
           }
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
-          }
-          if (searchParams.get('data_type') === 'RNA_SEQ') {
-            searchParams.delete('data_type');
           }
           if (searchParams.get('pageNumber') === '1') {
             searchParams.delete('pageNumber');
@@ -686,12 +675,12 @@ const useLogic = (isExprCalls) => {
           }
         }
 
-        // We collapse the search form if this is not the arrival on the page
+        // The search form will be collapsed if this is not the first time we're on the page
         if (!isFirstSearch) {
           setShow(false);
         }
 
-        // At the end we set values we are interested in
+        // Finally, we set the values we are interested in
         setIsLoading(false);
         setSearchResult(resp?.data);
         setLocalCount(
@@ -701,13 +690,13 @@ const useLogic = (isExprCalls) => {
         );
       })
       .catch(() => {
-        // We remove all parameters we could send
+        // We remove all the parameters that we may have sent
         history.replace(loc.pathname);
         setIsLoading(false);
       })
       .finally(() => {
-        // We change the 1st search flag
-        // --> allow to use filters in the next request
+        // The next searches will not be considered as the first
+        // --> Filters will now be used for the next requests
         setIsFirstSearch(false);
       });
   };
@@ -788,7 +777,7 @@ const useLogic = (isExprCalls) => {
 
   const toggleSex = (sexName) => {
     const i = selectedSexes.indexOf(sexName);
-    // Particular case of "all"
+    // Edge case where "all" is set
     if (selectedSexes.length === 1 && selectedSexes[0] === 'all') {
       setSelectedSexes([sexName]);
     }

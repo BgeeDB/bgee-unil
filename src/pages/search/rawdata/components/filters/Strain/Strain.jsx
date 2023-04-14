@@ -16,7 +16,8 @@ const Strain = ({
 
   const onSelect = (nextValue) => {
     setSelectedStrain(nextValue);
-    addConditionalParam(COND_PARAM2_STRAIN_KEY);
+    if(nextValue.length > 0)
+      addConditionalParam(COND_PARAM2_STRAIN_KEY);
   };
 
   return (

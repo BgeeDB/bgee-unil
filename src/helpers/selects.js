@@ -17,7 +17,7 @@ export const getOptionsForFilter = (
   return options;
 };
 
-// Allow to search for child values of the sent object
+// Allows to search for child value in sent back object
 export const getChildValueFromAttribute = (obj = {}, attributes = '') => {
   // ex: ['result', 'experiment', 'name']
   const attributeTab = attributes.split('.');

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-export const PARAM_PAGE_KEY = 'page';
+export const PARAM_PAGE_KEY = 'pageNumber';
 export const RESULTS_COUNT_KEY = 'results';
 
 export const usePaginationLink = (

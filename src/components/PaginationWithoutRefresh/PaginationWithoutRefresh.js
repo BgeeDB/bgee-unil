@@ -3,9 +3,15 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TableContext } from '../../contexts/TableContext';
+import { usePaginationLink } from '../../hooks/usePagination';
 
 const PaginationWithoutRefresh = ({ current, total }) => {
-  const { paginationParamPageKey } = useContext(TableContext);
+  const { paginationParamPageKey, paginationResultCountKey } =
+    useContext(TableContext);
+  const { generatePaginationLink } = usePaginationLink(
+    paginationParamPageKey,
+    paginationResultCountKey
+  );
 
   const history = useHistory();
   const loc = useLocation();
@@ -43,6 +49,7 @@ const PaginationWithoutRefresh = ({ current, total }) => {
   }, [current, total]);
 
   const goToPage = (e, targetPage) => {
+    e.preventDefault();
     e.stopPropagation();
     sp.set(paginationParamPageKey, targetPage);
     history.push({ search: `?${sp.toString()}` });
@@ -76,6 +83,7 @@ const PaginationWithoutRefresh = ({ current, total }) => {
             className={`pagination-link  ${current === 1 ? 'is-current' : ''}`}
             aria-label="Goto page 1"
             onClick={(e) => goToPage(e, 1)}
+            href={generatePaginationLink(1)}
           >
             1
           </a>
@@ -93,6 +101,7 @@ const PaginationWithoutRefresh = ({ current, total }) => {
               }`}
               aria-label={`Go to page ${page}`}
               onClick={(e) => goToPage(e, page)}
+              href={generatePaginationLink(page)}
             >
               {page}
             </a>
@@ -110,6 +119,7 @@ const PaginationWithoutRefresh = ({ current, total }) => {
             }`}
             aria-label={`Goto page ${total}`}
             onClick={(e) => goToPage(e, total)}
+            href={generatePaginationLink(total)}
           >
             {total}
           </a>

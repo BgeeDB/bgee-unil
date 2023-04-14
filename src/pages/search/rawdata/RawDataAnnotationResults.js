@@ -41,6 +41,7 @@ const RawDataAnnotationResults = ({
   dataType,
   pageNumber,
   isExprCalls,
+  searchParams
 }) => {
   const loc = useLocation();
 
@@ -181,11 +182,12 @@ const RawDataAnnotationResults = ({
               );
 
               currentSP.delete('cell_type_descendant');
-              currentSP.append('cell_type_descendant', true);
+              currentSP.append('cell_type_descendant', searchParams().hasCellTypeSubStructure ?? false);
               currentSP.delete('stage_descendant');
-              currentSP.append('stage_descendant', true);
+              currentSP.append('stage_descendant', searchParams().hasDevStageSubStructure ?? false);
               currentSP.delete('anat_entity_descendant');
-              currentSP.append('anat_entity_descendant', true);
+              currentSP.delete('pageNumber');
+              currentSP.append('anat_entity_descendant', searchParams().hasTissueSubStructure ?? false);
               return {
                 type: col.columnType,
                 content: 'Browse results',
@@ -217,12 +219,12 @@ const RawDataAnnotationResults = ({
     tsv += '%0D%0A'; // carriage return
 
     const columnsToExport = columnDescriptions
-      .map((c, i) => ({ ...c, indexForExport: i })) // Add indexes to know where to get the value in result
-      .filter((col) => col.export); // Filter the export = false
+      .map((c, i) => ({ ...c, indexForExport: i })) // We are adding indexes to know where to get our value in result
+      .filter((col) => col.export); // filtering export = false
 
     mappedResults.forEach((row) => {
       const rowTxt = columnsToExport
-        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // Get ONLY results of columns to export
+        .map((col) => encodeURIComponent(row[col.indexForExport].content)) // We get the result only from the column we need to export
         .join('%09');
       tsv += `${rowTxt}%0D%0A`; // carriage return
     });
@@ -262,8 +264,8 @@ const RawDataAnnotationResults = ({
             : null
         }
         pagination
+        defaultPaginationSize={50}
         classNamesTable="is-striped"
-        // onSortCustom={customRawListSorter}
         columns={columnDescriptions}
         data={mappedResults}
         customHeader={customHeader}

@@ -165,8 +165,7 @@ const Table = ({
             value={pageSize}
             options={[10, 20, 50, { value: 100, text: 100 }, 500, 1000]}
             onChange={(p) => {
-              // already done in onPageSizeChange
-              // setCurrentPage(1);
+              // setCurrentPage(1) is already done in onPageSizeChange
               onPageSizeChange(parseInt(p, 10));
             }}
           />
