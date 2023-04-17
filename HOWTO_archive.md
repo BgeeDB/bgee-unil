@@ -1,4 +1,4 @@
-#HOW TO archive
+# HOW TO archive
 
 ## in src/config.json
 
