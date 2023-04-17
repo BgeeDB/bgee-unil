@@ -1,7 +1,7 @@
 import React from 'react';
 import Bulma from '../Bulma';
 import NewsItem from '../NewsItem';
-import News20220329 from '../../markdown/news/News-2022-03-29.md';
+import News20230331 from '../../markdown/news/News-2023-03-31.md';
 
 const HomeNewsList = () => (
   <>
@@ -12,7 +12,7 @@ const HomeNewsList = () => (
     </Bulma.Card.Header>
     <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
       <div className="content">
-        <NewsItem date="2022-03-31" News={News20220329} />
+        <NewsItem date="2023-03-31" News={News20230331} />
       </div>
     </Bulma.Card.Body>
   </>
