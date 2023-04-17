@@ -305,7 +305,7 @@ const ABOUT = {
   },
   [PATHS.ABOUT.BGEESAB]: {
     source: SABFile,
-    title: 'Bgee Scientific Advisory Board',
+    title: 'Bgee SAB',
     meta: {
       title: 'Bgee Scientific Advisory Board',
       description: 'The Bgee Scientific Advisory Board (SAB)',

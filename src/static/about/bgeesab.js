@@ -6,7 +6,7 @@ const bgeesab = [
   {
     type: 'text',
     content:
-      'The SAB acts as a consultative body, providing recommendations to the Bgee team. Its main tasks consist in monitoring the service and infrastructure activities, as well as the core bioinformatics resources.',
+      'The SAB acts as a consultative body, providing recommendations to the Bgee team. Its main tasks consist in advising on strategy of development of the resource, as well as advice on methods, services or tools.',
   },
   {
     type: 'section',
@@ -38,7 +38,7 @@ const bgeesab = [
             content: [
               {
                 type: 'text',
-                content: 'Prof. ',
+                content: 'Dr. ',
               },
               {
                 type: 'link_external',
@@ -74,7 +74,7 @@ const bgeesab = [
             content: [
               {
                 type: 'text',
-                content: 'Prof. ',
+                content: 'Dr. ',
               },
               {
                 type: 'link_external',
