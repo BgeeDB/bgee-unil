@@ -11,7 +11,7 @@ columns: [] of {
         style: CSS Object
         hide: MEDIA_QUERIES
     }
-data: [] of Object
+data: [] of Objects
 onFilter: function (see details below)
 sortable: boolean (allow mono sorting)
 multiSortable: boolean (allow multi sorting)
@@ -23,11 +23,11 @@ pagination: boolean
 defaultPaginationSize: number (default = 10)
 customHeader: () => React.Component
 mappingObj: (object, key) => object
-identifierAtFilter: boolean (default false) (if true, the identifier column will be added when filtering active, allowing the user to knwo the place of the rows in the table not filtered)
+identifierAtFilter: boolean (default false) (if true, the identifier column will be added when filtering active, allowing the user to know the place of the rows in the table not filtered)
 ````
 
 ### Columns
-Here is the details of the `columns` property.
+Here are the details of the `columns` property.
 More details can be found for the adaptive design below.
 
 ````typescript jsx
@@ -47,10 +47,10 @@ const columns: Column[] = [
 
 ### Data
 
-The data should be un array of any type (array of row). Depending on your way of working you could format the row in an object or an array.
-If you want to minimize your code and impact, you can pass a function that you would the mapping of your data the way you want through the `mappingObj`.
+The data should be an array of any type (array of rows). Depending on your way of working you could format the row in an object or an array.
+If you want to minimize your code and impact, you can pass a function that you would do the mapping of your data the way you want through the `mappingObj`.
 
-Here is the two format that data can take.
+Here are the two format that data can take.
 
 ````typescript
 const dataAsArrayOfObject = [
@@ -76,7 +76,7 @@ const dataAsArrayOfArray = [
 
 ### Filtering
 If  you want to enable the filtering function, you have to provide a filtering function.
-This function will tell the table which column(s) or data should be use for the filtering
+This function will tell the table which column(s) or data should be used for the filtering.
 Do not forget to pass a custom header, that's where you can put the input for the filter. (see `Custom Header` below)
 
 ````typescript jsx
@@ -84,7 +84,7 @@ interface Object {
   [key: string]: any;
 }
 const onFilter = (stringTiFilter: string) => (element: Object): boolean=> {
-//  insert your logic, you should return a boolean to determine if it's match your filtering or not
+//  insert your logic, you should return a boolean to determine if it matches your filtering or not
 }
 ````
 
@@ -99,8 +99,8 @@ interface SortOption {
 }
 
 const onSortCustom = (sortOpts: SortOption | SortOption[]) => (a: any, b: any): -1 | 0 | 1 => {
-//  sortOpts is SortOption if it's a single sorting
-//  sortOpts is SortOption[] if it's a multi sorting
+//  sortOpts is SortOption   if it's a single sorting
+//  sortOpts is SortOption[] if it's a multi  sorting
 }
 ````
 
@@ -115,12 +115,12 @@ Any logic can be applied across the information of the row.
 It's also here that should be handled the fact that the row is expanding or not.
 
 Depending on the format of the data, each row is an array or an object, the value of the cell will differ.
-Here is the description of the function that should be passed as `onRenderCell`
+Here is the description of the function that should be passed as `onRenderCell`.
 
 ````typescript jsx
 interface ObjectRow {
   cell: object; // the object representing the row data
-  key: number | string; // the key of the column or the id of it
+  key: number | string; // the key of the column or its id
   key: number; // the id of the row
 };
 interface ArrayRow {
@@ -143,10 +143,10 @@ const onRenderCell = (
 
 ### Rendering Row
 
-Allow the use to customize the style of the `tr` tag.
-The usage here was to compare the current row and the previous one, depending of the gap between the value we had to display a separator between them (see gene expression table, in the gene page)
+Allow the user to customize the style of the `tr` tag.
+The usage here is to compare the current row and the previous one, depending of the gap between the value we had to display a separator between them (see gene expression table, in the gene page)
 
-Here is the description of the function that should be passed as `onRenderRow`
+Here is the description of the function that should be passed as `onRenderRow`.
 ````typescript
 const onRenderRow = (currentRow: object, previousRow: object | null, currentKey: number): string => {
   /*
@@ -167,16 +167,16 @@ The properties specific of the pagination are the following:
 }
 ````
 
-You juste have to enable the pagination, and the all the element of the pagination will be displayed as:
-- the counter (Showing X to Y of Z entries) (in the footer left of the table)
-- the buttons to navigate through the different page (in the footer right of the table)
+You just have to enable the pagination, and all the elements of the pagination will be displayed as:
+- the counter (Showing X to Y of Z entries) (in the footer on the left of the table)
+- the buttons to navigate through the different pages (in the footer on the right of the table)
 
 If you want to let the user change the size of the page (see `Custom Header` below).
 
 ### Custom Header
 
 If you need to use the filter or the pagination change switcher, you will have to use the property `customHeader`.
-It also allows you to add a header to table.
+It also allows you to add a header to the table.
 
 Here is the format of the function that should be passed.
 ````typescript jsx
@@ -192,7 +192,7 @@ const customHeader= (searchInput: React.Element, pageSizeSelector: React.Element
 # Adaptive Design
 
 The table can be configured to listen the size of the table.
-We can easily configure at which media query hide or show the columns
+We can easily configure at which media query hide or show the columns.
 
 To configure the header and the visibility of the header follow the template below.
 
@@ -202,7 +202,8 @@ To configure the header and the visibility of the header follow the template bel
         key: 'taxonName',
         text: 'Taxon Name',
         // `hide` key will hide the columns when the table will have a width inferior at the size configure (`hide` value)
-        hide: MEDIA_QUERIES_SIZE[MEDIA_QUERY.TABLET] // these are constant use to easily maintain the code
+        hide: MEDIA_QUERIES_SIZE[MEDIA_QUERY.TABLET] // these are constants used to easily maintain the code
       },
     ];
 ````
+

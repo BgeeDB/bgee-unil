@@ -28,7 +28,7 @@
     Routing handlers (route definition, paths dictionnary, ...)
 
         / static
-    JS and JSON objects to  render static html contents, using the staticBuilder (/src/helpers/staticBuilder.js)
+    JS and JSON objects to render static html contents, using the staticBuilder (/src/helpers/staticBuilder.js)
 
         / styles
     SCSS and CSS style files
@@ -96,3 +96,4 @@ Performs automated scans of your JavaScript files for common syntax and style er
 
 Scans files for style issues and automatically reformats the code to ensure
 consistent rules are being followed on the project.
+

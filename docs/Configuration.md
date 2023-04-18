@@ -1,6 +1,6 @@
 ## version
 
-It represents the version of the app. It's used at different place.
+It represents the version of the app. It's used at different places.
 
 ## archive
 
@@ -29,7 +29,7 @@ This array contains the information of the archive versions that is used on the 
 
 ## contactEmail
 
-This is the contact email used on the footer and th header menu.
+This is the contact email used on the footer and the header menu.
 
 ## googleAnalyticsIdDev
 
@@ -41,7 +41,7 @@ The ID of the google analytics in production.
 
 ## bioSchemaModifiedData
 
-It is the date of the bioSchema Data..
+It is the date of the bioSchema Data.
 
 ## oboLibraryOboPath
 
@@ -53,11 +53,11 @@ The base url of the obolibrary NCBI Taxon.
 
 ## isRawDataOnly
 
-Allow (mainly on mirror websites) to hide menu. (And with server redirect allow to only have raw data nnotion pages)
+Allow (mainly on mirror websites) to hide menu. (And with server redirect allow to only have raw data notion pages)
 
 ## dataType\_\*
 
-Allow to set the order of the data type in the tabs in raw data annotions pages
+Allow to set the order of the data type in the tabs in raw data annotation pages
 
 ## globalMessageInfo
 
@@ -74,3 +74,4 @@ Define the id for the "Full length" data type
 ## dataTypeSourceLetter.SL_FULL_LENGTH
 
 Define the Tag letters for "Full length" in the "supported data type" column (TagSource component)
+
