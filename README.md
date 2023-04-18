@@ -1,7 +1,7 @@
 # Requirement
 
 - NodeJS 16.x.x or fewer
-- Yarn 
+- Yarn
 
 # Installation
 
@@ -22,11 +22,11 @@ There is 2 commands for building the application.
 ````shell
 yarn build
 #or
-yarn archive 
+yarn archive
 ````
 
 The first command will build the app to be ready for production.
-The second one will prepare the application to de deployed as an archive.
+The second one will prepare the application to be deployed as an archive.
 
 DO NOT FORGET
 Be careful with the version set in config.json, it will impact the app in production or in archive.
@@ -43,7 +43,7 @@ If you are moving it, don't forget to change the path.
 ### Use of Node 17.x.x
 
 Node 17.x.x doesn't work with create-react-app. So it will be impossible to build the app.
-It's recommended to use 
+It's recommended to use
 
 ### Font size matrix
 
@@ -54,3 +54,4 @@ $size-5: 1.1rem (= 15.4px)
 $size-4: 1.2rem (= 16.8px)
 $size-3: 1.5rem (= 21px)
 ````
+
