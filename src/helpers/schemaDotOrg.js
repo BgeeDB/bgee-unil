@@ -55,6 +55,10 @@ const geneHomologsToLdJSON = (homo) => {
       '@context': 'https://schema.org/',
       '@type': 'https://schema.org/Taxon',
       '@id': `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${h.taxon.id}`,
+      'http://purl.org/dc/terms/conformsTo': {
+        '@id': 'https://bioschemas.org/profiles/Taxon/0.6-RELEASE',
+        '@type': 'CreativeWork',
+      },
       identifier: h.taxon.id,
       name: h.taxon.scientificName,
       alternateName: h.taxon.name,
@@ -94,6 +98,7 @@ const geneExpressionToLdJSON = (genes) => {
       });
     else
       ldJson.push({
+        '@context': 'https://schema.org/',
         '@type': 'Gene',
         '@id': window.location.href,
         expressedIn: {
@@ -110,6 +115,10 @@ const geneExpressionToLdJSON = (genes) => {
 
 const fileDownloadProps = (file) => ({
   '@type': 'Dataset',
+  'http://purl.org/dc/terms/conformsTo': {
+    '@id': 'https://bioschemas.org/profiles/Dataset/1.0-RELEASE',
+    '@type': 'CreativeWork',
+  },
   dateModified: config.bioSchemaModifiedData,
   creator: {
     '@type': 'Organization',
@@ -192,6 +201,7 @@ const datasetToLdJSON = () => {
             logo: 'https://bgee.org/img/logo/bgee13_hp_logo.png',
             sameAs: [
                 'https://twitter.com/Bgeedb',
+                'https://genomic.social/@bgeedb',
                 'https://bgeedb.wordpress.com/',
             ],
             parentOrganization: [{
@@ -216,7 +226,7 @@ const datasetToLdJSON = () => {
             '@type': 'Dataset',
             '@id': window.location.href,
             'http://purl.org/dc/terms/conformsTo': {
-                '@id': 'https://bioschemas.org/profiles/Dataset/0.3-RELEASE-2019_06_14',
+                '@id': 'https://bioschemas.org/profiles/Dataset/1.0-RELEASE',
                 '@type': 'CreativeWork',
             },
             url: window.location.href,
@@ -264,7 +274,7 @@ const speciesToLdJSON = ({
         '@type': 'Dataset',
         dateModified: config.bioSchemaModifiedData,
         citation: 'https://doi.org/10.1093/nar/gkaa793',
-        description: `${genus} ${speciesName} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
+        description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
         includedInDataCatalog: {
           '@id': config.genericDomain,
           '@type': 'DataCatalog',
@@ -277,7 +287,7 @@ const speciesToLdJSON = ({
           name: 'The Bgee Team',
         },
         license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        name: `${genus} ${speciesName} gene expression calls`,
+        name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression calls`,
         url: `${window.location.href}#expr-calls`,
         version: config.version,
         hasPart: [
@@ -290,7 +300,7 @@ const speciesToLdJSON = ({
               name: 'The Bgee Team',
             },
             license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: `${genus} ${speciesName} gene expression simple`,
+            name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression simple`,
             description:
               'Anatomical entities only, file without advanced columns.',
             url: `${
@@ -318,7 +328,7 @@ const speciesToLdJSON = ({
               name: 'The Bgee Team',
             },
             license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: `${genus} ${speciesName} gene expression advanced`,
+            name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression advanced`,
             description:
               'Anatomical entities only, file with advanced columns.',
             url: `${
@@ -346,7 +356,7 @@ const speciesToLdJSON = ({
               name: 'The Bgee Team',
             },
             license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: `${genus} ${speciesName} gene expression simple with all conditions`,
+            name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression simple with all conditions`,
             description:
               'Anatomical entities, developmental stages, sexes and strains. File without advanced columns.',
             url: `${
@@ -374,7 +384,7 @@ const speciesToLdJSON = ({
               name: 'The Bgee Team',
             },
             license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-            name: `${genus} ${speciesName} gene expression advanced with all conditions`,
+            name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression advanced with all conditions`,
             description:
               'Anatomical entities, developmental stages, sexes and strains. File with advanced columns.',
             url: `${
@@ -418,7 +428,7 @@ const speciesToLdJSON = ({
           name,
         ],
         license: 'https://creativecommons.org/publicdomain/zero/1.0/',
-        name: `${genus} ${speciesName} processed expression values`,
+        name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} processed expression values`,
         url: `${window.location.href}#proc-values`,
         version: config.version,
         hasPart: [],
@@ -426,7 +436,7 @@ const speciesToLdJSON = ({
       {
         '@type': 'WebPage',
         url: `${window.location.href}`,
-        name: `Species: ${genus} ${speciesName} (${name})`,
+        name: `Species: ${genus} ${speciesName}${ name ? ` (${name})` : ''}`,
       },
     ],
   };
@@ -435,7 +445,7 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} Affymetrix experiments chips`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Affymetrix experiments chips`,
       keywords: ['Affymetrix'],
       description: 'Affymetrix experiments/chips annotations and metadata.',
       url: `${window.location.href}#proc-values-affymetrix`,
@@ -445,8 +455,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} Affymetrix probesets`,
-      description: `${genus} ${speciesName} Affymetrix probesets, data (signal intensities).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Affymetrix probesets`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Affymetrix probesets, data (signal intensities).`,
       url: `${window.location.href}#proc-values-affymetrix`,
     });
   }
@@ -454,9 +464,9 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} RNA-Seq experiment libraries`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} RNA-Seq experiment libraries`,
       keywords: ['RNA-Seq'],
-      description: `${genus} ${speciesName} RNA-Seq experiments/libraries annotations and metadata.`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} RNA-Seq experiments/libraries annotations and metadata.`,
       url: `${window.location.href}#proc-values-rna-seq`,
     });
   }
@@ -464,8 +474,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName} RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
       keywords: ['RNA-Seq'],
       url: `${window.location.href}#proc-values-rna-seq`,
     });
@@ -474,8 +484,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} full-length Single cell RNA-Seq experiment libraries`,
-      description: `${genus} ${speciesName} full-length Single cell RNA-Seq experiments/ libraries annotations and metadata.`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} full-length Single cell RNA-Seq experiment libraries`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} full-length Single cell RNA-Seq experiments/ libraries annotations and metadata.`,
       keywords: ['Single cell full length RNA-Seq', 'Single cell RNA-Seq'],
       url: `${window.location.href}#proc-values-fl-scrna-seq`,
     });
@@ -484,8 +494,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName} Full-Length Single Cell RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName} Full-Length Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full-Length Single Cell RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full-Length Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
       keywords: ['Single cell full length RNA-Seq', 'Single cell RNA-Seq'],
       url: `${window.location.href}#proc-values-fl-scrna-seq`,
     });

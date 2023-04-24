@@ -1,5 +1,5 @@
 # User Story
-[Tips & tricks for writing User Stories like a pro — Product Owner guide part II.](https://medium.com/agileinsider/tips-tricks-for-writing-user-stories-like-a-pro-product-owner-guide-part-ii-fc9fa0c6538a)
+[Tips & tricks for writing User Stories like a pro - Product Owner guide part II.](https://medium.com/agileinsider/tips-tricks-for-writing-user-stories-like-a-pro-product-owner-guide-part-ii-fc9fa0c6538a)
 
 [How to Write a Good User Story](https://stormotion.io/blog/how-to-write-a-good-user-story-with-examples-templates/)
 
@@ -8,7 +8,7 @@
 > User Story is a small (actually, the smallest) piece of work that represents
 > some value to an end user and can be delivered during a sprint.
 
-A user story in Agile software development is a means used to get a description of a particular feature from an end-user
+A user story in Agile software development is a mean used to get a description of a particular feature from an end-user
 perspective. It describes the type of user, as well as what the user wants and why. These stories help to create a
 nominal description of a requirement.
 
@@ -16,7 +16,7 @@ Agile user stories can be written at different levels of detail and that makes t
 following:
 ````
 - A type of user
-- User’s intention
+- User's intention
 - The value they get (from a particular feature)
 ````
 
@@ -36,7 +36,7 @@ As a <role>, I want <feature> so that <reason>
 
 > Users should be able to _____.
 > 
->As a user, I want to do ___ because ____. 
+>As a user, I want to do ___ because ____.
 > 
 > Given that I'm doing ___, I should be able to ___ in order to ___.
 
@@ -63,12 +63,12 @@ appropriate questions, etc.
 
 
 ### 2. Creating epics
-Writing epics will help you sketch your product’s key functionality without going deep in the details.
+Writing epics will help you sketch your product key functionality without going deep in details.
 
-Here’s an example:
+Here is an example:
 ````
-You’re creating a dating app for users who can to create, manage and edit their profiles. So, the epic is “Managing user
-profile”.
+You are creating a dating app for users who can to create, manage and edit their profiles. So, the epic is: Managing user
+profile.
 ````
 
 User stories are:
@@ -92,17 +92,16 @@ working as intended.
 These criteria can be functional (identifying user tasks, functions or business processes), non-functional
 (design and UI-related) and performance criteria (related to performance metrics, for example, loading time).
 
-### 1. Validating user needs
-### 1. Validating user needs
-### 1. Validating user needs
+### 5. Validating user needs
 
 # INVEST
 
 Great User Stories always fit the INVEST set of criteria by Bill Wake:
 
-- [ ] Independent – they can be developed in any sequence and changes to one User Story don’t affect the others.
-- [ ] Negotiable – it’s up for the team to decide how to implement them; there is no rigidly fixed workflow.
-- [ ] Valuable – each User Story delivers a detached unit of value to end users.
-- [ ] Estimable – it’s quite easy to guess how much time the development of a User Story will take.
-- [ ] Small – it should go through the whole cycle (designing, coding, testing) during one sprint.
-- [ ] Testable – there should be clear acceptance criteria to check whether a User Story is implemented appropriately.
+- [ ] Independent - they can be developed in any sequence and changes to one User Story don't affect the others.
+- [ ] Negotiable - it's up for the team to decide how to implement them; there is no rigidly fixed workflow.
+- [ ] Valuable - each User Story delivers a detached unit of value to end users.
+- [ ] Estimable - it's quite easy to guess how much time the development of a User Story will take.
+- [ ] Small - it should go through the whole cycle (designing, coding, testing) during one sprint.
+- [ ] Testable - there should be clear acceptance criteria to check whether a User Story is implemented appropriately.
+

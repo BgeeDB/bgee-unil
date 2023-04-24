@@ -1,6 +1,7 @@
 import React from 'react';
 import Bulma from '../../components/Bulma';
 import GoTop from '../../components/GoTop';
+import News20230424 from '../../markdown/news/News-2023-04-24.md';
 import News20230331 from '../../markdown/news/News-2023-03-31.md';
 import News20220329 from '../../markdown/news/News-2022-03-29.md';
 import News20200820 from '../../markdown/news/News-2020-08-20.md';
@@ -32,6 +33,8 @@ const NewsPage = () => (
       <Bulma.Title size={5}>News</Bulma.Title>
     </div>
     <div className="content">
+      <NewsItem date="2023-04-24" News={News20230424} />
+      <div className="separator" />
       <NewsItem date="2023-03-31" News={News20230331} />
       <div className="separator" />
       <NewsItem date="2022-03-31" News={News20220329} />

@@ -19,6 +19,7 @@
     "react-markdown": "^7.1.0",
     "react-router-dom": "5.3.0",
     "react-scripts": "4.0.3",
+    "react-select": "^5.7.0",
     "rehype-highlight": "^5.0.0",
     "rehype-raw": "^6.1.0",
     "rehype-sanitize": "^5.0.0",
@@ -35,7 +36,8 @@
     "build:cra": "set \"GENERATE_SOURCEMAP=false\" && craco build",
     "build": "node productionCreation.js",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet=true"
   },
   "eslintConfig": {
     "extends": [

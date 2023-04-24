@@ -13,7 +13,7 @@ const faq = [
       {
         type: 'text',
         content:
-          "Got questions? We’ve got answers! Here, you can find Bgee team answers in response to the most frequently asked questions. If you don't find answers here, please do not hesitate to contact us, using ",
+          "Got questions? We've got answers! Here, you can find Bgee team answers in response to the most frequently asked questions. If you don't find answers here, please do not hesitate to contact us, using ",
       },
       {
         type: 'link_mail',
@@ -88,7 +88,7 @@ const faq = [
         ],
       },
       {
-        title: 'Why don’t you use standard names for developmental stages?',
+        title: 'Why don\'t you use standard names for developmental stages?',
         body: [
           {
             type: 'rich_text',

@@ -169,7 +169,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
   );
   const onFilter = React.useCallback(
     (search) => (element) => {
-      const regExp = new RegExp(search, 'gi');
+      const regExp = new RegExp(search);
       let isFound = regExp.test(element.taxon.scientificName);
       for (let i = 0; !isFound && i < element.genes.length; i += 1) {
         isFound =
@@ -192,6 +192,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             size={4}
             className="gradient-underline"
             id={GENE_DETAILS_HTML_IDS.ORTHOLOGS}
+            renderAs="h2"
           >
             Orthologs
           </Bulma.Title>
@@ -245,7 +246,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                 {homologs.orthologyXRef && (
                   <span className="is-size-7">
                     {`Orthology information comes from ${homologs.orthologyXRef?.source?.name} : `}
-                    <LinkExternal to={homologs.orthologyXRef?.xRefURL}>
+                    <LinkExternal to={homologs.orthologyXRef?.xRefURLWithTags.replace("[gene_id]", homologs.orthologyXRef?.xRefId)}>
                       {homologs.orthologyXRef?.xRefId}
                     </LinkExternal>
                     .
@@ -265,6 +266,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
             size={4}
             className="gradient-underline"
             id={GENE_DETAILS_HTML_IDS.PARALOGS}
+            renderAs="h2"
           >
             Paralogs (same species)
           </Bulma.Title>
@@ -312,7 +314,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
                 {homologs.paralogyXRef && (
                   <span className="is-size-7">
                     {`Paralogy information comes from ${homologs.paralogyXRef?.source?.name} : `}
-                    <LinkExternal to={homologs.paralogyXRef?.xRefURL}>
+                    <LinkExternal to={homologs.paralogyXRef?.xRefURLWithTags.replace("[gene_id]", homologs.paralogyXRef?.xRefId)}>
                       {homologs.paralogyXRef?.xRefId}
                     </LinkExternal>
                     .

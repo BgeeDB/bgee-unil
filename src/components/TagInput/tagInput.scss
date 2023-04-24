@@ -1,0 +1,23 @@
+.tag-item {
+  // background-color: hsl(0, 0%, 100%);
+  display: inline-block;
+}
+
+.tag-item .close {
+  margin-left: 4px;
+  color: red;
+  cursor: pointer;
+}
+
+.tag-input {
+  flex-grow: 1;
+  padding: 0.5em 0;
+  border: none;
+  outline: none;
+}
+
+.conteneur-result {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2px;
+}

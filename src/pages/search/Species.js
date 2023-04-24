@@ -9,6 +9,7 @@ import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const Species = () => {
   let metaTitle = '';
@@ -82,7 +83,6 @@ const Species = () => {
   }, [data]);
 
   React.useEffect(() => {
-    console.log('MOUNT id', id);
     setData();
     api.search.species
       .species(id)
@@ -110,7 +110,9 @@ const Species = () => {
        species, taxon`;
     /* By default genomeSourceURL goes to Ensembl or EnsemblMetazao, but for RefSeq here */
     const formattedSpeciesName = `${data.species.speciesName.replaceAll(' ', '_')}`;
-    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${formattedSpeciesName}/`}`;
+    /* Issue with naked mole rat in Ensembl because two assemblies, female and male, so different URLs! */
+	const extendedSpeciesName = `${data.species.speciesName === 'glaber' && data.species.genus === 'Heterocephalus' ? `${formattedSpeciesName}_female` : `${formattedSpeciesName}`}`;
+    genomeSourceURL = `${data.species.genomeSource.name === 'RefSeq' ? `https://www.ncbi.nlm.nih.gov/assembly/?term=${data.species.genomeVersion}` : `${data.species.genomeSource.baseUrl}/${data.species.genus}_${extendedSpeciesName}/`}`;
   }
 
   return !data ? null : (
@@ -135,7 +137,7 @@ const Species = () => {
         }`}</Bulma.Title>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline">
+        <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
           General information
         </Bulma.Title>
         <div className="">
@@ -198,7 +200,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="exp-calls">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="exp-calls"
+          renderAs="h2"
+        >
           Gene expression call files
         </Bulma.Title>
         <div className="">
@@ -277,7 +284,12 @@ const Species = () => {
         </div>
       </div>
       <div>
-        <Bulma.Title size={4} className="gradient-underline" id="proc-values">
+        <Bulma.Title
+          size={4}
+          className="gradient-underline"
+          id="proc-values"
+          renderAs="h2"
+        >
           Processed expression value files
         </Bulma.Title>
         <div className="">
@@ -360,7 +372,7 @@ const Species = () => {
               className="is-size-5 has-text-primary has-text-weight-semibold"
               id="proc-values-fl-scrna-seq"
             >
-              Single cell full length RNA-Seq
+              {FULL_LENGTH_LABEL}
             </p>
             {files.fullLength.annot || files.fullLength.data ? (
               <ul className="unordered">

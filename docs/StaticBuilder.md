@@ -1,20 +1,20 @@
 # Static Builder
 
 This feature allows you to render html through static contents (JSON Object) with preformatted styles.
-But you will always be able to customize the element by adding an `id` or a `classNames`
+But you will always be able to customize the element by adding an `id` or a `classNames`.
 
 The default styles are based on BulmaCSS, so the easier way to customize the elements are by using the BulmaCSS
 class helpers. (ex: notification with `is-danger` or `is-primary`)
 
 ### Elements
 
-There is 21 different element, with their properties:
+There are 21 different elements, with their properties:
 - Accordion
 
 ```
 {
     type: 'accordion',
-    children: Array of {title: string, body: Array of Element}
+    children: Array of {title: string, body: Array of Elements}
 }
 ```
 - Break Line
@@ -171,8 +171,8 @@ For a better understanding, please check the Table component.
     type: 'table',
     fullWidth: boolean,
     title: string,
-    columns: Array of Object,
-    mappedData: Array of Object,
+    columns: Array of Objects,
+    mappedData: Array of Objects,
     onRenderCell: ({
         cell,
         key: cellKey,
@@ -317,3 +317,4 @@ Some are similar to the previous Elements.
     content: string
 }
 ````
+

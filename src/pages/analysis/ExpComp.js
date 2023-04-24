@@ -230,7 +230,7 @@ const customHeader =
       const table = `Expression Comparison\n\n${dataToTsv(data)}`;
       copyToClipboard(table);
       addNotification({
-        id: random.toString(),
+        id: random().toString(),
         children: <p>Copied {data.length} rows to clipboard.</p>,
         className: `is-success`,
       });
@@ -469,7 +469,9 @@ const ExpComp = () => {
     <>
       <div>
         <div className="content has-text-centered">
-          <p className="title is3">Expression comparison</p>
+          <Bulma.Title size={3} className="title is3">
+            Expression comparison
+          </Bulma.Title>
         </div>
         <p className="is-size-5">
           Compare expression of several genes. If genes belong to several

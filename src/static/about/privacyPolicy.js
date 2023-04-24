@@ -69,7 +69,7 @@ const privacyPolicy = [
             content: [
               {
                 type: 'text',
-                content: 'Gwenaëlle Gilliéron, Responsable Service Juridique (',
+                content: 'Gwenaelle Gillieron, Responsable Service Juridique (',
               },
               {
                 type: 'link_mail',

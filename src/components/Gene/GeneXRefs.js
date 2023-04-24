@@ -7,7 +7,7 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 
 const GeneXRefs = ({ isLoading, data }) => (
   <div id={GENE_DETAILS_HTML_IDS.XREFS}>
-    <Bulma.Title size={4} className="gradient-underline">
+    <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
       Cross-references
     </Bulma.Title>
     <div>
@@ -30,7 +30,7 @@ const GeneXRefs = ({ isLoading, data }) => (
                 items={xref.xRefs}
                 renderElement={(ref, key, elements) => (
                   <span key={ref.xRefId}>
-                    <LinkExternal to={ref.xRefURL}>{ref.xRefId}</LinkExternal>
+                    <LinkExternal to={ref.xRefURL.replace('ensembl.org/Heterocephalus_glaber/', 'ensembl.org/Heterocephalus_glaber_female/')}>{ref.xRefId}</LinkExternal>
                     {ref.xRefName && <>{` (${ref.xRefName})`}</>}
                     {key !== elements.length - 1 ? (
                       <span className="mr-1">,</span>

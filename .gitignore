@@ -11,6 +11,10 @@
 # production
 /build
 
+# archives
+/archives/1*
+/archives/2*
+
 # misc
 .DS_Store
 .env.local

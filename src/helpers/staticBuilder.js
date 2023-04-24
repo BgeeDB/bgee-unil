@@ -279,9 +279,7 @@ const staticBuilder = (json, prefixKey = '') =>
           </a>
         );
       case 'only_image':
-        return (
-          <img src={props.src} alt={props.alt} style={props.style} />
-        );
+        return <img src={props.src} alt={props.alt} style={props.style} />;
       case 'link_internal':
         return (
           <Link
@@ -340,7 +338,7 @@ const staticBuilder = (json, prefixKey = '') =>
             key={`${prefixKey}-${key}`}
             className={classnames(classNames)}
           >
-            <Bulma.Title size={4} className="gradient-underline">
+            <Bulma.Title size={4} className="gradient-underline" renderAs="h2">
               {props.title}
             </Bulma.Title>
             <div className="">{staticBuilder(props.children)}</div>
@@ -370,7 +368,9 @@ const staticBuilder = (json, prefixKey = '') =>
             className={classnames('content has-text-centered', classNames)}
             key={`${prefixKey}-${key}`}
           >
-            <p className="title is-3">{props.content}</p>
+            <Bulma.Title size={3} className="title is-3">
+              {props.content}
+            </Bulma.Title>
           </div>
         );
       case 'unordered_list':

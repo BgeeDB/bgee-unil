@@ -21,7 +21,7 @@ For each gene and each sample in Bgee, we produce a p-value based on a null hypo
 
 * For <u>bulk RNA-Seq data</u>: we use our own method to estimate for each RNA-Seq library independently the TPM threshold to consider a gene as actively transcribed, inferred by the amount of reads mapped to intergenic regions of the genome. For this, we first define a stringent set of reference intergenic regions, based on available bulk RNA-Seq libraries for each species. We then call genes expressed if their level of expression is significantly higher than the background noise. For each gene in the library, we compute a Z-score in terms of standard deviations from the mean of reference intergenic regions. Then we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 * For <u>single-cell RNA-Seq data</u>: as of Bgee 15.0, only full-length protocols are integrated. The method used is the same as for bulk RNA-Seq data, for each cell/library.
-* For <u>Affymetrix data</u>: when raw CEL files are available, we use the gcRMA algorithm to normalize the signal taking into account probe sequences, and use a subset of weakly expressed probesets for estimating the background signal of expression. We then apply a Wilcoxon test to compare the normalized signal of the probesets with the background signal, as implemented in the ‘mas5calls’ function of the bioconductor package ‘affy’, and we use the resulting p-value. When only the MAS5 files of an analysis are available, we use the flags provided by the MAS5 software, with the following mapping to a p-value: 0.01 for 'present' detection flags; 0.05 for 'marginal' detection flags; 0.1 for 'absent' detection flags.
+* For <u>Affymetrix data</u>: when raw CEL files are available, we use the gcRMA algorithm to normalize the signal taking into account probe sequences, and use a subset of weakly expressed probesets for estimating the background signal of expression. We then apply a Wilcoxon test to compare the normalized signal of the probesets with the background signal, as implemented in the 'mas5calls' function of the bioconductor package 'affy', and we use the resulting p-value. When only the MAS5 files of an analysis are available, we use the flags provided by the MAS5 software, with the following mapping to a p-value: 0.01 for 'present' detection flags; 0.05 for 'marginal' detection flags; 0.1 for 'absent' detection flags.
 * For <u>EST data</u>: based on the number of ESTs mapped to a gene in a library, we produce a p-value based on the null hypothesis that the EST count is not different from 0, with the formula: 2^(-(est_count + 1)).
 * For <u>_in situ_ hybridization data</u>: we retrieve _in situ_ hybridization data from Model Organism Databases part of the Alliance of Genome Resources. We map call qualities provided by these resources to p-values: 0.0004 for 'present high quality' calls; 0.01 for "present low quality"; 0.1 for "absent low quality"; 0.5 for "absent high quality".
 
@@ -87,17 +87,17 @@ Advanced file information:
 |18|[Affymetrix call quality](#affymetrix-call-quality-column-18 "See Affymetrix call quality column description")|No|Yes|No|Yes|NA|
 |19|[Affymetrix FDR](#affymetrix-fdr-column-19 "See Affymetrix FDR column description")|No|Yes|No|Yes|NA|
 |20|[Affymetrix expression score](#affymetrix-expression-score-column-20 "See Affymetrix expression score column description")|No|Yes|No|Yes|NA|
-|21|[Affymetrix expression rank](#affymetrix-expression-rank-column-17 "See Affymetrix expression rank column description")|No|Yes|No|Yes|NA|
-|22|[Affymetrix weight for expression rank and score](#affymetrix-weight-column-17 "See Affymetrix weight for expression rank and score column description")|No|Yes|No|Yes|NA|
-|23|[Including Affymetrix observed data](#including-affymetrix-observed-data-column-17 "See Including Affymetrix observed data column description")|No|Yes|No|Yes|no|
-|24|[Self observation count Affymetrix](#self-observation-count-affymetrix-column-17 "See Self observation count Affymetrix column description")|No|Yes|No|Yes|0|
-|25|[Descendant observation count Affymetrix](#descendant-observation-count-affymetrix-column-17 "See Descendant observation count Affymetrix column description")|No|Yes|No|Yes|0|
+|21|[Affymetrix expression rank](#affymetrix-expression-rank-column-21 "See Affymetrix expression rank column description")|No|Yes|No|Yes|NA|
+|22|[Affymetrix weight for expression rank and score](#affymetrix-weight-for-expression-rank-and-score-column-22 "See Affymetrix weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|23|[Including Affymetrix observed data](#including-affymetrix-observed-data-column-23 "See Including Affymetrix observed data column description")|No|Yes|No|Yes|no|
+|24|[Self observation count Affymetrix](#self-observation-count-affymetrix-column-24 "See Self observation count Affymetrix column description")|No|Yes|No|Yes|0|
+|25|[Descendant observation count Affymetrix](#descendant-observation-count-affymetrix-column-25 "See Descendant observation count Affymetrix column description")|No|Yes|No|Yes|0|
 |26|[EST expression](#est-expression-column-26 "See EST expression column description")|No|Yes|No|Yes|no data|
 |27|[EST call quality](#est-call-quality-column-27 "See EST call quality column description")|No|Yes|No|Yes|NA|
 |28|[EST FDR](#est-fdr-column-28 "See EST FDR column description")|No|Yes|No|Yes|NA|
 |29|[EST expression score](#est-expression-score-column-29 "See EST expression score column description")|No|Yes|No|Yes|NA|
 |30|[EST expression rank](#est-expression-rank-column-30 "See EST expression rank column description")|No|Yes|No|Yes|NA|
-|31|[EST weight for expression rank and score](#est-weight-column-31 "See EST weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|31|[EST weight for expression rank and score](#est-weight-for-expression-rank-and-score-column-31 "See EST weight for expression rank and score column description")|No|Yes|No|Yes|NA|
 |32|[Including EST observed data](#including-est-observed-data-column-32 "See Including EST observed data column description")|No|Yes|No|Yes|no|
 |33|[Self observation count EST](#self-observation-count-est-column-33 "See Self observation count EST column description")|No|Yes|No|Yes|0|
 |34|[Descendant observation count EST](#descendant-observation-count-est-column-34 "See Descendant observation count EST column description")|No|Yes|No|Yes|0|
@@ -106,7 +106,7 @@ Advanced file information:
 |37|[in situ hybridization FDR](#in-situ-hybridization-fdr-column-37 "See in situ hybridization FDR column description")|No|Yes|No|Yes|0.0004|
 |38|[in situ hybridization expression score](#in-situ-hybridization-expression-score-column-38 "See in situ hybridization expression score column description")|No|Yes|No|Yes|49.99|
 |39|[in situ hybridization expression rank](#in-situ-hybridization-expression-rank-column-39 "See in situ hybridization expression rank column description")|No|Yes|No|Yes|8.32e3|
-|40|[in situ hybridization weight for expression rank and score](#in-situ-hybridization-weight-column-40 "See in situ hybridization weight for expression rank and score column description")|No|Yes|No|Yes|5.00|
+|40|[in situ hybridization weight for expression rank and score](#in-situ-hybridization-weight-for-expression-rank-and-score-column-40 "See in situ hybridization weight for expression rank and score column description")|No|Yes|No|Yes|5.00|
 |41|[Including in situ hybridization observed data](#including-in-situ-hybridization-observed-data-column-41 "See Including in situ hybridization observed data column description")|No|Yes|No|Yes|yes|
 |42|[Self observation count in situ hybridization](#self-observation-count-in-situ-hybridization-column-42 "See Self observation count in situ hybridization column description")|No|Yes|No|Yes|1|
 |43|[Descendant observation count in situ hybridization](#descendant-observation-count-in-situ-hybridization-column-43 "See Descendant observation count in situ hybridization column description")|No|Yes|No|Yes|0|
@@ -115,7 +115,7 @@ Advanced file information:
 |46|[RNA-Seq FDR](#rna-seq-fdr-column-46 "See RNA-Seq FDR column description")|No|Yes|No|Yes|NA|
 |47|[RNA-Seq expression score](#rna-seq-expression-score-column-47 "See RNA-Seq expression score column description")|No|Yes|No|Yes|NA|
 |48|[RNA-Seq expression rank](#rna-seq-expression-rank-column-48 "See RNA-Seq expression rank column description")|No|Yes|No|Yes|NA|
-|49|[RNA-Seq weight for expression rank and score](#rna-seq-weight-column-49 "See RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|49|[RNA-Seq weight for expression rank and score](#rna-seq-weight-for-expression-rank-and-score-column-49 "See RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
 |50|[Including RNA-Seq observed data](#including-rna-seq-observed-data-column-50 "See Including RNA-Seq observed data column description")|No|Yes|No|Yes|no|
 |51|[Self observation count RNA-Seq](#self-observation-count-rna-seq-column-51 "See Self observation count RNA-Seq column description")|No|Yes|No|Yes|0|
 |52|[Descendant observation count RNA-Seq](#descendant-observation-count-rna-seq-column-52 "See Descendant observation count RNA-Seq column description")|No|Yes|No|Yes|0|
@@ -124,7 +124,7 @@ Advanced file information:
 |55|[full-length single-cell RNA-Seq FDR](#full-length-single-cell-rna-seq-fdr-column-55 "See full-length single-cell RNA-Seq FDR column description")|No|Yes|No|Yes|NA|
 |56|[full-length single-cell RNA-Seq expression score](#full-length-single-cell-rna-seq-expression-score-column-56 "See full-length single-cell RNA-Seq expression score column description")|No|Yes|No|Yes|NA|
 |57|[full-length single-cell RNA-Seq expression rank](#full-length-single-cell-rna-seq-expression-rank-column-57 "See full-length single-cell RNA-Seq expression rank column description")|No|Yes|No|Yes|NA|
-|58|[full-length single-cell RNA-Seq weight for expression rank and score](#full-length-single-cell-rna-seq-weight-column-58 "See full-length single-cell RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
+|58|[full-length single-cell RNA-Seq weight for expression rank and score](#full-length-single-cell-rna-seq-weight-for-expression-rank-and-score-column-58 "See full-length single-cell RNA-Seq weight for expression rank and score column description")|No|Yes|No|Yes|NA|
 |59|[Including full-length single-cell RNA-Seq observed data](#including-full-length-single-cell-rna-seq-observed-data-column-59 "See Including full-length single-cell RNA-Seq observed data column description")|No|Yes|No|Yes|no|
 |60|[Self observation count full-length single-cell RNA-Seq](#self-observation-count-full-length-single-cell-rna-seq-column-60 "See Self observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
 |61|[Descendant observation count full-length single-cell RNA-Seq](#descendant-observation-count-full-length-single-cell-rna-seq-column-61 "See Descendant observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
@@ -218,27 +218,27 @@ Score of expression to the call from Affymetrix data. The score uses the minimum
 
 Low score means that the gene is lowly expressed in the condition.
 
-##### <a name="affymetrix-expression-rank-column-17"></a>Affymetrix expression rank (column 21)
+##### <a name="affymetrix-expression-rank-column-21"></a>Affymetrix expression rank (column 21)
 
 Rank score associated to the call from Affymetrix data. Rank scores of expression calls are normalized across genes, conditions and species.
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="affymetrix-weight-column-17"></a>Affymetrix weight for expression rank and score (column 22)
+##### <a name="affymetrix-weight-for-expression-rank-and-score-column-22"></a>Affymetrix weight for expression rank and score (column 22)
 
 The weight given to Affymetrix expression ranks and scores when computing the weighted mean over several data types.
 
-##### <a name="including-affymetrix-observed-data-column-17"></a>Including Affymetrix observed data (column 23)
+##### <a name="including-affymetrix-observed-data-column-23"></a>Including Affymetrix observed data (column 23)
 
 Information about the calls actually coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
 
 Permitted value: `yes` or `no`
 
-##### <a name="self-observation-count-affymetrix-column-17"></a>Self observation count Affymetrix (column 24)
+##### <a name="self-observation-count-affymetrix-column-24"></a>Self observation count Affymetrix (column 24)
 
 Number of observation coming from experimental Affymetrix data for this combination of condition parameters (anatomical or all conditions).
 
-##### <a name="descendant-observation-count-affymetrix-column-17"></a>Descendant observation count Affymetrix (column 25)
+##### <a name="descendant-observation-count-affymetrix-column-25"></a>Descendant observation count Affymetrix (column 25)
 
 Number of observation coming from experimental Affymetrix data for combination of condition parameters (anatomical or all conditions) descendant of the current one.
 
@@ -266,7 +266,7 @@ Rank score associated to the call from EST data. Rank scores of expression calls
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="est-weight-column-31"></a>EST weight for expression rank and score (column 31)
+##### <a name="est-weight-for-expression-rank-and-score-column-31"></a>EST weight for expression rank and score (column 31)
 
 The weight given to EST expression ranks and scores when computing the weighted mean over several data types.
 
@@ -308,7 +308,7 @@ Rank score associated to the call from in situ hybridization data. Rank scores o
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="in-situ-hybridization-weight-column-40"></a>in situ hybridization weight for expression rank and score (column 40)
+##### <a name="in-situ-hybridization-weight-for-expression-rank-and-score-column-40"></a>in situ hybridization weight for expression rank and score (column 40)
 
 The weight given to in situ hybridization expression ranks and scores when computing the weighted mean over several data types.
 
@@ -350,7 +350,7 @@ Rank score associated to the call from RNA-Seq data. Rank scores of expression c
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="rna-seq-weight-column-49"></a>RNA-Seq weight for expression rank and score (column 49)
+##### <a name="rna-seq-weight-for-expression-rank-and-score-column-49"></a>RNA-Seq weight for expression rank and score (column 49)
 
 The weight given to RNA-Seq expression ranks and scores when computing the weighted mean over several data types.
 
@@ -392,7 +392,7 @@ Rank score associated to the call from full-length single-cell RNA-Seq data. Ran
 
 A low score means that the gene is highly expressed in the condition.
 
-##### <a name="full-length-single-cell-rna-seq-weight-column-58"></a>full-length single-cell RNA-Seq weight for expression rank and score (column 58)
+##### <a name="full-length-single-cell-rna-seq-weight-for-expression-rank-and-score-column-58"></a>full-length single-cell RNA-Seq weight for expression rank and score (column 58)
 
 The weight given to full-length single-cell expression ranks and scores when computing the weighted mean over several data types.
 

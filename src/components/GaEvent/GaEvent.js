@@ -7,7 +7,7 @@ const GaEvent = ({ category, action, label, value, children }) => (
   <span
     onClick={() => {
       if (category && action) {
-        console.debug('Trigger ga');
+        // console.debug('Trigger ga');
         ReactGA.event({
           category: `${category}_${config.version}`,
           action,

@@ -16,6 +16,7 @@ import expressionPageHelper from '../../helpers/expressionPageHelper';
 import LinkExternal from '../../components/LinkExternal';
 import imagePath from '../../helpers/imagePath';
 import config from '../../config.json';
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
 const ProcessedExpressionValues = () => {
   const history = useHistory();
@@ -84,7 +85,7 @@ const ProcessedExpressionValues = () => {
         <meta
           name="keywords"
           content={`dataset, data download, gene expression,
-     RNA-Seq, Affymetrix, full-length single-cell RNA-Seq, full-length scRNA-Seq, scRNA-Seq,
+     RNA-Seq, Affymetrix, ${FULL_LENGTH_LABEL}, scRNA-Seq,
      expression data annotations, ${allSpeciesName}`}
         />
       </Helmet>
@@ -270,7 +271,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/rna_seq/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/rna_seq/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   RNA-Seq data directory
                                 </a>
@@ -312,7 +313,7 @@ const ProcessedExpressionValues = () => {
                                           Download experiments/chips info
                                           {` (${readableFileSize(
                                             files[species.id.toString()]
-                                              ?.rnaSeqData.size
+                                              ?.affymetrixAnnot.size
                                           )})`}
                                         </span>
                                       </button>
@@ -353,7 +354,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/affymetrix/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/affymetrix/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   Affymetrix data directory
                                 </a>
@@ -367,7 +368,7 @@ const ProcessedExpressionValues = () => {
                         </div>
                         <div className="mt-4">
                           <p className="mb-2 is-size-5 has-text-weight-semibold">
-                            Single cell full length RNA-Seq data
+                            {FULL_LENGTH_LABEL} data
                           </p>
                           {files[species.id.toString()]?.fullLengthAnnot ||
                           files[species.id.toString()]?.fullLengthData ? (
@@ -436,9 +437,9 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.genus}_${species.speciesName}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.speciesFullNameWithoutSpace}/`}
                                 >
-                                  Full length single cell RNA-Seq data directory
+                                  {FULL_LENGTH_LABEL} data directory
                                 </a>
                               </p>
                             </>

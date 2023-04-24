@@ -2,6 +2,9 @@
 import React, { useContext } from 'react';
 import { isHideMediaQuery } from '../../helpers/constants/mediaQueries';
 import { TableContext } from '../../contexts/TableContext';
+import HelpIcon from '../HelpIcon';
+import './override.scss';
+import classnames from '../../helpers/classnames';
 
 const cssSortOption = (key, sortOpts) => {
   let pos;
@@ -37,7 +40,7 @@ const cssSortOption = (key, sortOpts) => {
 
   return null;
 };
-const TableHead = () => {
+const TableHead = ({ minThWidth }) => {
   const {
     columns,
     sortable,
@@ -46,26 +49,41 @@ const TableHead = () => {
     showTableModalButton,
     usedWidth,
   } = useContext(TableContext);
+  const minWidthStyle = minThWidth ? { minWidth: minThWidth } : {};
   return (
     <thead>
       <tr>
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         {showTableModalButton && <th />}
         {columns.map((item, key) => {
+          const itemStyle = item.style ? item.style : {};
+          const thStyle = { ...itemStyle, ...minWidthStyle };
           if (typeof item === 'object') {
             if (isHideMediaQuery(usedWidth, item.hide)) return null;
             return (
               <th
-                key={item.key}
+                className={classnames(!!item.infoBubble && 'hasInfoBubble')}
+                key={key}
                 onClick={
                   sortable && !item.noSort
                     ? defineSortOption(item.key)
                     : undefined
                 }
-                style={item.style}
+                style={thStyle}
               >
-                {item.text}
-                {cssSortOption(item.key, sortOption)}
+                <div style={{ display: 'flex' }}>
+                  {item?.text || item?.title}
+                  {cssSortOption(item.key, sortOption)}
+                  {item.infoBubble && (
+                    <HelpIcon
+                      isLeft={key > columns.length / 2}
+                      title={item.text}
+                      className="helpIcon"
+                      iconName="information-circle"
+                      content={item.infoBubble}
+                    />
+                  )}
+                </div>
               </th>
             );
           }

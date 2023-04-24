@@ -66,7 +66,7 @@ const CreativeCommons = () => {
           </a>
         </p>
         <p>
-          <i>Drosophila melanogaster</i> picture by André Karwath aka Aka (Own
+          <i>Drosophila melanogaster</i> picture by Andr&eacute; Karwath aka Aka (Own
           work) [
           <a
             target="_blank"
@@ -479,7 +479,7 @@ const CreativeCommons = () => {
           </a>
         </p>
         <p>
-          <i>Xenopus tropicalis</i> picture by Václav Gvoždík
+          <i>Xenopus tropicalis</i> picture by V&aacute;clav Gvo&#382;d&iacute;k
           (http://calphotos.berkeley.edu) [
           <a
             target="_blank"
@@ -871,8 +871,8 @@ const CreativeCommons = () => {
           </a>
         </p>
         <p>
-          <i>Macaca fascicularis</i> picture by André Ueberbach (Eigene Aufnahme
-          von André Ueberbach/Own production) [
+          <i>Macaca fascicularis</i> picture by Andr&eacute; Ueberbach (Eigene Aufnahme
+          von Andr&eacute; Ueberbach/Own production) [
           <a
             target="_blank"
             rel="noopener noreferrer"

@@ -57,6 +57,7 @@ const Gene = () => {
       />
     );
   }
+
   if (!urlSpeciesId && geneDetails?.length > 1) {
     return <GeneList details={geneDetails} history={history} />;
   }

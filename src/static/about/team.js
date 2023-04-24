@@ -1,3 +1,4 @@
+import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 import imagePath from '../../helpers/imagePath';
 
 const team = [
@@ -41,7 +42,7 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Biocurator assistant: single-cell RNA-Seq data annotator and cleaner)',
+                content: ` (Biocurator assistant: ${FULL_LENGTH_LABEL} data annotator and cleaner)`,
               },
             ],
           },
@@ -54,7 +55,8 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Computational biologist: RDF/SPARQL guru, Bgee data disseminator)',
+                content:
+                  ' (Computational biologist: RDF/SPARQL guru, Bgee data disseminator)',
               },
             ],
           },
@@ -67,7 +69,7 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Bio-Statistician: single-cell RNA-Seq pipeline creator, p-value activist) ',
+                content: ` (Bio-Statistician: ${FULL_LENGTH_LABEL} pipeline creator, p-value activist) `,
               },
               {
                 type: 'underline',
@@ -84,7 +86,8 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Lead biocurator: provide "normal", healthy wild-type, expression data: the Bgee core)',
+                content:
+                  ' (Lead biocurator: provide "normal", healthy wild-type, expression data: the Bgee core)',
               },
             ],
           },
@@ -97,7 +100,8 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer)',
+                content:
+                  ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer)',
               },
             ],
           },
@@ -106,11 +110,12 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Moretti, Sébastien',
+                content: 'Moretti, Sebastien',
               },
               {
                 type: 'text',
-                content: ' (Software Developer: pipeline and container developer, system administrator)',
+                content:
+                  ' (Software Developer: pipeline and container developer, system administrator)',
               },
             ],
           },
@@ -123,7 +128,8 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Bioinformatician: pre-filter data before curation, molecular protocol master)',
+                content:
+                  ' (Bioinformatician: pre-filter data before curation, molecular protocol master)',
               },
             ],
           },
@@ -132,11 +138,12 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Bastian, Frédéric',
+                content: 'Bastian, Frederic',
               },
               {
                 type: 'text',
-                content: ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto)',
+                content:
+                  ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto)',
               },
             ],
           },
@@ -149,7 +156,8 @@ const team = [
               },
               {
                 type: 'text',
-                content: ' (Associate Director: roadmap, idea agitator and provider, Bgee initiator)',
+                content:
+                  ' (Associate Director: roadmap, idea agitator and provider, Bgee initiator)',
               },
             ],
           },
@@ -169,8 +177,7 @@ const team = [
         content: [
           {
             type: 'text',
-            content:
-              'Alphabetically ordered list of former Bgee team members:',
+            content: 'Alphabetically ordered list of former Bgee team members:',
           },
         ],
       },
@@ -179,7 +186,7 @@ const team = [
         children: [
           {
             type: 'text',
-            content: 'Comte, Aurélie',
+            content: 'Comte, Aurelie',
           },
           {
             type: 'text',
