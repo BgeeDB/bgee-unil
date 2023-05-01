@@ -37,7 +37,7 @@ const Footer = () => {
             <Bulma.Image
               className="no-responsive"
               src={imagePath('/cc-zero.png')}
-              alt="CC0"
+              alt="CC0 license logo"
               height={15}
               width={80}
             />
