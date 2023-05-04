@@ -664,6 +664,16 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('anat_entity_descendant') === 'true') {
             searchParams.delete('anat_entity_descendant');
           }
+
+          if (searchParams.get('cond_observed') === 'false') {
+            searchParams.delete('cond_observed');
+          }
+          // We check if the URL contains every single type of dataType available (any order)
+          const defaultDataType = [ "RNA_SEQ", "SC_RNA_SEQ", "AFFYMETRIX", "IN_SITU", "EST" ];
+          if (defaultDataType.every(i => searchParams.getAll('data_type').includes(i))) {
+            searchParams.delete('data_type');
+          }
+
           if (isFirstSearch) {
             history.replace({
               search: searchParams.toString(),
