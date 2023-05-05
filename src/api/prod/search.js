@@ -455,9 +455,15 @@ const search = {
           );
         }
 
+        // This is the URL that the browser will show after the page is loaded
         const paramsURLCalled = params.toString();
+        // This parameter is used by the Front-end, not the API so we won't send it to the server
+        params.delete('pageNumber');
+        // This is the URL we send to the server for our request
+        const paramsURLCalledWithoutFrontParameters = params.toString();
+
         axiosInstance
-          .get(`/?${paramsURLCalled}`, {
+          .get(`/?${paramsURLCalledWithoutFrontParameters}`, {
             cancelToken: new axios.CancelToken((c) => {
               SEARCH_CANCEL_API.rawData[typeToken] = c;
             }),
