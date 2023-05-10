@@ -270,6 +270,17 @@ const useLogic = (isExprCalls) => {
     setSelectedSexes([]);
   };
 
+  // When we remove the last gene of our list we need to reset the fields that are dependant on Genes
+  useEffect(() => {
+    if (selectedGene.length === 0) {
+      setSelectedCellTypes([]);
+      setSelectedStrain([]);
+      setSelectedTissue([]);
+      setSelectedDevStages([]);
+      setSelectedSexes([]);
+    }
+  }, [selectedGene]);
+
   useEffect(() => {
     if (!isFirstSearch) {
       triggerSearch();
