@@ -311,7 +311,8 @@ const useLogic = (isExprCalls) => {
     }
   }, [selectedSpecies]);
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     triggerSearch(true, true);
     triggerCounts();
   };

@@ -256,7 +256,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               {detailedData?.searchLabel}
             </h2>
             {show && (
-              <>
+              <form>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2 maxWidth50">
@@ -402,7 +402,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                     </div>
                   </div>
                 </div>
-              </>
+              </form>
             )}
             <div className="control is-flex is-align-items-center">
               <button
