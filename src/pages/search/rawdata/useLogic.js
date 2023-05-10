@@ -805,6 +805,18 @@ const useLogic = (isExprCalls) => {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
     }
+    if (isExprCalls) {
+      setDataTypesExpCalls(ALL_DATA_TYPES_ID);
+      setConditionalParam2([
+        COND_PARAM2_ANAT_KEY,
+        COND_PARAM2_DEVSTAGE_KEY,
+        COND_PARAM2_SEX_KEY,
+        COND_PARAM2_STRAIN_KEY,
+      ]);
+      setCallTypes([NOT_EXPRESSED, EXPRESSED]);
+      setDataQuality(BRONZE);
+      setCondObserved(false);
+    }
     if (pageWillBeReset) {
       setNeedToResetThePage(true);
     }
