@@ -16,14 +16,14 @@ const RawDataAnnotationsFilters = ({
   const eraseFilters = () => {
     if (filters[dataType] !== {} && filters[dataType] !== undefined) {
       setFilters((old) => ({ ...old, [dataType]: {} }));
-      triggerSearch(true, true);
+      triggerSearch(true, false);
       setHasChanged(false);
     }
   };
 
   const onApplyFilter = (e) => {
     e.preventDefault();
-    triggerSearch(false, true);
+    triggerSearch(false, false);
     setHasChanged(false);
   };
 
