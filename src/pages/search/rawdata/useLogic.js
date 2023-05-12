@@ -470,6 +470,11 @@ const useLogic = (isExprCalls) => {
     const filtersToCheck =
       (isExprCalls ? data?.filters : data?.filters?.[nextDataType]) || {};
     const searchParams = new URLSearchParams(requestParameters);
+
+    if(searchParams.get('filter_sex')) {
+      searchParams.append('filter_sex', searchParams.get('filter_sex').toUpperCase());
+    }
+    
     const initFilters = {};
     // eslint-disable-next-line no-unused-vars
     Object.entries(filtersToCheck).forEach(([_, f]) => {
