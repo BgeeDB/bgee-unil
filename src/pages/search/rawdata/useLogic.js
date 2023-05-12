@@ -324,7 +324,7 @@ const useLogic = (isExprCalls) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    triggerSearch(true, true);
+    triggerSearch(true, false);
     triggerCounts();
   };
 
