@@ -58,23 +58,30 @@ const useLogic = () => {
           colHeaders.push(column.title);
         });
 
-      let tsv = colHeaders.join('%09');
-      tsv += '%0D%0A'; // carriage return
-      const columnsToExport = data?.columnDescriptions
+        let tsv = colHeaders.join('%09');
+        tsv += '%0D%0A'; // carriage return
+        const columnsToExport = data?.columnDescriptions
         .filter((col) => col.export); // filtering export = false
 
       columnsToExport.forEach(col => {
-        const indexToCleanAttribute = col.attributes[0].indexOf(".") + 1;
-        const attributeCleaned = (col.attributes[0].substring(indexToCleanAttribute));
-        /* eslint-disable no-param-reassign */
-        col.attributeToSearch = attributeCleaned;
+        col.attributes.forEach(attr => {
+          const indexToCleanAttribute = attr.indexOf(".") + 1;
+          const attributeCleaned = (attr.substring(indexToCleanAttribute));
+          /* eslint-disable no-param-reassign */
+          if(!col.attributeToSearch)
+            col.attributeToSearch = [];
+          if(!col.attributeToSearch.includes(attributeCleaned))
+            col.attributeToSearch.push(attributeCleaned);
+        });
       }); 
 
       data?.assays.forEach((row) => {
         const rowTxt = columnsToExport
           .map((col) => {
-            const attrToSearch = col.attributeToSearch;
-            const attrValue = attrToSearch.split('.').reduce((prev, curr) => prev?.[curr], row); // We get the result only from the column we need to export
+            let attrValue = '';
+            col.attributeToSearch.forEach(attr => {
+              attrValue += `${attr.split('.').reduce((prev, curr) => prev?.[curr], row)} `; // We get the result only from the column we need to export
+            });
             return encodeURIComponent(attrValue);
           });
           tsv += `${rowTxt.join('%09')}%0D%0A`; // carriage return
