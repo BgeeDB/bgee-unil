@@ -104,6 +104,16 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
+  const blockSubmitButtonFromForm = useMemo(() => {
+    // While in ExprCall the user can't submit the form if a Species is selected but not a gene
+    if (isExprCalls) {
+      if(selectedSpecies.value !== ''  && selectedGene.length === 0)
+        return true;
+    }
+
+    return false;
+  }, [selectedSpecies, selectedGene]);
+
   const countResultKey = () => {
     if (pageType === EXPERIMENTS)
       return 'experimentCount';
@@ -385,7 +395,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           className="button is-success is-light is-outlined"
                           type="submit"
                           onClick={onSubmit}
-                          disabled={isLoading}
+                          disabled={isLoading || blockSubmitButtonFromForm}
                         >
                           Submit
                         </Button>

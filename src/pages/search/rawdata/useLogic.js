@@ -666,6 +666,9 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
           }
+          if (searchParams.get('pageType') === 'expr_calls' && isExprCalls) {
+            searchParams.delete('pageType');
+          }
           if (searchParams.get('pageNumber') === '1') {
             searchParams.delete('pageNumber');
           }
