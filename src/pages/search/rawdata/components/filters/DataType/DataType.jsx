@@ -60,7 +60,6 @@ const DataType = ({ dataTypes, setDataTypes }) => {
           </label>
         ))}
         <Bulma.Button
-          type="button"
           className="search-form"
           disabled={allDisabled}
           onClick={() => setDataTypes(ALL_DATA_TYPES_ID)}
@@ -68,7 +67,6 @@ const DataType = ({ dataTypes, setDataTypes }) => {
           Select All
         </Bulma.Button>
         <Bulma.Button
-          type="button"
           className="search-form"
           disabled={dataTypes.length === 0}
           onClick={() => setDataTypes([])}
