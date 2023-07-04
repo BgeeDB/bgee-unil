@@ -31,6 +31,7 @@ import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
+import CondObservedParameter from './components/filters/CondObservedParameter/CondObservedParameter';
 
 const RawDataAnnotations = ({ isExprCalls = false }) => {
   const {
@@ -62,6 +63,8 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     dataQuality,
     conditionalParam2,
     callTypes,
+    condObserved,
+    setCondObserved,
     setCallTypes,
     setConditionalParam2,
     setDataQuality,
@@ -103,16 +106,6 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
   const defaultdataFilters = searchResult?.filters?.[dataType] || {};
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
-
-  const blockSubmitButtonFromForm = useMemo(() => {
-    // While in ExprCall the user can't submit the form if a Species is selected but not a gene
-    if (isExprCalls) {
-      if(selectedSpecies.value !== ''  && selectedGene.length === 0)
-        return true;
-    }
-
-    return false;
-  }, [selectedSpecies, selectedGene]);
 
   const countResultKey = () => {
     if (pageType === EXPERIMENTS)
@@ -263,7 +256,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               {detailedData?.searchLabel}
             </h2>
             {show && (
-              <form>
+              <>
                 <div className="columns is-8">
                   <div className="column mr-6">
                     <div className="mb-2 maxWidth50">
@@ -282,7 +275,8 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                             AutoCompleteByType={AutoCompleteByType}
                           />
                         </div>
-                        {selectedGene.length > 0 && (
+                        {((isExprCalls && selectedGene.length > 0) ||
+                          !isExprCalls) && (
                           <>
                             <div className="my-2 maxWidth50">
                               <Tissues
@@ -371,13 +365,11 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 dataQuality={dataQuality}
                                 setDataQuality={setDataQuality}
                               />
-                              {/*
                               <hr />
                               <CondObservedParameter
                                 condObserved={condObserved}
                                 setCondObserved={setCondObserved}
                               />
-                              */}
                             </>
                           )}
                         </>
@@ -395,7 +387,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                           className="button is-success is-light is-outlined"
                           type="submit"
                           onClick={onSubmit}
-                          disabled={isLoading || blockSubmitButtonFromForm}
+                          disabled={isLoading}
                         >
                           Submit
                         </Button>
@@ -410,7 +402,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                     </div>
                   </div>
                 </div>
-              </form>
+              </>
             )}
             <div className="control is-flex is-align-items-center">
               <button

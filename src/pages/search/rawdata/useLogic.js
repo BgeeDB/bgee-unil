@@ -270,17 +270,6 @@ const useLogic = (isExprCalls) => {
     setSelectedSexes([]);
   };
 
-  // When we remove the last gene of our list we need to reset the fields that are dependant on Genes
-  useEffect(() => {
-    if (selectedGene.length === 0 && !isFirstSearch) {
-      setSelectedCellTypes([]);
-      setSelectedStrain([]);
-      setSelectedTissue([]);
-      setSelectedDevStages([]);
-      setSelectedSexes([]);
-    }
-  }, [selectedGene]);
-
   useEffect(() => {
     if (!isFirstSearch) {
       triggerSearch();
@@ -322,9 +311,8 @@ const useLogic = (isExprCalls) => {
     }
   }, [selectedSpecies]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    triggerSearch(true, false);
+  const onSubmit = () => {
+    triggerSearch(true, true);
     triggerCounts();
   };
 
@@ -470,11 +458,6 @@ const useLogic = (isExprCalls) => {
     const filtersToCheck =
       (isExprCalls ? data?.filters : data?.filters?.[nextDataType]) || {};
     const searchParams = new URLSearchParams(requestParameters);
-
-    if(searchParams.get('filter_sex')) {
-      searchParams.append('filter_sex', searchParams.get('filter_sex').toUpperCase());
-    }
-    
     const initFilters = {};
     // eslint-disable-next-line no-unused-vars
     Object.entries(filtersToCheck).forEach(([_, f]) => {
@@ -666,9 +649,6 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
           }
-          if (searchParams.get('pageType') === 'expr_calls' && isExprCalls) {
-            searchParams.delete('pageType');
-          }
           if (searchParams.get('pageNumber') === '1') {
             searchParams.delete('pageNumber');
           }
@@ -684,16 +664,6 @@ const useLogic = (isExprCalls) => {
           if (searchParams.get('anat_entity_descendant') === 'true') {
             searchParams.delete('anat_entity_descendant');
           }
-
-          if (searchParams.get('cond_observed') === 'false') {
-            searchParams.delete('cond_observed');
-          }
-          // We check if the URL contains every single type of dataType available (any order)
-          const defaultDataType = [ "RNA_SEQ", "SC_RNA_SEQ", "AFFYMETRIX", "IN_SITU", "EST" ];
-          if (defaultDataType.every(i => searchParams.getAll('data_type').includes(i))) {
-            searchParams.delete('data_type');
-          }
-
           if (isFirstSearch) {
             history.replace({
               search: searchParams.toString(),
@@ -834,18 +804,6 @@ const useLogic = (isExprCalls) => {
     if (!isSpeciesChange) {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
-    }
-    if (isExprCalls) {
-      setDataTypesExpCalls(ALL_DATA_TYPES_ID);
-      setConditionalParam2([
-        COND_PARAM2_ANAT_KEY,
-        COND_PARAM2_DEVSTAGE_KEY,
-        COND_PARAM2_SEX_KEY,
-        COND_PARAM2_STRAIN_KEY,
-      ]);
-      setCallTypes([NOT_EXPRESSED, EXPRESSED]);
-      setDataQuality(BRONZE);
-      setCondObserved(false);
     }
     if (pageWillBeReset) {
       setNeedToResetThePage(true);

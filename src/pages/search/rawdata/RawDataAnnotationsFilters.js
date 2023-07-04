@@ -16,14 +16,13 @@ const RawDataAnnotationsFilters = ({
   const eraseFilters = () => {
     if (filters[dataType] !== {} && filters[dataType] !== undefined) {
       setFilters((old) => ({ ...old, [dataType]: {} }));
-      triggerSearch(true, false);
+      triggerSearch(true, true);
       setHasChanged(false);
     }
   };
 
-  const onApplyFilter = (e) => {
-    e.preventDefault();
-    triggerSearch(false, false);
+  const onApplyFilter = () => {
+    triggerSearch(false, true);
     setHasChanged(false);
   };
 
@@ -36,7 +35,7 @@ const RawDataAnnotationsFilters = ({
   };
 
   return (
-    <form className="filters" onSubmit={onApplyFilter}>
+    <div className="filters">
       {!isEmpty(dataFilters) &&
         Object.keys(dataFilters).map((filterKey) => {
           const dataFilter = dataFilters[filterKey];
@@ -69,7 +68,7 @@ const RawDataAnnotationsFilters = ({
               ' button is-small is-info mt-2',
               !hasChanged && 'is-light'
             )}
-            type="submit"
+            type="button"
             onClick={onApplyFilter}
             disabled={!hasChanged}
           >
@@ -84,7 +83,7 @@ const RawDataAnnotationsFilters = ({
           </button>
         </div>
       )}
-    </form>
+    </div>
   );
 };
 

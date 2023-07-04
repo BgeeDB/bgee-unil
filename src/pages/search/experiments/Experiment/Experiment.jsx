@@ -31,7 +31,7 @@ const getUserFriendlyDataType = (dataType) => {
 };
 
 const Experiment = () => {
-  const { data, columns, pageNumber, buildTSVhref, onRenderCell, onFilter } = useLogic();
+  const { data, columns, onRenderCell, onFilter } = useLogic();
 
   const customHeader = useCallback(
     (searchElement, pageSizeElement) => (
@@ -134,25 +134,6 @@ const Experiment = () => {
         <h2 className="gradient-underline title is-size-5 has-text-primary">
           List of assays
         </h2>
-
-        {data.assays?.length > 0 && (
-          <div className="my-2 is-flex is-justify-content-flex-end">
-            <Bulma.Button
-              className="download-btn is-small"
-              href={buildTSVhref}
-              renderAs="a"
-              download={`Experiment_${data?.experiment?.id}_${pageNumber}.tsv`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Export current page in TSV
-              <span className="icon is-small ml-1">
-                <ion-icon name="download-outline" />
-              </span>
-            </Bulma.Button>
-          </div>
-        )}
-
         <Table
           pagination
           columns={columns}
