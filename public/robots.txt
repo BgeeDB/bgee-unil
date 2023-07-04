@@ -1,13 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
-Sitemap: https://bgee.org/sitemap.xml
+Sitemap: https://www.bgee.org/sitemap.xml
 User-agent: *
 Crawl-delay: 10
+Disallow: /error
 Disallow: /search/anatomical-homology?
 Disallow: /search/genes/*
-Disallow: /api
-Disallow: /bgee/bgee
-Disallow: /bgee13/*
-Disallow: /bgee14/*
-Disallow: /bgee14_0/*
-Disallow: /bgee14_1/*
-Disallow: /bgee14_2/*
