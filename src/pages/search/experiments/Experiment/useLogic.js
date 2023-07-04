@@ -41,6 +41,56 @@ const useLogic = () => {
     [data?.columnDescriptions]
   );
 
+  const pageNumber = useMemo( () => {
+    const currentSP = new URLSearchParams(loc.search);
+    return currentSP.get('pageNumber') ?? '1';
+  }, [loc.search]);
+
+  
+  const buildTSVhref = useMemo(() => {
+    const base = `data:text/tab-separated-values;charset=utf-8,`;
+    if (data) {
+      const colHeaders = [];
+      // We are creating the columns header by filtering the exports = false
+      data?.columnDescriptions
+        .filter((col) => col.export)
+        .forEach((column) => {
+          colHeaders.push(column.title);
+        });
+
+        let tsv = colHeaders.join('%09');
+        tsv += '%0D%0A'; // carriage return
+        const columnsToExport = data?.columnDescriptions
+        .filter((col) => col.export); // filtering export = false
+
+      columnsToExport.forEach(col => {
+        col.attributes.forEach(attr => {
+          const indexToCleanAttribute = attr.indexOf(".") + 1;
+          const attributeCleaned = (attr.substring(indexToCleanAttribute));
+          /* eslint-disable no-param-reassign */
+          if(!col.attributeToSearch)
+            col.attributeToSearch = [];
+          if(!col.attributeToSearch.includes(attributeCleaned))
+            col.attributeToSearch.push(attributeCleaned);
+        });
+      }); 
+
+      data?.assays.forEach((row) => {
+        const rowTxt = columnsToExport
+          .map((col) => {
+            let attrValue = '';
+            col.attributeToSearch.forEach(attr => {
+              attrValue += `${attr.split('.').reduce((prev, curr) => prev?.[curr], row)} `; // We get the result only from the column we need to export
+            });
+            return encodeURIComponent(attrValue);
+          });
+          tsv += `${rowTxt.join('%09')}%0D%0A`; // carriage return
+      });
+      return `${base}${tsv}`;
+    }
+    return `${base}`;
+  }, [data]);
+
   const onRenderCell = useCallback(
     ({ cell, key }) => {
       if (!data?.columnDescriptions) {
@@ -113,7 +163,7 @@ const useLogic = () => {
     [data?.columnDescriptions]
   );
 
-  return { data, columns, onRenderCell, onFilter };
+  return { data, columns, pageNumber, buildTSVhref, onRenderCell, onFilter };
 };
 
 export default useLogic;
