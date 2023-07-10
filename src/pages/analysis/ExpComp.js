@@ -490,7 +490,7 @@ const ExpComp = () => {
                     <div className="control">
                       <textarea
                         className="textarea is-small"
-                        placeholder="Enter a list of gene IDs (one ID per line or separated by a comma)"
+                        placeholder="Enter a list of gene identifiers, one ID per line, no quotes, no comma"
                         rows="10"
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}

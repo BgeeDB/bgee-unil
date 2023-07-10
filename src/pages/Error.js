@@ -7,8 +7,8 @@ const Error = ({ location: { state } }) => (
       <p>404 not found. We could not understand your query.</p>
     ) : (
       <p>
-        Try again later or contact the administrator through the contact us
-        button.
+        Try again later or contact the administrator through the &quot;Contact us&quot;
+        support menu link.
       </p>
     )}
   </div>

@@ -13,6 +13,27 @@ const annotations = [
         children: [
           {
             type: 'card',
+            title: 'Bgee Annotations Interface',
+            image: {
+              src: imagePath('/logo/bgee13_hp_logo.png'),
+              alt: 'Bgee logo',
+            },
+            link: 'https://annotations.bgee.org',
+            linkType: 'external',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'text',
+            classNames: 'has-text-centered',
+            content:
+              'Last published version of the Bgee annotations, available per experiments, per raw data and per processed expression values.',
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
             title: 'Anatomical similarity annotations',
             image: {
               src: imagePath('/logo/github_logo.png'),

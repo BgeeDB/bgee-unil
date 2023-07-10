@@ -17,7 +17,7 @@ const expressionValues = [
             title: 'RNA-Seq processed expression values',
             image: {
               src: imagePath('/document-text-outline.svg'),
-              alt: 'Github logo',
+              alt: 'Document logo',
             },
             link: PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
             linkType: 'internal',
@@ -52,7 +52,7 @@ const expressionValues = [
             title: `${FULL_LENGTH_LABEL} processed expression values`,
             image: {
               src: imagePath('/document-text-outline.svg'),
-              alt: 'Github logo',
+              alt: 'Document logo',
             },
             link: PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
             linkType: 'internal',
@@ -86,7 +86,7 @@ const expressionValues = [
             title: 'Affymetrix processed expression values',
             image: {
               src: imagePath('/document-text-outline.svg'),
-              alt: 'Github logo',
+              alt: 'Document logo',
             },
             link: PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
             linkType: 'internal',

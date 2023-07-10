@@ -83,7 +83,7 @@ const collaborations = [
           },
           {
             type: 'code',
-            content: 'https://bgee.org/sparql/',
+            content: 'https://www.bgee.org/sparql/',
           },
           {
             type: 'text',
