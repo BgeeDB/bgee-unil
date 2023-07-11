@@ -1,7 +1,22 @@
 import React from 'react';
 import Bulma from '../Bulma';
 import NewsItem from '../NewsItem';
-import News20230424 from '../../markdown/news/News-2023-04-24.md';
+
+// import all markdown files in the news directory
+const markdownFiles = require.context('../../markdown/news', false, /\.md$/);
+const news = markdownFiles.keys().map((path) => {
+  // get the filename from the path
+  const filename = path.replace(/^.*[\\/]/, '');
+  // e.g. News-2023-04-24.md
+  const date = filename.replace(/^News-(.*)\.md$/, "$1");
+
+  // import the markdown file
+  const markdown = markdownFiles(path).default;
+
+  // return an object with filename and markdown
+  return { date, markdown };
+});
+const lastNews = news[news.length - 1];
 
 const HomeNewsList = () => (
   <>
@@ -12,7 +27,7 @@ const HomeNewsList = () => (
     </Bulma.Card.Header>
     <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
       <div className="content">
-        <NewsItem date="2023-04-24" News={News20230424} />
+        <NewsItem date={lastNews.date} News={lastNews.markdown} />
       </div>
     </Bulma.Card.Body>
   </>
