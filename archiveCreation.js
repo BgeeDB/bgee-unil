@@ -22,6 +22,8 @@ const main = async () => {
       return;
     }
     config.archive = true;
+    const originalImageDomain = config.imageDomain;
+    config.imageDomain = `/${URL_VERSION}${config.imageDomain}`;
     await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
     console.log('Setting config as an archive');
 
@@ -65,6 +67,7 @@ const main = async () => {
     pkg.homepage = undefined;
     await fs.writeFile('./package.json', JSON.stringify(pkg, null, 2));
     config.archive = false;
+    config.imageDomain = originalImageDomain;
     await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
     await fs.writeFile('./src/styles/global.scss', scss);
     await fs.writeFile('./public/index.html', html);
