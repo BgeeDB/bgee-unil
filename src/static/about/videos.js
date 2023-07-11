@@ -46,6 +46,126 @@ const videos = [
         content: [
           {
             type: 'link_external',
+            path: 'https://youtu.be/vjrTq0fGCTk',
+            text: 'Bgee - Introduction of trainers',
+          },
+          {
+            type: 'text',
+            content: ' (May 26, 2023)',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/vjrTq0fGCTk',
+        src: imagePath('/videos/Bgee--Introduction-of-trainers.png'),
+        alt: 'Bgee - Introduction of trainers',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://youtu.be/x8Fypkwlmuw',
+            text: 'Bgee - an overview',
+          },
+          {
+            type: 'text',
+            content: ' (May 26, 2023)',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/x8Fypkwlmuw',
+        src: imagePath('/videos/Bgee--an-overview2.png'),
+        alt: 'Bgee - an overview',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://youtu.be/hTx4fk77DZ4',
+            text: 'Data integration in Bgee',
+          },
+          {
+            type: 'text',
+            content: ' (May 26, 2023)',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/hTx4fk77DZ4',
+        src: imagePath('/videos/Data-integration-in-Bgee2.png'),
+        alt: 'Data integration in Bgee',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://youtu.be/5cbXWL9quCA',
+            text: 'Bgee data access',
+          },
+          {
+            type: 'text',
+            content: ' (May 26, 2023)',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/5cbXWL9quCA',
+        src: imagePath('/videos/Bgee--Data-access.png'),
+        alt: 'Bgee data access',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://youtu.be/iUSjT9wDbmU',
+            text: 'Bgee tools',
+          },
+          {
+            type: 'text',
+            content: ' (May 26, 2023)',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://youtu.be/iUSjT9wDbmU',
+        src: imagePath('/videos/Bgee-tools.png'),
+        alt: 'Bgee tools',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
             path: 'https://youtu.be/PRj9f1gX_PM',
             text: 'Exploring gene expression with Bgee',
           },
