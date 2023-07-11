@@ -1,0 +1,15 @@
+# archives
+rm -Rf archives/15.0-archived/ && yarn archive
+cd archives/15.0-archived/
+rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_0/
+
+# prod
+rm -Rf build && yarn build
+cd build/
+rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/bgee.unil.ch/
+
+# annotations
+rm -Rf build && yarn build
+cd build/
+rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/annotations.bgee.org/
+
