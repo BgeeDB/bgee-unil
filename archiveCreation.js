@@ -9,8 +9,10 @@ const main = async () => {
     let config = await fs.readFile('./src/config.json', 'utf8');
     config = JSON.parse(config);
     const APP_VERSION = config.version;
-    const APP_VERSION_URL = config.version.replaceAll('.', '_');
-    const websiteUrl = `${config.genericDomain}/bgee${APP_VERSION_URL}`;
+    const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+    //const APP_VERSION_URL = config.version.replaceAll('.', '_');
+    //const websiteUrl = `${config.genericDomain}/bgee${APP_VERSION_URL}`;
+    const websiteUrl = `${config.genericDomain}`;
     const buildDirectory = `./archives/${APP_VERSION}-archived`;
     if (fsStd.existsSync(buildDirectory)) {
       console.log(
@@ -24,7 +26,7 @@ const main = async () => {
     console.log('Setting config as an archive');
 
     const scss = await fs.readFile('./src/styles/global.scss', 'utf8');
-    const tmpScss = scss.replace('$archive: false;', '$archive: true;');
+    const tmpScss = scss.replace('$archive: false;', '$archive: true;').replace('/img/external_link', `/${URL_VERSION}/img/external_link`);
     await fs.writeFile('./src/styles/global.scss', tmpScss);
     console.log('Setting scss as an archive');
 
@@ -33,9 +35,14 @@ const main = async () => {
       './archives/resources/htmlHead.txt',
       'utf8'
     );
-    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`);
+    const tmpHtml = html.replace('<head>', `<head>${noIndexSource}`).replace('/js/ionicons-5.5.4/ionicons.esm.js', `/${URL_VERSION}/js/ionicons-5.5.4/ionicons.esm.js`);
     await fs.writeFile('./public/index.html', tmpHtml);
-    console.log('Setting noindex in html\n');
+    console.log('Setting noindex in html');
+
+    const robots = await fs.readFile('./public/robots.txt', 'utf8');
+    let tmprobots = 'User-agent: *\nDisallow: /\n';
+    await fs.writeFile('./public/robots.txt', tmprobots);
+    console.log('Setting proper archived robots.txt file\n');
 
     let pkg = await fs.readFile('./package.json', 'utf8');
     pkg = JSON.parse(pkg);
@@ -61,6 +68,7 @@ const main = async () => {
     await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
     await fs.writeFile('./src/styles/global.scss', scss);
     await fs.writeFile('./public/index.html', html);
+    await fs.writeFile('./public/robots.txt', robots);
     console.log(
       '\x1b[93m%s %s\x1b[0m\n',
       'The website url setup for the archive is',
