@@ -56,7 +56,7 @@ const about = [
               },
               {
                 text: 'gene search',
-                path: '/search/genes',
+                path: PATHS.SEARCH.GENE,
                 type: 'link_internal',
               },
               {
@@ -71,7 +71,7 @@ const about = [
             content: [
               {
                 text: 'TopAnat expression enrichment analysis',
-                path: '/analysis/top-anat',
+                path: PATHS.ANALYSIS.TOP_ANAT,
                 type: 'link_internal',
               },
               {
@@ -86,7 +86,7 @@ const about = [
             content: [
               {
                 text: 'Expression comparison',
-                path: '/analysis/expr-comparison',
+                path: PATHS.ANALYSIS.EXPRESSION_COMPARISON,
                 type: 'link_internal',
               },
               {
@@ -161,7 +161,7 @@ const about = [
             content: [
               {
                 text: 'gene expression calls',
-                path: '/download/gene-expression-calls',
+                path: PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS,
                 type: 'link_internal',
               },
               {
@@ -176,7 +176,7 @@ const about = [
             content: [
               {
                 text: 'processed expression values',
-                path: '/download/processed-expression-values',
+                path: PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES,
                 type: 'link_internal',
               },
               {
@@ -191,7 +191,7 @@ const about = [
             content: [
               {
                 text: 'data dumps',
-                path: '/download/data-dumps',
+                path: PATHS.DOWNLOAD.DATA_DUMPS,
                 type: 'link_internal',
               },
               {
@@ -328,7 +328,7 @@ const about = [
           {
             type: 'link_internal',
             text: 'Bgee publications',
-            path: '/about/publications',
+            path: PATHS.ABOUT.PUBLICATION,
           },
           {
             type: 'text',
@@ -392,7 +392,7 @@ const about = [
           {
             type: 'link_internal',
             text: 'Bgee privacy notice',
-            path: '/about/privacy-policy',
+            path: PATHS.ABOUT.PRIVACY_POLICY,
           },
           {
             type: 'text',
