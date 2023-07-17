@@ -42,7 +42,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  ' Nucleic Acids Research, Volume 49, Issue D1, 8 January 2021, Pages D831-D847. ',
+                  ' Nucleic Acids Research, 2021, 49:D831-D847. ',
               },
               {
                 type: 'link_external',
@@ -99,7 +99,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'F1000Research. 2018, 5:2748. ',
+                content: 'F1000Research, 2018, 5:2748. ',
               },
               {
                 type: 'link_external',
@@ -140,7 +140,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'J Biomed Semantics. (2014): 5:21. ',
+                content: 'J Biomed Semantics, 2014, 5:21. ',
               },
               {
                 type: 'link_external',
@@ -185,7 +185,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'JCO Clinical Cancer Informatics. 4. 210-220.',
+                content: 'JCO Clinical Cancer Informatics, 2020, 4:210-220.',
               },
             ],
           },
@@ -214,7 +214,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Genomics, Proteomics & Bioinformatics. 2020.',
+                content: 'Genomics, Proteomics & Bioinformatics, 2020, 18:91-103.',
               },
             ],
           },
@@ -244,7 +244,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Scornavacca C, Delsuc F, Galtier N. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, pp.4.3:1-4.3:4, 2020.',
+                  'Scornavacca C, Delsuc F, Galtier N. Phylogenetics in the Genomic Era. No commercial publisher | Authors open access book, 2020, pp.4.3:1-4.3:4.',
               },
             ],
           },
@@ -273,7 +273,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Database. Volume 2019, 2019, baz106.',
+                content: 'Database, 2019, 2019:baz106.',
               },
             ],
           },
@@ -302,7 +302,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'On the Move to Meaningful Internet Systems: OTM 2019 Conferences. Lecture Notes in Computer Science. vol 11877.',
+                  'On the Move to Meaningful Internet Systems: OTM 2019 Conferences. Lecture Notes in Computer Science, 2019, 11877:607–625.',
               },
             ],
           },
@@ -331,7 +331,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Nucleic Acids Research.Volume 44, Issue D1, 4 January 2016, Pages D27-D37.',
+                  'Nucleic Acids Research, 2016, 44:D27-D37.',
               },
             ],
           },
@@ -360,7 +360,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Database.Volume 2015, 2015.',
+                content: 'Database, 2015, 2015:bav043.',
               },
             ],
           },
@@ -389,7 +389,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bioinformatics. Volume 30, Issue 10, 15 May 2014, Pages 1392-1399.',
+                  'Bioinformatics, 2014, 30:1392-1399.',
               },
             ],
           },
@@ -419,7 +419,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bioinformatics.Volume 28, Issue 7, 1 April 2012, Pages 1017-1020.',
+                  'Bioinformatics, 2012, 28:1017-1020.',
               },
             ],
           },
@@ -447,7 +447,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Trends Genet. 2010;26(3):99-102.',
+                content: 'Trends Genet, 2010, 26(3):99-102.',
               },
             ],
           },
@@ -475,7 +475,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Nat Prec (2009).',
+                content: 'Nat Prec, 2009.',
               },
             ],
           },
@@ -505,7 +505,7 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'DILS: Data Integration in Life Sciences. Lecture Notes in Computer Science. 5109:124-131. ',
+                  'DILS: Data Integration in Life Sciences. Lecture Notes in Computer Science, 2008, 5109:124-131. ',
               },
               {
                 type: 'link_external',
