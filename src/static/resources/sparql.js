@@ -94,8 +94,8 @@ const sparql = [
         content: [
           {
             type: 'link_external',
-            path: 'https://bgee.org/sparql/',
-            text: 'https://bgee.org/sparql/',
+            path: 'https://www.bgee.org/sparql/',
+            text: 'https://www.bgee.org/sparql/',
           },
         ],
       },
@@ -129,7 +129,7 @@ SELECT DISTINCT ?anatEntity ?anatName {
           },
           {
             type: 'link_external',
-            path: 'https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+',
+            path: 'https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+',
             text: 'JSON format',
           },
           {
@@ -138,7 +138,7 @@ SELECT DISTINCT ?anatEntity ?anatName {
           },
           {
             type: 'link_external',
-            path: 'https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bxml&timeout=0&debug=on&run=+Run+Query+',
+            path: 'https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bxml&timeout=0&debug=on&run=+Run+Query+',
             text: 'XML format',
           },
           {
@@ -184,8 +184,8 @@ SELECT DISTINCT ?anatEntity ?anatName {
         content: [
           {
             type: 'link_external',
-            path: `https://bgee.org/sparql${APP_VERSION_URL}/`,
-            text: `https://bgee.org/sparql${APP_VERSION_URL}/`,
+            path: `https://www.bgee.org/sparql${APP_VERSION_URL}/`,
+            text: `https://www.bgee.org/sparql${APP_VERSION_URL}/`,
           },
         ],
       },
