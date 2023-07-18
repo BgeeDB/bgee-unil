@@ -1,4 +1,3 @@
-import ReactGA from 'react-ga';
 import React from 'react';
 import axios from 'axios';
 import { getAxiosAddNotif } from './prod/constant';
@@ -9,15 +8,6 @@ const errorHandler = (error) => {
     console.error(error.message);
   }
   if (error?.response) {
-    const data = error?.response?.data?.data;
-    const incorrectParameters = data?.incorrectParameters
-      ? `_${data?.incorrectParameters}`
-      : '';
-    const invalidKey = data?.invalidKey ? `_${data?.invalidKey}` : '';
-    // response falls out of the range of 2xx
-    ReactGA.exception({
-      description: `${error?.response?.status}_${data?.exceptionType}${incorrectParameters}${invalidKey}`,
-    });
     getAxiosAddNotif()({
       id: random().toString(),
       children: <p>{error?.response?.data?.message || error?.message}</p>,
