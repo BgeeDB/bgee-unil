@@ -157,7 +157,7 @@ const GeneExpressionCalls = () => {
                 onClick={(species, isSelected) => {
                   history.replace(
                     isSelected
-                      ? `?id=${species.id}`
+                      ? `${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`
                       : PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS
                   );
                 }}

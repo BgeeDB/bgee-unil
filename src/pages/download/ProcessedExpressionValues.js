@@ -160,7 +160,7 @@ const ProcessedExpressionValues = () => {
                 onClick={(species, isSelected) => {
                   history.replace(
                     isSelected
-                      ? `?id=${species.id}`
+                      ? `${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`
                       : PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES
                   );
                 }}
