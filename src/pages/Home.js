@@ -174,7 +174,7 @@ const Home = () => {
                       to={`${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`}
                     >
                       <ion-icon name="arrow-forward-outline" />
-                      See RNA-Seq and Affymetrix data
+                      See processed expression values
                     </Link>
                     <Link
                       className="internal-link"
