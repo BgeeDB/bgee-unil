@@ -56,7 +56,7 @@ const geneHomologsToLdJSON = (homo) => {
       '@type': 'https://schema.org/Taxon',
       '@id': `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=${h.taxon.id}`,
       'http://purl.org/dc/terms/conformsTo': {
-        '@id': 'https://bioschemas.org/profiles/Taxon/0.6-RELEASE',
+        '@id': 'https://bioschemas.org/profiles/Taxon/1.0-RELEASE',
         '@type': 'CreativeWork',
       },
       identifier: h.taxon.id,
@@ -320,7 +320,7 @@ const speciesToLdJSON = ({
     '@id': window.location.href,
     '@type': 'Taxon',
     'http://purl.org/dc/terms/conformsTo': {
-      '@id': 'https://bioschemas.org/profiles/Taxon/0.6-RELEASE',
+      '@id': 'https://bioschemas.org/profiles/Taxon/1.0-RELEASE',
       '@type': 'CreativeWork',
     },
     name: `${genus} ${speciesName}`,
