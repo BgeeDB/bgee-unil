@@ -13,7 +13,7 @@ const GaEvent = ({ category, action, label, value, children }) => {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleClick();
-	}
+    }
   };
 
   return (
