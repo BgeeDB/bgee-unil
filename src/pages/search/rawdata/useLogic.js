@@ -15,6 +15,10 @@ import config from '../../../config.json';
 import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
 import { isEmpty } from '../../../helpers/arrayHelper';
 
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
+
 // building the page_type array depending on config.json
 export const EXPERIMENTS = 'experiments';
 export const RAW_DATA_ANNOTS = 'raw_data_annots';
@@ -667,10 +671,12 @@ const useLogic = (isExprCalls) => {
           if (isFirstSearch) {
             history.replace({
               search: searchParams.toString(),
+              pathname: `${URL_ROOT}${loc.pathname}`,
             });
           } else {
             history.push({
               search: searchParams.toString(),
+              pathname: `${URL_ROOT}${loc.pathname}`,
             });
           }
         }
@@ -691,7 +697,7 @@ const useLogic = (isExprCalls) => {
       })
       .catch(() => {
         // We remove all the parameters that we may have sent
-        history.replace(loc.pathname);
+        history.replace(`${URL_ROOT}${loc.pathname}`);
         setIsLoading(false);
       })
       .finally(() => {
@@ -701,7 +707,7 @@ const useLogic = (isExprCalls) => {
       });
   };
 
-  const triggerCounts = async (    
+  const triggerCounts = async (
     cleanFilters = false,
     bypassInitSearchParam = false
   ) => {
