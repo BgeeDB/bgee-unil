@@ -72,6 +72,42 @@ const publications = [
             content: [
               {
                 type: 'text',
+                content: 'For the development and life stage ontologies for animals:',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'text',
+                content:
+                  'Niknejad A, Mungall CJ, Osumi-Sutherland D, Robinson-Rechavi M, Bastian F.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Creation and unification of development and life stage ontologies for animals',
+                path: 'https://doi.org/10.48550/arXiv.2206.12231',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: ' in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2022.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
                 content: 'For the BgeeDB R package:',
               },
               {
@@ -88,7 +124,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'BgeeDB, an R package for retrieval of curated expression datasets and for gene list enrichment tests',
-                path: 'https://f1000research.com/articles/5-2748/v2',
+                path: 'https://f1000research.com/articles/5-2748',
               },
               {
                 type: 'break_line',
@@ -160,6 +196,93 @@ const publications = [
       {
         type: 'unordered_list',
         children: [
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Sima A-C, Mendes de Farias T.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'On the Potential of Artificial Intelligence Chatbots for Data Exploration of Federated Bioinformatics Knowledge Graphs',
+                path: 'https://doi.org/10.48550/arXiv.2304.10427',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2023.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Mendes de Farias T, Wollbrett J, Robinson-Rechavi M, Bastian F.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Lessons learned to boost a bioinformatics knowledge base reusability, the Bgee experience',
+                path: 'https://doi.org/10.48550/arXiv.2303.12329',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2023.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Mendes de Farias T, Kushida T, Sima A-C, Dessimoz C, Chiba H, Bastian F, Masuya H.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Data in use for Alzheimer disease study: combining gene expression, orthology, bioresource and disease datasets',
+                path: 'https://ceur-ws.org/Vol-3415/paper-47.pdf',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'Semantic Web Applications and Tools for Health Care and Life Sciences, 2023, 3415:177–178.',
+              },
+            ],
+          },
           {
             type: 'rich_text',
             content: [
