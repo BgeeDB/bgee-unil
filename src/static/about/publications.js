@@ -239,7 +239,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'Lessons learned to boost a bioinformatics knowledge base reusability, the Bgee experience',
-                path: 'https://doi.org/10.48550/arXiv.2303.12329',
+                path: 'https://doi.org/10.1093/gigascience/giad058',
               },
               {
                 type: 'break_line',
@@ -250,7 +250,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'arXiv, 2023.',
+                content: 'GigaScience, 2023, 12:giad058.',
               },
             ],
           },
