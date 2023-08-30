@@ -69,11 +69,11 @@ const privacyPolicy = [
             content: [
               {
                 type: 'text',
-                content: 'Gwenaelle Gillieron, Responsable Service Juridique (',
+                content: 'Salamin Mikhaël, Délégué à la protection des données (',
               },
               {
                 type: 'link_mail',
-                email: 'gwenaelle.gillieron@unil.ch',
+                email: 'Mikhael.Salamin@unil.ch',
                 text: 'email',
               },
               {
@@ -88,62 +88,7 @@ const privacyPolicy = [
           {
             type: 'text',
             content:
-              'Service Juridique, University of Lausanne, 1015 Lausanne, Switzerland',
-          },
-        ],
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'bold',
-            content: "The SIB Data Protection Officer's contact",
-          },
-          {
-            type: 'break_line',
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'text',
-                content: 'Marc Filliettaz (',
-              },
-              {
-                type: 'link_mail',
-                email: 'dpo@sib.swiss',
-                text: 'email',
-              },
-              {
-                type: 'text',
-                content: ')',
-              },
-            ],
-          },
-          {
-            type: 'break_line',
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'text',
-                content: 'Tel: ',
-              },
-              {
-                type: 'link_phone_number',
-                phoneNumber: '+41216924050',
-                text: '+41 21 692 40 50',
-              },
-            ],
-          },
-          {
-            type: 'break_line',
-          },
-          {
-            type: 'text',
-            content:
-              'SIB Swiss Institute of Bioinformatics, Quartier Sorge - Batiment Genopode, 1015 Lausanne, Switzerland',
+              'Affaires générales, University of Lausanne, 1015 Lausanne, Switzerland',
           },
         ],
       },
@@ -163,7 +108,7 @@ const privacyPolicy = [
   {
     type: 'section',
     title:
-      'What personal data is collected from users of the service? How do we use these personal data?',
+      'What personal data are collected from users of the service? How do we use these personal data?',
     children: [
       {
         type: 'text',
@@ -186,10 +131,6 @@ const privacyPolicy = [
           },
           {
             type: 'text',
-            content: 'Email address',
-          },
-          {
-            type: 'text',
             content: 'Date and time of a visit to the service',
           },
           {
@@ -203,6 +144,10 @@ const privacyPolicy = [
           {
             type: 'text',
             content: 'Amount of data transmitted',
+          },
+          {
+            type: 'text',
+            content: 'Email address (optionnaly requested)',
           },
         ],
       },
@@ -212,38 +157,6 @@ const privacyPolicy = [
       {
         type: 'bold',
         content: 'BgeeDB R package',
-      },
-      {
-        type: 'unordered_list',
-        children: [
-          {
-            type: 'text',
-            content: 'IP address',
-          },
-          {
-            type: 'text',
-            content: 'Date and time of a visit to the service',
-          },
-          {
-            type: 'text',
-            content: 'Operating system',
-          },
-          {
-            type: 'text',
-            content: 'Browser',
-          },
-          {
-            type: 'text',
-            content: 'Amount of data transmitted',
-          },
-        ],
-      },
-      {
-        type: 'break_line',
-      },
-      {
-        type: 'bold',
-        content: 'FTP',
       },
       {
         type: 'unordered_list',
@@ -289,6 +202,9 @@ const privacyPolicy = [
             content: 'Email address',
           },
         ],
+      },
+      {
+        type: 'break_line',
       },
       {
         type: 'text',
@@ -354,12 +270,7 @@ const privacyPolicy = [
           {
             type: 'text',
             content:
-              'Bgee uses Google Analytics as a third-party analytics service to collect information about website performance and how users navigate through and use our site to help us design better interfaces. We do not use Google Analytics to track you individually or collect personal data. ',
-          },
-          {
-            type: 'italic',
-            content:
-              'Personal data sent to Google Analytics are anonymized upstream.',
+              'Bgee uses Matomo as a third-party analytics service to collect information about website performance and how users navigate through and use our site to help us design better interfaces. We use a local instance of Matomo, all data stay local in Switzerland.',
           },
         ],
       },
@@ -379,15 +290,7 @@ const privacyPolicy = [
         content: [
           {
             type: 'text',
-            content: 'Only ',
-          },
-          {
-            type: 'bold',
-            content: 'Help desk',
-          },
-          {
-            type: 'text',
-            content: ' data are kept longer.',
+            content: 'Data are erased when not needed any more, and cannot be conserved more than 5 years for audits.',
           },
         ],
       },
@@ -417,7 +320,7 @@ const privacyPolicy = [
   {
     type: 'section',
     title:
-      'The joint Data Controllers provide these rights regarding your personal data',
+      'The Data Controller provides these rights regarding your personal data',
     children: [
       {
         type: 'text',
@@ -449,7 +352,7 @@ const privacyPolicy = [
           {
             type: 'text',
             content:
-              'Request free of charge and without excessive delay rectification or erasure of your personal data if we have not been processing it respecting the data protection policies of the respective controllers.',
+              'Request free of charge and without excessive delay rectification or erasure of your personal data if we have not been processing it respecting the data protection policies of the controller.',
           },
         ],
       },
