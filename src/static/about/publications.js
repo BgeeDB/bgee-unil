@@ -202,6 +202,35 @@ const publications = [
               {
                 type: 'text',
                 content:
+                  'Kushida T, Mendes de Farias T, Sima A-C, Dessimoz C, Chiba H, Bastian FB, Masuya H.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Exploring Disease Model Mouse Using Knowledge Graphs: Combining Gene Expression, Orthology, and Disease Datasets',
+                path: 'https://doi.org/10.1101/2023.08.30.555283',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'bioXiv, 2023.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
                   'Sima A-C, Mendes de Farias T.',
               },
               {
