@@ -2,7 +2,7 @@
 const fs = require('fs/promises');
 const fsStd = require('fs');
 const { execSync } = require('child_process');
-//const { APP_VERSION_URL, APP_VERSION } = require('./src/helpers/constants');
+const ARCH_URL = 'https://archives.bgee.org/';
 
 const main = async () => {
   try {
@@ -10,9 +10,6 @@ const main = async () => {
     config = JSON.parse(config);
     const APP_VERSION = config.version;
     const URL_VERSION = APP_VERSION.replaceAll('.', '-');
-    //const APP_VERSION_URL = config.version.replaceAll('.', '_');
-    //const websiteUrl = `${config.genericDomain}/bgee${APP_VERSION_URL}`;
-    const websiteUrl = `${config.genericDomain}`;
     const buildDirectory = `./archives/${APP_VERSION}-archived`;
     if (fsStd.existsSync(buildDirectory)) {
       console.log(
@@ -23,7 +20,16 @@ const main = async () => {
     }
     config.archive = true;
     const originalImageDomain = config.imageDomain;
+    const originalGenericDomain = config.genericDomain;
+    const originalPermanentVersionedDomain = config.permanentVersionedDomain;
+    const originalApiDomain = config.apiDomain;
+    const originalFtpDomain = config.ftpDomain;
     config.imageDomain = `/${URL_VERSION}${config.imageDomain}`;
+    config.genericDomain = `${ARCH_URL}${URL_VERSION}`;
+    config.permanentVersionedDomain = `${ARCH_URL}${URL_VERSION}`;
+    config.apiDomain = `${ARCH_URL}api-${URL_VERSION}`;
+    config.ftpDomain = `${ARCH_URL}ftp/${URL_VERSION}`;
+    const websiteUrl = `${config.genericDomain}`;
     await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
     console.log('Setting config as an archive');
 
@@ -68,6 +74,10 @@ const main = async () => {
     await fs.writeFile('./package.json', JSON.stringify(pkg, null, 2));
     config.archive = false;
     config.imageDomain = originalImageDomain;
+    config.genericDomain = originalGenericDomain;
+    config.permanentVersionedDomain = originalPermanentVersionedDomain;
+    config.apiDomain = originalApiDomain;
+    config.ftpDomain = originalFtpDomain;
     await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
     await fs.writeFile('./src/styles/global.scss', scss);
     await fs.writeFile('./public/index.html', html);
