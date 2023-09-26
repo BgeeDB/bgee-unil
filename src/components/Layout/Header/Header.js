@@ -6,7 +6,11 @@ import Bulma from '../../Bulma';
 import config from '../../../config.json';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import ROUTES from '../../../routes/routes';
+import GaEvent from '../../GaEvent/GaEvent';
 
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `${URL_VERSION}` : ''}`;
 const NAVBAR_LEFT = [
   {
     key: 'menu.analysis',
@@ -45,7 +49,7 @@ const NAVBAR_LEFT = [
       {
         key: 'page.resources.sparql',
         title: 'SPARQL endpoint',
-        path: '/sparql/',
+        path: `/sparql${URL_ROOT}/`,
         type: 'external',
       },
       {
@@ -157,6 +161,18 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
       },
       {
+        key: 'page.support.tutorials',
+        title: ROUTES[PATHS.SUPPORT.TUTORIALS].title,
+        type: 'internal',
+        path: PATHS.SUPPORT.TUTORIALS,
+      },
+      {
+        key: 'page.support.videos',
+        title: ROUTES[PATHS.SUPPORT.VIDEOS].title,
+        type: 'internal',
+        path: PATHS.SUPPORT.VIDEOS,
+      },
+      {
         key: 'page.support.faq',
         title: ROUTES[PATHS.SUPPORT.FAQ].title,
         type: 'internal',
@@ -197,12 +213,6 @@ const NAVBAR_LEFT = [
         title: ROUTES[PATHS.ABOUT.PUBLICATION].title,
         type: 'internal',
         path: PATHS.ABOUT.PUBLICATION,
-      },
-      {
-        key: 'page.about.videos',
-        title: ROUTES[PATHS.ABOUT.VIDEOS].title,
-        type: 'internal',
-        path: PATHS.ABOUT.VIDEOS,
       },
       {
         key: 'page.about.sources',
@@ -378,30 +388,42 @@ const Header = () => {
                           );
                         case 'external':
                           return (
-                            <a
-                              key={keyChild}
-                              className="navbar-item custom"
-                              href={childProps.path}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <GaEvent
+                              category="External link"
+                              action="External link"
+                              label={childProps.path}
                             >
-                              {pageTitle}
-                            </a>
+                              <a
+                                key={keyChild}
+                                className="navbar-item custom"
+                                href={childProps.path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {pageTitle}
+                              </a>
+                            </GaEvent>
                           );
                         case 'internal':
                         default:
                           return (
-                            <Link
-                              key={keyChild}
-                              to={childProps.path}
-                              className="navbar-item custom"
-                              onClick={(event) => {
-                                event.target.blur();
-                                setHamburgerActive(false);
-                              }}
+                            <GaEvent
+                              category="Internal link"
+                              action="Internal link"
+                              label={childProps.path}
                             >
-                              {pageTitle}
-                            </Link>
+                              <Link
+                                key={keyChild}
+                                to={childProps.path}
+                                className="navbar-item custom"
+                                onClick={(event) => {
+                                  event.target.blur();
+                                  setHamburgerActive(false);
+                                }}
+                              >
+                                {pageTitle}
+                              </Link>
+                            </GaEvent>
                           );
                       }
                     }

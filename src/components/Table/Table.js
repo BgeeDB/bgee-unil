@@ -186,7 +186,7 @@ const Table = ({
   const processedData = React.useMemo(() => {
     const clone = JSON.parse(JSON.stringify(mappedData));
     const filtered =
-      search === '' || !onFilter ? clone : clone.filter(onFilter(search));
+      (search === '' || !onFilter) ? clone : clone.filter(onFilter(search));
     if (sortOption) {
       filtered.sort(
         (Array.isArray(sortOption)

@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import ROUTES from '../../routes/routes';
+import PATHS from '../../routes/paths';
 
 class Page extends React.PureComponent {
   constructor(props) {
@@ -28,7 +29,7 @@ class Page extends React.PureComponent {
         <Redirect
           push
           to={{
-            pathname: '/error',
+            pathname: PATHS.ERROR,
             state: { error: hasError },
           }}
         />

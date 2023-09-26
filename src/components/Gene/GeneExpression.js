@@ -26,7 +26,11 @@ import {
   PROC_EXPR_VALUES,
 } from '../../pages/search/rawdata/useLogic';
 import TagSource from '../TagSource/TagSource';
+import config from '../../config.json';
 
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 const DATA_TYPES = [
   {
     key: 'AFFYMETRIX',
@@ -323,7 +327,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
                 queryParams.set(dataTypeKey, dataType.join(','));
               else queryParams.delete(dataTypeKey);
 
-              history.replace(`?${queryParams.toString()}`);
+              history.replace(`${URL_ROOT}${history.location.pathname}?${queryParams.toString()}`);
             }}
           >
             Update
@@ -399,7 +403,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
           if (data.requestedConditionParameters.find((r) => r === 'Cell type')) {
             // cellType can sometimes be undefined
             if (cell?.condition?.cellType?.id) {
-              searchParams += `&cell_type_id=${cell?.condition?.cellType?.id}`;   
+              searchParams += `&cell_type_id=${cell?.condition?.cellType?.id}`;
             }
           }
           return (
@@ -454,7 +458,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
   );
   const onFilter = React.useCallback(
     (search) => (element) => {
-      const regExp = new RegExp(search);
+      const regExp = new RegExp(search, 'i');
       return (
         regExp.test(element?.condition?.anatEntity?.id) ||
         regExp.test(element?.condition?.anatEntity?.name) ||

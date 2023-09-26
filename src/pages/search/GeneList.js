@@ -104,7 +104,7 @@ const GeneList = () => {
 
   const onFilter = React.useCallback(
     (searchReg) => (element) => {
-      const regExp = new RegExp(searchReg);
+      const regExp = new RegExp(searchReg, 'i'); /* Needs i = ignoreCase to be able to search with human for Human and human strings */
       return (
         Boolean(regExp.test(element.gene.geneId)) ||
         Boolean(
@@ -162,19 +162,19 @@ const GeneList = () => {
         <GeneSearch classNames="search-input mx-auto my-3" searchTerm={search}>
           <p>
             {`Example: `}
-            <Link className="internal-link" to="?search=HBB">
+            <Link className="internal-link" to={`${PATHS.SEARCH.GENE}?search=HBB`}>
               HBB
             </Link>
             {', '}
-            <Link className="internal-link" to="?search=Apoc1">
+            <Link className="internal-link" to={`${PATHS.SEARCH.GENE}?search=Apoc1`}>
               Apoc1
             </Link>
             {', '}
-            <Link className="internal-link" to="?search=PDE4DIP">
+            <Link className="internal-link" to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}>
               PDE4DIP
             </Link>
             {', '}
-            <Link className="internal-link" to="?search=insulin">
+            <Link className="internal-link" to={`${PATHS.SEARCH.GENE}?search=insulin`}>
               insulin
             </Link>
           </p>

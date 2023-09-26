@@ -21,6 +21,8 @@ const GenericHelmetProvider = () => (
       {`
         var _paq = window._paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setCookieDomain", "*.bgee.org"]);
+        _paq.push(["setDomains", ["*.bgee.org"]]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
@@ -30,6 +32,17 @@ const GenericHelmetProvider = () => (
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
           g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
         })();
+
+       // ONLY for the SPA because the page doesn't reload on navigation to other pages
+       document.body.addEventListener('click', (event) => {
+         const clickedUrl = event.originalTarget.href;
+         // if a NAVIGATION link (menu item in the SPA) was clicked
+         if(clickedUrl) {
+           _paq.push(['setCustomUrl', clickedUrl]);
+           _paq.push(['trackPageView']);
+           _paq.push(['enableLinkTracking']);
+         }
+       });
       `}
       </script>
     </Helmet>

@@ -88,8 +88,8 @@ const TopAnatResult = ({
   }, []);
   const onFilter = React.useCallback(
     (search) => (element) =>
-      Boolean(new RegExp(search).test(element[0])) ||
-      Boolean(new RegExp(search).test(element[1])),
+      Boolean(new RegExp(search, 'i').test(element[0])) ||
+      Boolean(new RegExp(search, 'i').test(element[1])),
     []
   );
   const dataCsvHref = React.useMemo(() => {

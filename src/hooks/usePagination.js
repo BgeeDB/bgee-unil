@@ -1,5 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import config from '../config.json';
+
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 
 export const PARAM_PAGE_KEY = 'pageNumber';
 export const RESULTS_COUNT_KEY = 'results';
@@ -33,7 +38,7 @@ export const usePaginationLink = (
         newSp.set(keyForPageSize, count);
       }
 
-      return `${pathname}?${newSp.toString()}`;
+      return `${URL_ROOT}${pathname}?${newSp.toString()}`;
     },
     [searchParams]
   );
@@ -46,7 +51,7 @@ const usePagination = (
   paginationParamPageKey = PARAM_PAGE_KEY,
   paginationResultCountKey = RESULTS_COUNT_KEY
 ) => {
-  const { search } = useLocation();
+  const { pathname, search } = useLocation();
   const { push } = useHistory();
 
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
@@ -66,6 +71,7 @@ const usePagination = (
       };
       push({
         search: new URLSearchParams(newParams).toString(),
+        pathname: `${URL_ROOT}${pathname}`,
       });
     },
     [searchParams]
@@ -81,6 +87,7 @@ const usePagination = (
       };
       push({
         search: new URLSearchParams(params).toString(),
+        pathname: `${URL_ROOT}${pathname}`,
       });
     },
     [searchParams]

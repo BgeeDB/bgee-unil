@@ -169,7 +169,7 @@ const GeneHomologs = ({ homologs, geneId, isLoading }) => {
   );
   const onFilter = React.useCallback(
     (search) => (element) => {
-      const regExp = new RegExp(search);
+      const regExp = new RegExp(search, 'i');
       let isFound = regExp.test(element.taxon.scientificName);
       for (let i = 0; !isFound && i < element.genes.length; i += 1) {
         isFound =

@@ -1,6 +1,11 @@
 import config from '../../config.json';
 import imagePath from '../../helpers/imagePath';
 
+// TODO CURRENT collaborations only?
+// TODO scFAIR portal and logo?
+// TODO how to link David Osumi-Sutherland? Which affiliation?
+// TODO link scFAIR github?
+// TODO salmonids Bgee portal?
 const collaborations = [
   {
     type: 'title',
@@ -232,7 +237,7 @@ const collaborations = [
           {
             type: 'text',
             content:
-              ' is a knowledgebase of unified cancer genomics data from integrated mutation, expression, literature, and biomarker databases, accessible through web portal. It is supported by ',
+              ' is a knowledgebase of unified cancer genomics data from integrated mutation, expression, literature, and biomarker databases, accessible through a web portal. It is supported by ',
           },
           {
             type: 'link_external',
@@ -270,6 +275,177 @@ const collaborations = [
           {
             type: 'text',
             content: '.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Salmobase',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/Salmobase.png'),
+        path: 'https://salmobase.org/',
+        alt: 'Salmobase',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://salmobase.org/',
+            text: 'Salmobase',
+          },
+          {
+            type: 'text',
+            content:
+              ' has been created for making molecular genomic resources for salmonid species publically available in a framework of visualizations and analytic tools.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'In coordination with Salmobase, Bgee developed an ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/develop/src/ssaldv',
+            text: 'atlantic salmon developmental stages ontology',
+          },
+          {
+            type: 'text',
+            content:
+              '.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'scFAIR',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath(''),
+        path: 'https://sc-fair.org/',
+        alt: 'scFAIR',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://sc-fair.org/',
+            text: 'scFAIR',
+          },
+          {
+            type: 'text',
+            content:
+              ' is an ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://www.swissuniversities.ch/en/topics/digitalisation/open-research-data/',
+            text: 'Open Research Data (ORD)',
+          },
+          {
+            type: 'text',
+            content:
+              ' project for the standardization and stewardship of single-cell metadata, funded by swissuniversities.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'The Bgee group is involved with the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://asap.epfl.ch/',
+            text: 'ASAP',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/EPFL) group in Switzerland, but the project is broader and involves also ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://cellxgene.cziscience.com/',
+            text: 'CZ CELLxGENE',
+          },
+          {
+            type: 'text',
+            content:
+              ' and everyone interested in the standardization of single-cell metadata.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'SIB AI',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/logo/sib_emblem.png'),
+        path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
+        alt: 'SIB AI',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
+            text: 'SIB AI',
+          },
+          {
+            type: 'text',
+            content:
+              ' is an SIB call to bring added value to the scientific impact of SIB Resources, while proposing innovative technologies - Artificial Intelligence (AI) - that will benefit the scientific community.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'The Bgee group is involved with the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://asap.epfl.ch/',
+            text: 'ASAP/Deplancke',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/EPFL) group, and the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://robinsonlabuzh.github.io/',
+            text: 'Robinson Statistical Bioinformatics',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/UZH) group to develop a pilot implementation of annotation of single-cell RNA-Seq data guided by AI.',
           },
         ],
       },

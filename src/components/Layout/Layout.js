@@ -1,6 +1,5 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import { useLocation } from 'react-router-dom';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Alert from '../Alert';
@@ -14,10 +13,11 @@ import { NotificationContext } from '../../contexts/NotificationsContext';
 const Layout = ({ children }) => {
   const { addNotification } = React.useContext(NotificationContext);
   const loc = useLocation();
-  const { listen } = useHistory();
+  const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+  const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
   const body = React.useMemo(
     () =>
-      loc.pathname === '/' ? (
+      loc.pathname === '/' || loc.pathname === `${URL_ROOT}/`  || loc.pathname === `${URL_ROOT}` ? (
         <>{children}</>
       ) : (
         <Bulma.Section className="is-flex-grow-1">{children}</Bulma.Section>
@@ -27,17 +27,10 @@ const Layout = ({ children }) => {
 
   React.useEffect(() => {
     if (loc.hash !== '') {
-      console.debug(loc.hash);
+      /* console.debug(loc.hash); */
       document.getElementById(loc.hash.replace('#', ''))?.scrollIntoView();
     }
   }, [loc.hash]);
-  React.useEffect(
-    () =>
-      listen((location) => {
-        ReactGA.pageview(location.pathname);
-      }),
-    [listen]
-  );
   React.useEffect(() => {
     setAxiosAddNotif(addNotification);
     return () => {
@@ -51,7 +44,7 @@ const Layout = ({ children }) => {
         <Alert type="danger" light>
           <span>
             {`This is an archived version of Bgee (version ${APP_VERSION})`}
-            <a className="internal-link ml-2" href={config.genericDomain}>
+            <a className="internal-link ml-2" href={config.prodDomain}>
               <strong>Access latest version of Bgee</strong>
             </a>
           </span>

@@ -1,5 +1,10 @@
 /* eslint-disable react/destructuring-assignment,jsx-a11y/interactive-supports-focus,react/no-array-index-key,react/button-has-type,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,jsx-a11y/label-has-associated-control */
 import React from 'react';
+import config from '../config.json';
+
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 
 const expressionPageHelper = {
   autocompleteSpecies: (list, kwList, search) =>
@@ -19,7 +24,7 @@ const expressionPageHelper = {
         role="button"
         onClick={() => {
           setSearch(s.word);
-          history.replace(`?id=${s.info.id}`);
+          history.replace(`${URL_ROOT}${history.location.pathname}?id=${s.info.id}`);
           setTimeout(() => {
             closeAutoComplete();
           }, 100);

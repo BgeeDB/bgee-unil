@@ -225,11 +225,12 @@ const Router = () => (
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
                   PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.TUTORIALS,
+                  PATHS.SUPPORT.VIDEOS,
                   PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
-                  PATHS.ABOUT.VIDEOS,
                   PATHS.ABOUT.TEAM,
                   PATHS.ABOUT.BGEESAB,
                   PATHS.ABOUT.PRIVACY_POLICY,
@@ -245,6 +246,7 @@ const Router = () => (
                   PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.TUTORIAL_GENE_PAGE,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />
@@ -253,7 +255,7 @@ const Router = () => (
 
               <Route path={PATHS.ERROR} component={Error} />
 
-              <Redirect to={PATHS.HOME} />
+              <Redirect to={{ pathname: PATHS.ERROR, state: { error: { message: 404} } }} />
             </Switch>
           </Layout>
         </NotificationProvider>

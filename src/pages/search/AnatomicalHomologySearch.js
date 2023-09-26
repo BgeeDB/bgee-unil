@@ -7,6 +7,11 @@ import api from '../../api';
 import LinkExternal from '../../components/LinkExternal';
 import { customAnatomicalHomologySorter } from '../../helpers/sortTable';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
+import config from '../../config.json';
+
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 
 const onRenderCell =
   () =>
@@ -88,7 +93,7 @@ const AnatomicalHomologySearch = () => {
   const [anatomicalEntities, setAnatomicalEntities] = React.useState('');
   const [error, setError] = React.useState(false);
   const [selectedSpecies, setSelectedSpecies] = React.useState([]);
-  const { search: searchParams } = useLocation();
+  const { search: searchParams, pathname } = useLocation();
   const [results, set] = React.useState(DEFAULT_RESULTS);
   const [speciesList, setSpeciesList] = React.useState([]);
 
@@ -145,7 +150,7 @@ const AnatomicalHomologySearch = () => {
           signature: queryString,
           data,
         });
-        history.push(`?${queryString}`);
+        history.push(`${URL_ROOT}${pathname}?${queryString}`);
       })
       .catch((err) => {
         console.error(err);
@@ -301,35 +306,35 @@ const AnatomicalHomologySearch = () => {
                       {`Example: `}
                       <Link
                         className="internal-link"
-                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0002048"
+                        to={`${URL_ROOT}${pathname}?species_list=9606&species_list=7955&ae_list=UBERON%3A0002048`}
                       >
                         Lung in human and zebrafish
                       </Link>
                       {', '}
                       <Link
                         className="internal-link"
-                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0000206"
+                        to={`${URL_ROOT}${pathname}?species_list=9606&species_list=7955&ae_list=UBERON%3A0000206`}
                       >
                         Pharyngeal gill in human and zebrafish
                       </Link>
                       {', '}
                       <Link
                         className="internal-link"
-                        to="?species_list=9606&species_list=7955&ae_list=CL%3A0000084"
+                        to={`${URL_ROOT}${pathname}?species_list=9606&species_list=7955&ae_list=CL%3A0000084`}
                       >
                         T Cell in human and zebrafish
                       </Link>
                       {', Placenta '}
                       <Link
                         className="internal-link"
-                        to="?species_list=9606&species_list=9598&ae_list=UBERON%3A0001987"
+                        to={`${URL_ROOT}${pathname}?species_list=9606&species_list=9598&ae_list=UBERON%3A0001987`}
                       >
                         in human and chimpanzee
                       </Link>
                       {' (homologous structure), or '}
                       <Link
                         className="internal-link"
-                        to="?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987"
+                        to={`${URL_ROOT}${pathname}?species_list=9606&species_list=7955&ae_list=UBERON%3A0001987`}
                       >
                         in human and zebrafish
                       </Link>

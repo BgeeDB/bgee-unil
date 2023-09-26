@@ -13,7 +13,11 @@ import TagSource from '../../../components/TagSource/TagSource';
 import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
 import PATHS from '../../../routes/paths';
 import { getChildValueFromAttribute } from '../../../helpers/selects';
+import config from '../../../config.json';
 
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 const LINK_TO_RAW_DATA_ANNOTS = 'LINK_TO_RAW_DATA_ANNOTS';
 const LINK_TO_PROC_EXPR_VALUES = 'LINK_TO_PROC_EXPR_VALUES';
 const LINK_CALL_TO_PROC_EXPR_VALUES = 'LINK_CALL_TO_PROC_EXPR_VALUES';
@@ -100,7 +104,7 @@ const RawDataAnnotationResults = ({
               };
             }
             case 'INTERNAL_LINK': {
-              let path = `/${col.linkTarget}/${valueFromFirstAttribute}`;
+              let path = `${URL_ROOT}/${col.linkTarget}/${valueFromFirstAttribute}`;
               if (col?.linkTarget === 'gene') {
                 const geneMappedToSameGeneIdCount = getChildValueFromAttribute(
                   result,

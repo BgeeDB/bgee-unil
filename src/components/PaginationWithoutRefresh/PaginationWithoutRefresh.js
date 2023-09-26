@@ -4,6 +4,11 @@ import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TableContext } from '../../contexts/TableContext';
 import { usePaginationLink } from '../../hooks/usePagination';
+import config from '../../config.json';
+
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 
 const PaginationWithoutRefresh = ({ current, total }) => {
   const { paginationParamPageKey, paginationResultCountKey } =
@@ -52,7 +57,7 @@ const PaginationWithoutRefresh = ({ current, total }) => {
     e.preventDefault();
     e.stopPropagation();
     sp.set(paginationParamPageKey, targetPage);
-    history.push({ search: `?${sp.toString()}` });
+    history.push({ search: `?${sp.toString()}`, pathname: `${URL_ROOT}${loc.pathname}` });
   };
 
   if (total === 1) return null;

@@ -422,7 +422,7 @@ const ExpComp = () => {
             data,
           });
           if (storableParams?.queryString) {
-            history.replace(`?${storableParams?.queryString}`);
+            history.replace(`${PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT}?${storableParams?.queryString}`);
           }
         })
         .catch((err) => {
@@ -519,7 +519,7 @@ const ExpComp = () => {
                       Examples:{' '}
                       <Link
                         className="internal-link"
-                        to="?data=34beddfc93bb7fbb440e757e6de24d91fc0ce177"
+                        to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT}?data=34beddfc93bb7fbb440e757e6de24d91fc0ce177`}
                         onClick={() => {
                           setSearchValue('');
                         }}
@@ -529,7 +529,7 @@ const ExpComp = () => {
                       {', '}
                       <Link
                         className="internal-link"
-                        to="?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823"
+                        to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT}?gene_list=ENSDARG00000059263%0D%0AENSG00000170178%0D%0AENSMUSG00000001823`}
                         onClick={() => {
                           setSearchValue('');
                         }}

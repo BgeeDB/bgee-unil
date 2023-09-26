@@ -9,7 +9,7 @@ cd build/
 rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/bgee.unil.ch/
 
 # annotations
-ACHTUNG! Think to change "isRawDataOnly" to "true" first!
+echo 'ACHTUNG! Think to change "isRawDataOnly" to "true" first!'
 rm -Rf build && yarn annot
 cd build/
 rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/annotations.bgee.org/

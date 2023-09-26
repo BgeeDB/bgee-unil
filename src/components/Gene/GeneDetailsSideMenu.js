@@ -2,6 +2,11 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import config from '../../config.json';
+
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 
 const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
   const history = useHistory();
@@ -9,7 +14,7 @@ const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
 
   const handlerMenuClick = React.useCallback(
     (id) => {
-      history.replace(`${location.pathname}${location.search}#${id}`);
+      history.replace(`${URL_ROOT}${location.pathname}${location.search}#${id}`);
     },
     [location]
   );

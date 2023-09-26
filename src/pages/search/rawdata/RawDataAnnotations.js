@@ -32,7 +32,11 @@ import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
 import CondObservedParameter from './components/filters/CondObservedParameter/CondObservedParameter';
+import config from '../../../config.json';
 
+const APP_VERSION = config.version;
+const URL_VERSION = APP_VERSION.replaceAll('.', '-');
+const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 const RawDataAnnotations = ({ isExprCalls = false }) => {
   const {
     searchResult,
@@ -236,7 +240,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                 <h1>
                   <a
                     onClick={(e) => changePageType(e, type.id)}
-                    href={`/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
+                    href={`${URL_ROOT}/search/raw-data?pageType=${type.id}${isActive ? filterForAllParameter() : ''}${isActive ? parameterInCurrentUrlWithoutPageType() : parameterFromForm()}`}
                     key={type.id}
                     className={`ongletPages is-centered py-2 px-5 ${
                       isActive ? 'pageActive' : ''
