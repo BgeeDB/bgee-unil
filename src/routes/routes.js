@@ -34,7 +34,8 @@ import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import TutoFile from '../static/support/Tutorials';
 import VideoFile from '../static/support/videos';
-import TutoGenePageFile from '../markdown/support/tutoGenePage.md';
+import TutoGenePageFile from '../markdown/support/gene-page/Tutorial_gene_page.md';
+import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -253,6 +254,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_GENE_PAGE]: {
     source: TutoGenePageFile,
     title: 'Tutorial: gene page',
+  },
+  [PATHS.SUPPORT.TUTORIAL_TOPANAT]: {
+    source: TutoTopAnatFile,
+    title: 'Tutorial: TopAnat',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,

@@ -247,6 +247,7 @@ const Router = () => (
                   PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.TUTORIAL_GENE_PAGE,
+                  PATHS.SUPPORT.TUTORIAL_TOPANAT,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />
