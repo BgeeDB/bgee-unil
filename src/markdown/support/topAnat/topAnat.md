@@ -1,6 +1,6 @@
 # TopAnat: Uberon enrichment analysis
 
-keywords SEO :Uberon, enrichment analysis, GSEA, organ enrichment analysis, gene enrichment, anatomical entity, organ
+keywords: Uberon, enrichment analysis, GSEA, organ enrichment analysis, gene enrichment, anatomical entity, organ
 
 ## Overview
 

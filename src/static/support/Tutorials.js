@@ -55,14 +55,40 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to use TopAnat and to do an anatomical enrichment analysis',
+                  'Description of how to use TopAnat and to do an anatomical enrichment analysis.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Expression call search',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how search all gene expression present and absent calls in the Bgee database.',
               },
             ],
           },
         ],
       },
     ],
-    cols: 2,
+    cols: 3,
     fillRow: true,
   },
 ];

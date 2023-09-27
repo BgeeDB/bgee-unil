@@ -51,6 +51,7 @@ const PATHS = {
     VIDEOS: `${URL_ROOT}/support/videos`,
     TUTORIAL_GENE_PAGE: `${URL_ROOT}/support/tutorial-gene-page`,
     TUTORIAL_TOPANAT: `${URL_ROOT}/support/tutorial-TopAnat`,
+    TUTORIAL_EXPRESSION_CALLS: `${URL_ROOT}/support/tutorial-expression-calls`,
     FAQ: `${URL_ROOT}/support/faq`,
   },
   ABOUT: {
