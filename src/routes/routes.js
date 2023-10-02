@@ -37,6 +37,7 @@ import VideoFile from '../static/support/videos';
 import TutoGenePageFile from '../markdown/support/gene-page/Tutorial_gene_page.md';
 import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
 import TutoExpressionCallsFile from '../markdown/support/present_absent-expression-calls/Expression_call_search.md';
+import TutoSPARQLFile from '../markdown/support/sparql-tutorial/sparql-tutorial.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -263,6 +264,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS]: {
     source: TutoExpressionCallsFile,
     title: 'Tutorial: expression calls',
+  },
+  [PATHS.SUPPORT.TUTORIAL_SPARQL]: {
+    source: TutoSPARQLFile,
+    title: 'Tutorial: knowledge graph query',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,

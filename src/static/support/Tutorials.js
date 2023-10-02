@@ -81,7 +81,33 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how search all gene expression present and absent calls in the Bgee database.',
+                  'Description of how to search all gene expression present and absent calls in the Bgee database.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Querying the Bgee Knowledge Graph with SPARQL',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_SPARQL,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how to query the Bgee Knowledge Graph with SPARQL.',
               },
             ],
           },
