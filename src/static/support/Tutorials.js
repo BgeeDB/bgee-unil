@@ -91,6 +91,32 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
+            title: 'Tutorial: Data curation in Bgee',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_CURATION,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how the curation is done in Bgee.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
             title: 'Tutorial: Querying the Bgee Knowledge Graph with SPARQL',
             image: {
               src: imagePath('/document-text-outline.svg'),

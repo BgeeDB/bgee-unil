@@ -38,6 +38,7 @@ import TutoGenePageFile from '../markdown/support/gene-page/Tutorial_gene_page.m
 import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
 import TutoExpressionCallsFile from '../markdown/support/present_absent-expression-calls/Expression_call_search.md';
 import TutoSPARQLFile from '../markdown/support/sparql-tutorial/sparql-tutorial.md';
+import TutoCurationFile from '../markdown/support/data-curation/data-curation.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -268,6 +269,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_SPARQL]: {
     source: TutoSPARQLFile,
     title: 'Tutorial: knowledge graph query',
+  },
+  [PATHS.SUPPORT.TUTORIAL_CURATION]: {
+    source: TutoCurationFile,
+    title: 'Tutorial: data curation',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,

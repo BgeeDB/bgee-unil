@@ -53,6 +53,7 @@ const PATHS = {
     TUTORIAL_TOPANAT: `${URL_ROOT}/support/tutorial-TopAnat`,
     TUTORIAL_EXPRESSION_CALLS: `${URL_ROOT}/support/tutorial-expression-calls`,
     TUTORIAL_SPARQL: `${URL_ROOT}/support/tutorial-query-bgee-knowledge-graph-sparql`,
+    TUTORIAL_CURATION: `${URL_ROOT}/support/tutorial-data-curation`,
     FAQ: `${URL_ROOT}/support/faq`,
   },
   ABOUT: {
