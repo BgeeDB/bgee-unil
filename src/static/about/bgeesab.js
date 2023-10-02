@@ -148,6 +148,38 @@ const bgeesab = [
       },
     ],
   },
+  {
+    type: 'section',
+    title: 'The Bgee Scientific Advisory Board meetings',
+    children: [
+      {
+        type: 'bold',
+        content: 'Upcoming Bgee SAB meeting',
+      },
+      {
+        type: 'unordered_list',
+        children: [
+          {
+            type: 'text',
+            content: 'February 26 2024',
+          },
+        ],
+      },
+      {
+        type: 'bold',
+        content: 'Past Bgee SAB meetings',
+      },
+      {
+        type: 'unordered_list',
+        children: [
+          {
+            type: 'text',
+            content: 'April 28 2023',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export default bgeesab;
