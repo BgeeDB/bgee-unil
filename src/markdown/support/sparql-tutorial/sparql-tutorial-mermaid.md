@@ -10,7 +10,7 @@ https://bgee.org/sparql/, see its webpage header below) can also be queried usin
 [SPARQLWrapper](https://sparqlwrapper.readthedocs.io/en/latest/) package for Python language or the [R SPARQL](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) package 
 for the R language.  
 
-![](../img/doc/sparql-tutorial/bgee-sparql-endpoint.png)
+![](img/bgee-sparql-endpoint.png)
 
 To improve readability, all reserved words of the SPARQL query language are written in capital letters. As per the SPARQL language:
 - All variables are defined by starting with a question mark `?`. 
@@ -35,7 +35,10 @@ SELECT ?species {
 All species are defined as a `up:Taxon` where `up:` is prefix for `http://purl.uniprot.org/core/` (the UniProtKB core ontology). See below a graphical representation of the 
 [Q01](#Q01) query:
 
-![](../img/doc/sparql-tutorial/q01.png)
+```mermaid
+    graph TD 
+		?species-->|a|up:Taxon
+```
 
 A species in Bgee may have the following attributes (i.e., properties):
 * `up:scientificName` (**always present**): the scientific name of a species such as "Homo sapiens". 
@@ -59,7 +62,13 @@ SELECT ?species ?sci_name ?common_name {
 > To run this query [click 
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0ASELECT+%3Fspecies+%3Fsci_name+%3Fcommon_name+%7B%0D%0A%09%3Fspecies+a+up%3ATaxon+.%0D%0A%09%3Fspecies+up%3AscientificName+%3Fsci_name+.%0D%0A%09%3Fspecies+up%3Arank+up%3ASpecies+.%0D%0A++++OPTIONAL+%7B%3Fspecies+up%3AcommonName+%3Fcommon_name+.%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 #### Q02 graphical representation:
-![](../img/doc/sparql-tutorial/q02.png)
+```mermaid
+    graph TD 
+		?species-->|a|up:Taxon
+		?species-->|up:scientificName|?sci_name
+		?species-->|up:rank|up:Species
+        ?species-->|"up:commonName <br><b>(optional)</b>"|?common_name        
+```
 
 
 ## Querying gene expression profile
@@ -90,8 +99,14 @@ SELECT DISTINCT ?anat ?anatName {
 > To run this query [click 
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fanat.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 #### Q03 graphical representation:
-![](../img/doc/sparql-tutorial/q03.png)
-
+```mermaid
+    graph TD
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isExpressedIn|?anat
+		?seq-->|rdfs:label|''APOC1''
+		?anat-->|a|genex:AnatomicalEntity
+		?anat-->|rdfs:label|?anatName
+```
 Other vocabulary terms: 
 * [orth:Gene](https://biosoda.github.io/genex/#http://purl.org/net/orth#Gene): a class representing genes.
 * [genex:AnatomicalEntity](https://biosoda.github.io/genex/#AnatomicalEntity): a class representing anatomical entities such as organs.
@@ -128,7 +143,17 @@ SELECT DISTINCT ?anat ?anatName {
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fanat.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++%23%23%23Specifies+species%3A%0D%0A++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++%3Fspecies+up%3AscientificName+%22Homo+sapiens%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q04 graphical representation:
-![](../img/doc/sparql-tutorial/q04.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isExpressedIn|?anat
+		?seq-->|rdfs:label|''APOC1''
+		?anat-->|a|genex:AnatomicalEntity
+		?anat-->|rdfs:label|?anatName
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|?species
+		?species-->|a|up:Taxon
+```
 
 > **NOTE**: [orth:organism](https://biosoda.github.io/genex/#http://purl.org/net/orth#organism) (a relation to assign an organism to a gene) chained with 
 [obo:RO_0002162](https://biosoda.github.io/genex/#http://purl.obolibrary.org/obo/RO_0002162) (a relation to assign a taxon to an organism) indicates from which taxon a gene belongs.
@@ -178,7 +203,19 @@ Other vocabulary terms:
 * [genex:hasStrain](https://biosoda.github.io/genex/#hasStrain): this relation states in which strain a gene expression is being assessed.
 
 #### Q05 graphical representation:
-![](../img/doc/sparql-tutorial/q05.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isExpressedIn|?condition
+		?seq-->|rdfs:label|''APOC1''
+		?condition-->|genex:hasAnatomicalEntity|?anat
+   		?anat-->|rdfs:label|?anatName
+   		?condition-->|genex:hasAnatomicalEntity|?a1["<a href=http://purl.obolibrary.org/obo/GO_0005575>obo:GO_0005575</a> <br>''cellular_component''"]
+		?condition-->|genex:hasDevelopmentalStage|?stage
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''
+```
 
 
 
@@ -190,7 +227,12 @@ since a cell type is also considered as an anatomical entity. For example, to de
 expressed in a cellular component located in lung, in other words, in lung.  Therefore, when the cell type is unspecified, we assert with `genex:hasAnatomicalEntity` property the 
 value [obo:GO_0005575 (cellular_component)](http://purl.obolibrary.org/obo/GO_0005575), this [Gene Ontology]() term is the root of all cell types. 
  
-![](../img/doc/sparql-tutorial/cell-type.png)  
+```mermaid
+    graph TD 
+        ?condition-->|a|genex:ExpressionCondition
+		?condition-->|genex:hasAnatomicalEntity|?a1["<a href=http://purl.obolibrary.org/obo/GO_0005575>obo:GO_0005575</a> <br>''cellular_component''"]
+		?condition-->|genex:hasAnatomicalEntity|?a2["<a href=http://purl.obolibrary.org/obo/UBERON_0002048>obo:UBERON_0002048</a> <br>''lung''"]
+```   
 
 Below, we show a question and its corresponding SPARQL query [Q06](#Q06)  along with its [graph representation](#Q06-graphical-representation:) where other gene expression conditions 
 are specified, more precisely, the developmental stage.  
@@ -227,7 +269,24 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fcondition.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q06 graphical representation:
-![](../img/doc/sparql-tutorial/q06.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isExpressedIn|?condition
+		?seq-->|rdfs:label|''APOC1''
+		?condition-->|genex:hasAnatomicalEntity|?anat
+        ?condition-->|genex:hasAnatomicalEntity|?a1["<a href=http://purl.obolibrary.org/obo/GO_0005575>obo:GO_0005575</a> <br>''cellular_component''"]
+		?anat-->|rdfs:label|?anatName
+		?condition-->|genex:hasDevelopmentalStage|?stage
+		?stage-->|rdfs:label|''post-juvenile''
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|?species
+		?species-->|a|up:Taxon
+		?species-->|up:commonName|''human''
+```
 
 Moreover, if there is not a specific strain to declare, the strain must be defined as "wild-type" since "wild-type" represents any strain. This is because Bgee only considers 
 wild-type experiments. As a result, we assure the gene is expressed independently of the strain type. If we do not state that is a "wild-type" strain, expressed genes that are 
@@ -310,7 +369,27 @@ FILTER (?anat !=  obo:GO_0005575)
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fscore+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++%09%23%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%23%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%23%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q08 graphical representation:
-![](../img/doc/sparql-tutorial/q08.png)    
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?expression-->|a|genex:Expression
+		?expression-->|genex:hasExpressionCondition|?condition
+		?expression-->|genex:hasExpressionLevel|?score
+		?expression-->|genex:hasSequenceUnit|?seq
+		?seq-->|rdfs:label|''APOC1''
+		?condition-->|genex:hasAnatomicalEntity|?anat["?anat &ne; obo:GO_0005575"] 
+        ?condition-->|genex:hasAnatomicalEntity|?o["obo:GO_0005575 <br> ''cellular_component''"] 
+		?anat-->|rdfs:label|?anatName
+		?condition-->|genex:hasDevelopmentalStage|?stage
+		?stage-->|rdfs:label|''post-juvenile''
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|?species
+		?species-->|a|up:Taxon
+		?species-->|up:commonName|''human''
+```      
 
 
 > **NOTE:** In the query [Q08](#Q08), we filter out the anatomical entity `obo:GO_0005575` that is "cellular_component" with the expression ``FILTER(?anat !=  obo:GO_0005575)`` due to 
@@ -364,7 +443,28 @@ FILTER (?anat != ?cellType)
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FcellType+%3FanatName+%3FcellTypeName+%3Fscore+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A+++%09%3Fcondition+genex%3AhasAnatomicalEntity+%3FcellType+.%0D%0A++++%3FcellType+rdfs%3Alabel+%3FcellTypeName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0AFILTER+%28%3Fanat+%21%3D+%3FcellType%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q09 graphical representation:
-![](../img/doc/sparql-tutorial/q09.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?expression-->|a|genex:Expression
+		?expression-->|genex:hasExpressionCondition|?condition
+		?expression-->|genex:hasExpressionLevel|?score
+		?expression-->|genex:hasSequenceUnit|?seq
+		?seq-->|rdfs:label|''APOC1''
+		?condition-->|genex:hasAnatomicalEntity|?anat["?anat &ne; obo:GO_0005575"] 
+		?anat-->|rdfs:label|?anatName
+		?condition-->|genex:hasAnatomicalEntity|?cellType
+		?cellType-->|rdfs:label|?cellTypeName
+		?condition-->|genex:hasDevelopmentalStage|?stage
+		?stage-->|rdfs:label|''post-juvenile''
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|?species
+		?species-->|a|up:Taxon
+		?species-->|up:commonName|''human''
+```
 
 > **NOTE:** Currently, the data accessible via the SPARQL endpoint do not specify *sex* and *strain* types. Therefore, to optimise [Q09](#Q09) query, we can omit triple patterns 
 related to sex and strain. [Q10](#Q10) is the optimised SPARQL query that retrieves exactly the same results as [Q09](#Q09).
@@ -520,7 +620,23 @@ here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Cht
 
 #### Q08-a graphical representation:
 
-![](../img/doc/sparql-tutorial/q08-a.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?expression-->|a|genex:Expression
+		?expression-->|genex:hasExpressionCondition|?condition
+		?expression-->|genex:hasExpressionLevel|?score
+		?expression-->|genex:hasSequenceUnit|?seq
+		?seq-->|lscr:xrefEnsemblGene|ensembl:ENSG00000130208
+		?condition-->|genex:hasAnatomicalEntity|?anat
+		?anat-->|rdfs:label|?anatName
+		?condition-->|genex:hasDevelopmentalStage|obo:UBERON_0000113
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|up-taxon:9606
+```
 
 The [Q08-a](#Q08-a) query can be further simplified by removing the statements about species because an Ensembl gene identifier is always associated to a unique species, hence, by 
 stating `ensembl:ENSG00000130208`, we are already referring to a human gene. This simplified version is shown in [Q08-b](#Q08-b) query.   
@@ -634,7 +750,21 @@ FILTER (?anat !=  obo:GO_0005575)
 
 #### Q12-a graphical representation:
 
-![](../img/doc/sparql-tutorial/q12-a.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?expression-->|a|genex:Expression
+		?expression-->|genex:hasExpressionCondition|?condition
+		?expression-->|genex:hasExpressionLevel|?score
+		?expression-->|genex:hasSequenceUnit|?seq
+		?seq-->|dcterms:identifier|''118230125''
+		?condition-->|genex:hasAnatomicalEntity|?anat
+		?anat-->|rdfs:label|?anatName
+		?condition-->|genex:hasDevelopmentalStage|?stageIRI
+		?condition-->|genex:hasSex|''any''
+		?condition-->|genex:hasStrain|?strain
+		?strain-->|rdfs:label|''wild-type''      
+```
 
 ## Querying with UniProtKB cross-references
 To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its 
@@ -666,7 +796,14 @@ SELECT DISTINCT ?anat ?anatName {
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up-protein%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Funiprot%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fanat+.%0D%0A%09%3Fseq+lscr%3AxrefUniprot+up-protein%3AP02654+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q13 graphical representation:
-![](../img/doc/sparql-tutorial/q13.png)
+```mermaid
+    graph TD
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isExpressedIn|?anat
+		?seq-->|lscr:xrefUniprot|up-protein:P02654
+		?anat-->|a|genex:AnatomicalEntity
+		?anat-->|rdfs:label|?anatName
+```
 
 ## Querying gene metadata
 
@@ -713,7 +850,18 @@ SELECT DISTINCT ?symbol ?description ?id
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0APREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsymbol+%3Fdescription+%3Fid+%0D%0A%3Flinks+%3Forganism+%3Funiprot+%3Fensembl+%3Fncbi++%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3Fsymbol+.%0D%0A++++%3Fseq+rdfs%3AseeAlso+%3Flinks+.%0D%0A++++%3Fseq+dcterms%3Adescription+%3Fdescription+.%0D%0A++++%3Fseq+dcterms%3Aidentifier+%3Fid+.%0D%0A++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefUniprot+%3Funiprot+.%7D%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefEnsemblGene+%3Fensembl+.%7D%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefNCBIGene+%3Fncbi+.%7D%0D%0A++++FILTER+%28%3Fid+%3D+%22ENSG00000130208%22%29%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q14 graphical representation:
-![](../img/doc/sparql-tutorial/q14.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?seq-->|rdfs:label|?symbol
+		?seq-->|rdfs:seeAlso|?links
+		?seq-->|dcterms:description|?description
+		?seq-->|dcterms:identifier|''ENSG00000130208''
+		?seq-->|orth:organism|?organism
+		?seq-->|"lscr:xrefUniprot <br>(optional)"|?uniprot
+		?seq-->|"lscr:xrefEnsemblGene<br>(optional)"|?ensembl
+		?seq-->|"lscr:xrefNCBIGene<br>(optional)"|?ncbi
+```
 
 ## Absence of expression 
 
@@ -747,4 +895,14 @@ SELECT DISTINCT ?anat ?anatName {
 here](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisAbsentIn+%3Fanat.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AscientificName+%22Homo+sapiens%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 #### Q15 graphical representation:
-![](../img/doc/sparql-tutorial/q15.png)
+```mermaid
+    graph TD 
+		?seq-->|a|orth:Gene
+		?seq-->|genex:isAbsentIn|?anat
+		?seq-->|rdfs:label|''APOC1''
+		?anat-->|a|genex:AnatomicalEntity
+		?anat-->|rdfs:label|?anatName
+		?seq-->|orth:organism|?organism
+		?organism-->|"<a href=http://purl.obolibrary.org/obo/RO_0002162>obo:RO_0002162</a> <br> ''in taxon''"|?species
+		?species-->|a|up:Taxon
+```
