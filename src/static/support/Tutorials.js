@@ -139,6 +139,32 @@ const tutorialValues = [
           },
         ],
       },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Comparison of gene expression for a list of genes in anatomical entities',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how to compare gene expression for a list of genes in anatomical entities.',
+              },
+            ],
+          },
+        ],
+      },
     ],
     cols: 3,
     fillRow: true,

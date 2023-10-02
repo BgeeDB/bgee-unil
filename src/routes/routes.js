@@ -39,6 +39,7 @@ import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
 import TutoExpressionCallsFile from '../markdown/support/present_absent-expression-calls/Expression_call_search.md';
 import TutoSPARQLFile from '../markdown/support/sparql-tutorial/sparql-tutorial.md';
 import TutoCurationFile from '../markdown/support/data-curation/data-curation.md';
+import TutoExpCompFile from '../markdown/support/expression-comparison/expression-comparison.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -273,6 +274,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_CURATION]: {
     source: TutoCurationFile,
     title: 'Tutorial: data curation',
+  },
+  [PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON]: {
+    source: TutoExpCompFile,
+    title: 'Tutorial: expression comparison',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
