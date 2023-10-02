@@ -123,7 +123,7 @@ You can run an expression comparison analysis for all orthologs genes at one tax
 
 Paralogy information are presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
 For the Mus musculus gene [Cdk5](https://www.bgee.org/gene/ENSMUSG00000028969/#orthologs) paralogs are found at 2 different taxon level (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
-SCREENSHOT POINTING TO the paralogs section of the gene Cdk5 after clicking on *See details* column for Metazoa (or even better a GIF of the orthologs section while clicking on *See details* of the first line)
+
 ![](../img/doc/gene-search/Fig16_Paralogs-see-details.gif)
 
 
