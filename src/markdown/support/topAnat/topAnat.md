@@ -1,7 +1,5 @@
 # TopAnat: Uberon enrichment analysis
 
-keywords: Uberon, enrichment analysis, GSEA, organ enrichment analysis, gene enrichment, anatomical entity, organ
-
 ## Overview
 
 TopAnat is an anatomical entity enrichment analysis tool based on the [topGO R package](https://bioconductor.org/packages/release/bioc/html/topGO.html).
@@ -23,7 +21,7 @@ The ***Advanced Options*** section is closed by default.
 
 ![](../img/doc/topAnat/topAnat_advancedOptionsTitle.png)
 
-To open that section, click on the corresponding dark grey banner. It contains options allowing to tune both Bgee data used to process the enrichment analysis and the parameters of the algorithm itself. Read the [Advanced options](#Advanced-Options) section for more details.
+To open that section, click on the corresponding dark grey banner. It contains options allowing to tune both Bgee data used to process the enrichment analysis and the parameters of the algorithm itself. Read the [Advanced options](#advanced-options) section for more details.
 ![](../img/doc/topAnat/topAnat_advancedOptions.png)
 
 Below the Advanced Options section the ***Email*** field allows to receive an email once the analysis is over. The ***Job description*** field allows to give a title to your analysis.
@@ -39,7 +37,7 @@ At the bottom of the page the ***Submit your Job*** button allows to submit an a
 
 The entry point of TopAnat is a set of genes from one species you are interested in. In this quick start tutorial we will focus on a set of pigmentation genes from rabbit. TopAnat will be used to detect in which anatomical entities the presence of expression of those genes is over or under represented.
 
-TopAnat uses gene identifiers (e.g ENSG00000244734) and automatically detects the species of interest. You have to provide one gene identifier per line without space or delimiter as shown in the screenshot below. The list of gene identifiers used in this example is available [here](https://www.bgee.org/ftp/bgee_v15_1/documentation/pigmentation_geneIds_rabbit.txt).
+TopAnat uses gene identifiers (e.g ENSG00000244734) and automatically detects the species of interest. You have to provide one gene identifier per line without space or delimiter as shown in the screenshot below. The list of gene identifiers used in this example is available [here](https://bgee.org/ftp/bgee_v15_1/documentation/pigmentation_geneIds_rabbit.txt).
 
 ![](../img/doc/topAnat/topAnat_foregroundIds.png)
 
@@ -51,7 +49,7 @@ On top of your gene list you can now see a sentence describing the number of gen
 
 Additionally, two new subsections appeared: ***Background*** and ***Analysis options***.
 
-The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#Properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
+The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
 
 ![](../img/doc/topAnat/topAnat_backgroundDefault.png)
 
@@ -97,7 +95,7 @@ Below the title on the left side there is a light red button which allows you to
 * ***topAnat_log.R_console*** : the log resulting from running the R script on our server
 * ***topAnat_results.tsv*** : the results table stored as a tabulated file containing the same information found in the table present on our website
 
-Below the title in the middle there is a ***Filter*** field which allows you to perform a case-sensitive filter on all columns of the result table. For instance, in the *Pigmentations genes in rabbit* results coming from the analysis of the [Quick start](#Quick-start) section, filtering with the word *skin* will return all anatomical entities containing the word skin and will show 5 results in the table.
+Below the title in the middle there is a ***Filter*** field which allows you to perform a case-sensitive filter on all columns of the result table. For instance, in the *Pigmentations genes in rabbit* results coming from the analysis of the [Quick start](#quick-start) section, filtering with the word *skin* will return all anatomical entities containing the word skin and will show 5 results in the table.
 
 ![](../img/doc/topAnat/topAnat_filterResults.png)
 
@@ -111,7 +109,7 @@ the result table is comprised of 8 columns:
 
 * ***Anat Entity ID*** : the ID of the Uberon term
 * ***Anat Entity Name*** : the name of the Uberon term
-* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background are available in [Properly choose your background](#Properly-choose-your-background)
+* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background are available in [Properly choose your background](#properly-choose-your-background)
 * ***Significant*** : actual number of annotations to this Uberon term from our *Gene list*
 * ***Expected*** : expected number of annotations to this Uberon term from our *Gene list* based on the number of annotation to that term from the background.
 * ***Fold Enrichment*** : ratio between Significant and Expected annotated genes.
