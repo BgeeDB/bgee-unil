@@ -117,7 +117,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Querying the Bgee Knowledge Graph with SPARQL',
+            title: 'Tutorial: Querying the Bgee Knowledge Graph',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -143,7 +143,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Comparison of gene expression for a list of genes in anatomical entities',
+            title: 'Tutorial: Comparison of gene expression',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
