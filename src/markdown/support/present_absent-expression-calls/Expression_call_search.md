@@ -5,9 +5,9 @@ Bgee expression call search allows you to search all gene expression present and
 Bgee applies statistical methods specific to each data type to detect signal of active expression (present expression calls)
 and to report absence of expression (absent expression calls, *i.e.* where expression levels are below the background expression noise).
 
-The expression call search is available at [https://www.bgee.org/search/expression-calls](https://www.bgee.org/search/expression-calls).
+The expression call search is available at [https://www.bgee.org/search/expression-calls](https://bgee.org/search/expression-calls).
 The examples in this tutorial have been generated using Bgee release 15.0. More information about how the present/absent calls
-are generated can be found at [https://www.bgee.org/support/gene-expression-calls](https://www.bgee.org/support/gene-expression-calls).
+are generated can be found at [https://www.bgee.org/support/gene-expression-calls](https://bgee.org/support/gene-expression-calls).
 
 ## Search for present/absent expression calls
 The search for expression present/absent calls form allows you to narrow the expression calls displayed to only those of interest.

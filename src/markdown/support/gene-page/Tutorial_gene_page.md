@@ -1,5 +1,5 @@
 # Tutorial: gene page
-Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page: https://www.bgee.org/gene/ENSMUSG00000028969/
+Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969/](https://bgee.org/gene/ENSMUSG00000028969/)
 
 ## Gene search
 You can search for genes based on their name, description, synonyms, identifiers, or cross-references.
@@ -98,7 +98,7 @@ They correspond to one-to-one homologs for each pair of species in Bgee.
 ### Orthologs
 
 Orthology information are presented at taxon levels corresponding to the least common ancestor taxon for which orthologs are found in Bgee species.
-For the Mus musculus gene [Cdk5](https://www.bgee.org/gene/ENSMUSG00000028969/#orthologs) orthologs are found at 10 different taxon level, each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](https://bgee.org/gene/ENSMUSG00000028969/#orthologs) orthologs are found at 10 different taxon level, each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig12_Orthologs.gif)
 
@@ -122,7 +122,7 @@ You can run an expression comparison analysis for all orthologs genes at one tax
 ### Paralogs
 
 Paralogy information are presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
-For the Mus musculus gene [Cdk5](https://www.bgee.org/gene/ENSMUSG00000028969/#orthologs) paralogs are found at 2 different taxon level (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](https://bgee.org/gene/ENSMUSG00000028969/#orthologs) paralogs are found at 2 different taxon level (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig16_Paralogs-see-details.gif)
 
@@ -140,8 +140,8 @@ You can run an expression comparison analysis for all paralog genes at one taxon
 
 ### Download one-to-one homologs
 
-All one-to-one orthologs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://www.bgee.org/ftp/current/homologous_genes/OMA_orthologs.zip).
-All one-to-one paralogs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://www.bgee.org/ftp/current/homologous_genes/OMA_paralogs.zip).
+All one-to-one orthologs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://bgee.org/ftp/current/homologous_genes/OMA_orthologs.zip).
+All one-to-one paralogs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://bgee.org/ftp/current/homologous_genes/OMA_paralogs.zip).
 
 ## Cross-references
 

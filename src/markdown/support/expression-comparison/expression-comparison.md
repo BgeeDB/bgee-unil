@@ -7,7 +7,7 @@ If the genes listed belong to a single species, their expression is compared in 
 If the genes listed belong to different species, their expression is compared in homologous anatomical entites with expression data
 (deriving from a common ancestral entity in the least common ancestor of the selected species).
 
-The expression comparison tool is available at [https://www.bgee.org/analysis/expr-comparison](https://www.bgee.org/analysis/expr-comparison).
+The expression comparison tool is available at [https://www.bgee.org/analysis/expr-comparison](https://bgee.org/analysis/expr-comparison).
 The examples in this tutorial have been generated using Bgee release 15.0.
 
 ![](../img/doc/expression-comparison/expression-comparison-overview.png)
@@ -20,7 +20,7 @@ for human in Bgee is [Ensembl](https://www.ensembl.org/). Gene names (e.g. *SRRM
 
 The genome source database can be either [Ensembl](https://www.ensembl.org/), [EnsemblMetazoa](https://metazoa.ensembl.org/),
 or [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/). The genome source database for a species can be found
-on the Bgee species information page, accessible from [the list of species](https://www.bgee.org/search/species).
+on the Bgee species information page, accessible from [the list of species](https://bgee.org/search/species).
 
 One gene ID must be entered per line. If a gene ID is not recognized, it will be listed below the text area after submission.
 A minumum of two gene IDs must be entered.
@@ -40,7 +40,7 @@ Each row in the result table represents one anatomical entity, in which presence
     has evolved into distinct tissues in the selected species. For instance, the homologous organ of the human "lung" is, in zebrafish,
     "swim bladder". If those species were selected, a row could display the expression results by grouping "lung" and "swim bladder" together.
     More information about the relations of homology between anatomical entities used in Bgee can be found in
-    [the documentation for the anatomical homology search](https://www.bgee.org/support/documentation/anatomical-homology).
+    [the documentation for the anatomical homology search](https://bgee.org/support/documentation/anatomical-homology).
   * If the genes belong to a single species, all anatomical entities with expression data for the selected genes are considered.
 
 ![](../img/doc/expression-comparison/expr-comp-anat-entities.png)

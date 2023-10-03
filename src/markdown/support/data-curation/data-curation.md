@@ -133,7 +133,7 @@ and lineage-specific General Class Inclusion (GCI) relations to produce species-
 which integrates almost all other animal anatomy ontologies.
 
 Finally, we define relations of historical homology between anatomical entities, to be able to determine which entities can be compared
-between species. See our [Anatomical homology search](https://www.bgee.org/search/anatomical-homology) and our [repository of similarity annotations between anatomical structures](https://github.com/BgeeDB/anatomical-similarity-annotations) for more information.
+between species. See our [Anatomical homology search](https://bgee.org/search/anatomical-homology) and our [repository of similarity annotations between anatomical structures](https://github.com/BgeeDB/anatomical-similarity-annotations) for more information.
 
 We also define broad mappings between the developmental and life stages of different species, integrated into the composite version of Uberon.
 
