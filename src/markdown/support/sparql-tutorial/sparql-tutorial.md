@@ -16,7 +16,7 @@ To improve readability, all reserved words of the SPARQL query language are writ
 
 ## Querying species
 
-[Q01](#Q01) is a SPARQL query to retrieve species that are present in Bgee.
+[Q01](#q01) is a SPARQL query to retrieve species that are present in Bgee.
 
 #### Q01:
 > *Question*: What are the species present in Bgee?
@@ -28,7 +28,7 @@ SELECT ?species {
 ```
 
 
-All species are defined as a `up:Taxon` where `up:` is prefix for `http://purl.uniprot.org/core/` (the UniProtKB core ontology). See below a graphical representation of the [Q01](#Q01) query:
+All species are defined as a `up:Taxon` where `up:` is prefix for `http://purl.uniprot.org/core/` (the UniProtKB core ontology). See below a graphical representation of the [Q01](#q01) query:
 
 ![](../img/doc/sparql-tutorial/q01.png)
 
@@ -38,7 +38,7 @@ A species in Bgee may have the following attributes (i.e., properties):
 * `up:rank` (**always present**): taxonomic rank is the relative level of a group of organisms (a taxon) in an ancestral or hereditary hierarchy (e.g. species, kingdom, family).
 Currently, in Bgee, only the "species" rank is stated (i.e.,`up:rank` is always `up:Species`).
 
-[Q02](#Q02) is the whole SPARQL query including all direct attributes for `up:Taxon` along with its [graphical representation](#Q02-graphical-representation).
+[Q02](#q02) is the whole SPARQL query including all direct attributes for `up:Taxon` along with its [graphical representation](#q02-graphical-representation).
 #### Q02:
 > *Question*: What are the species present in Bgee and their scientific and common names?
 *SPARQL query*:
@@ -62,7 +62,7 @@ All anatomic entities and developmental stages are represented with the [UBERON 
 
 ### Where is a gene expressed? (simplified)
 Genes that are expressed in a tissue, organ or cell (i.e., anatomical entity in general) are represented with the relation
-[genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn), alternativaly its corresponding relation [obo:RO_0002206](http://purl.obolibrary.org/obo/RO_0002206) is stated too. In the query [Q03](#Q03) (see [graphical representation](#Q03-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" gene is expressed**.
+[genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn), alternativaly its corresponding relation [obo:RO_0002206](http://purl.obolibrary.org/obo/RO_0002206) is stated too. In the query [Q03](#q03) (see [graphical representation](#q03-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" gene is expressed**.
 #### Q03:
 > *Question*: What are the anatomical entities where the "APOC1" gene is expressed?
 *SPARQL query*:
@@ -88,7 +88,7 @@ Other vocabulary terms:
 * [rdfs:label](http://www.w3.org/2000/01/rdf-schema#label): in the Bgee KG, this relation is often used to give names for each individual of a class.
 
 ### Where is a human gene expressed? (simplified)
-Similarly to the previous query, we can specify the species from where the gene comes from to avoid possible ambiguities among gene names in different species. In the query [Q04](#Q04) (see its [graphical representation](#Q04-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" homo sapiens gene is expressed**.
+Similarly to the previous query, we can specify the species from where the gene comes from to avoid possible ambiguities among gene names in different species. In the query [Q04](#q04) (see its [graphical representation](#q04-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" homo sapiens gene is expressed**.
 
 #### Q04:
 > *Question*: What are the anatomical entities where the "APOC1" homo sapiens gene is expressed?
@@ -126,7 +126,7 @@ In addition to anatomical entities, many conditions can be specified with [genex
 - A sex (as text values, i.e.: `"any"`, `"NA"`, `"female"`, `"hermaphrodite"`, `"male"`, `"mixed"`, `"not annotated"`)
 - A strain ([efo:EFO_0005135](https://biosoda.github.io/genex/#http://www.ebi.ac.uk/efo/EFO_0005135)).
 
-The query [Q05](#Q05) (see its [graphical representation](#Q05-graphical-representation)) retrieves the same results as [Q3](#Q3:), but it is more accurate because it explicitly specifies the results are independent of developmental stage, sex, strain and cell type.
+The query [Q05](#q05) (see its [graphical representation](#q05-graphical-representation)) retrieves the same results as [Q03](#q03), but it is more accurate because it explicitly specifies the results are independent of developmental stage, sex, strain and cell type.
 
 #### Q05:
 > *Question*: What are the anatomical entities where the "APOC1" gene is expressed independently of the developmental stage, sex, strain and cell type?
@@ -171,7 +171,7 @@ When defining the condition to assess a gene expression, the [genex:hasAnatomica
 
 ![](../img/doc/sparql-tutorial/cell-type.png)
 
-Below, we show a question and its corresponding SPARQL query [Q06](#Q06)  along with its [graph representation](#Q06-graphical-representation:) where other gene expression conditions are specified, more precisely, the developmental stage.
+Below, we show a question and its corresponding SPARQL query [Q06](#q06)  along with its [graph representation](#q06-graphical-representation) where other gene expression conditions are specified, more precisely, the developmental stage.
 
 
 #### Q06:
@@ -208,7 +208,7 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 
 Moreover, if there is not a specific strain to declare, the strain must be defined as "wild-type" since "wild-type" represents any strain. This is because Bgee only considers wild-type experiments. As a result, we assure the gene is expressed independently of the strain type. If we do not state that is a "wild-type" strain, expressed genes that are exclusive to a specific strain will be considered too. Similarly, for sex, if stated 'any', it means that the gene is expressed in any sex type.
 
-> **NOTE:** Currently, the data accessible via the SPARQL endpoint do not specify *sex* and *strain* types. Therefore, to optimise this query, we can omit triple patterns related to sex and strain. [Q07](#Q07) is the optimised SPARQL query that retrieves exactly the same results as [Q06](#Q06).
+> **NOTE:** Currently, the data accessible via the SPARQL endpoint do not specify *sex* and *strain* types. Therefore, to optimise this query, we can omit triple patterns related to sex and strain. [Q07](#q07) is the optimised SPARQL query that retrieves exactly the same results as [Q06](#q06).
 #### Q07:
 > *Question*: What are the anatomical entities where the human gene "APOC1" is expressed in the post-juvenile stage?
 *SPARQL query*:
@@ -237,10 +237,10 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 
 
 ### Where is a gene expressed and its expression score? (with more details)
-Expression of genes and their corresponding scores can also be obtained via the [genex:Expression](https://biosoda.github.io/genex/#Expression) concept. We rewrite the query [Q07](#Q07:) using the `genex:Expression` concept.
+Expression of genes and their corresponding scores can also be obtained via the [genex:Expression](https://biosoda.github.io/genex/#Expression) concept. We rewrite the query [Q07](#q07) using the `genex:Expression` concept.
 
 
-The query [Q08](#Q08:) below (see its [graphical representation](#Q08-graphical-representation)) retrieves **anatomical entities where the human gene "APOC1" is expressed in the post-juvenile stage along with its expression score independently of the strain, sex and cell type**. The higher the expression score is, the higher the gene is expressed considering a given experimental condition. Note that the query [Q08](#Q08:) orders results by expression scores with the statement: ``ORDER BY DESC(?score)`` where `DESC()` is an ordering modifier indicating the descending order.
+The query [Q08](#q08) below (see its [graphical representation](#q08-graphical-representation)) retrieves **anatomical entities where the human gene "APOC1" is expressed in the post-juvenile stage along with its expression score independently of the strain, sex and cell type**. The higher the expression score is, the higher the gene is expressed considering a given experimental condition. Note that the query [Q08](#q08) orders results by expression scores with the statement: ``ORDER BY DESC(?score)`` where `DESC()` is an ordering modifier indicating the descending order.
 
 #### Q08:
 > *Question*: What are the anatomical entities where the human gene "APOC1" is expressed in the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?
@@ -280,12 +280,12 @@ FILTER (?anat !=  obo:GO_0005575)
 ![](../img/doc/sparql-tutorial/q08.png)
 
 
-> **NOTE:** In the query [Q08](#Q08), we filter out the anatomical entity `obo:GO_0005575` that is "cellular_component" with the expression ``FILTER(?anat !=  obo:GO_0005575)`` due to the fact that it is not informative, in other words, "cellular_component" means any cell type.
+> **NOTE:** In the query [Q08](#q08), we filter out the anatomical entity `obo:GO_0005575` that is "cellular_component" with the expression ``FILTER(?anat !=  obo:GO_0005575)`` due to the fact that it is not informative, in other words, "cellular_component" means any cell type.
 
-> **NOTE:** In [Q08](#Q08), we define the cell type where the gene expression is being evaluated as the most general (i.e., the root term `obo:GO_0005575`) with the statement `?condition genex:hasAnatomicalEntity obo:GO_0005575 .`. The cost of doing this is that the query will not return specific cell level expression.
+> **NOTE:** In [Q08](#q08), we define the cell type where the gene expression is being evaluated as the most general (i.e., the root term `obo:GO_0005575`) with the statement `?condition genex:hasAnatomicalEntity obo:GO_0005575 .`. The cost of doing this is that the query will not return specific cell level expression.
 
-The query [Q09](#Q09) eliminates the ambiguities of genes that are not only stated as expressed in a given organ or tissue, but also in a specific cell type in the same tissue or organ, however with different expression scores. Note that this specific cell is a subtype of the "cellular_component" ([obo:GO_0005575](http://purl.obolibrary.org/obo/GO_0005575)).
-Therefore, the query [Q09](#Q09) below retrieves also gene expression calls related to specific cell types different from "cellular_component". [Q09](#Q09) query can be interpreted as **anatomical entities including cell types, if any, where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain and sex**.
+The query [Q09](#q09) eliminates the ambiguities of genes that are not only stated as expressed in a given organ or tissue, but also in a specific cell type in the same tissue or organ, however with different expression scores. Note that this specific cell is a subtype of the "cellular_component" ([obo:GO_0005575](http://purl.obolibrary.org/obo/GO_0005575)).
+Therefore, the query [Q09](#q09) below retrieves also gene expression calls related to specific cell types different from "cellular_component". [Q09](#q09) query can be interpreted as **anatomical entities including cell types, if any, where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain and sex**.
 
 #### Q09:
 > *Question*: What are the anatomical entities including cell types, if any, where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain and sex?
@@ -326,11 +326,11 @@ FILTER (?anat != ?cellType)
 #### Q09 graphical representation:
 ![](../img/doc/sparql-tutorial/q09.png)
 
-> **NOTE:** Currently, the data accessible via the SPARQL endpoint do not specify *sex* and *strain* types. Therefore, to optimise [Q09](#Q09) query, we can omit triple patterns related to sex and strain. [Q10](#Q10) is the optimised SPARQL query that retrieves exactly the same results as [Q09](#Q09).
+> **NOTE:** Currently, the data accessible via the SPARQL endpoint do not specify *sex* and *strain* types. Therefore, to optimise [Q09](#q09) query, we can omit triple patterns related to sex and strain. [Q10](#q10) is the optimised SPARQL query that retrieves exactly the same results as [Q09](#q09).
 
 #### Q10:
 > *Question*: What are the anatomical entities including cell types, if any, where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain and sex?
-*SPARQL query ([Q09](#Q09) optimised)*:
+*SPARQL query ([Q09](#q09) optimised)*:
 ```
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
@@ -375,7 +375,7 @@ For looking up an ontology term corresponding to a given anatomical entity, we c
 
 ### Developmental stage vocabulary
 For looking up an ontology term corresponding to a given developmental stage, we can browse the [developmental stage file](https://raw.githubusercontent.com/BgeeDB/bgee_pipeline/master/source_files/uberon/dev_stage_ontology.obo). In this file, by looking at the name and ID fields we can compose the corresponding IRI of a given developmental stage. For example, we can look up  `post-juvenile`  and find out that its ID is `UBERON:0000113`. By prefixing this ID with`http://purl.obolibrary.org/obo/`  and replacing `:` with `_`, we can define its IRI as stated in the Bgee knowledge graph: `http://purl.obolibrary.org/obo/UBERON_0000113`.
-Alternatively, we can retrieve all developmental stages and their IRIs in Bgee with the [Q11 query](#Q11:).
+Alternatively, we can retrieve all developmental stages and their IRIs in Bgee with the [Q11 query](#q11).
 
 #### Q11:
 > *Question*: What are the developmental stages present in Bgee?
@@ -392,7 +392,7 @@ SELECT DISTINCT ?stage ?stageName ?stageDescription {
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
 
-In Q11 query, we can also apply a filter by adding the statement `FILTER (CONTAINS(?stageName,"stage"))` and replacing `"stage"` with the stage name or part of its name we are searching for such as the following:`FILTER (CONTAINS(?stageName,"post-juvenile"))` where the function CONTAINS checks if the "post-juvenile" string is a substring of any stage name in Bgee. [Q11-a](#Q11-a:) implements this filter.
+In Q11 query, we can also apply a filter by adding the statement `FILTER (CONTAINS(?stageName,"stage"))` and replacing `"stage"` with the stage name or part of its name we are searching for such as the following:`FILTER (CONTAINS(?stageName,"post-juvenile"))` where the function CONTAINS checks if the "post-juvenile" string is a substring of any stage name in Bgee. [Q11-a](#q11-a) implements this filter.
 #### Q11-a:
 > *Question*: What is the post-juvenile stage link and description?
 *SPARQL query*:
@@ -410,15 +410,15 @@ SELECT DISTINCT ?stage ?stageName ?stageDescription {
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0AFILTER+%28CONTAINS%28%3FstageName%2C%22post-juvenile%22%29%29%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
 ### Example 1: querying with controlled vocabularies
 
-Let us consider the question addressed by the [Q08](#Q08) query: **anatomical entities where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain, sex and cell type**.
-We can rewrite the [Q08](#Q08) query as shown in [Q08-a](#Q08-a) (see its [graphical representation](#Q08-a-graphical-representation)) below, where:
+Let us consider the question addressed by the [Q08](#q08) query: **anatomical entities where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain, sex and cell type**.
+We can rewrite the [Q08](#q08) query as shown in [Q08-a](#q08-a) (see its [graphical representation](#q08-a-graphical-representation)) below, where:
 - [obo:UBERON_0000113](http://purl.obolibrary.org/obo/UBERON_0000113) represents the `post-juvenile` stage
 - the taxon [up-taxon:9606](http://purl.uniprot.org/taxonomy/9606) represents `human` - the `APOC1` gene is defined with [ensembl:ENSG00000130208](https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000130208;r=19:44914247-44919349) that is an IRI composed of the Ensembl gene identifier.
-- all prefixes (`obo:`, `ensembl:` and `up-taxon:`) are defined in [Q08-a](#Q08-a) query header. Moreover, the full IRI can also be provided in the query by defining it between `<>`, for instance, `<http://purl.uniprot.org/taxonomy/9606>` is the same as `up-taxon:9606` as defined in the [Q08-a](#Q08-a) query.
+- all prefixes (`obo:`, `ensembl:` and `up-taxon:`) are defined in [Q08-a](#q08-a) query header. Moreover, the full IRI can also be provided in the query by defining it between `<>`, for instance, `<http://purl.uniprot.org/taxonomy/9606>` is the same as `up-taxon:9606` as defined in the [Q08-a](#q08-a) query.
 
 #### Q08-a:
 > *Question*: What are the anatomical entities where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain, sex and cell type?
-*SPARQL query (a [Q08](#Q08) variant)*:
+*SPARQL query (a [Q08](#q08) variant)*:
 ```
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
@@ -452,11 +452,11 @@ FILTER (?anat !=  obo:GO_0005575)
 
 ![](../img/doc/sparql-tutorial/q08-a.png)
 
-The [Q08-a](#Q08-a) query can be further simplified by removing the statements about species because an Ensembl gene identifier is always associated to a unique species, hence, by stating `ensembl:ENSG00000130208`, we are already referring to a human gene. This simplified version is shown in [Q08-b](#Q08-b) query.
+The [Q08-a](#q08-a) query can be further simplified by removing the statements about species because an Ensembl gene identifier is always associated to a unique species, hence, by stating `ensembl:ENSG00000130208`, we are already referring to a human gene. This simplified version is shown in [Q08-b](#q08-b) query.
 
 #### Q08-b:
 > *Question*: What are the anatomical entities where the human gene "APOC1" is expressed at the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?
-*SPARQL query (a [Q08](#Q08) variant)*:
+*SPARQL query (a [Q08](#q08) variant)*:
 ```
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
@@ -487,7 +487,7 @@ FILTER (?anat !=  obo:GO_0005575)
 
 ### Example 2: querying with gene source identifiers
 
-To query gene expression information of a species where the genome source is NCBI such as the example of the apoc1 eel gene (see [Gene identifiers](#Gene-identifiers)), one way is to use the `lscr:xrefNCBIGene` property. For example, to answer the [Q12](#Q12) question, we can consider [Q08-b](#Q08-b) and replace the relation `lscr:xrefEnsemblGene` that relates a Bgee gene to its corresponding Ensembl gene IRI with `lscr:xrefNCBIGene` in the statement:
+To query gene expression information of a species where the genome source is NCBI such as the example of the apoc1 eel gene (see [Gene identifiers](#gene-identifiers)), one way is to use the `lscr:xrefNCBIGene` property. For example, to answer the [Q12](#q12) question, we can consider [Q08-b](#q08-b) and replace the relation `lscr:xrefEnsemblGene` that relates a Bgee gene to its corresponding Ensembl gene IRI with `lscr:xrefNCBIGene` in the statement:
 `?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .` . `ensembl:ENSG00000130208` should be also replaced with the apoc1 eel gene IRI from NCBI Gene database: `<https://www.ncbi.nlm.nih.gov/gene/118230125>`.
 
 #### Q12:
@@ -519,7 +519,7 @@ FILTER (?anat !=  obo:GO_0005575)
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+up-taxon%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3FstageIRI+%3Fscore++%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A++++++++%3Fseq+lscr%3AxrefNCBIGene+%3Chttps%3A%2F%2Fwww.ncbi.nlm.nih.gov%2Fgene%2F118230125%3E+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3FstageIRI+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
-Note that in the [Q12](#Q12:) question a specific developmental stage is not declared. So, because it is unknown or not specified, we replaced `obo:UBERON_0000113` in [Q08-b](#Q08-b) with a variable (`?stageIRI`) and we projected it in the `SELECT` query header to properly answer [Q12](#Q12:) question. Moreover, if we want to generalize the [Q12](#Q12:) query for any genome source, we could replace the property `lscr:xrefNCBIGene` with a variable (e.g., `?xref_property`). Alternatively, we can use the [dcterms:identifier](http://purl.org/dc/terms/identifier) property that assigns a identifier for each Bgee gene according to the gene identifier of the genome source of a given species in Bgee. See [Q12-a](#Q12-a:) that retrieves exactly the same results as [Q12](#Q12:) but by using the `dcterms:identifier` relation. For a graphical representation of [Q12-a](#Q12-a:) see [Q12 graphical representation](#Q12-graphical-representation:).
+Note that in the [Q12](#q12) question a specific developmental stage is not declared. So, because it is unknown or not specified, we replaced `obo:UBERON_0000113` in [Q08-b](#q08-b) with a variable (`?stageIRI`) and we projected it in the `SELECT` query header to properly answer [Q12](#q12) question. Moreover, if we want to generalize the [Q12](#q12) query for any genome source, we could replace the property `lscr:xrefNCBIGene` with a variable (e.g., `?xref_property`). Alternatively, we can use the [dcterms:identifier](http://purl.org/dc/terms/identifier) property that assigns a identifier for each Bgee gene according to the gene identifier of the genome source of a given species in Bgee. See [Q12-a](#q12-a) that retrieves exactly the same results as [Q12](#q12) but by using the `dcterms:identifier` relation. For a graphical representation of [Q12-a](#q12-a) see [Q12-a graphical representation](#q12-a-graphical-representation).
 
 #### Q12-a:
 > *Question*: What are the anatomical entities where the eel gene "apoc1" is expressed along with its expression score independently of the strain, sex, and cell type?
@@ -555,14 +555,14 @@ FILTER (?anat !=  obo:GO_0005575)
 ![](../img/doc/sparql-tutorial/q12-a.png)
 
 ## Querying with UniProtKB cross-references
-To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its correspoding UniProtKB IRI `up-protein:P02654` where `up-protein:` is a prefix replacing the URI `http://purl.uniprot.org/uniprot/` as defined in the header of the [Q13](#Q13:).
+To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its correspoding UniProtKB IRI `up-protein:P02654` where `up-protein:` is a prefix replacing the URI `http://purl.uniprot.org/uniprot/` as defined in the header of the [Q13](#q13).
 
-[Q13](#Q13:) retrieves the same results and it is similar to [Q03](#Q03) but [Q13](#Q13:) uses UniProKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
+[Q13](#q13) retrieves the same results and it is similar to [Q03](#q03) but [Q13](#q13) uses UniProKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
 
 #### Q13:
 > *Question*: What are the anatomical entities where the P02654 gene is expressed?
 > Note that [P02654](http://purl.uniprot.org/uniprot/P02654) is a UniProtKB identifier of the APOC1 human gene.
-*SPARQL query* (see [Q13 graphical representation](#Q13-graphical-representation:)):
+*SPARQL query* (see [Q13 graphical representation](#q13-graphical-representation)):
 ```
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
@@ -595,11 +595,11 @@ All direct attributes of a given gene in the Bgee knowledge graph are listed bel
 - [lscr:xrefNCBIGene](http://purl.org/lscr#xrefNCBIGene) (**optionally present**): the NCBI Gene database cross-references. The values are the NCBI Gene webpages, for example, https://www.ncbi.nlm.nih.gov/gene/118230125.
 - [lscr:xrefUniprot](http://purl.org/lscr#xrefUniprot) (**optionally present**): the UniProtKB cross-references. The values are the UniProKB persitent links, for example, http://purl.uniprot.org/uniprot/P02654.
 
-[Q14](#Q14) shows a SPARQL query to retrieve all metadata related to the `ENSG00000130208` Ensembl gene.
+[Q14](#q14) shows a SPARQL query to retrieve all metadata related to the `ENSG00000130208` Ensembl gene.
 
 #### Q14:
 > *Question*: What is all the metadata related to the `ENSG00000130208` gene, where `ENSG00000130208` is the identifier of the "APOC1" human gene.
-*SPARQL query* (see [Q14 graphical representation](#Q14-graphical-representation:)):
+*SPARQL query* (see [Q14 graphical representation](#q14-graphical-representation)):
 ```
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX lscr: <http://purl.org/lscr#>
@@ -626,7 +626,7 @@ SELECT DISTINCT ?symbol ?description ?id
 
 ## Absence of expression
 
-To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), repectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q4](#Q4) as show in [Q15](#Q15) and its [graphical represention](#Q15-graphical-representation:).
+To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), repectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as show in [Q15](#q15) and its [graphical represention](#q15-graphical-representation).
 
 #### Q15:
 > *Question*: What are the anatomical entities where the "APOC1" homo sapiens gene is not expressed, that is where is "APOC1" absent ?
