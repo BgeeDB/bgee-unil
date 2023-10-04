@@ -217,7 +217,7 @@ const TopAnatResult = ({
                   <a
                     className="button"
                     href={dataCsvHref}
-                    download="data.tsv"
+                    download="Bgee-TopAnat-data.tsv"
                     target="_blank"
                     rel="noreferrer"
                   >

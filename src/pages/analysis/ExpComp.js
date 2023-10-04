@@ -253,7 +253,7 @@ const customHeader =
               className="ml-2 py-0"
               href={exportTSV}
               renderAs="a"
-              download="expression comparison.tsv"
+              download="Bgee-expression-comparison.tsv"
               target="_blank"
               rel="noreferrer"
             >
