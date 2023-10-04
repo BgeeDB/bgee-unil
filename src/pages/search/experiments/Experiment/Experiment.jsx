@@ -69,7 +69,7 @@ const Experiment = () => {
           </Bulma.Title>
         </div>
 
-        <div className="is-flex is-justify-content-center	">
+        <div className="is-flex is-justify-content-center">
           <div className="mt-6 mb-5 near-columns is-flex-direction-column is-flex encartTop">
             <div className="is-flex is-flex-direction-row mr-2">
               <span className="has-text-weight-semibold my-1 labelsLeft">
@@ -103,6 +103,7 @@ const Experiment = () => {
                 Source: {data?.experiment?.xRef?.source?.name}
               </span>
               <span className="my-1 is-flex-grow-1">
+              {data?.experiment?.xRef?.xRefURL?.length > 0 && (
                 <a
                   href={data?.experiment?.xRef?.xRefURL}
                   className="external-link"
@@ -111,6 +112,7 @@ const Experiment = () => {
                 >
                   {data.experiment.id}
                 </a>
+              )}
               </span>
             </div>
             {data?.experiment?.downloadUrl?.length > 0 && (
