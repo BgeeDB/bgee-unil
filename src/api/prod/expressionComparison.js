@@ -44,7 +44,7 @@ const expressionComparison = {
                   filterAnatEntities = `${r.condition.cellType.name} in `;
                 filterAnatEntities += r.condition.anatEntity.name;
               } else if (r.multiSpeciesCondition) {
-                if (r.multiSpeciesCondition.cellTypes) {
+                if (r.multiSpeciesCondition.cellTypes && r.multiSpeciesCondition.cellTypes.length > 0) {
                   filterAnatEntities = `${r.multiSpeciesCondition.cellTypes
                     .map((a) => a.name)
                     .join(', ')} in `;
