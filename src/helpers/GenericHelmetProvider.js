@@ -19,30 +19,10 @@ const GenericHelmetProvider = () => (
       <meta name="dcterms.rights" content={copyright} />
       <script>
       {`
-        var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(["setCookieDomain", "*.bgee.org"]);
-        _paq.push(["setDomains", ["*.bgee.org"]]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-          var u="https://matomo.sib.swiss/";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
-          _paq.push(['setSiteId', '14']);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
-
-       // ONLY for the SPA because the page doesn't reload on navigation to other pages
-       document.body.addEventListener('click', (event) => {
-         const clickedUrl = event.originalTarget.href;
-         // if a NAVIGATION link (menu item in the SPA) was clicked
-         if(clickedUrl) {
-           _paq.push(['setCustomUrl', clickedUrl]);
-           _paq.push(['trackPageView']);
-           _paq.push(['enableLinkTracking']);
-         }
-       });
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='https://matomo.sib.swiss/js/container_F5WPJc2X.js'; s.parentNode.insertBefore(g,s);
       `}
       </script>
     </Helmet>

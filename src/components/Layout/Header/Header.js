@@ -6,7 +6,6 @@ import Bulma from '../../Bulma';
 import config from '../../../config.json';
 import obfuscateMailLink from '../../../helpers/obfuscateMailLink';
 import ROUTES from '../../../routes/routes';
-import GaEvent from '../../GaEvent/GaEvent';
 
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
@@ -388,42 +387,30 @@ const Header = () => {
                           );
                         case 'external':
                           return (
-                            <GaEvent
-                              category="External link"
-                              action="External link"
-                              label={childProps.path}
+                            <a
+                              key={keyChild}
+                              className="navbar-item custom"
+                              href={childProps.path}
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
-                              <a
-                                key={keyChild}
-                                className="navbar-item custom"
-                                href={childProps.path}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {pageTitle}
-                              </a>
-                            </GaEvent>
+                              {pageTitle}
+                            </a>
                           );
                         case 'internal':
                         default:
                           return (
-                            <GaEvent
-                              category="Internal link"
-                              action="Internal link"
-                              label={childProps.path}
+                            <Link
+                              key={keyChild}
+                              to={childProps.path}
+                              className="navbar-item custom"
+                              onClick={(event) => {
+                                event.target.blur();
+                                setHamburgerActive(false);
+                              }}
                             >
-                              <Link
-                                key={keyChild}
-                                to={childProps.path}
-                                className="navbar-item custom"
-                                onClick={(event) => {
-                                  event.target.blur();
-                                  setHamburgerActive(false);
-                                }}
-                              >
-                                {pageTitle}
-                              </Link>
-                            </GaEvent>
+                              {pageTitle}
+                            </Link>
                           );
                       }
                     }
