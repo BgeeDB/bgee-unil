@@ -6,9 +6,7 @@ import api from '../../api';
 import PATHS from '../../routes/paths';
 import LinkExternal from '../../components/LinkExternal/LinkExternal';
 import classnames from '../../helpers/classnames';
-import copyToClipboard from '../../helpers/copyToClipboard';
 import { NotificationContext } from '../../contexts/NotificationsContext';
-import random from '../../helpers/random';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
 
 const DEFAULT_RESULTS = {
@@ -225,16 +223,7 @@ const dataToTsv = (data) => {
   return tsv;
 };
 const customHeader =
-  (addNotification) => (searchElement, pageSizeElement, data) => {
-    const copyIntoClipboard = () => {
-      const table = `Expression Comparison\n\n${dataToTsv(data)}`;
-      copyToClipboard(table);
-      addNotification({
-        id: random().toString(),
-        children: <p>Copied {data.length} rows to clipboard.</p>,
-        className: `is-success`,
-      });
-    };
+  () => (searchElement, pageSizeElement, data) => {
     const exportTSV = `data:text/tab-separated-values;charset=utf-8,${dataToTsv(
       data
     )}`;
@@ -243,12 +232,6 @@ const customHeader =
         <Bulma.C size={9}>
           <div className="tablet-flex-direction-column is-flex is-flex-direction-row is-align-items-center">
             <div>{searchElement}</div>
-            <Bulma.Button className="ml-2 py-0" onClick={copyIntoClipboard}>
-              Copy to clipboard
-              <span className="icon is-small ml-1">
-                <ion-icon name="clipboard-outline" />
-              </span>
-            </Bulma.Button>
             <Bulma.Button
               className="ml-2 py-0"
               href={exportTSV}
