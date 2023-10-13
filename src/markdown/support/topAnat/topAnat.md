@@ -7,13 +7,13 @@ TopAnat is an anatomical entity enrichment analysis tool based on the [topGO R p
 It is similar to a GO enrichment test but rather than using Gene Ontology annotations it is based on anatomical [Uberon](http://obophenotype.github.io/uberon/about/) annotations manually curated by Bgee. For example, given a set of genes that are up-regulated under certain conditions, TopAnat will find which anatomical entities have over or under-represented expression using annotations for that gene set.
 
 On top of the page from left to right you have
- * A ***Recent Jobs*** button allowing to look at the history of analysis you recently run.
+ * A ***Recent Jobs*** button allows you to look at the history of analysis you recently ran.
  * A ***Documentation*** button linking to the current documentation
  * ***Examples*** with buttons numbered from 1 to 5, each of them corresponding to an already processed example. Click on a button to see the result of the anatomical enrichment analysis with the corresponding set of genes.
 
 ![](../img/doc/topAnat/topAnat_header.png)
 
-The main section is the ***Gene list***. It is in that section that identifiers of your genes of interest have to be entered. Be careful to provide gene identifiers (e.g ENSG00000244734) and not gene names (e.g HBB).
+The main section is the ***Gene list***. It is in that section that identifiers of your genes of interest have to be entered. Be careful to provide gene identifiers (e.g. ENSG00000244734) and not gene names (e.g. HBB).
 
 ![](../img/doc/topAnat/topAnat_geneList.png)
 
@@ -21,14 +21,14 @@ The ***Advanced Options*** section is closed by default.
 
 ![](../img/doc/topAnat/topAnat_advancedOptionsTitle.png)
 
-To open that section, click on the corresponding dark grey banner. It contains options allowing to tune both Bgee data used to process the enrichment analysis and the parameters of the algorithm itself. Read the [Advanced options](#advanced-options) section for more details.
+To open that section, click on the corresponding dark grey banner. It contains options allowing you to tune both Bgee data used to process the enrichment analysis and the parameters of the algorithm itself. Read the [Advanced options](#advanced-options) section for more details.
 ![](../img/doc/topAnat/topAnat_advancedOptions.png)
 
-Below the Advanced Options section the ***Email*** field allows to receive an email once the analysis is over. The ***Job description*** field allows to give a title to your analysis.
+Below the Advanced Options section the ***Email*** field allows you to receive an email once the analysis is over. The ***Job description*** field allows you to give a title to your analysis.
 
 ![](../img/doc/topAnat/topAnat_emailAndTitle.png)
 
-At the bottom of the page the ***Submit your Job*** button allows to submit an analysis. It is greyed out by default and becomes clickable once genes have been entered.
+At the bottom of the page the ***Submit your Job*** button allows you to submit an analysis. It is greyed out by default and becomes clickable once genes have been entered.
 
 ![](../img/doc/topAnat/topAnat_greyedSubmit.png)           ![](../img/doc/topAnat/topAnat_submit.png)
 
@@ -37,11 +37,11 @@ At the bottom of the page the ***Submit your Job*** button allows to submit an a
 
 The entry point of TopAnat is a set of genes from one species you are interested in. In this quick start tutorial we will focus on a set of pigmentation genes from rabbit. TopAnat will be used to detect in which anatomical entities the presence of expression of those genes is over or under represented.
 
-TopAnat uses gene identifiers (e.g ENSG00000244734) and automatically detects the species of interest. You have to provide one gene identifier per line without space or delimiter as shown in the screenshot below. The list of gene identifiers used in this example is available [here](https://bgee.org/ftp/bgee_v15_1/documentation/pigmentation_geneIds_rabbit.txt).
+TopAnat uses gene identifiers (e.g. ENSG00000244734) and automatically detects the species of interest. You have to provide one gene identifier per line without space or delimiter as shown in the screenshot below. The list of gene identifiers used in this example is available [here](https://bgee.org/ftp/bgee_v15_1/documentation/pigmentation_geneIds_rabbit.txt).
 
 ![](../img/doc/topAnat/topAnat_foregroundIds.png)
 
-Once you entered your list of genes the web interface is updated.
+Once you enter your list of genes the web interface is updated.
 
 On top of your gene list you can now see a sentence describing the number of genes you entered and the corresponding species. You can also see a picture of the species.
 
@@ -49,15 +49,15 @@ On top of your gene list you can now see a sentence describing the number of gen
 
 Additionally, two new subsections appeared: ***Background*** and ***Analysis options***.
 
-The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
+The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#How-to-properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
 
 ![](../img/doc/topAnat/topAnat_backgroundDefault.png)
 
-The ***Analysis options*** subsection allows the user to limit the analysis to expression data coming from a subset of the datatypes integrated in Bgee. In this example we want to use as much data as possible and then do not modify the default behaviour which is to select expression data coming from all available datatypes. To remove one datatype from your TopAnat analysis uncheck the corresponding datatype checkbox.
+The ***Analysis options*** subsection allows the user to limit the analysis to expression data coming from a subset of the datatypes integrated in Bgee. In this example we want to use as much data as possible and then do not modify the default behavior which is to select expression data coming from all available datatypes. To remove one datatype from your TopAnat analysis uncheck the corresponding datatype checkbox.
 
 ![](../img/doc/topAnat/topAnat_analysisOptions.png)
 
-Now add your email adress to receive an email once the processing of the analysis is over and enter the title `Pigmentation genes in rabbit` to easily find the analysis when using the ***Recent jobs*** button. This title will also be used to name the email you will receive.
+Now add your email address to receive an email once the processing of the analysis is over and enter the title `Pigmentation genes in rabbit` to easily find the analysis when using the ***Recent jobs*** button. This title will also be used to name the email you will receive.
 
 ![](../img/doc/topAnat/topAnat_emailAndTitleFilled.png)
 
@@ -66,8 +66,8 @@ You are now ready to run TopAnat. Click on the ***Submit your job*** button and 
 ![](../img/doc/topAnat/topAnat_submit.png)
 
 
-A TopAnat analysis can take up to 1 hour to finish processing. In order to leave the page without loosing the results you have 2 options:
-* enter your email adress : you will then receive en email containing a link to the results of your analysis
+A TopAnat analysis can take up to 1 hour to finish processing. In order to leave the page without losing the results you have 2 options:
+* enter your email address: you will then receive an email containing a link to the results of your analysis
 ![](../img/doc/topAnat/topAnat_emailReceived.png)
 
 * wait to see the page shown below and then bookmark the permanent URL of this page by clicking on ***Copy permanent link*** in the footer of the page
@@ -75,7 +75,7 @@ A TopAnat analysis can take up to 1 hour to finish processing. In order to leave
 
 ## Description of the results
 
-Once the processing is complete you will automaticaly be redirected to the result section of the web interface.
+Once the processing is complete you will automatically be redirected to the result section of the web interface.
 
 The header of this results section consists of a blue banner containing a sentence describing that the request was successful, the number of results, and the number of analyses launched.
 
@@ -109,7 +109,7 @@ the result table is comprised of 8 columns:
 
 * ***Anat Entity ID*** : the ID of the Uberon term
 * ***Anat Entity Name*** : the name of the Uberon term
-* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background are available in [Properly choose your background](#properly-choose-your-background)
+* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background is available in [Properly choose your background](#properly-choose-your-background)
 * ***Significant*** : actual number of annotations to this Uberon term from our *Gene list*
 * ***Expected*** : expected number of annotations to this Uberon term from our *Gene list* based on the number of annotation to that term from the background.
 * ***Fold Enrichment*** : ratio between Significant and Expected annotated genes.
@@ -123,11 +123,11 @@ The background, also called the universe, corresponds to the list of genes you w
 
 By default, the gene universe considered for the TopAnat enrichment analysis is all genes with data in Bgee for the selected species.
 
-Let's imagine that you want to answer the question: where (which anatomical entities) are human genes enriched that are both present and differentialy expressed in testis and ovary?
+Let's imagine that you want to answer the question: where (which anatomical entities) are human genes enriched that are both present and differentially expressed in testis and ovary?
 * You will first select genes that are expressed in both testis and ovary.
-* Then, you will run a differential analysis on this list of genes (e.g using edgeR).
+* Then, you will run a differential analysis on this list of genes (e.g. using edgeR).
 
-In this naive example, your topAnat *Gene list* will be the list of differentialy expressed genes and your background will consist of the list of all genes expressed in both testis and ovary.
+In this naive example, your topAnat *Gene list* will be the list of differentially expressed genes and your background will consist of the list of all genes expressed in both testis and ovary.
 
 It is possible to provide a custom gene universe as a list of gene IDs. To do so, click on the ***Custom data*** button.
 
@@ -164,7 +164,7 @@ For each expression call, Bgee assigns a level of confidence to the call: silver
 Decorrelation is an algorithm used to take into account the topology of the anatomical ontology, to decrease the number of false positives and highly general terms in the results, owing to the inheritance problem. A precise description of these algorithms can be found in the [topGO documentation](https://bioconductor.org/packages/release/bioc/vignettes/topGO/inst/doc/topGO.pdf). Please note that using these decorrelation methods greatly increases the analysis time. By default a Fisher test without any decorrelation is performed.
 
 #### node size
-Parameter allowing to prune the anatomical ontology from the terms which have a number of genes with data lower than this cutoff.
+Parameter allows pruning of the anatomical ontology from the terms that have a number of genes with data lower than this cutoff.
 
 #### number of nodes
 The number of significant nodes to be displayed in the generated graph of results. The parameter has a visualization purpose only, and has no impact on the results of the analysis.
