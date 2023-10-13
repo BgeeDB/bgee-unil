@@ -1,5 +1,5 @@
 # Data Curation
-Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of normal gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. In this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
+Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of normal gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. For this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
 
 ## Curation Overview
 
@@ -8,9 +8,9 @@ We use a few different methods for identifying experiments for annotation. We us
 ### What is "healthy wild-type"?
 Before annotation, we check that the samples are considered healthy wild-type by the Bgee definition, particularly no knock-outs, no mutations, no cancer or other diseases, and no treatment. This step is to ensure that all data in the Bgee database represents healthy wild-type expression data.
 
-Some common scenarios we exclude: cell lines, cell cultures, intestinal germ free animals, injured animals, polysomal RNA only hybridized, and animals killed by exsanguination under CO2 anesthesia.
+Some common scenarios we exclude: cell lines, cell cultures, intestinal germ-free animals, injured animals, polysomal RNA only hybridized, and animals killed by exsanguination under CO2 anesthesia.
 
-Some common scenarios we include: BMI greater than 18.5 and less than 35, fasted animals (considering reasonable fasting time), dark/light circadian rhythms and temperature variation when reasonable for the animals physiology, short duration low or high fat diet, mammary glands from virgin, pregnant, and lactating females, oocytes at different stages of maturation, placenta and extraembryonic components during development, animals selected for their behavior, animals from different strains, human post-mortem tissues, light impulse to stress the animals, killed by cervical dislocation or decapitation, and killed by inhalants (CO2).
+Some common scenarios we include: BMI greater than 18.5 and less than 35, fasted animals (considering reasonable fasting time), dark/light circadian rhythms and temperature variation when reasonable for the animal's physiology, short duration low or high-fat diet, mammary glands from virgin, pregnant, and lactating females, oocytes at different stages of maturation, placenta and extraembryonic components during development, animals selected for their behavior, animals from different strains, human post-mortem tissues, light impulse to stress the animals, killed by cervical dislocation or decapitation, and killed by inhalants (CO2).
 ### What data are captured?
 Various data are captured and manually checked, and several data fields must be captured using controlled vocabularies or ontologies. The following data are always captured:
 
@@ -42,10 +42,10 @@ The following ontologies are used for the associated use cases listed below.
 [Cell Ontology]: http://obofoundry.org/ontology/cl.html
 
 ### How are data annotated with ontologies?
-Bgee manually curates expression data using ontologies and controlled vocabularies to ensure accurate annotation, allow data propagation, and to support species to species comparisons. The Bgee curators prioritize using the most accurate term to annotate data. We also internally keep track of the quality of each annotation to support re-annotation and annotation quality control. Generally, when there is no indication provided for annotation, the root of the ontology is used.
+Bgee manually curates expression data using ontologies and controlled vocabularies to ensure accurate annotation, allow data propagation, and support species to species comparisons. The Bgee curators prioritize using the most accurate term to annotate data. We also internally keep track of the quality of each annotation to support re-annotation and annotation quality control. Generally, when there is no indication provided for annotation, the root of the ontology is used.
 
 ### Anatomical Entity
-Uberon, the multi-species anatomy ontology is used to annotate anatomical entity. When the experiment is done using cells it can be appropriate to annotate using the Cell Ontology. Additionally, there will be cases where the anatomical entity is a post-composition of an anatomical structure and a cell type. There are a few special cases to look out for, which are listed below.
+Uberon, the multi-species anatomy ontology is used to annotate anatomical entities. When the experiment is done using cells it can be appropriate to annotate using the Cell Ontology. Additionally, there will be cases where the anatomical entity is a post-composition of an anatomical structure and a cell type. There are a few special cases to look out for, which are listed below.
 | Term | Uberon ID | Uberon Name |
 |:--|:--|:--|
 | missing organ, embryo stage | UBERON:0000922 | embryo |
@@ -88,7 +88,7 @@ The following species-specific developmental stage ontologies are used in Bgee:
 | platynereis | pdumdv.obo |
 
 ### Cell Type
-The cell ontology is used to annotate cell type. This is only applicable for single-cell RNA-seq experiments. Bgee does not perform its own clustering and cell type annotation, instead the cell type annotations provided by the authors are mapped back to the most appropriate cell ontology term.
+The cell ontology is used to annotate cell type. This is only applicable to single-cell RNA-seq experiments. Bgee does not perform its own clustering and cell type annotation, instead the cell type annotations provided by the authors are mapped back to the most appropriate cell ontology term.
 
 ### Strain
 We use the [UniProt controlled vocabulary](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/strains) to report strains.
@@ -98,7 +98,7 @@ We report 'subspecies' (as defined by [NCBI Taxonomy](https://www.ncbi.nlm.nih.g
 For humans, this field is where we annotate ethnicity. The accepted values (as suggested by the [FDA](https://www.pharmasug.org/proceedings/2015/SS/PharmaSUG-2015-SS06.pdf)) are American Indian or Alaska Native, Asian, Black or African American, Native Hawaiian or Other Pacific Islander, and White.
 
 ### Sex
-Sex is used to annotated the sex of the animal the sample was taken from. The possible values are: male, female, hermaphrodite, NA (not available or unknown), or mixed (mixture of different sexes in the sample).
+Sex is used to annotate the sex of the animal the sample was taken from. The possible values are: male, female, hermaphrodite, NA (not available or unknown), or mixed (mixture of different sexes in the sample).
 
 ### Technologies and Protocols
 We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, listed below. We try to capture information about the kit used for preparing libraries, in order to determine which RNA population could be captured.
