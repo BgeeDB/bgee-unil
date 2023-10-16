@@ -5,9 +5,9 @@ Bgee expression call search allows you to search all gene expression present and
 Bgee applies statistical methods specific to each data type to detect signal of active expression (present expression calls)
 and to report absence of expression (absent expression calls, *i.e.* where expression levels are below the background expression noise).
 
-The expression call search is available at [https://www.bgee.org/search/expression-calls](https://bgee.org/search/expression-calls).
+The expression call search is available at [https://www.bgee.org/search/expression-calls](https://www.bgee.org/search/expression-calls).
 The examples in this tutorial have been generated using Bgee release 15.0. More information about how the present/absent calls
-are generated can be found at [https://www.bgee.org/support/gene-expression-calls](https://bgee.org/support/gene-expression-calls).
+are generated can be found at [https://www.bgee.org/support/gene-expression-calls](https://www.bgee.org/support/gene-expression-calls).
 
 ## Search for present/absent expression calls
 The search for expression present/absent calls form allows you to narrow the expression calls displayed to only those of interest.
@@ -15,7 +15,7 @@ The search for expression present/absent calls form allows you to narrow the exp
 To start your search click *Show Form*. After selecting your species and gene(s) of interest, the full form will become available.
 You must first select a species to be able to select some genes.
 
-![](../img/doc/present_absent-expression-calls/expression-form.png)
+![](../img/doc/present_absent-expression-calls/expression-form.png#tutoimgborder)
 
 The following filter options are available through the search form:
 * **Species** (required): Species of interest, either the common name or the latin name.
@@ -62,7 +62,7 @@ Filters allow to select actual values present in your results. For instance, if 
 to retrieve calls in "brain" including all its substructures, then the filter "Anat. entity and cell type" will display all the brain tissues
 actually retrieved in the resulting calls.
 
-![](../img/doc/present_absent-expression-calls/results-filtering.png)
+![](../img/doc/present_absent-expression-calls/results-filtering.png#tutoimgborder)
 
 The following filters can be applied:
 * **Anat. entity and cell type**: Anatomical entity (tissue) or cell type. Selection of multiple terms is supported. You can search using common terms, or the ontology ID.
@@ -73,7 +73,7 @@ The following filters can be applied:
 
 Click ***apply filters*** to apply the filters you selected. Click the *trash icon* to remove the selected filters.
 
-![](../img/doc/present_absent-expression-calls/results-apply-clean.png)
+![](../img/doc/present_absent-expression-calls/results-apply-clean.png#tutoimgborder)
 
 
 ### Result export
@@ -83,7 +83,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 ### Column description
 
-![](../img/doc/present_absent-expression-calls/Fig1_results-table.png)
+![](../img/doc/present_absent-expression-calls/Fig1_results-table.png#tutoimgborder)
 
 * **Gene ID:** Gene identifier used to uniquely label each gene.
 
@@ -95,7 +95,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **FDR:** P-value, corrected for multiple testing by false discovery rate (FDR), of the test of significance used by Bgee to determine the expression state of the gene (various statistical methods are used to determine the p-value based on the data types and for merging results from different data types).
 
-* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types and libraries. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to the all other gene.(<span style='color:red'>link to expression score explanation?</span>)
+* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types and libraries. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to the all other gene. (**link to expression score explanation?**)
 
 * **Expression score confidence:** Bgee's assessment of how confident we are on the validity of the expression score results. There is two possible values, high or low. Our estimation on the validity of the score is determined by looking at the data types used for the expression score calculations. If the score is low and only non quantitative methods such as in situ hybridisation or EST are used, we set its value to low.
 

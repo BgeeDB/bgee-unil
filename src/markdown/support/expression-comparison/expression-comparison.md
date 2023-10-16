@@ -7,10 +7,10 @@ If the genes listed belong to a single species, their expression is compared in 
 If the genes listed belong to different species, their expression is compared in homologous anatomical entites with expression data
 (deriving from a common ancestral entity in the least common ancestor of the selected species).
 
-The expression comparison tool is available at [https://www.bgee.org/analysis/expr-comparison](https://bgee.org/analysis/expr-comparison).
+The expression comparison tool is available at [https://www.bgee.org/analysis/expr-comparison](https://www.bgee.org/analysis/expr-comparison).
 The examples in this tutorial have been generated using Bgee release 15.0.
 
-![](../img/doc/expression-comparison/expression-comparison-overview.png)
+![](../img/doc/expression-comparison/expression-comparison-overview.png#tutoimgborder)
 
 ## Gene selection
 
@@ -20,12 +20,12 @@ for human in Bgee is [Ensembl](https://www.ensembl.org/). Gene names (e.g. *SRRM
 
 The genome source database can be either [Ensembl](https://www.ensembl.org/), [EnsemblMetazoa](https://metazoa.ensembl.org/),
 or [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/). The genome source database for a species can be found
-on the Bgee species information page, accessible from [the list of species](https://bgee.org/search/species).
+on the Bgee species information page, accessible from [the list of species](https://www.bgee.org/search/species).
 
 One gene ID must be entered per line. If a gene ID is not recognized, it will be listed below the text area after submission.
 A minumum of two gene IDs must be entered.
 
-![](../img/doc/expression-comparison/gene-selection.png)
+![](../img/doc/expression-comparison/gene-selection.png#tutoimgborder)
 
 ## Result table
 
@@ -40,10 +40,10 @@ Each row in the result table represents one anatomical entity, in which presence
     has evolved into distinct tissues in the selected species. For instance, the homologous organ of the human "lung" is, in zebrafish,
     "swim bladder". If those species were selected, a row could display the expression results by grouping "lung" and "swim bladder" together.
     More information about the relations of homology between anatomical entities used in Bgee can be found in
-    [the documentation for the anatomical homology search](https://bgee.org/support/documentation/anatomical-homology).
+    [the documentation for the anatomical homology search](https://www.bgee.org/support/documentation/anatomical-homology).
   * If the genes belong to a single species, all anatomical entities with expression data for the selected genes are considered.
 
-![](../img/doc/expression-comparison/expr-comp-anat-entities.png)
+![](../img/doc/expression-comparison/expr-comp-anat-entities.png#tutoimgborder)
 
 * **Conservation score**: corresponds to the difference between the number of genes with presence of expression and the number of genes with a reported absence of expression (meaning, the sum of the number of genes with presence of expression
   and of the number of genes with reported absence of expression), divided by the total number of genes with expression data for that anatomical entity . The conservation score can thus go from -1 to +1,
@@ -58,7 +58,7 @@ Each row in the result table represents one anatomical entity, in which presence
 * **Species with absence of expression**: number of species whose genes have a reported absence of expression in the anatomical entity.
 * **See details**: click on this cell to expand the row, and see the complete list of genes and species related to each cell.
 
-![](../img/doc/expression-comparison/expr-comp-see-details.png)
+![](../img/doc/expression-comparison/expr-comp-see-details.png#tutoimgborder)
 
 ### Result sorting
 
@@ -69,7 +69,7 @@ between the provided genes and highest expression level. Therefore the sorting i
 * then ascending order of "genes with absence of expression"
 * then descending order of "max expression score"
 
-![](../img/doc/expression-comparison/expr-comp-default-sorting.png)
+![](../img/doc/expression-comparison/expr-comp-default-sorting.png#tutoimgborder)
 
 It is possible to order by anatomical entities where the genes have a conserved **absence** of expression,
 by reverting the ordering by ascending order of "conservation score": a conservation score of -1 means that,
@@ -93,4 +93,4 @@ Results are not sorted in the export, thus sorting using columns has no effect o
 Alternatively, you can copy all results to clipboard, the sorting will be conserved, but tabs and line returns
 are UTF-8 encoded in that process (respectively as '%09' and '%0D%0A').
 
-![](../img/doc/expression-comparison/expr-comp-export.png)
+![](../img/doc/expression-comparison/expr-comp-export.png#tutoimgborder)
