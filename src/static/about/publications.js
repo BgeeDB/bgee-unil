@@ -202,6 +202,35 @@ const publications = [
               {
                 type: 'text',
                 content:
+                  'Mendes de Farias T, Altenhoff A, Bairoch A, Bastian FB, Crameri K, Dauvillier J, Dessimoz C, Glover N, Gnodtke K, Hayes C, Kriventseva E, Moretti S, Morgat A, Oesterle S, Sima A-C, Szklarczyk D, Topalov O, Toure V, Unni D, von Mering C, Wollbrett J, Zdobnov E, Samarasinghe K, Gehant S, Baratin D, Burdet B, Ibberson M, Redaschi N, Robinson-Rechavi M, Mehl F, Pagni M, Lisacek F, Bolleman J, Michel P-A, Zahn-Zabal M, Bridge AJ, Kuznetsov D, Bansal P.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'The SIB Swiss Institute of Bioinformatics Semantic Web of data',
+                path: 'https://doi.org/10.1093/nar/gkad902',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'Nucleic Acids Research, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
                   'Kushida T, Mendes de Farias T, Sima A-C, Dessimoz C, Chiba H, Bastian FB, Masuya H.',
               },
               {
