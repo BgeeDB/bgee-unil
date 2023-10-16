@@ -7,6 +7,15 @@ const about = [
     content: 'About',
   },
   {
+    type: 'rich_text',
+    content: [
+      {
+        content: `As a SIB Resource, Bgee is developed and maintained thanks to SIB's support.`,
+        type: 'bold',
+      },
+    ],
+  },
+  {
     type: 'section',
     title: 'What is Bgee?',
     children: [

@@ -26,8 +26,15 @@ const Footer = () => {
             href="https://www.sib.swiss/"
             target="_blank"
             rel="noopener noreferrer"
+            className="dflex"
           >
-            SIB Swiss Institute of Bioinformatics
+            <Bulma.Image
+              className="no-responsive"
+              src={imagePath('/logo/sib_emblem.png')}
+              height={15}
+              width={20}
+            />
+            &nbsp;SIB Swiss Institute of Bioinformatics
           </a>
           <a
             className="image cc"

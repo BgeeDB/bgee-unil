@@ -239,6 +239,10 @@ footer.footer {
   }
 }
 
+.dflex {
+  display: flex;
+}
+
 /*
  * END footer style
  */
@@ -661,6 +665,9 @@ a.youtube-preview-image img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+img[src*="#tutoimgborder"] {
+  border: 1px solid #363636;
 }
 
 @media only screen and (max-width: 600px) {
