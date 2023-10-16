@@ -49,7 +49,7 @@ On top of your gene list you can now see a sentence describing the number of gen
 
 Additionally, two new subsections appeared: ***Background*** and ***Analysis options***.
 
-The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#How-to-properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
+The ***Background*** subsection allows the user to select the universe of the analysis and will be described in the [Properly choose your background](#how-to-properly-choose-your-background) section of this documentation. In our example we keep the default background which corresponds to all genes from the species.
 
 ![](../img/doc/topAnat/topAnat_backgroundDefault.png#tutoimgborder)
 
@@ -109,7 +109,7 @@ the result table is comprised of 8 columns:
 
 * ***Anat Entity ID*** : the ID of the Uberon term
 * ***Anat Entity Name*** : the name of the Uberon term
-* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background is available in [Properly choose your background](#properly-choose-your-background)
+* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background is available in [Properly choose your background](#how-to-properly-choose-your-background)
 * ***Significant*** : actual number of annotations to this Uberon term from our *Gene list*
 * ***Expected*** : expected number of annotations to this Uberon term from our *Gene list* based on the number of annotation to that term from the background.
 * ***Fold Enrichment*** : ratio between Significant and Expected annotated genes.
