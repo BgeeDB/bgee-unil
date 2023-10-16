@@ -2,7 +2,7 @@
 
 ## Overview
 Bgee expression call search allows you to search all gene expression present and absent calls in the Bgee database.
-Bgee applies statistical methods specific to each data type to detect signal of active expression (present expression calls)
+Bgee applies statistical methods specific to each data type to detect a signal of active expression (present expression calls)
 and to report absence of expression (absent expression calls, *i.e.* where expression levels are below the background expression noise).
 
 The expression call search is available at [https://www.bgee.org/search/expression-calls](https://www.bgee.org/search/expression-calls).
@@ -89,15 +89,15 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **Gene name:** It represents the commonly used name for the given gene. For example, in humans the gene names are approved and controlled by the HUGO Gene Nomenclature Committee (HGNC).
 
-* **Present/absent call:** This column shows whether the given gene is considered expressed based on various evidences given by Bgee data types and statistical methods in the specified condition or if the gene was not shown to be active above the background noise.
+* **Present/absent call:** This column shows whether the given gene is considered expressed based on various evidence given by Bgee data types and statistical methods in the specified condition or if the gene was not shown to be active above the background noise.
 
 * **Call quality:** Determines how confident Bgee is of the presence/absence call given to the expression state of the gene in that condition. It scale goes from bronze for less confident calls to silver or gold for more strongly supported expression calls.
 
 * **FDR:** P-value, corrected for multiple testing by false discovery rate (FDR), of the test of significance used by Bgee to determine the expression state of the gene (various statistical methods are used to determine the p-value based on the data types and for merging results from different data types).
 
-* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types and libraries. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to the all other gene. (**link to expression score explanation?**)
+* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types and libraries. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to all other genes.(**link to expression score explanation?**)
 
-* **Expression score confidence:** Bgee's assessment of how confident we are on the validity of the expression score results. There is two possible values, high or low. Our estimation on the validity of the score is determined by looking at the data types used for the expression score calculations. If the score is low and only non quantitative methods such as in situ hybridisation or EST are used, we set its value to low.
+* **Expression score confidence:** Bgee's assessment of how confident we are on the validity of the expression score results. There are two possible values, high or low. Our estimation of the validity of the score is determined by looking at the data types used for the expression score calculations. If the score is low and only non quantitative methods such as in situ hybridization or EST are used, we set its value to low.
 
 * **Supporting data types:** In this column, we have 5 squares each representing a different method which Bgee integrates to make the presence/absence calls. The data types that were used to produce the calls of each row is colored in green, all squares in gray show the data types not used for the call either because no data was available for that method in the selected gene and condition, or those data types were filtered out by the user in order to make the expression calls.
 
@@ -115,7 +115,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
 
-* **Strain:** Annotation of the specifc strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
 
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 
