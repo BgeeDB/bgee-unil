@@ -39,7 +39,7 @@ const sparql = [
           },
           {
             type: 'link_external',
-            path: 'http://biosoda.expasy.org/',
+            path: 'https://biosoda.expasy.org/',
             text: 'Bio-Query',
           },
           {
