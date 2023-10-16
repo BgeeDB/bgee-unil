@@ -30,7 +30,7 @@ const Table = ({
   onRenderRow,
   striped = true,
   pagination = false,
-  defaultPaginationSize = 10,
+  defaultPaginationSize = 20,
   customHeader,
   mappingObj = (obj) => obj,
   name,

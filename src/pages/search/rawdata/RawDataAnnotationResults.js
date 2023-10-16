@@ -248,7 +248,7 @@ const RawDataAnnotationResults = ({
             className="download-btn is-small"
             href={buildTSVhref}
             renderAs="a"
-            download={`${pageType}_${
+            download={`Bgee-${pageType}_${
               isExprCalls ? '' : `${dataType}_`
             }${pageNumber}.tsv`}
             target="_blank"

@@ -12,7 +12,8 @@ const rehypeLink = (history) => () => (tree) => {
       if (isInternal.test(node.properties.href)) {
         node.properties.classname = 'internal-link';
         const isInternalAndNotAnchor = /(^\/)|(^https:\/\/www.bgee.org)/gi;
-        node.properties.href = node.properties.href.replace(isInternalAndNotAnchor, `${URL_ROOT}`);
+        const regex = /\/\/+/g;
+        node.properties.href = node.properties.href.replace(isInternalAndNotAnchor, `${URL_ROOT}`).replaceAll(regex, '/');
         node.properties.onclick = (e) => {
           e.preventDefault();
           history.push(e.target.href.replace(window.location.origin, ''));
