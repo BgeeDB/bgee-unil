@@ -252,6 +252,7 @@ const Router = () => (
                   PATHS.SUPPORT.TUTORIAL_SPARQL,
                   PATHS.SUPPORT.TUTORIAL_CURATION,
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
+                  PATHS.SUPPORT.TUTORIAL_RAW_DATA,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />

@@ -13,7 +13,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: gene search and gene page',
+            title: 'Tutorial: Gene search and gene page',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -160,6 +160,32 @@ const tutorialValues = [
                 type: 'text',
                 content:
                   'Description of how to compare gene expression for a list of genes in anatomical entities.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Raw data interface',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_RAW_DATA,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how to explore experiments, raw data annotations and processed expression values.',
               },
             ],
           },

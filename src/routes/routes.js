@@ -40,6 +40,7 @@ import TutoExpressionCallsFile from '../markdown/support/present_absent-expressi
 import TutoSPARQLFile from '../markdown/support/sparql-tutorial/sparql-tutorial.md';
 import TutoCurationFile from '../markdown/support/data-curation/data-curation.md';
 import TutoExpCompFile from '../markdown/support/expression-comparison/expression-comparison.md';
+import TutoRawDataFile from '../markdown/support/Raw-data-interface/Raw-data-interface.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -278,6 +279,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON]: {
     source: TutoExpCompFile,
     title: 'Tutorial: expression comparison',
+  },
+  [PATHS.SUPPORT.TUTORIAL_RAW_DATA]: {
+    source: TutoRawDataFile,
+    title: 'Tutorial: raw data',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
