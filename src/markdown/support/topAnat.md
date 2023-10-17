@@ -3,7 +3,7 @@ TopAnat documentation
 
 TopAnat is a tool to identify and visualize enriched anatomical terms, from the expression patterns of a list of genes.
 
-It allows to discover where genes from a set are preferentially expressed, as compared to a background, represented by default by all expression data in Bgee for the requested species. It is similar to a Gene Ontology enrichment test, except that it analyzes the anatomical structures where genes are expressed, rather than their GO functional annotations.
+It allows you to discover where genes from a set are preferentially expressed, as compared to a background, represented by default by all expression data in Bgee for the requested species. It is similar to a Gene Ontology enrichment test, except that it analyzes the anatomical structures where genes are expressed, rather than their GO functional annotations.
 
 See also our [blog post](https://bgeedb.wordpress.com/category/topanat/ "Link to the Bgee Wordpress blog") about TopAnat for more information.
 

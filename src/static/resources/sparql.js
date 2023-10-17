@@ -86,7 +86,7 @@ const sparql = [
       {
         type: 'text',
         content:
-          'The latest version of the Bgee SPARQL endpoint is accessible by using your prefered programming language through the URL address below:',
+          'The latest version of the Bgee SPARQL endpoint is accessible by using your preferred programming language through the URL address below:',
       },
       {
         type: 'rich_text',
@@ -176,7 +176,7 @@ SELECT DISTINCT ?anatEntity ?anatName {
       {
         type: 'text',
         content:
-          'This version of the Bgee SPARQL endpoint is accessible in a stable manner by using your prefered programming language through the stable URL address below:',
+          'This version of the Bgee SPARQL endpoint is accessible in a stable manner by using your preferred programming language through the stable URL address below:',
       },
       {
         type: 'rich_text',

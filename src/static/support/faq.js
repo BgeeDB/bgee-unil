@@ -137,7 +137,7 @@ const faq = [
               {
                 type: 'link_external',
                 path: 'http://www.obofoundry.org/ontology/wbls.html',
-                text: 'WBIs ontology',
+                text: 'WBls ontology',
               },
               {
                 type: 'text',

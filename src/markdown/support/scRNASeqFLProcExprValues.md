@@ -355,7 +355,7 @@ For each individual `Library ID` (column 2) we map reads both to transcripts and
 
 $ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 14)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
 
-Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
+Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to the reference intergenic, estimated as a Normal distribution.
 
 The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value &#8804; \alpha$.
 In the download files we used $\alpha = 0.05$.
@@ -366,4 +366,4 @@ Three different labels can be retrieved in this column:
 
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
-3) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) for absent calls.
+3) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow you to consider `Gene ID` (column 4) for absent calls.

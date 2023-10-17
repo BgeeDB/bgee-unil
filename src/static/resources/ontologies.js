@@ -125,7 +125,7 @@ const ontologies = [
               {
                 type: 'text',
                 content:
-                  '. We also manually modified mapping to termsfrom external ontologies.',
+                  '. We also manually modified mapping to terms from external ontologies.',
               },
             ],
           },
@@ -160,7 +160,7 @@ const ontologies = [
               {
                 type: 'text',
                 content:
-                  'is generated for Bgee. Steps explaining how and why this custom version is generated are described ',
+                  ' is generated for Bgee. Steps explaining how and why this custom version is generated are described ',
               },
               {
                 type: 'link_external',

@@ -202,7 +202,7 @@ Example of rows for a single species in experiment download file:
 |Experiment ID|Experiment name|Library count|Condition count|Organ-stage count|Organ count|Stage count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Experiment description|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
 GSE44612|Comparative Validation of the D. melanogaster Encyclopedia of DNA Elements Transcript Models|13|6|3|3|1|2|3|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44612|https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Drosophila_simulans/Drosophila_simulans_RNA-Seq_read_counts_TPM_FPKM_GSE44612.tsv.gz||
-SRP099257|Pervasive epigenetic effects of Drosophila euchromatic transposable elements impact their evolution [RNA-seq]|2|1|1|1|1|1|1|SRA|https://trace.ncbi.nlm.nih.gov/Traces/?view=study&acc=SRP099257|https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Drosophila_simulans/Drosophila_simulans_RNA-Seq_read_counts_TPM_FPKM_SRP099257.tsv.gz|We study the relatively unexplored evolutionary consequences of the epigenetic effects of transpoable elements (TEs)....|
+SRP099257|Pervasive epigenetic effects of Drosophila euchromatic transposable elements impact their evolution [RNA-seq]|2|1|1|1|1|1|1|SRA|https://trace.ncbi.nlm.nih.gov/Traces/?view=study&acc=SRP099257|https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Drosophila_simulans/Drosophila_simulans_RNA-Seq_read_counts_TPM_FPKM_SRP099257.tsv.gz|We study the relatively unexplored evolutionary consequences of the epigenetic effects of transposable elements (TEs)....|
 
 ##### <a name="experiment-id-column-1-1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -335,7 +335,7 @@ For each individual `Library ID` (column 2) we map reads both to transcripts and
 
 $ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 12)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
 
-Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
+Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to the reference intergenic, estimated as a Normal distribution.
 
 The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value &#8804; \alpha$.
 In the download files we used $\alpha = 0.05$.
@@ -346,7 +346,7 @@ Three different labels can be retrieved in this column:
 
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 1) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
-2) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) absent for this gene biotype.
+2) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow you to consider `Gene ID` (column 4) absent for this gene biotype.
 
 The biotypes excluded of absent calls are:
 

@@ -147,7 +147,7 @@ const privacyPolicy = [
           },
           {
             type: 'text',
-            content: 'Email address (optionnaly requested)',
+            content: 'Email address (optionally requested)',
           },
         ],
       },
@@ -250,7 +250,7 @@ const privacyPolicy = [
       {
         type: 'text',
         content:
-          'Personal data will only be disclosed to authorized staff of Bgee.Your personal data are stored internally and not exposed to third parties or countries. IP addresses are removed from log files or anonymized before being stored in case they are needed.',
+          'Personal data will only be disclosed to authorized staff of Bgee. Your personal data are stored internally and not exposed to third parties or countries. IP addresses are removed from log files or anonymized before being stored in case they are needed.',
       },
     ],
   },
@@ -262,7 +262,7 @@ const privacyPolicy = [
       {
         type: 'text',
         content:
-          'There are no personal data transfers to international organisations outside of Bgee.',
+          'There are no personal data transfers to international organisations outside Bgee.',
       },
       {
         type: 'rich_text',

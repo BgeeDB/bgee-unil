@@ -306,7 +306,7 @@ const about = [
           },
           {
             type: 'link_external',
-            text: 'University of Lausanne.',
+            text: 'University of Lausanne',
             path: 'https://www.unil.ch/central/en/home.html',
           },
           {

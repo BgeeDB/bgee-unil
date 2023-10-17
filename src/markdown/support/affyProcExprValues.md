@@ -256,7 +256,7 @@ The Experiment ID column provides the unique identifier per experiment.
 The Chip ID column provides the unique identifier per sample that belongs to an `Experiment ID` (column 1).
 
 ##### <a name="probeset-id-column-3"></a>Probeset ID (column 3)
-The Probeset ID column provides a unique identifier associated to a `Chip ID` (column 2) in the target `Experiment ID` (column 1). The `Probeset ID`(column 3) allows to define a `Gene ID` (column 4) based on the chip type information. This allows us to retrieve the mapping of probesets to genes from
+The Probeset ID column provides a unique identifier associated to a `Chip ID` (column 2) in the target `Experiment ID` (column 1). The `Probeset ID` (column 3) allows you to define a `Gene ID` (column 4) based on the chip type information. This allows us to retrieve the mapping of probesets to genes from
 Ensembl.
 
 ##### <a name="gene-id-column-4"></a>Gene ID (column 4)
@@ -286,10 +286,10 @@ The Log of normalized signal intensity column provides a log transformation of n
 ##### <a name="detection-flag-column-12"></a>Detection flag (column 12)
 The Detection flag column provides an informative classification based on `pValue` (column 13) cutoff.
 A `Probeset ID` (column 3) linked to a `Gene ID` (column 4) can be classified as present, marginal or absent.
-The flag present means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is actively expressed. The absent flag means that the `Gene ID` (column 4) associated to a `Probeset ID`(column 3) is not actively expressed. The marginal label means that the intensities of `Gene ID` (column 4) associated to a `Probeset ID`(column 3) are between the two p-value cutoffs, this means between present and absent p-values.
+The flag present means that the `Gene ID` (column 4) associated to a `Probeset ID` (column 3) is actively expressed. The absent flag means that the `Gene ID` (column 4) associated to a `Probeset ID` (column 3) is not actively expressed. The marginal label means that the intensities of `Gene ID` (column 4) associated to a `Probeset ID` (column 3) are between the two p-value cutoffs, this means between present and absent p-values.
 
 ##### <a name="pvalue-column-13"></a>pValue (column 13)
-The pValue column provides a quantitative metric for each unique `Probeset ID`(column 3) referent to `Gene ID` (column 4) in a `Chip ID` (column 2).
+The pValue column provides a quantitative metric for each unique `Probeset ID` (column 3) referent to `Gene ID` (column 4) in a `Chip ID` (column 2).
 Based on the availability of the raw CEL files or by using the processed files (MAS5), the p-values are calculated/attributed differently, this means, for:
 
 1) Raw CEL files, the p-value are calculated based on Wilcoxon test on the signal of the probesets against a subset of weakly expressed probesets.
@@ -304,7 +304,7 @@ For this, we use a `mas5calls()` R function, where we set the parameters: tau=0.
   * for stored MAS5 flags of expression "absent" is attributed the p-value = 0.1,
 
 ##### <a name="state-in-bgee-column-14"></a>State in Bgee (column 14)
-The State in Bgee column provides the information about the usage of `Probeset ID`(column 3) linked to a `Gene ID` (column 4) to make expression calls.
+The State in Bgee column provides the information about the usage of `Probeset ID` (column 3) linked to a `Gene ID` (column 4) to make expression calls.
 Two different labels can be retrieved in this column:
 
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
