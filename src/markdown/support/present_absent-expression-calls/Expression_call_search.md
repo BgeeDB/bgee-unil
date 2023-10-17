@@ -18,7 +18,7 @@ You must first select a species to be able to select some genes.
 ![](../img/doc/present_absent-expression-calls/expression-form.png#tutoimgborder)
 
 The following filter options are available through the search form:
-* **Species** (required): Species of interest, either the common name or the latin name.
+* **Species** (required): Species of interest, either the common name or the Latin name.
 
 * **Gene** (required): Gene(s) of interest. You must first select a species for this field to be displayed.
 You can search using the gene symbol (for instance, *HBB*) or by the gene identifier (for instance, *ENSG00000244734*).
@@ -58,7 +58,7 @@ and in its child conditions.
 
 ### Result filtering
 The expression calls can be further filtered by using the fields appearing above the result table after submitting the form.
-Filters allow to select actual values present in your results. For instance, if you request in the form
+Filters allow you to select actual values present in your results. For instance, if you request in the form
 to retrieve calls in "brain" including all its substructures, then the filter "Anat. entity and cell type" will display all the brain tissues
 actually retrieved in the resulting calls.
 

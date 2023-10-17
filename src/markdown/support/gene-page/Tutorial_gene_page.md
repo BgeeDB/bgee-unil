@@ -31,7 +31,7 @@ You can reach the species page by clicking on the **Organism** link in the gene 
 ![](../img/doc/gene-search/Fig05_gene-page-linked-rows.png#tutoimgborder)
 
 
-The Bgee gene page is also directly accessible from the UniProt website, or from wikipedia:
+The Bgee gene page is also directly accessible from the UniProt website, or from Wikipedia:
 - https://www.uniprot.org/uniprotkb/P49615/entry#expression
 - https://en.wikipedia.org/wiki/Cyclin-dependent_kinase_5 (_Show_ RNA expression pattern)
 

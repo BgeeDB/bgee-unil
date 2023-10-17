@@ -105,11 +105,11 @@ In the same line, on the right side, you can change the number of lines visible 
 
 ### Result table
 
-the result table is comprised of 8 columns:
+the result table is composed of 8 columns:
 
 * ***Anat Entity ID*** : the ID of the Uberon term
 * ***Anat Entity Name*** : the name of the Uberon term
-* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More infomation about background is available in [Properly choose your background](#how-to-properly-choose-your-background)
+* ***Annotated*** : total number of genes annotated with this term from the background list of genes. More information about background is available in [Properly choose your background](#how-to-properly-choose-your-background)
 * ***Significant*** : actual number of annotations to this Uberon term from our *Gene list*
 * ***Expected*** : expected number of annotations to this Uberon term from our *Gene list* based on the number of annotation to that term from the background.
 * ***Fold Enrichment*** : ratio between Significant and Expected annotated genes.

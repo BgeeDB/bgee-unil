@@ -2,16 +2,16 @@
 **Keywords**: Bgee knowledge graph, gene-expression profile, RDF, SPARQL.
 
 ## Overview
-In this tutorial we will demonstrate how to build complex queries to retrieve gene expression information. We will build them step-by-step based on simple queries. The language used for quering the Bgee knowledge graph is [SPARQL](https://www.w3.org/TR/sparql11-overview/). The Bgee graph was built based on the [GenEx semantic model](https://biosoda.github.io/genex/).
+In this tutorial we will demonstrate how to build complex queries to retrieve gene expression information. We will build them step-by-step based on simple queries. The language used for querying the Bgee knowledge graph is [SPARQL](https://www.w3.org/TR/sparql11-overview/). The Bgee graph was built based on the [GenEx semantic model](https://biosoda.github.io/genex/).
 
-The following sections describe queries that can be run direclty in our [SPARQL endpoint webpage](https://bgee.org/sparql/). Nevertheless, the Bgee SPARQL endpoint (see its webpage header below) can also be queried using your preferred programming language such as with the [SPARQLWrapper](https://sparqlwrapper.readthedocs.io/en/latest/) package for Python language or the [R SPARQL](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) package for the R language.
+The following sections describe queries that can be run directly in our [SPARQL endpoint webpage](https://bgee.org/sparql/). Nevertheless, the Bgee SPARQL endpoint (see its webpage header below) can also be queried using your preferred programming language such as with the [SPARQLWrapper](https://sparqlwrapper.readthedocs.io/en/latest/) package for the Python language or the [R SPARQL](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) package for the R language.
 
 ![](../img/doc/sparql-tutorial/bgee-sparql-endpoint.png#tutoimgborder)
 
 To improve readability, all reserved words of the SPARQL query language are written in capital letters. As per the SPARQL language:
 - All variables are defined by starting with a question mark `?`.
 - The graph patterns are stated as triples ended with a full stop (.): `subject predicate object .`.
-- Results are projected via the variables that are defined in the query header such as the reserverd word `SELECT`.
+- Results are projected via the variables that are defined in the query header such as the reserved word `SELECT`.
 
 
 ## Querying species
@@ -62,7 +62,7 @@ All anatomic entities and developmental stages are represented with the [UBERON 
 
 ### Where is a gene expressed? (simplified)
 Genes that are expressed in a tissue, organ or cell (i.e., anatomical entity in general) are represented with the relation
-[genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn), alternativaly its corresponding relation [obo:RO_0002206](http://purl.obolibrary.org/obo/RO_0002206) is stated too. In the query [Q03](#q03) (see [graphical representation](#q03-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" gene is expressed**.
+[genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn), alternatively its corresponding relation [obo:RO_0002206](http://purl.obolibrary.org/obo/RO_0002206) is stated too. In the query [Q03](#q03) (see [graphical representation](#q03-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" gene is expressed**.
 #### Q03:
 > *Question*: What are the anatomical entities where the "APOC1" gene is expressed?
 *SPARQL query*:
@@ -88,10 +88,10 @@ Other vocabulary terms:
 * [rdfs:label](http://www.w3.org/2000/01/rdf-schema#label): in the Bgee KG, this relation is often used to give names for each individual of a class.
 
 ### Where is a human gene expressed? (simplified)
-Similarly to the previous query, we can specify the species from where the gene comes from to avoid possible ambiguities among gene names in different species. In the query [Q04](#q04) (see its [graphical representation](#q04-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" homo sapiens gene is expressed**.
+Similarly to the previous query, we can specify the species from where the gene comes from to avoid possible ambiguities among gene names in different species. In the query [Q04](#q04) (see its [graphical representation](#q04-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" Homo sapiens gene is expressed**.
 
 #### Q04:
-> *Question*: What are the anatomical entities where the "APOC1" homo sapiens gene is expressed?
+> *Question*: What are the anatomical entities where the "APOC1" Homo sapiens gene is expressed?
 *SPARQL query*:
 ```
 PREFIX orth: <http://purl.org/net/orth#>
@@ -368,13 +368,13 @@ Queries specifying conditions such as taxa, anatomical entities and developmenta
 Taxa are based on the NCBI taxonomy identifiers, to find out the NCBI ID that corresponds to the species being looked for, you can choose the species at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) and look for the species ID in the general information section. Alternatively, we can search the NCBI ID of a given species directly at the [NCBI taxonomy website](https://www.ncbi.nlm.nih.gov/taxonomy). For example, human ID is `9606`, and its full corresponding IRI defined in the Bgee knowledge graph is `http://purl.uniprot.org/taxonomy/9606`. More precisely, the full IRI is composed of the `http://purl.uniprot.org/taxonomy/` prefix and the NCBI ID as the suffix.
 
 ### Gene identifiers
-Currently, Bgee mostly reuses either Ensembl or NCBI Gene database identifiers depending on the genome source. These identifiers are stated for each gene with the [dcterms:identifier](http://purl.org/dc/terms/identifier) relation. The genome source for each species in Bgee can be verified at each Bgee species page accessible at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) such as [human page](https://www.bgee.org/species/9606) states the genome source as being [Ensembl](https://nov2020.archive.ensembl.org/Homo_sapiens/Info/Index) in the "General information" section.  To fetch the corresponding main gene identifier to a given gene in Bgee, we can rely on the [Bgee's gene search tool](https://www.bgee.org/search/genes). For example, if we search for the APOC1 gene with the [Bgee's gene search tool](https://www.bgee.org/search/genes), the first row result refers to the human APOC1 gene and the first column shows the correspoding Ensembl id: `ENSG00000130208` and its full IRI is `http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208` as defined in the Bgee knowledge graph. The IRI is composed of the prefix `http://rdf.ebi.ac.uk/resource/ensembl/` and the `Ensembl id`. If it is a `NCBI Gene id`, the IRI prefix is `https://www.ncbi.nlm.nih.gov/gene/`. For instance, `https://www.ncbi.nlm.nih.gov/gene/118230125` corresponds to the [apoc1 eel gene](https://www.ncbi.nlm.nih.gov/gene/118230125).
+Currently, Bgee mostly reuses either Ensembl or NCBI Gene database identifiers depending on the genome source. These identifiers are stated for each gene with the [dcterms:identifier](http://purl.org/dc/terms/identifier) relation. The genome source for each species in Bgee can be verified at each Bgee species page accessible at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) such as [human page](https://www.bgee.org/species/9606) states the genome source as being [Ensembl](https://nov2020.archive.ensembl.org/Homo_sapiens/Info/Index) in the "General information" section.  To fetch the corresponding main gene identifier to a given gene in Bgee, we can rely on the [Bgee's gene search tool](https://www.bgee.org/search/genes). For example, if we search for the APOC1 gene with the [Bgee's gene search tool](https://www.bgee.org/search/genes), the first row result refers to the human APOC1 gene and the first column shows the corresponding Ensembl id: `ENSG00000130208` and its full IRI is `http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208` as defined in the Bgee knowledge graph. The IRI is composed of the prefix `http://rdf.ebi.ac.uk/resource/ensembl/` and the `Ensembl id`. If it is a `NCBI Gene id`, the IRI prefix is `https://www.ncbi.nlm.nih.gov/gene/`. For instance, `https://www.ncbi.nlm.nih.gov/gene/118230125` corresponds to the [apoc1 eel gene](https://www.ncbi.nlm.nih.gov/gene/118230125).
 
 ### Anatomical entity vocabulary
 For looking up an ontology term corresponding to a given anatomical entity, we can rely on the Ontology Look Up service at https://www.ebi.ac.uk/ols4/ontologies/uberon. For example, if we type `liver` in the search field we can retrieve the Uberon identifier that is `UBERON:0002107` and its corresponding IRI http://purl.obolibrary.org/obo/UBERON_0002107 as defined in the Bgee knowledge graph.
 
 ### Developmental stage vocabulary
-For looking up an ontology term corresponding to a given developmental stage, we can browse the [developmental stage file](https://raw.githubusercontent.com/BgeeDB/bgee_pipeline/master/source_files/uberon/dev_stage_ontology.obo). In this file, by looking at the name and ID fields we can compose the corresponding IRI of a given developmental stage. For example, we can look up  `post-juvenile`  and find out that its ID is `UBERON:0000113`. By prefixing this ID with`http://purl.obolibrary.org/obo/`  and replacing `:` with `_`, we can define its IRI as stated in the Bgee knowledge graph: `http://purl.obolibrary.org/obo/UBERON_0000113`.
+For looking up an ontology term corresponding to a given developmental stage, we can browse the [developmental stage file](https://raw.githubusercontent.com/BgeeDB/bgee_pipeline/master/source_files/uberon/dev_stage_ontology.obo). In this file, by looking at the name and ID fields we can compose the corresponding IRI of a given developmental stage. For example, we can look up  `post-juvenile`  and find out that its ID is `UBERON:0000113`. By prefixing this ID with `http://purl.obolibrary.org/obo/`  and replacing `:` with `_`, we can define its IRI as stated in the Bgee knowledge graph: `http://purl.obolibrary.org/obo/UBERON_0000113`.
 Alternatively, we can retrieve all developmental stages and their IRIs in Bgee with the [Q11 query](#q11).
 
 #### Q11:
@@ -488,7 +488,7 @@ FILTER (?anat !=  obo:GO_0005575)
 ### Example 2: querying with gene source identifiers
 
 To query gene expression information of a species where the genome source is NCBI such as the example of the apoc1 eel gene (see [Gene identifiers](#gene-identifiers)), one way is to use the `lscr:xrefNCBIGene` property. For example, to answer the [Q12](#q12) question, we can consider [Q08-b](#q08-b) and replace the relation `lscr:xrefEnsemblGene` that relates a Bgee gene to its corresponding Ensembl gene IRI with `lscr:xrefNCBIGene` in the statement:
-`?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .` . `ensembl:ENSG00000130208` should be also replaced with the apoc1 eel gene IRI from NCBI Gene database: `<https://www.ncbi.nlm.nih.gov/gene/118230125>`.
+`?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .` . `ensembl:ENSG00000130208` should also be replaced with the apoc1 eel gene IRI from NCBI Gene database: `<https://www.ncbi.nlm.nih.gov/gene/118230125>`.
 
 #### Q12:
 > *Question*: What are the anatomical entities where the eel gene "apoc1" is expressed along with its expression score independently of the strain, sex and cell type?
@@ -519,7 +519,7 @@ FILTER (?anat !=  obo:GO_0005575)
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+up-taxon%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3FstageIRI+%3Fscore++%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A++++++++%3Fseq+lscr%3AxrefNCBIGene+%3Chttps%3A%2F%2Fwww.ncbi.nlm.nih.gov%2Fgene%2F118230125%3E+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3FstageIRI+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
-Note that in the [Q12](#q12) question a specific developmental stage is not declared. So, because it is unknown or not specified, we replaced `obo:UBERON_0000113` in [Q08-b](#q08-b) with a variable (`?stageIRI`) and we projected it in the `SELECT` query header to properly answer [Q12](#q12) question. Moreover, if we want to generalize the [Q12](#q12) query for any genome source, we could replace the property `lscr:xrefNCBIGene` with a variable (e.g., `?xref_property`). Alternatively, we can use the [dcterms:identifier](http://purl.org/dc/terms/identifier) property that assigns a identifier for each Bgee gene according to the gene identifier of the genome source of a given species in Bgee. See [Q12-a](#q12-a) that retrieves exactly the same results as [Q12](#q12) but by using the `dcterms:identifier` relation. For a graphical representation of [Q12-a](#q12-a) see [Q12-a graphical representation](#q12-a-graphical-representation).
+Note that in the [Q12](#q12) question a specific developmental stage is not declared. So, because it is unknown or not specified, we replaced `obo:UBERON_0000113` in [Q08-b](#q08-b) with a variable (`?stageIRI`) and we projected it in the `SELECT` query header to properly answer the [Q12](#q12) question. Moreover, if we want to generalize the [Q12](#q12) query for any genome source, we could replace the property `lscr:xrefNCBIGene` with a variable (e.g., `?xref_property`). Alternatively, we can use the [dcterms:identifier](http://purl.org/dc/terms/identifier) property that assigns an identifier for each Bgee gene according to the gene identifier of the genome source of a given species in Bgee. See [Q12-a](#q12-a) that retrieves exactly the same results as [Q12](#q12) but by using the `dcterms:identifier` relation. For a graphical representation of [Q12-a](#q12-a) see [Q12-a graphical representation](#q12-a-graphical-representation).
 
 #### Q12-a:
 > *Question*: What are the anatomical entities where the eel gene "apoc1" is expressed along with its expression score independently of the strain, sex, and cell type?
@@ -555,9 +555,9 @@ FILTER (?anat !=  obo:GO_0005575)
 ![](../img/doc/sparql-tutorial/q12-a.png#tutoimgborder)
 
 ## Querying with UniProtKB cross-references
-To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its correspoding UniProtKB IRI `up-protein:P02654` where `up-protein:` is a prefix replacing the URI `http://purl.uniprot.org/uniprot/` as defined in the header of the [Q13](#q13).
+To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its corresponding UniProtKB IRI `up-protein:P02654` where `up-protein:` is a prefix replacing the URI `http://purl.uniprot.org/uniprot/` as defined in the header of the [Q13](#q13).
 
-[Q13](#q13) retrieves the same results and it is similar to [Q03](#q03) but [Q13](#q13) uses UniProKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
+[Q13](#q13) retrieves the same results and it is similar to [Q03](#q03) but [Q13](#q13) uses UniProtKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
 
 #### Q13:
 > *Question*: What are the anatomical entities where the P02654 gene is expressed?
@@ -589,11 +589,11 @@ All direct attributes of a given gene in the Bgee knowledge graph are listed bel
 - [rdfs:label](http://www.w3.org/2000/01/rdf-schema#label) (**always present**): the gene symbol.
 - [rdfs:seeAlso](http://www.w3.org/2000/01/rdf-schema#seeAlso) (**always present**): additional links, currently, its values are versioned Bgee gene page links, for instance, `https://www.bgee.org/bgee15_0/gene/ENSG00000130208`.
 - [dcterms:description](http://purl.org/dc/terms/description) (**always present**): the gene description.
-- [dcterms:identifier](http://purl.org/dc/terms/identifier)(**always present**): the gene identifier as defined by the genome source. Currently, it is either an Ensembl or NCBI Gene database ID (e.g., [ENSG00000130208](https://www.bgee.org/gene/ENSG00000130208), [118230125](https://www.bgee.org/gene/118230125)).
+- [dcterms:identifier](http://purl.org/dc/terms/identifier) (**always present**): the gene identifier as defined by the genome source. Currently, it is either an Ensembl or NCBI Gene database ID (e.g., [ENSG00000130208](https://www.bgee.org/gene/ENSG00000130208), [118230125](https://www.bgee.org/gene/118230125)).
 - [orth:organism](http://purl.org/net/orth#organism) (**always present**): the values are the Bgee species webpages, for example, [Homo sapiens](https://www.bgee.org/species/9606).
 - [lscr:xrefEnsemblGene](http://purl.org/lscr#xrefEnsemblGene) (**optionally present**): the Ensembl cross-references. The values are the Ensembl IRIs from the [EBI RDF platform](https://academic.oup.com/bioinformatics/article/30/9/1338/234645), for example, http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208.
 - [lscr:xrefNCBIGene](http://purl.org/lscr#xrefNCBIGene) (**optionally present**): the NCBI Gene database cross-references. The values are the NCBI Gene webpages, for example, https://www.ncbi.nlm.nih.gov/gene/118230125.
-- [lscr:xrefUniprot](http://purl.org/lscr#xrefUniprot) (**optionally present**): the UniProtKB cross-references. The values are the UniProKB persitent links, for example, http://purl.uniprot.org/uniprot/P02654.
+- [lscr:xrefUniprot](http://purl.org/lscr#xrefUniprot) (**optionally present**): the UniProtKB cross-references. The values are the UniProtKB persistent links, for example, http://purl.uniprot.org/uniprot/P02654.
 
 [Q14](#q14) shows a SPARQL query to retrieve all metadata related to the `ENSG00000130208` Ensembl gene.
 
@@ -626,10 +626,10 @@ SELECT DISTINCT ?symbol ?description ?id
 
 ## Absence of expression
 
-To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), repectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as show in [Q15](#q15) and its [graphical represention](#q15-graphical-representation).
+To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), respectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as show in [Q15](#q15) and its [graphical representation](#q15-graphical-representation).
 
 #### Q15:
-> *Question*: What are the anatomical entities where the "APOC1" homo sapiens gene is not expressed, that is where is "APOC1" absent ?
+> *Question*: What are the anatomical entities where the "APOC1" Homo sapiens gene is not expressed, that is where is "APOC1" absent ?
 *SPARQL query*:
 ```
 PREFIX orth: <http://purl.org/net/orth#>

@@ -75,7 +75,7 @@ It is possible to order by anatomical entities where the genes have a conserved 
 by reverting the ordering by ascending order of "conservation score": a conservation score of -1 means that,
 among the genes with data in that anatomical entity, all of them are reported as being not expressed in that location.
 
-Depending on your priorities (best data coverage, or lowest reported absence of expression, etc), you might want to try
+Depending on your priorities (best data coverage, or lowest reported absence of expression, etc.), you might want to try
 different selections of columns for sorting the results. Press "shift", and while holding it, click on the columns you want to use.
 Click twice on a column to reverse the sorting from ascending to descending. We recommend that you always include "conservation score"
 and "max expression score".
