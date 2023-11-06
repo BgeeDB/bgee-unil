@@ -31,6 +31,7 @@ const Footer = () => {
             <Bulma.Image
               className="no-responsive"
               src={imagePath('/logo/sib_emblem.png')}
+              alt="SIB logo"
               height={15}
               width={20}
             />
