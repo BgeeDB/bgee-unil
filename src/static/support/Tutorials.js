@@ -191,6 +191,32 @@ const tutorialValues = [
           },
         ],
       },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Anatomical homology',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of how to retrieve anatomical entities that are homologous among different species.',
+              },
+            ],
+          },
+        ],
+      },
     ],
     cols: 3,
     fillRow: true,

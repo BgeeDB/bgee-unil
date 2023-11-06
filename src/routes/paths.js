@@ -56,6 +56,7 @@ const PATHS = {
     TUTORIAL_CURATION: `${URL_ROOT}/support/tutorial-data-curation`,
     TUTORIAL_EXPRESSION_COMPARISON: `${URL_ROOT}/support/tutorial-expression-comparison`,
     TUTORIAL_RAW_DATA: `${URL_ROOT}/support/tutorial-raw-data`,
+    TUTORIAL_ANAT_HOMOLOGY: `${URL_ROOT}/support/tutorial-anatomical-homology`,
     FAQ: `${URL_ROOT}/support/faq`,
   },
   ABOUT: {

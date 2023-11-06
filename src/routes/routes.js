@@ -41,6 +41,7 @@ import TutoSPARQLFile from '../markdown/support/sparql-tutorial/sparql-tutorial.
 import TutoCurationFile from '../markdown/support/data-curation/data-curation.md';
 import TutoExpCompFile from '../markdown/support/expression-comparison/expression-comparison.md';
 import TutoRawDataFile from '../markdown/support/Raw-data-interface/Raw-data-interface.md';
+import TutoAnatHomologyFile from '../markdown/support/anatomical-homology/anatomical-homology.md';
 import FaqFile from '../static/support/faq';
 
 import AboutFile from '../static/about/about';
@@ -283,6 +284,10 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_RAW_DATA]: {
     source: TutoRawDataFile,
     title: 'Tutorial: raw data',
+  },
+  [PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY]: {
+    source: TutoAnatHomologyFile,
+    title: 'Tutorial: anatomical homology',
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,

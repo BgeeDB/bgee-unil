@@ -253,6 +253,7 @@ const Router = () => (
                   PATHS.SUPPORT.TUTORIAL_CURATION,
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
                   PATHS.SUPPORT.TUTORIAL_RAW_DATA,
+                  PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />

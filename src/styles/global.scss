@@ -814,6 +814,14 @@ label.label {
       list-style: disc;
     }
   }
+  ol {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 40px;
+    list-style-type: decimal;
+  }
   pre {
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
     white-space: -o-pre-wrap; /* Opera 7 */
