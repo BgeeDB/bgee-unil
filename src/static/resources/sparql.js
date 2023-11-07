@@ -39,7 +39,7 @@ const sparql = [
           },
           {
             type: 'link_external',
-            path: 'https://biosoda.expasy.org/',
+            path: 'http://purl.org/bioquery',
             text: 'Bio-Query',
           },
           {
@@ -47,8 +47,8 @@ const sparql = [
             content: ' search created for the ',
           },
           {
-            type: 'link_internal',
-            path: PATHS.ABOUT.COLLABORATIONS,
+            type: 'link_external',
+            path: 'http://biosoda.expasy.org/',
             text: 'BioSODA project',
           },
           {
