@@ -545,7 +545,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
-	?stage ref:type efo:EFO_0000399 . #developmental stage
+	?stage rdf:type efo:EFO_0000399 . #developmental stage
         ?stage rdfs:label ?stageName .
         ?stage dcterms:description ?stageDescription .
 }
@@ -564,7 +564,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
-	?stage ref:type efo:EFO_0000399 . #developmental stage
+	?stage rdf:type efo:EFO_0000399 . #developmental stage
         ?stage rdfs:label ?stageName .
         ?stage dcterms:description ?stageDescription .
         FILTER (CONTAINS(?stageName,"post-juvenile"))
