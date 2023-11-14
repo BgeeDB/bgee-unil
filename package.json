@@ -36,6 +36,7 @@
     "build": "node productionCreation.js",
     "prod": "node productionCreation.js",
     "annot": "node productionCreation.js",
+    "githubio": "node githubioCreation.js",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet=true"
