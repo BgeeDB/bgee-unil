@@ -1,4 +1,3 @@
-import PATHS from '../../routes/paths';
 import { APP_VERSION_URL } from '../../helpers/constants';
 
 const sparql = [
