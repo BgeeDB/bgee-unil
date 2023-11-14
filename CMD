@@ -3,6 +3,11 @@ rm -Rf archives/15.0-archived/ && yarn archive
 cd archives/15.0-archived/
 rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_0/
 
+# githubio
+rm -Rf archives/15.1-githubio/ && yarn githubio
+cd archives/15.1-githubio/
+rsync -av --del --exclude=.git . /home/smoretti/job/bgee-github.io.git/
+
 # prod
 rm -Rf build && yarn prod
 cd build/
