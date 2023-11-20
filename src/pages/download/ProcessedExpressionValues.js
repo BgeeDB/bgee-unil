@@ -437,7 +437,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_full_length/${species.speciesFullNameWithoutSpace}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_rnaseq/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   {FULL_LENGTH_LABEL} data directory
                                 </a>
