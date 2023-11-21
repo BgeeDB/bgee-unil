@@ -364,7 +364,7 @@ const Species = () => {
           <div className="mt-2">
             <p
               className="is-size-5 has-text-primary has-text-weight-semibold"
-              id="proc-values-fl-scrna-seq"
+              id="proc-values-scrna-seq"
             >
               {FULL_LENGTH_LABEL}
             </p>

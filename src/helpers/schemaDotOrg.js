@@ -179,9 +179,9 @@ const datasetToLdJSON = () => {
 //            }],
 //        }, {
 //            '@type': 'Dataset',
-//            '@id': `https://www.bgee.org/species/${id}#proc-values-fl-scrna-seq`,
-//            name: `proc-values-fl-scrna-seq ${id}`,
-//            description: `Single cell full length RNA-Seq expression values processed for the species ${genus} ${speciesName} (${name} ${id})`,
+//            '@id': `https://www.bgee.org/species/${id}#proc-values-scrna-seq`,
+//            name: `proc-values-scrna-seq ${id}`,
+//            description: `Single cell RNA-Seq expression values processed for the species ${genus} ${speciesName} (${name} ${id})`,
 //            license: {
 //              '@type': 'CreativeWork',
 //              name: 'CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
@@ -582,20 +582,20 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} full-length Single cell RNA-Seq experiment libraries`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} full-length Single cell RNA-Seq experiments/ libraries annotations and metadata.`,
-      keywords: ['Single cell full length RNA-Seq', 'Single cell RNA-Seq'],
-      url: `${window.location.href}#proc-values-fl-scrna-seq`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiment libraries`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/ libraries annotations and metadata.`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
     });
   }
   file = downloadFiles.find((d) => d.category === 'full_length_data');
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full-Length Single Cell RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full-Length Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
-      keywords: ['Single cell full length RNA-Seq', 'Single cell RNA-Seq'],
-      url: `${window.location.href}#proc-values-fl-scrna-seq`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
     });
   }
 
