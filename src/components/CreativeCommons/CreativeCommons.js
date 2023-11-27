@@ -19,7 +19,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Da_Vinci%27s_Anatomical_Man.jpg#mediaviewer/File:Da_Vinci%27s_Anatomical_Man.jpg"
+            href="https://commons.wikimedia.org/wiki/File%3AUomo_Vitruviano.jpg"
             className="external-link"
           >
             See <i>H. sapiens</i> picture via Wikimedia Commons
@@ -283,7 +283,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Twilight20008-300.jpg#/media/File:Twilight20008-300.jpg"
+            href="https://commons.wikimedia.org/wiki/File:Twilight20008-300.jpg"
             className="external-link"
           >
             See <i>E. caballus</i> picture via Wikimedia Commons
@@ -303,7 +303,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Oryctolagus_cuniculus_Tasmania_2.jpg#/media/File:Oryctolagus_cuniculus_Tasmania_2.jpg"
+            href="https://commons.wikimedia.org/wiki/File:Oryctolagus_cuniculus_Tasmania_2.jpg"
             className="external-link"
           >
             See <i>O. cuniculus</i> picture via Wikimedia Commons
@@ -323,7 +323,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Male_fawn_Boxer_undocked.jpg#/media/File:Male_fawn_Boxer_undocked.jpg"
+            href="https://commons.wikimedia.org/wiki/File:Male_fawn_Boxer_undocked.jpg"
             className="external-link"
           >
             See <i>C. lupus familiaris</i> picture via Wikimedia Commons
@@ -343,7 +343,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Valentino.jpg#/media/File:Valentino.jpg"
+            href="https://commons.wikimedia.org/wiki/File:Valentino.jpg"
             className="external-link"
           >
             See <i>F. catus</i> picture via Wikimedia Commons
@@ -363,7 +363,7 @@ const CreativeCommons = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://commons.wikimedia.org/wiki/File:Yoyocochondinde.JPG#/media/File:Yoyocochondinde.JPG"
+            href="https://commons.wikimedia.org/wiki/File:Yoyocochondinde.JPG"
             className="external-link"
           >
             See <i>C. porcellus</i> picture via Wikimedia Commons
