@@ -61,9 +61,14 @@ const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
     title: 'Run TopAnat: Expression enrichment analysis',
     component: TopAnatAnalysis,
+    meta: {
+      title: 'TopAnat: Expression enrichment analysis',
+      description: 'GO-like enrichment of anatomical terms, mapped to genes by expression patterns',
+      keywords: 'Enrichment, Gene expression, Anatomical terms',
+    },
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
-    title: 'Expression comparison',
+    title: 'Run Expression comparison',
     component: ExpComp,
     meta: {
       title: 'Expression comparison analysis',
@@ -105,10 +110,20 @@ const SEARCH = {
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
     component: () => <RawDataAnnotations />,
     title: 'Raw data annotated and processed',
+    meta: {
+      title: 'Raw data annotated and processed',
+      description: 'Search for Experiments, Raw data annotations and Processed expression values',
+      keywords: 'Raw data, annotations, annotated, processed, experiments, raw data annotations, processed expression values',
+    },
   },
   [PATHS.SEARCH.EXPRESSION_CALLS]: {
     component: () => <RawDataAnnotations isExprCalls />,
     title: 'Present/absent expression calls',
+    meta: {
+      title: 'Present/absent expression calls',
+      description: 'Search for Present/absent expression calls',
+      keywords: 'Present, absent, expression calls',
+    },
   },
   [PATHS.SEARCH.EXPERIMENT]: {
     component: Experiment,
@@ -135,6 +150,11 @@ const RESOURCES = {
   [PATHS.RESOURCES.DOCS]: {
     source: ResourcesFile,
     title: 'Bgee documentation',
+    meta: {
+      title: 'Bgee documentation',
+      description: 'Bgee documentation and code links',
+      keywords: 'documentation, support, resources',
+    },
   },
   [PATHS.RESOURCES.R_PACKAGES]: {
     source: RPackageFile,
@@ -215,6 +235,11 @@ const SUPPORT = {
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
     source: GeneExpressionFile,
     title: 'About gene expression calls',
+    meta: {
+      title: 'Expression call download file documentation',
+      description: 'Documentation of gene expression calls download files',
+      keywords: 'Documentation, gene expression calls, Download files',
+    },
   },
   [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
     source: ProcExprValFile,
@@ -229,14 +254,32 @@ const SUPPORT = {
   [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
     source: RNASeqProcExprValFile,
     title: 'RNA-Seq annotations and processed expression values',
+    meta: {
+      title: 'RNA-Seq processed expression values files documentation',
+      description:
+        'Documentation of RNA-Seq processed expression values download files',
+      keywords: 'Documentation, RNA-Seq, processed expression values, Download files',
+    },
   },
   [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
     source: ScRNASeqFLProcExprValFile,
     title: `${FULL_LENGTH_LABEL} annotations and processed expression values`,
+    meta: {
+      title: 'scRNA-Seq processed expression values files documentation',
+      description:
+        'Documentation of scRNA-Seq processed expression values download files',
+      keywords: 'Documentation, scRNA-Seq, processed expression values, Download files',
+    },
   },
   [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
     source: AffymetrixProcExprValFile,
     title: 'Affymetrix annotations and processed expression values',
+    meta: {
+      title: 'Affymetrix processed expression values files documentation',
+      description:
+        'Documentation of Affymetrix processed expression values download files',
+      keywords: 'Documentation, Affymetrix, Microarray, processed expression values, Download files',
+    },
   },
   [PATHS.SUPPORT.TUTORIALS]: {
     source: TutoFile,
@@ -260,34 +303,74 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_GENE_PAGE]: {
     source: TutoGenePageFile,
     title: 'Tutorial: gene page',
+    meta: {
+      title: 'Bgee gene page tutorial',
+      description: 'Bgee Tutorial about gene search and gene page',
+      keywords: 'Tutorial, gene, search',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_TOPANAT]: {
     source: TutoTopAnatFile,
     title: 'Tutorial: TopAnat',
+    meta: {
+      title: 'Bgee TopAnat tutorial',
+      description: 'Bgee Tutorial about TopAnat Uberon enrichment analysis',
+      keywords: 'Tutorial, enrichment analysis, Uberon',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS]: {
     source: TutoExpressionCallsFile,
     title: 'Tutorial: expression calls',
+    meta: {
+      title: 'Bgee expression calls tutorial',
+      description: 'Bgee Tutorial about expression calls search',
+      keywords: 'Tutorial, expression calls, search',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_SPARQL]: {
     source: TutoSPARQLFile,
     title: 'Tutorial: knowledge graph query',
+    meta: {
+      title: 'Bgee knowledge graph tutorial',
+      description: 'Bgee Tutorial about knowledge graph',
+      keywords: 'Tutorial, knowledge graph, RDF, SPARQL',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_CURATION]: {
     source: TutoCurationFile,
     title: 'Tutorial: data curation',
+    meta: {
+      title: 'Bgee data curation tutorial',
+      description: 'Bgee Tutorial about data curation and annotation',
+      keywords: 'Tutorial, data curation, annotation',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON]: {
     source: TutoExpCompFile,
     title: 'Tutorial: expression comparison',
+    meta: {
+      title: 'Bgee expression comparison tutorial',
+      description: 'Bgee Tutorial about expression comparison of genes',
+      keywords: 'Tutorial, expression comparison, genes',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_RAW_DATA]: {
     source: TutoRawDataFile,
     title: 'Tutorial: raw data',
+    meta: {
+      title: 'Bgee raw data interface tutorial',
+      description: 'Bgee Tutorial about the raw data interface',
+      keywords: 'Tutorial, raw data, experiments, libraries, processed expression values',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY]: {
     source: TutoAnatHomologyFile,
     title: 'Tutorial: anatomical homology',
+    meta: {
+      title: 'Bgee anatomical homology tutorial',
+      description: 'Bgee Tutorial about anatomical homology',
+      keywords: 'Tutorial, anatomical homology, tool, analysis, search',
+    },
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
@@ -312,7 +395,12 @@ const ABOUT = {
   },
   [PATHS.ABOUT.NEWS]: {
     component: NewsPage,
-    title: 'News',
+    title: 'Bgee News',
+    meta: {
+      title: 'Bgee news',
+      description: 'Bgee news describing each new releases',
+      keywords: 'News, latest, information, releases',
+    },
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
     source: CollaborationsFile,
