@@ -59,7 +59,7 @@ import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
-    title: 'TopAnat: Expression enrichment analysis',
+    title: 'Run TopAnat: Expression enrichment analysis',
     component: TopAnatAnalysis,
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
@@ -119,11 +119,11 @@ const SEARCH = {
 const DOWNLOAD = {
   [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
     component: GeneExpressionCallsDownload,
-    title: 'Gene expression calls',
+    title: 'Download gene expression calls',
   },
   [PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]: {
     component: ProcessedExpressionValues,
-    title: 'Processed expression values',
+    title: 'Download processed expression values',
   },
   [PATHS.DOWNLOAD.DATA_DUMPS]: {
     component: DataDumps,
@@ -148,7 +148,7 @@ const RESOURCES = {
   },
   [PATHS.RESOURCES.SPARQL]: {
     source: SparqlFile,
-    title: 'SPARQL endpoint',
+    title: 'About the Bgee SPARQL endpoint',
     meta: {
       title: 'SPARQL endpoint documentation',
       description:
@@ -158,7 +158,7 @@ const RESOURCES = {
   },
   [PATHS.RESOURCES.ANNOTATIONS]: {
     source: AnnotationsFile,
-    title: 'Annotations',
+    title: 'Annotation resources',
     meta: {
       title: 'Annotation resources',
       description:
@@ -169,7 +169,7 @@ const RESOURCES = {
   },
   [PATHS.RESOURCES.ONTOLOGIES]: {
     source: OntologiesFile,
-    title: 'Ontologies',
+    title: 'Ontology resources',
     meta: {
       title: 'Ontology resources',
       description:
@@ -203,7 +203,7 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.TOP_ANAT]: {
     source: TopAnatFile,
-    title: 'TopAnat: Expression enrichment analysis',
+    title: 'About TopAnat: Expression enrichment analysis',
     meta: {
       title: 'TopAnat documentation',
       description:
@@ -214,11 +214,11 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
     source: GeneExpressionFile,
-    title: 'Gene expression calls',
+    title: 'About gene expression calls',
   },
   [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
     source: ProcExprValFile,
-    title: 'Processed expression values',
+    title: 'About processed expression values',
     meta: {
       title: 'Processed expression values files documentation',
       description:

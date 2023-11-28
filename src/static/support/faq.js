@@ -123,7 +123,7 @@ const faq = [
               {
                 type: 'link_external',
                 path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src',
-                text: 'here',
+                text: 'in this repository',
               },
               {
                 type: 'text',
@@ -158,7 +158,7 @@ const faq = [
               {
                 type: 'link_external',
                 path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/dev_stage_ontology.obo',
-                text: 'here',
+                text: 'here: dev_stage_ontology.obo',
               },
               {
                 type: 'text',
@@ -169,7 +169,7 @@ const faq = [
               {
                 type: 'link_external',
                 path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/report.md#caenorhabditis-elegans',
-                text: 'here',
+                text: 'in this report',
               },
               { type: 'text', content: '.' },
             ],
