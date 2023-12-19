@@ -37,43 +37,59 @@ const faq = [
     ],
   },
   {
-    type: 'accordion',
+    type: 'break_line',
+  },
+  {
+    type: 'section',
+    title: 'Are all tissues tested in every species, e.g. in both mouse and rat?',
     children: [
       {
-        title:
-          'Are all tissues tested in every species, e.g. in both mouse and rat?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
-            type: 'rich_text',
-            classNames: 'mb-3',
-            content: [
-              {
-                type: 'text',
-                content:
-                  'We integrate publicly available data, and different species are studied in more or less details. Only tissues with detected active expression are displayed in the gene page on our website. If you use the files available for download (from here ',
-              },
-              {
-                type: 'link_internal',
-                path: PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS,
-                text: 'Genes expression calls',
-              },
-              {
-                type: 'text',
-                content:
-                  '), you can see report of tissues with absence of expression. This will give you a definitive answer about which, e.g., mouse/rat tissues were studied.',
-              },
-            ],
+            type: 'text',
+            content:
+               'We integrate publicly available data, and different species are studied in more or less details. Only tissues with detected active expression are displayed in the gene page on our website. If you use the files available for download (from here ',
+          },
+          {
+            type: 'link_internal',
+            path: PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS,
+            text: 'Genes expression calls',
+          },
+          {
+            type: 'text',
+            content:
+              '), you can see report of tissues with absence of expression. This will give you a definitive answer about which, e.g., mouse/rat tissues were studied.',
           },
         ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Why do you use chimpanzee gene IDs for bonobo data?',
+    children: [
       {
-        title: 'Why do you use chimpanzee gene IDs for bonobo data?',
-        body: "When generating data for Bgee release 14, the bonobo genome was not yet available in Ensembl. So, bonobo RNA-Seq libraries are mapped to the chimpanzee genome, and 'ENSPTRG' chimpanzee gene IDs are reported. Since the bonobo genome has been made available December 2017 in Ensembl, Bgee release 15 will use the actual bonobo genome as reference. In the meantime, you can use Ensembl tools to retrieve a mapping from chimpanzee genes to bonobo orthologs. We are sorry for the inconvenience.",
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
+          {
+            type: 'text',
+            content: "When generating data for Bgee release 14, the bonobo genome was not yet available in Ensembl. So, bonobo RNA-Seq libraries are mapped to the chimpanzee genome, and 'ENSPTRG' chimpanzee gene IDs are reported. Since the bonobo genome has been made available December 2017 in Ensembl, Bgee release 15 will use the actual bonobo genome as reference. In the meantime, you can use Ensembl tools to retrieve a mapping from chimpanzee genes to bonobo orthologs. We are sorry for the inconvenience.",
+          },
+        ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Why are there differences between interface results and downloadable files?',
+    children: [
       {
-        title:
-          'Why are there differences between interface results and downloadable files?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
             type: 'text',
             content:
@@ -87,134 +103,142 @@ const faq = [
           },
         ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: "Why don't you use standard names for developmental stages?",
+    children: [
       {
-        title: 'Why don\'t you use standard names for developmental stages?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
-            type: 'rich_text',
-            classNames: 'mb-3',
-            content: [
-              {
-                type: 'text',
-                content:
-                  'We use as input one specific developmental stage ontology for each species, and we then merge all these species-specific developmental ontologies into one single multi-species ontology. To do that, we use broad developmental stages described in the ',
-              },
-              {
-                type: 'link_external',
-                path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src',
-                text: 'Uberon ontology',
-              },
-              {
-                type: 'text',
-                content:
-                  ': either we map some of the species-specific stages to these Uberon broad developmental stages (i.e., equivalent classes), or we attach some of the species-specific stages as children of these Uberon developmental stages (i.e., subclasses).',
-              },
-            ],
+            type: 'text',
+            content:
+              'We use as input one specific developmental stage ontology for each species, and we then merge all these species-specific developmental ontologies into one single multi-species ontology. To do that, we use broad developmental stages described in the ',
           },
           {
-            type: 'rich_text',
-            classNames: 'mb-3',
-            content: [
-              {
-                type: 'text',
-                content:
-                  "You can find all 'source' species-specific ontologies we develop ",
-              },
-              {
-                type: 'link_external',
-                path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src',
-                text: 'in this repository',
-              },
-              {
-                type: 'text',
-                content: '. For ',
-              },
-              { type: 'italic', content: 'C. elegans' },
-              {
-                type: 'text',
-                content: ', we rely on the ',
-              },
-              {
-                type: 'link_external',
-                path: 'http://www.obofoundry.org/ontology/wbls.html',
-                text: 'WBls ontology',
-              },
-              {
-                type: 'text',
-                content:
-                  ' developed by WormBase (we also rely on external ontologies for fly, zebrafish, and xenopus).',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            classNames: 'mb-3',
-            content: [
-              {
-                type: 'text',
-                content:
-                  'You can find the ontology merging all these species-specific ontologies with Uberon ',
-              },
-              {
-                type: 'link_external',
-                path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/dev_stage_ontology.obo',
-                text: 'here: dev_stage_ontology.obo',
-              },
-              {
-                type: 'text',
-                content:
-                  '. You can find an overview of the resulting merge for ',
-              },
-              { type: 'italic', content: 'C. elegans ' },
-              {
-                type: 'link_external',
-                path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/report.md#caenorhabditis-elegans',
-                text: 'in this report',
-              },
-              { type: 'text', content: '.' },
-            ],
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src',
+            text: 'Uberon ontology',
           },
           {
             type: 'text',
-            classNames: 'mb-3',
             content:
-              "In the ontology, developmental stages are ordered thanks to the use of the relations 'preceded_by' and 'immediately_preceded_by'.",
-          },
-          {
-            type: 'rich_text',
-            classNames: 'mb-3',
-            content: [
-              {
-                type: 'text',
-                content:
-                  'An example of apparent non-standard nomenclature arises for ',
-              },
-              { type: 'italic', content: 'C. elegans' },
-              { type: 'text', content: ' a specific ' },
-              { type: 'italic', content: 'C. elegans' },
-              {
-                type: 'text',
-                content:
-                  " developmental stage is mapped to a broad Uberon stage. For instance, several WBls stages are mapped to the same Uberon term 'UBERON:0000092' (post-embryonic stage): 'WBls:0000022' (postembryonic Ce), 'WBls:0000093' (Brugia postembryonic stage), 'WBls:0000103' (postembryonic nematode); these mappings are cross-references in the ontology file.",
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'text',
-                content:
-                  "Similarly, some Uberon terms have no equivalent in WBls, as for instance 'UBERON:0007220' (late embryonic stage). In that case, we mapped the terms 'WBls:0000015' (elongating embryo Ce) and 'WBls:0000021' (fully-elongated embryo Ce) as children of 'UBERON:0007220'. As a result, the non-standard term (late embryonic stage) will show up in the nomenclature for ",
-              },
-              { type: 'italic', content: 'C. elegans.' },
-            ],
+              ': either we map some of the species-specific stages to these Uberon broad developmental stages (i.e., equivalent classes), or we attach some of the species-specific stages as children of these Uberon developmental stages (i.e., subclasses).',
           },
         ],
       },
       {
-        title: 'Can I find information on strain and/or sex?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
+          {
+            type: 'text',
+            content:
+              "You can find all 'source' species-specific ontologies we develop ",
+          },
+          {
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src',
+            text: 'in this repository',
+          },
+          {
+            type: 'text',
+            content: '. For ',
+          },
+          { type: 'italic', content: 'C. elegans' },
+          {
+            type: 'text',
+            content: ', we rely on the ',
+          },
+          {
+            type: 'link_external',
+            path: 'http://www.obofoundry.org/ontology/wbls.html',
+            text: 'WBls ontology',
+          },
+          {
+            type: 'text',
+            content:
+              ' developed by WormBase (we also rely on external ontologies for fly, zebrafish, and xenopus).',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
+          {
+            type: 'text',
+            content:
+              'You can find the ontology merging all these species-specific ontologies with Uberon ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/dev_stage_ontology.obo',
+            text: 'here: dev_stage_ontology.obo',
+          },
+          {
+            type: 'text',
+            content:
+              '. You can find an overview of the resulting merge for ',
+          },
+          { type: 'italic', content: 'C. elegans ' },
+          {
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/blob/master/external/bgee/report.md#caenorhabditis-elegans',
+            text: 'in this report',
+          },
+          { type: 'text', content: '.' },
+        ],
+      },
+      {
+        type: 'text',
+        classNames: 'mb-3',
+        content:
+          "In the ontology, developmental stages are ordered thanks to the use of the relations 'preceded_by' and 'immediately_preceded_by'.",
+      },
+      {
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
+          {
+            type: 'text',
+            content:
+              'An example of apparent non-standard nomenclature arises for ',
+          },
+          { type: 'italic', content: 'C. elegans' },
+          { type: 'text', content: ' a specific ' },
+          { type: 'italic', content: 'C. elegans' },
+          {
+            type: 'text',
+            content:
+              " developmental stage is mapped to a broad Uberon stage. For instance, several WBls stages are mapped to the same Uberon term 'UBERON:0000092' (post-embryonic stage): 'WBls:0000022' (postembryonic Ce), 'WBls:0000093' (Brugia postembryonic stage), 'WBls:0000103' (postembryonic nematode); these mappings are cross-references in the ontology file.",
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              "Similarly, some Uberon terms have no equivalent in WBls, as for instance 'UBERON:0007220' (late embryonic stage). In that case, we mapped the terms 'WBls:0000015' (elongating embryo Ce) and 'WBls:0000021' (fully-elongated embryo Ce) as children of 'UBERON:0007220'. As a result, the non-standard term (late embryonic stage) will show up in the nomenclature for ",
+          },
+          { type: 'italic', content: 'C. elegans.' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Can I find information on strain and/or sex?',
+    children: [
+      {
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
             type: 'rich_text',
             content: [
@@ -256,14 +280,32 @@ const faq = [
           },
         ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Are there multi-species comparison available in gene expression calls?',
+    children: [
       {
-        title:
-          'Are there multi-species comparison available in gene expression calls?',
-        body: 'These files are not currently available.',
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
+          {
+            type: 'text',
+            content: 'These files are not currently available.',
+          },
+        ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'What can I do with my genes of interest?',
+    children: [
       {
-        title: 'What can I do with my genes of interest?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
             type: 'rich_text',
             content: [
@@ -304,9 +346,16 @@ const faq = [
           },
         ],
       },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Do you have protein expression?',
+    children: [
       {
-        title: 'Do you have protein expression?',
-        body: [
+        type: 'rich_text',
+        classNames: 'mb-3',
+        content: [
           {
             type: 'rich_text',
             content: [
