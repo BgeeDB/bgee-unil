@@ -14,3 +14,8 @@ rm -Rf build && yarn annot
 cd build/
 rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/annotations.bgee.org/
 
+# rbgee (test server)
+echo 'Update src/config.json for rbgee !!!'
+rm -Rf build && yarn prod
+cd build/
+rsync -av --del . bgee@rbioinfo.unil.ch:/var/www/html/bgee.unil.ch/
