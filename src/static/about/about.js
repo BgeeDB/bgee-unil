@@ -16,6 +16,15 @@ const about = [
     ],
   },
   {
+    type: 'rich_text',
+    content: [
+      {
+        content: `Bgee is one of the Global Core Biodata Resources (GCBRs), and also one of the ELIXIR Recommended Interoperability Resources (RIR).`,
+        type: 'bold',
+      },
+    ],
+  },
+  {
     type: 'section',
     title: 'What is Bgee?',
     children: [
@@ -29,7 +38,7 @@ const about = [
           {
             type: 'text',
             content:
-              'Bgee data are produced from multiple data types (RNA-Seq, Affymetrix, in situ hybridization, EST data), and multiple data sets, that are all integrated consistently to provide a single answer to the question: "where is this gene expressed?"',
+              'Bgee data are produced from multiple data types (bulk RNA-Seq, scRNA-Seq, Affymetrix, in situ hybridization, EST data), and multiple data sets, that are all integrated consistently to provide a single answer to the question: "where is this gene expressed?"',
           },
           {
             type: 'text',
