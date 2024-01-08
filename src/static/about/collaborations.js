@@ -22,7 +22,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/biosoda_logo.png'),
+        src: imagePath('/biosoda-logo.png'),
         path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
         alt: 'Bio-SODA',
       },
@@ -119,7 +119,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/INODE_Logo--white.png'),
+        src: imagePath('/INODE-Logo.png'),
         path: 'https://www.inode-project.eu/',
         alt: 'INODE',
         style: {
@@ -167,7 +167,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/oma_logo.png'),
+        src: imagePath('/oma-logo.png'),
         path: 'https://omabrowser.org/',
         alt: 'OMA',
       },
@@ -222,7 +222,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/ONCOMX_logo-thin.png'),
+        src: imagePath('/ONCOMX-logo.png'),
         path: 'https://www.oncomx.org/',
         alt: 'OncoMX',
       },
