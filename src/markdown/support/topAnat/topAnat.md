@@ -176,9 +176,9 @@ Anatomical terms with a FDR higher than this threshold will not be considered as
 Anatomical terms with a p-value higher than this threshold will not be considered as significant.
 
 ## Examples
-* [Human genes involved in autism and epilepsy, with decorrelation.](https://www.bgee.org/analysis/top-anat/8af5b0727ba1c62318707bf6f59c7c9c2b3697a1)
-* [Mouse genes mapped to the GO term "spermatogenesis", with decorrelation.](https://www.bgee.org/analysis/top-anat/2dd226ea83f1b041cf105e7d18a01d81fff19d10)
-* [Zebrafish 3R ohnologs showing nervous system expression of 3R duplicates.](https://www.bgee.org/analysis/top-anat/2bf58d4561f36bbaec9bebc730131423e695df3d)
-* [Pigmentation genes in rabbit, with decorrelation.](https://www.bgee.org/analysis/top-anat/9a9896727557dab83c45731d3fd4f4ccadf19be0)
-* [COVID-19 related human genes, with decorrelation and increased FDR threshold.](https://www.bgee.org/analysis/top-anat/10fb20cc0f767484a570ee82e5c24fc317657d23)
+* [Human genes involved in autism and epilepsy, with decorrelation.](/analysis/top-anat/8af5b0727ba1c62318707bf6f59c7c9c2b3697a1)
+* [Mouse genes mapped to the GO term "spermatogenesis", with decorrelation.](/analysis/top-anat/2dd226ea83f1b041cf105e7d18a01d81fff19d10)
+* [Zebrafish 3R ohnologs showing nervous system expression of 3R duplicates.](/analysis/top-anat/2bf58d4561f36bbaec9bebc730131423e695df3d)
+* [Pigmentation genes in rabbit, with decorrelation.](/analysis/top-anat/9a9896727557dab83c45731d3fd4f4ccadf19be0)
+* [COVID-19 related human genes, with decorrelation and increased FDR threshold.](/analysis/top-anat/10fb20cc0f767484a570ee82e5c24fc317657d23)
 
