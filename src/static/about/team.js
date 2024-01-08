@@ -17,7 +17,7 @@ const team = [
     children: [
       {
         type: 'only_image',
-        src: imagePath('/team/Bgee-team-062023.png'),
+        src: imagePath('/team/Bgee-team-122023.png'),
         alt: 'The current Bgee team',
       },
       {
@@ -25,8 +25,7 @@ const team = [
         content: [
           {
             type: 'text',
-            content:
-              'The Bgee team as of June 2023 photo (from left to right):',
+            content: 'The Bgee team as of December 2023 photo (from left to right):',
           },
         ],
       },
@@ -38,16 +37,16 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Carsanaro, Sara',
+                content: 'Bastian, Frederic',
               },
               {
                 type: 'text',
-                content: ` (Biocurator: sc-FAIR guru, how to make ${FULL_LENGTH_LABEL} metadata useful and usable) `,
+                content: ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto) ',
               },
               {
                 type: 'link_external',
                 text: '[ORCID]',
-                path: 'https://orcid.org/0009-0002-8634-7138',
+                path: 'https://orcid.org/0000-0002-9415-5104',
               },
             ],
           },
@@ -56,17 +55,16 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Mendes de Farias, Tarcisio',
+                content: 'Dind, Sagane',
               },
               {
                 type: 'text',
-                content:
-                  ' (Computational biologist: RDF/SPARQL guru, Bgee data disseminator) ',
+                content: ' (Bioinformatician: pre-filter data before curation, molecular protocol master) ',
               },
               {
                 type: 'link_external',
                 text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-3175-5372',
+                path: 'https://orcid.org/0000-0003-4771-6113',
               },
             ],
           },
@@ -93,55 +91,52 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Bastian, Frederic',
-              },
-              {
-                type: 'text',
-                content:
-                  ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto) ',
-              },
-              {
-                type: 'link_external',
-                text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-9415-5104',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
-                content: 'Dind, Sagane',
-              },
-              {
-                type: 'text',
-                content:
-                  ' (Bioinformatician: pre-filter data before curation, molecular protocol master) ',
-              },
-              {
-                type: 'link_external',
-                text: '[ORCID]',
-                path: 'https://orcid.org/0000-0003-4771-6113',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
                 content: 'Wollbrett, Julien',
               },
               {
                 type: 'text',
-                content:
-                  ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer) ',
+                content: ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer) ',
               },
               {
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0002-3099-3117',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Carsanaro, Sara',
+              },
+              {
+                type: 'text',
+                content: ` (Biocurator: sc-FAIR guru, how to make ${FULL_LENGTH_LABEL} metadata useful and usable) `,
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0009-0002-8634-7138',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Detering, Harry',
+              },
+              {
+                type: 'text',
+                content: ` (Making sense of data through visualisation, machine learning and workflow automation) `,
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0002-0134-7618',
               },
             ],
           },
@@ -199,6 +194,42 @@ const team = [
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0003-3947-488X',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Mendes de Farias, Tarcisio',
+              },
+              {
+                type: 'text',
+                content: ' (Computational biologist: RDF/SPARQL guru, Bgee data disseminator) ',
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0002-3175-5372',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Nyamari, Marion',
+              },
+              {
+                type: 'text',
+                content: ` (Graduate student: Exploring the dynamics of gene expression variation and alternative splicing) `,
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0003-0004-9982',
               },
             ],
           },
