@@ -33,7 +33,7 @@ const docs = [
             title: 'Download file documentation',
             description: undefined,
             image: {
-              src: imagePath('/logo/download_logo.png'),
+              src: imagePath('/logo/download-logo.png'),
               alt: 'Bgee Download logo',
             },
             link: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,

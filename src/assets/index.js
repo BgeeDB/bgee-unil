@@ -2,12 +2,12 @@ import imagePath from '../helpers/imagePath';
 
 const assets = {
   bgeeLogo: imagePath('/logo/bgee13_hp_logo.png'),
-  linkedinLogo: imagePath('/logo/linkedin_logo.png'),
-  mastodonLogo: imagePath('/logo/mastodon_logo.png'),
-  rLogo: imagePath('/logo/r_logo.png'),
-  sibLogo: imagePath('/logo/sib_emblem.png'),
-  twitterLogo: imagePath('/logo/twitter_logo.png'),
-  unilLogo: imagePath('/logo/unil_logo_noir.png'),
+  linkedinLogo: imagePath('/logo/linkedin-logo.png'),
+  mastodonLogo: imagePath('/logo/mastodon-logo.png'),
+  rLogo: imagePath('/logo/r-logo.png'),
+  sibLogo: imagePath('/logo/sib-emblem.png'),
+  twitterLogo: imagePath('/logo/twitter-logo.png'),
+  unilLogo: imagePath('/logo/unil-logo-noir.png'),
 };
 
 export default assets;

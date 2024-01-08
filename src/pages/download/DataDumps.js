@@ -38,7 +38,7 @@ const DataDumps = () => (
                     className={`image is-128x128'
                   }`}
                   >
-                    <img src={imagePath('/logo/mysql_logo.png')} alt="MySQL logo" />
+                    <img src={imagePath('/logo/mysql-logo.png')} alt="MySQL logo" />
                   </figure>
                 </div>
 
@@ -65,7 +65,7 @@ const DataDumps = () => (
               <div className={classnames('card custom-card', 'mb-3')}>
                 <div className="card-image">
                   <figure className="image is-128x128">
-                    <img src={imagePath('/logo/rdf_logo.png')} alt="RDF logo" />
+                    <img src={imagePath('/logo/rdf-logo.png')} alt="RDF logo" />
                   </figure>
                 </div>
 
