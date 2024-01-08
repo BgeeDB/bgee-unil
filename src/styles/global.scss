@@ -273,9 +273,12 @@ a.external-link {
   background-position: right center;
   background-repeat: no-repeat;
   background-image: linear-gradient(transparent, transparent),
-    url('/img/external_link.png');
+    url('/img/external-link.png');
   background-size: 9px;
   padding-right: 13px;
+}
+a.ext-as-int-link {
+  background-image: none;
 }
 
 ul.unordered {
