@@ -1,5 +1,5 @@
 # Data Curation
-Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of normal gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. For this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
+Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. For this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
 
 ## Curation Overview
 

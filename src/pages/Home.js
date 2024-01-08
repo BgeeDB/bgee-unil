@@ -132,10 +132,10 @@ const Home = () => {
           </Bulma.C>
           <Bulma.C size={4}>
             <div className="is-size-5">
-              <p className="is-size-3">SIMPLY NORMAL</p>
-              Bgee is based exclusively on curated &quot;normal&quot;, healthy
-              wild-type, expression data (e.g., no gene knock-out, no treatment,
-              no disease), to provide a comparable reference of normal gene
+              <p className="is-size-3">SIMPLY HEALTHY WILD-TYPE</p>
+              Bgee is based exclusively on curated healthy
+              wild-type expression data (e.g., no gene knock-out, no treatment,
+              no disease), to provide a comparable reference of gene
               expression.
             </div>
           </Bulma.C>

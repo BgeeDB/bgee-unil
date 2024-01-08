@@ -34,7 +34,7 @@ const about = [
           {
             type: 'text',
             content:
-              'Bgee is based exclusively on curated "normal", healthy wild-type expression data (e.g., no gene knock-out, no treatment, no disease), to provide a comparable reference of normal gene expression.',
+              'Bgee is based exclusively on curated healthy wild-type expression data (e.g., no gene knock-out, no treatment, no disease), to provide a comparable reference of gene expression.',
           },
           {
             type: 'text',

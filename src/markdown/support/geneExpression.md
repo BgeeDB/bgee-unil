@@ -6,7 +6,7 @@ This documentation describes the format of presence/absence expression calls dow
 ## Introduction
 
 Bgee provides present/absent expression calls, that can be retrieved in download files either per gene and anatomical entity, or per gene and combination of: i) anatomical entity; ii) developmental and life stage; iii) sex; and iv) strain or ethnicity.  
-Only "normal" wild-type healthy expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, a FDR-corrected p-value is provided, along with an expression score allowing to compare levels of expression.
+Only healthy wild-type expression is considered in Bgee (i.e., no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, a FDR-corrected p-value is provided, along with an expression score allowing to compare levels of expression.
 
 Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, and single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
 

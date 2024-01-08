@@ -150,7 +150,7 @@ const team = [
               {
                 type: 'text',
                 content:
-                  ' (Lead biocurator: provide "normal", healthy wild-type, expression data: the Bgee core) ',
+                  ' (Lead biocurator: provide reference healthy wild-type expression data: the Bgee core) ',
               },
               {
                 type: 'link_external',
