@@ -3,11 +3,16 @@ const fs = require('fs/promises');
 const fsStd = require('fs');
 const { execSync } = require('child_process');
 const ANNOT_URL = 'annotations.bgee.org';
+const DEV_URL = 'http://rbgee.unil.ch';
 
 const main = async () => {
   try {
     let config = await fs.readFile('./src/config.json', 'utf8');
     config = JSON.parse(config);
+    if (config.isRawDataOnly && config.isDevOnly) {
+      console.log('Try to build RawData and Dev at the same time!');
+      return;
+    }
     const originalGenericDomain = config.genericDomain;
     const originalPermanentVersionedDomain = config.permanentVersionedDomain;
     const originalApiDomain = config.apiDomain;
@@ -25,6 +30,16 @@ const main = async () => {
       /* Write modified config.json */
       await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
       console.log('Setting config as annotations');
+    }
+    if (config.isDevOnly) {
+      /* Change root URLs */
+      config.genericDomain = config.genericDomain.replace('https://www.bgee.org', `${DEV_URL}`);
+      config.permanentVersionedDomain = config.permanentVersionedDomain.replace('https://www.bgee.org', `${DEV_URL}`);
+      config.apiDomain = config.apiDomain.replace('https://www.bgee.org', `${DEV_URL}`);
+      config.ftpDomain = config.ftpDomain.replace('https://www.bgee.org', `${ANNOT_URL}`);
+      /* Write modified config.json */
+      await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
+      console.log('Setting config as dev/test');
     }
 
     const scss = await fs.readFile('./src/styles/global.scss', 'utf8');
@@ -86,6 +101,14 @@ const main = async () => {
     if (config.isRawDataOnly) {
       /* Back to default */
       await fs.writeFile('./src/routes/paths.js', paths);
+      config.genericDomain = originalGenericDomain;
+      config.permanentVersionedDomain = originalPermanentVersionedDomain;
+      config.apiDomain = originalApiDomain;
+      config.ftpDomain = originalFtpDomain;
+      await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
+    }
+    if (config.isDevOnly) {
+      /* Back to default */
       config.genericDomain = originalGenericDomain;
       config.permanentVersionedDomain = originalPermanentVersionedDomain;
       config.apiDomain = originalApiDomain;
