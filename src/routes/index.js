@@ -227,7 +227,6 @@ const Router = () => (
                   PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.TUTORIALS,
                   PATHS.SUPPORT.VIDEOS,
-                  PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
@@ -254,6 +253,7 @@ const Router = () => (
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
                   PATHS.SUPPORT.TUTORIAL_RAW_DATA,
                   PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY,
+                  PATHS.SUPPORT.FAQ,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />

@@ -1,3 +1,5 @@
+## Table of contents
+
 # Frequently asked questions (FAQ)
 
 Got questions? We've got answers! Here, you can find Bgee team answers in response to the most frequently asked questions. If you don't find answers here, please do not hesitate to contact us, using [Bgee e-mail](mailto:Bgee@sib.swiss). And maybe a new collaboration will take place as it has already been (see the [collaboration page](/about/collaborations)).
