@@ -238,9 +238,11 @@ const Home = () => {
               <LinkExternal className='ext-as-int-link' to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
                 <img src={imagePath(`/logo/GCBR-Logo.png`)} alt='Global Core Biodata Resource Logo' width='165' height='70' />
               </LinkExternal>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <LinkExternal className='ext-as-int-link' to='https://elixir-europe.org/platforms/interoperability/rirs'>
                 <img src={imagePath(`/logo/ELIXIR-rir-logo.png`)} alt='ELIXIR Recommended Interoperability Resources Logo' width='89' height='70' />
               </LinkExternal>
+              <br /><br />
             </p>
           </Bulma.C>
         </Bulma.Columns>
