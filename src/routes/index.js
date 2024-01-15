@@ -253,6 +253,12 @@ const Router = () => (
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
                   PATHS.SUPPORT.TUTORIAL_RAW_DATA,
                   PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY,
+                  PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_RNASEQ_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_SCRNASEQ_FL_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_SCRNASEQ_TB_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_GENE_EXPR,
                   PATHS.SUPPORT.FAQ,
                 ]}
                 render={(props) => (

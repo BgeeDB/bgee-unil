@@ -217,6 +217,58 @@ const tutorialValues = [
           },
         ],
       },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Expression call download file',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_GENE_EXPR,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of the format of expression call download files.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Tutorial: Processed expression values download file',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_EXPR_VAL,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Description of the format of processed expression values download files.',
+              },
+            ],
+          },
+        ],
+      },
     ],
     cols: 3,
     fillRow: true,

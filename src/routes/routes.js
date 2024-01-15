@@ -42,6 +42,12 @@ import TutoCurationFile from '../markdown/support/data-curation/data-curation.md
 import TutoExpCompFile from '../markdown/support/expression-comparison/expression-comparison.md';
 import TutoRawDataFile from '../markdown/support/Raw-data-interface/Raw-data-interface.md';
 import TutoAnatHomologyFile from '../markdown/support/anatomical-homology/anatomical-homology.md';
+import TutoAffyExprVal from '../markdown/support/Download-files/affyProcExprValues.md';
+import TutoRNASeqExprVal from '../markdown/support/Download-files/rnaSeqProcExprValues.md';
+import TutoscRNAseqFLExprVal from '../markdown/support/Download-files/scRNASeqFLProcExprValues.md';
+import TutoscRNAseqTBExprVal from '../markdown/support/Download-files/scRNASeqTBProcExprValues.md';
+import TutoExprVal from '../markdown/support/Download-files/procExprValFile.md';
+import TutoGeneExpr from '../markdown/support/Download-files/geneExpression.md';
 import FaqFile from '../markdown/support/FAQ.md';
 
 import AboutFile from '../static/about/about';
@@ -370,6 +376,60 @@ const SUPPORT = {
       title: 'Bgee anatomical homology tutorial',
       description: 'Bgee Tutorial about anatomical homology',
       keywords: 'Tutorial, anatomical homology, tool, analysis, search',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL]: {
+    source: TutoAffyExprVal,
+    title: 'Tutorial: Affymetrix download file documentation',
+    meta: {
+      title: 'Bgee Affymetrix download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about Affymetrix download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, Affymetrix, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_RNASEQ_EXPR_VAL]: {
+    source: TutoRNASeqExprVal,
+    title: 'Tutorial: RNA-Seq download file documentation',
+    meta: {
+      title: 'Bgee RNA-Seq download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about RNA-Seq download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, RNA-Seq, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_SCRNASEQ_FL_EXPR_VAL]: {
+    source: TutoscRNAseqFLExprVal,
+    title: 'Tutorial: Single cell RNA-Seq full-length download file documentation',
+    meta: {
+      title: 'Bgee Single cell RNA-Seq full-length download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about Single cell RNA-Seq full-length download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, Single cell RNA-Seq full-length, scRNA-seq full-length, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_SCRNASEQ_TB_EXPR_VAL]: {
+    source: TutoscRNAseqTBExprVal,
+    title: 'Tutorial: Droplet-based scRNA-seq Data in H5AD Format',
+    meta: {
+      title: 'Bgee Droplet-based scRNA-seq Data in H5AD Format tutorial',
+      description: 'Bgee Tutorial about Droplet-based scRNA-seq Data in H5AD Format',
+      keywords: 'Tutorial, Single cell RNA-Seq Droplet-based, scRNA-seq Droplet-based, Single cell RNA-Seq target-based, scRNA-seq target-based, Download file, Processed expression values, H5AD',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_EXPR_VAL]: {
+    source: TutoExprVal,
+    title: 'Tutorial: Processed expression values download file documentation',
+    meta: {
+      title: 'Bgee Processed expression values download file documentation tutorial',
+      description: 'Bgee Tutorial about Processed expression values download file documentation',
+      keywords: 'Tutorial, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_GENE_EXPR]: {
+    source: TutoGeneExpr,
+    title: 'Tutorial: Expression call download file documentation',
+    meta: {
+      title: 'Bgee Expression call download file documentation tutorial',
+      description: 'Bgee Tutorial about Expression call download file documentation',
+      keywords: 'Tutorial, Download file, Expression call',
     },
   },
   [PATHS.SUPPORT.FAQ]: {
