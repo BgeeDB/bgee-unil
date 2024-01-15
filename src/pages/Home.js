@@ -132,7 +132,7 @@ const Home = () => {
           </Bulma.C>
           <Bulma.C size={4}>
             <div className="is-size-5">
-              <p className="is-size-3">SIMPLY HEALTHY WILD-TYPE</p>
+              <p className="is-size-3">HEALTHY WILD-TYPE</p>
               Bgee is based exclusively on curated healthy
               wild-type expression data (e.g., no gene knock-out, no treatment,
               no disease), to provide a comparable reference of gene
@@ -228,6 +228,21 @@ const Home = () => {
               </p>
             </Bulma.C>
           )}
+        </Bulma.Columns>
+      </Bulma.Section>
+
+      <Bulma.Section>
+        <Bulma.Columns>
+          <Bulma.C size={12}>
+            <p className="has-text-centered is-size-5">
+              <LinkExternal className='ext-as-int-link' to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
+                <img src={imagePath(`/logo/GCBR-Logo.png`)} alt='Global Core Biodata Resource Logo' width='165' height='70' />
+              </LinkExternal>
+              <LinkExternal className='ext-as-int-link' to='https://elixir-europe.org/platforms/interoperability/rirs'>
+                <img src={imagePath(`/logo/ELIXIR-rir-logo.png`)} alt='ELIXIR Recommended Interoperability Resources Logo' width='89' height='70' />
+              </LinkExternal>
+            </p>
+          </Bulma.C>
         </Bulma.Columns>
       </Bulma.Section>
     </>

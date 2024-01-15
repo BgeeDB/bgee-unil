@@ -19,7 +19,25 @@ const about = [
     type: 'rich_text',
     content: [
       {
-        content: `Bgee is one of the Global Core Biodata Resources (GCBRs), and also one of the ELIXIR Recommended Interoperability Resources (RIR).`,
+        content: `Bgee is a Global Core Biodata Resources (`,
+        type: 'bold',
+      },
+      {
+        text: `GCBR`,
+        path: 'https://globalbiodata.org/scientific-activities/global-core-biodata-resources',
+        type: 'link_external',
+      },
+      {
+        content: `), and also an ELIXIR Recommended Interoperability Resources (`,
+        type: 'bold',
+      },
+      {
+        text: `RIR`,
+        path: 'https://elixir-europe.org/platforms/interoperability/rirs',
+        type: 'link_external',
+      },
+      {
+        content: `).`,
         type: 'bold',
       },
     ],
