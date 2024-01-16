@@ -25,7 +25,7 @@ import AnnotationsFile from '../static/resources/annotations';
 import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
-import GtexFile from '../markdown/support/datasets_of_interest.md';
+import DatasetsInterestFile from '../markdown/support/datasets_of_interest.md';
 import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import ProcExprValFile from '../static/support/ProcessedExpressionValues';
@@ -33,6 +33,7 @@ import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
 import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
 import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import TutoFile from '../static/support/Tutorials';
+import ScRNASeqProtocolsFile from '../markdown/support/scRNA-seq_Protocols.md';
 import VideoFile from '../static/support/videos';
 import TutoGenePageFile from '../markdown/support/gene-page/Tutorial_gene_page.md';
 import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
@@ -218,7 +219,7 @@ const RESOURCES = {
 
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
-    source: GtexFile,
+    source: DatasetsInterestFile,
     title: 'Datasets of interest',
     meta: {
       title: 'Datasets of interest',
@@ -294,6 +295,15 @@ const SUPPORT = {
       title: 'Tutorials',
       description: 'Bgee Tutorials',
       keywords: 'Tutorials',
+    },
+  },
+  [PATHS.SUPPORT.SCRNASEQPROTOCOLS]: {
+    source: ScRNASeqProtocolsFile,
+    title: 'scRNA-Seq Protocols: A Comparative Guide',
+    meta: {
+      title: 'Single-cell RNA Sequencing (scRNA-Seq) Protocols: A Comparative Guide',
+      description: 'Single-cell RNA Sequencing (scRNA-Seq) Protocols: A Comparative Guide',
+      keywords: 'Single-cell RNA Sequencing, scRNA-Seq, protocols, Comparative Guide',
     },
   },
   [PATHS.SUPPORT.VIDEOS]: {

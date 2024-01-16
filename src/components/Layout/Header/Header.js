@@ -166,6 +166,12 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.TUTORIALS,
       },
       {
+        key: 'page.support.scrna-seq-protocols-comparison',
+        title: ROUTES[PATHS.SUPPORT.SCRNASEQPROTOCOLS].title,
+        type: 'internal',
+        path: PATHS.SUPPORT.SCRNASEQPROTOCOLS,
+      },
+      {
         key: 'page.support.videos',
         title: ROUTES[PATHS.SUPPORT.VIDEOS].title,
         type: 'internal',

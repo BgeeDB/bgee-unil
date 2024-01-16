@@ -48,6 +48,7 @@ const PATHS = {
     AFFYMETRIX_PROCESSED_EXPRESSION_VALUES:
       `${URL_ROOT}/support/affymetrix-processed-expression-values`,
     TUTORIALS: `${URL_ROOT}/support/tutorials`,
+    SCRNASEQPROTOCOLS: `${URL_ROOT}/support/scRNA-seq-protocols-comparison`,
     VIDEOS: `${URL_ROOT}/support/videos`,
     TUTORIAL_GENE_PAGE: `${URL_ROOT}/support/tutorial-gene-page`,
     TUTORIAL_TOPANAT: `${URL_ROOT}/support/tutorial-TopAnat`,
