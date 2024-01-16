@@ -36,7 +36,7 @@ const main = async () => {
       config.genericDomain = config.genericDomain.replace('https://www.bgee.org', `${DEV_URL}`);
       config.permanentVersionedDomain = config.permanentVersionedDomain.replace('https://www.bgee.org', `${DEV_URL}`);
       config.apiDomain = config.apiDomain.replace('https://www.bgee.org', `${DEV_URL}`);
-      config.ftpDomain = config.ftpDomain.replace('https://www.bgee.org', `${ANNOT_URL}`);
+      config.ftpDomain = config.ftpDomain.replace('https://www.bgee.org', `${DEV_URL}`);
       /* Write modified config.json */
       await fs.writeFile('./src/config.json', JSON.stringify(config, null, 2));
       console.log('Setting config as dev/test');
