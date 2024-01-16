@@ -48,6 +48,14 @@ After all p-values have been propagated, we apply a Benjamini-Hochberg FDR corre
   * and there is no FDR-corrected p-value less than or equal to 0.05 in any child condition for that gene, considering the data types trusted for absent calls.
 * **Absent silver quality** expression calls: same as absent gold quality expression calls, but using an FDR-corrected p-value threshold of 0.05.
 
+
+### Potential download problems
+
+- If you open a file with a spreadsheet editor, it will potentially transform some cell values into dates. Files need to be **imported** into a spreadsheet editor to avoid such problems.
+- Download files are compressed with gzip. They have to be **uncompressed** before opening them into an editor.
+- Tarball containing TPM values for a species contain gzip files that also need to be uncompressed before opening with an editor.
+
+
 ### Download file format description
 
 Once a species is selected, you will need to choose if you want data only for anatomical entities or for all conditions, and if you want the summarized information (simple file) or all information (advanced file). The implications of each option are explained in further detail below.
@@ -417,3 +425,4 @@ Number of observations coming from experimental full-length single-cell RNA-Seq 
 ##### <a name="descendant-observation-count-full-length-single-cell-rna-seq-column-61"></a>Descendant observation count full-length single-cell RNA-Seq (column 61)
 
 Number of observations coming from experimental full-length single-cell RNA-Seq data for the combination of condition parameters (anatomical or all conditions) descendant of the current one.
+

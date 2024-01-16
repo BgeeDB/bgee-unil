@@ -10,6 +10,16 @@ There are four data types that are available for download: bulk RNA-Seq, single 
 
 ![](../img/doc/Download-files/Processed-expression-Species-data-types.png#tutoimgborder)
 
+
+### Potential download problems
+
+- If you open a file with a spreadsheet editor, it will potentially transform some cell values into dates. Files need to be **imported** into a spreadsheet editor to avoid such problems.
+- Download files are compressed with gzip. They have to be **uncompressed** before opening them into an editor.
+- Tarball containing TPM values for a species contain gzip files that also need to be uncompressed before opening with an editor.
+
+
+### Processed expression values data-type download file documentation
+
 *   [bulk RNA-Seq download file documentation: annotations and processed expression values](/support/tutorial-processed-expression-values-download-RNA-seq)
 *   [single cell RNA-Seq full-length download file documentation: annotations and processed expression values](/support/tutorial-processed-expression-values-download-scRNA-seq-full-length)
 *   [single cell RNA-Seq droplet-based download file documentation: annotations and processed expression values](/support/tutorial-processed-expression-values-download-scRNA-seq-droplet-based)
