@@ -25,7 +25,7 @@ import AnnotationsFile from '../static/resources/annotations';
 import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
-import GtexFile from '../markdown/support/gtex.md';
+import GtexFile from '../markdown/support/datasets_of_interest.md';
 import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import ProcExprValFile from '../static/support/ProcessedExpressionValues';
@@ -219,12 +219,12 @@ const RESOURCES = {
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
     source: GtexFile,
-    title: 'GTEx in Bgee',
+    title: 'Datasets of interest',
     meta: {
       title: 'Datasets of interest',
       description:
         'Retrieve information about the datasets of special interest present in Bgee and how we integrated them.',
-      keywords: 'Dataset, gene expression dataset, GTEx, annotation',
+      keywords: 'Dataset, gene expression dataset, GTEx, Fly Cell Atlas, FCA, featured experiments, annotation',
     },
   },
   [PATHS.SUPPORT.TOP_ANAT]: {

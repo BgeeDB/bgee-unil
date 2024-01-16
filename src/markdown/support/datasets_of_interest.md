@@ -13,7 +13,7 @@ We applied a stringent re-annotation process to the GTEx data to retain only hea
 In total, only 50% of samples were kept; these represent a high quality subset of GTEx. All these samples were re-annotated manually to specific Uberon anatomy and aging terms.
 
 
-The GTEx annotations can be browsed on our raw data interface: [Curated GTEx data in Bgee](https://annotations.bgee.org/experiment/SRP012682).
+The GTEx annotations can be browsed on our raw data interface: [Curated GTEx data in Bgee](/experiment/SRP012682).
 
 ## GTEx data into Bgee
 
@@ -21,7 +21,7 @@ All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently wit
 
 ### GTEx data into our website
 
-- Annotations can be browsed on our raw data interface: [Curated GTEx data in Bgee](https://annotations.bgee.org/experiment/SRP012682).
+- Annotations can be browsed on our raw data interface: [Curated GTEx data in Bgee](/experiment/SRP012682).
 - Annotations can be downloaded from [RNA-Seq human experiments/libraries info](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_experiments_libraries.tar.gz). Experiment ID of GTEx is 'SRP012682'.
 - Processed expression values, from GTEx only, are available on our FTP ([download file](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_read_counts_TPM_FPKM_SRP012682.tsv.gz)).
   Gene expression calls are included into [human files](/download/gene-expression-calls?id=9606).
