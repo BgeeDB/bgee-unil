@@ -349,7 +349,7 @@ const SUPPORT = {
     meta: {
       title: 'Bgee knowledge graph tutorial',
       description: 'Bgee Tutorial about knowledge graph',
-      keywords: 'Tutorial, knowledge graph, RDF, SPARQL',
+      keywords: 'Tutorial, knowledge graph, RDF, SPARQL, gene-expression profile',
     },
   },
   [PATHS.SUPPORT.TUTORIAL_CURATION]: {

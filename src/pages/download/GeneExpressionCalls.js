@@ -9,7 +9,6 @@ import api from '../../api';
 import CreativeCommons from '../../components/CreativeCommons';
 import GridSpecies from '../../components/GridSpecies/GridSpecies';
 import classnames from '../../helpers/classnames';
-import LINK_ANCHOR from '../../routes/linkAnchor';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
@@ -204,7 +203,7 @@ const GeneExpressionCalls = () => {
                             Presence/Absence of expression
                             <Link
                               className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
-                              to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
+                              to={`${PATHS.SUPPORT.TUTORIAL_GENE_EXPR}`}
                             >
                               See documentation
                             </Link>
