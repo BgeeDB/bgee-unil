@@ -124,6 +124,16 @@ const Router = () => (
                   />
                 )}
               />
+              <Route
+                exact
+                path={PATHS.SEARCH.SPECIES_GENE_LIST_ITEM}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.SPECIES_GENE_LIST_ITEM].component}
+                  />
+                )}
+              />
 
               <Route
                 exact

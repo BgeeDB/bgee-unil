@@ -19,6 +19,7 @@ const PATHS = {
     ANATOMICAL_HOMOLOGY: `${URL_ROOT}/search/anatomical-homology`,
     SPECIES: `${URL_ROOT}/search/species`,
     SPECIES_ITEM: `${URL_ROOT}/species/:id`,
+    SPECIES_GENE_LIST_ITEM: `${URL_ROOT}/species/:speciesId/gene-list`,
     RAW_DATA_ANNOTATIONS: `${URL_ROOT}/search/raw-data`,
     EXPRESSION_CALLS: `${URL_ROOT}/search/expression-calls`,
     EXPERIMENT: `${URL_ROOT}/experiment/:id`,
