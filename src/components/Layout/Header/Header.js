@@ -58,10 +58,21 @@ const NAVBAR_LEFT = [
         path: PATHS.SEARCH.SPECIES,
       },
       {
-        key: 'page.search.raw-data',
-        title: ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].title,
+        key: 'page.search.raw-data-experiment',
+        title: 'Search experiments',
         type: 'internal',
         path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
+      },
+      {
+        key: 'page.search.raw-data-annotations',
+        title: 'Raw data annotations',
+        type: 'fullinternal',
+        path: `${config.genericDomain}${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=raw_data_annots`,
+      },      {
+        key: 'page.search.raw-data-processed-expression-values',
+        title: 'Processed expression values',
+        type: 'fullinternal',
+        path: `${config.genericDomain}${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?pageType=proc_expr_values`,
       },
       {
         key: 'page.search.presence-absence-expression-calls',
@@ -399,6 +410,16 @@ const Header = () => {
                               href={childProps.path}
                               target="_blank"
                               rel="noopener noreferrer"
+                            >
+                              {pageTitle}
+                            </a>
+                          );
+                        case 'fullinternal':
+                          return (
+                            <a
+                              key={keyChild}
+                              className="navbar-item custom"
+                              href={childProps.path}
                             >
                               {pageTitle}
                             </a>
