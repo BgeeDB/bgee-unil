@@ -1,9 +1,8 @@
 # Tutorial: Expression call search
 
 ## Overview
-Bgee expression call search allows you to search all gene expression present and absent calls in the Bgee database.
-Bgee applies statistical methods specific to each data type to detect a signal of active expression (present expression calls)
-and to report absence of expression (absent expression calls, *i.e.* where expression levels are below the background expression noise).
+Bgee "expression call search" allows you to search all present/absent gene expression calls in the Bgee database.
+The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](https://www.bgee.org/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](https://www.bgee.org/search/raw-data) to retrieve such data).
 
 The expression call search is available at [https://www.bgee.org/search/expression-calls](https://www.bgee.org/search/expression-calls).
 The examples in this tutorial have been generated using Bgee release 15.0. More information about how the present/absent calls
@@ -48,7 +47,7 @@ at least one of the selected data types.
   * Removing a condition parameter, for example "Strain", will integrate all strain data for a particular anatomical localization, developmental and life stage, and sex, into one singular call per gene.
 
 * **Call type**: Limit to presence or absence of expression calls. "Present" means expression level significantly above
-background transcriptional noise, "absent" means that the level of expression is equal to or below the background noise.
+background transcriptional noise, "absent" means that the level of expression is not significantly different from the background noise.
 
 * **Data Quality**: The minimum level of quality in support of the expression call. This level is determined
 by the FDR-corrected p-values of the statistical test for significant expression of the gene in the reported condition,
@@ -95,7 +94,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **FDR:** P-value, corrected for multiple testing by false discovery rate (FDR), of the test of significance used by Bgee to determine the expression state of the gene (various statistical methods are used to determine the p-value based on the data types and for merging results from different data types).
 
-* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types and libraries. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to all other genes.(**link to expression score explanation?**)
+* **Expression score:** This value represents the normalized expression level of the gene in that condition after merging all supporting data types. It is scaled from 0, meaning this gene was on average the one with the lowest expression, to 100 which indicates that this gene has high expression in that condition compared to all other genes. Briefly, the expression scores are based on non-parametric statistics, where conditions are ranked based on the gene expression levels. These ranks are then normalized across conditions, genes, and data types, and transformed into an expression score going from 0 (= low expression) to 100 (= high expression) for a more intuitive use. This non-parametric statistics allow comparison of gene expression in a quantitative manner across species and conditions, without requiring batch-correction procedures.
 
 * **Expression score confidence:** Bgee's assessment of how confident we are on the validity of the expression score results. There are two possible values, high or low. Our estimation of the validity of the score is determined by looking at the data types used for the expression score calculations. If the score is low and only non quantitative methods such as in situ hybridization or EST are used, we set its value to low.
 
