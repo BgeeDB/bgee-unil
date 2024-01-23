@@ -26,10 +26,6 @@ import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
 import DatasetsInterestFile from '../markdown/support/datasets_of_interest.md';
-import ProcExprValFile from '../static/support/ProcessedExpressionValues';
-import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
-import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
-import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
 import TutoFile from '../static/support/Tutorials';
 import ScRNASeqProtocolsFile from '../markdown/support/scRNA-seq_Protocols.md';
 import VideoFile from '../static/support/videos';
@@ -60,7 +56,6 @@ import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
-import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
@@ -224,46 +219,6 @@ const SUPPORT = {
       description:
         'Retrieve information about the datasets of special interest present in Bgee and how we integrated them.',
       keywords: 'Dataset, gene expression dataset, GTEx, Fly Cell Atlas, FCA, featured experiments, annotation',
-    },
-  },
-  [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
-    source: ProcExprValFile,
-    title: 'About processed expression values',
-    meta: {
-      title: 'Processed expression values files documentation',
-      description:
-        'Documentation of processed expression values download files',
-      keywords: 'Documentation, processed expression values, Download files',
-    },
-  },
-  [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
-    source: RNASeqProcExprValFile,
-    title: 'RNA-Seq annotations and processed expression values',
-    meta: {
-      title: 'RNA-Seq processed expression values files documentation',
-      description:
-        'Documentation of RNA-Seq processed expression values download files',
-      keywords: 'Documentation, RNA-Seq, processed expression values, Download files',
-    },
-  },
-  [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
-    source: ScRNASeqFLProcExprValFile,
-    title: `${FULL_LENGTH_LABEL} annotations and processed expression values`,
-    meta: {
-      title: 'scRNA-Seq processed expression values files documentation',
-      description:
-        'Documentation of scRNA-Seq processed expression values download files',
-      keywords: 'Documentation, scRNA-Seq, processed expression values, Download files',
-    },
-  },
-  [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
-    source: AffymetrixProcExprValFile,
-    title: 'Affymetrix annotations and processed expression values',
-    meta: {
-      title: 'Affymetrix processed expression values files documentation',
-      description:
-        'Documentation of Affymetrix processed expression values download files',
-      keywords: 'Documentation, Affymetrix, Microarray, processed expression values, Download files',
     },
   },
   [PATHS.SUPPORT.TUTORIALS]: {

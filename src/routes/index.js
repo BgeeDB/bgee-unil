@@ -224,7 +224,6 @@ const Router = () => (
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
-                  PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.TUTORIALS,
                   PATHS.SUPPORT.VIDEOS,
                   PATHS.ABOUT.ABOUT,
@@ -240,9 +239,6 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.SUPPORT.GTEX,
-                  PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
-                  PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
-                  PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.SCRNASEQPROTOCOLS,
                   PATHS.SUPPORT.TUTORIAL_GENE_PAGE,
                   PATHS.SUPPORT.TUTORIAL_TOPANAT,

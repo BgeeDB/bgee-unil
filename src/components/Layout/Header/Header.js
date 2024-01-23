@@ -153,12 +153,6 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.GTEX,
       },
       {
-        key: 'page.support.processed-expression-values',
-        title: ROUTES[PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES].title,
-        type: 'internal',
-        path: PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
-      },
-      {
         key: 'page.support.tutorials',
         title: ROUTES[PATHS.SUPPORT.TUTORIALS].title,
         type: 'internal',
