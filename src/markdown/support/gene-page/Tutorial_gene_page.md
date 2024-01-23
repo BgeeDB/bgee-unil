@@ -1,5 +1,5 @@
 # Tutorial: gene page
-Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969/](https://www.bgee.org/gene/ENSMUSG00000028969/)
+Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969/](/gene/ENSMUSG00000028969/)
 
 ## Gene search
 You can search for genes based on their name, description, synonyms, identifiers, or cross-references.
@@ -51,9 +51,9 @@ e.g. the gene ENSMUSG00000028969, also known as Cdk5, encodes the cyclin-depende
 ## Expression and reported absence of expression
 The expression and absence of expression sections on each gene page provide a ranked list of conditions where the expression or absence of expression of a gene has been reported: the present/absent expression calls. The conditions with significant expression (present expression calls) are reported in the "Expression" section, the conditions with a reported absence of expression (absent expression calls) are in the section "reported absence of expression".
 
-The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](https://www.bgee.org/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](https://www.bgee.org/search/raw-data) to retrieve such data).
+The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](/search/raw-data) to retrieve such data).
 
-The present/absent calls are then ranked using the Bgee expression score method, in order to provide first the most relevant conditions of expression for each gene. Again, specific methods are used for each data type, see the main [Bgee publications](https://www.bgee.org/about/publications) for details. Briefly, the expression scores are based on non-parametric statistics, where conditions are ranked based on the gene expression levels. These ranks are then normalized across conditions, genes, and data types, and transformed into an expression score going from 0 (= low expression) to 100 (= high expression) for a more intuitive use. This non-parametric statistics allow comparison of gene expression in a quantitative manner across species and conditions, without requiring batch-correction procedures.
+The present/absent calls are then ranked using the Bgee expression score method, in order to provide first the most relevant conditions of expression for each gene. Again, specific methods are used for each data type, see the main [Bgee publications](/about/publications) for details. Briefly, the expression scores are based on non-parametric statistics, where conditions are ranked based on the gene expression levels. These ranks are then normalized across conditions, genes, and data types, and transformed into an expression score going from 0 (= low expression) to 100 (= high expression) for a more intuitive use. This non-parametric statistics allow comparison of gene expression in a quantitative manner across species and conditions, without requiring batch-correction procedures.
 
 By default, the gene page reports this information for each anatomical localization only. For each present/absent expression call, are provided:
 * Anatomical entity: the localization of the call (where the gene is detected either as present or as absent). It can point to simply an antomical structure, or to a cell type, or to the composition of a cell type in a specific anatomical structure.
@@ -100,7 +100,7 @@ They correspond to one-to-one homologs for each pair of species in Bgee.
 ### Orthologs
 
 Orthology information is presented at taxon levels corresponding to the least common ancestor taxon for which orthologs are found in Bgee species.
-For the Mus musculus gene [Cdk5](https://www.bgee.org/gene/ENSMUSG00000028969/#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969/#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig12_Orthologs.gif#tutoimgborder)
 
@@ -124,7 +124,7 @@ You can run an expression comparison analysis for all ortholog genes at one taxo
 ### Paralogs
 
 Paralogy information is presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
-For the Mus musculus gene [Cdk5](https://www.bgee.org/gene/ENSMUSG00000028969/#orthologs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969/#paralogs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig16_Paralogs-see-details.gif#tutoimgborder)
 
