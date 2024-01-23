@@ -97,14 +97,14 @@ const Species = () => {
   if (data) {
     metaTitle = `${data.species.genus}  ${data.species.speciesName}
        ${data.species.name ? `( ${data.species.name} )` : ''}`;
-    metaDescription = `General information and datasets available 
-        in Bgee for species 
+    metaDescription = `General information and datasets available
+        in Bgee for species
         ${data.species.genus}  ${data.species.speciesName}
        ${data.species.name ? `( ${data.species.name} )` : ''}`;
-    metaKeywords = `gene expression in 
+    metaKeywords = `gene expression in
        ${data.species.genus} ${data.species.speciesName},
        ${data.species.name ? `gene expression in ${data.species.name} , ` : ''}
-       ${data.species.genus} ${data.species.speciesName}, 
+       ${data.species.genus} ${data.species.speciesName},
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
   }
@@ -289,7 +289,14 @@ const Species = () => {
         <div className="">
           <p>
             Bgee provides annotations and experiment annotations, and processed
-            expression values.
+            expression values. More information in our{' '}
+            <Link
+              to={PATHS.SUPPORT.TUTORIAL_EXPR_VAL}
+              className="internal-link"
+            >
+              documentation
+            </Link>
+            .
           </p>
           <div className="mt-2">
             <p
