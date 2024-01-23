@@ -4,7 +4,7 @@ import PATHS from '../../routes/paths';
 const tutorialValues = [
   {
     type: 'title',
-    content: 'Bgee tutorials',
+    content: 'Bgee documentation and tutorials',
   },
   {
     type: 'grid',

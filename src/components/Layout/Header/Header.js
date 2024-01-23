@@ -147,16 +147,16 @@ const NAVBAR_LEFT = [
     title: 'Support',
     children: [
       {
-        key: 'page.support.gtex',
-        title: ROUTES[PATHS.SUPPORT.GTEX].title,
-        type: 'internal',
-        path: PATHS.SUPPORT.GTEX,
-      },
-      {
         key: 'page.support.tutorials',
         title: ROUTES[PATHS.SUPPORT.TUTORIALS].title,
         type: 'internal',
         path: PATHS.SUPPORT.TUTORIALS,
+      },
+      {
+        key: 'page.support.gtex',
+        title: ROUTES[PATHS.SUPPORT.GTEX].title,
+        type: 'internal',
+        path: PATHS.SUPPORT.GTEX,
       },
       {
         key: 'page.support.scrna-seq-protocols-comparison',

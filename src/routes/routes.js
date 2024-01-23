@@ -223,11 +223,11 @@ const SUPPORT = {
   },
   [PATHS.SUPPORT.TUTORIALS]: {
     source: TutoFile,
-    title: 'Tutorials',
+    title: 'Documentation and tutorials',
     meta: {
-      title: 'Tutorials',
-      description: 'Bgee Tutorials',
-      keywords: 'Tutorials',
+      title: 'Documentation and tutorials',
+      description: 'Bgee tutorials and documentation',
+      keywords: 'Tutorials, documentation',
     },
   },
   [PATHS.SUPPORT.SCRNASEQPROTOCOLS]: {
