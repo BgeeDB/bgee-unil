@@ -4,6 +4,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import Bulma from '../../components/Bulma';
 import Table from '../../components/Table';
 import api from '../../api';
+import PATHS from '../../routes/paths';
 import LinkExternal from '../../components/LinkExternal';
 import { customAnatomicalHomologySorter } from '../../helpers/sortTable';
 import obolibraryLinkFromID from '../../helpers/obolibraryLinkFromID';
@@ -210,7 +211,7 @@ const AnatomicalHomologySearch = () => {
       <div className="content has-text-centered">
         <Bulma.Title size={3}>Anatomical homology</Bulma.Title>
       </div>
-      <p>
+      <p className="has-text-centered">
         Retrieve anatomical homologies from a list of species and a list of
         Uberon IDs. Retrieve Uberon IDs from organ names{' '}
         <a
@@ -222,6 +223,14 @@ const AnatomicalHomologySearch = () => {
           here
         </a>
         .
+      </p>
+      <p className="has-text-centered">
+        <Link
+          className="internal-link"
+          to={`${PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY}`}
+        >
+          See documentation
+        </Link>
       </p>
       <div>
         {!(loading && anatomicalEntities === '') && (
