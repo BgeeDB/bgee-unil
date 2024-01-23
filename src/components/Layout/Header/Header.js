@@ -153,12 +153,6 @@ const NAVBAR_LEFT = [
         path: PATHS.SUPPORT.GTEX,
       },
       {
-        key: 'page.support.top-anat',
-        title: ROUTES[PATHS.SUPPORT.TOP_ANAT].title,
-        type: 'internal',
-        path: PATHS.SUPPORT.TOP_ANAT,
-      },
-      {
         key: 'page.support.gene-expression-calls',
         title: ROUTES[PATHS.SUPPORT.GENE_EXPRESSION_CALLS].title,
         type: 'internal',

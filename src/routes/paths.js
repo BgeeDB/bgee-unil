@@ -38,7 +38,6 @@ const PATHS = {
   },
   SUPPORT: {
     GTEX: `${URL_ROOT}/support/data-sets`,
-    TOP_ANAT: `${URL_ROOT}/support/top-anat`,
     GENE_EXPRESSION_CALLS: `${URL_ROOT}/support/gene-expression-calls`,
     PROCESSED_EXPRESSION_VALUES: `${URL_ROOT}/support/processed-expression-values`,
     RNASEQ_PROCESSED_EXPRESSION_VALUES:

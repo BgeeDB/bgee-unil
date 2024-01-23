@@ -20,7 +20,7 @@ const docs = [
               src: imagePath('/logo/bgee_access_logo.png'),
               alt: 'Bgee TopAnat logo',
             },
-            link: PATHS.SUPPORT.TOP_ANAT,
+            link: PATHS.SUPPORT.TUTORIAL_TOPANAT,
             linkType: 'internal',
             classNames: '',
           },

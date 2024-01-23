@@ -26,7 +26,6 @@ import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
 import DatasetsInterestFile from '../markdown/support/datasets_of_interest.md';
-import TopAnatFile from '../markdown/support/topAnat.md';
 import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import ProcExprValFile from '../static/support/ProcessedExpressionValues';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
@@ -226,17 +225,6 @@ const SUPPORT = {
       description:
         'Retrieve information about the datasets of special interest present in Bgee and how we integrated them.',
       keywords: 'Dataset, gene expression dataset, GTEx, Fly Cell Atlas, FCA, featured experiments, annotation',
-    },
-  },
-  [PATHS.SUPPORT.TOP_ANAT]: {
-    source: TopAnatFile,
-    title: 'About TopAnat: Expression enrichment analysis',
-    meta: {
-      title: 'TopAnat documentation',
-      description:
-        'Documentation to use TopAnat, performing gene set expression enrichment analyses.',
-      keywords:
-        'TopAnat, gene set enrichment analysis, gene expression enrichment analysis, GO-like enrichment analysis, gene expression patterns, topGO, BgeeDB',
     },
   },
   [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {

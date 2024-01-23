@@ -240,7 +240,6 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.SUPPORT.GTEX,
-                  PATHS.SUPPORT.TOP_ANAT,
                   PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
                   PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
