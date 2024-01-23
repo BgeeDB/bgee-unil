@@ -456,10 +456,18 @@ const ExpComp = () => {
             Expression comparison
           </Bulma.Title>
         </div>
-        <p className="is-size-5">
+        <p className="is-size-5 has-text-centered">
           Compare expression of several genes. If genes belong to several
           species, comparisons will be performed in homologous organs. Please
           enter one gene ID per line.
+        </p>
+        <p className="is-size-5 has-text-centered">
+          <Link
+            className="internal-link"
+            to={`${PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON}`}
+          >
+            See documentation
+          </Link>
         </p>
         {!(loading && searchValue === '') && (
           <div className="is-flex is-justify-content-center my-3">
@@ -529,7 +537,7 @@ const ExpComp = () => {
       </div>
       {geneInfo && geneInfo.undeterminedGeneIds.length > 0 && (
         <p>
-          Unknown Ensembl IDs:{' '}
+          Unknown gene IDs:{' '}
           {geneInfo.undeterminedGeneIds.map((g, key) => (
             // eslint-disable-next-line react/no-array-index-key
             <React.Fragment key={`UG-${key}`}>{`'${g}'${
