@@ -101,7 +101,7 @@ For humans, this field is where we annotate ethnicity. The accepted values (as s
 Sex is used to annotate the sex of the animal the sample was taken from. The possible values are: male, female, hermaphrodite, NA (not available or unknown), or mixed (mixture of different sexes in the sample).
 
 ### Technologies and Protocols
-We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, listed below. We try to capture information about the kit used for preparing libraries, in order to determine which RNA population could be captured.
+We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, listed below. We try to capture information about the kit used for preparing libraries, in order to determine which RNA population could be captured. More information about scRNA-seq protocols can be found in our [comparative guide](/support/scRNA-seq-protocols-comparison).
 
 | bulk RNA-seq | scRNA-seq |
 |:--|:--|
