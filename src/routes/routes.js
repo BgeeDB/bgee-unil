@@ -26,7 +26,6 @@ import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
 import DatasetsInterestFile from '../markdown/support/datasets_of_interest.md';
-import GeneExpressionFile from '../markdown/support/geneExpression.md';
 import ProcExprValFile from '../static/support/ProcessedExpressionValues';
 import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
 import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
@@ -225,15 +224,6 @@ const SUPPORT = {
       description:
         'Retrieve information about the datasets of special interest present in Bgee and how we integrated them.',
       keywords: 'Dataset, gene expression dataset, GTEx, Fly Cell Atlas, FCA, featured experiments, annotation',
-    },
-  },
-  [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
-    source: GeneExpressionFile,
-    title: 'About gene expression calls',
-    meta: {
-      title: 'Expression call download file documentation',
-      description: 'Documentation of gene expression calls download files',
-      keywords: 'Documentation, gene expression calls, Download files',
     },
   },
   [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {

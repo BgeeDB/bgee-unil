@@ -36,7 +36,7 @@ const docs = [
               src: imagePath('/logo/download-logo.png'),
               alt: 'Bgee Download logo',
             },
-            link: PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
+            link: PATHS.SUPPORT.TUTORIAL_GENE_EXPR,
             linkType: 'internal',
           },
         ],

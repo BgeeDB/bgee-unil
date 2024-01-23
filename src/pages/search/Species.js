@@ -209,7 +209,7 @@ const Species = () => {
             a life stage, a sex, and a strain, with reported presence or absence
             of expression. More information in our{' '}
             <Link
-              to={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
+              to={PATHS.SUPPORT.TUTORIAL_GENE_EXPR}
               className="internal-link"
             >
               documentation
