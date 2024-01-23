@@ -205,6 +205,12 @@ const ProcessedExpressionValues = () => {
                         <div>
                           <p className="mb-2 is-size-5 has-text-weight-semibold">
                             RNA-Seq data
+                            <Link
+                              className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
+                              to={`${PATHS.SUPPORT.TUTORIAL_RNASEQ_EXPR_VAL}`}
+                            >
+                              See documentation
+                            </Link>
                           </p>
                           {files[species.id.toString()]?.rnaSeqAnnot ||
                           files[species.id.toString()]?.rnaSeqData ? (
@@ -286,6 +292,12 @@ const ProcessedExpressionValues = () => {
                         <div className="mt-4">
                           <p className="mb-2 is-size-5 has-text-weight-semibold">
                             Affymetrix data
+                            <Link
+                              className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
+                              to={`${PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL}`}
+                            >
+                              See documentation
+                            </Link>
                           </p>
                           {files[species.id.toString()]?.affymetrixAnnot ||
                           files[species.id.toString()]?.affymetrixData ? (
@@ -369,6 +381,12 @@ const ProcessedExpressionValues = () => {
                         <div className="mt-4">
                           <p className="mb-2 is-size-5 has-text-weight-semibold">
                             {FULL_LENGTH_LABEL} data
+                            <Link
+                              className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
+                              to={`${PATHS.SUPPORT.TUTORIAL_SCRNASEQ_FL_EXPR_VAL}`}
+                            >
+                              See documentation
+                            </Link>
                           </p>
                           {files[species.id.toString()]?.fullLengthAnnot ||
                           files[species.id.toString()]?.fullLengthData ? (
