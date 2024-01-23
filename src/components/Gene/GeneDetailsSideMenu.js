@@ -2,6 +2,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import PATHS from '../../routes/paths';
 import config from '../../config.json';
 
 const APP_VERSION = config.version;
@@ -22,6 +23,9 @@ const GeneDetailsSideMenu = ({ homologs = null, xRefs }) => {
   return (
     <aside className="menu">
       <ul className="menu-list gene-menu">
+        <li>
+          <a href={`${PATHS.SUPPORT.TUTORIAL_GENE_PAGE}`} className="is-size-5 has-text-weight-semibold">See documentation</a>
+        </li>
         <li
           onClick={() =>
             handlerMenuClick(GENE_DETAILS_HTML_IDS.GENERAL_INFORMATION)
