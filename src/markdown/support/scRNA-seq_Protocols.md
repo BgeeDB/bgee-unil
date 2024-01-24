@@ -2,8 +2,9 @@
 
 scRNA-seq technologies have revolutionized transcriptomics, but the variety of available protocols and their distinct features can be confusing. This guide presents essential information on 30 protocols to help you select the right method for your needs and process the data correctly.
 
-The protocols differ in several key aspects, including cell isolation techniques, transcript coverage, throughput, strand specificity, multiplexing capability, cost and technical complexity
+The protocols differ in several key aspects, including cell isolation techniques, transcript coverage, throughput, strand specificity, multiplexing capability, cost and technical complexity.
 
+Last modification: 2023-06-02
 <br/>
 
 
