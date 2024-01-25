@@ -115,7 +115,7 @@ const SEARCH = {
     component: Species,
     title: 'Species',
   },
-  [PATHS.SEARCH.SPECIES_GENE_LIST_ITEM]: {
+  [PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES]: {
     component: SpeciesGeneList,
     title: 'Species gene list',
   },
