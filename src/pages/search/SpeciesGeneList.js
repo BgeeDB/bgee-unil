@@ -65,6 +65,14 @@ const SpeciesGeneList = () => {
         [speciesScientificName, speciesDisplay]
     );
 
+    function getGeneDisplay(element) {
+        let text = element.geneId;
+        if (element.name) {
+            text = `${element.name} (${text})`;
+        }
+        return text;
+    }
+
     return !species ? null :(
         <>
             <Helmet>
@@ -103,7 +111,8 @@ const SpeciesGeneList = () => {
                                               .replace(':geneId', element.geneId)
                                               .replace(':speciesId', element.geneMappedToSameGeneIdCount === 1 ? '' : species?.id)}
                                           title={`Gene expression for ${element.name} in ${speciesDisplay}`}>
-                                        {element.geneId}{element.name? ` (${element.name})` : ''}</Link>
+                                        {getGeneDisplay(element)}
+                                    </Link>
                                     {index < genes.length - 1 && <span className="inline-list-separator"/>}
                                 </li>
                             )}
