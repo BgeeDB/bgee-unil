@@ -9,6 +9,7 @@ import ExpComp from '../pages/analysis/ExpComp';
 import GeneList from '../pages/search/GeneList';
 import Gene from '../pages/search/Gene';
 import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
+import GeneExpressionMatrix from '../pages/search/expressionmatrix/GeneExpressionMatrix';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
@@ -109,6 +110,10 @@ const SEARCH = {
   [PATHS.SEARCH.EXPRESSION_CALLS]: {
     component: () => <RawDataAnnotations isExprCalls />,
     title: 'Present/absent expression calls',
+  },
+  [PATHS.SEARCH.EXPRESSION_MATRIX]: {
+    component: () => <GeneExpressionMatrix isExprCalls />,
+    title: 'Gene expression matrix',
   },
   [PATHS.SEARCH.EXPERIMENT]: {
     component: Experiment,

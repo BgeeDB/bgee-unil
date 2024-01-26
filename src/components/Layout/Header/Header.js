@@ -69,6 +69,12 @@ const NAVBAR_LEFT = [
         type: 'internal',
         path: PATHS.SEARCH.EXPRESSION_CALLS,
       },
+      {
+        key: 'page.search.expression-matrix',
+        title: ROUTES[PATHS.SEARCH.EXPRESSION_MATRIX].title,
+        type: 'internal',
+        path: PATHS.SEARCH.EXPRESSION_MATRIX,
+      },
     ],
   },
   {
