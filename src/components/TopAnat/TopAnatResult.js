@@ -168,7 +168,7 @@ const TopAnatResult = ({
                     color="danger"
                     light
                     style={{ width: 'fit-content' }}
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     renderAs="a"
                     size="small"
                   >
@@ -193,7 +193,7 @@ const TopAnatResult = ({
                         color="danger"
                         light
                         style={{ width: 'fit-content' }}
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         renderAs="a"
                         size="small"
                         className="mt-1"
@@ -219,7 +219,7 @@ const TopAnatResult = ({
                     href={dataCsvHref}
                     download="Bgee-TopAnat-data.tsv"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                   >
                     <span>TSV</span>
                     <span className="icon is-small">

@@ -238,7 +238,7 @@ const customHeader =
               renderAs="a"
               download="Bgee-expression-comparison.tsv"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               TSV
               <span className="icon is-small ml-1">

@@ -252,7 +252,7 @@ const RawDataAnnotationResults = ({
               isExprCalls ? '' : `${dataType}_`
             }${pageNumber}.tsv`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Export current page in TSV
             <span className="icon is-small ml-1">

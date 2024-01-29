@@ -108,7 +108,7 @@ const Experiment = () => {
                   href={data?.experiment?.xRef?.xRefURL}
                   className="external-link"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   {data.experiment.id}
                 </a>
@@ -122,7 +122,7 @@ const Experiment = () => {
                   href={data?.experiment?.downloadUrl}
                   renderAs="a"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   Download all assays
                   <span className="icon is-small ml-1">
