@@ -219,12 +219,6 @@ const NAVBAR_LEFT = [
         path: PATHS.ABOUT.SOURCES,
       },
       {
-        key: 'page.about.blog',
-        title: 'Bgee blog',
-        type: 'external',
-        path: 'https://bgeedb.wordpress.com/',
-      },
-      {
         key: 'page.about.team',
         title: ROUTES[PATHS.ABOUT.TEAM].title,
         type: 'internal',
