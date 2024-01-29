@@ -59,7 +59,7 @@ const NAVBAR_LEFT = [
       },
       {
         key: 'page.search.raw-data-experiment',
-        title: 'Search experiments',
+        title: 'Experiments',
         type: 'internal',
         path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
       },

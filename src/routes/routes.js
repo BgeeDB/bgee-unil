@@ -82,7 +82,7 @@ const ANALYSIS = {
 
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
-    title: 'Gene search',
+    title: 'Genes',
     component: GeneList,
   },
   [PATHS.SEARCH.GENE_ITEM]: {
@@ -91,7 +91,7 @@ const SEARCH = {
   },
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
     component: AnatomicalHomologySearch,
-    title: 'Anatomical homology search',
+    title: 'Anatomical homologies',
     meta: {
       title: 'Anatomical homology search',
       description:
@@ -101,7 +101,7 @@ const SEARCH = {
   },
   [PATHS.SEARCH.SPECIES]: {
     component: SpeciesList,
-    title: 'Species list',
+    title: 'Species information',
   },
   [PATHS.SEARCH.SPECIES_ITEM]: {
     component: Species,
