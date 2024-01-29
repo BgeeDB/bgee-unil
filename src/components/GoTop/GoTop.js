@@ -12,6 +12,7 @@ const GoTop = () => (
     }}
     color="primary"
     outlined
+    type="button"
     className="go-top"
   >
     <span className="icon">
