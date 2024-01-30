@@ -83,7 +83,7 @@ const SpeciesGeneList = () => {
             </Helmet>
 
             <div className="content has-text-centered">
-                <Bulma.Title size={3} className="m-0">{`Gene list in ${speciesDisplay}`}
+                <Bulma.Title size={3} className="m-0">{`Gene list for ${speciesDisplay}`}
                 </Bulma.Title>
             </div>
             
