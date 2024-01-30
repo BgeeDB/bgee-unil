@@ -184,11 +184,19 @@ const Species = () => {
           <div className="is-flex">
             <div style={{ width: 150 }}>
               <p>
-                <b style={{ width: 140 }}>Genome version</b>
+                <b style={{ width: 140 }}>Gene list</b>
               </p>
             </div>
             <div>
-              <p>{data.species.genomeVersion}</p>
+              <p>
+                <Link className="internal-link"
+                      to={PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES
+                          .replace(':speciesId', data.species.id)
+                          .replace(':speciesName', data.species.speciesFullNameWithoutSpace?.replace("_", "-").toLowerCase())}
+                      title={`Gene list for ${data.species.genus} ${data.species.speciesName}`}>
+                  All genes for {data.species.genus} {data.species.speciesName} genome version &apos;{data.species.genomeVersion}&apos;
+                </Link>
+              </p>
             </div>
           </div>
         </div>
