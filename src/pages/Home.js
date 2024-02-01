@@ -16,6 +16,7 @@ import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
 import GeneSearch from '../components/Gene/GeneSearch';
 import { FULL_LENGTH_LABEL } from '../api/prod/constant';
+import Indexes from "../components/Indexes/Indexes";
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -149,6 +150,7 @@ const Home = () => {
             </div>
           </Bulma.C>
         </Bulma.Columns>
+
         <Bulma.Card className="mt-4">
           <Bulma.Card.Header>
             <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
@@ -196,6 +198,7 @@ const Home = () => {
             </div>
           </Bulma.Card.Body>
         </Bulma.Card>
+
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
@@ -204,7 +207,13 @@ const Home = () => {
             See all news
           </Link>
         </div>
+        
+        <Bulma.Card className="mt-4">
+          <Indexes speciesList={speciesList}/>
+        </Bulma.Card>
+
       </Bulma.Section>
+
       <Bulma.Hero className="home-hero-banner">
         <Bulma.Hero.Body className="pt-3">
           <NavButtons />
