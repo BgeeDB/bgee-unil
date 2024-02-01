@@ -12,6 +12,7 @@ import RawDataAnnotations from '../pages/search/rawdata/RawDataAnnotations';
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
+import SpeciesGeneList from "../pages/search/SpeciesGeneList";
 
 import Experiment from '../pages/search/experiments/Experiment';
 
@@ -106,6 +107,10 @@ const SEARCH = {
   [PATHS.SEARCH.SPECIES_ITEM]: {
     component: Species,
     title: 'Species',
+  },
+  [PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES]: {
+    component: SpeciesGeneList,
+    title: 'Species gene list',
   },
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
     component: () => <RawDataAnnotations />,

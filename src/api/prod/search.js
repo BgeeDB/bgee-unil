@@ -19,6 +19,8 @@ export const SEARCH_CANCEL_API = {
     processedValues: null,
     species: null,
     speciesDevelopmentSexe: null,
+    name: null,
+    geneList: null,
   },
   rawData: {
     search: null,
@@ -337,6 +339,37 @@ const search = {
             reject(error?.response);
           });
       }),
+      name: (speciesId) =>
+          new Promise((resolve, reject) => {
+              const params = DEFAULT_PARAMETERS('species', 'name');
+              params.append('species_id', speciesId);
+              axiosInstance
+                  .get(`/?${params.toString()}`, {
+                      cancelToken: new axios.CancelToken((c) => {
+                          SEARCH_CANCEL_API.species.name = c;
+                      }),
+                  })
+                  .then(({ data }) => resolve(data))
+                  .catch((error) => {
+                      errorHandler(error);
+                      reject(error?.response);
+                  });
+          }),
+      geneList: (speciesId) =>
+          new Promise((resolve, reject) => {
+              const params = DEFAULT_PARAMETERS('gene', 'species_list');
+              params.append('species_id', speciesId);
+              axiosInstance
+                  .get(`/?${params.toString()}`, {
+                      cancelToken: new axios.CancelToken((c) => {
+                          SEARCH_CANCEL_API.species.geneList = c;
+                      }),
+                  })
+                  .then(({ data }) => resolve(data))
+                  .catch((error) => {
+                      reject(error?.response);
+                  });
+          }),
   },
   rawData: {
     search: (form, isOnlyCounts, bypassInitSearchParam = false) =>

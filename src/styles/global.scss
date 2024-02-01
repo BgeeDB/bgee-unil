@@ -1141,3 +1141,11 @@ h1.title.in-md {
 .isTableFlipped {
   transform: rotate(180deg) scaleX(-1);
 }
+
+.inline-list li {
+  display: inline-block;
+  margin-right: 5px;
+}
+.inline-list-separator::after {
+  content: ", ";
+}
