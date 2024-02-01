@@ -12,6 +12,8 @@ import {
   RNA_SEQ,
 } from '../../rawdata/useLogic';
 import { FULL_LENGTH_LABEL } from '../../../../api/prod/constant';
+import PATHS from "../../../../routes/paths";
+import config from "../../../../config.json";
 
 const getUserFriendlyDataType = (dataType) => {
   switch (dataType) {
@@ -60,6 +62,8 @@ const Experiment = () => {
           name="keywords"
           content={`experiment,${data.experiment.id}, ${data.experiment.name}`}
         />
+        <link rel="canonical" href={`${config.genericDomain}${PATHS.SEARCH.EXPERIMENT
+            .replace(':id', data?.experiment?.id)}`} />
       </Helmet>
 
       <div className="experimentPage">

@@ -15,10 +15,11 @@ import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
 import imagePath from '../../helpers/imagePath';
 import GeneDetailsSideMenu from './GeneDetailsSideMenu';
 import { PROC_EXPR_VALUES } from '../../pages/search/rawdata/useLogic';
+import config from '../../config.json';
 
 const GeneDetails = ({
   details,
-  details: { name, geneId, description, species, synonyms },
+  details: { name, geneId, description, species, synonyms, geneMappedToSameGeneIdCount },
 }) => {
   const loc = useLocation();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -76,12 +77,16 @@ const GeneDetails = ({
     const speciesNameBrackets = species.name ? `( ${species.name} )` : '';
     const nameExpr = name ? `${name}, ${name} expression, ` : '';
     const synonymsExpr = synonyms ? `, ${synonyms.join(', ')}` : '';
+    const canonicalLink = `${config.genericDomain}${PATHS.SEARCH.GENE_ITEM_BY_SPECIES
+        .replace(':geneId', geneId)
+        .replace(':speciesId', geneMappedToSameGeneIdCount === 1 ? '' : species.id)}`;
     return {
       title: `${name}  expression in ${speciesName}`,
       description: `Bgee gene expression data for ${hasNameOpener}${geneId}${hasNameCloser} in ${species.genus} ${species.name} ${speciesNameBrackets}`,
       keywords: `gene expression, ${nameExpr}${geneId}, ${geneId} expression${synonymsExpr}`,
+      link: canonicalLink,
     };
-  }, [name, geneId, synonyms, species]);
+  }, [name, geneId, synonyms, species, geneMappedToSameGeneIdCount]);
 
   React.useEffect(() => {
     if (loc.hash) {
@@ -103,6 +108,7 @@ const GeneDetails = ({
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
         <meta name="keywords" content={meta.keywords} />
+        <link rel="canonical" href={meta.link} />
       </Helmet>
       <div id="gene-wrapper">
         <div className="sidebar">

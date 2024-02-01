@@ -10,11 +10,13 @@ import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
 import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
+import config from "../../config.json";
 
 const Species = () => {
   let metaTitle = '';
   let metaDescription = '';
   let metaKeywords = '';
+  let metaLink = ''; 
 
   const [data, setData] = React.useState();
   const { id } = useParams();
@@ -107,6 +109,8 @@ const Species = () => {
        ${data.species.genus} ${data.species.speciesName},
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
+    metaLink = `${config.genericDomain}${PATHS.SEARCH.SPECIES_ITEM
+        .replace(':id', data.species.id)}`;
   }
 
   return !data ? null : (
@@ -116,6 +120,7 @@ const Species = () => {
           <title>{metaTitle}</title>
           <meta name="description" content={metaDescription} />
           <meta name="keywords" content={metaKeywords} />
+          <link rel="canonical" href={metaLink} />
         </Helmet>
       )}
       <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
