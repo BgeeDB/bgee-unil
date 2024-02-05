@@ -282,24 +282,6 @@ const about = [
           },
         ],
       },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            content: 'More information is provided in the ',
-            type: 'text',
-          },
-          {
-            text: 'documentation',
-            path: PATHS.RESOURCES.DOCS,
-            type: 'link_internal',
-          },
-          {
-            content: '.',
-            type: 'text',
-          },
-        ],
-      },
     ],
   },
   {
@@ -467,12 +449,12 @@ const about = [
           {
             type: 'text',
             content:
-              'More information about data analyses and database content is available in the ',
+              'The Bgee blog can be found at ',
           },
           {
-            type: 'link_internal',
+            type: 'link_external',
             text: 'documentation',
-            path: PATHS.RESOURCES.DOCS,
+            path: 'https://bgeedb.wordpress.com/',
           },
           {
             type: 'text',

@@ -31,7 +31,6 @@ const PATHS = {
     DATA_DUMPS: `${URL_ROOT}/download/data-dumps`,
   },
   RESOURCES: {
-    DOCS: `${URL_ROOT}/resources/`,
     R_PACKAGES: `${URL_ROOT}/resources/r-packages`,
     SPARQL: `${URL_ROOT}/resources/sparql`,
     ANNOTATIONS: `${URL_ROOT}/resources/annotations`,

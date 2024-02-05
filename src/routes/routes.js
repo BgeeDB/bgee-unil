@@ -19,7 +19,6 @@ import Experiment from '../pages/search/experiments/Experiment';
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
 
-import ResourcesFile from '../static/resources/docs';
 import RPackageFile from '../static/resources/rPackage';
 import SparqlFile from '../static/resources/sparql';
 import AnnotationsFile from '../static/resources/annotations';
@@ -152,15 +151,6 @@ const DOWNLOAD = {
 };
 
 const RESOURCES = {
-  [PATHS.RESOURCES.DOCS]: {
-    source: ResourcesFile,
-    title: 'Bgee documentation',
-    meta: {
-      title: 'Bgee documentation',
-      description: 'Bgee documentation and code links',
-      keywords: 'documentation, support, resources',
-    },
-  },
   [PATHS.RESOURCES.R_PACKAGES]: {
     source: RPackageFile,
     title: 'R packages',
