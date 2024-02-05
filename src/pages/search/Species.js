@@ -16,7 +16,7 @@ const Species = () => {
   let metaTitle = '';
   let metaDescription = '';
   let metaKeywords = '';
-  let metaLink = ''; 
+  let metaLink = '';
 
   const [data, setData] = React.useState();
   const { id } = useParams();
