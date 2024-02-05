@@ -221,7 +221,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Nucleic Acids Research, 2024.',
+                content: 'Nucleic Acids Research, 2024, 52:D44-D51.',
               },
             ],
           },
