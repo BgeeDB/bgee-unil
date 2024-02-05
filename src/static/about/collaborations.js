@@ -333,7 +333,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath(''),
+        src: imagePath('/sc-fair-logo.png'),
         path: 'https://sc-fair.org/',
         alt: 'scFAIR',
       },
