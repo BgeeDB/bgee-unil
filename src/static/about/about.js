@@ -449,11 +449,11 @@ const about = [
           {
             type: 'text',
             content:
-              'The Bgee blog can be found at ',
+              'The Bgee blog can be found ',
           },
           {
             type: 'link_external',
-            text: 'documentation',
+            text: 'here',
             path: 'https://bgeedb.wordpress.com/',
           },
           {
