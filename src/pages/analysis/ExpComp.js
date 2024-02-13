@@ -451,7 +451,7 @@ const ExpComp = () => {
 
   return (
     <>
-      {results?.signature &&
+      {searchParams &&
           <Helmet>
             <meta name="robots" content="noindex"/>
           </Helmet>
