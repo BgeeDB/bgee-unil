@@ -57,7 +57,6 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.ANALYSIS.EXPRESSION_COMPARISON,
-                  PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT,
                 ]}
                 render={(props) => (
                   <Page
