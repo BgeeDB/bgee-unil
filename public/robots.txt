@@ -4,6 +4,8 @@ User-agent: *
 Crawl-delay: 10
 Disallow: /error
 Disallow: /search/anatomical-homology?
+Disallow: /analysis/expr-comparison/:
+Disallow: /analysis/expr-comparison?
 Disallow: /search/genes/*
 Disallow: /bgee/bgee
 Disallow: /bgee13/*
