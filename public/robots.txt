@@ -6,6 +6,7 @@ Disallow: /error
 Disallow: /search/anatomical-homology?
 Disallow: /analysis/expr-comparison/:
 Disallow: /analysis/expr-comparison?
+Disallow: /analysis/top-anat/*
 Disallow: /search/genes/*
 Disallow: /bgee/bgee
 Disallow: /bgee13/*
