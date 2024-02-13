@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Button from '../../../components/Bulma/Button/Button';
+import PATHS from '../../../routes/paths';
 import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
@@ -394,6 +395,11 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                         >
                           Reinitialize
                         </Button>
+                        <a className="reinit button is-bgee-link is-outlined mr-2"
+                          href={isExprCalls ? `${PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS}` : `${PATHS.SUPPORT.TUTORIAL_RAW_DATA}`}
+                        >
+                          Documentation
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -425,7 +431,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
             )}
             <div className="resultPart">
               {isLoading ? (
-                <div className="progressWrapper is-justify-content-flex-end	">
+                <div className="progressWrapper is-justify-content-flex-end">
                   <progress
                     className="progress is-small is-primary"
                     style={{
