@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Table from '../../components/Table';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
@@ -450,6 +451,11 @@ const ExpComp = () => {
 
   return (
     <>
+      {results?.signature &&
+          <Helmet>
+            <meta name="robots" content="noindex"/>
+          </Helmet>
+      }
       <div>
         <div className="content has-text-centered">
           <Bulma.Title size={3} className="title is3">
