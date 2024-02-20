@@ -202,6 +202,35 @@ const publications = [
               {
                 type: 'text',
                 content:
+                  'Rangel JC, Mendes de Farias T, Sima AC, Kobayashi N.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'SPARQL Generation: an analysis on fine-tuning OpenLLaMA for Question Answering over a Life Science Knowledge Graph',
+                path: 'https://doi.org/10.48550/arXiv.2402.04627',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
                   'Mendes de Farias T, Altenhoff A, Bairoch A, Bastian FB, Crameri K, Dauvillier J, Dessimoz C, Glover N, Gnodtke K, Hayes C, Kriventseva E, Moretti S, Morgat A, Oesterle S, Sima A-C, Szklarczyk D, Topalov O, Toure V, Unni D, von Mering C, Wollbrett J, Zdobnov E, Samarasinghe K, Gehant S, Baratin D, Burdet B, Ibberson M, Redaschi N, Robinson-Rechavi M, Mehl F, Pagni M, Lisacek F, Bolleman J, Michel P-A, Zahn-Zabal M, Bridge AJ, Kuznetsov D, Bansal P.',
               },
               {
