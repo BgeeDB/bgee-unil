@@ -1149,3 +1149,46 @@ h1.title.in-md {
 .inline-list-separator::after {
   content: ", ";
 }
+
+.home-cards {
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
+.home-card, .home-card figure, .home-card img {
+  border-radius: 16px;
+}
+
+.home-card-link:after {
+  display: inline-block;
+  //-webkit-transform: scale(0.5, 1); /* Safari and Chrome */
+  //-moz-transform: scale(0.5, 1); /* Firefox */
+  //-ms-transform: scale(0.5, 1); /* IE 9 */
+  //-o-transform: scale(0.5, 1); /* Opera */
+  transform: scale(0.5, 1); /* W3C */
+  content: "\25BA";
+  position: relative;
+  margin-left: 2px;
+}
+
+.home-card h2 a, .home-card h2 a:hover {
+  color: $title-color !important;
+}
+
+.home-card h2 a:after {
+  content: "";
+}
+
+.home-card-footer {
+  background: linear-gradient(153deg, $primary 0%, $dark-color 100%);
+  padding: 15px;
+  border-radius: 16px;
+}
+
+.home-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import assets from '../assets';
+import assets, {heroCounts}  from '../assets';
 import CreativeCommons from '../components/CreativeCommons';
 import PATHS from '../routes/paths';
 import Bulma from '../components/Bulma';
@@ -10,13 +10,32 @@ import config from '../config.json';
 import HomeNewsList from '../components/HomeNewsList';
 import api from '../api';
 import LinkExternal from '../components/LinkExternal';
-import classnames from '../helpers/classnames';
-import GridSpecies from '../components/GridSpecies/GridSpecies';
 import schemaDotOrg from '../helpers/schemaDotOrg';
 import imagePath from '../helpers/imagePath';
-import GeneSearch from '../components/Gene/GeneSearch';
-import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 import Indexes from "../components/Indexes/Indexes";
+
+const HomeCard = props => {
+    const {imgUrl, title, desc, linkUrl, linkText} = props;
+    return (<Bulma.C size={6}><Link  to={linkUrl}>
+            <Bulma.Card className="mt-4 home-card">
+                <Bulma.Card.Body>
+                    <h2 className="has-text-primary is-size-2">{title}</h2>
+                    <div className="content">
+                        <p>{desc}</p>
+                        <p><Link to={linkUrl} className="home-card-link">{linkText}</Link></p>
+                    </div>
+                </Bulma.Card.Body>
+                <div className="home-card-footer">
+                    <Bulma.Image
+                        className="no-responsive home-card-img"
+                        src={imagePath(imgUrl)}
+                        alt={`${title} screenshot`}
+                    />
+                </div>
+            </Bulma.Card></Link>
+        </Bulma.C>
+    );
+};
 
 const Home = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -35,169 +54,117 @@ const Home = () => {
   return (
     <>
       <Bulma.Hero className="home-hero-banner">
-        <Bulma.Hero.Body className="pt-3">
-          <p className="has-text-right mb-5 has-text-black-ter">{`${
-            config.archive ? 'Archived version' : 'Version'
+        <Bulma.Hero.Body className="py-3">
+          <p className="has-text-right has-text-black-ter">{`${
+              config.archive ? 'Archived version' : 'Version'
           } ${config.fullversion}`}</p>
-          <div className="is-flex is-justify-content-center">
-            <Bulma.Image
-              src={assets.bgeeLogo}
-              alt="Bgee logo"
-              width={248}
-              height={100}
-            />
-          </div>
-          <Bulma.Title
-            className="is-size-4 has-text-uppercase has-text-centered has-text-weight-medium mb-0"
-            colorClassName="has-text-white"
-          >
-            GENE EXPRESSION DATA IN ANIMALS
-          </Bulma.Title>
-          <Bulma.Section>
-            <GeneSearch classNames="search-input mx-auto my-3 mb-5">
-              <p>
-                {`Examples: `}
-                <Link
-                  className="internal-link"
-                  to={`${PATHS.SEARCH.GENE}?search=HBB`}
-                >
-                  HBB
-                </Link>
-                {', '}
-                <Link
-                  className="internal-link"
-                  to={`${PATHS.SEARCH.GENE}?search=Apoc1`}
-                >
-                  Apoc1
-                </Link>
-                {', '}
-                <Link
-                  className="internal-link"
-                  to={`${PATHS.SEARCH.GENE}?search=PDE4DIP`}
-                >
-                  PDE4DIP
-                </Link>
-                {', '}
-                <Link
-                  className="internal-link"
-                  to={`${PATHS.SEARCH.GENE}?search=insulin`}
-                >
-                  insulin
-                </Link>
+          <Bulma.Columns>
+            <Bulma.C size={6} className="my-auto">
+              <Bulma.Title
+                className="is-size-2 has-text-left has-text-weight-medium my-3"
+                colorClassName="has-text-white"
+              >
+                Discover gene expression data in animals
+              </Bulma.Title>
+              <p className="has-text-left is-size-4 has-text-black-ter my-6">
+                Bgee is a database for retrieval and comparison of gene expression
+                patterns across multiple animal species.
+                It provides an intuitive answer to the question &quot;where is a gene expressed?&quot;
+                and supports research in cancer and agriculture as well as evolutionary biology.
               </p>
-            </GeneSearch>
-          </Bulma.Section>
-          <NavButtons />
+              <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 has-text-white my-3 is-desktop">
+                <Bulma.C size={3}>
+                  <span>comparable<br/>species</span>
+                  <p className="is-size-2 has-text-primary">{heroCounts.speciesCount}</p>
+                </Bulma.C>
+                <Bulma.C size={4}>
+                  <span>bulk and single-cell<br/>RNA-Seq libraries</span>
+                  <p className="is-size-2 has-text-primary">{heroCounts.libraryCount}</p>
+                </Bulma.C>
+                <Bulma.C size={4}>
+                  <span>unique annotated<br/>conditions</span>
+                  <p className="is-size-2 has-text-primary">{heroCounts.conditionCount}</p>
+                </Bulma.C>
+              </Bulma.Columns>
+            </Bulma.C>
+            <Bulma.C size={6}>
+              <Bulma.Image
+                className="hero-image is-justify-content-flex-end"
+                src={assets.heroImg}
+                alt="Hero logo"
+                height={480}
+                width={711}
+              />
+            </Bulma.C>
+          </Bulma.Columns>
         </Bulma.Hero.Body>
       </Bulma.Hero>
 
-      <div className="species-banner is-hidden-touch">
-        {speciesList.map((s) => (
-          <img
-            key={s.id}
-            src={imagePath(`/species/${s.id}_light.jpg`)}
-            alt={`${s.genus[0]}. ${s.speciesName}`}
-            style={{ width: `${100 / speciesList.length}%` }}
-          />
-        ))}
-      </div>
-
-      <Bulma.Section>
+      <Bulma.Section className="home-cards">
         <Bulma.Columns>
-          <Bulma.C size={12}>
-            <p className="has-text-centered is-size-5">
-              Bgee is a database for retrieval and comparison of gene expression
-              patterns across multiple animal species.
-            </p>
-            <p className="has-text-centered is-size-5">
-              It provides an intuitive answer to the question &quot;where is a
-              gene expressed?&quot; and supports research in cancer and
-              agriculture as well as evolutionary biology.
-            </p>
+          <HomeCard imgUrl="/home/gene_screenshot.png" title="Gene expression"
+                    desc="Discover important details about your selected gene including its expression 
+                            in various conditions and its orthologs."
+                    linkUrl={PATHS.SEARCH.GENE}
+                    linkText="Gene search"/>
+          <HomeCard imgUrl="/home/exp_comp_screenshot.png" title="Expression comparison"
+                    desc="Compare gene expression for a iconlist of genes in anatomical entities."
+                    linkUrl={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
+                    linkText="Compare"/>
+          <HomeCard imgUrl="/home/topanat_screenshot.png" title="Expression enrichment analysis"
+                    desc="Tool similar to a GO enrichment test but rather than using Gene Ontology annotations
+                             it is based on anatomical annotations."
+                    linkUrl={PATHS.ANALYSIS.TOP_ANAT}
+                    linkText="Analyse"/>
+          <HomeCard imgUrl="/home/raw_annot_screenshot.png" title="Raw data annotations"
+                    desc="Explore all libraries in Bgee that match your selected conditions and access their 
+                            fully annotated raw (unprocessed) data."
+                    linkUrl={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
+                    linkText="Explore"/>
+          <HomeCard imgUrl="/home/exp_call_screenshot.png" title="Expression calls"
+                    desc="Search all present/absent gene expression calls in the Bgee database."
+                    linkUrl={PATHS.SEARCH.EXPRESSION_CALLS}
+                    linkText="Search"/>
+
+          <Bulma.C size={6}>
+            <Bulma.Card className="mt-4 home-card">
+              <Bulma.Card.Body>
+                <h3 className="is-size-2 has-text-primary">
+                  Data retrieval
+                </h3>
+                <div className="content">
+                  <p>How to retrieve data.</p>
+                  <ul className="unordered">
+                    <li key="data-retrieval-1">
+                      <Link to={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS} className="home-card-link">
+                        Expression calls download files
+                      </Link>
+                    </li>
+                    <li key="data-retrieval-2">
+                      <Link to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES} className="home-card-link">
+                        Expression values download files
+                      </Link>
+                    </li>
+                    <li key="data-retrieval-3">
+                      <Link to={PATHS.RESOURCES.R_PACKAGES} className="home-card-link">R packages</Link>
+                    </li>
+                    <li key="data-retrieval-4">
+                      <Link to={PATHS.RESOURCES.SPARQL} className="home-card-link">SPARQL endpoint</Link>
+                    </li>
+                  </ul>
+                </div>
+              </Bulma.Card.Body>
+              <div className="home-card-footer">
+                <Bulma.Image
+                  className="no-responsive home-card-img"
+                  style={{ backgroundColor: 'white' }}
+                  src={imagePath("/home/data_retrieval_screenshot.png")}
+                  alt='Data retrieval screenshot'
+                />
+              </div>
+            </Bulma.Card>
           </Bulma.C>
         </Bulma.Columns>
-        <Bulma.Columns>
-          <Bulma.C size={4}>
-            <div className="is-size-5">
-              <p className="is-size-3">GENE EXPRESSION DATA</p>
-              Bgee is a database for retrieval and comparison of gene expression
-              patterns across multiple animal species, produced from multiple
-              data types (bulk RNA-Seq, {FULL_LENGTH_LABEL}, Affymetrix, in situ
-              hybridization, and EST data) and from multiple data sets
-              (including{' '}
-              <LinkExternal to="https://www.gtexportal.org/home/">
-                GTEx data
-              </LinkExternal>
-              ).
-            </div>
-          </Bulma.C>
-          <Bulma.C size={4}>
-            <div className="is-size-5">
-              <p className="is-size-3">HEALTHY WILD-TYPE</p>
-              Bgee is based exclusively on curated healthy
-              wild-type expression data (e.g., no gene knock-out, no treatment,
-              no disease), to provide a comparable reference of gene
-              expression.
-            </div>
-          </Bulma.C>
-          <Bulma.C size={4}>
-            <div className="is-size-5">
-              <p className="is-size-3">COMPARABLE BETWEEN SPECIES</p>
-              Bgee produces calls of presence/absence of expression, and of
-              differential over-/under-expression, integrated along with
-              information of gene orthology, and of homology between organs.
-              This allows comparisons of expression patterns between species.
-            </div>
-          </Bulma.C>
-        </Bulma.Columns>
-
-        <Bulma.Card className="mt-4">
-          <Bulma.Card.Header>
-            <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
-              Species with data in Bgee
-            </Bulma.Card.Header.Title>
-          </Bulma.Card.Header>
-          <Bulma.Card.Body className="species">
-            <div id="home-species-wrapper" className="content">
-              <GridSpecies
-                speciesList={speciesList}
-                onRenderSelection={(species) => (
-                  <div
-                    className={classnames(
-                      'selection px-3 fullwidth is-flex is-flex-direction-row is-justify-content-space-around is-align-items-center'
-                    )}
-                  >
-                    <p className="is-size-4 m-0">
-                      <i>{`${species.genus} ${species.speciesName}`}</i>
-                      {species.name ? ` (${species.name})` : ''}
-                    </p>
-                    <Link
-                      className="internal-link"
-                      to={`${PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES}?id=${species.id}`}
-                    >
-                      <ion-icon name="arrow-forward-outline" />
-                      See processed expression values
-                    </Link>
-                    <Link
-                      className="internal-link"
-                      to={`${PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS}?id=${species.id}`}
-                    >
-                      <ion-icon name="arrow-forward-outline" />
-                      See gene expression calls
-                    </Link>
-                    <Link
-                      className="internal-link"
-                      to={PATHS.SEARCH.SPECIES_ITEM.replace(':id', species.id)}
-                    >
-                      <ion-icon name="arrow-forward-outline" className="mr-2" />
-                      See species information
-                    </Link>
-                  </div>
-                )}
-              />
-            </div>
-          </Bulma.Card.Body>
-        </Bulma.Card>
 
         <Bulma.Card className="mt-4">
           <HomeNewsList />
@@ -208,12 +175,6 @@ const Home = () => {
         </Bulma.Card>
 
       </Bulma.Section>
-
-      <Bulma.Hero className="home-hero-banner">
-        <Bulma.Hero.Body className="pt-3">
-          <NavButtons />
-        </Bulma.Hero.Body>
-      </Bulma.Hero>
 
       <Bulma.Section>
         <Bulma.Columns>
@@ -248,55 +209,23 @@ const Home = () => {
               </LinkExternal>
               <br /><br />
             </p>
+            <p className="has-text-centered is-size-4 has-text-weight-bold">
+              Bgee have been recognised as a&nbsp;
+              <LinkExternal className='ext-as-int-link'
+                            to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
+                Global Core Biodata Resource
+              </LinkExternal>
+              and an&nbsp;
+              <LinkExternal className='ext-as-int-link'
+                            to='https://elixir-europe.org/platforms/interoperability/rirs'>
+                ELIXIR Recommended Interoperability Resource
+              </LinkExternal>
+            </p>
           </Bulma.C>
         </Bulma.Columns>
       </Bulma.Section>
     </>
   );
 };
-
-const NavButtons = ({ className }) => (
-  <div
-    className={classnames(
-      'field is-grouped is-justify-content-center',
-      className
-    )}
-  >
-    <div className="is-flex is-flex-direction-column is-justify-content-center">
-      <span className="m-1 color-white">Analysis</span>
-      <Link
-        className="button is-primary m-1 is-justify-content-start"
-        to={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
-      >
-        <Bulma.IonIcon name="list-outline" />
-        <span>Expression comparison</span>
-      </Link>
-      <Link
-        className="button is-primary m-1 is-justify-content-start"
-        to={PATHS.ANALYSIS.TOP_ANAT}
-      >
-        <Bulma.IonIcon name="stats-chart-outline" />
-        <span>Expression enrichment analysis</span>
-      </Link>
-    </div>
-    <div className="is-flex is-flex-direction-column is-justify-content-center">
-      <span className="m-1 color-white">Browse</span>
-      <Link
-        className="button is-primary m-1 is-justify-content-start"
-        to={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
-      >
-        <Bulma.IonIcon name="search-outline" />
-        <span>Raw data annotations</span>
-      </Link>
-      <Link
-        className="button is-primary m-1 is-justify-content-start"
-        to={PATHS.SEARCH.EXPRESSION_CALLS}
-      >
-        <Bulma.IonIcon name="search-outline" />
-        <span>Expression calls</span>
-      </Link>
-    </div>
-  </div>
-);
 
 export default Home;
