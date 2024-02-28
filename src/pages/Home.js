@@ -202,11 +202,6 @@ const Home = () => {
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
-        <div className="is-flex is-justify-content-flex-end mt-2">
-          <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
-            See all news
-          </Link>
-        </div>
         
         <Bulma.Card className="mt-4">
           <Indexes speciesList={speciesList}/>
