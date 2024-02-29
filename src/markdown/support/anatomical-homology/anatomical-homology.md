@@ -27,7 +27,7 @@ Additionally, the top of the results table displays the least common ancestral c
 
 ![](../img/doc/anatomical-homology/results-table.png#tutoimgborder)
 
-You can filter the results table using the filter free text box on the top left of the results table. You can also change the number of entries using the _Show N entries_ box on the top right of the results table.
+You can filter the results table using the filter free-text box on the top left of the results table. You can also change the number of entries using the _Show N entries_ box on the top right of the results table.
 
 
 ## Background
