@@ -2,7 +2,7 @@
 Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. For this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
 
 *   [Introduction](#introduction "Quick jump to this section")
-    *   [What is “Healthy Wild-Type”?](#chip-file "Quick jump to this section")
+    *   [What is “Healthy Wild-Type”?](#what-is-"healthy-wild-type"? "Quick jump to this section")
     *   [What Data are Captured?](#experiment-file "Quick jump to this section")
 *   [Annotation Process](#processed-expression-values-download-files "Quick jump to this section")
     *   [What Data are Captured?](#experiment-file "Quick jump to this section")
