@@ -113,7 +113,7 @@ To the right of the Filter field, a ***TSV*** button allows you to download the 
 
 In the same line, on the right side, you can change the number of lines visible in the results table. The default value is 20 but can be increased up to 1000.
 
-### Result table
+### Results table
 
 the result table is composed of 8 columns:
 
