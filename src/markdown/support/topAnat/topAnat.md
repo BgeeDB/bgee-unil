@@ -3,11 +3,11 @@
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Quick Start](#quick-start "Quick jump to this section")
 *   [Description of the Results](#description-of-the-results "Quick jump to this section")
-  *    [Results Table](#results-table "Quick jump to this section")
+    *    [Results Table](#results-table "Quick jump to this section")
 *   [How to Properly Choose Your Background](#how-to-properly-choose-your-background "Quick jump to this section")
 *   [Advanced Options](#advanced-options "Quick jump to this section")
-  *    [Filtering of Expression Data](#filtering-of-expression-data "Quick jump to this section")
-  *    [Algorithm Parameters](#algorithm-parameters "Quick jump to this section")
+    *    [Filtering of Expression Data](#filtering-of-expression-data "Quick jump to this section")
+    *    [Algorithm Parameters](#algorithm-parameters "Quick jump to this section")
 *   [Examples](#examples "Quick jump to this section")
 
 ## Introduction
