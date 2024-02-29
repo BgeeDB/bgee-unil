@@ -55,7 +55,7 @@ The following ontologies are used for the associated use cases listed below.
 [Cell Ontology]: http://obofoundry.org/ontology/cl.html
 
 ### How are data annotated with ontologies?
-Bgee manually curates expression data using ontologies and controlled vocabularies to ensure accurate annotation, allow data propagation, and support species to species comparisons. The Bgee curators prioritize using the most accurate term to annotate data. We also internally keep track of the quality of each annotation to support re-annotation and annotation quality control. Generally, when there is no indication provided for annotation, the root of the ontology is used.
+Bgee manually curates expression data using ontologies and controlled vocabularies to ensure accurate annotation, allow data propagation, and support species-to-species comparisons. The Bgee curators prioritize using the most accurate term to annotate data. We also internally keep track of the quality of each annotation to support re-annotation and annotation quality control. Generally, when there is no indication provided for annotation, the root of the ontology is used.
 
 ### Anatomical Entity
 Uberon, the multi-species anatomy ontology is used to annotate anatomical entities. When the experiment is done using cells it can be appropriate to annotate using the Cell Ontology. Additionally, there will be cases where the anatomical entity is a post-composition of an anatomical structure and a cell type. There are a few special cases to look out for, which are listed below.
@@ -74,7 +74,7 @@ Uberon, the multi-species anatomy ontology is used to annotate anatomical entiti
 | unfertilized egg | CL:0000025 | egg cell |
 
 ### Developmental Stage
-We use species-specific developmental stage ontologies when available for the species. When a species does not have a dedicated developmental stage ontology, we report the developmental stages directly by using the metastages of Uberon. Alternatively, we create species-specific developmental stage ontologies when none exist for a given species. For species to species comparisons, all developmental stage ontologies are mapped back to the metastages of Uberon.
+We use species-specific developmental stage ontologies when available for the species. When a species does not have a dedicated developmental stage ontology, we report the developmental stages directly by using the metastages of Uberon. Alternatively, we create species-specific developmental stage ontologies when none exist for a given species. For species-to-species comparisons, all developmental stage ontologies are mapped back to the metastages of Uberon.
 
 The following species-specific developmental stage ontologies are used in Bgee:
 | Species | Ontology |
@@ -111,10 +111,10 @@ We report 'subspecies' (as defined by [NCBI Taxonomy](https://www.ncbi.nlm.nih.g
 For humans, this field is where we annotate ethnicity. The accepted values (as suggested by the [FDA](https://www.pharmasug.org/proceedings/2015/SS/PharmaSUG-2015-SS06.pdf)) are American Indian or Alaska Native, Asian, Black or African American, Native Hawaiian or Other Pacific Islander, and White.
 
 ### Sex
-Sex is used to annotate the sex of the animal the sample was taken from. The possible values are: male, female, hermaphrodite, NA (not available or unknown), or mixed (mixture of different sexes in the sample).
+Sex is used to annotate the sex of the animal the sample was taken from. The possible values are male, female, hermaphrodite, NA (not available or unknown), or mixed (mixture of different sexes in the sample).
 
 ### Technologies and Protocols
-We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, listed below. We try to capture information about the kit used for preparing libraries, in order to determine which RNA population could be captured. More information about scRNA-seq protocols can be found in our [comparative guide](/support/scRNA-seq-protocols-comparison).
+We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, listed below. We try to capture information about the kit used for preparing libraries to determine which RNA population could be captured. More information about scRNA-seq protocols can be found in our [comparative guide](/support/scRNA-seq-protocols-comparison).
 
 | bulk RNA-seq | scRNA-seq |
 |:--|:--|
