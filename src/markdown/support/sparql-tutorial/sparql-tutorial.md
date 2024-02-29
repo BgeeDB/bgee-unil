@@ -179,7 +179,7 @@ Other vocabulary terms:
 
 These query triple patterns are more accurate because we can now precisely define the other expression conditions available instead of only an anatomical entity.
 
-#### Cell types in the Bgee knowledge graph
+### In what cell types is a gene expressed?
 When defining the condition to assess a gene expression, the [genex:hasAnatomicalEntity](https://biosoda.github.io/genex/#hasAnatomicalEntity) property is used to state cell types too since a cell type is also considered as an anatomical entity. For example, to define that a gene is expressed in lung, the graph below is built where we can interpret as the gene is expressed in a cellular component located in lung, in other words, in lung.  Therefore, when the cell type is unspecified, we assert with `genex:hasAnatomicalEntity` property the value [obo:GO_0005575 (cellular_component)](http://purl.obolibrary.org/obo/GO_0005575), this [Gene Ontology](https://geneontology.org/) term is the root of all cell types.
 
 ![](../img/doc/sparql-tutorial/cell-type.png#tutoimgborder)
@@ -637,7 +637,7 @@ SELECT DISTINCT ?symbol ?description ?id
 #### Q14 graphical representation:
 ![](../img/doc/sparql-tutorial/q14.png#tutoimgborder)
 
-## Absence of expression
+## Querying Genes with Absence of Expression
 
 To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), respectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as show in [Q15](#q15) and its [graphical representation](#q15-graphical-representation).
 
