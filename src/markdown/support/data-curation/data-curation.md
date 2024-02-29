@@ -1,7 +1,7 @@
-# Data Curation
+# Data Curation in Bgee
 Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. Bgee is based exclusively on curated healthy wild-type expression data to provide a comparable reference of gene expression. The data included in Bgee undergoes manual curation to ensure all metadata captured is accurate and reliable. For this purpose, ontologies are used to annotate anatomical entities, developmental stages, and cell types to support simple comparisons between species and the propagation of information.
 
-## Curation Overview
+## Introduction
 
 ### How are experiments identified for annotation?
 We use a few different methods for identifying experiments for annotation. We use a python and an R script to mine the SRA for experiments to annotate. We also accept external and internal requests for annotation, in addition to taking on large annotation projects like GTEx and Fly Cell Atlas.
@@ -124,16 +124,12 @@ We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, list
 | Ion Torrent Proton |  |
 
 ## Multi-species integration
-In order to make our annotations comparable between species, we remap all source information to the composite-metazoa version of Uberon.
-It means that we carefully check and use cross-references in Uberon and other ontologies, to map, for instance, data from [ZFIN](https://zfin.org/)
-or [FlyBase](https://flybase.org/) to this common representation.
+To make our annotations comparable between species, we remap all source information to the composite-metazoa version of Uberon.
+This means that we carefully check and use cross-references in Uberon and other ontologies to map, for instance, data from [ZFIN](https://zfin.org/)
+or [FlyBase](https://flybase.org/) to this shared representation.
 
-We use the taxon constraints (see for instance this [Protégé plugin](https://github.com/geneontology/protege-taxon-constraints))
+We also use the taxon constraints (for instance this [Protégé plugin](https://github.com/geneontology/protege-taxon-constraints))
 and lineage-specific General Class Inclusion (GCI) relations to produce species-specific anatomical representations from this common ontology,
 which integrates almost all other animal anatomy ontologies.
 
-Finally, we define relations of historical homology between anatomical entities, to be able to determine which entities can be compared
-between species. See our [Anatomical homology search](https://www.bgee.org/search/anatomical-homology) and our [repository of similarity annotations between anatomical structures](https://github.com/BgeeDB/anatomical-similarity-annotations) for more information.
-
-We also define broad mappings between the developmental and life stages of different species, integrated into the composite version of Uberon.
-
+Finally, we define relations of historical homology between anatomical entities to determine which entities can be compared between species. See our [Anatomical homology search](https://www.bgee.org/search/anatomical-homology) and our [repository of similarity annotations between anatomical structures](https://github.com/BgeeDB/anatomical-similarity-annotations) for more information.
