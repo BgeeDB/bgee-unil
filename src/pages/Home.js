@@ -16,10 +16,10 @@ import Indexes from "../components/Indexes/Indexes";
 
 const HomeCard = props => {
     const {imgUrl, title, desc, linkUrl, linkText} = props;
-    return (<Bulma.C size={6}><Link  to={linkUrl}>
+    return (<Bulma.C size={6}>
             <Bulma.Card className="mt-4 home-card">
                 <Bulma.Card.Body>
-                    <h2 className="has-text-primary is-size-2">{title}</h2>
+                    <h2 className="has-text-primary is-size-2"><Link  to={linkUrl}>{title}</Link></h2>
                     <div className="content">
                         <p>{desc}</p>
                         <p><Link to={linkUrl} className="home-card-link">{linkText}</Link></p>
@@ -32,7 +32,7 @@ const HomeCard = props => {
                         alt={`${title} screenshot`}
                     />
                 </div>
-            </Bulma.Card></Link>
+            </Bulma.Card>
         </Bulma.C>
     );
 };
