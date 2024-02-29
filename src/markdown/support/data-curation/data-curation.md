@@ -3,10 +3,16 @@ Bgee is a database for retrieval and comparison of gene expression patterns acro
 
 *   [Introduction](#introduction "Quick jump to this section")
     *   [What is “Healthy Wild-Type”?](#what-is-healthy-wild-type "Quick jump to this section")
-    *   [What Data are Captured?](#experiment-file "Quick jump to this section")
-*   [Annotation Process](#processed-expression-values-download-files "Quick jump to this section")
-    *   [What Data are Captured?](#experiment-file "Quick jump to this section")
-    *   [What Data are Captured?](#experiment-file "Quick jump to this section")
+    *   [What Data are Captured?](#what-data-are-captured "Quick jump to this section")
+*   [Annotation Process](#annotation-process "Quick jump to this section")
+    *   [Ontologies](#ontologies "Quick jump to this section")
+    *   [Anatomical Entity](#anatomical-entity "Quick jump to this section")
+    *   [Developmental Stage](#developmental-stage "Quick jump to this section")
+    *   [Cell Type](#cell-type "Quick jump to this section")
+    *   [Strain](#strain "Quick jump to this section")
+    *   [Sex](#sex "Quick jump to this section")
+    *   [Technologies and Protocols](#technologies-and-protocols "Quick jump to this section")
+ *  [Multi-Species Integration](#mulit-species-integration "Quick jump to this section")
 
 ## Introduction
 
