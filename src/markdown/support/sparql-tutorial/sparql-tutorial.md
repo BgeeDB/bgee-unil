@@ -249,7 +249,7 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fcondition.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcondition+genex%3AhasAnatomicalEntity+obo%3AGO_0005575+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
 
 
-### Where is a gene expressed and its expression score? (with more details)
+### Where is a gene expressed and its expression score?
 Expression of genes and their corresponding scores can also be obtained via the [genex:Expression](https://biosoda.github.io/genex/#Expression) concept. We rewrite the query [Q07](#q07) using the `genex:Expression` concept.
 
 
