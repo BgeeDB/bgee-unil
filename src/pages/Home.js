@@ -178,26 +178,6 @@ const Home = () => {
 
       <Bulma.Section>
         <Bulma.Columns>
-          <Bulma.C size={config.archive ? 12 : 9}>
-            <CreativeCommons />
-          </Bulma.C>
-          {!config.archive && (
-            <Bulma.C size={3}>
-              <p className="is-size-7 archived-link">
-                View archive sites:
-                {config.archivedVersion.map((archived) => (
-                  <LinkExternal key={archived.version} to={archived.url}>
-                    {`version ${archived.version}`}
-                  </LinkExternal>
-                ))}
-              </p>
-            </Bulma.C>
-          )}
-        </Bulma.Columns>
-      </Bulma.Section>
-
-      <Bulma.Section>
-        <Bulma.Columns>
           <Bulma.C size={12}>
             <p className="has-text-centered is-size-5">
               <LinkExternal className='ext-as-int-link' to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
@@ -222,6 +202,26 @@ const Home = () => {
               </LinkExternal>
             </p>
           </Bulma.C>
+        </Bulma.Columns>
+      </Bulma.Section>
+
+      <Bulma.Section>
+        <Bulma.Columns>
+          <Bulma.C size={config.archive ? 12 : 9}>
+            <CreativeCommons />
+          </Bulma.C>
+          {!config.archive && (
+              <Bulma.C size={3}>
+                <p className="is-size-7 archived-link">
+                  View archive sites:
+                  {config.archivedVersion.map((archived) => (
+                      <LinkExternal key={archived.version} to={archived.url}>
+                        {`version ${archived.version}`}
+                      </LinkExternal>
+                  ))}
+                </p>
+              </Bulma.C>
+          )}
         </Bulma.Columns>
       </Bulma.Section>
     </>
