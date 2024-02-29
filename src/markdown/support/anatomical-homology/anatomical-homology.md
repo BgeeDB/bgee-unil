@@ -1,12 +1,12 @@
-# Tutorial: anatomical homology
+# Anatomical Homology
 
 The [Anatomical Homology tool](https://www.bgee.org/search/anatomical-homology) retrieves anatomical entities that are homologous among different species. The user simply provides a list of anatomical entities and their species of interest. In the next sections, we provide a tutorial on how to use the Anatomical Homology tool. This tutorial is based on the Bgee release 15.0.
 
 Jump to:
 * [Quick start](#quick-start)
-* [Explanation of homology annotation tool](#explanation-of-anatomical-homology-tool)
-* [How to use this page](#how-to-use-this-page)
-* [Results table](#results-table)
+* [Background](#background)
+* [How to use the Anatomical Homology tool](#how-to-use-the-anatomical-homology-tool)
+* [Description of Results](#description-of-results)
 
 ![](../img/doc/anatomical-homology/anatomical-homology-header.png#tutoimgborder)
 
@@ -30,7 +30,7 @@ Additionally, the top of the results table displays the least common ancestral c
 You can filter the results table using the filter free text box on the top left of the results table. You can also change the number of entries using the _Show N entries_ box on the top right of the results table.
 
 
-## Explanation of anatomical homology tool
+## Background
 The anatomical homology tool can be used to identify anatomical structures in different species that are believed to be derived from a common ancestral structure. This is based on the concept of [historical homology](https://www.ebi.ac.uk/ols/ontologies/hom/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FHOM_0000007): a homology that is defined by common descent. This process is described in more detail on the [anatomical similarity annotation page](https://github.com/BgeeDB/anatomical-similarity-annotations/wiki/Similarity-annotations).
 
 The [UBERON cross-species anatomy ontology](https://www.ebi.ac.uk/ols/ontologies/uberon) IDs must be used as input for anatomical entities. Uberon IDs can be easily identified by searching the organ name on the [OLS Uberon site](https://www.ebi.ac.uk/ols/ontologies/uberon). You can input multiple Uberon IDs by listing them with a space between each ID.
@@ -39,13 +39,13 @@ This tool can be used to identify homologous anatomical structures in the select
 
 Currently, the list of available species only includes species with expression data in Bgee. Multiple species can be selected but by definition, homology relationships must involve the comparison between at least 2 species.
 
-## How to use this page
+## How to use the Anatomical Homology tool
 1. Use the [OLS Uberon site](https://www.ebi.ac.uk/ols/ontologies/uberon) to search for your organs of interest and retrieve the Uberon ID(s).
     - You can use a list of Uberon IDs by putting a space between each ID.
 2. Select at a minimum 2 species from the species list by clicking on the species name or the corresponding checkbox. All selected species will display a blue check next to their name.
 3. Click search to run the anatomical homology tool.
 
-## Results table
+## Description of Results
 ![](../img/doc/anatomical-homology/full-results-table-numbered.png#tutoimgborder)
 1. **Least common ancestor of provided species**: gives the clade to which species you selected belongs.
 2. **Anatomical entities**: the homologous anatomical entities with their common names and Uberon IDs. Clicking on an anatomical entity will bring you to the corresponding Uberon page, where you can learn more about the anatomical entity.
