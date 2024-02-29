@@ -241,38 +241,6 @@ const NAVBAR_LEFT = [
 ];
 const NAVBAR_RIGHT = [
   {
-    href: 'https://bioconductor.org/packages/BgeeDB/',
-    src: assets.rLogo,
-    alt: 'R',
-    height: '20',
-    width: '20',
-    className: 'no-responsive',
-  },
-//  {
-//    href: 'https://www.linkedin.com/company/bgee/',
-//    src: assets.linkedinLogo,
-//    alt: 'LinkedIn Bgee',
-//    height: '20',
-//    width: '20',
-//    className: 'no-responsive',
-//  },
-  {
-    href: 'https://genomic.social/@bgeedb',
-    src: assets.mastodonLogo,
-    alt: 'Mastodon Bgee',
-    height: '20',
-    width: '19',
-    className: 'no-responsive',
-  },
-  {
-    href: 'https://twitter.com/Bgeedb',
-    src: assets.twitterLogo,
-    alt: 'Twitter Bgee',
-    height: '20',
-    width: '20',
-    className: 'no-responsive',
-  },
-  {
     href: 'https://www.unil.ch/central/en/home.html',
     src: assets.unilLogo,
     alt: 'UNIL',

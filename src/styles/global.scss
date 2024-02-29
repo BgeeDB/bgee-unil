@@ -191,14 +191,12 @@ $footer-color: $dark-color;
 $footer-padding: 1rem;
 
 footer.footer {
-  .left-wrapper {
+  .left-wrapper,
+  .right-wrapper {
     display: flex;
     a:not(:first-child) {
       margin-left: 15px;
     }
-  }
-  .right-wrapper a:not(:last-child) {
-    margin-right: 15px;
   }
   a {
     color: #ffffff;
@@ -1192,3 +1190,40 @@ h1.title.in-md {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.nav-footer {
+  display: table;
+  margin: 40px auto;
+  max-width: 1000px;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+.nav-footer-line {
+  display: table-row;
+}
+
+.nav-footer-col {
+  display: table-cell;
+  padding: 0 10px;
+}
+
+.nav-footer-col-head {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 6px 0 14px 0;
+  white-space: nowrap;
+}
+
+.nav-footer-col ul li {
+  margin: 0 0 10px;
+  white-space: nowrap;
+}
+
+.nav-footer-col ul li a:hover {
+  text-decoration: underline;
+}
+
+.nav-footer-col-spacer {
+  width: 10%;
+  display: table-cell;
+}
