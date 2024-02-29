@@ -73,7 +73,7 @@ SELECT ?species ?sci_name ?common_name {
 
 All anatomic entities and developmental stages are represented with the [UBERON ontology](https://www.ebi.ac.uk/ols4/ontologies/uberon) or related ontologies as controlled vocabularies.
 
-### Where is a gene expressed? (simplified)
+### Where is a gene expressed?
 Genes that are expressed in a tissue, organ or cell (i.e., anatomical entity in general) are represented with the relation
 [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn), alternatively its corresponding relation [obo:RO_0002206](http://purl.obolibrary.org/obo/RO_0002206) is stated too. In the query [Q03](#q03) (see [graphical representation](#q03-graphical-representation)), more precisely, we query for **the anatomical entities where the "APOC1" gene is expressed**.
 #### Q03:
