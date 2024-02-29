@@ -1,8 +1,21 @@
-# Tutorial: Querying the Bgee Knowledge Graph with SPARQL
-**Keywords**: Bgee knowledge graph, gene-expression profile, RDF, SPARQL.
+# Querying the Bgee Knowledge Graph with SPARQL
 
-## Overview
-In this tutorial we will demonstrate how to build complex queries to retrieve gene expression information. We will build them step-by-step based on simple queries. The language used for querying the Bgee knowledge graph is [SPARQL](https://www.w3.org/TR/sparql11-overview/). The Bgee graph was built based on the [GenEx semantic model](https://biosoda.github.io/genex/).
+*   [Introduction](#introduction "Quick jump to this section")
+*   [Querying Species](#querying-species "Quick jump to this section")
+*   [Querying Gene Expression Profile](#querying-gene-expression-profile "Quick jump to this section")
+    *   [Where is a Gene Expressed](#where-is-a-gene-expressed "Quick jump to this section")
+    *   [In What Cell Types is a Gene Expressed](#in-what-cell-types-is-a-gene-expressed "Quick jump to this section")
+    *   [Where is a Gene Expressed and its Expression Score](#where-is-a-gene-expressed-and-its-expression-score "Quick jump to this section")
+*   [Querying with Controlled Vocabularies and Identifiers](#querying-with-controlled-vocabularies-and-identifiers "Quick jump to this section")
+    *   [Taxonomy Identifiers](#taxonomy-identifiers "Quick jump to this section")
+    *   [Gene Identifiers](#gene-identifiers "Quick jump to this section")
+    *   [Anatomical Entity Vocabulary](#anatomical-entity-vocabulary "Quick jump to this section")
+    *   [Developmental Stage Vocabulary](#developmental-stage-vocabulary "Quick jump to this section")
+*   [Querying with UniProtKB Cross-References](#querying-with-UniProtKB-cross-references "Quick jump to this section")
+*   [Querying Genes with Absence of Expression](#querying-genes-with-absence-of-expression "Quick jump to this section")
+
+## Introduction
+In this tutorial, we will demonstrate how to build complex queries to retrieve gene expression information. We will build them step-by-step based on simple queries. The language used for querying the Bgee knowledge graph is [SPARQL](https://www.w3.org/TR/sparql11-overview/). The Bgee graph was built based on the [GenEx semantic model](https://biosoda.github.io/genex/).
 
 The following sections describe queries that can be run directly in our [SPARQL endpoint webpage](https://bgee.org/sparql/). Nevertheless, the Bgee SPARQL endpoint (see its webpage header below) can also be queried using your preferred programming language such as with the [SPARQLWrapper](https://sparqlwrapper.readthedocs.io/en/latest/) package for the Python language or the [R SPARQL](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) package for the R language.
 
