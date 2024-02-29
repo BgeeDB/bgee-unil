@@ -1,6 +1,6 @@
-# Tutorial: Expression call search
+# Search for Present/Absent Expression Calls
 
-## Overview
+## Introduction
 Bgee "expression call search" allows you to search all present/absent gene expression calls in the Bgee database.
 The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](/search/raw-data) to retrieve such data).
 
