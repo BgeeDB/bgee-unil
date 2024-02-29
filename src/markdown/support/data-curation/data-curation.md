@@ -126,7 +126,7 @@ We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, list
 ## Multi-species integration
 To make our annotations comparable between species, we remap all source information to the composite-metazoa version of Uberon.
 This means that we carefully check and use cross-references in Uberon and other ontologies to map, for instance, data from [ZFIN](https://zfin.org/)
-or [FlyBase](https://flybase.org/) to this shared representation.
+or [FlyBase](https://flybase.org/) to this common representation.
 
 We also use the taxon constraints (for instance this [Protégé plugin](https://github.com/geneontology/protege-taxon-constraints))
 and lineage-specific General Class Inclusion (GCI) relations to produce species-specific anatomical representations from this common ontology,
