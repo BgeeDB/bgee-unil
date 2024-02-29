@@ -1,4 +1,4 @@
-# TopAnat: Uberon enrichment analysis
+# TopAnat: an Anatomical Entity Enrichment Tool
 
 ## Overview
 
