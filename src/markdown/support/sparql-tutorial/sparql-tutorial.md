@@ -11,7 +11,8 @@
     *   [Gene Identifiers](#gene-identifiers "Quick jump to this section")
     *   [Anatomical Entity Vocabulary](#anatomical-entity-vocabulary "Quick jump to this section")
     *   [Developmental Stage Vocabulary](#developmental-stage-vocabulary "Quick jump to this section")
-*   [Querying with UniProtKB Cross-References](#querying-with-UniProtKB-cross-references "Quick jump to this section")
+*   [Querying with UniProtKB cross-references](#querying-with-uniprotkb-cross-references "Quick jump to this section")
+*   [Querying Gene Metadata](#querying-gene-metadata "Quick jump to this section")
 *   [Querying Genes with Absence of Expression](#querying-genes-with-absence-of-expression "Quick jump to this section")
 
 ## Introduction
@@ -570,7 +571,7 @@ FILTER (?anat !=  obo:GO_0005575)
 ## Querying with UniProtKB cross-references
 To query with UniProtKB cross-references the easiest way is to state the property `lscr:xrefUniprot` that is assigned to each Bgee gene. For example, the human APOC1 gene has its corresponding UniProtKB IRI `up-protein:P02654` where `up-protein:` is a prefix replacing the URI `http://purl.uniprot.org/uniprot/` as defined in the header of the [Q13](#q13).
 
-[Q13](#q13) retrieves the same results and it is similar to [Q03](#q03) but [Q13](#q13) uses UniProtKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
+[Q13](#q13) retrieves the same results, and it is similar to [Q03](#q03) but [Q13](#q13) uses UniProtKB accession numbers for identifying genes instead of gene names or symbols, in other words, it uses `lscr:xrefUniprot` instead of `rdfs:label` property.
 
 #### Q13:
 > *Question*: What are the anatomical entities where the P02654 gene is expressed?

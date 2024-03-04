@@ -180,7 +180,7 @@ This parameter allows pruning of the anatomical ontology from the terms that hav
 The number of significant nodes to be displayed in the generated graph of results. The parameter has a visualization purpose only and has no impact on the results of the analysis.
 
 #### FDR threshold
-Anatomical terms with a FDR higher than this threshold will not be considered as significant.
+Anatomical terms with an FDR higher than this threshold will not be considered as significant.
 
 #### p-value threshold
 Anatomical terms with a p-value higher than this threshold will not be considered as significant.
