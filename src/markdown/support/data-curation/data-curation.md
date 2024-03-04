@@ -5,14 +5,14 @@ Bgee is a database for retrieval and comparison of gene expression patterns acro
     *   [What is “Healthy Wild-Type”?](#what-is-healthy-wild-type "Quick jump to this section")
     *   [What Data are Captured?](#what-data-are-captured "Quick jump to this section")
 *   [Annotation Process](#annotation-process "Quick jump to this section")
-    *   [Ontologies](#ontologies "Quick jump to this section")
+    *   [Ontologies Used](#ontologies-used "Quick jump to this section")
     *   [Anatomical Entity](#anatomical-entity "Quick jump to this section")
     *   [Developmental Stage](#developmental-stage "Quick jump to this section")
     *   [Cell Type](#cell-type "Quick jump to this section")
     *   [Strain](#strain "Quick jump to this section")
     *   [Sex](#sex "Quick jump to this section")
     *   [Technologies and Protocols](#technologies-and-protocols "Quick jump to this section")
- *  [Multi-Species Integration](#mulit-species-integration "Quick jump to this section")
+ *  [Multi-Species Integration](#multi-species-integration "Quick jump to this section")
 
 ## Introduction
 
@@ -136,7 +136,7 @@ We have a list of acceptable protocols for both scRNA-seq and bulk RNA-seq, list
 | Illumina NovaSeq 6000 |  |
 | Ion Torrent Proton |  |
 
-## Multi-species integration
+## Multi-Species Integration
 To make our annotations comparable between species, we remap all source information to the composite-metazoa version of Uberon.
 This means that we carefully check and use cross-references in Uberon and other ontologies to map, for instance, data from [ZFIN](https://zfin.org/)
 or [FlyBase](https://flybase.org/) to this common representation.
