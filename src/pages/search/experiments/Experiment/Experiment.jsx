@@ -56,11 +56,11 @@ const Experiment = () => {
   return (
     <>
       <Helmet>
-        <title>{data.experiment.name}</title>
-        <meta name="description" content={data.experiment.description} />
+        <title>{`${data.experiment.name ? data.experiment.name : `${getUserFriendlyDataType(data?.dataType)} for ${data.experiment.id}`}`}</title>
+        <meta name="description" content={`${data.experiment.description ? data.experiment.description : `${getUserFriendlyDataType(data?.dataType)} for ${data.experiment.id}`}`} />
         <meta
           name="keywords"
-          content={`experiment,${data.experiment.id}, ${data.experiment.name}`}
+          content={`experiment,${data.experiment.id}${data.experiment.name ? `,${data.experiment.name}`: ''}`}
         />
         <link rel="canonical" href={`${config.genericDomain}${PATHS.SEARCH.EXPERIMENT
             .replace(':id', data?.experiment?.id)}`} />
