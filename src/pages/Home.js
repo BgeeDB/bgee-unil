@@ -66,11 +66,14 @@ const Home = () => {
               >
                 Discover gene expression data in animals
               </Bulma.Title>
-              <p className="has-text-left is-size-4 has-text-black-ter my-6">
+              <p className="has-text-left is-size-5 has-text-black-ter my-6">
                 Bgee is a database for retrieval and comparison of gene expression
                 patterns across multiple animal species.
                 It provides an intuitive answer to the question &quot;where is a gene expressed?&quot;
                 and supports research in cancer and agriculture as well as evolutionary biology.
+              </p>
+              <p className="has-text-centered my-6">
+                <Link to={PATHS.SEARCH.GENE}>Gene search</Link>
               </p>
               <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 has-text-white my-3 is-desktop">
                 <Bulma.C size={3}>
