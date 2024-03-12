@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import Bulma from '../../components/Bulma';
 import api from '../../api';
 import PATHS from "../../routes/paths";
+import config from '../../config.json';
 
 const SpeciesGeneList = () => {
     let speciesDisplay = '';
@@ -53,7 +54,7 @@ const SpeciesGeneList = () => {
     if (species) {
         speciesScientificName = `${species.genus} ${species.speciesName}`;
         speciesDisplay = `${speciesScientificName}${species.name ? ` (${species.name})` : ''}`;
-        canonicalURL = getCanonicalURL(species);
+        canonicalURL = `${config.genericDomain}${getCanonicalURL(species)}`;
     }
 
     const meta = React.useMemo(
