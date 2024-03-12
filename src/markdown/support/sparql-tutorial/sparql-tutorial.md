@@ -601,9 +601,9 @@ SELECT DISTINCT ?anat ?anatName {
 
 All direct attributes of a given gene in the Bgee knowledge graph are listed below:
 - [rdfs:label](http://www.w3.org/2000/01/rdf-schema#label) (**always present**): the gene symbol.
-- [rdfs:seeAlso](http://www.w3.org/2000/01/rdf-schema#seeAlso) (**always present**): additional links, currently, its values are versioned Bgee gene page links, for instance, `https://www.bgee.org/bgee15_0/gene/ENSG00000130208`.
+- [rdfs:seeAlso](http://www.w3.org/2000/01/rdf-schema#seeAlso) (**always present**): additional links, currently, its values are versioned Bgee gene page links, for instance, `https://www.bgee.org/bgee15_0/gene/ENSG00000130208/`.
 - [dcterms:description](http://purl.org/dc/terms/description) (**always present**): the gene description.
-- [dcterms:identifier](http://purl.org/dc/terms/identifier) (**always present**): the gene identifier as defined by the genome source. Currently, it is either an Ensembl or NCBI Gene database ID (e.g., [ENSG00000130208](https://www.bgee.org/gene/ENSG00000130208), [118230125](https://www.bgee.org/gene/118230125)).
+- [dcterms:identifier](http://purl.org/dc/terms/identifier) (**always present**): the gene identifier as defined by the genome source. Currently, it is either an Ensembl or NCBI Gene database ID (e.g., [ENSG00000130208](https://www.bgee.org/gene/ENSG00000130208/), [118230125](https://www.bgee.org/gene/118230125/)).
 - [orth:organism](http://purl.org/net/orth#organism) (**always present**): the values are the Bgee species webpages, for example, [Homo sapiens](https://www.bgee.org/species/9606).
 - [lscr:xrefEnsemblGene](http://purl.org/lscr#xrefEnsemblGene) (**optionally present**): the Ensembl cross-references. The values are the Ensembl IRIs from the [EBI RDF platform](https://academic.oup.com/bioinformatics/article/30/9/1338/234645), for example, http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208.
 - [lscr:xrefNCBIGene](http://purl.org/lscr#xrefNCBIGene) (**optionally present**): the NCBI Gene database cross-references. The values are the NCBI Gene webpages, for example, https://www.ncbi.nlm.nih.gov/gene/118230125.
