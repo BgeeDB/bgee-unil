@@ -297,7 +297,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'On the Potential of Artificial Intelligence Chatbots for Data Exploration of Federated Bioinformatics Knowledge Graphs',
-                path: 'https://doi.org/10.48550/arXiv.2304.10427',
+                path: 'https://ceur-ws.org/Vol-3466/paper1.pdf',
               },
               {
                 type: 'break_line',
@@ -308,7 +308,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'arXiv, 2023.',
+                content: 'Proceedings of the 6th Workshop on Semantic Web Solutions for Large-Scale Biomedical Data Analytics, 2023, 3466:paper1.',
               },
             ],
           },
