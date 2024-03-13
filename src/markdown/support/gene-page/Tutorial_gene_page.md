@@ -1,5 +1,5 @@
 # Tutorial: gene page
-Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969/](/gene/ENSMUSG00000028969/)
+Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969](/gene/ENSMUSG00000028969)
 
 ## Gene search
 You can search for genes based on their name, description, synonyms, identifiers, or cross-references.
@@ -100,7 +100,7 @@ They correspond to one-to-one homologs for each pair of species in Bgee.
 ### Orthologs
 
 Orthology information is presented at taxon levels corresponding to the least common ancestor taxon for which orthologs are found in Bgee species.
-For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969/#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig12_Orthologs.gif#tutoimgborder)
 
@@ -124,7 +124,7 @@ You can run an expression comparison analysis for all ortholog genes at one taxo
 ### Paralogs
 
 Paralogy information is presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
-For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969/#paralogs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#paralogs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig16_Paralogs-see-details.gif#tutoimgborder)
 

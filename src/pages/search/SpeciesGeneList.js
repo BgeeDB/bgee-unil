@@ -110,7 +110,8 @@ const SpeciesGeneList = () => {
                                     <Link className="internal-link"
                                           to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES
                                               .replace(':geneId', element.geneId)
-                                              .replace(':speciesId', element.geneMappedToSameGeneIdCount === 1 ? '' : species?.id)}
+                                              .replace(':speciesId', element.geneMappedToSameGeneIdCount === 1 ? '' : species?.id)
+                                              .replace(/\/$/, '')}
                                           title={`Gene expression for ${element.name} in ${speciesDisplay}`}>
                                         {getGeneDisplay(element)}
                                     </Link>

@@ -58,7 +58,7 @@ const GenesCell = ({ genes }) => {
           ).replace(
             ':speciesId',
             a.geneMappedToSameGeneIdCount === 1 ? '' : a.species.id
-          )}
+          ).replace(/\/$/, '')}
         >
           {a.geneId}
         </Link>

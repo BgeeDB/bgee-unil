@@ -80,7 +80,8 @@ const GeneDetails = ({
     const synonymsExpr = synonyms ? `, ${synonyms.join(', ')}` : '';
     const canonicalLink = `${config.genericDomain}${PATHS.SEARCH.GENE_ITEM_BY_SPECIES
         .replace(':geneId', geneId)
-        .replace(':speciesId', geneMappedToSameGeneIdCount === 1 ? '' : species.id)}`;
+        .replace(':speciesId', geneMappedToSameGeneIdCount === 1 ? '' : species.id)
+        .replace(/\/$/, '')}`;
     return {
       title: `${name} expression in ${speciesName}`,
       description: `Bgee gene expression data for ${hasNameOpener}${geneId}${hasNameCloser} in ${latinName}${speciesNameBrackets}`,

@@ -24,7 +24,8 @@ const onRenderCell =
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
               cell.id
-            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
+            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)
+             .replace(/\/$/, '')}
           >
             {cell[key]}
           </Link>

@@ -119,9 +119,6 @@ const RawDataAnnotationResults = ({
 
                   path += `/${specieId}`;
                 }
-                else {
-                  path += '/'; // To use gene canonical URLs
-                }
               }
               return {
                 type: col.columnType,

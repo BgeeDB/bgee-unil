@@ -26,7 +26,7 @@ const GeneList = ({ details, history }) => (
               PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
                 ':geneId',
                 e.geneId
-              ).replace(':speciesId', e.species.id)
+              ).replace(':speciesId', e.species.id).replace(/\/$/, '')
             );
           }}
         >
