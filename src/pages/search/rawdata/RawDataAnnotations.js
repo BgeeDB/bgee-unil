@@ -32,6 +32,7 @@ import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
+import OnlyPropagated from './components/filters/OnlyPropagated/OnlyPropagated';
 import config from '../../../config.json';
 
 const APP_VERSION = config.version;
@@ -51,6 +52,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     selectedCellTypes,
     hasTissueSubStructure,
     hasCellTypeSubStructure,
+    onlyPropagated,
     selectedStrain,
     selectedGene,
     selectedExpOrAssay,
@@ -71,6 +73,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     setConditionalParam2,
     setDataQuality,
     setDataTypesExpCalls,
+    setOnlyPropagated,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -203,6 +206,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     urlParamsWithoutPageType += `&anat_entity_descendant=${params.hasTissueSubStructure}`;
     urlParamsWithoutPageType += `&cell_type_descendant=${params.hasCellTypeSubStructure}`;
     urlParamsWithoutPageType += `&stage_descendant=${params.hasDevStageSubStructure}`;
+    urlParamsWithoutPageType += `&only_propagated=${params.onlyPropagated}`;
 
     return urlParamsWithoutPageType;
   });
@@ -336,6 +340,16 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
+                            {(!isExprCalls) && (
+                              <>
+                                <div className="my-2">
+                                  <OnlyPropagated
+                                    onlyPropagated={onlyPropagated}
+                                    setOnlyPropagated={setOnlyPropagated}
+                                  />
+                                </div>
+                              </>
+                            )}
                           </>
                         )}
                       </div>

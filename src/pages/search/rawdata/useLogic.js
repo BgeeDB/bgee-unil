@@ -189,6 +189,7 @@ const useLogic = (isExprCalls) => {
   const [hasCellTypeSubStructure, setHasCellTypeSubStructure] = useState(true);
   const [hasTissueSubStructure, setHasTissueSubStructure] = useState(true);
   const [hasDevStageSubStructure, setDevStageSubStructure] = useState(true);
+  const [onlyPropagated, setOnlyPropagated] = useState(true);
   const [dataQuality, setDataQuality] = useState(BRONZE);
   const [callTypes, setCallTypes] = useState([NOT_EXPRESSED, EXPRESSED]);
   const [condObserved, setCondObserved] = useState(false);
@@ -451,12 +452,15 @@ const useLogic = (isExprCalls) => {
     setHasTissueSubStructure(true);
     setHasCellTypeSubStructure(true);
     setDevStageSubStructure(true);
+    setOnlyPropagated(isExprCalls);
     if (requestParameters?.anat_entity_descendant === 'false')
       setHasTissueSubStructure(false);
     if (requestParameters?.cell_type_descendant === 'false')
       setHasCellTypeSubStructure(false);
     if (requestParameters?.stage_descendant === 'false')
       setDevStageSubStructure(false);
+    if (requestParameters?.only_propagated === 'true')
+      setOnlyPropagated(true);
 
     // Filters
     const filtersToCheck =
@@ -541,6 +545,7 @@ const useLogic = (isExprCalls) => {
       hasCellTypeSubStructure,
       hasDevStageSubStructure,
       hasTissueSubStructure,
+      onlyPropagated,
       pageNumber,
       limit,
     };
@@ -667,6 +672,9 @@ const useLogic = (isExprCalls) => {
           }
           if (searchParams.get('anat_entity_descendant') === 'true') {
             searchParams.delete('anat_entity_descendant');
+          }
+          if (searchParams.get('only_propagated') === 'false') {
+            searchParams.delete('only_propagated');
           }
           if (isFirstSearch) {
             history.replace({
@@ -807,6 +815,7 @@ const useLogic = (isExprCalls) => {
     setHasCellTypeSubStructure(true);
     setHasTissueSubStructure(true);
     setDevStageSubStructure(true);
+    setOnlyPropagated(isExprCalls);
     if (!isSpeciesChange) {
       setSelectedSpecies(EMPTY_SPECIES_VALUE);
       setSelectedExpOrAssay([]);
@@ -828,6 +837,7 @@ const useLogic = (isExprCalls) => {
     selectedCellTypes,
     hasTissueSubStructure,
     hasCellTypeSubStructure,
+    onlyPropagated,
     selectedStrain,
     selectedGene,
     selectedExpOrAssay,
@@ -866,6 +876,7 @@ const useLogic = (isExprCalls) => {
     setSelectedDevStages,
     setDevStageSubStructure,
     setHasCellTypeSubStructure,
+    setOnlyPropagated,
     setDataType,
     setShow,
     AutoCompleteByType,
