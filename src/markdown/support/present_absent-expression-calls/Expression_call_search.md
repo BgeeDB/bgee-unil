@@ -55,7 +55,7 @@ and in its child conditions.
 
 ## Results
 
-### Result filtering
+### Filter results
 The expression calls can be further filtered by using the fields appearing above the result table after submitting the form.
 Filters allow you to select actual values present in your results. For instance, if you request in the form
 to retrieve calls in "brain" including all its substructures, then the filter "Anat. entity and cell type" will display all the brain tissues
@@ -75,12 +75,12 @@ Click ***apply filters*** to apply the filters you selected. Click the *trash ic
 ![](../img/doc/present_absent-expression-calls/results-apply-clean.png#tutoimgborder)
 
 
-### Result export
+### Export results
 Below the Filter field, the ***export current page in TSV*** button allows you to download the results table as a tabulated file. Please note that only the displayed entries will be downloaded in the TSV.
 
 Below the export current page in TSV button, you can change the number of lines visible in the results table with the **Show *N* entries** dropdown. The default value is 50 but can be increased up to 1000.
 
-### Column description
+### Description of results
 
 ![](../img/doc/present_absent-expression-calls/Fig1_results-table.png#tutoimgborder)
 
