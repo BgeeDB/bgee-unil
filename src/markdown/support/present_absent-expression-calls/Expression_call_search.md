@@ -1,16 +1,11 @@
 # Search for Present/Absent Expression Calls
 
-*   [Introduction](#Introduction "Quick jump to this section")
-*   [Search Form](#Introduction "Quick jump to this section")
-*   [Filtering](#Introduction "Quick jump to this section")
-*   [Experiments](#Introduction "Quick jump to this section")
-    *   [Results Table](#chip-file "Quick jump to this section")
+*   [Introduction](#introduction "Quick jump to this section")
+*   [Search for Present/Absent Expression Calls](#Introduction "Quick jump to this section")
+*   [Results](#results "Quick jump to this section")
+    *   [Results Table](#results-table "Quick jump to this section")
     *   [Results Table - Within an Experiment](#experiment-file "Quick jump to this section")
-    *   [Description of Results](#experiment-file "Quick jump to this section")
-*   [Data Annotations](#processed-expression-values-download-files "Quick jump to this section")
-    *   [Description of Results](#chip-file "Quick jump to this section")
-*   [Processed Expression Values](#processed-expression-values-download-files "Quick jump to this section")
-    *   [Description of Results](#chip-file "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
 
 ## Introduction
 Bgee "expression call search" allows you to search all present/absent gene expression calls in the Bgee database.
