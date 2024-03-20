@@ -8,10 +8,10 @@ Instructions on how to search and filter Bgee *Experiments*, *Raw data annotatio
     *   [Results Table](#results-table "Quick jump to this section")
     *   [Results Table - Within an Experiment](#result-table---within-an-experiment "Quick jump to this section")
     *   [Description of Results](#description-of-results "Quick jump to this section")
-*   [Data Annotations](#data-annotations "Quick jump to this section")
-    *   [Description of Results](#description-of-results "Quick jump to this section")
+*   [Raw Data Annotations](#raw-data-annotations "Quick jump to this section")
+    *   [Description of Results](#description-of-results-1 "Quick jump to this section")
 *   [Processed Expression Values](#processed-expression-values "Quick jump to this section")
-    *   [Description of Results](#description-of-results "Quick jump to this section")
+    *   [Description of Results](#description-of-results-2 "Quick jump to this section")
 
 
 ## Introduction
