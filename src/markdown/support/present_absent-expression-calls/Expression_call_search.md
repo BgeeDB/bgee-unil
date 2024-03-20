@@ -3,8 +3,8 @@
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Search for Present/Absent Expression Calls](#search-for-presentabsent-expression-calls-1 "Quick jump to this section")
 *   [Results](#results "Quick jump to this section")
-    *   [Results Table](#results-table "Quick jump to this section")
-    *   [Results Table - Within an Experiment](#experiment-file "Quick jump to this section")
+    *   [Filter Results](#filter-results "Quick jump to this section")
+    *   [Export Results](#export-results "Quick jump to this section")
     *   [Description of Results](#description-of-results "Quick jump to this section")
 
 ## Introduction
