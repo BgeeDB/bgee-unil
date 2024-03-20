@@ -6,7 +6,7 @@ This tutorial shows how to search for genes in Bgee and describes the informatio
     *   [General information](#general-information "Quick jump to this section")
     *   [Expression and reported absence of expression](#expression-and-reported-absence-of-expression "Quick jump to this section")
     *   [Orthology and paralogy](#orthology-and-paralogy "Quick jump to this section")
-    *   [Cross-references](#orthology-and-paralogy "Quick jump to this section")
+    *   [Cross-references](#cross-references "Quick jump to this section")
 
 ## Gene search
 You can search for genes based on their name, description, synonyms, identifiers, or cross-references.
