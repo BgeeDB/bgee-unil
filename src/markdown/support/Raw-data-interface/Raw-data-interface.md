@@ -6,7 +6,7 @@ Instructions on how to search and filter Bgee *Experiments*, *Raw data annotatio
 *   [Filtering](#filtering "Quick jump to this section")
 *   [Experiments](#experiments "Quick jump to this section")
     *   [Results Table](#results-table "Quick jump to this section")
-    *   [Results Table - Within an Experiment](#experiment-file "Quick jump to this section")
+    *   [Results Table - Within an Experiment](#result-table---within-an-experiment "Quick jump to this section")
     *   [Description of Results](#description-of-results "Quick jump to this section")
 *   [Data Annotations](#data-annotations "Quick jump to this section")
     *   [Description of Results](#description-of-results "Quick jump to this section")
@@ -137,7 +137,7 @@ The top of the results page has a filter option that filters all the columns usi
 
 As with the *Raw data annotations* or *Processed expression values* pages, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
-### Column descriptions - within an experiment
+### Description of results
 
 * **Library ID:** Unique library identifier for the sequenced or analyzed sample.
 * **Anat. entity ID:** Controlled vocabulary ID (UBERON, CL or species specific term) describing anatomical localization of the sample. Clicking on the Uberon link brings you to the Ontology search page for that Uberon ID where you will be able to see all related substructures or parent terms.
@@ -171,7 +171,7 @@ The raw data annotations tab allows you to retrieve all libraries in Bgee that m
 As with the *Experiments* or *Processed expression values* page, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
 
-### Column descriptions
+### Description of results
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Experiment name**: defines the title used to designate this experiment.
@@ -211,7 +211,7 @@ using the [filtering section](#filtering).
 The columns of the results table will depend on the data type selected. We describe in the *Column description* section all columns present in at least one data type.
 
 
-### Column descriptions
+### Description of results
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Library ID**: Unique library identifier for the sequenced or analyzed sample.
