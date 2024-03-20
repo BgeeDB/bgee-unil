@@ -1,5 +1,5 @@
 # Search Experiments, Annotations, and Processed Expression Values
-Instructions on how to search and filter Bgee *Experiments*, *Raw data annotations* or *Processed expression values*, and information on the generated results table.
+Instructions on how to search and filter Bgee *experiments*, *raw data annotations* and *processed expression values*, and information on the generated results table.
 
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Search Form](#search-form "Quick jump to this section")
