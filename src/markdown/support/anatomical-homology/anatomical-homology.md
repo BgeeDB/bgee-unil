@@ -1,6 +1,6 @@
 # Anatomical Homology
 
-The [Anatomical Homology tool](https://www.bgee.org/search/anatomical-homology) retrieves anatomical entities that are homologous among different species. The user simply provides a list of anatomical entities and their species of interest. In the next sections, we provide a tutorial on how to use the Anatomical Homology tool. This tutorial is based on the Bgee release 15.0.
+The [Anatomical Homology tool](https://www.bgee.org/search/anatomical-homology) can be used to identify anatomical structures in different species that are believed to be derived from a common ancestral structure. In the next sections, we provide a tutorial on how to use the Anatomical Homology tool. This tutorial is based on the Bgee release 15.0.
 
 * [Quick start](#quick-start)
 * [Background](#background)
