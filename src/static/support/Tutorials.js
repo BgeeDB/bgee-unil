@@ -13,7 +13,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Gene search and gene page',
+            title: 'Gene Search and Gene Page',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -29,7 +29,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to search gene and what kind of information you can get from the Bgee gene page.',
+                  'Describes how to search for a gene and the information you can get from the Bgee gene page.',
               },
             ],
           },
@@ -39,7 +39,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: TopAnat, Uberon enrichment analysis',
+            title: 'TopAnat: an Anatomical Entity (Uberon) Enrichment Tool',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -65,7 +65,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Expression call search',
+            title: 'Search for Present/Absent Expression Calls',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -91,7 +91,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Data curation in Bgee',
+            title: 'Data Curation in Bgee',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -117,7 +117,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Querying the Bgee Knowledge Graph',
+            title: 'Querying the Bgee Knowledge Graph with SPARQL',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -169,7 +169,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Raw data interface',
+            title: 'Search Experiments, Annotations, and Processed Expression Values',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -195,7 +195,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Anatomical homology',
+            title: 'Anatomical Homology',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
