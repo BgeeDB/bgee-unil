@@ -22,7 +22,7 @@ The raw data interface consists of 3 different tabs (*Experiments*, *Raw data an
 
 To access the main search page, go to the *Search* section of Bgee's homepage toolbar and select the *Raw data annotated and processed* subsection.
 
-# Search Form
+## Search Form
 
 At the top of each data interface page (such as *Experiments*) you will find the form that you can fill in to select specific species, tissues, experiments, and more. The form works as follows:
 
@@ -46,11 +46,11 @@ The following filter options are available through the search form:
 
 After selecting all desired filters from the search form, click the *Submit* button to populate the results table.
 
-# Filtering
+## Filtering
 
 The data can be further filtered from the results table.
 
-## Available filters
+### Available filters
 
 Filters can differ depending on the data page (*experiments*, *raw data annotations*, or *processed expression values*) and the data type (bulk RNA-seq, scRNA-seq, affymetrix, ISH, or EST).
 The following filters can always be applied:
@@ -66,18 +66,18 @@ The following filters can be applied only on some data pages or data types:
 * **Experiments**: Available for all data types except ESTs, as such a concept does not exist for the EST data type. Select the experiment(s) of interest, either by the experiment name or the experiment ID. Multiple experiments can be selected.
 * **Assays**: Available for all data types for *Raw data annotations* and *Processed expression values* data. Also available for *Experiments* data of ESTs. Select the assay of interest. Can either be the assay name or the assay ID. Multiple assays can be selected.
 
-## Apply filters
+### Apply filters
 
 Once you select the filters you are interested in you can apply them by clicking on the *Apply filters* button.
 
 ![](../img/doc/Raw-data-interface/postfilter-apply-filters.png#tutoimgborder)
 
-## Number of filtered results
+### Number of filtered results
 
 Once filters are applied the number of filtered results can be seen in red on the top right of the filtering section.
 
 ![](../img/doc/Raw-data-interface/postfilter-number-filtered-results.png#tutoimgborder)
-## Remove filters
+### Remove filters
 
 To remove a filter you can click on the cross on the right side of the filter name.
 
@@ -89,13 +89,13 @@ Then click on the *Apply filters* button.
 It is also possible to remove all filters at once by clicking on the red trash icon to the right of the *Apply filters* button.
 
 ![](../img/doc/Raw-data-interface/postfilter-delete-filters.png#tutoimgborder)
-## Export of filtered results
+### Export of filtered results
 
 Due to the number of potential entries in the result table, we do not support the export of all results at once. The *Export current page in TSV* button will only export the results shown on the current page. However, it is possible to increase the number of entries displayed on the current page by selecting up to 1000 entries using the *Show X entries* dropdown. You can export the entries of the current result table by clicking on the button *Export current page in TSV*.
 
 ![](../img/doc/Raw-data-interface/postfilter-update-number-result-entries.png#tutoimgborder)
 
-# Experiments
+## Experiments
 
 The experiments tab allows you to retrieve the experiments in Bgee that match the specific conditions you are interested in (e.g. species, tissue, developmental stage, etc.) and retrieve library-specific expression values.
 
@@ -110,7 +110,7 @@ Following the previously described steps will bring you to this page.
 
 Alternatively, if you are not looking for a particular experiment but want to search all experiments in Bgee that match specific conditions you are interested in (e.g. species, tissue, developmental stage, etc.), you can simply fill out the [search form](#search-form) as described above and click on *Submit*.
 
-## Results table
+### Results table
 
 The result table at the bottom of the page, which gets populated after searching for a specific experiment ID or filling out the search form, contains 4 columns. You can easily access the more detailed Experiment information by clicking on any Experiment ID name contained in the results table.
 
@@ -121,7 +121,7 @@ The four columns contained in the table are:
 * **Description**: a more detailed description of how the experiment was done and the aims of the project.
 * **Link to raw data annotations**: this link will allow you to see all libraries included in this experiment (inside Bgee) through our raw data annotations page (for further details on this page, see [Raw data annotations](#raw-data-annotations) section).
 
-## Experiment general information
+### Experiment general information
 
 The top section of the experiment page contains general information about the experiment selected. You can find the title of the experiment, the experiment ID, the technology used, a brief description of the experiment, and the original data source with a link to where you can find the relevant data and information outside Bgee.
 
@@ -130,7 +130,7 @@ You may also be interested in the *Download all assays* button which allows the 
 ![](../img/doc/Raw-data-interface/Fig2-General-info-headers.png#tutoimgborder)
 
 
-## Result table - within an experiment
+### Result table - within an experiment
 
 The bottom section of the page contains the results table where each row represents one library from the selected experiment.
 
@@ -140,7 +140,7 @@ The top of the results page has a filter option that filters all the columns usi
 
 As with the *Raw data annotations* or *Processed expression values* pages, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
-## Column descriptions - within an experiment
+### Column descriptions - within an experiment
 
 * **Library ID:** Unique library identifier for the sequenced or analyzed sample.
 * **Anat. entity ID:** Controlled vocabulary ID (UBERON, CL or species specific term) describing anatomical localization of the sample. Clicking on the Uberon link brings you to the Ontology search page for that Uberon ID where you will be able to see all related substructures or parent terms.
@@ -163,18 +163,18 @@ As with the *Raw data annotations* or *Processed expression values* pages, the c
 * **Max rank:** When performing a fractional ranking of the genes in the annotated sample, based on their expression level, maximum rank attained in the sample. Used to normalize ranks across samples and compute expression scores in Bgee.
 * **Link to processed expression values:** The "Browse results" link allows you to access the processed expression values for this library. It will include the expression level and expression p-value for each available gene.
 
-# Raw data annotations
+## Raw data annotations
 
 The raw data annotations tab allows you to retrieve all libraries in Bgee that match your selected conditions and access their fully annotated raw (unprocessed) data. Similar to the *experiments* and *processed expression values* pages, you can fill out the form at the top of the page to specify in which species, tissue, developmental stage, or any other condition you want to see the available data for. You may also just want to select a specific experiment on the top right next to the form and see all available libraries for that experiment.
 
 ![](../img/doc/Raw-data-interface/Raw-data-annotation_homepage.png#tutoimgborder)
 
-## Results table
+### Results table
 
 As with the *Experiments* or *Processed expression values* page, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
 
-## Column descriptions
+### Column descriptions
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Experiment name**: defines the title used to designate this experiment.
@@ -204,17 +204,17 @@ As with the *Experiments* or *Processed expression values* page, the columns of 
 * **Chip ID**: Identifier of the Affymetrix chip.
 * **Evidence ID**: Specific identifier of one results from an in situ hybridization experiment.
 
-# Processed expression values
+## Processed expression values
 The *Processed expression values* tab allows you to gather gene expression information processed using the Bgee pipeline that matches your selected conditions.
 The [form](#search-form) on top of the page allows you to limit which processed expression data is populated in the results table. It is also possible to filter data present in the result table
 using the [filtering section](#filtering).
 
-## Results table
+### Results table
 
 The columns of the results table will depend on the data type selected. We describe in the *Column description* section all columns present in at least one data type.
 
 
-## Column descriptions
+### Column descriptions
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Library ID**: Unique library identifier for the sequenced or analyzed sample.
