@@ -1,5 +1,12 @@
-# Tutorial: gene page
-Throughout this tutorial we are going to look as an example at the gene CDK5 from Mouse. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969](/gene/ENSMUSG00000028969)
+# Gene Search and Gene Page
+This tutorial shows how to search for genes in Bgee and describes the information you will find on a gene page including gene expression, orthologs, paralogs, and general information about the gene. We use the mouse CDK5 gene (ENSMUSG00000028969) as an example throughout the tutorial. Bgee release 15.0 was used, link to the most current version of the page is [https://www.bgee.org/gene/ENSMUSG00000028969](/gene/ENSMUSG00000028969)
+
+*   [Gene Search](#gene-search "Quick jump to this section")
+*   [Gene Page](#gene-page "Quick jump to this section")
+    *   [General information](#general-information "Quick jump to this section")
+    *   [Expression and reported absence of expression](#expression-and-reported-absence-of-expression "Quick jump to this section")
+    *   [Orthology and paralogy](#orthology-and-paralogy "Quick jump to this section")
+    *   [Cross-references](#orthology-and-paralogy "Quick jump to this section")
 
 ## Gene search
 You can search for genes based on their name, description, synonyms, identifiers, or cross-references.
@@ -38,7 +45,10 @@ The Bgee gene page is also directly accessible from the UniProt website, or from
 The Bgee gene result page is directly accessible from the Expasy website:
 - https://www.expasy.org/search/cdk5
 
-## General information
+## Gene page
+The gene page is the main page for a gene and includes information on gene expression, orthologs, paralogs, and general information about the gene.
+
+### General information
 This section provides important details about your selected gene, including its gene identifier, common name, a concise description, gene synonyms, the count of orthologs observed in various species, the count of paralogs within this species, and a hyperlink to access the processed expression values associated with the gene.
 
 ![](../img/doc/gene-search/Fig06_species-gene-page.png#tutoimgborder)
@@ -48,7 +58,7 @@ e.g. the gene ENSMUSG00000028969, also known as Cdk5, encodes the cyclin-depende
 
 
 
-## Expression and reported absence of expression
+### Expression and reported absence of expression
 The expression and absence of expression sections on each gene page provide a ranked list of conditions where the expression or absence of expression of a gene has been reported: the present/absent expression calls. The conditions with significant expression (present expression calls) are reported in the "Expression" section, the conditions with a reported absence of expression (absent expression calls) are in the section "reported absence of expression".
 
 The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](/search/raw-data) to retrieve such data).
@@ -92,12 +102,12 @@ It is possible to view/retrieve the processed data used to produce each call by 
 ![](../img/doc/gene-search/Fig11_retrieve-processed-data.png#tutoimgborder)
 
 
-## Orthology/paralogy
+### Orthology and paralogy
 
 Bgee gene homology information is retrieved from the [OMA SPARQL endpoint](https://sparql.omabrowser.org/lode/sparql).
 They correspond to one-to-one homologs for each pair of species in Bgee.
 
-### Orthologs
+#### Orthologs
 
 Orthology information is presented at taxon levels corresponding to the least common ancestor taxon for which orthologs are found in Bgee species.
 For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
@@ -121,7 +131,7 @@ You can filter the result entries with the _Filter_ box at the top left of the r
 You can run an expression comparison analysis for all ortholog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance clicking on the link "Compare expression" at the Bilateria level will run an expression comparison analysis for the 46 genes (45 orthologs + the gene itself) at that taxonomic level.
 
 
-### Paralogs
+#### Paralogs
 
 Paralogy information is presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
 For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#paralogs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
@@ -140,12 +150,12 @@ You can filter the result entries with the Filter box at the top left of the res
 
 You can run an expression comparison analysis for all paralog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance clicking on the link "Compare expression" at the Opisthokonta level will run an expression comparison analysis for the 197 genes (196 paralogs + the gene itself) at that taxonomic level.
 
-### Download one-to-one homologs
+#### Download one-to-one homologs
 
 All one-to-one orthologs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://bgee.org/ftp/current/homologous_genes/OMA_orthologs.zip).
 All one-to-one paralogs generated from OMA SPARQL endpoint for species present in Bgee are available [here](https://bgee.org/ftp/current/homologous_genes/OMA_paralogs.zip).
 
-## Cross-references
+### Cross-references
 
 ![](../img/doc/gene-search/Fig19_Cross-ref.png#tutoimgborder)
 
