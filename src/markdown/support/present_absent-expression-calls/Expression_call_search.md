@@ -6,7 +6,7 @@ The present/absent expression calls are produced using statistical tests specifi
 
 The expression call search is available at [https://www.bgee.org/search/expression-calls](/search/expression-calls).
 The examples in this tutorial have been generated using Bgee release 15.0. More information about how the present/absent calls
-are generated can be found on the [expression calls documentation page](support/Download-files/geneExpression.md).
+are generated can be found on the [expression calls documentation page](../Download-files/geneExpression.md).
 
 ## Search for present/absent expression calls
 The search for expression present/absent calls form allows you to narrow the expression calls displayed to only those of interest.
