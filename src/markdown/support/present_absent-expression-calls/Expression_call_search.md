@@ -1,4 +1,5 @@
 # Search for Present/Absent Expression Calls
+Search the present and absent expression calls in the Bgee database. Learn how to search for expression calls in your species, genes, tissues, cells, developmental stages, sexes, and expression data types of interest. 
 
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Search for Present/Absent Expression Calls](#search-for-presentabsent-expression-calls-1 "Quick jump to this section")
