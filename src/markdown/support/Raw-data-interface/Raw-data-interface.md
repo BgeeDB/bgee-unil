@@ -1,26 +1,23 @@
 # Search Experiments, Annotations, and Processed Expression Values
+Instructions on how to search and filter Bgee *Experiments*, *Raw data annotations* or *Processed expression values*, and information on the generated results table.
 
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Search Form](#search-form "Quick jump to this section")
 *   [Filtering](#filtering "Quick jump to this section")
 *   [Experiments](#experiments "Quick jump to this section")
-    *   [Results Table](#chip-file "Quick jump to this section")
+    *   [Results Table](#results-table "Quick jump to this section")
     *   [Results Table - Within an Experiment](#experiment-file "Quick jump to this section")
-    *   [Description of Results](#experiment-file "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
 *   [Data Annotations](#data-annotations "Quick jump to this section")
-    *   [Description of Results](#chip-file "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
 *   [Processed Expression Values](#processed-expression-values "Quick jump to this section")
-    *   [Description of Results](#chip-file "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
 
-The raw data interface consists of 3 different tabs (*Experiments*, *Raw data annotations* and *Processed expression values*) that are described in detail below. They all  share a common search form and filtering step. You can access further information on each individual data interface tab by clicking the *Experiments*, *Raw data annotations* or *Processed expression values* links below. You can also read about the search form and the filtering by clicking their respective links.
 
-* [Search Form](#search-form)
-* [Filtering](#filtering)
-* [Experiments](#experiments)
-* [Raw data annotations](#raw-data-annotations)
-* [Processed expression values](#processed-expression-values)
+## Introduction
+Bgee data can be searched and filtered through the *Experiments*, *Raw data annotations* and *Processed expression values* pages. Each page shares a common search form and filtering options and will display a results table that can be exported. The search form, filtering options, and data in the results table are described in detail below. 
 
-To access the main search page, go to the *Search* section of Bgee's homepage toolbar and select the *Raw data annotated and processed* subsection.
+To start a search, go to the *Search* section of Bgee's homepage toolbar and select the *Experiments*, *Raw data annotations* or *Processed expression values* subsection. Once on a page, you can easily alternate between data types.
 
 ## Search Form
 
