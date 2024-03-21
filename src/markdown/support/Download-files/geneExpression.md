@@ -1,5 +1,4 @@
-Expression call download file documentation
-===========================================
+# Expression Calls
 
 This documentation describes the format of presence/absence expression calls download files, and how values of each column are generated. The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls".
 
