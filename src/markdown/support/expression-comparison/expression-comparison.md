@@ -1,4 +1,4 @@
-# Tutorial: expression comparison
+# Expression Comparison Tool
 
 ## Introduction
 
