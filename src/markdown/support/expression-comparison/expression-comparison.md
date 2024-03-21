@@ -50,7 +50,7 @@ Each row in the result table represents one anatomical entity, in which the pres
 
 * **Conservation score**: a metric representing the proportion of genes from the input list that have expression or absence of expression in the anatomical entity.
    * Corresponds to the difference between the number of genes with presence of expression and the number of genes with a reported absence of expression (meaning, the sum of the number of genes with presence of expression and of the number of genes with reported absence of expression), divided by the total number of genes with expression data for that anatomical entity. The conservation score can thus go from -1 to +1, with +1 showing the highest possible conservation score where all genes with data are expressed, and -1 showing conservation for **absence** of expression, where all genes with data exhibit a reported absence of expression in the anatomical entity.
-* **Max expression score**: denotes the highest expression score attained among genes exhibiting presence of expression.
+* **Max expression score**: denotes the highest expression score attained among genes exhibiting presence of expression. For more information on how the expression score is calculated, see the [expression call documentation](support/tutorial-expression-call-download-documentation) 
 * **Genes with presence of expression**: number of genes with presence of active expression in the anatomical entity.
 * **Genes with absence of expression**: number of genes with reported absence of expression in the anatomical entity.
 * **Genes with no data**: number of genes for which there is no expression data available in the anatomical entity.
