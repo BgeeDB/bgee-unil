@@ -40,7 +40,7 @@ Each row in the result table represents one anatomical entity, in which the pres
     has evolved into distinct tissues in the selected species. For instance, the homologous organ of the human "lung" is, in zebrafish,
     "swim bladder". If those species were selected, a row could display the expression results by grouping "lung" and "swim bladder" together.
     More information about the relations of homology between anatomical entities used in Bgee can be found in
-    [the documentation for the anatomical homology search](https://www.bgee.org/support/documentation/anatomical-homology).
+    [the documentation for the anatomical homology search](support/tutorial-anatomical-homology).
   * If the genes belong to a single species, all anatomical entities with expression data for the selected genes are considered.
 
 ![](../img/doc/expression-comparison/expr-comp-anat-entities.png#tutoimgborder)
