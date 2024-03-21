@@ -143,7 +143,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Comparison of gene expression',
+            title: 'Expression Pattern Comparison',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
