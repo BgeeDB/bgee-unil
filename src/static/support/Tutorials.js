@@ -29,7 +29,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Describes how to search for a gene and the information you can get from the Bgee gene page.',
+                  'How to search for a gene and the information you can get from the Bgee gene page.',
               },
             ],
           },
@@ -55,7 +55,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to use TopAnat and to do an anatomical enrichment analysis.',
+                  'How to use TopAnat and to identify anatomical entities that have over or under-represented gene expression.',
               },
             ],
           },
@@ -81,7 +81,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to search all gene expression present and absent calls in the Bgee database.',
+                  'How to search gene expression calls in the Bgee database.',
               },
             ],
           },
@@ -107,7 +107,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how the curation is done in Bgee.',
+                  'Background on data curation including what data are captured, relevant ontologies, and how data is integrated across species.',
               },
             ],
           },
@@ -133,7 +133,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to query the Bgee Knowledge Graph with SPARQL.',
+                  'How to query the Bgee Knowledge Graph with SPARQL.',
               },
             ],
           },
@@ -159,7 +159,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to compare gene expression for a list of genes in anatomical entities.',
+                  'Compare gene expression across anatomical structures for a list of genes.',
               },
             ],
           },
@@ -169,7 +169,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Search Experiments, Annotations, and Processed Expression Values',
+            title: 'Search Experiments, Data Annotations, and Processed Expression Values',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -185,7 +185,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to explore experiments, raw data annotations and processed expression values.',
+                  'How to search and filter experiments, raw data annotations, and processed expression values in the Bgee database.',
               },
             ],
           },
@@ -211,7 +211,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to retrieve anatomical entities that are homologous among different species.',
+                  'How to retrieve anatomical entities that are homologous among different species.',
               },
             ],
           },
