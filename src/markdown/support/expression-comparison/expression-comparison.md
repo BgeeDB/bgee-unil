@@ -1,4 +1,4 @@
-# Expression Comparison Tool
+# Expression Pattern Comparison
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Gene Selection](#gene-selection "Quick jump to this section")
     *   [Gene Identifiers](#gene-identifiers "Quick jump to this section")
