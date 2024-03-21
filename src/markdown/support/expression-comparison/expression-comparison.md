@@ -1,5 +1,14 @@
 # Expression Comparison Tool
-
+*   [Introduction](#introduction "Quick jump to this section")
+*   [Gene Selection](#gene-selection "Quick jump to this section")
+    *   [Gene Identifiers](#gene-identifiers "Quick jump to this section")
+    *   [Finding Orthologous Genes](#finding-orthologous-genes "Quick jump to this section")
+*   [Results Table](#results-table "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
+    *   [Sorting the Results](#sorting-the-results "Quick jump to this section")
+    *   [Searching the Results](#searching-the-results "Quick jump to this section")
+    *   [Export Results](#export-results "Quick jump to this section")
+    
 ## Introduction
 
 The [expression comparison tool](analysis/expr-comparison) identifies anatomical entities with gene expression or absence of expression based on a provided list of genes. The tool highlights the anatomical entities where the highest proportion of input genes are expressed or not expressed. When the listed genes belong to a single species, their expression is compared in all anatomical entities with expression data. Alternatively, when the listed genes are orthologs (or groups of orthologs) belonging to different species, their expression is compared in homologous anatomical entities (deriving from a common ancestral entity in the least common ancestor of the selected species) with expression data. The examples in this tutorial have been generated using Bgee release 15.0.
@@ -15,7 +24,7 @@ A minimum of two gene IDs must be entered.
 
 ![](../img/doc/expression-comparison/gene-selection.png#tutoimgborder)
 
-### Gene Identifiers
+### Gene identifiers
 Unique identifiers from the genome source database must be used: for instance, *ENSG00000139767* must be used for selecting the *SRRM4* human gene, as the genome source database for human in Bgee is [Ensembl](https://www.ensembl.org/). Gene names (e.g. *SRRM4*) are not recognized.
 
 The genome source database can be either [Ensembl](https://www.ensembl.org/), [EnsemblMetazoa](https://metazoa.ensembl.org/),
