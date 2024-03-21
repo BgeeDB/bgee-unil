@@ -11,7 +11,7 @@
     
 ## Introduction
 
-The [expression comparison tool](analysis/expr-comparison) identifies anatomical entities with gene expression or absence of expression based on a provided list of genes. The tool highlights the anatomical entities where the highest proportion of input genes are expressed or not expressed. When the listed genes belong to a single species, their expression is compared in all anatomical entities with expression data. Alternatively, when the listed genes are orthologs (or groups of orthologs) belonging to different species, their expression is compared in homologous anatomical entities (deriving from a common ancestral entity in the least common ancestor of the selected species) with expression data. The examples in this tutorial have been generated using Bgee release 15.0.
+The [expression pattern comparison tool](analysis/expr-comparison) identifies anatomical entities with gene expression or absence of expression based on a provided list of genes. The tool highlights the anatomical entities where the highest proportion of input genes are expressed or not expressed. When the listed genes belong to a single species, their expression is compared in all anatomical entities with expression data. Alternatively, when the listed genes are orthologs (or groups of orthologs) belonging to different species, their expression is compared in homologous anatomical entities (deriving from a common ancestral entity in the least common ancestor of the selected species) with expression data. The examples in this tutorial have been generated using Bgee release 15.0.
 
 ![](../img/doc/expression-comparison/expression-comparison-overview.png#tutoimgborder)
 
