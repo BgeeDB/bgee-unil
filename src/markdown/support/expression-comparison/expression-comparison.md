@@ -35,7 +35,7 @@ on the Bgee species information page, accessible from [the list of species](http
 ### Finding orthologous genes
 If you wish to identify anatomical entities with shared expression or absence of expression between different species, you must enter the orthologous genes of interest as input.  For a given gene, you can find orthologous genes on the gene page (link) in the Orthologs section.
 
-## Result table
+## Results table
 
 Each row in the result table represents one anatomical entity, in which the presence and absence of expression for the selected genes and species are displayed.
 
