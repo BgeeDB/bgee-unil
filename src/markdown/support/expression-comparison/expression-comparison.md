@@ -42,19 +42,14 @@ Each row in the result table represents one anatomical entity, in which the pres
 ### Description of results
 
 * **Anatomical entities**: the name of the anatomical entity in that row, for which expression of the list of genes is displayed.
-  * If the genes entered belong to several species, the comparisons will be performed only in anatomical entities
-    with valid relations of homology between the selected species, and with expression data for some of the selected genes.
-    * Several anatomical entity terms can be displayed in a row when the same ancestral anatomical entity
-    has evolved into distinct tissues in the selected species. For instance, the homologous organ of the human "lung" is, in zebrafish,
-    "swim bladder". If those species were selected, a row could display the expression results by grouping "lung" and "swim bladder" together.
-    More information about the relations of homology between anatomical entities used in Bgee can be found in
-    [the documentation for the anatomical homology search](support/tutorial-anatomical-homology).
-  * If the genes belong to a single species, all anatomical entities with expression data for the selected genes are considered.
+  * If the genes entered belong to several species, the comparisons will be performed only in anatomical entities with valid relations of homology between the selected species, and with expression data for some of the selected genes.
+      * Several anatomical entity terms can be displayed in a row when the same ancestral anatomical entity has evolved into distinct tissues in the selected species. For instance, the homologous organ of the human "lung" is, in zebrafish, "swim bladder". If those species were selected, a row could display the expression results by grouping "lung" and "swim bladder" together. More information about the relations of homology between anatomical entities used in Bgee can be found in [the documentation for the anatomical homology search](support/tutorial-anatomical-homology).
+   * If the genes belong to a single species, all anatomical entities with expression data for the selected genes are considered.
 
 ![](../img/doc/expression-comparison/expr-comp-anat-entities.png#tutoimgborder)
 
-* **Conservation score**:a metric representing the proportion of genes from the input list that have expression or absence of expression in the anatomical entity
-   * corresponds to the difference between the number of genes with presence of expression and the number of genes with a reported absence of expression (meaning, the sum of the number of genes with presence of expression and of the number of genes with reported absence of expression), divided by the total number of genes with expression data for that anatomical entity. The conservation score can thus go from -1 to +1, with +1 showing the highest possible conservation score where all genes with data are expressed, and -1 showing conservation for **absence** of expression, where all genes with data exhibit a reported absence of expression in the anatomical entity.
+* **Conservation score**: a metric representing the proportion of genes from the input list that have expression or absence of expression in the anatomical entity
+   * Corresponds to the difference between the number of genes with presence of expression and the number of genes with a reported absence of expression (meaning, the sum of the number of genes with presence of expression and of the number of genes with reported absence of expression), divided by the total number of genes with expression data for that anatomical entity. The conservation score can thus go from -1 to +1, with +1 showing the highest possible conservation score where all genes with data are expressed, and -1 showing conservation for **absence** of expression, where all genes with data exhibit a reported absence of expression in the anatomical entity.
 * **Max expression score**: denotes the highest expression score attained among genes exhibiting presence of expression.
 * **Genes with presence of expression**: number of genes with presence of active expression in the anatomical entity.
 * **Genes with absence of expression**: number of genes with reported absence of expression in the anatomical entity.
