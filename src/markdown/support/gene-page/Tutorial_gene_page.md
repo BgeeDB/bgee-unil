@@ -66,7 +66,7 @@ The present/absent expression calls are produced using statistical tests specifi
 The present/absent calls are then ranked using the Bgee expression score method, in order to provide first the most relevant conditions of expression for each gene. Again, specific methods are used for each data type, see the main [Bgee publications](/about/publications) for details. Briefly, the expression scores are based on non-parametric statistics, where conditions are ranked based on the gene expression levels. These ranks are then normalized across conditions, genes, and data types, and transformed into an expression score going from 0 (= low expression) to 100 (= high expression) for a more intuitive use. This non-parametric statistics allow comparison of gene expression in a quantitative manner across species and conditions, without requiring batch-correction procedures.
 
 By default, the gene page reports this information for each anatomical localization only. For each present/absent expression call, are provided:
-* Anatomical entity: the localization of the call (where the gene is detected either as present or as absent). It can point to simply an antomical structure, or to a cell type, or to the composition of a cell type in a specific anatomical structure.
+* Anatomical entity: the localization of the call (where the gene is detected either as present or as absent). It can point to simply an anatomical structure, or to a cell type, or to the composition of a cell type in a specific anatomical structure.
 * the FDR-corrected p-value of the present/absent call.
 * its expression score
 * an overview of the data types supporting it

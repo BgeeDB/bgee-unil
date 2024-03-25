@@ -96,7 +96,7 @@ Due to the number of potential entries in the result table, we do not support th
 
 The experiments tab allows you to retrieve the experiments in Bgee that match the specific conditions you are interested in (e.g. species, tissue, developmental stage, etc.) and retrieve library-specific expression values.
 
-We will focus this tutorial on the Mus musculus experiment ERP012910. To access the page click on the *Search* tab in the tool bar then click *Raw data annotated and processed* which will bring you to the Experiments search page. Type in the experiment of interest (ERP012910) in the right search form entitled "Experiment or assay ID" and click *Submit*. Next, click the ERP012910 link in the Experiment ID column to access the ERP012910 experiment page. The video below details how to reach the experiment page in Bgee 15.0. Additionally, you can access the page directly at https://www.bgee.org/experiment/ERP012910.
+We will focus this tutorial on the Mus musculus experiment ERP012910. To access the page click on the *Search* tab in the toolbar then click *Raw data annotated and processed* which will bring you to the Experiments search page. Type in the experiment of interest (ERP012910) in the right search form entitled "Experiment or assay ID" and click *Submit*. Next, click the ERP012910 link in the Experiment ID column to access the ERP012910 experiment page. The video below details how to reach the experiment page in Bgee 15.0. Additionally, you can access the page directly at https://www.bgee.org/experiment/ERP012910.
 
 
 ![](../img/doc/Raw-data-interface/Fig1-Experiment-page-howtogetthere.gif#tutoimgborder)
