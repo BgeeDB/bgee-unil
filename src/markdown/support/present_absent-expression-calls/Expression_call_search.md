@@ -12,9 +12,9 @@ Search the present and absent expression calls in the Bgee database. Learn how t
 Bgee "expression call search" allows you to search all present/absent gene expression calls in the Bgee database.
 The present/absent expression calls are produced using statistical tests specific to each data type, to identify whether the gene expression level is significantly above the background transcriptional and experimental noise. See the main [Bgee publications](/about/publications) for details. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in each library. These p-values are then merged and corrected for multiple testing, to provide a definitive FDR-corrected result for each gene in each condition. This result per gene and condition takes into account all produced p-values, from all available data for all requested data types, in this condition and all its children conditions. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](/search/raw-data) to retrieve such data).
 
-The expression call search can be performed on the [Present/absent expression calls search page](/search/expression-calls).
+The expression call search can be performed on the [Present/Absent expression calls search page](/search/expression-calls).
 The examples in this tutorial have been generated using Bgee release 15.0. More information about how the present/absent calls
-are generated can be found on the [expression calls documentation page](support/tutorial-expression-call-download-documentation).
+are generated can be found on the [expression calls documentation page](/support/tutorial-expression-call-download-documentation).
 
 ## Search for present/absent expression calls
 The search for expression present/absent calls form allows you to narrow the expression calls displayed to only those of interest.
@@ -96,7 +96,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **Gene name:** It represents the commonly used name for the given gene. For example, in humans the gene names are approved and controlled by the HUGO Gene Nomenclature Committee (HGNC).
 
-* **Present/absent call:** This column shows whether the given gene is considered expressed based on various evidence given by Bgee data types and statistical methods in the specified condition or if the gene was not shown to be active above the background noise.
+* **Present/Absent call:** This column shows whether the given gene is considered expressed based on various evidence given by Bgee data types and statistical methods in the specified condition or if the gene was not shown to be active above the background noise.
 
 * **Call quality:** Determines how confident Bgee is of the presence/absence call given to the expression state of the gene in that condition. It scale goes from bronze for less confident calls to silver or gold for more strongly supported expression calls.
 
@@ -114,11 +114,11 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **Cell type ID:** ID of the cell type of the sample. Clicking the link will give you more information on that cell type by bringing you to the Ontology origin where you can see parent and child terms or cell type function.
 
-* **Cell type name:** Common name of the cell type of the sample such as "embryonic cell".
+* **Cell type name:** Common name of the cell type of the sample, such as "embryonic cell".
 
 * **Stage ID:** ID of the developmental and life stage of the sample. By clicking on the link you can have more information from the ontology.
 
-* **Stage name:** Common name of the developmental and life stage of the sample such as "adult". You can either have highly precise life stage information such as 4 days old, or if the authors of the libraries used did not have highly precise terms, the most precise parent term is used, in some cases such term can be "life cycle".
+* **Stage name:** Common name of the developmental and life stage of the sample, such as "adult". You can either have highly precise life stage information such as 4 days old, or if the authors of the libraries used did not have highly precise terms, the most precise parent term is used, in some cases such term can be "life cycle".
 
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
 
