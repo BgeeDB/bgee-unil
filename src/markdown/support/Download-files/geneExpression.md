@@ -1,6 +1,18 @@
 # Expression Calls File
 
-This documentation describes the format of presence/absence expression calls download files, and how values of each column are generated. The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls".
+This documentation describes the content of the presence/absence expression calls download files, how values of each column are generated, and how to download expression calls data. 
+*   [Introduction](#introduction "Quick jump to this section")
+*   [Generation of Expression Calls](#generation-of-expression-calls "Quick jump to this section")
+*   [Download Expression Calls](#download-expression-calls "Quick jump to this section")
+*   [Choosing a Download File](#choosing-a-download-file "Quick jump to this section")
+    *   [Condition Parameters](#condition-parameters "Quick jump to this section")
+    *   [Simple File vs. Advanced File](#result-table---within-an-experiment "Quick jump to this section")
+*   [Download File Details](#download-file-details "Quick jump to this section")
+    *   [File Content](#file-content "Quick jump to this section")
+    *   [Column Descriptions](#column-descriptions "Quick jump to this section")
+
+
+The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls".
 
 Once on the download calls webpage, you can either search for a specific species in the top search bar or look through the species list at the bottom and click on the species logo to access the different download file options. These datasets can also be downloaded directly using our R package "BgeeDB".
 
