@@ -6,7 +6,7 @@ const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 const PATHS = {
   HOME: `${URL_ROOT}/`,
   ANALYSIS: {
-    TOP_ANAT: `${URL_ROOT}/analysis/top-anat/`,
+    TOP_ANAT: `${URL_ROOT}/analysis/top-anat`,
     TOP_ANAT_RESULT: `${URL_ROOT}/analysis/top-anat/:id`,
     TOP_ANAT_RESULT_JOB_ID: `${URL_ROOT}/analysis/top-anat/:id/:jobId`,
     EXPRESSION_COMPARISON: `${URL_ROOT}/analysis/expr-comparison`,

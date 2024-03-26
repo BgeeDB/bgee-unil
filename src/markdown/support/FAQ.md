@@ -39,7 +39,7 @@ These files are not currently available.
 
 ## What can I do with my genes of interest?
 
-Each gene can be visualized one by one via [our gene search](/search/genes). You can also visualize enrichment of expression of your list relative to a random background using [TopAnat](/analysis/top-anat/). All associated data can be downloaded using our [R package](https://bioconductor.org/packages/BgeeDB/). Note that there is at present no way to visualize a list of genes.
+Each gene can be visualized one by one via [our gene search](/search/genes). You can also visualize enrichment of expression of your list relative to a random background using [TopAnat](/analysis/top-anat). All associated data can be downloaded using our [R package](https://bioconductor.org/packages/BgeeDB/). Note that there is at present no way to visualize a list of genes.
 
 ## Do you have protein expression?
 
