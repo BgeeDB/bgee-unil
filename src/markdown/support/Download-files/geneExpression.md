@@ -1,6 +1,6 @@
 # Expression Calls File
 
-This documentation describes the content of the presence/absence expression calls download files, how values of each column are generated, and how to download expression calls data. 
+This documentation describes the content of the presence/absence expression calls download files, how values of each column are generated, and how to download expression calls data.
 *   [Introduction](#introduction "Quick jump to this section")
 *   [Generation of Expression Calls](#generation-of-expression-calls "Quick jump to this section")
 *   [Download Expression Calls](#download-expression-calls "Quick jump to this section")
@@ -52,7 +52,7 @@ After all p-values have been propagated, we apply a Benjamini-Hochberg FDR corre
 
 ## Download expression calls
 
-The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls". 
+The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls".
 
 Once on the download calls webpage, you can either search for a specific species in the top search bar or look through the species list at the bottom and click on the species logo to access the different download file options. These datasets can also be downloaded directly using our R package "BgeeDB”.
 

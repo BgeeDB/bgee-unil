@@ -8,7 +8,7 @@
     *   [Sorting the Results](#sorting-the-results "Quick jump to this section")
     *   [Searching the Results](#searching-the-results "Quick jump to this section")
     *   [Export Results](#export-results "Quick jump to this section")
-    
+
 ## Introduction
 
 The [expression pattern comparison tool](/analysis/expr-comparison) identifies anatomical entities with gene expression or absence of expression based on a provided list of genes. The tool highlights the anatomical entities where the highest proportion of input genes are expressed or not expressed. When the listed genes belong to a single species, their expression is compared in all anatomical entities with expression data. Alternatively, when the listed genes are orthologs (or groups of orthologs) belonging to different species, their expression is compared in homologous anatomical entities (deriving from a common ancestral entity in the least common ancestor of the selected species) with expression data. The examples in this tutorial have been generated using Bgee release 15.0.
@@ -17,7 +17,7 @@ The [expression pattern comparison tool](/analysis/expr-comparison) identifies a
 
 ## Gene selection
 
-The first step for comparing gene expression is to enter a list of gene IDs in the text box area. 
+The first step for comparing gene expression is to enter a list of gene IDs in the text box area.
 
 One gene ID must be entered per line. If a gene ID is not recognized, it will be listed below the text area after submission.
 A minimum of two gene IDs must be entered.
@@ -50,7 +50,7 @@ Each row in the result table represents one anatomical entity, in which the pres
 
 * **Conservation score**: a metric representing the proportion of genes from the input list that have expression or absence of expression in the anatomical entity.
    * Corresponds to the difference between the number of genes with presence of expression and the number of genes with a reported absence of expression (meaning, the sum of the number of genes with presence of expression and of the number of genes with reported absence of expression), divided by the total number of genes with expression data for that anatomical entity. The conservation score can thus go from -1 to +1, with +1 showing the highest possible conservation score where all genes with data are expressed, and -1 showing conservation for **absence** of expression, where all genes with data exhibit a reported absence of expression in the anatomical entity.
-* **Max expression score**: denotes the highest expression score attained among genes exhibiting presence of expression. For more information on how the expression score is calculated, see the [expression call documentation](/support/tutorial-expression-call-download-documentation). 
+* **Max expression score**: denotes the highest expression score attained among genes exhibiting presence of expression. For more information on how the expression score is calculated, see the [expression call documentation](/support/tutorial-expression-call-download-documentation).
 * **Genes with presence of expression**: number of genes with presence of active expression in the anatomical entity.
 * **Genes with absence of expression**: number of genes with reported absence of expression in the anatomical entity.
 * **Genes with no data**: number of genes for which there is no expression data available in the anatomical entity.

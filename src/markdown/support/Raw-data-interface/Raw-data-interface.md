@@ -15,7 +15,7 @@ Instructions on how to search and filter Bgee *experiments*, *raw data annotatio
 
 
 ## Introduction
-Bgee data can be searched and filtered through the *Experiments*, *Raw data annotations* and *Processed expression values* pages. Each page shares a common search form and filtering options and will display a results table that can be exported. The search form, filtering options, and data in the results table are described in detail below. 
+Bgee data can be searched and filtered through the *Experiments*, *Raw data annotations* and *Processed expression values* pages. Each page shares a common search form and filtering options and will display a results table that can be exported. The search form, filtering options, and data in the results table are described in detail below.
 
 To start a search, go to the *Search* section of Bgee's homepage toolbar and select the *Experiments*, *Raw data annotations* or *Processed expression values* subsection. Once on a page, you can easily alternate between data types.
 
