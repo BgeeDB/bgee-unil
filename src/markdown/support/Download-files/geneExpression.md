@@ -11,26 +11,17 @@ This documentation describes the content of the presence/absence expression call
     *   [File Content](#file-content "Quick jump to this section")
     *   [Column Descriptions](#column-descriptions "Quick jump to this section")
 
-
-The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls".
-
-Once on the download calls webpage, you can either search for a specific species in the top search bar or look through the species list at the bottom and click on the species logo to access the different download file options. These datasets can also be downloaded directly using our R package "BgeeDB".
-
-If you are only interested in what is included in the download files without the technical explanation you can jump to the [Download file format description](#download-file-format-description) section.
-
-![](../img/doc/Download-files/Expression-call-download.png#tutoimgborder)
-
 ## Introduction
 
-Bgee provides present/absent expression calls that can be retrieved in download files either per gene and anatomical entity or per gene and combination of i) anatomical entity, ii) developmental and life stage, iii) sex, and iv) strain or ethnicity.
+Bgee provides presence/absence of expression calls that can be retrieved in download files or by using our R package "BgeeDB". The expression calls are reported either: 1) by gene and anatomical entity or 2) by gene and i) anatomical entity, ii) developmental and life stage, iii) sex, and iv) strain/ethnicity.
 
-Only wild-type healthy gene expression data is included in Bgee (i.e. no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, an FDR-corrected p-value is provided, along with an expression score which allows you to compare levels of expression.
+Only wild-type healthy gene expression data is included in Bgee (i.e. no treatment, no disease, no gene knock-out, etc.). Bgee collects data from different experiments and data types, and provides a summary from all these data as unique calls of presence and absence of expression, per gene and condition. For each call, an FDR-corrected p-value and expression score are provided, which allows you to compare levels of expression.
 
 Present/absent expression calls are very similar to the data that can be reported using _in situ_ hybridization methods; Bgee applies dedicated statistical analyses to generate such calls from EST, Affymetrix, bulk RNA-Seq, and single-cell RNA-Seq, and also collects _in situ_ hybridization calls from model organism databases. This offers the possibility to aggregate and compare these present/absent expression calls between different experiments, different data types, and different species.
 
-### Generation of present/absent expression calls per gene and condition
+## Generation of expression calls
 
-#### First step: computation of expression p-values per gene and sample
+### First step: computation of expression p-values per gene and sample
 
 For each gene and each sample in Bgee, we produce a p-value based on a null hypothesis of expression level equal to or below the background expression noise (i.e. absence of expression).
 
@@ -40,7 +31,7 @@ For each gene and each sample in Bgee, we produce a p-value based on a null hypo
 * __EST data__: based on the number of ESTs mapped to a gene in a library, we produce a p-value based on the null hypothesis that the EST count is not different from 0, with the formula: 2^(-(est_count + 1)).
 * ___in situ_ hybridization data__: we retrieve _in situ_ hybridization data from Model Organism Databases part of the Alliance of Genome Resources. We map call qualities provided by these resources to p-values: 0.0004 for 'present high quality' calls; 0.01 for "present low quality"; 0.1 for "absent low quality"; 0.5 for "absent high quality".
 
-#### Second step: FDR corrected p-values per gene and condition
+### Second step: FDR corrected p-values per gene and condition
 
 We capture information about the anatomical localization of samples, their developmental and life stage, sex, and strain or ethnicity. We either manually capture this information using ontologies and controlled vocabularies, or we map existing annotations provided by MODs to these ontologies and vocabularies.
 
@@ -48,7 +39,7 @@ After p-values are generated from the raw data for each gene and sample, they ar
 
 After all p-values have been propagated, we apply a Benjamini-Hochberg FDR correction to generate one FDR p-value per gene and condition.
 
-#### Final step: generation of present/absent expression calls per gene and condition
+### Final step: generation of present/absent expression calls per gene and condition
 
 * **Present gold quality** expression calls: when the FDR-corrected p-value for a gene in a condition is less than or equal to 0.01.
 * **Present silver quality** expression calls: when the FDR-corrected p-value for a gene in a condition is less than or equal to 0.05, and greater than 0.01.
@@ -59,6 +50,13 @@ After all p-values have been propagated, we apply a Benjamini-Hochberg FDR corre
   * and there is no FDR-corrected p-value less than or equal to 0.05 in any child condition for that gene, considering the data types trusted for absent calls.
 * **Absent silver quality** expression calls: same as absent gold quality expression calls, but using an FDR-corrected p-value threshold of 0.05.
 
+## Download expression calls
+
+The files can be found on the Bgee [download page](/download/gene-expression-calls) for each species. To access the download page from the Bgee homepage, go to the download section on the top toolbar and click on "Gene expression calls". 
+
+Once on the download calls webpage, you can either search for a specific species in the top search bar or look through the species list at the bottom and click on the species logo to access the different download file options. These datasets can also be downloaded directly using our R package "BgeeDB”.
+
+![](../img/doc/Download-files/Expression-call-download.png#tutoimgborder)
 
 ### Potential download problems
 
