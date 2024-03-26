@@ -6,7 +6,7 @@ This documentation describes the content of the presence/absence expression call
 *   [Download Expression Calls](#download-expression-calls "Quick jump to this section")
 *   [Choosing a Download File](#choosing-a-download-file "Quick jump to this section")
     *   [Condition Parameters](#condition-parameters "Quick jump to this section")
-    *   [Simple File vs. Advanced File](#result-table---within-an-experiment "Quick jump to this section")
+    *   [Simple File vs. Advanced File](#simple-file-vs-advanced-file "Quick jump to this section")
 *   [Download File Details](#download-file-details "Quick jump to this section")
     *   [File Content](#file-content "Quick jump to this section")
     *   [Column Descriptions](#column-descriptions "Quick jump to this section")
@@ -78,7 +78,7 @@ There are two different options for `condition parameters`:
 * anatomical entities only: files contain one expression call for each unique pair of genes and anatomical entities.
 * all conditions parameters: files contain one expression call for each unique gene, anatomical entity, developmental stage, sex and strain.
 
-### Somple file vs. Advanced file
+### Simple file vs. Advanced file
 There are two different options when downloading the file:
 
 * simple: aimed at providing summarized information over all data types.
