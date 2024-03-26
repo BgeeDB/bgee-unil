@@ -65,18 +65,21 @@ Once on the download calls webpage, you can either search for a specific species
 - Tarball containing TPM values for a species contain gzip files that also need to be uncompressed before opening with an editor.
 
 
-### Download file format description
+## Choosing a download file
 
 Once a species is selected, you will need to choose if you want data only for anatomical entities or for all conditions, and if you want the summarized information (simple file) or all information (advanced file). The implications of each option are explained in further detail below.
 
 ![](../img/doc/Download-files/Expression-call-download-per-species.png#tutoimgborder)
+
+### Condition parameters
 
 There are two different options for `condition parameters`:
 
 * anatomical entities only: files contain one expression call for each unique pair of genes and anatomical entities.
 * all conditions parameters: files contain one expression call for each unique gene, anatomical entity, developmental stage, sex and strain.
 
-Additionally, there are two different options when downloading the file:
+### Somple file vs. Advanced file
+There are two different options when downloading the file:
 
 * simple: aimed at providing summarized information over all data types.
 * advanced: aimed at reporting all information, for instance allowing you to retrieve the contribution of each data type to a call.
@@ -89,6 +92,11 @@ Advanced file additional information:
 *   number of present high quality and present low quality calls from each data type.
 *   number of absent high quality and absent low quality calls from _in situ_, Affymetrix, and RNA-Seq.
 *   data type for which calls are observed. Each call is observed in at least one data type.
+
+## Download file details
+Below is a complete description of which data you can expect to find in each download file and a detailed description of each column.
+
+### File content
 
 |Column|Content|In anatomical simple files|In anatomical advanced files|In all conditions simple files|In all conditions advanced files|Example|
 |--- |--- |--- |--- |--- |--- |--- |
@@ -154,6 +162,7 @@ Advanced file additional information:
 |60|[Self observation count full-length single-cell RNA-Seq](#self-observation-count-full-length-single-cell-rna-seq-column-60 "See Self observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
 |61|[Descendant observation count full-length single-cell RNA-Seq](#descendant-observation-count-full-length-single-cell-rna-seq-column-61 "See Descendant observation count full-length single-cell RNA-Seq column description")|No|Yes|No|Yes|0|
 
+### Column descriptions
 
 ##### <a name="gene-id-column-1"></a>Gene ID (column 1)
 
