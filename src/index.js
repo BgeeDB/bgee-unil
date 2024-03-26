@@ -10,7 +10,7 @@ ReactDOM.render(
       <title>Welcome to Bgee: a dataBase for Gene Expression Evolution</title>
       <meta
         name="description"
-        content="Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question -where is a gene expressed?- and supports research in cancer and agriculture as well as evolutionary biology."
+        content="Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question -where is a gene expressed?- and supports research in cancer and agriculture, as well as evolutionary biology."
       />
       <meta
         name="keywords"

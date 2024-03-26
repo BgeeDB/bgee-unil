@@ -70,7 +70,7 @@ const Home = () => {
                 Bgee is a database for retrieval and comparison of gene expression
                 patterns across multiple animal species.
                 It provides an intuitive answer to the question &quot;where is a gene expressed?&quot;
-                and supports research in cancer and agriculture as well as evolutionary biology.
+                and supports research in cancer and agriculture, as well as evolutionary biology.
               </p>
               <p className="has-text-centered my-6">
                 <Link to={PATHS.SEARCH.GENE}>Gene search</Link>
@@ -106,12 +106,12 @@ const Home = () => {
       <Bulma.Section className="home-cards">
         <Bulma.Columns>
           <HomeCard imgUrl="/home/gene_screenshot.png" title="Gene expression"
-                    desc="Discover important details about your selected gene including its expression 
+                    desc="Discover important details about your selected gene, including its expression
                             in various conditions and its orthologs."
                     linkUrl={PATHS.SEARCH.GENE}
                     linkText="Gene search"/>
           <HomeCard imgUrl="/home/exp_comp_screenshot.png" title="Expression comparison"
-                    desc="Compare gene expression for a iconlist of genes in anatomical entities."
+                    desc="Compare gene expression for an iconlist of genes in anatomical entities."
                     linkUrl={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                     linkText="Compare"/>
           <HomeCard imgUrl="/home/topanat_screenshot.png" title="Expression enrichment analysis"
@@ -120,7 +120,7 @@ const Home = () => {
                     linkUrl={PATHS.ANALYSIS.TOP_ANAT}
                     linkText="Analyse"/>
           <HomeCard imgUrl="/home/raw_annot_screenshot.png" title="Raw data annotations"
-                    desc="Explore all libraries in Bgee that match your selected conditions and access their 
+                    desc="Explore all libraries in Bgee that match your selected conditions and access their
                             fully annotated raw (unprocessed) data."
                     linkUrl={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
                     linkText="Explore"/>
@@ -172,7 +172,7 @@ const Home = () => {
         <Bulma.Card className="mt-4">
           <HomeNewsList />
         </Bulma.Card>
-        
+
         <Bulma.Card className="mt-4">
           <Indexes speciesList={speciesList}/>
         </Bulma.Card>
