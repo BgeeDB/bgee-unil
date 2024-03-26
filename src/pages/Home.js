@@ -112,7 +112,7 @@ const Home = () => {
             <p className="has-text-centered is-size-5">
               It provides an intuitive answer to the question &quot;where is a
               gene expressed?&quot; and supports research in cancer and
-              agriculture as well as evolutionary biology.
+              agriculture, as well as evolutionary biology.
             </p>
           </Bulma.C>
         </Bulma.Columns>
