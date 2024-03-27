@@ -111,7 +111,7 @@ const Home = () => {
                     linkUrl={PATHS.SEARCH.GENE}
                     linkText="Gene search"/>
           <HomeCard imgUrl="/home/exp_comp_screenshot.png" title="Expression comparison"
-                    desc="Compare gene expression for an iconlist of genes in anatomical entities."
+                    desc="Compare gene expression for a list of genes in anatomical entities."
                     linkUrl={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                     linkText="Compare"/>
           <HomeCard imgUrl="/home/topanat_screenshot.png" title="Expression enrichment analysis"
