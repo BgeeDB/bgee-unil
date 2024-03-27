@@ -1,30 +1,22 @@
-# Affymetrix download file documentation: annotations and processed expression values
+# Affymetrix Processed Expression Values Files
 
-This documentation describes the format of annotation download files (that include the chip and experiment files) as well as the processed expression values download files for Affymetrix data. The files can be found in the Bgee [download page](/download/processed-expression-values) for each species.
+This page describes the contents of the expression (Affymetrix signal intensity) and annotation (experiment and chip) files. These files can be found in the Bgee [download page](/download/processed-expression-values) for each species.
 
-*   [Annotation download files](#annotation-download-files "Quick jump to this section")
-    *   [Chip file](#chip-file "Quick jump to this section")
-    *   [Experiment file](#experiment-file "Quick jump to this section")
-*   [Processed expression values download files](#processed-expression-values-download-files "Quick jump to this section")
+*   [Annotation (experiments/chips) files](#annotation-download-files "Quick jump to this section")
+*   [Processed expression (signal intensities) files](#processed-expression-values-download-files "Quick jump to this section")
 
 
-## Annotation download files
+## Annotation (experiments/chips) files
 
 The annotation download files are divided into 2 main files:
 
-1) **chip file**: provides detailed information for each individual chip, such as annotation to anatomical entities, developmental stages, sex, strain, chip type, as well as normalization type and quality scores used in quality control metrics.
+1) [**chip file**](#chip-file "Quick jump to this section"): provides detailed information for each individual chip, including anatomical entities, developmental stages, sex, strain, chip type, normalization type, and quality scores used in quality control metrics.
 
-2) **experiment file**: provides the overall information about the experiment, such as the number of chips that belong to the experiment, as well as the number of conditions, organs, stages, sexes, and strains.
-
-Go to:
-
-*   [Chip file](#chip-file "Quick jump to this section")
-*   [Experiment file](#experiment-file "Quick jump to this section")
+2) [**experiment file**](#experiment-file "Quick jump to this section"): provides overall information about the experiment, including the number of chips that belong to the experiment, and the number of conditions, organs, stages, sexes, and strains.
 
 ### Chip file
 
-Format description of the chip download file for a target species:
-
+Description of the chip file for a given species:
 
 |Column|Content|Example|
 |---|---|:---:|
