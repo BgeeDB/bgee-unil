@@ -236,7 +236,7 @@ SRP099257|Pervasive epigenetic effects of Drosophila euchromatic transposable el
 
 The processed expression (read counts, TPM, FPKM) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/) or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
 
-Format description of processed expression values download file per experiment identifier.
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -258,15 +258,6 @@ Format description of processed expression values download file per experiment i
 |16|[pValue](#pvalue-column-16 "See pValue column description")|0.13514812|
 |17|[State in Bgee](#state-in-bgee-column-17 "See State in Bgee column description")|Part of a call|
 
-
-Example of rows of processed expression values download file. Experiment SRP099257 from *Drosophila simulans*.
-
-|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
-|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
-SRP099257|SRX2548614|paired|FBgn0012820|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|0|0|0|13263|absent|1|Part of a call|
-SRP099257|SRX2548614|paired|FBgn0012821|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|0|0|0|13263|absent|1|Part of a call|
-SRP099257|SRX2548614|paired|FBgn0012823|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|4|0.178537|0.159188|10528|absent|0.13514812|Part of a call|
-SRP099257|SRX2548614|paired|FBgn0012824|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|274.911|16.049365|14.310003|5174|present|1.81226E-05|Part of a call|
 
 ##### <a name="experiment-id-column-1-2"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -335,8 +326,7 @@ Three different labels can be retrieved in this column:
 1) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 2) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) absent for this gene biotype.
 
-The biotypes excluded of absent calls are:
-
+#### Biotypes excluded from absent calls
 
 RNASeqProtocol|biotypes_excluded_for_absent_calls|
 |---- |---- |
@@ -345,3 +335,12 @@ lncRNA|IG_C_gene,IG_C_pseudogene,IG_D_gene,IG_D_pseudogene,IG_J_gene,IG_J_pseudo
 miRNA|3prime_overlapping_ncRNA,antisense,antisense_RNA,bidirectional_promoter_lncRNA,IG_C_gene,IG_C_pseudogene,IG_D_gene,IG_D_pseudogene,IG_J_gene,IG_J_pseudogene,IG_LV_gene,IG_pseudogene,IG_V_gene,IG_V_pseudogene,lincRNA,lncRNA,macro_lncRNA,misc_RNA,Mt_rRNA,Mt_tRNA,ncRNA,other,piRNA,polymorphic_pseudogene,processed_pseudogene,processed_transcript,protein_coding,pseudogene,ribozyme,rRNA,rRNA_pseudogene,scaRNA,scRNA,sense_intronic,sense_overlapping,snoRNA,snRNA,sRNA,TEC,transcribed_processed_pseudogene,transcribed_unitary_pseudogene,transcribed_unprocessed_pseudogene,translated_processed_pseudogene,translated_unprocessed_pseudogene,tRNA,TR_C_gene,TR_D_gene,TR_J_gene,TR_J_pseudogene,TR_V_gene,TR_V_pseudogene,unitary_pseudogene,unprocessed_pseudogene,vault_RNA,Y_RNA|
 circRNA|3prime_overlapping_ncRNA,antisense,antisense_RNA,bidirectional_promoter_lncRNA,IG_C_gene,IG_C_pseudogene,IG_D_gene,IG_D_pseudogene,IG_J_gene,IG_J_pseudogene,IG_LV_gene,IG_pseudogene,IG_V_gene,IG_V_pseudogene,lincRNA,lncRNA,macro_lncRNA,miRNA,misc_RNA,Mt_rRNA,Mt_tRNA,ncRNA,other,piRNA,polymorphic_pseudogene,pre_miRNA,processed_pseudogene,processed_transcript,protein_coding,pseudogene,ribozyme,rRNA,rRNA_pseudogene,scaRNA,scRNA,sense_intronic,sense_overlapping,snoRNA,snRNA,sRNA,TEC,transcribed_processed_pseudogene,transcribed_unitary_pseudogene,transcribed_unprocessed_pseudogene,translated_processed_pseudogene,translated_unprocessed_pseudogene,tRNA,TR_C_gene,TR_D_gene,TR_J_gene,TR_J_pseudogene,TR_V_gene,TR_V_pseudogene,unitary_pseudogene,unprocessed_pseudogene,vault_RNA,Y_RNA|
 ribo-minus|Mt_rRNA,rRNA,rRNA_pseudogene|
+
+#### Example rows
+
+|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
+|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
+SRP099257|SRX2548614|paired|FBgn0012820|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|0|0|0|13263|absent|1|Part of a call|
+SRP099257|SRX2548614|paired|FBgn0012821|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|0|0|0|13263|absent|1|Part of a call|
+SRP099257|SRX2548614|paired|FBgn0012823|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|4|0.178537|0.159188|10528|absent|0.13514812|Part of a call|
+SRP099257|SRX2548614|paired|FBgn0012824|UBERON:0000922|embryo|UBERON:0000068|embryo stage|NA|W501|274.911|16.049365|14.310003|5174|present|1.81226E-05|Part of a call|
