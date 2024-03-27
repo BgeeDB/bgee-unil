@@ -194,12 +194,7 @@ ERP013381|ERX1226596|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mous
 |13|[Bgee normalized data URL](#bgee-normalized-data-url-column-13 "See Bgee normalized data URL column description")|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|
 |14|[Experiment description](#experiment-description-column-14 "See Experiment description column description")|The study was aimed at interrogating the early stages of blood cell development within the embryo...|
 
-Example of rows for a single species in an experiment download file:
 
-|Experiment ID|Experiment name|Library count|Condition count|Organ-stage count|Organ count|Stage count|Cell-Type count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Experiment description|
-|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
-ERP013381|Mouse embryonic RNA-seq|1205|4|4|1|4|2|1|1|SRA|https://www.ncbi.nlm.nih.gov/sra/ERP013381|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|The study was aimed at interrogating the early stages of blood cell development within the embryo...
-SRP020490|Single-cell RNA-Seq reveals dynamic, random monoallelic gene expression in mammalian cells|118|2|2|2|2|2|2|1|SRA|https://www.ncbi.nlm.nih.gov/sra/SRP020490|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_SRP020490.tsv.gz|In the diploid genome, genes come in two copies, which can have different DNA sequence and where one is maternal and one is paternal...
 
 ##### <a name="experiment-id-column-1-1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -243,13 +238,19 @@ URL pathway where is located the processed data for the correspondent `Experimen
 ##### <a name="experiment-description-column-14 "></a>Experiment description (column 14)
 Description provided by the authors of the `Experiment ID` (column 1).
 
+#### Example rows
 
-Processed expression values download files
------------------------------------------------------------------
+|Experiment ID|Experiment name|Library count|Condition count|Organ-stage count|Organ count|Stage count|Cell-Type count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Experiment description|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
+ERP013381|Mouse embryonic RNA-seq|1205|4|4|1|4|2|1|1|SRA|https://www.ncbi.nlm.nih.gov/sra/ERP013381|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|The study was aimed at interrogating the early stages of blood cell development within the embryo...
+SRP020490|Single-cell RNA-Seq reveals dynamic, random monoallelic gene expression in mammalian cells|118|2|2|2|2|2|2|1|SRA|https://www.ncbi.nlm.nih.gov/sra/SRP020490|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_SRP020490.tsv.gz|In the diploid genome, genes come in two copies, which can have different DNA sequence and where one is maternal and one is paternal...
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/), or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. By using the web page all the processed data related to the species are downloaded, which means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file includes all processed data of all libraries that belong to the corresponding target experiment.
 
-Format description of processed expression values download file per experiment identifier.
+## Processed expression (read counts, TPM, FPKM) files
+
+The processed expression (read counts, TPM, FPKM) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/) or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
+
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -272,15 +273,6 @@ Format description of processed expression values download file per experiment i
 |17|[Detection flag](#detection-flag-column-17 "See Detection flag column description")|present|
 |18|[pValue](#pvalue-column-18 "See pValue column description")|3.70353E-06|
 |19|[State in Bgee](#state-in-bgee-column-19 "See State in Bgee column description")|Part of a call|
-
-
-Example of rows from a processed expression values download file. Experiment SRP020490 from *Mus musculus*.
-
-|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
-|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
-SRP020490|SRX259105|single|ENSMUSG00000000001|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|2154|54.538026|55.33224|2465|present|3.70353E-06|Part of a call|
-SRP020490|SRX259105|single|ENSMUSG00000000003|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|0|0|0|NA||NA|Result excluded, reason: absent call not reliable|
-SRP020490|SRX259105|single|ENSMUSG00000000028|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|341.9999|16.191957|16.427753|4671|present|8.89015E-05|Part of a call|
 
 
 ##### <a name="experiment-id-column-1-2"></a>Experiment ID (column 1)
@@ -355,3 +347,11 @@ Three different labels can be retrieved in this column:
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Library ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 3) Result excluded, reason: absent call not reliable --> protocol used to generate the `Library ID` (column 2) does not allow to consider `Gene ID` (column 4) for absent calls.
+
+#### Example rows
+
+|Experiment ID|Library ID|Library type|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Read count|TPM|FPKM|Rank|Detection flag|pValue|State in Bgee|
+|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
+SRP020490|SRX259105|single|ENSMUSG00000000001|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|2154|54.538026|55.33224|2465|present|3.70353E-06|Part of a call|
+SRP020490|SRX259105|single|ENSMUSG00000000003|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|0|0|0|NA||NA|Result excluded, reason: absent call not reliable|
+SRP020490|SRX259105|single|ENSMUSG00000000028|UBERON:0000085|morula|MmusDv:0000006|Theiler stage 03 (mouse)|CL:0000353|blastoderm cell|NA|CAST_EiJ(mother)_x_C57BL_6J(father)|341.9999|16.191957|16.427753|4671|present|8.89015E-05|Part of a call|
