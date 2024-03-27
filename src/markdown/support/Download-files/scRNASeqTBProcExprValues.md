@@ -1,6 +1,6 @@
 # Droplet-based scRNA-seq Data in H5AD Format
 
-The Bgee database now provides scRNA-seq data, specifically from droplet-based experiments, along with their associated metadata in the H5AD file format. This format facilitates quick access and manipulation of large-scale single-cell RNA sequencing datasets and their metadata.
+The Bgee database provides scRNA-seq data, specifically from droplet-based experiments, along with their associated metadata in the H5AD file format. This format facilitates quick access and manipulation of large-scale single-cell RNA sequencing datasets and their metadata.
 
 
 ## About the H5AD File Format
