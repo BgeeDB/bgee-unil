@@ -45,7 +45,7 @@ Description of the chip file for a given species:
 
 
 
-Example of the rows in the chip download file for a target species:
+Example rows in the chip file for a given species:
 
 |Experiment ID|Chip ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|IQRray score|MAS5 percent present|Normalization type|Scan date|Chip type ID|CDF name|Chip type name|IQRray score threshold for the chip type|MAS5 percent present threshold for the chip type|Data source|Data source URL|Bgee normalized data URL|Bgee normalized data file|Bgee raw file URL|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
