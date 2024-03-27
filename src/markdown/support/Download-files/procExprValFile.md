@@ -1,4 +1,4 @@
-# Processed Expression Values File
+# Processed Expression Values Files
 
 The [processed expression values](/download/processed-expression-values) page is a landing page for expression data (e.g. read counts, TPMs, FPKMs, log values of Affymetrix probeset normalized signal intensities) and annotation metadata (e.g. anatomical entities, developmental stages, sex, strain, quality scores). These files are divided by species and data type (bulk RNA-Seq, full-length single-cell RNA-Seq, droplet-based single-cell RNA-Seq, and Affymetrix).  To get more information on the download file for a specific data type, follow the relevant link below.
 *   [bulk RNA-Seq](/support/tutorial-processed-expression-values-download-RNA-seq)
