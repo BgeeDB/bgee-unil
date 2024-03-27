@@ -3,7 +3,7 @@
 This documentation describes the format of annotation download files (library and experiment files) as well as the processed expression values download files for RNA-Seq data. The files can be found on the Bgee [download page](/download/processed-expression-values) for each species.
 
 *   [Annotation (experiments/libraries) files](#annotation-experimentslibraries-files "Quick jump to this section")
-*   [Processed expression (read counts, TPM, FPKM) files](#processed-expression-values-download-files "Quick jump to this section")
+*   [Processed expression (read counts, TPM, FPKM) files](#processed-expression-read-counts-tpm-fpkm-files "Quick jump to this section")
 
 
 ## Annotation (experiments/libraries) files
