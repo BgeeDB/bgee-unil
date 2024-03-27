@@ -2,26 +2,21 @@
 
 This documentation describes the format of annotation download files (library and experiment files) as well as the processed expression values download files for single-cell RNA-Seq data. The files can be found on the Bgee [download page](/download/processed-expression-values).
 
-*   [Annotation download files](#annotation-download-files "Quick jump to this section")
-*   [Processed expression values download files](#processed-expression-values-download-files "Quick jump to this section")
+*   [Annotation (experiments/libraries) files](#annotation-experimentslibraries-files "Quick jump to this section")
+*   [Processed expression (read counts, TPM, FPKM) files](#processed-expression-read-counts-tpm-fpkm-files "Quick jump to this section")
 
 
-Annotation download files
----------------------------------------------------------------
+## Annotation (experiments/libraries) files
 The annotation download files are divided into 2 main files:
 
-1) **library file**: provides detailed information for each individual sample (where each sample is a unique cell), including annotation to an anatomical entity, developmental stage, cell type, sex, strain as well as the quality scores used in quality control metrics.
+1) [**library file**](#library-file "Quick jump to this section"): provides detailed information for each individual sample (where each sample is a unique cell), including anatomical entity, developmental stage, cell type, sex, strain, and quality scores used in quality control metrics.
 
-2) **experiment file**: provides the overall information about the experiment, such as the number of libraries that belong to the experiment, and the number of conditions, organs, stages, cell types, and strains.
+2) [**experiment file**](#experiment-file "Quick jump to this section"): provides overall information about the experiment, including the number of libraries that belong to the experiment, and the number of conditions, organs, stages, cell types, and strains.
 
-Go to:
-
-*   [Library file](#library-file "Quick jump to this section")
-*   [Experiment file](#experiment-file "Quick jump to this section")
 
 ### Library file
 
-Format description of the library download file for a target species:
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -61,15 +56,6 @@ Format description of the library download file for a target species:
 |34|[Data source URL](#data-source-url-column-34 "See Data source URL column description")|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226594|
 |35|[Bgee normalized data URL](#bgee-normalized-data-url-column-35 "See Bgee normalized data URL column description")|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|
 |36|[Raw file URL](#raw-file-url-column-36 "See Raw file URL column description")|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226594|
-
-
-Example of rows of the library download file for a target species:
-
-|Experiment ID|Library ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Expression mapped anatomical entity ID|Expression mapped anatomical entity name|Expression mapped stage ID|Expression mapped stage name|Expression mapped cell type ID|Expression mapped cell type name|Expression mapped sex|Expression mapped strain|Platform ID|Library type|Library orientation|TPM expression threshold|Read count|Mapped read count|Min. read length|Max. read length|All genes percent present|Protein coding genes percent present|Intergenic regions percent present|Distinct rank count|Max rank in the expression mapped condition|Run IDs|Data source|Data source URL|Bgee normalized data URL|Raw file URL|
-|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
-ERP013381|ERX1226594|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.88442|3238518|1467281|125|125|13.79|31.54|1.55|10642|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226594|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226594|
-ERP013381|ERX1226595|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|2.32718|3621774|2049490|125|125|15.34|34.81|1.28|11014|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226595|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226595|
-ERP013381|ERX1226596|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.39165|3581718|1606871|125|125|13.11|29.75|1.17|9585|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226596|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226596|
 
 ##### <a name="experiment-id-column-1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -179,10 +165,17 @@ URL pathway where is located the processed data for the correspondent `Experimen
 ##### <a name="raw-file-url-column-36"></a>Raw file URL (column 36)
 URL pathway to the SRA Run Selector. This allows access to the `Run IDs` (column 32) through the `library ID` (column 2).
 
+#### Example rows
+
+|Experiment ID|Library ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Cell type ID|Cell type name|Sex|Strain|Expression mapped anatomical entity ID|Expression mapped anatomical entity name|Expression mapped stage ID|Expression mapped stage name|Expression mapped cell type ID|Expression mapped cell type name|Expression mapped sex|Expression mapped strain|Platform ID|Library type|Library orientation|TPM expression threshold|Read count|Mapped read count|Min. read length|Max. read length|All genes percent present|Protein coding genes percent present|Intergenic regions percent present|Distinct rank count|Max rank in the expression mapped condition|Run IDs|Data source|Data source URL|Bgee normalized data URL|Raw file URL|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
+ERP013381|ERX1226594|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.88442|3238518|1467281|125|125|13.79|31.54|1.55|10642|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226594|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226594|
+ERP013381|ERX1226595|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|2.32718|3621774|2049490|125|125|15.34|34.81|1.28|11014|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226595|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226595|
+ERP013381|ERX1226596|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|NA|CD-1|UBERON:0000922|embryo|MmusDv:0000014|Theiler stage 09 (mouse)|CL:0000352|epiblast cell|not annotated|CD-1|Illumina HiSeq 2500|single|NA|3.39165|3581718|1606871|125|125|13.11|29.75|1.17|9585|NA|NA|SRA|https://www.ncbi.nlm.nih.gov/sra/?term=ERX1226596|https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/Mus_musculus/Mus_musculus_Full-Length_SC_RNA-Seq_read_counts_TPM_FPKM_ERP013381.tsv.gz|https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=ERX1226596|
 
 ### Experiment file
 
-Format description of the experiment download file for a target species:
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
