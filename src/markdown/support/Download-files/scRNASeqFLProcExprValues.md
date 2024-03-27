@@ -248,7 +248,7 @@ SRP020490|Single-cell RNA-Seq reveals dynamic, random monoallelic gene expressio
 
 ## Processed expression (read counts, TPM, FPKM) files
 
-The processed expression (read counts, TPM, FPKM) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/) or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking in the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
+The processed expression (read counts, TPM, FPKM) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/) or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking on the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
 
 #### File format and column descriptions
 
