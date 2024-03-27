@@ -2,13 +2,12 @@
 
 The Bgee database provides scRNA-seq data, specifically from droplet-based experiments, along with their associated metadata in the H5AD file format. This format facilitates quick access and manipulation of large-scale single-cell RNA sequencing datasets and their metadata.
 
+## Download Processed Expression Files
+The processed expression files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/) or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking on the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
 
 ## About the H5AD File Format
 
 H5AD is an extension of the HDF5 file format, designed for storing large annotated high-dimensional data arrays, such as scRNA-seq data. It offers efficient storage with built-in compression, reducing file sizes and enabling quicker data transfers. Additionally, its binary structure allows for rapid, indexed data retrieval without loading the entire dataset, and its hierarchical organization ensures structured storage of diverse data levels, from raw counts to metadata. Many single-cell analysis tools and databases favor this format.
-
-## Download Processed Expression Files
-The processed expression files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/sc_rnaseq/) or through the [download page](/download/processed-expression-values) by selecting the species of interest and then by clicking on the button `Download read counts, TPM, and FPKMs`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment.
 
 ##  Bgee's H5AD File Contents
 
