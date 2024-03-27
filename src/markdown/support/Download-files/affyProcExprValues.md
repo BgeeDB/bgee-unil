@@ -1,6 +1,6 @@
 # Affymetrix Processed Expression Values Files
 
-This page describes the contents of the expression (Affymetrix signal intensity) and annotation (experiment and chip) files. These files can be found in the Bgee [download page](/download/processed-expression-values) for each species.
+This page describes the contents of the expression (Affymetrix signal intensity) and annotation (experiment and chip) files. The files can be found on the Bgee [download page](/download/processed-expression-values).
 
 *   [Annotation (experiments/chips) files](#annotation-experimentschips-files "Quick jump to this section")
 *   [Processed expression (signal intensities) files](#processed-expression-signal-intensities-files "Quick jump to this section")
