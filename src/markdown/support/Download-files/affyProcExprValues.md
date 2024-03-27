@@ -16,7 +16,7 @@ The annotation download files are divided into 2 main files:
 
 ### Chip file
 
-Description of the chip file for a given species:
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -42,17 +42,6 @@ Description of the chip file for a given species:
 |20|[Bgee normalized data URL](#bgee-normalized-data-url-column-20 "See Bgee normalized data URL column description")|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|
 |21|[Bgee normalized data file](#bgee-normalized-data-file-column-21 "See Bgee normalized data file column description")|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|
 |22|[Bgee raw file URL](#bgee-raw-file-url-column-22 "See Bgee raw file URL column description")|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
-
-
-
-Example rows in the chip file for a given species:
-
-|Experiment ID|Chip ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|IQRray score|MAS5 percent present|Normalization type|Scan date|Chip type ID|CDF name|Chip type name|IQRray score threshold for the chip type|MAS5 percent present threshold for the chip type|Data source|Data source URL|Bgee normalized data URL|Bgee normalized data file|Bgee raw file URL|
-|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
-E-MEXP-1594|EA05066_30456_DROSO2_1|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113944.65|51.59|gcRMA|11/21/06 19:03:15|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
-E-MEXP-1594|EA05066_30460_DROSO2_10|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113462.67|51.46|gcRMA|11/21/06 19:11:47|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30460_DROSO2_10.CEL.gz|
-E-MEXP-1594|EA05066_30461_DROSO2_22|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|117482.56|52.42|gcRMA|11/21/06 19:17:40|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30461_DROSO2_22.CEL.gz|
-
 
 ##### <a name="experiment-id-column-1"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -127,10 +116,18 @@ File name of the normalized data referring to the `Experiment ID` (column 1).
 URL pathway where is located the raw data (CEL files) referring to the `Chip ID` (column 2) that belongs to a target `Experiment ID` (column 1) in Bgee.
 
 
+#### Example rows
+
+|Experiment ID|Chip ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|IQRray score|MAS5 percent present|Normalization type|Scan date|Chip type ID|CDF name|Chip type name|IQRray score threshold for the chip type|MAS5 percent present threshold for the chip type|Data source|Data source URL|Bgee normalized data URL|Bgee normalized data file|Bgee raw file URL|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
+E-MEXP-1594|EA05066_30456_DROSO2_1|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113944.65|51.59|gcRMA|11/21/06 19:03:15|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30456_DROSO2_1.CEL.gz|
+E-MEXP-1594|EA05066_30460_DROSO2_10|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|113462.67|51.46|gcRMA|11/21/06 19:11:47|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30460_DROSO2_10.CEL.gz|
+E-MEXP-1594|EA05066_30461_DROSO2_22|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|117482.56|52.42|gcRMA|11/21/06 19:17:40|A-AFFY-35|Drosophila_2|Affymetrix GeneChip Drosophila Genome 2.0 Array [Drosophila_2]|77335.92|37.17|ArrayExpress|NA|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|Drosophila_melanogaster_probesets_E-MEXP-1594_A-AFFY-35_gcRMA.tsv|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/EA05066_30461_DROSO2_22.CEL.gz|
+
 
 ### Experiment file
 
-Format description of the experiment download file for a target species:
+Description of the download file for a given species:
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -204,12 +201,12 @@ Description provided by the authors of the `Experiment ID` (column 1).
 
 
 
-## Processed expression values download files
+## Processed expression (signal intensities) files
 
-The processed expression values download files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. By using the web page all the processed data related to the species are downloaded, which means all the experiments are automatically downloaded. In the folder directory all the files (if more than 1 experiment) are organized by experiment identifier and each processed expression values experiment file includes all processed data of all samples that belong to the corresponding target experiment.
+The processed expression (signal intensities) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment. 
 
-Format description of processed expression values download file per experiment identifier.
 
+Description of processed expression (signal intensities) files:
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -230,7 +227,7 @@ Format description of processed expression values download file per experiment i
 
 
 
-Example of rows from the processed expression values download file. Experiment E-MEXP-1594 from *Drosophila melanogaster*.
+Example rows from a processed expression (signal intensities) file (experiment E-MEXP-1594 from *Drosophila melanogaster*).
 
 |Experiment ID|Chip ID|Probeset ID|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Log of normalized signal intensity|Detection flag|pValue|State in Bgee|
 |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
@@ -295,7 +292,6 @@ For this, we use a `mas5calls()` R function, where we set the parameters: tau=0.
 ##### <a name="state-in-bgee-column-14"></a>State in Bgee (column 14)
 The State in Bgee column provides information about the usage of `Probeset ID` (column 3) linked to a `Gene ID` (column 4) to make expression calls.
 Two different labels can be retrieved in this column:
-
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Chip ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 
