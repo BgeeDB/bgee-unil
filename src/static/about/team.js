@@ -233,32 +233,6 @@ const team = [
               },
             ],
           },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
-                content: 'Schneider, Theo',
-              },
-              {
-                type: 'text',
-                content: ` (not on photo) (Developer assistant: prepare a curation interface to help biocurators)`,
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
-                content: 'Huang, Wan-Ting',
-              },
-              {
-                type: 'text',
-                content: ` (not on photo) (Biocurator assistant: ${FULL_LENGTH_LABEL} data annotator and cleaner)`,
-              },
-            ],
-          },
         ],
       },
       {
@@ -353,6 +327,15 @@ const team = [
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0002-1661-7254',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Huang, Wan-Ting',
               },
             ],
           },
@@ -492,6 +475,15 @@ const team = [
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0003-3248-011X',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Schneider, Theo',
               },
             ],
           },
