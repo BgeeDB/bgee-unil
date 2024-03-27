@@ -4,7 +4,7 @@ import PATHS from '../../routes/paths';
 const tutorialValues = [
   {
     type: 'title',
-    content: 'Bgee documentation and tutorials',
+    content: 'Bgee Documentation',
   },
   {
     type: 'grid',
@@ -221,7 +221,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Expression call download file',
+            title: 'Expression Calls Files',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -237,7 +237,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of the format of expression call download files.',
+                  'Detailed description of the contents and generation of the presence/absence expression calls download files.',
               },
             ],
           },
@@ -247,7 +247,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Processed expression values download file',
+            title: 'Processed Expression Values File',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -263,7 +263,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of the format of processed expression values download files.',
+                  'Detailed description of the contents and generation of the processed expression and annotation metadata download files.',
               },
             ],
           },
