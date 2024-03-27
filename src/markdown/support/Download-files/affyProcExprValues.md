@@ -127,7 +127,7 @@ E-MEXP-1594|EA05066_30461_DROSO2_22|UBERON:0007023|adult organism|UBERON:0000066
 
 ### Experiment file
 
-Description of the download file for a given species:
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -145,16 +145,6 @@ Description of the download file for a given species:
 |12|[Bgee normalized data URL](#bgee-normalized-data-url-column-12 "See Bgee normalized data URL column description")|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|
 |13|[Bgee raw files URL](#bgee-raw-files-url-column-13 "See Bgee raw files URL column description")|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/|
 |14|[Experiment description](#experiment-description-column-14 "See Experiment description column description")|We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
-
-
-
-Example of rows for a single species in the experiment download file:
-
-|Experiment ID|Experiment name|Chip count|Condition count|Organ-stage count|Organ count|Stage count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Bgee raw files URL|Experiment description|
-|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
-E-MEXP-1594|Transcription profiling of Drosophila 40 homozygous Raleigh lines to understand the genetic basis of complex traits in Drosophila|160|2|1|1|1|2|1|ArrayExpress|https://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-1594|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/|We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
-GSE17013|The sexually antagonistic genes of Drosophila melanogaster|120|2|1|1|1|2|1|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17013|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE17013.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/GSE17013/|Differences in the selective pressures experienced by males and females are believed to be ubiquitous in dioecious organisms...|
-GSE3842|Transcription profiling of Drosophila LD/DD time course of y w; tim01, cn bw, and y w|46|2|1|1|1|0|2|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE3842|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE3842.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/GSE3842/|This SuperSeries is composed of the following subset Series:; GSE3826: LD/DD time course of y w Drosophila ...|
 
 
 ##### <a name="experiment-id-column-1-1"></a>Experiment ID (column 1)
@@ -200,13 +190,19 @@ URL pathway where the raw files (CEL files) corresponding to the `Experiment ID`
 Description provided by the authors of the `Experiment ID` (column 1).
 
 
+#### Example rows
+
+|Experiment ID|Experiment name|Chip count|Condition count|Organ-stage count|Organ count|Stage count|Sex count|Strain count|Data source|Data source URL|Bgee normalized data URL|Bgee raw files URL|Experiment description|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |------------------- |
+E-MEXP-1594|Transcription profiling of Drosophila 40 homozygous Raleigh lines to understand the genetic basis of complex traits in Drosophila|160|2|1|1|1|2|1|ArrayExpress|https://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-1594|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_E-MEXP-1594.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/E-MEXP-1594/|We used microarrays to assess whole genome transcript profiles of the 40 homozygous Raleigh lines...|
+GSE17013|The sexually antagonistic genes of Drosophila melanogaster|120|2|1|1|1|2|1|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17013|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE17013.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/GSE17013/|Differences in the selective pressures experienced by males and females are believed to be ubiquitous in dioecious organisms...|
+GSE3842|Transcription profiling of Drosophila LD/DD time course of y w; tim01, cn bw, and y w|46|2|1|1|1|0|2|GEO|https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE3842|https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/Drosophila_melanogaster/Drosophila_melanogaster_Affymetrix_probesets_GSE3842.tar.gz|https://bgee.org/ftp/affymetrix_data/cel_files/GSE3842/|This SuperSeries is composed of the following subset Series:; GSE3826: LD/DD time course of y w Drosophila ...|
 
 ## Processed expression (signal intensities) files
 
 The processed expression (signal intensities) files can be retrieved per experiment for a specific species, accessed through [FTP](https://bgee.org/ftp/current/download/processed_expr_values/affymetrix/), or through the [download page](/download/processed-expression-values "Bgee Processed expression values download page") by selecting the species of interest and then by clicking in the button `Download signal intensities`. When using the web page, all processed data for the species are downloaded. The data for each experiment are contained in separate files named using the experiment identifier. Each experiment file includes all processed data of all samples from the experiment. 
 
-
-Description of processed expression (signal intensities) files:
+#### File format and column descriptions
 
 |Column|Content|Example|
 |---|---|:---:|
@@ -225,15 +221,6 @@ Description of processed expression (signal intensities) files:
 |13|[pValue](#pvalue-column-13 "See pValue column description")|0.000612574|
 |14|[State in Bgee](#state-in-bgee-column-14 "See State in Bgee column description")|Part of a call|
 
-
-
-Example rows from a processed expression (signal intensities) file (experiment E-MEXP-1594 from *Drosophila melanogaster*).
-
-|Experiment ID|Chip ID|Probeset ID|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Log of normalized signal intensity|Detection flag|pValue|State in Bgee|
-|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
-E-MEXP-1594|EA05066_30456_DROSO2_1|1633746_s_at|FBgn0000008|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|8.00643|present|0.000612574|Part of a call|
-E-MEXP-1594|EA05066_30456_DROSO2_1|1636558_a_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|2.11749|absent|0.745101314|Part of a call|
-E-MEXP-1594|EA05066_30456_DROSO2_1|1637813_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|5.201|present|0.001164789|Part of a call|
 
 ##### <a name="experiment-id-column-1-2"></a>Experiment ID (column 1)
 The Experiment ID column provides the unique identifier per experiment.
@@ -295,3 +282,10 @@ Two different labels can be retrieved in this column:
 1) Part of a call --> This means the information from the `Gene ID` (column 4) was used to make an expression informative call.
 2) Result excluded, reason: pre-filtering --> Pre-filtering of genes never observed as present in any `Chip ID` (column 2). No calls will be generated for those `Gene ID` (column 4).
 
+#### Example rows
+
+|Experiment ID|Chip ID|Probeset ID|Gene ID|Anatomical entity ID|Anatomical entity name|Stage ID|Stage name|Sex|Strain|Log of normalized signal intensity|Detection flag|pValue|State in Bgee|
+|---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |---- |
+E-MEXP-1594|EA05066_30456_DROSO2_1|1633746_s_at|FBgn0000008|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|8.00643|present|0.000612574|Part of a call|
+E-MEXP-1594|EA05066_30456_DROSO2_1|1636558_a_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|2.11749|absent|0.745101314|Part of a call|
+E-MEXP-1594|EA05066_30456_DROSO2_1|1637813_at|FBgn0000014|UBERON:0007023|adult organism|UBERON:0000066|fully formed stage|female|Raleigh|5.201|present|0.001164789|Part of a call|
