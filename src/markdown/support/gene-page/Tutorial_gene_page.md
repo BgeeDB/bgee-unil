@@ -19,10 +19,10 @@ Select the first match **Cdk5**. You can now see the corresponding search result
 
 ![](../img/doc/gene-search/Fig02_Gene-search-results.png#tutoimgborder)
 
-If your search returns several entries you can navigate between them in different ways:
+If your search returns several entries, you can navigate between them in different ways:
 - Between result pages with the page numbers at the bottom right of the result table.
 - Change the number of entries displayed per page with the _Show **N** entries_ at the top right of the result table.
-- Alternatively you can filter the result entries with the _Filter_ box at the top left of the result table, e.g. with a species name.
+- Alternatively, you can filter the result entries with the _Filter_ box at the top left of the result table, e.g. with a species name.
 
 ![](../img/doc/gene-search/Fig03_Gene-search-headers.png#tutoimgborder)
 
@@ -54,7 +54,7 @@ This section provides important details about your selected gene, including its 
 ![](../img/doc/gene-search/Fig06_species-gene-page.png#tutoimgborder)
 
 
-e.g. the gene ENSMUSG00000028969, also known as Cdk5, encodes the cyclin-dependent kinase 5 protein in _Mus musculus_ (mouse). The gene has been identified to have 45 orthologs in different species, and possesses 196 paralogs within the mouse genome. Access to processed expression values for Cdk5 allows us to explore its patterns in various tissues and conditions
+E.g. the gene ENSMUSG00000028969, also known as Cdk5, encodes the cyclin-dependent kinase 5 protein in _Mus musculus_ (mouse). The gene has been identified to have 45 orthologs in different species, and possesses 196 paralogs within the mouse genome. Access to processed expression values for Cdk5 allows us to explore its patterns in various tissues and conditions
 
 
 
@@ -84,7 +84,7 @@ Expression calls can be re-grouped by any of the following condition parameters,
 ![](../img/doc/gene-search/Fig09_Expression-headers-gene-page.png#tutoimgborder)
 
 
-It is also possible to filter by data types/techniques (Affymetrix, EST, RNA Seq, etc.) used to produce the expression calls. By default, all are selected.
+It is also possible to filter by data types/techniques (Affymetrix, EST, RNA-Seq, etc.) used to produce the expression calls. By default, all are selected.
 
 ![](../img/doc/gene-search/Fig10_Expression-Data-types.png#tutoimgborder)
 
@@ -110,13 +110,13 @@ They correspond to one-to-one homologs for each pair of species in Bgee.
 #### Orthologs
 
 Orthology information is presented at taxon levels corresponding to the least common ancestor taxon for which orthologs are found in Bgee species.
-For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#orthologs) orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#orthologs), orthologs are found at 10 different taxon levels, each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig12_Orthologs.gif#tutoimgborder)
 
 
 For this gene the most precise taxon is Murinae and the highest level one is Bilateria. At Murinae taxon level, Cdk5 has one ortholog gene (column *Gene(s)*) coming from one species (column *Species with orthologs*).
-Clicking on the *See details* column allows you to see details of species and genes. At Murinae level the only orthologous gene is Cdk5 (ENSRNOG00000008017) from _Rattus norvegicus_.
+Clicking on the *See details* column allows you to see details of species and genes. At Murinae level, the only orthologous gene is Cdk5 (ENSRNOG00000008017) from _Rattus norvegicus_.
 
 ![](../img/doc/gene-search/Fig13_orthologs-tab-explanation.png#tutoimgborder)
 
@@ -128,13 +128,13 @@ You can filter the result entries with the _Filter_ box at the top left of the r
 
 ![](../img/doc/gene-search/Fig15_Orthologs-expression-comparison.png#tutoimgborder)
 
-You can run an expression comparison analysis for all ortholog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance clicking on the link "Compare expression" at the Bilateria level will run an expression comparison analysis for the 46 genes (45 orthologs + the gene itself) at that taxonomic level.
+You can run an expression comparison analysis for all ortholog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance, clicking on the link "Compare expression" at the Bilateria level will run an expression comparison analysis for the 46 genes (45 orthologs + the gene itself) at that taxonomic level.
 
 
 #### Paralogs
 
 Paralogy information is presented at taxon levels corresponding to the least common ancestor taxon for which paralogs are found in Bgee species.
-For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#paralogs) paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
+For the Mus musculus gene [Cdk5](/gene/ENSMUSG00000028969#paralogs), paralogs are found at 2 different taxon levels (Metazoa and Opisthokonta), each one corresponding to one line in the result table.
 
 ![](../img/doc/gene-search/Fig16_Paralogs-see-details.gif#tutoimgborder)
 
@@ -148,7 +148,7 @@ You can filter the result entries with the Filter box at the top left of the res
 
 ![](../img/doc/gene-search/Fig18_Paralogs-expression-comparison-analysis.png#tutoimgborder)
 
-You can run an expression comparison analysis for all paralog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance clicking on the link "Compare expression" at the Opisthokonta level will run an expression comparison analysis for the 197 genes (196 paralogs + the gene itself) at that taxonomic level.
+You can run an expression comparison analysis for all paralog genes at one taxonomic level by clicking on the link "Compare expression" of the *Expression comparison* column. For instance, clicking on the link "Compare expression" at the Opisthokonta level will run an expression comparison analysis for the 197 genes (196 paralogs + the gene itself) at that taxonomic level.
 
 #### Download one-to-one homologs
 

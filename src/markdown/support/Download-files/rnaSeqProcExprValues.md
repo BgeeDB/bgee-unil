@@ -9,9 +9,9 @@ This documentation describes the format of annotation download files (library an
 ## Annotation (experiments/libraries) files
 The annotation download files are divided into 2 main files:
 
-1) [**library file**](#library-file "Quick jump to this section"): provides detailed information for each individual sample, including anatomical entity, developmental stages, sex, strain, and quality scores used in quality control metrics.
+1) **[library file](#library-file "Quick jump to this section")**: provides detailed information for each individual sample, including anatomical entity, developmental stages, sex, strain, and quality scores used in quality control metrics.
 
-2) [**experiment file**](#experiment-file "Quick jump to this section"): provides overall information about the experiment, including the number of libraries that belong to the experiment, and the number of conditions, organs, stages, and strains.
+2) **[experiment file](#experiment-file "Quick jump to this section")**: provides overall information about the experiment, including the number of libraries that belong to the experiment, and the number of conditions, organs, stages, and strains.
 
 ### Library file
 
@@ -110,7 +110,7 @@ The Library type column consists of the strandedness of the library. This can be
 The Library orientation column provides the relative orientation of the reads.
 
 ##### <a name="tmm-normalization-factor-column-19"></a>TMM normalization factor (column 19)
-The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method we estimate the scale factors between samples, this means from libraries that belong to the same target `Experiment ID` (column 1).
+The TMM normalization factor column provides the estimated normalized factor of the relative RNA production levels from the RNA-seq data. Using the TMM method, we estimate the scale factors between samples, this means from libraries that belong to the same target `Experiment ID` (column 1).
 
 ##### <a name="tpm-expression-threshold-column-20"></a>TPM expression threshold (column 20)
 The TPM expression threshold column provides the minimum TPM value to call expressed genes in the `Library ID` (column 2).
@@ -303,7 +303,7 @@ The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a
 
 ##### <a name="detection-flag-column-15"></a>Detection flag (column 15)
 The Detection flag column provides an informative classification of a `Gene ID` (column 4) being classified as present or absent.
-The flag present means that the gene is actively expressed and absent means that the gene is not actively expressed.
+The flag present means that the gene is actively expressed, and absent means that the gene is not actively expressed.
 The genes are classified as present or absent based on `pValue` (column 16) cutoff.
 
 ##### <a name="pvalue-column-16"></a>pValue (column 16)
@@ -311,12 +311,16 @@ The p-value is a quantitative metric to detect if `Gene ID` (column 4) is active
 
 For each individual `Library ID` (column 2) we map reads both to transcripts and to the reference intergenic regions, and compute `TPM` (column 12) per `Gene ID` (column 4) (summing over transcripts) and per intergenic region. Then for each `Gene ID` (column 4) in the `Library ID` (column 2), we compute a Z-score in terms of standard deviations from the mean of reference intergenic regions:
 
-$ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 12)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
+```
+                              log2(TPM (column 12)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic}))
+ZScore_{Gene ID (column 4)} = ----------------------------------------------------------------------------
+                                                     sd(log2(TPM_{RefIntergenic}))
+```
 
 Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 
-The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value &#8804; \alpha$.
-In the download files we used $\alpha = 0.05$.
+The library-specific TPM limit to call genes expressed is the minimum value of TPM where *p-value &#8804; &alpha;*.
+In the download files, we used &alpha; = 0.05.
 
 ##### <a name="state-in-bgee-column-17"></a>State in Bgee (column 17)
 The State in Bgee column provides the information about the usage of `Gene ID` (column 4) to make expression calls.

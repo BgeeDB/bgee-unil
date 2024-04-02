@@ -7,7 +7,7 @@ The processed expression files can be retrieved per experiment for a specific sp
 
 ## About the H5AD File Format
 
-H5AD is an extension of the HDF5 file format, designed for storing large annotated high-dimensional data arrays, such as scRNA-seq data. It offers efficient storage with built-in compression, reducing file sizes and enabling quicker data transfers. Additionally, its binary structure allows for rapid, indexed data retrieval without loading the entire dataset, and its hierarchical organization ensures structured storage of diverse data levels, from raw counts to metadata. Many single-cell analysis tools and databases favor this format.
+H5AD is an extension of the [HDF5](https://en.wikipedia.org/wiki/Hierarchical_Data_Format) file format, designed for storing large annotated high-dimensional data arrays, such as scRNA-seq data. It offers efficient storage with built-in compression, reducing file sizes and enabling quicker data transfers. Additionally, its binary structure allows for rapid, indexed data retrieval without loading the entire dataset, and its hierarchical organization ensures structured storage of diverse data levels, from raw counts to metadata. Many single-cell analysis tools and databases favor this format.
 
 ##  Bgee's H5AD File Contents
 

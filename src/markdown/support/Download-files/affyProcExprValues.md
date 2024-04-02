@@ -10,9 +10,9 @@ This page describes the contents of the expression (Affymetrix signal intensity)
 
 The annotation download files are divided into 2 main files:
 
-1) [**chip file**](#chip-file "Quick jump to this section"): provides detailed information for each individual chip, including anatomical entities, developmental stages, sex, strain, chip type, normalization type, and quality scores used in quality control metrics.
+1) **[chip file](#chip-file "Quick jump to this section")**: provides detailed information for each individual chip, including anatomical entities, developmental stages, sex, strain, chip type, normalization type, and quality scores used in quality control metrics.
 
-2) [**experiment file**](#experiment-file "Quick jump to this section"): provides overall information about the experiment, including the number of chips that belong to the experiment, and the number of conditions, organs, stages, sexes, and strains.
+2) **[experiment file](#experiment-file "Quick jump to this section")**: provides overall information about the experiment, including the number of chips that belong to the experiment, and the number of conditions, organs, stages, sexes, and strains.
 
 ### Chip file
 
@@ -101,7 +101,7 @@ The IQRray score threshold for the chip type column provides a minimum threshold
 The MAS5 percent present threshold for the chip type column provides information about the minimum proportion of genes called expressed in the `Chip type ID` (column 13).
 
 ##### <a name="data-source-column-18"></a>Data source (column 18)
-Data repository from where the raw files were extracted referring to the `Chip ID` (column 2).
+Data repository from where the raw files were extracted, referring to the `Chip ID` (column 2).
 
 ##### <a name="data-source-url-column-19"></a>Data source URL (column 19)
 URL pathway to the data repository where is located the `Chip ID` (column 2).
@@ -110,7 +110,7 @@ URL pathway to the data repository where is located the `Chip ID` (column 2).
 URL pathway where is located the processed data for the correspondent `Experiment ID` (column 1) in Bgee.
 
 ##### <a name="bgee-normalized-data-file-column-21"></a>Bgee normalized data file (column 21)
-File name of the normalized data referring to the `Experiment ID` (column 1).
+File name of the normalized data, referring to the `Experiment ID` (column 1).
 
 ##### <a name="bgee-raw-file-url-column-22"></a>Bgee raw file URL (column 22)
 URL pathway where is located the raw data (CEL files) referring to the `Chip ID` (column 2) that belongs to a target `Experiment ID` (column 1) in Bgee.
@@ -172,7 +172,7 @@ The Stage count column provides the total number of developmental stages in the 
 The Sex count column provides the total number of sexes in the target `Experiment ID` (column 1).
 
 ##### <a name="strain-count-column-9"></a>Strain count (column 9)
-The Strain count column provides the total number of genetic variants or sub-types in the target `Experiment ID` (column 1).
+The Strain count column provides the total number of genetic variants or subtypes in the target `Experiment ID` (column 1).
 
 ##### <a name="data-source-column-10"></a>Data source (column 10)
 Data repository from where the raw files that belong to the `Experiment ID` (column 1) were extracted.

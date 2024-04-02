@@ -9,9 +9,9 @@ This documentation describes the format of annotation download files (library an
 ## Annotation (experiments/libraries) files
 The annotation download files are divided into 2 main files:
 
-1) [**library file**](#library-file "Quick jump to this section"): provides detailed information for each individual sample (where each sample is a unique cell), including anatomical entity, developmental stage, cell type, sex, strain, and quality scores used in quality control metrics.
+1) **[library file](#library-file "Quick jump to this section")**: provides detailed information for each individual sample (where each sample is a unique cell), including anatomical entity, developmental stage, cell type, sex, strain, and quality scores used in quality control metrics.
 
-2) [**experiment file**](#experiment-file "Quick jump to this section"): provides overall information about the experiment, including the number of libraries that belong to the experiment, and the number of conditions, organs, stages, cell types, and strains.
+2) **[experiment file](#experiment-file "Quick jump to this section")**: provides overall information about the experiment, including the number of libraries that belong to the experiment, and the number of conditions, organs, stages, cell types, and strains.
 
 
 ### Library file
@@ -224,7 +224,7 @@ The Cell-Type count column provides the total number of cell types in the target
 The Sex count column provides the total number of sexes in the target `Experiment ID` (column 1).
 
 ##### <a name="strain-count-column-10"></a>Strain count (column 10)
-The Strain count column provides the total number of genetic variants or sub-types in the target `Experiment ID` (column 1).
+The Strain count column provides the total number of genetic variants or subtypes in the target `Experiment ID` (column 1).
 
 ##### <a name="data-source-column-11"></a>Data source (column 11)
 Data repository from where the raw files that belong to the `Experiment ID` (column 1) were extracted.
@@ -324,8 +324,8 @@ The FPKM column provides a normalized quantification measure for sequencing dept
 The Rank column provides the rank of a `Gene ID` (column 4) in a condition for a species. It is used to compute expression ranks and expression scores.
 
 ##### <a name="detection-flag-column-17"></a>Detection flag (column 17)
-The Detection flag column provides an informative classification of a `Gene ID` (column 4). The flag can be present which means that the gene is actively expressed or empty classification (NULL).
-Note that in single cell RNA-Seq full-length data we don't call absent genes.
+The Detection flag column provides an informative classification of a `Gene ID` (column 4). The flag can be present, which means that the gene is actively expressed or empty classification (NULL).
+Note that in single cell RNA-Seq full-length data, we don't call absent genes.
 The genes are classified as present based on `pValue` (column 18) cutoff.
 
 ##### <a name="pvalue-column-18"></a>pValue (column 18)
@@ -333,12 +333,16 @@ The p-value is a quantitative metric to detect if `Gene ID` (column 4) is active
 
 For each individual `Library ID` (column 2) we map reads both to transcripts and to the reference intergenic regions, and compute `TPM` (column 14) per `Gene ID` (column 4) (summing over transcripts) and per intergenic region. Then for each `Gene ID` (column 4) in the `Library ID` (column 2), we compute a Z-score in terms of standard deviations from the mean of reference intergenic regions:
 
-$ZScore_{Gene ID (column 4)} = \frac{(log2(TPM (column 14)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic})))}{sd(log2(TPM_{RefIntergenic}))}$
+```
+                              log2(TPM (column 14)_{Gene ID (column 4)}) - mean(log2(TPM_{RefIntergenic}))
+ZScore_{Gene ID (column 4)} = ----------------------------------------------------------------------------
+                                                     sd(log2(TPM_{RefIntergenic}))
+```
 
 Then for `Gene ID` (column 4) in the `Library ID` (column 2) we calculate a p-value based on a null hypothesis of expression at a similar level to reference intergenic, estimated as a Normal distribution.
 
-The library-specific TPM limit to call genes expressed is the minimum value of TPM where $p-value &#8804; \alpha$.
-In the download files we used $\alpha = 0.05$.
+The library-specific TPM limit to call genes expressed is the minimum value of TPM where *p-value &#8804; &alpha;*.
+In the download files, we used &alpha; = 0.05.
 
 ##### <a name="state-in-bgee-column-19"></a>State in Bgee (column 19)
 The State in Bgee column provides information about the usage of `Gene ID` (column 4) to make expression calls.
