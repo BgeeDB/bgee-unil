@@ -3,6 +3,7 @@ import config from '../config.json';
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
 const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
+const SPARQL_ARCH = `${config.archive ? `${URL_VERSION}` : ''}`;
 const PATHS = {
   HOME: `${URL_ROOT}/`,
   ANALYSIS: {
@@ -16,7 +17,7 @@ const PATHS = {
     GENE_ITEM: `${URL_ROOT}/gene/:geneId`,
     GENE_ITEM_BY_SPECIES: `${URL_ROOT}/gene/:geneId/:speciesId`,
     ANATOMICAL_HOMOLOGY: `${URL_ROOT}/search/anatomical-homology`,
-    SPARQL: `${URL_ROOT}/sparql/`,
+    SPARQL: `/sparql${SPARQL_ARCH}/`,
     SPECIES: `${URL_ROOT}/search/species`,
     SPECIES_ITEM: `${URL_ROOT}/species/:id`,
     GENE_LIST_ITEM: `${URL_ROOT}/gene-list/:speciesId`,

@@ -33,10 +33,10 @@ const NAVBAR_LEFT = [
     path: PATHS.SEARCH.RAW_DATA_ANNOTATIONS,
   },
   {
-    key: 'page.resources.sparql',
+    key: 'page.search.sparql',
     title: 'SPARQL',
-    type: 'internal',
-    path: PATHS.RESOURCES.SPARQL,
+    type: 'external',
+    path: PATHS.SEARCH.SPARQL,
   },
   {
     key: 'page.support.tutorials',

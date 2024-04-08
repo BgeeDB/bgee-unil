@@ -87,7 +87,7 @@ const Footer = () => {
             <div className="nav-footer-col-head">Resources</div>
             <ul>
               <li><Link to={PATHS.RESOURCES.R_PACKAGES} className="nav_a">R packages</Link></li>
-              <li><Link to={PATHS.RESOURCES.SPARQL} className="nav_a">SPARQL endpoint</Link></li>
+              <li><a href={PATHS.SEARCH.SPARQL} target="_blank" rel="noopener noreferrer" className="nav_a">SPARQL endpoint</a></li>
             </ul>
           </div>
           <div className="nav-footer-col-spacer"/>

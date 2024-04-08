@@ -152,7 +152,7 @@ const Home = () => {
                       <Link to={PATHS.RESOURCES.R_PACKAGES} className="home-card-link">R packages</Link>
                     </li>
                     <li key="data-retrieval-4">
-                      <Link to={PATHS.RESOURCES.SPARQL} className="home-card-link">SPARQL endpoint</Link>
+                      <a href={PATHS.SEARCH.SPARQL} target="_blank" rel="noopener noreferrer" className="home-card-link">SPARQL endpoint</a>
                     </li>
                   </ul>
                 </div>
