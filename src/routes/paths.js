@@ -16,6 +16,7 @@ const PATHS = {
     GENE_ITEM: `${URL_ROOT}/gene/:geneId`,
     GENE_ITEM_BY_SPECIES: `${URL_ROOT}/gene/:geneId/:speciesId`,
     ANATOMICAL_HOMOLOGY: `${URL_ROOT}/search/anatomical-homology`,
+    SPARQL: `${URL_ROOT}/sparql/`,
     SPECIES: `${URL_ROOT}/search/species`,
     SPECIES_ITEM: `${URL_ROOT}/species/:id`,
     GENE_LIST_ITEM: `${URL_ROOT}/gene-list/:speciesId`,
