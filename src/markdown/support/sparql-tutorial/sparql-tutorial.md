@@ -1,9 +1,6 @@
 # Querying the Bgee Knowledge Graph with SPARQL
 
 *   [Introduction](#introduction "Quick jump to this section")
-*   [Programmatic access to the latest version of the Bgee SPARQL endpoint](#programmatic-access-to-the-latest-version-of-the-bgee-sparql-endpoint "Quick jump to this section")
-*   [Stable programmatic access to this version of the Bgee SPARQL endpoint](#stable-programmatic-access-to-this-version-of-the-bgee-sparql-endpoint "Quick jump to this section")
-*   [RDF serialisation and semantic models](#rdf-serialisation-and-semantic-models "Quick jump to this section")
 *   [Querying Species](#querying-species "Quick jump to this section")
 *   [Querying Gene Expression Profile](#querying-gene-expression-profile "Quick jump to this section")
     *   [Where is a Gene Expressed](#where-is-a-gene-expressed "Quick jump to this section")
@@ -17,6 +14,9 @@
 *   [Querying with UniProtKB cross-references](#querying-with-uniprotkb-cross-references "Quick jump to this section")
 *   [Querying Gene Metadata](#querying-gene-metadata "Quick jump to this section")
 *   [Querying Genes with Absence of Expression](#querying-genes-with-absence-of-expression "Quick jump to this section")
+*   [Programmatic access to the latest version of the Bgee SPARQL endpoint](#programmatic-access-to-the-latest-version-of-the-bgee-sparql-endpoint "Quick jump to this section")
+*   [Stable programmatic access to this version of the Bgee SPARQL endpoint](#stable-programmatic-access-to-this-version-of-the-bgee-sparql-endpoint "Quick jump to this section")
+*   [RDF serialisation and semantic models](#rdf-serialisation-and-semantic-models "Quick jump to this section")
 
 ## Introduction
 In this tutorial, we will demonstrate how to build complex queries to retrieve gene expression information. We will build them step-by-step based on simple queries. The language used for querying the Bgee knowledge graph is [SPARQL](https://www.w3.org/TR/sparql11-overview/). The Bgee graph was built based on the [GenEx semantic model](https://biosoda.github.io/genex/).
@@ -36,66 +36,6 @@ To improve readability, all reserved words of the SPARQL query language are writ
 - All variables are defined by starting with a question mark `?`.
 - The graph patterns are stated as triples ended with a full stop (.): `subject predicate object .`.
 - Results are projected via the variables that are defined in the query header such as the reserved word `SELECT`.
-
-
-## Programmatic access to the latest version of the Bgee SPARQL endpoint
-
-The latest version of the Bgee SPARQL endpoint is accessible by using your preferred programming language through the URL address [https://www.bgee.org/sparql/](https://bgee.org/sparql/).
-
-
-For example, to retrieve all anatomic entities in *Rattus norvegicus* where the APOC1 gene is expressed, the query is:
-```
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-SELECT DISTINCT ?anatEntity ?anatName {
-    ?seq a orth:Gene;
-         orth:organism ?organism ;
-         rdfs:label ?geneName .
-    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
-    ?seq genex:isExpressedIn ?anatEntity.
-    ?anatEntity a genex:AnatomicalEntity .
-    ?anatEntity rdfs:label ?anatName .
-    FILTER (LCASE(?geneName) = LCASE('APOC1'))
-}
-```
-
-It is possible to download the result of this query in the [JSON](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+) or [XML](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bxml&timeout=0&debug=on&run=+Run+Query+) format.
-
-
-(Of note, as opposed to the example below to access an archived version, when accessing the endpoint for the latest version, it is important **NOT** to specify the name of a graph to target; otherwise, results will be incorrect)
-
-
-## Stable programmatic access to this version of the Bgee SPARQL endpoint
-
-This version of the Bgee SPARQL endpoint is accessible in a stable manner by using your preferred programming language through the stable URL address [https://www.bgee.org/sparql15_1/](https://bgee.org/sparql15_1/).
-
-In the SELECT section of your query, it is essential to specify the URL of the graph you want to query (`https://bgee.org/rdf_v15_1`), otherwise you won't be using the data for this version. For example, to retrieve all anatomic entities in *Rattus norvegicus* where the APOC1 gene is expressed, the query is:
-
-```
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-SELECT DISTINCT ?anatEntity ?anatName FROM <https://bgee.org/rdf_v15_1>{
-    ?seq a orth:Gene;
-         orth:organism ?organism ;
-         rdfs:label ?geneName .
-    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
-    ?seq genex:isExpressedIn ?anatEntity.
-    ?anatEntity a genex:AnatomicalEntity .
-    ?anatEntity rdfs:label ?anatName .
-    FILTER (LCASE(?geneName) = LCASE('APOC1'))
-}
-```
-
-Again, **it is essential to specify the name of the graph of the version to target** (in the example above, `https://bgee.org/rdf_v15_1`); otherwise, results will be incorrect.
-
-
-## RDF serialisation and semantic models
-
-The Bgee RDF data were created using an Ontology Based Data Access (OBDA) approach, so-called Ontop. The RDF serialisation of the '*EasyBgee*' database is based on the [GenEx semantic model specification](https://biosoda.github.io/genex/) and the OBDA mappings defined in [OBDA mappings](https://github.com/biosoda/bioquery/tree/master/Bgee_OBDA_mappings). The mappings are defined using the [Ontop mapping language](https://github.com/ontop/ontop/wiki/ontopOBDAModel). We also inferred all implicit information based on [OWL 2 Web Ontology Language Profile QL](https://www.w3.org/TR/owl2-profiles/#OWL_2_QL) reasoning over GenEx.
-
-To cross-reference other resources, this SPARQL endpoint contains annotation property assertions defined by a first draft of the life-sciences cross-reference (LSCR) ontology that is available to download at the [Quest for Orthologs GitHub](https://github.com/qfo/OrthologyOntology) repository [here](https://github.com/qfo/OrthologyOntology/blob/master/lscr.ttl).
 
 
 ## Querying species
@@ -737,3 +677,66 @@ SELECT DISTINCT ?anat ?anatName {
 
 #### Q15 graphical representation:
 ![](../img/doc/sparql-tutorial/q15.png#tutoimgborder)
+
+
+## Programmatic access to the latest version of the Bgee SPARQL endpoint
+
+The latest version of the Bgee SPARQL endpoint is accessible by using your preferred programming language through the URL address [https://www.bgee.org/sparql/](https://bgee.org/sparql/).
+
+
+For example, to retrieve all anatomic entities in *Rattus norvegicus* where the APOC1 gene is expressed, the query is:
+```
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT DISTINCT ?anatEntity ?anatName {
+    ?seq a orth:Gene;
+         orth:organism ?organism ;
+         rdfs:label ?geneName .
+    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+    ?seq genex:isExpressedIn ?anatEntity.
+    ?anatEntity a genex:AnatomicalEntity .
+    ?anatEntity rdfs:label ?anatName .
+    FILTER (LCASE(?geneName) = LCASE('APOC1'))
+}
+```
+
+It is possible to download the result of this query in the [JSON](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+) or [XML](https://www.bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0ASELECT+DISTINCT+%3FanatEntity+%3FanatName+%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3FgeneName+.%0D%0A++++%3Fseq+genex%3AisExpressedIn+%3Fcond+.%0D%0A++++%3Fcond+genex%3AhasAnatomicalEntity+%3FanatEntity+.%0D%0A++++%3FanatEntity+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcond+obo%3ARO_0002162+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F10116%3E+.+%0D%0A++++FILTER+%28LCASE%28%3FgeneName%29+%3D+LCASE%28%27APOC1%27%29%29%0D%0A%7D&should-sponge=&format=application%2Fsparql-results%2Bxml&timeout=0&debug=on&run=+Run+Query+) format.
+
+
+(Of note, as opposed to the example below to access an archived version, when accessing the endpoint for the latest version, it is important **NOT** to specify the name of a graph to target; otherwise, results will be incorrect)
+
+
+## Stable programmatic access to this version of the Bgee SPARQL endpoint
+
+This version of the Bgee SPARQL endpoint is accessible in a stable manner by using your preferred programming language through the stable URL address [https://www.bgee.org/sparql15_1/](https://bgee.org/sparql15_1/).
+
+In the SELECT section of your query, it is essential to specify the URL of the graph you want to query (`https://bgee.org/rdf_v15_1`), otherwise you won't be using the data for this version. For example, to retrieve all anatomic entities in *Rattus norvegicus* where the APOC1 gene is expressed, the query is:
+
+```
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+SELECT DISTINCT ?anatEntity ?anatName FROM <https://bgee.org/rdf_v15_1>{
+    ?seq a orth:Gene;
+         orth:organism ?organism ;
+         rdfs:label ?geneName .
+    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+    ?seq genex:isExpressedIn ?anatEntity.
+    ?anatEntity a genex:AnatomicalEntity .
+    ?anatEntity rdfs:label ?anatName .
+    FILTER (LCASE(?geneName) = LCASE('APOC1'))
+}
+```
+
+Again, **it is essential to specify the name of the graph of the version to target** (in the example above, `https://bgee.org/rdf_v15_1`); otherwise, results will be incorrect.
+
+
+## RDF serialisation and semantic models
+
+The Bgee RDF data were created using an Ontology Based Data Access (OBDA) approach, so-called Ontop. The RDF serialisation of the '*EasyBgee*' database is based on the [GenEx semantic model specification](https://biosoda.github.io/genex/) and the OBDA mappings defined in [OBDA mappings](https://github.com/biosoda/bioquery/tree/master/Bgee_OBDA_mappings). The mappings are defined using the [Ontop mapping language](https://github.com/ontop/ontop/wiki/ontopOBDAModel). We also inferred all implicit information based on [OWL 2 Web Ontology Language Profile QL](https://www.w3.org/TR/owl2-profiles/#OWL_2_QL) reasoning over GenEx.
+
+To cross-reference other resources, this SPARQL endpoint contains annotation property assertions defined by a first draft of the life-sciences cross-reference (LSCR) ontology that is available to download at the [Quest for Orthologs GitHub](https://github.com/qfo/OrthologyOntology) repository [here](https://github.com/qfo/OrthologyOntology/blob/master/lscr.ttl).
+
+Download the latest Bgee RDF data dump [here](https://bgee.org/ftp/current/rdf_easybgee.zip).
+
