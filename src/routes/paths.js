@@ -31,7 +31,6 @@ const PATHS = {
   },
   RESOURCES: {
     R_PACKAGES: `${URL_ROOT}/resources/r-packages`,
-    SPARQL: `${URL_ROOT}/resources/sparql`,
     ANNOTATIONS: `${URL_ROOT}/resources/annotations`,
     ONTOLOGIES: `${URL_ROOT}/resources/ontologies`,
     SOURCE_CODE: `${URL_ROOT}/resources/source-code`,

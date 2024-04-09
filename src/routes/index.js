@@ -230,7 +230,6 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.RESOURCES.R_PACKAGES,
-                  PATHS.RESOURCES.SPARQL,
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,

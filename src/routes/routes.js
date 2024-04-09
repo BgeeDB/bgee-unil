@@ -20,7 +20,6 @@ import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValu
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
 
 import RPackageFile from '../static/resources/rPackage';
-import SparqlFile from '../static/resources/sparql';
 import AnnotationsFile from '../static/resources/annotations';
 import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
@@ -159,16 +158,6 @@ const RESOURCES = {
       description:
         'Access R packages allowing to retrieve Bgee data, or to perform Bgee analyses on your own data.',
       keywords: 'R package, Bioconductor, BgeeDB, BgeeCall, Docker container',
-    },
-  },
-  [PATHS.RESOURCES.SPARQL]: {
-    source: SparqlFile,
-    title: 'About the Bgee SPARQL endpoint',
-    meta: {
-      title: 'SPARQL endpoint documentation',
-      description:
-        'Documentation about how to access the Bgee SPARQL endpoint to retrieve present/absent calls of expression',
-      keywords: 'SPARQL, SPARQL endpoint, GenEx, OWL, OWL2, RDF, ontology',
     },
   },
   [PATHS.RESOURCES.ANNOTATIONS]: {

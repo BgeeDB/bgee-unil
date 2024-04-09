@@ -37,7 +37,6 @@
 <url><loc>https://www.bgee.org/resources/ontologies</loc><priority>0.7</priority></url>
 <url><loc>https://www.bgee.org/resources/r-packages</loc><priority>0.7</priority></url>
 <url><loc>https://www.bgee.org/resources/source-code</loc><priority>0.7</priority></url>
-<url><loc>https://www.bgee.org/resources/sparql</loc><priority>0.7</priority></url>
 <url><loc>https://www.bgee.org/analysis/expr-comparison</loc><priority>0.7</priority></url>
 <url><loc>https://www.bgee.org/analysis/top-anat</loc><priority>0.7</priority></url>
 <url><loc>https://www.bgee.org/search/anatomical-homology</loc><priority>0.7</priority></url>

@@ -117,12 +117,6 @@ const NAVBAR_LEFT = [
         path: PATHS.RESOURCES.R_PACKAGES,
       },
       {
-        key: 'page.resources.sparql',
-        title: ROUTES[PATHS.RESOURCES.SPARQL].title,
-        type: 'internal',
-        path: PATHS.RESOURCES.SPARQL,
-      },
-      {
         key: 'page.resources.annotations',
         title: ROUTES[PATHS.RESOURCES.ANNOTATIONS].title,
         type: 'internal',
