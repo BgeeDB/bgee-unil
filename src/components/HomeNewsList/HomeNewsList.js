@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import PATHS from "../../routes/paths";
 import Bulma from '../Bulma';
 import NewsItem from '../NewsItem';
 
@@ -24,6 +26,12 @@ const HomeNewsList = () => (
       <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
         News
       </Bulma.Card.Header.Title>
+      <Bulma.Card.Header.Icon>
+        <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
+          See all news
+        </Link>
+      </Bulma.Card.Header.Icon>
+
     </Bulma.Card.Header>
     <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
       <div className="content">

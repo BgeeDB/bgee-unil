@@ -58,7 +58,7 @@ import DataSource from '../pages/about/DataSource';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
-    title: 'Run TopAnat: Expression enrichment analysis',
+    title: 'TopAnat: Expression enrichment analysis',
     component: TopAnatAnalysis,
     meta: {
       title: 'TopAnat: Expression enrichment analysis',
@@ -67,7 +67,7 @@ const ANALYSIS = {
     },
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
-    title: 'Run Expression comparison',
+    title: 'Expression comparison',
     component: ExpComp,
     meta: {
       title: 'Expression comparison analysis',
@@ -100,7 +100,7 @@ const SEARCH = {
   },
   [PATHS.SEARCH.SPECIES]: {
     component: SpeciesList,
-    title: 'Species information',
+    title: 'Species',
   },
   [PATHS.SEARCH.SPECIES_ITEM]: {
     component: Species,
