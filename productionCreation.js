@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const fsStd = require('fs');
 const { execSync } = require('child_process');
 const ANNOT_URL = 'annotations.bgee.org';
-const DEV_URL = 'http://dbbgee.unil.ch';
+const DEV_URL = 'http://rbgee.unil.ch';
 
 const main = async () => {
   try {
