@@ -34,7 +34,7 @@ const main = async () => {
     console.log('Setting config as an archive');
 
     const scss = await fs.readFile('./src/styles/global.scss', 'utf8');
-    const tmpScss = scss.replace('$archive: false;', '$archive: true;').replace('/img/external_link', `/${URL_VERSION}/img/external_link`);
+    const tmpScss = scss.replace('$archive: false;', '$archive: true;').replace('/img/external-link', `/${URL_VERSION}/img/external-link`);
     await fs.writeFile('./src/styles/global.scss', tmpScss);
     console.log('Setting scss as an archive');
 
