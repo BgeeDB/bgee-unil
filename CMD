@@ -1,7 +1,7 @@
 # archives
-rm -Rf archives/15.0-archived/ && yarn archive
-cd archives/15.0-archived/
-rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_0/
+rm -Rf archives/15.1-archived/ && yarn archive
+cd archives/15.1-archived/
+rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_1/
 
 # prod
 rm -Rf build && yarn prod
