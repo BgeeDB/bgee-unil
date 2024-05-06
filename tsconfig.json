@@ -1,12 +1,6 @@
 {
   "compilerOptions": {
-    /* Language and Environment */
-    "target": "ES2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2021",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,10 +10,18 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "types": [
+      "@types/d3"
+    ],
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"                                /* Specify what JSX code is generated. */
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
   "include": [
     "src"

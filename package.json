@@ -9,6 +9,10 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/d3": "^7.4.3",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.7",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
     "axios": "0.21.4",
     "bulma": "^0.9.3",
     "craco-raw-loader": "^1.0.2",
@@ -41,7 +45,7 @@
     "annot": "node productionCreation.js",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet=true"
+    "lint": "eslint \"src/**/*.{js,jsx,tsx}\" --quiet=true"
   },
   "eslintConfig": {
     "extends": [
