@@ -460,9 +460,6 @@ const search = {
               params.append('cond_param2', cp)
             );
           }
-          if (form?.condObserved !== undefined) {
-            params.append('cond_observed', form?.condObserved);
-          }
 
           // We apply the filters
           // If filters_for_all we apply all filters EVEN IF there is OnlyCount
