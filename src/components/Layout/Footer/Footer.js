@@ -111,7 +111,7 @@ const Footer = () => {
                 <a
                   href="#"
                   onClick={(event) => {
-                    event.preventDefault(); // Prevent the default anchor behavior
+                    event.preventDefault();
                     copyToClipboard(permanentLink);
                     addNotification({
                       id: random().toString(),
@@ -125,7 +125,7 @@ const Footer = () => {
                   }}
                   onKeyPress={(event) => {
                     if (event.key === 'Enter') {
-                      event.preventDefault(); // Prevent the default anchor behavior
+                      event.preventDefault();
                       copyToClipboard(permanentLink);
                       addNotification({
                         id: random().toString(),
