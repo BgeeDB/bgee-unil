@@ -105,7 +105,7 @@ const Footer = () => {
           </div>
           <div className="nav-footer-col-spacer"/>
           <div className="nav-footer-col">
-            <div className="nav-footer-col-head">Share</div>
+            <div className="nav-footer-col-head">Share &amp; Social</div>
             <ul>
               <li>
                 <a
