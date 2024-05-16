@@ -15,14 +15,13 @@ import imagePath from '../helpers/imagePath';
 import Indexes from "../components/Indexes/Indexes";
 
 const HomeCard = props => {
-    const {imgUrl, title, desc, linkUrl, linkText} = props;
+    const {id, imgUrl, title, desc, linkUrl, linkText} = props;
     return (<Bulma.C size={6}>
-            <Bulma.Card className="mt-4 home-card">
+            <Bulma.Card id={id} className="mt-4 home-card">
                 <Bulma.Card.Body>
                     <h2 className="has-text-primary is-size-2"><Link  to={linkUrl}>{title}</Link></h2>
                     <div className="content">
-                        <p>{desc}</p>
-                        <p><Link to={linkUrl} className="home-card-link">{linkText}</Link></p>
+                        <p>{desc} <Link to={linkUrl} className="home-card-link">{linkText}</Link></p>
                     </div>
                 </Bulma.Card.Body>
                 <div className="home-card-footer">
@@ -49,119 +48,151 @@ const Home = () => {
         setSpeciesList([]);
       }
     });
+
+    // Add the class to the body element when the component mounts
+    document.body.classList.add('homepage');
+
+    // Clean up function to remove the class when the component unmounts
+    return () => {
+      document.body.classList.remove('homepage');
+    };
+
   }, []);
 
   return (
     <>
       <Bulma.Hero className="home-hero-banner">
         <Bulma.Hero.Body className="py-3">
-          <p className="has-text-right has-text-black-ter">{`${
-              config.archive ? 'Archived version' : 'Version'
-          } ${config.fullversion}`}</p>
+          <p className="has-text-right has-text-white hero-version-number">
+            <span>
+              {`${config.archive ? 'Archived version' : 'Version'} ${config.fullversion}`}
+            </span>
+          </p>
           <Bulma.Columns>
+
             <Bulma.C size={6} className="my-auto">
               <Bulma.Title
-                className="is-size-2 has-text-left has-text-weight-medium my-3"
+                className="has-text-left has-text-weight-bold my-3"
                 colorClassName="has-text-white"
               >
                 Discover gene expression data in animals
               </Bulma.Title>
-              <p className="has-text-left is-size-5 has-text-black-ter my-6">
+              <p className="has-text-left is-size-4 has-text-white my-3">
                 Bgee is a database for retrieval and comparison of gene expression
                 patterns across multiple animal species.
                 It provides an intuitive answer to the question &quot;where is a gene expressed?&quot;
                 and supports research in cancer and agriculture, as well as evolutionary biology.
               </p>
-              <p className="has-text-centered my-6">
-                <Link to={PATHS.SEARCH.GENE}>Gene search</Link>
-              </p>
-              <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 has-text-white my-3 is-desktop">
+              <div className="has-text-centered my-6 gene-search">
+                <Link to={PATHS.SEARCH.GENE}>
+                  <Bulma.C size={6} className="ic-dna">
+                    <Bulma.Image
+                      src={assets.dnaIcon}
+                      alt="Icon DNA"
+                      style={{ width: '30px' }}
+                    />
+                  </Bulma.C>
+                  Gene search
+                </Link>
+              </div>
+              <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 has-text-white my-3 is-desktop hero-data-columns">
                 <Bulma.C size={3}>
                   <span>comparable<br/>species</span>
-                  <p className="is-size-2 has-text-primary">{heroCounts.speciesCount}</p>
+                  <p className="is-size-2">{heroCounts.speciesCount}</p>
                 </Bulma.C>
                 <Bulma.C size={4}>
-                  <span>bulk and single-cell<br/>RNA-Seq libraries</span>
-                  <p className="is-size-2 has-text-primary">{heroCounts.libraryCount}</p>
+                  <div className="inner-hero-data-column">
+                    <span>bulk and single-cell<br/>RNA-Seq libraries</span>
+                    <p className="is-size-2">{heroCounts.libraryCount}</p>
+                  </div>
                 </Bulma.C>
                 <Bulma.C size={4}>
-                  <span>unique annotated<br/>conditions</span>
-                  <p className="is-size-2 has-text-primary">{heroCounts.conditionCount}</p>
+                  <div className="inner-hero-data-column">
+                    <span>unique annotated<br/>conditions</span>
+                    <p className="is-size-2">{heroCounts.conditionCount}</p>
+                  </div>
                 </Bulma.C>
               </Bulma.Columns>
             </Bulma.C>
-            <Bulma.C size={6}>
+
+            <Bulma.C size={6} className="is-align-content-center">
               <Bulma.Image
                 className="hero-image is-justify-content-flex-end"
                 src={assets.heroImg}
-                alt="Hero logo"
-                height={480}
-                width={711}
+                alt="Bgee hero illustration species and organs"
+                style={{ width: '100%', maxWidth: '790px' }}
               />
             </Bulma.C>
+            
           </Bulma.Columns>
         </Bulma.Hero.Body>
       </Bulma.Hero>
 
+      <Bulma.Section className="quick-nav-cards">
+        <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 my-3 is-desktop hero-data-columns">
+          <Bulma.C>
+            <div className="inner">
+              <a href="#card-gene-expression">Gene expression</a>
+              <a href="#card-expression-comparison">Expression comparison</a>
+              <a href="#card-expression-enrichment-analysis">Expression enrichment analysis</a>
+              <a href="#card-raw-data-annotations">Raw data annotations</a>
+              <a href="#card-expression-calls">Expression calls</a>
+              <a href="#card-data-retrieval">Data retrieval</a>
+            </div>
+          </Bulma.C>
+        </Bulma.Columns>
+      </Bulma.Section>
+
       <Bulma.Section className="home-cards">
         <Bulma.Columns>
-          <HomeCard imgUrl="/home/gene_screenshot.png" title="Gene expression"
+          <HomeCard id="card-gene-expression"
+                    imgUrl="/home/gene_screenshot.webp" title="Gene expression"
                     desc="Discover important details about your selected gene, including its expression
                             in various conditions and its orthologs."
                     linkUrl={PATHS.SEARCH.GENE}
                     linkText="Gene search"/>
-          <HomeCard imgUrl="/home/exp_comp_screenshot.png" title="Expression comparison"
+          <HomeCard id="card-expression-comparison"
+                    imgUrl="/home/exp_comp_screenshot.webp" title="Expression comparison"
                     desc="Compare gene expression for a list of genes in anatomical entities."
                     linkUrl={PATHS.ANALYSIS.EXPRESSION_COMPARISON}
                     linkText="Compare"/>
-          <HomeCard imgUrl="/home/topanat_screenshot.png" title="Expression enrichment analysis"
+          <HomeCard id="card-expression-enrichment-analysis"
+                    imgUrl="/home/topanat_screenshot.webp" title="Expression enrichment analysis"
                     desc="Tool similar to a GO enrichment test but rather than using Gene Ontology annotations
                              it is based on anatomical annotations."
                     linkUrl={PATHS.ANALYSIS.TOP_ANAT}
                     linkText="Analyse"/>
-          <HomeCard imgUrl="/home/raw_annot_screenshot.png" title="Raw data annotations"
+          <HomeCard id="card-raw-data-annotations"
+                    imgUrl="/home/raw_data_annotations_screenshot.webp" title="Raw data annotations"
                     desc="Explore all libraries in Bgee that match your selected conditions and access their
                             fully annotated raw (unprocessed) data."
                     linkUrl={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
                     linkText="Explore"/>
-          <HomeCard imgUrl="/home/exp_call_screenshot.png" title="Expression calls"
+          <HomeCard id="card-expression-calls"
+                    imgUrl="/home/expression_calls_screenshot.webp" title="Expression calls"
                     desc="Search all present/absent gene expression calls in the Bgee database."
                     linkUrl={PATHS.SEARCH.EXPRESSION_CALLS}
                     linkText="Search"/>
 
           <Bulma.C size={6}>
-            <Bulma.Card className="mt-4 home-card">
+            <Bulma.Card className="mt-4 home-card" id="card-data-retrieval">
               <Bulma.Card.Body>
-                <h3 className="is-size-2 has-text-primary">
+                <h2 className="is-size-2 has-text-primary">
                   Data retrieval
-                </h3>
+                </h2>
                 <div className="content">
                   <p>How to retrieve data.</p>
-                  <ul className="unordered">
-                    <li key="data-retrieval-1">
-                      <Link to={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS} className="home-card-link">
-                        Expression calls download files
-                      </Link>
-                    </li>
-                    <li key="data-retrieval-2">
-                      <Link to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES} className="home-card-link">
-                        Expression values download files
-                      </Link>
-                    </li>
-                    <li key="data-retrieval-3">
-                      <Link to={PATHS.RESOURCES.R_PACKAGES} className="home-card-link">R packages</Link>
-                    </li>
-                    <li key="data-retrieval-4">
-                      <a href={PATHS.SEARCH.SPARQL} target="_blank" rel="noopener noreferrer" className="home-card-link">SPARQL endpoint</a>
-                    </li>
-                  </ul>
+                  <Link to={PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS} className="home-card-link">Expression calls download files</Link>
+                  <Link to={PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES} className="home-card-link">Expression values download files</Link>
+                  <Link to={PATHS.RESOURCES.R_PACKAGES} className="home-card-link">R packages</Link>
+                  <a href={PATHS.SEARCH.SPARQL} target="_blank" rel="noopener noreferrer" className="home-card-link">SPARQL endpoint</a>
                 </div>
               </Bulma.Card.Body>
               <div className="home-card-footer">
                 <Bulma.Image
                   className="no-responsive home-card-img"
                   style={{ backgroundColor: 'white' }}
-                  src={imagePath("/home/data_retrieval_screenshot.png")}
+                  src={imagePath("/home/data_retrieval_screenshot.webp")}
                   alt='Data retrieval screenshot'
                 />
               </div>
@@ -169,30 +200,28 @@ const Home = () => {
           </Bulma.C>
         </Bulma.Columns>
 
-        <Bulma.Card className="mt-4">
+        <Bulma.Card className="bgee-news">
           <HomeNewsList />
         </Bulma.Card>
 
-        <Bulma.Card className="mt-4">
+        <Bulma.Card className="mt-6">
           <Indexes speciesList={speciesList}/>
         </Bulma.Card>
 
       </Bulma.Section>
 
-      <Bulma.Section>
+      <Bulma.Section className="bgee-resource-archive">
         <Bulma.Columns>
-          <Bulma.C size={12}>
-            <p className="has-text-centered is-size-5">
+          <Bulma.C size={6} className='resource-container'>
+            <div className='resource-logos'>
               <LinkExternal className='ext-as-int-link' to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
                 <img src={imagePath(`/logo/GCBR-Logo.png`)} alt='Global Core Biodata Resource Logo' width='165' height='70' />
               </LinkExternal>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <LinkExternal className='ext-as-int-link' to='https://elixir-europe.org/platforms/interoperability/rirs'>
                 <img src={imagePath(`/logo/ELIXIR-rir-logo.png`)} alt='ELIXIR Recommended Interoperability Resources Logo' width='89' height='70' />
-              </LinkExternal>
-              <br /><br />
-            </p>
-            <p className="has-text-centered is-size-4 has-text-weight-bold">
+              </LinkExternal>  
+            </div>
+            <div className='resource-links'>
               Bgee have been recognised as a&nbsp;
               <LinkExternal className='ext-as-int-link'
                             to='https://globalbiodata.org/scientific-activities/global-core-biodata-resources'>
@@ -203,28 +232,30 @@ const Home = () => {
                             to='https://elixir-europe.org/platforms/interoperability/rirs'>
                 ELIXIR Recommended Interoperability Resource
               </LinkExternal>
-            </p>
+            </div>
+          </Bulma.C>
+          <Bulma.C size={6}>
+            {!config.archive && (
+            <Bulma.C size={3}>
+              View archive sites:
+              <p className="is-size-7 archived-link">
+                {config.archivedVersion.map((archived) => (
+                    <LinkExternal key={archived.version} to={archived.url}>
+                      {`${archived.version}`}
+                    </LinkExternal>
+                ))}
+              </p>
+            </Bulma.C>
+            )}
           </Bulma.C>
         </Bulma.Columns>
       </Bulma.Section>
 
       <Bulma.Section>
         <Bulma.Columns>
-          <Bulma.C size={config.archive ? 12 : 9}>
+          <Bulma.C size={12} className="has-text-centered">
             <CreativeCommons />
           </Bulma.C>
-          {!config.archive && (
-              <Bulma.C size={3}>
-                <p className="is-size-7 archived-link">
-                  View archive sites:
-                  {config.archivedVersion.map((archived) => (
-                      <LinkExternal key={archived.version} to={archived.url}>
-                        {`version ${archived.version}`}
-                      </LinkExternal>
-                  ))}
-                </p>
-              </Bulma.C>
-          )}
         </Bulma.Columns>
       </Bulma.Section>
     </>

@@ -1,16 +1,17 @@
 import imagePath from '../helpers/imagePath';
 
 const assets = {
-  bgeeLogo: imagePath('/logo/bgee13_hp_logo.png'),
+  bgeeLogo: imagePath('/logo/logo-bgee-v2.svg'),
   linkedinLogo: imagePath('/logo/linkedin-logo.png'),
   mastodonLogo: imagePath('/logo/mastodon-logo.png'),
   facebookLogo: imagePath('/logo/facebook-logo.png'),
   instagramLogo: imagePath('/logo/instagram-logo.png'),
   rLogo: imagePath('/logo/r-logo.png'),
-  sibLogo: imagePath('/logo/sib-emblem.png'),
+  sibLogo: imagePath('/logo/logo-sib-emblem-new.svg'),
   twitterLogo: imagePath('/logo/twitter-logo.png'),
   unilLogo: imagePath('/logo/unil-logo-noir.png'),
-  heroImg: imagePath('/home/hero_logo.png'),
+  heroImg: imagePath('/home/bgee-hero-illustration-species-organs.webp'),
+  dnaIcon: imagePath('/home/ic-dna.svg'),
 };
 
 export const heroCounts = {
