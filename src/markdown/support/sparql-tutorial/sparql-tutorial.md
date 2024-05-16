@@ -406,7 +406,7 @@ Alternatively, we can retrieve all developmental stages and their IRIs in Bgee w
 *SPARQL query*:
 ```
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
@@ -422,7 +422,7 @@ In Q11 query, we can also apply a filter by adding the statement `FILTER (CONTAI
 *SPARQL query*:
 ```
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
