@@ -7,6 +7,7 @@ $size-4: 1.2rem !default;
 $size-3: 1.5rem !default;
 @import '../../node_modules/bulma/sass/utilities/initial-variables';
 @import '../../node_modules/bulma/sass/utilities/functions';
+@import url('https://fonts.cdnfonts.com/css/cabinet-grotesk?styles=134960,134955,134954');
 
 $archive: false;
 
@@ -30,6 +31,10 @@ $tablet: 850px;
 $desktop: 1091px;
 $widescreen: 1152px;
 $xlscreen: 1620px;
+
+$footer-background-color: $dark-bg-color;
+$footer-color: $light-color;
+$footer-padding: 1rem;
 
 /* Button customization*/
 .button.search-form {
@@ -309,60 +314,6 @@ body.homepage {
 /*
  * END navbar style
  */
-
-/*
- * footer style
- */
-$footer-background-color: $dark-bg-color;
-$footer-color: $light-color;
-$footer-padding: 1rem;
-
-footer.footer {
-  .left-wrapper,
-  .right-wrapper {
-    display: flex;
-    a:not(:first-child) {
-      margin-left: 15px;
-    }
-  }
-  a {
-    color: #ffffff;
-    &.image {
-      position: relative;
-      height: 15px;
-      top: 4px;
-      img {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-      }
-    }
-  }
-}
-@media only screen and (max-width: $desktop) {
-  footer.footer {
-    & > div {
-      flex-direction: column;
-      justify-content: normal !important;
-    }
-    .left-wrapper,
-    .right-wrapper {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .left-wrapper a:not(:first-child) {
-      margin-left: 0;
-      margin-top: 10px;
-    }
-    .right-wrapper a {
-      margin-top: 10px;
-      &:not(:last-child) {
-        margin-right: 0;
-      }
-    }
-  }
-}
 
 .dflex {
   display: flex;
@@ -1485,11 +1436,16 @@ h1.title.in-md {
   .inner {
     display: flex;
     justify-content: space-around;
-    padding: 20px;
+    padding: 10px;
     background: $light-color;
     border-radius: 16px;
     a {
       margin: 0 5px 0 0;
+      padding: 18px;
+      &:hover {
+        background: $light-gray;
+        border-radius: 10px;
+      }
     }
   }
 }
@@ -1500,6 +1456,7 @@ h1.title.in-md {
       display: block;
       a {
         display: block;
+        padding: 5px;
       }
     }
   }
@@ -1645,6 +1602,26 @@ h1.title.in-md {
   padding: 40px 0 0;
   border-radius: 30px 30px 0 0;
   background: #09111C;
+  .left-wrapper,
+  .right-wrapper {
+    display: flex;
+    a:not(:first-child) {
+      margin-left: 15px;
+    }
+  }
+  a {
+    color: #ffffff;
+    &.image {
+      position: relative;
+      height: 15px;
+      top: 4px;
+      img {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+      }
+    }
+  }
   .copyright {
     padding: 140px 0 20px;
   }
@@ -1656,39 +1633,58 @@ h1.title.in-md {
   max-width: 1366px;
   line-height: 20px;
   box-sizing: border-box;
-}
-
-.nav-footer-line {
-  display: table-row;
-}
-
-.nav-footer-col {
-  display: table-cell;
-  padding: 0 10px;
-}
-
-.nav-footer-col-head {
-  font-size: 1.2em;
-  font-weight: 700;
-  margin: 6px 0 14px 0;
-  white-space: nowrap;
-}
-
-.nav-footer-col ul li {
-  margin: 0 0 10px;
-  white-space: nowrap;
-}
-
-.nav-footer-col ul li a:hover {
-  text-decoration: underline;
-}
-
-.nav-footer-col-spacer {
-  width: 10%;
-  display: table-cell;
+  .nav-footer-line {
+    display: table-row;
+    .nav-footer-col {
+      display: table-cell;
+      padding: 0 10px;
+      .nav-footer-col-head {
+        font-size: 1.2em;
+        font-weight: 700;
+        margin: 6px 0 14px 0;
+        white-space: nowrap;
+      }
+      ul {
+        li {
+          margin: 0 0 10px;
+          white-space: nowrap;
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    .nav-footer-col-spacer {
+      width: 10%;
+      display: table-cell;
+    }
+  }
 }
 
 @media screen and (max-width: $desktop) {
+  .footer {
+    & > div {
+      flex-direction: column;
+      justify-content: normal !important;
+    }
+    .left-wrapper,
+    .right-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    .left-wrapper a:not(:first-child) {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+    .right-wrapper a {
+      margin-top: 10px;
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+    }
+  }
   .nav-footer {
     display: flex;
     justify-content: center;
