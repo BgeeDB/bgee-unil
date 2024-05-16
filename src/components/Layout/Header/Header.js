@@ -69,14 +69,14 @@ const Header = () => {
   const [hamburgerActive, setHamburgerActive] = React.useState(false);
 
   return (
-      <nav className="navbar is-bgee-inverted" aria-label="main navigation">
+      <nav className="navbar py-3 is-bgee-inverted" aria-label="main navigation">
         <div className="navbar-brand">
-          <Link className="navbar-item" to={PATHS.HOME}>
+          <Link className="" to={PATHS.HOME}>
             <Bulma.Image
                 alt="Bgee logo"
                 className="logo"
                 src={assets.bgeeLogo}
-                height={40}
+                height={50}
             />
           </Link>
 
@@ -139,12 +139,12 @@ const Header = () => {
                 {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
                     <a
                         key={href}
-                        className="navbar-item"
+                        // className="navbar-item"
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                      <Bulma.Image alt={alt} {...imgProps} />
+                      <Bulma.Image alt={alt} {...imgProps} className="logo-associations" />
                     </a>
                 ))}
               </div>

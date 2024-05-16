@@ -24,7 +24,7 @@ const HomeNewsList = () => (
   <>
     <Bulma.Card.Header>
       <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
-        News
+        Bgee News
       </Bulma.Card.Header.Title>
       <Bulma.Card.Header.Icon>
         <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
