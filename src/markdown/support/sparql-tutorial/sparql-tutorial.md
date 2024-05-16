@@ -48,7 +48,8 @@ To improve readability, all reserved words of the SPARQL query language are writ
 ```
 PREFIX up: <http://purl.uniprot.org/core/>
 SELECT ?species {
-	?species a up:Taxon .}
+	?species a up:Taxon .
+}
 ```
 
 
@@ -68,6 +69,7 @@ Currently, in Bgee, only the "species" rank is stated (i.e.,`up:rank` is always 
 *SPARQL query*:
 ```
 PREFIX up: <http://purl.uniprot.org/core/>
+
 SELECT ?species ?sci_name ?common_name {
 	?species a up:Taxon .
 	?species up:scientificName ?sci_name .
@@ -94,6 +96,7 @@ Genes that are expressed in a tissue, organ, or cell (i.e., anatomical entity in
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
+
 SELECT DISTINCT ?anat ?anatName {
 	?seq a orth:Gene .
 	?seq genex:isExpressedIn ?anat .
@@ -406,12 +409,12 @@ Alternatively, we can retrieve all developmental stages and their IRIs in Bgee w
 *SPARQL query*:
 ```
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
-		?stage rdfs:label ?stageName .
-		?stage dcterms:description ?stageDescription .
+	?stage rdfs:label ?stageName .
+	?stage dcterms:description ?stageDescription .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
@@ -422,13 +425,13 @@ In Q11 query, we can also apply a filter by adding the statement `FILTER (CONTAI
 *SPARQL query*:
 ```
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX efo: <http://www.ebi.ac.uk/efo/EFO_0000399>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
-		?stage rdfs:label ?stageName .
-		?stage dcterms:description ?stageDescription .
-		FILTER (CONTAINS(?stageName,"post-juvenile"))
+	?stage rdfs:label ?stageName .
+	?stage dcterms:description ?stageDescription .
+	FILTER (CONTAINS(?stageName,"post-juvenile"))
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0AFILTER+%28CONTAINS%28%3FstageName%2C%22post-juvenile%22%29%29%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
@@ -527,18 +530,18 @@ PREFIX lscr: <http://purl.org/lscr#>
 
 SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
-		?seq lscr:xrefNCBIGene <https://www.ncbi.nlm.nih.gov/gene/118230125> .
+	?seq lscr:xrefNCBIGene <https://www.ncbi.nlm.nih.gov/gene/118230125> .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage ?stageIRI .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage ?stageIRI .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
-FILTER (?anat !=  obo:GO_0005575)
+	?strain rdfs:label "wild-type" .
+	FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+up-taxon%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3FstageIRI+%3Fscore++%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A++++++++%3Fseq+lscr%3AxrefNCBIGene+%3Chttps%3A%2F%2Fwww.ncbi.nlm.nih.gov%2Fgene%2F118230125%3E+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3FstageIRI+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
