@@ -382,7 +382,7 @@ const GeneExpression = ({ geneId, speciesId, notExpressed }) => {
         case 'fdr':
           return defaultRender(cell.fdr, key);
         case 'proc_expr_values':
-          let searchParams = `pageType=${PROC_EXPR_VALUES}&gene_id=${geneId}&species_id=${speciesId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true`;
+          let searchParams = `pageType=${PROC_EXPR_VALUES}&gene_id=${geneId}&species_id=${speciesId}&cell_type_descendant=true&stage_descendant=true&anat_entity_descendant=true&only_propagated=true`;
           if (
             data.requestedConditionParameters.find((r) => r === 'Anat. entity')
           ) {
