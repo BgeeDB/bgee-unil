@@ -103,10 +103,68 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+          <div className="nav-footer-col-spacer"/>
+          <div className="nav-footer-col">
+            <div className="nav-footer-col-head">Share &amp; Social</div>
+            <ul>
+              <li>
+                <a
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    copyToClipboard(permanentLink);
+                    addNotification({
+                      id: random().toString(),
+                      children: (
+                        <>
+                          Copied link <u>{permanentLink}</u>
+                        </>
+                      ),
+                      className: 'is-success',
+                    });
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      copyToClipboard(permanentLink);
+                      addNotification({
+                        id: random().toString(),
+                        children: (
+                          <>
+                            Copied link <u>{permanentLink}</u>
+                          </>
+                        ),
+                        className: 'is-success',
+                      });
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Copy permanent link
+                </a>
+              </li>
+              <li>
+                <div className="right-wrapper">
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                  {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
+                    <a
+                      key={href}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Bulma.Image alt={alt} {...imgProps} />
+                    </a>
+                  ))}
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
 
-      <div className="is-flex is-justify-content-space-between">
+      <div className="is-flex is-justify-content-center copyright">
         <div className="left-wrapper">
           <a
             href="https://www.sib.swiss/"
@@ -138,35 +196,7 @@ const Footer = () => {
             />
           </a>
         </div>
-        <div className="right-wrapper">
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <a
-            onClick={() => {
-              copyToClipboard(permanentLink);
-              addNotification({
-                id: random().toString(),
-                children: (
-                  <>
-                    Copied link <u>{permanentLink}</u>
-                  </>
-                ),
-                className: 'is-success',
-              });
-            }}
-          >
-            Copy permanent link
-          </a>
-          {NAVBAR_RIGHT.map(({ href, alt, ...imgProps }) => (
-            <a
-              key={href}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Bulma.Image alt={alt} {...imgProps} />
-            </a>
-          ))}
-        </div>
+        
       </div>
     </Bulma.Footer>
   );
