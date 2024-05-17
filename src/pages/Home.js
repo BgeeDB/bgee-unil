@@ -97,8 +97,10 @@ const Home = () => {
               </div>
               <Bulma.Columns className="has-text-uppercase has-text-weight-bold is-size-6 has-text-white my-3 is-desktop hero-data-columns">
                 <Bulma.C size={3}>
-                  <span>comparable<br/>species</span>
-                  <p className="is-size-2">{heroCounts.speciesCount}</p>
+                  <div className="inner-hero-data-column">
+                    <span>comparable<br/>species</span>
+                    <p className="is-size-2">{heroCounts.speciesCount}</p>
+                  </div>
                 </Bulma.C>
                 <Bulma.C size={4}>
                   <div className="inner-hero-data-column">

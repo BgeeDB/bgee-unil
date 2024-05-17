@@ -18,6 +18,7 @@ $code: $primary;
 $title-color: $primary;
 $light-color: #ffffff;
 $light-gray: #f5f5f5;
+$light-opacity: #ffffff4d;
 
 $nav-hover: linear-gradient(117deg, rgb(54, 54, 54) 0%, rgb(73, 70, 70) 100%);
 $dark-bg-color: #282828;
@@ -31,6 +32,7 @@ $tablet: 850px;
 $desktop: 1091px;
 $widescreen: 1152px;
 $xlscreen: 1620px;
+$smallestscreen: 375px; 
 
 $footer-background-color: $dark-bg-color;
 $footer-color: $light-color;
@@ -686,8 +688,6 @@ a.image.cc {
       size: 2rem;
       weight: 700;
     }
-    font-size: 2rem;
-    font-weight: 700;
     text-align: center;
     border-radius: 8px;
     transition: background .3s;
@@ -1371,7 +1371,7 @@ h1.title.in-md {
     }
     .hero-data-columns {
       .column:not(:first-child) {
-        border-left: 1px solid #ffffff4d;
+        border-left: 1px solid $light-opacity;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1712,6 +1712,68 @@ h1.title.in-md {
   body:not(.homepage) {
     footer {
       margin: 100px 0 0;
+    }
+  }
+}
+
+@media screen and (max-width: $smallestscreen) {
+  /* GENERAL */
+  .section {
+    padding: 1rem;
+  }
+  /* HERO */
+  .home-hero-banner {
+    .hero-body {
+      .gene-search {
+        margin: 1rem 0 !important;
+      }
+      .hero-data-columns {
+        width: 100%;
+        display: inline-block;
+        .column {
+          &:not(:first-child) {
+            align-items: start;
+            border: none;
+            border-top: 1px solid $light-opacity;
+          }
+        }
+      }
+    }
+  }
+  /* CARDS */
+  .home-cards {
+    .card-content {
+      h2 {
+        padding: 0 0 10px;
+        line-height: 2.5rem;
+      }
+      .content {
+        a {
+          display: block;
+          padding: 10px 0 0;
+        }
+      }
+    }
+    .home-card-footer {
+      padding-top: 0;
+      .home-card-img {
+        border-width: 6px;
+      }
+    }
+  }
+  /* RESOURCE AND ARCHIVE */
+  .bgee-resource-archive {
+    .columns {
+      div {
+        .archived-link {
+          a {
+            height: 60px;
+            font: {
+              size: 1.6rem
+            }
+          }
+        }
+      }
     }
   }
 }
