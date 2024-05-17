@@ -16,8 +16,9 @@ import expressionPageHelper from '../../helpers/expressionPageHelper';
 import LinkExternal from '../../components/LinkExternal';
 import imagePath from '../../helpers/imagePath';
 import config from '../../config.json';
-import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 
+const FULL_LENGTH_LABEL = "Full length RNA-Seq";
+const DROPLET_BASED_LABEL = "Droplet based RNA-Seq";
 const ProcessedExpressionValues = () => {
   const history = useHistory();
   const [speciesList, setSpeciesList] = React.useState([]);
@@ -61,6 +62,18 @@ const ProcessedExpressionValues = () => {
           ),
           fullLengthData: s.downloadFiles.find(
             (d) => d.category === 'full_length_data'
+          ),
+          fullLengthH5ad: s.downloadFiles.find(
+            (d) => d.category === 'full_length_h5ad'
+          ),
+          dropletBasedAnnot: s.downloadFiles.find(
+            (d) => d.category === 'droplet_based_annot'
+          ),
+          dropletBasedData: s.downloadFiles.find(
+            (d) => d.category === 'droplet_based_data'
+          ),
+          dropletBasedH5ad: s.downloadFiles.find(
+            (d) => d.category === 'droplet_based_h5ad'
           ),
         };
       });
@@ -262,7 +275,7 @@ const ProcessedExpressionValues = () => {
                                       <button className="button is-light is-multiline">
                                         <ion-icon name="download-outline" />
                                         <span className="is-size-6 ml-2">
-                                          Download read count, TPMs and FPKMs
+                                          Download read counts and TPMs
                                           {` (${readableFileSize(
                                             files[species.id.toString()]
                                               ?.rnaSeqData.size
@@ -380,6 +393,125 @@ const ProcessedExpressionValues = () => {
                         </div>
                         <div className="mt-4">
                           <p className="mb-2 is-size-5 has-text-weight-semibold">
+                            {DROPLET_BASED_LABEL} data
+                            {/* <Link
+                              className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
+                              to={`${PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL}`}
+                            >
+                              See documentation
+                            </Link> */}
+                          </p>
+                          {files[species.id.toString()]?.dropletBasedAnnot ||
+                          files[species.id.toString()]?.dropletBasedData ||
+                          files[species.id.toString()]?.dropletBasedH5ad ? (
+                            <>
+                              <div className="buttons-wrapper">
+                                {files[species.id.toString()]
+                                  ?.dropletBasedAnnot && (
+                                  <GaEvent
+                                    category="Processed Expression Values"
+                                    action="download_droplet-based_annotation-file"
+                                    label={
+                                      files[species.id.toString()]
+                                        ?.dropletBasedAnnot.path
+                                    }
+                                  >
+                                    <a
+                                      href={
+                                        files[species.id.toString()]
+                                          ?.dropletBasedAnnot.path
+                                      }
+                                    >
+                                      <button className="button is-light is-multiline">
+                                        <ion-icon name="download-outline" />
+                                        <span className="is-size-6 ml-2">
+                                          Download experiments/libraries info
+                                          {` (${readableFileSize(
+                                            files[species.id.toString()]
+                                              ?.dropletBasedAnnot.size
+                                          )})`}
+                                        </span>
+                                      </button>
+                                    </a>
+                                  </GaEvent>
+                                )}
+                                {files[species.id.toString()]
+                                  ?.dropletBasedData && (
+                                  <GaEvent
+                                    category="Processed Expression Values"
+                                    action="download_droplet-based_data-file"
+                                    label={
+                                      files[species.id.toString()]
+                                        ?.dropletBasedData.path
+                                    }
+                                  >
+                                    <a
+                                      href={
+                                        files[species.id.toString()]
+                                          ?.dropletBasedData.path
+                                      }
+                                    >
+                                      <button className="button is-light is-multiline">
+                                        <ion-icon name="download-outline" />
+                                        <span className="is-size-6 ml-2">
+                                          Download UMI counts and CPMs per cell-type
+                                          {` (${readableFileSize(
+                                            files[species.id.toString()]
+                                              ?.dropletBasedData.size
+                                          )})`}
+                                        </span>
+                                      </button>
+                                    </a>
+                                  </GaEvent>
+                                )}
+                                {files[species.id.toString()]
+                                  ?.dropletBasedH5ad && (
+                                  <GaEvent
+                                    category="Processed Expression Values"
+                                    action="download_droplet-based_h5ad-file"
+                                    label={
+                                      files[species.id.toString()]
+                                        ?.dropletBasedH5ad.path
+                                    }
+                                  >
+                                    <a
+                                      href={
+                                        files[species.id.toString()]
+                                          ?.dropletBasedH5ad.path
+                                      }
+                                    >
+                                      <button className="button is-light is-multiline">
+                                        <ion-icon name="download-outline" />
+                                        <span className="is-size-6 ml-2">
+                                          Download UMI counts per cell
+                                          {` (${readableFileSize(
+                                            files[species.id.toString()]
+                                              ?.dropletBasedH5ad.size
+                                          )})`}
+                                        </span>
+                                      </button>
+                                    </a>
+                                  </GaEvent>
+                                )}
+                              </div>
+                              <p className="is-size-6 has-text-grey">
+                                Files can also be retrieved per experiment, see{' '}
+                                <a
+                                  className="internal-link grey"
+                                  href={`${config.ftpDomain}/download/processed_expr_values/droplet_based/${species.speciesFullNameWithoutSpace}/`}
+                                >
+                                  {DROPLET_BASED_LABEL} data directory
+                                </a>
+                              </p>
+                            </>
+                          ) : (
+                            <p className="is-size-6 has-text-grey mb-2">
+                              No data
+                            </p>
+                          )}
+                        </div>
+                        <div className="mt-4">
+                          <p className="mb-2 is-size-5 has-text-weight-semibold">
                             {FULL_LENGTH_LABEL} data
                             <Link
                               className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
@@ -389,7 +521,8 @@ const ProcessedExpressionValues = () => {
                             </Link>
                           </p>
                           {files[species.id.toString()]?.fullLengthAnnot ||
-                          files[species.id.toString()]?.fullLengthData ? (
+                          files[species.id.toString()]?.fullLengthData ||
+                          files[species.id.toString()]?.fullLengthH5ad ? (
                             <>
                               <div className="buttons-wrapper">
                                 {files[species.id.toString()]
@@ -440,10 +573,39 @@ const ProcessedExpressionValues = () => {
                                       <button className="button is-light is-multiline">
                                         <ion-icon name="download-outline" />
                                         <span className="is-size-6 ml-2">
-                                          Download read count, TPMs and FPKMs
+                                          Download read counts and TPMs per cell-type
                                           {` (${readableFileSize(
                                             files[species.id.toString()]
                                               ?.fullLengthData.size
+                                          )})`}
+                                        </span>
+                                      </button>
+                                    </a>
+                                  </GaEvent>
+                                )}
+                                {files[species.id.toString()]
+                                  ?.fullLengthH5ad && (
+                                  <GaEvent
+                                    category="Processed Expression Values"
+                                    action="download_full-length_h5ad-file"
+                                    label={
+                                      files[species.id.toString()]
+                                        ?.fullLengthH5ad.path
+                                    }
+                                  >
+                                    <a
+                                      href={
+                                        files[species.id.toString()]
+                                          ?.fullLengthH5ad.path
+                                      }
+                                    >
+                                      <button className="button is-light is-multiline">
+                                        <ion-icon name="download-outline" />
+                                        <span className="is-size-6 ml-2">
+                                          Download read counts per cell
+                                          {` (${readableFileSize(
+                                            files[species.id.toString()]
+                                              ?.fullLengthH5ad.size
                                           )})`}
                                         </span>
                                       </button>
@@ -455,7 +617,7 @@ const ProcessedExpressionValues = () => {
                                 Files can also be retrieved per experiment, see{' '}
                                 <a
                                   className="internal-link grey"
-                                  href={`${config.ftpDomain}/download/processed_expr_values/sc_rnaseq/${species.speciesFullNameWithoutSpace}/`}
+                                  href={`${config.ftpDomain}/download/processed_expr_values/full_length/${species.speciesFullNameWithoutSpace}/`}
                                 >
                                   {FULL_LENGTH_LABEL} data directory
                                 </a>
