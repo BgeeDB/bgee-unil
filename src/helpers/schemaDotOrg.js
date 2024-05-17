@@ -266,7 +266,7 @@ const datasetToLdJSON = () => {
             keywords: ['bgee', 'gene expression', 'evolution', 'ontology', 'anatomy', 'development', 'evo-devo database', 'anatomical ontology', 'developmental ontology', 'gene expression evolution'],
             creator: {'@id': 'https://www.bgee.org/'},
             citation: {
-                '@type': 'ScholarlyArticle',
+                '@type': 'CreativeWork',
                 name: 'The Bgee suite: integrated curated expression atlas and comparative transcriptomics in animals',
                 headline: 'The Bgee suite: integrated curated expression atlas and comparative transcriptomics in animals',
                 author: [
