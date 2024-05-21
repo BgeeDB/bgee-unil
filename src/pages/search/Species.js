@@ -9,8 +9,10 @@ import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
-import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
 import config from "../../config.json";
+
+const FULL_LENGTH_LABEL = "Full length RNA-Seq";
+const DROPLET_BASED_LABEL = "Droplet based RNA-Seq";
 
 const Species = () => {
   let metaTitle = '';
@@ -28,6 +30,7 @@ const Species = () => {
       affymetrix: {},
       rnaSeq: {},
       fullLength: {},
+      dropletBased: {}
     };
 
     if (data) {
@@ -79,6 +82,23 @@ const Species = () => {
         (d) => d.category === 'full_length_data'
       );
       if (search) src.fullLength.data = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'full_length_h5ad'
+      );
+      if (search) src.fullLength.h5ad = search;
+
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_annot'
+      );
+      if (search) src.dropletBased.annot = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_data'
+      );
+      if (search) src.dropletBased.data = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_h5ad'
+      );
+      if (search) src.dropletBased.h5ad = search;
     }
     return src;
   }, [data]);
@@ -369,7 +389,7 @@ const Species = () => {
                 )}
                 {files.rnaSeq.data && (
                   <li>
-                    Data (read counts, TPMs, and FPKMs):{' '}
+                    Data (read counts, TPMs):{' '}
                     <a className="internal-link" href={files.rnaSeq.data.path}>
                       <code>{files.rnaSeq.data.name}</code>
                     </a>
@@ -388,7 +408,8 @@ const Species = () => {
             >
               {FULL_LENGTH_LABEL}
             </p>
-            {files.fullLength.annot || files.fullLength.data ? (
+            {files.fullLength.annot || files.fullLength.data ||
+              files.fullLength.h5ad ? (
               <ul className="unordered">
                 {files.fullLength.annot && (
                   <li>
@@ -404,7 +425,7 @@ const Species = () => {
                 )}
                 {files.fullLength.data && (
                   <li>
-                    Data (read counts, TPMs, and FPKMs){' '}
+                    Processed expression values (read counts, TPMs){' '}
                     <a
                       className="internal-link"
                       href={files.fullLength.data.path}
@@ -412,6 +433,69 @@ const Species = () => {
                       <code>{files.fullLength.data.name}</code>
                     </a>
                     {` (${readableFileSize(files.fullLength.data.size)})`}
+                  </li>
+                )}
+                {files.fullLength.h5ad && (
+                  <li>
+                    Processed H5AD data per cell (read counts){' '}
+                    <a
+                      className="internal-link"
+                      href={files.fullLength.h5ad.path}
+                    >
+                      <code>{files.fullLength.h5ad.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.fullLength.h5ad.size)})`}
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="mt-2 mb-4">No data</p>
+            )}
+          </div>
+          <div className="mt-2">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-scrna-seq"
+            >
+              {DROPLET_BASED_LABEL}
+            </p>
+            {files.dropletBased.annot || files.dropletBased.data ||
+              files.dropletBased.h5ad ? (
+              <ul className="unordered">
+                {files.dropletBased.annot && (
+                  <li>
+                    Experiments/libraries annotations and meta data:{' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.annot.path}
+                    >
+                      <code>{files.dropletBased.annot.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.annot.size)})`}
+                  </li>
+                )}
+                {files.dropletBased.data && (
+                  <li>
+                    Processed expression values (UMI counts, CPMs){' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.data.path}
+                    >
+                      <code>{files.dropletBased.data.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.data.size)})`}
+                  </li>
+                )}
+                {files.dropletBased.h5ad && (
+                  <li>
+                    Processed H5AD data per cell (UMI counts){' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.h5ad.path}
+                    >
+                      <code>{files.dropletBased.h5ad.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.h5ad.size)})`}
                   </li>
                 )}
               </ul>
