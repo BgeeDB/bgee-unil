@@ -95,12 +95,30 @@ const Experiment = () => {
 
             <div className="is-flex is-flex-direction-row mr-2">
               <span className="has-text-weight-semibold my-1 labelsLeft">
-                Experiment&nbsp;description:
+                Description:
               </span>
               <span className="my-1 is-flex-grow-1 ml-2">
                 {data?.experiment?.description}
               </span>
             </div>
+
+            {data?.experiment?.dOI?.length > 0 && (
+              <div className="is-flex is-flex-direction-row mr-2">
+                <span className="has-text-weight-semibold my-1 labelsLeft">
+                  DOI:
+                </span>
+                <span className="my-1 is-flex-grow-1">
+                  <a
+                    href={`https://doi.org/${data?.experiment?.dOI}`}
+                    className="external-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {data?.experiment?.dOI}
+                  </a>
+                </span>
+              </div>
+            )}
 
             <div className="is-flex is-flex-direction-row mr-2">
               <span className="has-text-weight-semibold my-1 labelsLeft">
@@ -119,20 +137,27 @@ const Experiment = () => {
               )}
               </span>
             </div>
-            {data?.experiment?.downloadUrl?.length > 0 && (
-              <div className="is-flex is-justify-content-flex-end">
-                <Bulma.Button
-                  className="download-btn is-small mt-2"
-                  href={data?.experiment?.downloadUrl}
-                  renderAs="a"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download all assays
-                  <span className="icon is-small ml-1">
-                    <ion-icon name="download-outline" />
-                  </span>
-                </Bulma.Button>
+
+            {data?.downloadUrls?.length > 0 && (
+              <div className="is-justify-content-flex-end">
+                <div className="has-text-weight-semibold my-1 labelsLeft">
+                  Download:
+                </div>
+                {data?.downloadUrls.map(url =>
+                  <Bulma.Button
+                    className="download-btn is-small mt-2"
+                    href={url.href}
+                    title={url.title}
+                    renderAs="a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {url.text}
+                    <span className="icon is-small ml-1">
+                      <ion-icon name="download-outline" />
+                    </span>
+                  </Bulma.Button>
+                )}
               </div>
             )}
           </div>
