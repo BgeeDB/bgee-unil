@@ -141,6 +141,24 @@ const bgeesab = [
               },
             ],
           },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Prof. ',
+              },
+              {
+                type: 'link_external',
+                path: 'https://som.cuanschutz.edu/Profiles/Faculty/Profile/35865',
+                text: 'Monica Munoz-Torres',
+              },
+              {
+                type: 'text',
+                content: ', Associate Professor of Biomedical Informatics at the School of Medicine, University of Colorado, Colorado, USA',
+              },
+            ],
+          },
         ],
       },
       {
