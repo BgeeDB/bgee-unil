@@ -122,7 +122,7 @@ const Experiment = () => {
 
             <div className="is-flex is-flex-direction-row mr-2">
               <span className="has-text-weight-semibold my-1 labelsLeft">
-                Source: {data?.experiment?.xRef?.source?.name}
+                Source:
               </span>
               <span className="my-1 is-flex-grow-1">
               {data?.experiment?.xRef?.xRefURL?.length > 0 && (
@@ -135,6 +135,7 @@ const Experiment = () => {
                   {data.experiment.id}
                 </a>
               )}
+              &nbsp;{data?.experiment?.xRef?.source?.name}
               </span>
             </div>
 
