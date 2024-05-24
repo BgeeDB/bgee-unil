@@ -129,11 +129,11 @@ SELECT DISTINCT ?anat ?anatName {
 	?seq rdfs:label "APOC1" .
 	?anat a genex:AnatomicalEntity .
 	?anat rdfs:label ?anatName .
-		### Specifying species:
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:scientificName "Homo sapiens" .
+	### Specifying species:
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:scientificName "Homo sapiens" .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fanat.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++%23%23%23Specifies+species%3A%0D%0A++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++%3Fspecies+up%3AscientificName+%22Homo+sapiens%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -167,11 +167,11 @@ SELECT DISTINCT ?anat ?anatName {
 	?condition genex:hasAnatomicalEntity ?anat .
 	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
 	?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "life cycle" .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
+	?strain rdfs:label "wild-type" .
 }
 ```
 
@@ -213,16 +213,16 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
-		?condition genex:hasAnatomicalEntity obo:GO_0005575 .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:commonName "human" .
+	?strain rdfs:label "wild-type" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:commonName "human" .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fcondition.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -248,13 +248,13 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
-		?condition genex:hasAnatomicalEntity obo:GO_0005575 .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:commonName "human" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:commonName "human" .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fstage+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisExpressedIn+%3Fcondition.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++%3Fcondition+genex%3AhasAnatomicalEntity+obo%3AGO_0005575+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3Fstage+.%0D%0A%09%3Fstage+rdfs%3Alabel+%22post-juvenile%22+.%0D%0A++++++++%23%23%23+Specifying+the+species%3A%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AcommonName+%22human%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -277,23 +277,23 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?anatName ?score ?stage {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?condition genex:hasAnatomicalEntity obo:GO_0005575 .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:commonName "human" .
+	?strain rdfs:label "wild-type" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:commonName "human" .
 FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
@@ -322,24 +322,24 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
+	?anat rdfs:label ?anatName .
 	?condition genex:hasAnatomicalEntity ?cellType .
-		?cellType rdfs:label ?cellTypeName .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?cellType rdfs:label ?cellTypeName .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:commonName "human" .
+	?strain rdfs:label "wild-type" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:commonName "human" .
 FILTER (?anat !=  obo:GO_0005575)
 FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)
@@ -363,21 +363,21 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
+	?anat rdfs:label ?anatName .
 	?condition genex:hasAnatomicalEntity ?cellType .
-		?cellType rdfs:label ?cellTypeName .
-		?condition genex:hasDevelopmentalStage ?stage .
+	?cellType rdfs:label ?cellTypeName .
+	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:commonName "human" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:commonName "human" .
 FILTER (?anat !=  obo:GO_0005575)
 FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)
@@ -410,8 +410,8 @@ PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
-		?stage rdfs:label ?stageName .
-		?stage dcterms:description ?stageDescription .
+	?stage rdfs:label ?stageName .
+	?stage dcterms:description ?stageDescription .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
@@ -426,9 +426,9 @@ PREFIX efo: <http://www.ebi.ac.uk/efo/>
 
 SELECT DISTINCT ?stage ?stageName ?stageDescription {
 	?stage rdf:type efo:EFO_0000399 . #developmental stage
-		?stage rdfs:label ?stageName .
-		?stage dcterms:description ?stageDescription .
-		FILTER (CONTAINS(?stageName,"post-juvenile"))
+	?stage rdfs:label ?stageName .
+	?stage dcterms:description ?stageDescription .
+	FILTER (CONTAINS(?stageName,"post-juvenile"))
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+efo%3A+%3Chttp%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fstage+%3FstageName+%3FstageDescription+%7B%0D%0A%09%3Fstage+rdf%3Atype+efo%3AEFO_0000399+.%0D%0A++++++++%3Fstage+rdfs%3Alabel+%3FstageName+.+%0D%0A++++++++%3Fstage+dcterms%3Adescription+%3FstageDescription+.+%0D%0AFILTER+%28CONTAINS%28%3FstageName%2C%22post-juvenile%22%29%29%0D%0A%7D+&should-sponge=&format=text%2Fhtml&timeout=0&debug=on)
@@ -454,19 +454,19 @@ PREFIX lscr: <http://purl.org/lscr#>
 
 SELECT DISTINCT ?anat ?anatName ?score  {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
-		?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .
+	?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  up-taxon:9606 .
+	?strain rdfs:label "wild-type" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  up-taxon:9606 .
 FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
@@ -492,17 +492,17 @@ PREFIX lscr: <http://purl.org/lscr#>
 
 SELECT DISTINCT ?anat ?anatName ?score  {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
-		?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .
+	?seq lscr:xrefEnsemblGene ensembl:ENSG00000130208 .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
+	?strain rdfs:label "wild-type" .
 FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
@@ -527,17 +527,17 @@ PREFIX lscr: <http://purl.org/lscr#>
 
 SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
-		?seq lscr:xrefNCBIGene <https://www.ncbi.nlm.nih.gov/gene/118230125> .
+	?seq lscr:xrefNCBIGene <https://www.ncbi.nlm.nih.gov/gene/118230125> .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage ?stageIRI .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage ?stageIRI .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
+	?strain rdfs:label "wild-type" .
 FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
@@ -559,17 +559,17 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 
 SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
 	?seq a orth:Gene .
-		?expression a genex:Expression .
-		?expression genex:hasExpressionCondition ?condition .
-		?expression genex:hasExpressionLevel ?score .
+	?expression a genex:Expression .
+	?expression genex:hasExpressionCondition ?condition .
+	?expression genex:hasExpressionLevel ?score .
 	?expression genex:hasSequenceUnit ?seq .
-		?seq dcterms:identifier "118230125" .
+	?seq dcterms:identifier "118230125" .
 	?condition genex:hasAnatomicalEntity ?anat .
-		?anat rdfs:label ?anatName .
-		?condition genex:hasDevelopmentalStage ?stageIRI .
+	?anat rdfs:label ?anatName .
+	?condition genex:hasDevelopmentalStage ?stageIRI .
 	?condition genex:hasSex "any".
 	?condition genex:hasStrain ?strain .
-		?strain rdfs:label "wild-type" .
+	?strain rdfs:label "wild-type" .
 FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
@@ -667,10 +667,10 @@ SELECT DISTINCT ?anat ?anatName {
 	?seq rdfs:label "APOC1" .
 	?anat a genex:AnatomicalEntity .
 	?anat rdfs:label ?anatName .
-		?seq orth:organism ?organism .
-		?organism obo:RO_0002162  ?species . #in taxon
-		?species a up:Taxon .
-		?species up:scientificName "Homo sapiens" .
+	?seq orth:organism ?organism .
+	?organism obo:RO_0002162  ?species . #in taxon
+	?species a up:Taxon .
+	?species up:scientificName "Homo sapiens" .
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A%09%3Fseq+genex%3AisAbsentIn+%3Fanat.%0D%0A%09%3Fseq+rdfs%3Alabel+%22APOC1%22+.%0D%0A%09%3Fanat+a+genex%3AAnatomicalEntity+.%0D%0A%09%3Fanat+rdfs%3Alabel+%3FanatName+.+%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++%3Fspecies+.+%23in+taxon%0D%0A++++++++%3Fspecies+a+up%3ATaxon+.%0D%0A++++++++%3Fspecies+up%3AscientificName+%22Homo+sapiens%22+.%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
