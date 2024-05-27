@@ -224,6 +224,22 @@ const Species = () => {
               </p>
             </div>
           </div>
+          <div className="is-flex">
+            <div style={{ width: 150 }}>
+              <p>
+                <b style={{ width: 140 }}>Experiment list</b>
+              </p>
+            </div>
+            <div>
+              <p>
+                <Link className="internal-link"
+                      to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?species_id=${data.species.id}`}
+                      title={`Experiment list for ${data.species.genus} ${data.species.speciesName}`}>
+                  All experiments for {data.species.genus} {data.species.speciesName}
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div>
