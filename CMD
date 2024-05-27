@@ -8,11 +8,6 @@ rm -Rf build && yarn prod
 cd build/
 rsync -av --del . bgee@proxybioinfo.unil.ch:/var/www/html/bgee.unil.ch/
 
-# annotations
-echo 'ACHTUNG! Think to change "isRawDataOnly" to "true" first!'
-rm -Rf build && yarn annot
-cd build/
-rsync -av --del . bgee@proxybioinfo.unil.ch:/var/www/html/annotations.bgee.org/
 
 # rbgee (dev/test server)
 echo 'Set isDevOnly to true to switch to dev build + Update DEV_URL if different from http://rbgee.unil.ch'
