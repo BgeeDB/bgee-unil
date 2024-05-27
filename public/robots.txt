@@ -3,7 +3,6 @@ Sitemap: https://www.bgee.org/sitemap.xml
 User-agent: *
 Crawl-delay: 10
 Disallow: /error
-Disallow: /*?
 Disallow: /search/anatomical-homology?
 Disallow: /analysis/expr-comparison/:
 Disallow: /analysis/expr-comparison?
@@ -23,8 +22,6 @@ Disallow: /analysis/top-anat/c
 Disallow: /analysis/top-anat/d
 Disallow: /analysis/top-anat/e
 Disallow: /analysis/top-anat/f
-Disallow: /search/genes?
-Disallow: /search/genes/?
 Disallow: /bgee/bgee
 Disallow: /bgee13/*
 Disallow: /bgee14/*
@@ -32,3 +29,4 @@ Disallow: /bgee14_0/*
 Disallow: /bgee14_1/*
 Disallow: /bgee14_2/*
 Disallow: /bgee15_0/*
+Disallow: /bgee15_1/*
