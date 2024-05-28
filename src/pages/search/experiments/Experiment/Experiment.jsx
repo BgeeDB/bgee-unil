@@ -97,7 +97,7 @@ const Experiment = () => {
               <span className="has-text-weight-semibold my-1 labelsLeft">
                 Description:
               </span>
-              <span className="my-1 is-flex-grow-1 ml-2">
+              <span className="my-1 is-flex-grow-1">
                 {data?.experiment?.description}
               </span>
             </div>
