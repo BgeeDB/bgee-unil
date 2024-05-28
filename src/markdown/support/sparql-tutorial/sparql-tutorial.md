@@ -48,7 +48,8 @@ To improve readability, all reserved words of the SPARQL query language are writ
 ```
 PREFIX up: <http://purl.uniprot.org/core/>
 SELECT ?species {
-	?species a up:Taxon .}
+	?species a up:Taxon .
+}
 ```
 
 
@@ -72,7 +73,7 @@ SELECT ?species ?sci_name ?common_name {
 	?species a up:Taxon .
 	?species up:scientificName ?sci_name .
 	?species up:rank up:Species .
-	OPTIONAL {?species up:commonName ?common_name .}
+	OPTIONAL { ?species up:commonName ?common_name . }
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0ASELECT+%3Fspecies+%3Fsci_name+%3Fcommon_name+%7B%0D%0A%09%3Fspecies+a+up%3ATaxon+.%0D%0A%09%3Fspecies+up%3AscientificName+%3Fsci_name+.%0D%0A%09%3Fspecies+up%3Arank+up%3ASpecies+.%0D%0A++++OPTIONAL+%7B%3Fspecies+up%3AcommonName+%3Fcommon_name+.%7D%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -125,13 +126,13 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?anatName {
 	?seq a orth:Gene .
-	?seq genex:isExpressedIn ?anat.
+	?seq genex:isExpressedIn ?anat .
 	?seq rdfs:label "APOC1" .
 	?anat a genex:AnatomicalEntity .
 	?anat rdfs:label ?anatName .
 	### Specifying species:
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:scientificName "Homo sapiens" .
 }
@@ -162,14 +163,14 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 
 SELECT DISTINCT ?anat ?anatName {
 	?seq a orth:Gene .
-	?seq genex:isExpressedIn ?condition.
+	?seq genex:isExpressedIn ?condition .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
 	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "life cycle" .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
 }
@@ -191,11 +192,11 @@ Other vocabulary terms:
 These query triple patterns are more accurate because we can now precisely define the other expression conditions available instead of only an anatomical entity.
 
 ### In what cell types is a gene expressed?
-When defining the condition to assess a gene expression, the [genex:hasAnatomicalEntity](https://biosoda.github.io/genex/#hasAnatomicalEntity) property is used to state cell types too since a cell type is also considered as an anatomical entity. For example, to define that a gene is expressed in the lung, the graph below is built where we can interpret that the gene is expressed in a cellular component located in the lung, in other words, in the lung.  Therefore, when the cell type is unspecified, we assert with `genex:hasAnatomicalEntity` property the value [obo:GO_0005575 (cellular_component)](http://purl.obolibrary.org/obo/GO_0005575), this [Gene Ontology](https://geneontology.org/) term is the root of all cell types.
+When defining the condition to assess a gene expression, the [genex:hasAnatomicalEntity](https://biosoda.github.io/genex/#hasAnatomicalEntity) property is used to state cell types too since a cell type is also considered as an anatomical entity. For example, to define that a gene is expressed in the lung, the graph below is built where we can interpret that the gene is expressed in a cellular component located in the lung, in other words, in the lung. Therefore, when the cell type is unspecified, we assert with `genex:hasAnatomicalEntity` property the value [obo:GO_0005575 (cellular_component)](http://purl.obolibrary.org/obo/GO_0005575), this [Gene Ontology](https://geneontology.org/) term is the root of all cell types.
 
 ![](../img/doc/sparql-tutorial/cell-type.png#tutoimgborder)
 
-Below, we show a question and its corresponding SPARQL query [Q06](#q06)  along with its [graph representation](#q06-graphical-representation) where other gene expression conditions are specified, more precisely, the developmental stage.
+Below, we show a question and its corresponding SPARQL query [Q06](#q06) along with its [graph representation](#q06-graphical-representation) where other gene expression conditions are specified, more precisely, the developmental stage.
 
 
 #### Q06:
@@ -209,18 +210,18 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?anatName ?stage {
 	?seq a orth:Gene .
-	?seq genex:isExpressedIn ?condition.
+	?seq genex:isExpressedIn ?condition .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasAnatomicalEntity obo:GO_0005575 .
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:commonName "human" .
 }
@@ -244,7 +245,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?anatName ?stage {
 	?seq a orth:Gene .
-	?seq genex:isExpressedIn ?condition.
+	?seq genex:isExpressedIn ?condition .
 	?seq rdfs:label "APOC1" .
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
@@ -252,7 +253,7 @@ SELECT DISTINCT ?anat ?anatName ?stage {
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:commonName "human" .
 }
@@ -287,14 +288,14 @@ SELECT DISTINCT ?anat ?anatName ?score ?stage {
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:commonName "human" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 
@@ -304,7 +305,7 @@ FILTER (?anat !=  obo:GO_0005575)
 ![](../img/doc/sparql-tutorial/q08.png#tutoimgborder)
 
 
-> **NOTE:** In the query [Q08](#q08), we filter out the anatomical entity `obo:GO_0005575` that is "cellular_component" with the expression ``FILTER(?anat !=  obo:GO_0005575)``because it is not informative. In other words, "cellular_component" means any cell type.
+> **NOTE:** In the query [Q08](#q08), we filter out the anatomical entity `obo:GO_0005575` that is "cellular_component" with the expression ``FILTER(?anat != obo:GO_0005575)`` because it is not informative. In other words, "cellular_component" means any cell type.
 
 > **NOTE:** In [Q08](#q08), we define the cell type where the gene expression is being evaluated as the most general (i.e., the root term `obo:GO_0005575`) with the statement `?condition genex:hasAnatomicalEntity obo:GO_0005575 .`. The cost of doing this is that the query will not return specific cell level expression.
 
@@ -333,14 +334,14 @@ SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage {
 	?cellType rdfs:label ?cellTypeName .
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:commonName "human" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)
 ```
@@ -375,10 +376,10 @@ SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage {
 	?condition genex:hasDevelopmentalStage ?stage .
 	?stage rdfs:label "post-juvenile" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:commonName "human" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)
 ```
@@ -392,13 +393,13 @@ Queries specifying conditions such as taxa, anatomical entities, and development
 Taxa are based on the NCBI taxonomy identifiers, to find out the NCBI ID that corresponds to the species being looked for, you can choose the species at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) and look for the species ID in the general information section. Alternatively, we can search the NCBI ID of a given species directly at the [NCBI taxonomy website](https://www.ncbi.nlm.nih.gov/taxonomy). For example, human ID is `9606`, and its full corresponding IRI defined in the Bgee knowledge graph is `http://purl.uniprot.org/taxonomy/9606`. More precisely, the full IRI is composed of the `http://purl.uniprot.org/taxonomy/` prefix and the NCBI ID as the suffix.
 
 ### Gene identifiers
-Currently, Bgee mostly reuses either Ensembl or NCBI Gene database identifiers depending on the genome source. These identifiers are stated for each gene with the [dcterms:identifier](http://purl.org/dc/terms/identifier) relation. The genome source for each species in Bgee can be verified at each Bgee species page accessible at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) such as [human page](https://www.bgee.org/species/9606) states the genome source as being [Ensembl](https://nov2020.archive.ensembl.org/Homo_sapiens/Info/Index) in the "General information" section.  To fetch the corresponding main gene identifier to a given gene in Bgee, we can rely on the [Bgee's gene search tool](https://www.bgee.org/search/genes). For example, if we search for the APOC1 gene with the [Bgee's gene search tool](https://www.bgee.org/search/genes), the first row result refers to the human APOC1 gene and the first column shows the corresponding Ensembl id: `ENSG00000130208` and its full IRI is `http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208` as defined in the Bgee knowledge graph. The IRI is composed of the prefix `http://rdf.ebi.ac.uk/resource/ensembl/` and the `Ensembl id`. If it is a `NCBI Gene id`, the IRI prefix is `https://www.ncbi.nlm.nih.gov/gene/`. For instance, `https://www.ncbi.nlm.nih.gov/gene/118230125` corresponds to the [apoc1 eel gene](https://www.ncbi.nlm.nih.gov/gene/118230125).
+Currently, Bgee mostly reuses either Ensembl or NCBI Gene database identifiers depending on the genome source. These identifiers are stated for each gene with the [dcterms:identifier](http://purl.org/dc/terms/identifier) relation. The genome source for each species in Bgee can be verified at each Bgee species page accessible at [https://www.bgee.org/search/species](https://www.bgee.org/search/species) such as [human page](https://www.bgee.org/species/9606) states the genome source as being [Ensembl](https://nov2020.archive.ensembl.org/Homo_sapiens/Info/Index) in the "General information" section. To fetch the corresponding main gene identifier to a given gene in Bgee, we can rely on the [Bgee's gene search tool](https://www.bgee.org/search/genes). For example, if we search for the APOC1 gene with the [Bgee's gene search tool](https://www.bgee.org/search/genes), the first row result refers to the human APOC1 gene and the first column shows the corresponding Ensembl id: `ENSG00000130208` and its full IRI is `http://rdf.ebi.ac.uk/resource/ensembl/ENSG00000130208` as defined in the Bgee knowledge graph. The IRI is composed of the prefix `http://rdf.ebi.ac.uk/resource/ensembl/` and the `Ensembl id`. If it is a `NCBI Gene id`, the IRI prefix is `https://www.ncbi.nlm.nih.gov/gene/`. For instance, `https://www.ncbi.nlm.nih.gov/gene/118230125` corresponds to the [apoc1 eel gene](https://www.ncbi.nlm.nih.gov/gene/118230125).
 
 ### Anatomical entity vocabulary
 For looking up an ontology term corresponding to a given anatomical entity, we can rely on the Ontology Look Up service at https://www.ebi.ac.uk/ols4/ontologies/uberon. For example, if we type `liver` in the search field we can retrieve the Uberon identifier that is `UBERON:0002107` and its corresponding IRI http://purl.obolibrary.org/obo/UBERON_0002107 as defined in the Bgee knowledge graph.
 
 ### Developmental stage vocabulary
-For looking up an ontology term corresponding to a given developmental stage, we can browse the [developmental stage file](https://raw.githubusercontent.com/BgeeDB/bgee_pipeline/master/source_files/uberon/dev_stage_ontology.obo). In this file, by looking at the name and ID fields we can compose the corresponding IRI of a given developmental stage. For example, we can look up  `post-juvenile`  and find out that its ID is `UBERON:0000113`. By prefixing this ID with `http://purl.obolibrary.org/obo/`  and replacing `:` with `_`, we can define its IRI as stated in the Bgee knowledge graph: `http://purl.obolibrary.org/obo/UBERON_0000113`.
+For looking up an ontology term corresponding to a given developmental stage, we can browse the [developmental stage file](https://raw.githubusercontent.com/BgeeDB/bgee_pipeline/master/source_files/uberon/dev_stage_ontology.obo). In this file, by looking at the name and ID fields we can compose the corresponding IRI of a given developmental stage. For example, we can look up `post-juvenile` and find out that its ID is `UBERON:0000113`. By prefixing this ID with `http://purl.obolibrary.org/obo/` and replacing `:` with `_`, we can define its IRI as stated in the Bgee knowledge graph: `http://purl.obolibrary.org/obo/UBERON_0000113`.
 Alternatively, we can retrieve all developmental stages and their IRIs in Bgee with the [Q11 query](#q11).
 
 #### Q11:
@@ -452,7 +453,7 @@ PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
 PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
 PREFIX lscr: <http://purl.org/lscr#>
 
-SELECT DISTINCT ?anat ?anatName ?score  {
+SELECT DISTINCT ?anat ?anatName ?score {
 	?seq a orth:Gene .
 	?expression a genex:Expression .
 	?expression genex:hasExpressionCondition ?condition .
@@ -462,12 +463,12 @@ SELECT DISTINCT ?anat ?anatName ?score  {
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  up-taxon:9606 .
-FILTER (?anat !=  obo:GO_0005575)
+	?organism obo:RO_0002162 up-taxon:9606 .
+FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+up-taxon%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+ensembl%3A+%3Chttp%3A%2F%2Frdf.ebi.ac.uk%2Fresource%2Fensembl%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3Fscore++%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A++++++++%3Fseq+lscr%3AxrefEnsemblGene+ensembl%3AENSG00000130208+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+obo%3AUBERON_0000113+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0A++++++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++++++%3Forganism+obo%3ARO_0002162++up-taxon%3A9606+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -490,7 +491,7 @@ PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
 PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
 PREFIX lscr: <http://purl.org/lscr#>
 
-SELECT DISTINCT ?anat ?anatName ?score  {
+SELECT DISTINCT ?anat ?anatName ?score {
 	?seq a orth:Gene .
 	?expression a genex:Expression .
 	?expression genex:hasExpressionCondition ?condition .
@@ -500,10 +501,10 @@ SELECT DISTINCT ?anat ?anatName ?score  {
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage obo:UBERON_0000113 .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 
@@ -525,7 +526,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
 PREFIX lscr: <http://purl.org/lscr#>
 
-SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
+SELECT DISTINCT ?anat ?anatName ?stageIRI ?score {
 	?seq a orth:Gene .
 	?expression a genex:Expression .
 	?expression genex:hasExpressionCondition ?condition .
@@ -535,10 +536,10 @@ SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage ?stageIRI .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+genex%3A+%3Chttp%3A%2F%2Fpurl.org%2Fgenex%23%3E%0D%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0D%0APREFIX+up%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E%0D%0APREFIX+up-taxon%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fanat+%3FanatName+%3FstageIRI+%3Fscore++%7B%0D%0A%09%3Fseq+a+orth%3AGene+.%0D%0A++++++++%3Fexpression+a+genex%3AExpression+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionCondition+%3Fcondition+.%0D%0A++++++++%3Fexpression+genex%3AhasExpressionLevel+%3Fscore+.%0D%0A%09%3Fexpression+genex%3AhasSequenceUnit+%3Fseq+.%0D%0A++++++++%3Fseq+lscr%3AxrefNCBIGene+%3Chttps%3A%2F%2Fwww.ncbi.nlm.nih.gov%2Fgene%2F118230125%3E+.%0D%0A%09%3Fcondition+genex%3AhasAnatomicalEntity+%3Fanat+.%0D%0A++++++++%3Fanat+rdfs%3Alabel+%3FanatName+.%0D%0A++++++++%3Fcondition+genex%3AhasDevelopmentalStage+%3FstageIRI+.%0D%0A++%09%3Fcondition+genex%3AhasSex+%22any%22.%0D%0A+++%09%3Fcondition+genex%3AhasStrain+%3Fstrain+.%0D%0A++++++++%3Fstrain+rdfs%3Alabel+%22wild-type%22+.%0D%0AFILTER+%28%3Fanat+%21%3D++obo%3AGO_0005575%29%0D%0A%7D+ORDER+BY+DESC%28%3Fscore%29&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -557,7 +558,7 @@ PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
-SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
+SELECT DISTINCT ?anat ?anatName ?stageIRI ?score {
 	?seq a orth:Gene .
 	?expression a genex:Expression .
 	?expression genex:hasExpressionCondition ?condition .
@@ -567,10 +568,10 @@ SELECT DISTINCT ?anat ?anatName ?stageIRI ?score  {
 	?condition genex:hasAnatomicalEntity ?anat .
 	?anat rdfs:label ?anatName .
 	?condition genex:hasDevelopmentalStage ?stageIRI .
-	?condition genex:hasSex "any".
+	?condition genex:hasSex "any" .
 	?condition genex:hasStrain ?strain .
 	?strain rdfs:label "wild-type" .
-FILTER (?anat !=  obo:GO_0005575)
+FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)
 ```
 
@@ -630,17 +631,17 @@ PREFIX lscr: <http://purl.org/lscr#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
 SELECT DISTINCT ?symbol ?description ?id
-?links ?organism ?uniprot ?ensembl ?ncbi  {
-    ?seq a orth:Gene .
-    ?seq rdfs:label ?symbol .
-    ?seq rdfs:seeAlso ?links .
-    ?seq dcterms:description ?description .
-    ?seq dcterms:identifier ?id .
-    ?seq orth:organism ?organism .
-    OPTIONAL{?seq lscr:xrefUniprot ?uniprot .}
-    OPTIONAL{?seq lscr:xrefEnsemblGene ?ensembl .}
-    OPTIONAL{?seq lscr:xrefNCBIGene ?ncbi .}
-    FILTER (?id = "ENSG00000130208")
+?links ?organism ?uniprot ?ensembl ?ncbi {
+	?seq a orth:Gene .
+	?seq rdfs:label ?symbol .
+	?seq rdfs:seeAlso ?links .
+	?seq dcterms:description ?description .
+	?seq dcterms:identifier ?id .
+	?seq orth:organism ?organism .
+	OPTIONAL{ ?seq lscr:xrefUniprot ?uniprot . }
+	OPTIONAL{ ?seq lscr:xrefEnsemblGene ?ensembl . }
+	OPTIONAL{ ?seq lscr:xrefNCBIGene ?ncbi . }
+	FILTER (?id = "ENSG00000130208")
 }
 ```
 > To run this query [click here](https://bgee.org/sparql/?default-graph-uri=&query=PREFIX+orth%3A+%3Chttp%3A%2F%2Fpurl.org%2Fnet%2Forth%23%3E%0D%0APREFIX+lscr%3A+%3Chttp%3A%2F%2Fpurl.org%2Flscr%23%3E%0D%0APREFIX+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0A%0D%0ASELECT+DISTINCT+%3Fsymbol+%3Fdescription+%3Fid+%0D%0A%3Flinks+%3Forganism+%3Funiprot+%3Fensembl+%3Fncbi++%7B%0D%0A++++%3Fseq+a+orth%3AGene+.%0D%0A++++%3Fseq+rdfs%3Alabel+%3Fsymbol+.%0D%0A++++%3Fseq+rdfs%3AseeAlso+%3Flinks+.%0D%0A++++%3Fseq+dcterms%3Adescription+%3Fdescription+.%0D%0A++++%3Fseq+dcterms%3Aidentifier+%3Fid+.%0D%0A++++%3Fseq+orth%3Aorganism+%3Forganism+.%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefUniprot+%3Funiprot+.%7D%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefEnsemblGene+%3Fensembl+.%7D%0D%0A++++OPTIONAL%7B%3Fseq+lscr%3AxrefNCBIGene+%3Fncbi+.%7D%0D%0A++++FILTER+%28%3Fid+%3D+%22ENSG00000130208%22%29%0D%0A%7D&should-sponge=&format=text%2Fhtml&timeout=0&debug=on).
@@ -650,7 +651,7 @@ SELECT DISTINCT ?symbol ?description ?id
 
 ## Querying Genes with Absence of Expression
 
-To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), respectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement  `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as shown in [Q15](#q15) and its [graphical representation](#q15-graphical-representation).
+To check for genes that are not expressed in some condition or tissue, we can use the [genex:isAbsentIn](https://biosoda.github.io/genex/#isAbsentIn) and [genex:AbsenceExpression](https://biosoda.github.io/genex/#AbsenceExpression) terms instead of [genex:isExpressedIn](https://biosoda.github.io/genex/#isExpressedIn) and [genex:Expression](https://biosoda.github.io/genex/#Expression), respectively. For instance, to answer the question *Where is a gene not expressed?*, we can answer this question by replacing the statement `genex:isExpressedIn` with `genex:isAbsentIn` in the query [Q14](#q14) as shown in [Q15](#q15) and its [graphical representation](#q15-graphical-representation).
 
 #### Q15:
 > *Question*: What are the anatomical entities where the "APOC1" Homo sapiens gene is not expressed, that is where is "APOC1" absent?
@@ -663,12 +664,12 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT DISTINCT ?anat ?anatName {
 	?seq a orth:Gene .
-	?seq genex:isAbsentIn ?anat.
+	?seq genex:isAbsentIn ?anat .
 	?seq rdfs:label "APOC1" .
 	?anat a genex:AnatomicalEntity .
 	?anat rdfs:label ?anatName .
 	?seq orth:organism ?organism .
-	?organism obo:RO_0002162  ?species . #in taxon
+	?organism obo:RO_0002162 ?species . #in taxon
 	?species a up:Taxon .
 	?species up:scientificName "Homo sapiens" .
 }
@@ -690,14 +691,14 @@ PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 SELECT DISTINCT ?anatEntity ?anatName {
-    ?seq a orth:Gene;
-         orth:organism ?organism ;
-         rdfs:label ?geneName .
-    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
-    ?seq genex:isExpressedIn ?anatEntity.
-    ?anatEntity a genex:AnatomicalEntity .
-    ?anatEntity rdfs:label ?anatName .
-    FILTER (LCASE(?geneName) = LCASE('APOC1'))
+	?seq a             orth:Gene ;
+	     orth:organism ?organism ;
+	     rdfs:label    ?geneName .
+	?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+	?seq genex:isExpressedIn ?anatEntity .
+	?anatEntity a genex:AnatomicalEntity .
+	?anatEntity rdfs:label ?anatName .
+	FILTER (LCASE(?geneName) = LCASE('APOC1'))
 }
 ```
 
@@ -717,15 +718,15 @@ In the SELECT section of your query, it is essential to specify the URL of the g
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
-SELECT DISTINCT ?anatEntity ?anatName FROM <https://bgee.org/rdf_v15_1>{
-    ?seq a orth:Gene;
-         orth:organism ?organism ;
-         rdfs:label ?geneName .
-    ?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
-    ?seq genex:isExpressedIn ?anatEntity.
-    ?anatEntity a genex:AnatomicalEntity .
-    ?anatEntity rdfs:label ?anatName .
-    FILTER (LCASE(?geneName) = LCASE('APOC1'))
+SELECT DISTINCT ?anatEntity ?anatName FROM <https://bgee.org/rdf_v15_1> {
+	?seq a             orth:Gene ;
+	     orth:organism ?organism ;
+	     rdfs:label    ?geneName .
+	?organism obo:RO_0002162 <http://purl.uniprot.org/taxonomy/10116> . #in_taxon
+	?seq genex:isExpressedIn ?anatEntity .
+	?anatEntity a genex:AnatomicalEntity .
+	?anatEntity rdfs:label ?anatName .
+	FILTER (LCASE(?geneName) = LCASE('APOC1'))
 }
 ```
 
