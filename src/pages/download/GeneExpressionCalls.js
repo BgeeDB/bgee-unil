@@ -107,8 +107,10 @@ const GeneExpressionCalls = () => {
           className="internal-link"
         >
           processed expression values
-        </Link>
-        . All data are available under the{' '}
+        </Link>.
+      </p>
+      <p className="is-size-5">
+        All data are available under the{' '}
         <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
           Creative Commons Zero license (CC0)
         </LinkExternal>

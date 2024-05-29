@@ -4,6 +4,7 @@ import Bulma from '../../components/Bulma';
 import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import imagePath from '../../helpers/imagePath';
+import LinkExternal from '../../components/LinkExternal';
 import config from '../../config.json';
 
 const DataDumps = () => (
@@ -22,6 +23,14 @@ const DataDumps = () => (
     <div className="content has-text-centered">
       <Bulma.Title size={3}>Bgee data dumps</Bulma.Title>
     </div>
+
+    <p className="is-size-5">
+      All data are available under the{' '}
+      <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
+        Creative Commons Zero license (CC0)
+      </LinkExternal>
+      .
+    </p>
 
     <Bulma.Tile kind="ancestor">
       <Bulma.Tile kind="parent">
