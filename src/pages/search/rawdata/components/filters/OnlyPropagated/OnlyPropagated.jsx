@@ -4,7 +4,7 @@ import HelpIcon from '../../../../../../components/HelpIcon';
 const OnlyPropagated = ({ onlyPropagated, setOnlyPropagated }) => (
   <>
   <label className="labelWithHelpIcon">
-        <span>Propagation</span>
+        <span>Data integration</span>
         <HelpIcon
           style={{
             height: '21px',
@@ -27,7 +27,7 @@ const OnlyPropagated = ({ onlyPropagated, setOnlyPropagated }) => (
           checked={onlyPropagated ? 'checked' : ''}
           onChange={() => setOnlyPropagated((value) => !value)}
         />
-        <label htmlFor="onlyPropagated">Only Propagated</label>
+        <label htmlFor="onlyPropagated">Used in gene expression calls</label>
         
     </div>
     </>
