@@ -141,30 +141,35 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     setPageType(newPageType);
   };
 
+  const formatLargeNumber = (largeNumber) => {
+    const numberToDisplay = new Intl.NumberFormat('en').format(largeNumber || 0);
+    return numberToDisplay;
+  };
+
   const resultCountLabel = useMemo(() => {
     switch (pageType) {
       case EXPERIMENTS:
-        return `${localCount.experimentCount || 0} ${
+        return `${formatLargeNumber(localCount.experimentCount)} ${
           dataType === EST ? 'libraries' : 'experiments'
         }`;
       case RAW_DATA_ANNOTS: {
         if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries`;
+          return `${formatLargeNumber(localCount.assayCount)} libraries`;
         }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
+        return `${formatLargeNumber(localCount.experimentCount)} experiments / ${
+          formatLargeNumber(localCount.assayCount)
         } ${dataType === AFFYMETRIX ? 'chips' : 'assays'}`;
       }
       case PROC_EXPR_VALUES: {
         if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries / ${
-            localCount.callCount || 0
+          return `${formatLargeNumber(localCount.assayCount)} libraries / ${
+            formatLargeNumber(localCount.callCount)
           } gene expression values`;
         }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
+        return `${formatLargeNumber(localCount.experimentCount)} experiments / ${
+          formatLargeNumber(localCount.assayCount)
         } ${dataType === AFFYMETRIX ? 'chips' : 'assays'} / ${
-          localCount.callCount
+          formatLargeNumber(localCount.callCount)
         } gene expression values`;
       }
       default:
@@ -457,7 +462,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               ) : (
                 <div className="resultCounts">
                   {isExprCalls ? (
-                    <>{`${localCount?.assayCount || 0} expressions calls`}</>
+                    <>{`${formatLargeNumber(localCount?.assayCount)} expression calls`}</>
                   ) : (
                     resultCountLabel
                   )}
