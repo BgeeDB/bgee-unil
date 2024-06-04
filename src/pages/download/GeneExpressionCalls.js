@@ -339,6 +339,22 @@ const GeneExpressionCalls = () => {
                               </span>
                               : includes information by data types
                             </p>
+                            <p className=" is-size-7">
+                              <a
+                                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Public domain license"
+                              >
+                                <Bulma.Image
+                                  src={imagePath(`/cc-zero.png`)}
+                                  alt="Creative Commons Zero license (CC0)"
+                                  height={15}
+                                  width={80}
+                                  style={{ margin: 0, padding: 0, textAlign: 'left' }}
+                                />
+                              </a>
+                            </p>
                           </div>
                         </div>
                       </div>
