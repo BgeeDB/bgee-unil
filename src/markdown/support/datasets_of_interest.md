@@ -200,7 +200,7 @@ The adult [Fly Cell Atlas (FCA)](https://flycellatlas.org/) is a comprehensive s
 
 ### Annotation Process
 
-In addition to using the fly-specific vocabularies for annotation (i.e., FBbt ontology), Bgee reconnects these data to species-neutral terms (i.e., from Uberon and CL ontologies) to enhance comparisons between species, while still conserving precise fly-specific terms when necessary.
+In addition to using the fly-specific vocabularies for annotation (i.e., FBbt ontology), Bgee reconnects these data to species-neutral terms (i.e., from Uberon and CL ontologies) to enhance comparisons between species, while still conserving precise fly-specific terms when necessary. *All annotations were verified and re-curated to ensure consistency between cell types and organismal information.*
 
 ### Accessing Fly Cell Atlas data in Bgee
 All corresponding scRNA-seq data were reanalyzed in the Bgee pipeline. These data are available both through the website and through the BgeeDB R package.
