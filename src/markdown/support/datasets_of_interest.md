@@ -35,7 +35,7 @@ All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently wit
 #### GTEx data on the Bgee website
 
 - Annotations can be browsed on our raw data interface: [Curated GTEx data in Bgee](/experiment/SRP012682). Annotations can be downloaded from [RNA-Seq human experiments/libraries info](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_experiments_libraries.tar.gz). The Experiment ID for GTEx is 'SRP012682'.
-- Processed expression values, from GTEx only, are available via FTP ([download file](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_read_counts_TPM_SRP012682.tsv.gz)).
+- Processed expression values for GTEx data are available via FTP ([download file](https://bgee.org/ftp/current/download/processed_expr_values/rna_seq/Homo_sapiens/Homo_sapiens_RNA-Seq_read_counts_TPM_SRP012682.tsv.gz)).
 - Gene expression calls from GTEx and other experiments are found in the [human gene expression files](/download/gene-expression-calls?id=9606).
 - Each human gene page includes GTEx data where applicable (search a gene [here](/search/genes)).
 - TopAnat analyses can be performed [here](/analysis/top-anat), which leverage the power of the abundant GTEx data integrated with many smaller datasets to provide biological insight into gene lists.
@@ -44,7 +44,7 @@ All corresponding RNA-seq were reanalyzed in the Bgee pipeline, consistently wit
 
 More information and examples can be found on the [BgeeDB R package page](https://bioconductor.org/packages/BgeeDB/).
 
-- Annotations can be retrieved from RNA-Seq human experiments/libraries information. Experiment ID of GTEx is 'SRP012682'.
+- Annotations can be retrieved from RNA-Seq human experiments/libraries information. The experiment ID for GTEx is 'SRP012682'.
     ```R
         if (!requireNamespace("BiocManager", quietly = TRUE))
             install.packages("BiocManager")
