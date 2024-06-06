@@ -212,6 +212,6 @@ All corresponding scRNA-seq data were reanalyzed in the Bgee pipeline. These dat
 - Each Drosophila melanogaster (fruit fly) gene page includes FCA data where applicable (search a gene [here](/search/genes)).
 - TopAnat analyses can be performed [here](/analysis/top-anat), which leverage the power of the abundant FCA data integrated with many smaller datasets to provide biological insight into gene lists.
 
-#### Fly Cell Atlas on the Bgee website
+#### Fly Cell Atlas data using BgeeDB R package
 
 to add
