@@ -1,16 +1,16 @@
 # Datasets of Interest
 This page describes large datasets of interest in Bgee, specifically how they were annotated and how to access the data. 
 
-*   [GTEx in Bgee](#introduction "Quick jump to this section")
-    *   [Annotation process](#result-table---within-an-experiment "Quick jump to this section")
-    *   [GTEx data in Bgee](#description-of-results "Quick jump to this section")
-        *   [GTEx data on the Bgee website](#description-of-results "Quick jump to this section")
-        *   [GTEx data using BgeeDB R package](#description-of-results "Quick jump to this section")
-*   [Fly Cell Atlas in Bgee](#introduction "Quick jump to this section")
-    *   [Annotation process](#result-table---within-an-experiment "Quick jump to this section")
-    *   [Accessing Fly Cell Atlas data in Bgee](#description-of-results "Quick jump to this section")
-        *   [Fly Cell Atlas on the Bgee website](#description-of-results "Quick jump to this section")
-        *   [Fly Cell Atlas data using BgeeDB R package](#description-of-results "Quick jump to this section")
+*   [GTEx in Bgee](#gtex-in-bgee "Quick jump to this section")
+    *   [Annotation process](#annotation-process "Quick jump to this section")
+    *   [Accessing GTEx data in Bgee](#accessing-gtex-data-in-bgee "Quick jump to this section")
+        *   [GTEx data on the Bgee website](#gtex-data-on-the-bgee-website "Quick jump to this section")
+        *   [GTEx data using BgeeDB R package](#gtex-data-using-bgeedb-r-package "Quick jump to this section")
+*   [Fly Cell Atlas in Bgee](#fly-cell-atlas-in-bgee "Quick jump to this section")
+    *   [Annotation process](#annotation-process-1 "Quick jump to this section")
+    *   [Accessing Fly Cell Atlas data in Bgee](#accessing-fly-cell-atlas-data-in-bgee "Quick jump to this section")
+        *   [Fly Cell Atlas on the Bgee website](#fly-cell-atlas-on-the-bgee-website "Quick jump to this section")
+        *   [Fly Cell Atlas data using BgeeDB R package](#fly-cell-atlas-using-bgeedb-r-package "Quick jump to this section")
 
 
 ## GTEx in Bgee
