@@ -7,7 +7,8 @@ use diagnostics;
 
 $| = 1;
 
-use FindBin qw($RealBin);
+use File::Slurp;
+#use FindBin qw($RealBin);
 use Getopt::Long;
 use List::Util qw(shuffle);
 use TAP::Harness;
@@ -41,7 +42,19 @@ my $URL;
 my $url_count = 0;
 #Read local sitemap files
 if ( $sitemap_path && -e "$sitemap_path/sitemap.xml" ){
-    #TODO
+    my $content = read_file("$sitemap_path/sitemap.xml");
+    my $sitemaps = parse_main_sitemap( $content );
+    SITEMAP:
+    for my $sitemap ( @$sitemaps ){
+        my ($local_path) = $sitemap =~ m|$ENV{'BASE_URL'}/(sitemap_\w+\.xml)|;
+        if ( -e "$sitemap_path/$local_path" ){
+            my $content = read_file("$sitemap_path/$local_path");
+            parse_sitemap( $content );
+        }
+        else {
+            warn "\n\tCannot read [$sitemap_path/$local_path]\n\n";
+        }
+    }
 }
 #Read remote sitemap files
 else {
