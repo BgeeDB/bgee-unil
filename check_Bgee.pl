@@ -11,9 +11,11 @@ use File::Slurp;
 #use FindBin qw($RealBin);
 use Getopt::Long;
 use List::Util qw(shuffle);
+use Log::Log4perl qw(:easy);
 use TAP::Harness;
 use Test::More 'no_plan';
-use WWW::Mechanize;
+#use WWW::Mechanize;
+use WWW::Mechanize::Chrome;
 
 my $tester = TAP::Harness->new({
         timer       => 1,
@@ -40,7 +42,13 @@ help()  if ( !$test_options || $help );
 
 
 # Read sitemap URLs
-my $mech = WWW::Mechanize->new();
+Log::Log4perl->easy_init($ERROR);  # Set priority of root logger to ERROR
+my $mech = WWW::Mechanize::Chrome->new(
+    headless       => 0,
+    launch_exe     => '/usr/bin/google-chrome',
+    launch_arg     => [ '--no-sandbox', ],
+    cleanup_signal => 'SIGTERM',
+);
 my $URL;
 my $url_count = 0;
 #Read local sitemap files
@@ -93,14 +101,15 @@ if ( $check_url ){
     for my $cat ( @categories ){
         URL:
         for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
-            $mech->get("$url.23");
+            $mech->get("$url");
             ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
-#            sleep 1;
+            sleep 1;
         }
         last;
     }
 }
 
+$tester->runtests();
 exit 0;
 
 
