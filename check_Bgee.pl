@@ -24,13 +24,15 @@ my $tester = TAP::Harness->new({
 $ENV{'BASE_URL'} = 'https://www.bgee.org';
 
 # Script options
-my ($help, $debug, $shuffle) = (0, 0, 0);
-my ($sitemap_path)           = ('');
-my ($check_url, $check_content, $check_links) = (0, 0, 0);
+my ($help, $debug, $shuffle)  = (0, 0, 0);
+my ($sitemap_path)            = ('');
+my ($check_url, $check_links) = (0, 0);
 my %opts   = ('help|?'        => \$help,
               'debug|verbose' => \$debug,
               'sitemap=s'     => \$sitemap_path,
               'shuffle'       => \$shuffle,
+              'check_url'     => \$check_url,
+              'check_links'   => \$check_links,
              );
 
 my $test_options = Getopt::Long::GetOptions(%opts);
@@ -38,6 +40,7 @@ help()  if ( !$test_options || $help );
 
 
 # Read sitemap URLs
+my $mech = WWW::Mechanize->new();
 my $URL;
 my $url_count = 0;
 #Read local sitemap files
@@ -59,7 +62,6 @@ if ( $sitemap_path && -e "$sitemap_path/sitemap.xml" ){
 #Read remote sitemap files
 else {
     my $sitemap_url = $ENV{'BASE_URL'}.'/sitemap.xml';
-    my $mech = WWW::Mechanize->new();
     $mech->get("$sitemap_url");
     if ( $mech->success() && $mech->content() =~ m|<sitemap><loc>$ENV{'BASE_URL'}/sitemap_main\.xml</loc></sitemap>| ){
         my $sitemaps = parse_main_sitemap( $mech->content() );
@@ -82,19 +84,34 @@ warn "$url_count URLs\n"                                                        
 warn scalar keys %$URL, ' URL categories: ', join(', ', sort keys %$URL), "\n"  if $debug;
 
 
-#TODO Actions
-#$check_url, $check_content, $check_links
-
+# Actions
+$check_url = $check_links == 1 ? 1 : $check_url;
+#Check Bgee URLs
+if ( $check_url ){
+    my @categories = $shuffle ? shuffle keys %$URL : sort keys %$URL;
+    CAT:
+    for my $cat ( @categories ){
+        URL:
+        for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
+            $mech->get("$url.23");
+            ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
+#            sleep 1;
+        }
+        last;
+    }
+}
 
 exit 0;
 
 
 sub help {
     print "\n$0 [options]
-\t--shuffle   Shuffle URLs to check
-\t--debug     Verbose/Debug mode
-\t--sitemap   Path of a local sitemap.xml file
-\t--help      This message\n\n";
+\t--check_url    Check Bgee URLs
+\t--check_links  Check links in Bgee URLs
+\t--shuffle      Shuffle URLs to check
+\t--sitemap      Directory of a local sitemap.xml file
+\t--debug        Verbose/Debug mode
+\t--help         This message\n\n";
     exit 1;
 }
 
