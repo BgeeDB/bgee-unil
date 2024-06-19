@@ -216,10 +216,10 @@ const datasetToLdJSON = () => {
     const ldJson = [];
     ldJson.push({
         '@context': 'https://schema.org/',
-        '@id': window.location.href,
+        '@id': 'https://www.bgee.org/#schema-org',
         '@graph': [{
             '@type': 'Organization',
-            '@id': 'https://www.bgee.org/',
+            '@id': 'https://www.bgee.org/about/team',
             name: 'Bgee - Bring Gene Expression Expertise',
             url: 'https://www.bgee.org/',
             description: 'The aim of Bgee is to help biologists to use and understand gene expression',
@@ -240,9 +240,9 @@ const datasetToLdJSON = () => {
                 ],
               }, {
                 '@type': 'CollegeOrUniversity',
-                '@id': 'https://unil.ch',
+                '@id': 'https://www.unil.ch',
                 name: 'UNIL University of Lausanne',
-                url: 'https://unil.ch',
+                url: 'https://www.unil.ch',
                 sameAs: [
                   'https://ror.org/019whta54',
                   'https://en.wikipedia.org/wiki/University_of_Lausanne',

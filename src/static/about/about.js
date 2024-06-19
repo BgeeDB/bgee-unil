@@ -298,7 +298,7 @@ const about = [
           {
             type: 'link_external',
             text: 'Evolutionary Bioinformatics group',
-            path: 'https://bioinfo.unil.ch/',
+            path: 'https://www.sib.swiss/marc-robinson-rechavi-frederic-bastian-group',
           },
           {
             type: 'text',
