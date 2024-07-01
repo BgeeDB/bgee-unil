@@ -17,12 +17,6 @@ use Test::More 'no_plan';
 #use WWW::Mechanize;
 use WWW::Mechanize::Chrome;
 
-my $tester = TAP::Harness->new({
-        timer       => 1,
-        verbosity   => 1,
-        color       => 1,
-});
-
 $ENV{'BASE_URL'} = 'https://www.bgee.org';
 
 # Script options
@@ -44,9 +38,9 @@ help()  if ( !$test_options || $help );
 # Read sitemap URLs
 Log::Log4perl->easy_init($ERROR);  # Set priority of root logger to ERROR
 my $mech = WWW::Mechanize::Chrome->new(
-    headless       => 0,
+    headless       => 'new',
     launch_exe     => '/usr/bin/google-chrome',
-    launch_arg     => [ '--no-sandbox', ],
+    launch_arg     => [ '--no-sandbox', '--disable-gpu', ],
     cleanup_signal => 'SIGTERM',
 );
 my $URL;
@@ -88,8 +82,8 @@ else {
         die "\n\tCannot reach [$sitemap_url]\n\n";
     }
 }
-warn "$url_count URLs\n"                                                        if $debug;
-warn scalar keys %$URL, ' URL categories: ', join(', ', sort keys %$URL), "\n"  if $debug;
+warn "$url_count URLs\n"                                                          if $debug;
+warn scalar keys %$URL, ' URL categories: ', join(', ', sort keys %$URL), "\n\n"  if $debug;
 
 
 # Actions
@@ -99,8 +93,10 @@ if ( $check_url ){
     my @categories = $shuffle ? shuffle keys %$URL : sort keys %$URL;
     CAT:
     for my $cat ( @categories ){
+        diag("\t[[[ $cat availability ]]]");
         URL:
         for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
+            CORE::say "Loading [$url] ..."  if $debug;
             $mech->get("$url");
             ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
             sleep 1;
@@ -109,7 +105,14 @@ if ( $check_url ){
     }
 }
 
-$tester->runtests();
+
+my $tester = TAP::Harness->new({
+        timer       => 1,
+        verbosity   => 1,
+        color       => 1,
+});
+
+$tester->runtests( ); #TODO tests do not currently run in TAP
 exit 0;
 
 
