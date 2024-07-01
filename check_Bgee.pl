@@ -88,19 +88,25 @@ warn scalar keys %$URL, ' URL categories: ', join(', ', sort keys %$URL), "\n\n"
 
 # Actions
 $check_url = $check_links == 1 ? 1 : $check_url;
+my %tests;
 #Check Bgee URLs
 if ( $check_url ){
     my @categories = $shuffle ? shuffle keys %$URL : sort keys %$URL;
+    my $count = 0;
     CAT:
     for my $cat ( @categories ){
-        diag("\t[[[ $cat availability ]]]");
-        URL:
-        for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
-            CORE::say "Loading [$url] ..."  if $debug;
-            $mech->get("$url");
-            ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
-            sleep 1;
-        }
+        my $CAT = sprintf('%03d', $count).$cat; # NOTE to be able to get always the same sorted key order at runtests!
+        $tests{$CAT} = sub {
+            plan tests => scalar @{ $URL->{$cat} };
+            diag("\t[[[ $cat availability ]]]");
+            URL:
+            for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
+                $mech->get("$url");
+                ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
+                sleep 1;
+            }
+        };
+        $count++;
         last;
     }
 }
@@ -108,11 +114,12 @@ if ( $check_url ){
 
 my $tester = TAP::Harness->new({
         timer       => 1,
+        exec        => \&runner,
         verbosity   => 1,
         color       => 1,
 });
 
-$tester->runtests( ); #TODO tests do not currently run in TAP
+$tester->runtests( sort keys %tests );
 exit 0;
 
 
@@ -153,5 +160,27 @@ sub parse_sitemap {
     }
 
     return;
+}
+
+# From https://stackoverflow.com/questions/16584001/using-functions-in-tap-harness-instead-of-test-files
+sub runner{
+    my($harness,$test) = @_;
+
+    my $builder = Test::More->builder;
+
+    # reset the Test::Builder object for every "file"
+    $builder->reset;
+    $builder->{Indent} = ''; # may not be needed
+
+    # collect the output into $out
+    $builder->output(\my($out));     # STDOUT
+    $builder->failure_output(\$out); # STDERR
+    $builder->todo_output(\$out);    # STDOUT
+
+    # run the test
+    $tests{$test}->();
+
+    # the output ( needs at least one newline )
+    return $out;
 }
 
