@@ -23,7 +23,7 @@ const collaborations = [
       {
         type: 'link_image',
         src: imagePath('/biosoda-logo.png'),
-        path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
+        path: 'https://www.zhaw.ch/en/research/research-database/project-detailview/projektid/1493/',
         alt: 'Bio-SODA',
       },
       {
@@ -31,7 +31,7 @@ const collaborations = [
         content: [
           {
             type: 'link_external',
-            path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
+            path: 'https://www.zhaw.ch/en/research/research-database/project-detailview/projektid/1493/',
             text: 'BioSODA project',
           },
           {
