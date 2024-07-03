@@ -115,7 +115,20 @@ if ( $check_url ){
             URL:
             for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
                 $mech->get("$url");
+                #FIXME does chrome wait till the page is fully loaded (with ajax calls and everything)?
                 ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
+                # Test page links
+                if ( $check_links && $mech->success() && $mech->content() !~ /404 not found/ ){
+                    my %page_links;
+                    map { $page_links{ $_->url_abs() }++ } $mech->links();
+                    #NOTE remove the URL to itself
+                    delete( $page_links{ $specific_url} );
+                    delete( $page_links{ "$specific_url#"} );
+                    if ( $debug ){
+                        warn "$_\t$page_links{ $_ }\n"  for sort keys %page_links;
+                    }
+                    #TODO...
+                }
                 sleep 1;
             }
         };
