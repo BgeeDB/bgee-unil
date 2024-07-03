@@ -23,16 +23,19 @@ $ENV{'BASE_URL'} = 'https://www.bgee.org';
 my ($help, $debug, $shuffle)  = (0, 0, 0);
 my ($sitemap_path)            = ('');
 my ($check_url, $check_links) = (0, 0);
+my ($specific_url)            = ('');
 my %opts   = ('help|?'        => \$help,
               'debug|verbose' => \$debug,
               'sitemap=s'     => \$sitemap_path,
               'shuffle'       => \$shuffle,
               'check_url'     => \$check_url,
               'check_links'   => \$check_links,
+              'url=s'         => \$specific_url,
              );
 
 my $test_options = Getopt::Long::GetOptions(%opts);
 help()  if ( !$test_options || $help );
+help()  if ( !$specific_url && !$check_url && !$check_links );
 
 
 # Read sitemap URLs
@@ -60,6 +63,16 @@ if ( $sitemap_path && -e "$sitemap_path/sitemap.xml" ){
             warn "\n\tCannot read [$sitemap_path/$local_path]\n\n";
         }
     }
+}
+#A specific URL
+elsif ( $specific_url ne '' ){
+    if ( $specific_url !~ /^$ENV{'BASE_URL'}/ ){
+        die "\n\tInvalid URL [$specific_url] not in the $ENV{'BASE_URL'} domain\n\n";
+    }
+
+    $url_count++;
+    push @{ $URL->{'specific'} }, $specific_url;
+    $check_url = 1;
 }
 #Read remote sitemap files
 else {
@@ -107,7 +120,6 @@ if ( $check_url ){
             }
         };
         $count++;
-        last;
     }
 }
 
@@ -127,6 +139,7 @@ sub help {
     print "\n$0 [options]
 \t--check_url    Check Bgee URLs
 \t--check_links  Check links in Bgee URLs
+\t--url          Check a specific Bgee URL
 \t--shuffle      Shuffle URLs to check
 \t--sitemap      Directory of a local sitemap.xml file
 \t--debug        Verbose/Debug mode
