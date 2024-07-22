@@ -331,6 +331,18 @@ const staticBuilder = (json, prefixKey = '') =>
             {richTextBuilder(props.content, `${prefixKey}-${key}`)}
           </p>
         );
+      case 'subsection':
+        return (
+          <div
+            id={props.id}
+            key={`${prefixKey}-${key}`}
+            className={classnames(classNames)}
+          >
+            <Bulma.Title size={5} className="h3-margin" renderAs="h3">
+              {props.title}
+            </Bulma.Title>
+          </div>
+        );
       case 'section':
         return (
           <div

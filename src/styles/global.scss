@@ -32,7 +32,7 @@ $tablet: 850px;
 $desktop: 1091px;
 $widescreen: 1152px;
 $xlscreen: 1620px;
-$smallestscreen: 375px; 
+$smallestscreen: 375px;
 
 $footer-background-color: $dark-bg-color;
 $footer-color: $light-color;
@@ -340,6 +340,10 @@ body.homepage {
   );
   border-image: linear-gradient(to right, $title-color 70%, rgba(146, 2, 9, 0));
   border-image-slice: 1;
+}
+.title.h3-margin {
+  margin: 1rem 0 !important;
+  padding-left: 15px;
 }
 
 a.internal-link,

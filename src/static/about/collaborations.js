@@ -13,13 +13,8 @@ const collaborations = [
       'This page provides current and past collaborations of the Bgee project (in alphabetical order).',
   },
   {
-    type: 'rich_text',
-    content: [
-      {
-        type: 'italic',
-        content: 'Current Bgee collaborations',
-      },
-    ],
+    type: 'subsection',
+    title: 'Current Bgee collaborations',
   },
   {
     type: 'section',
@@ -254,13 +249,8 @@ const collaborations = [
     type: 'break_line',
   },
   {
-    type: 'rich_text',
-    content: [
-      {
-        type: 'italic',
-        content: 'Past Bgee collaborations',
-      },
-    ],
+    type: 'subsection',
+    title: 'Past Bgee collaborations',
   },
   {
     type: 'section',
