@@ -11,11 +11,9 @@ use File::Slurp;
 #use FindBin qw($RealBin);
 use Getopt::Long;
 use List::Util qw(shuffle);
-use Log::Log4perl qw(:easy);
 use TAP::Harness;
 use Test::More 'no_plan';
-#use WWW::Mechanize;
-use WWW::Mechanize::Chrome;
+use Firefox::Marionette();
 
 $ENV{'BASE_URL'} = 'https://www.bgee.org';
 
@@ -39,12 +37,10 @@ help()  if ( !$specific_url && !$check_url && !$check_links );
 
 
 # Read sitemap URLs
-Log::Log4perl->easy_init($ERROR);  # Set priority of root logger to ERROR
-my $mech = WWW::Mechanize::Chrome->new(
-    headless       => 'new',
-    launch_exe     => '/usr/bin/google-chrome',
-    launch_arg     => [ '--no-sandbox', '--disable-gpu', ],
-    cleanup_signal => 'SIGTERM',
+my $firefox = Firefox::Marionette->new(
+    binary => '/home/smoretti/bin/firefox',
+#    page_load => '', # a shortcut to allow directly providing the page_load timeout, instead of needing to use timeouts from the capabilities parameter. Overrides all longer ways. the document to load or the session's page_load duration to elapse before returning, which, by default is 5 minutes.
+#    survive => '', # if this is set to a true value, firefox will not automatically exit when the object goes out of scope. See the reconnect parameter for an experimental technique for reconnecting.
 );
 my $URL;
 my $url_count = 0;
@@ -77,14 +73,14 @@ elsif ( $specific_url ne '' ){
 #Read remote sitemap files
 else {
     my $sitemap_url = $ENV{'BASE_URL'}.'/sitemap.xml';
-    $mech->get("$sitemap_url");
-    if ( $mech->success() && $mech->content() =~ m|<sitemap><loc>$ENV{'BASE_URL'}/sitemap_main\.xml</loc></sitemap>| ){
-        my $sitemaps = parse_main_sitemap( $mech->content() );
+    $firefox->go("$sitemap_url");
+    if ( $firefox->loaded() && $firefox->html() =~ m|<sitemap><loc>$ENV{'BASE_URL'}/sitemap_main\.xml</loc></sitemap>| ){
+        my $sitemaps = parse_main_sitemap( $firefox->html() );
         SITEMAP:
         for my $sitemap ( @$sitemaps ){
-            $mech->get("$sitemap");
-            if ( $mech->success() && $mech->content() =~ m|<url><loc>$ENV{'BASE_URL'}.*?</loc>| ){
-                parse_sitemap( $mech->content() );
+            $firefox->go("$sitemap");
+            if ( $firefox->loaded() && $firefox->html() =~ m|<url><loc>$ENV{'BASE_URL'}.*?</loc>| ){
+                parse_sitemap( $firefox->html() );
             }
             else {
                 warn "\n\tCannot reach [$sitemap]\n\n";
@@ -114,20 +110,20 @@ if ( $check_url ){
             diag("\t[[[ $cat availability ]]]");
             URL:
             for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
-                $mech->get("$url");
-                #FIXME does chrome wait till the page is fully loaded (with ajax calls and everything)?
-                ok( $mech->success() && $mech->content() !~ /404 not found/, "[$url] loaded");
+                $firefox->go("$url");
+                #FIXME does firefox wait till the page is fully loaded (with ajax calls and everything)?
+                ok( $firefox->loaded() && $firefox->html() !~ /404 not found/, "[$url] loaded");
                 # Test page links
-                if ( $check_links && $mech->success() && $mech->content() !~ /404 not found/ ){
+                if ( $check_links && $firefox->loaded() && $firefox->html() !~ /404 not found/ ){
                     my %page_links;
-                    map { $page_links{ $_->url_abs() }++ } $mech->links();
+                    map { $page_links{ $_->url_abs() }++ } $firefox->links();
                     #NOTE remove the URL to itself
                     delete( $page_links{ $specific_url} );
                     delete( $page_links{ "$specific_url#"} );
                     if ( $debug ){
                         warn "$_\t$page_links{ $_ }\n"  for sort keys %page_links;
                     }
-                    #TODO...
+                    #TODO ...
                 }
                 sleep 1;
             }
