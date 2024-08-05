@@ -22,13 +22,15 @@ my ($help, $debug, $shuffle)  = (0, 0, 0);
 my ($sitemap_path)            = ('');
 my ($check_url, $check_links) = (0, 0);
 my ($specific_url)            = ('');
-my %opts   = ('help|?'        => \$help,
-              'debug|verbose' => \$debug,
-              'sitemap=s'     => \$sitemap_path,
-              'shuffle'       => \$shuffle,
-              'check_url'     => \$check_url,
-              'check_links'   => \$check_links,
-              'url=s'         => \$specific_url,
+my ($check_content)           = ('');
+my %opts   = ('help|?'          => \$help,
+              'debug|verbose'   => \$debug,
+              'sitemap=s'       => \$sitemap_path,
+              'shuffle'         => \$shuffle,
+              'check_url'       => \$check_url,
+              'check_links'     => \$check_links,
+              'url=s'           => \$specific_url,
+              'check_content=s' => \$check_content,
              );
 
 my $test_options = Getopt::Long::GetOptions(%opts);
@@ -112,9 +114,16 @@ if ( $check_url ){
             for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
                 $firefox->go("$url");
                 #FIXME does firefox wait till the page is fully loaded (with ajax calls and everything)?
-                ok( $firefox->loaded() && $firefox->html() !~ /404 not found/, "[$url] loaded");
+                my $status = 0;
+                if ( $check_content =~ /\w/ ){
+                    $status = $firefox->loaded() && $firefox->html() !~ /404 not found/ && $firefox->html() =~ m/$check_content/;
+                }
+                else {
+                    $status = $firefox->loaded() && $firefox->html() !~ /404 not found/;
+                }
+                ok( $status, "[$url] loaded");
                 # Test page links
-                if ( $check_links && $firefox->loaded() && $firefox->html() !~ /404 not found/ ){
+                if ( $check_links && $status ){
                     my %page_links;
                     map { $page_links{ $_->url_abs() }++ } $firefox->links();
                     #NOTE remove the URL to itself
@@ -146,13 +155,14 @@ exit 0;
 
 sub help {
     print "\n$0 [options]
-\t--check_url    Check Bgee URLs
-\t--check_links  Check links in Bgee URLs
-\t--url          Check a specific Bgee URL
-\t--shuffle      Shuffle URLs to check
-\t--sitemap      Directory of a local sitemap.xml file
-\t--debug        Verbose/Debug mode
-\t--help         This message\n\n";
+\t--check_url      Check Bgee URLs
+\t--check_links    Check links in Bgee URLs [default: ".($check_links==0 ? 'False' : 'True')."]
+\t--url            Check a specific Bgee URL [default: None]
+\t--shuffle        Shuffle URLs to check [default: ".($shuffle==0 ? 'False' : 'True')."]
+\t--sitemap        Directory of a local sitemap.xml file [default: Use the remote one]
+\t--check_content  Pattern to search in page [default: None]
+\t--debug          Verbose/Debug mode
+\t--help           This message\n\n";
     exit 1;
 }
 
