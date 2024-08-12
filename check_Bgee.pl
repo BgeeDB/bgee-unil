@@ -23,6 +23,7 @@ my ($sitemap_path)            = ('');
 my ($check_url, $check_links) = (0, 0);
 my ($specific_url)            = ('');
 my ($check_content)           = ('');
+my ($build_cache)             = (0);
 my %opts   = ('help|?'          => \$help,
               'debug|verbose'   => \$debug,
               'sitemap=s'       => \$sitemap_path,
@@ -31,6 +32,7 @@ my %opts   = ('help|?'          => \$help,
               'check_links'     => \$check_links,
               'url=s'           => \$specific_url,
               'check_content=s' => \$check_content,
+              'build_cache'     => \$build_cache,
              );
 
 my $test_options = Getopt::Long::GetOptions(%opts);
@@ -120,8 +122,8 @@ if ( $check_url ){
                 #NOTE Test with data https://www.bgee.org/gene/ENSG00000130208, or without https://www.bgee.org/gene/ENSG00000277044
                 #NOTE can be printed: print $firefox->await(...)->text();
                 $firefox->await(
-                    # gene expression table xpath | no gene expression xpath | experiment table xpath
-                    sub { $firefox->find('/html/body/div[3]/div/section/div/div[2]/div[3]/div[5]/table/thead/tr/th[1]/div|/html/body/div[3]/div/section/div/div[2]/div[3]/span|/html/body/div[3]/div/section/div/div[5]/table/thead/tr/th[1]/div'); }
+                    # gene expression table xpath | no gene expression xpath (so on xrefs because longer to run and be retrieved) | experiment table xpath
+                    sub { $firefox->find('/html/body/div[3]/div/section/div/div[2]/div[3]/div[5]/table/thead/tr/th[1]/div|/html/body/div[3]/div/section/div/div[2]/div[5]/div/div/div|/html/body/div[3]/div/section/div/div[5]/table/thead/tr/th[1]/div'); }
                 );
                 my $status = 0;
                 if ( $check_content =~ /\w/ ){
@@ -131,10 +133,16 @@ if ( $check_url ){
                     $status = $firefox->loaded() && $firefox->html() !~ /404 not found/;
                 }
                 ok( $status, "[$url] loaded");
-#                if ( $debug && !$status ){
-#                    warn '['.$firefox->html()."]\n";
-#                    write_file('test.html', $firefox->html());
-#                }
+                if ( $status && $build_cache ){
+                    #NOTE When writing the html, relative href/src paths have to be prefixed with $ENV{'BASE_URL'} but NOT the javascript!!!
+                    my $html = $firefox->html();
+                    $html =~ s{(<img[^>]*) src="/}{$1 src="$ENV{'BASE_URL'}/}g;
+                    $html =~ s{ href="/}{ href="$ENV{'BASE_URL'}/}g;
+                    my $filename = 'index.html';
+                    ($filename) = $url =~ m|$ENV{'BASE_URL'}/(.*)|;
+                    $filename =~ s{/}{--}g; #FIXME URLs with parameters, i.e. ?query=..., are not yet supported
+                    write_file("$filename.html", {binmode => ':utf8'}, $html);
+                }
 
                 # Test page links
                 if ( $check_links && $status ){
@@ -175,6 +183,7 @@ sub help {
 \t--shuffle        Shuffle URLs to check [default: ".($shuffle==0 ? 'False' : 'True')."]
 \t--sitemap        Directory of a local sitemap.xml file [default: Use the remote one]
 \t--check_content  Pattern to search in page [default: None]
+\t--build_cache    Write a result html file, per page, for a cache [default: ".($build_cache==0 ? 'False' : 'True')."]
 \t--debug          Verbose/Debug mode
 \t--help           This message\n\n";
     exit 1;
