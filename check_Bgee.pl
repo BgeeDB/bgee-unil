@@ -156,7 +156,7 @@ if ( $check_url ){
                     }
                     #TODO
                 }
-                sleep 1;
+                sleep 1  if ( !$specific_url );
             }
         };
         $count++;
