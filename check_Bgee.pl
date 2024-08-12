@@ -40,7 +40,10 @@ help()  if ( !$specific_url && !$check_url && !$check_links );
 
 # Read sitemap URLs
 my $firefox = Firefox::Marionette->new(
-    binary => '/home/smoretti/bin/firefox',
+    binary         => '/home/smoretti/bin/firefox',
+    set_javascript => 1,
+    stealth        => 1,
+    agent          => 'Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0',
 #    page_load => '', # a shortcut to allow directly providing the page_load timeout, instead of needing to use timeouts from the capabilities parameter. Overrides all longer ways. the document to load or the session's page_load duration to elapse before returning, which, by default is 5 minutes.
 #    survive => '', # if this is set to a true value, firefox will not automatically exit when the object goes out of scope. See the reconnect parameter for an experimental technique for reconnecting.
 );
@@ -113,7 +116,13 @@ if ( $check_url ){
             URL:
             for my $url ( $shuffle ? shuffle @{ $URL->{$cat} } : @{ $URL->{$cat} } ){
                 $firefox->go("$url");
-                #FIXME does firefox wait till the page is fully loaded (with ajax calls and everything)?
+                #NOTE Firefox does not wait till the page is fully loaded (with ajax calls and everything). You have to search the DOM, and wait, with the async searched pattern
+                #NOTE Test with data https://www.bgee.org/gene/ENSG00000130208, or without https://www.bgee.org/gene/ENSG00000277044
+                #NOTE can be printed: print $firefox->await(...)->text();
+                $firefox->await(
+                    # gene expression table xpath | no gene expression xpath | experiment table xpath
+                    sub { $firefox->find('/html/body/div[3]/div/section/div/div[2]/div[3]/div[5]/table/thead/tr/th[1]/div|/html/body/div[3]/div/section/div/div[2]/div[3]/span|/html/body/div[3]/div/section/div/div[5]/table/thead/tr/th[1]/div'); }
+                );
                 my $status = 0;
                 if ( $check_content =~ /\w/ ){
                     $status = $firefox->loaded() && $firefox->html() !~ /404 not found/ && $firefox->html() =~ m/$check_content/;
@@ -122,6 +131,11 @@ if ( $check_url ){
                     $status = $firefox->loaded() && $firefox->html() !~ /404 not found/;
                 }
                 ok( $status, "[$url] loaded");
+#                if ( $debug && !$status ){
+#                    warn '['.$firefox->html()."]\n";
+#                    write_file('test.html', $firefox->html());
+#                }
+
                 # Test page links
                 if ( $check_links && $status ){
                     my %page_links;
@@ -132,7 +146,7 @@ if ( $check_url ){
                     if ( $debug ){
                         warn "$_\t$page_links{ $_ }\n"  for sort keys %page_links;
                     }
-                    #TODO ...
+                    #TODO
                 }
                 sleep 1;
             }
