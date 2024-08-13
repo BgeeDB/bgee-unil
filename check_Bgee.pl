@@ -121,10 +121,13 @@ if ( $check_url ){
                 #NOTE Firefox does not wait till the page is fully loaded (with ajax calls and everything). You have to search the DOM, and wait, with the async searched pattern
                 #NOTE Test with data https://www.bgee.org/gene/ENSG00000130208, or without https://www.bgee.org/gene/ENSG00000277044
                 #NOTE can be printed: print $firefox->await(...)->text();
-                $firefox->await(
-                    # gene expression table xpath | no gene expression xpath (so on xrefs because longer to run and be retrieved) | experiment table xpath
-                    sub { $firefox->find('/html/body/div[3]/div/section/div/div[2]/div[3]/div[5]/table/thead/tr/th[1]/div|/html/body/div[3]/div/section/div/div[2]/div[5]/div/div/div|/html/body/div[3]/div/section/div/div[5]/table/thead/tr/th[1]/div'); }
-                );
+                #NOTE pages without async calls should not execute the await !!!
+                if ( $url =~ /^$ENV{'BASE_URL'}\/(gene|experiment)\// ){
+                    $firefox->await(
+                        # gene expression table xpath | no gene expression xpath (so on xrefs because longer to run and be retrieved) | experiment table xpath
+                        sub { $firefox->find('/html/body/div[3]/div/section/div/div[2]/div[3]/div[5]/table/thead/tr/th[1]/div|/html/body/div[3]/div/section/div/div[2]/div[5]/div/div/div|/html/body/div[3]/div/section/div/div[5]/table/thead/tr/th[1]/div'); }
+                    );
+                }
                 my $status = 0;
                 if ( $check_content =~ /\w/ ){
                     $status = $firefox->loaded() && $firefox->html() !~ /404 not found/ && $firefox->html() =~ m/$check_content/;
@@ -138,8 +141,8 @@ if ( $check_url ){
                     my $html = $firefox->html();
                     $html =~ s{(<img[^>]*) src="/}{$1 src="$ENV{'BASE_URL'}/}g;
                     $html =~ s{ href="/}{ href="$ENV{'BASE_URL'}/}g;
-                    my $filename = 'index.html';
-                    ($filename) = $url =~ m|$ENV{'BASE_URL'}/(.*)|;
+                    my ($filename) = $url =~ m|$ENV{'BASE_URL'}/(.*)|;
+                    $filename = $filename || 'index';
                     $filename =~ s{/}{--}g; #FIXME URLs with parameters, i.e. ?query=..., are not yet supported
                     write_file("$filename.html", {binmode => ':utf8'}, $html);
                 }
