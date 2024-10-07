@@ -106,7 +106,7 @@ const collaborations = [
           },
           {
             type: 'link_external',
-            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/develop/src/ssaldv',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src/ssaldv',
             text: 'Atlantic salmon developmental stages ontology',
           },
           {
