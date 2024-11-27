@@ -12,6 +12,14 @@ import assets from "../../../assets";
 
 const NAVBAR_RIGHT = [
   {
+    href: 'https://bsky.app/profile/bgee.org',
+    src: assets.blueskyLogo,
+    alt: 'Bluesky Bgee',
+    height: '20',
+    width: '20',
+    className: 'no-responsive',
+  },
+  {
     href: 'https://genomic.social/@bgeedb',
     src: assets.mastodonLogo,
     alt: 'Mastodon Bgee',
@@ -27,22 +35,38 @@ const NAVBAR_RIGHT = [
     width: '24',
     className: 'no-responsive',
   },
-  // {
-  //   href: 'https://www.facebook.com/bgee',
-  //   src: assets.facebookLogo,
-  //   alt: 'Facebook Bgee',
-  //   height: '20',
-  //   width: '20',
-  //   className: 'no-responsive',
-  // },
-  // {
-  //   href: 'INSTA_bgee',
-  //   src: assets.instagramLogo,
-  //   alt: 'Instagram Bgee',
-  //   height: '20',
-  //   width: '20',
-  //   className: 'no-responsive',
-  // },
+  {
+    href: 'https://www.youtube.com/@bgeedatabase',
+    src: assets.youtubeLogo,
+    alt: 'YouTube Bgee',
+    height: '20',
+    width: '29',
+    className: 'no-responsive',
+  },
+//  {
+//    href: 'https://www.facebook.com/profile.php?id=61558228221779',
+//    src: assets.facebookLogo,
+//    alt: 'Facebook Bgee',
+//    height: '20',
+//    width: '20',
+//    className: 'no-responsive',
+//  },
+//  {
+//    href: 'https://www.instagram.com/bgeedb/',
+//    src: assets.instagramLogo,
+//    alt: 'Instagram Bgee',
+//    height: '20',
+//    width: '20',
+//    className: 'no-responsive',
+//  },
+//  {
+//    href: 'https://x.com/Bgeedb/',
+//    src: assets.twitterLogo,
+//    alt: 'X/Twitter Bgee',
+//    height: '20',
+//    width: '20',
+//    className: 'no-responsive',
+//  },
 ];
 
 const Footer = () => {
@@ -196,10 +220,10 @@ const Footer = () => {
             />
           </a>
         </div>
-        
       </div>
     </Bulma.Footer>
   );
 };
 
 export default Footer;
+
