@@ -23,7 +23,7 @@ const lastNews = news[news.length - 1];
 const HomeNewsList = () => (
   <>
     <Bulma.Card.Header>
-      <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
+      <Bulma.Card.Header.Title className="is-size-3 has-text-primary">
         Bgee News
       </Bulma.Card.Header.Title>
       <Bulma.Card.Header.Icon>

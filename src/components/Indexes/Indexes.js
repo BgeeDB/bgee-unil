@@ -5,7 +5,7 @@ import PATHS from "../../routes/paths";
 
 const Indexes = ({ speciesList }) => (<>
     <Bulma.Card.Header>
-      <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
+      <Bulma.Card.Header.Title className="is-size-3 has-text-primary">
         Bgee gene expression database indexes
       </Bulma.Card.Header.Title>
     </Bulma.Card.Header>
