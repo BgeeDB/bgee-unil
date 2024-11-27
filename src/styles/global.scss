@@ -678,6 +678,7 @@ a.image.cc {
 .archived-link {
   display: flex;
   margin: 10px 0;
+  flex-wrap: wrap;
   a.external-link {
     width: 100px;
     height: 100px;
