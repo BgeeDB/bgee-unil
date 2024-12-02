@@ -202,6 +202,64 @@ const publications = [
               {
                 type: 'text',
                 content:
+                  'Emonet V, Bolleman J, Duvaud D, Mendes de Farias T, Sima AC',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'LLM-based SPARQL Query Generation from Natural Language over Federated Knowledge Graphs',
+                path: 'https://doi.org/10.48550/arXiv.2410.06062',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Bolleman J, Emonet V, Altenhoff A, Bairoch A, Blatter M-C, Bridge A, Duvaud S, Gasteiger E, Kuznetsov D, Moretti S, Michel P-A, Morgat A, Pagni M, Redaschi N, Zahn-Zabal M, Mendes de Farias T, Sima AC',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications',
+                path: 'https://doi.org/10.48550/arXiv.2410.06010',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
                   'Rangel JC, Mendes de Farias T, Sima AC, Kobayashi N.',
               },
               {
