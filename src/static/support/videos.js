@@ -36,6 +36,26 @@ const videos = [
         content: [
           {
             type: 'link_external',
+            path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGLGR9-h8gmD7mCvN2RRHmZV',
+            text: 'All About Bgee',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGLGR9-h8gmD7mCvN2RRHmZV',
+        src: imagePath('/videos/All-about-Bgee.png'),
+        alt: 'All About Bgee',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
             path: 'https://www.youtube.com/watch?v=vjrTq0fGCTk&list=PLbJBK0jNmCGKFCDZUnNoQra3T0E-VDhVu',
             text: 'Bgee Course 2023: Gene Expression Made Useful Easily: Tools and Database of Bgee',
           },
@@ -106,6 +126,26 @@ const videos = [
         path: 'https://www.youtube.com/watch?v=EHNTlOy14t4&list=PLbJBK0jNmCGIS7lYN9qed8r8bceT8fF87&index=3',
         src: imagePath('/videos/Bgee-Comparative-Genomics.png'),
         alt: 'Bgee Comparative Genomics',
+        classNames: 'youtube-preview-image',
+      },
+{
+    type: 'break_line',
+},
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGIKZuCsZ6daNEwbV0nCS6C0',
+            text: 'Accessing Bgee with Semantic Queries',
+          },
+        ],
+      },
+      {
+        type: 'link_image',
+        path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGIKZuCsZ6daNEwbV0nCS6C0',
+        src: imagePath('/videos/Accessing-Bgee-with-Semantic-Queries.png'),
+        alt: 'Accessing Bgee with Semantic Queries',
         classNames: 'youtube-preview-image',
       },
 {
