@@ -32,6 +32,7 @@ export const Tooltip = ({
         left: 0,
         pointerEvents: "none",
       }}
+      // transform={`translate(${interactionData.xPos}, ${interactionData.xPos})`}
     >
       {/* The actual box with dark background */}
       <div
@@ -41,11 +42,13 @@ export const Tooltip = ({
           left: interactionData.xPos,
           top: interactionData.yPos,
         }}
+        
       >
         <TooltipRow label="x" value={interactionData.xLabel} />
         <TooltipRow label="y" value={interactionData.yLabel} />
         <TooltipRow label="value" value={String(interactionData.value)} />
         <TooltipRow label="expressed" value={String(interactionData.isExpressed)} />
+        <TooltipRow label="max. expression" value={String(interactionData.maxExpScore)} />
       </div>
     </div>
   );

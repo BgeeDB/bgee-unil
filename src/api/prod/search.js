@@ -487,6 +487,102 @@ const search = {
       }),
   },
   geneExpressionMatrix: {
+    // Initial search, requesting the top-level terms
+    initialSearch: (form) =>
+      new Promise((resolve, reject) => {
+        // populate request params
+        const params = DEFAULT_PARAMETERS('data', 'expr_calls');
+        params.append('get_results', '1');
+        params.append('display_rp', '1');
+        params.append('offset', '0');
+        params.append('limit', '10000');
+        if (form.selectedTissue?.length > 0) {
+          params.append('anat_entity_id', "UBERON:0001062");
+          params.append('anat_entity_id', form.selectedTissue);
+        } else {
+          params.append('anat_entity_id', 'SUMMARY');
+          params.append('cell_type_id', 'SUMMARY');
+        }
+        params.append('cond_param2', 'anat_entity');
+        if (form.selectedSpecies) {
+          params.append('species_id', form.selectedSpecies);
+        }
+        form.selectedGene.forEach((g) => 
+          params.append('gene_id', g)
+        );
+        // [...]
+        // const paramsURLCalled = params.toString();
+        const paramsURLCalled = params.toString();
+
+        const typeToken = 'search'; // alternatives: 'count'
+        axiosInstance
+          .get(`/?${paramsURLCalled}`, {
+            cancelToken: new axios.CancelToken((c) => {
+              SEARCH_CANCEL_API.rawData[typeToken] = c;
+            }),
+          })
+          .then(({ data }) => {
+            SEARCH_CANCEL_API.rawData[typeToken] = null;
+            return resolve({ resp: data, paramsURLCalled });
+          })
+          .catch((error) => {
+            errorHandler(error);
+            reject(error?.response || error?.message);
+          });
+
+      }),
+    
+      initialSearchComplementary: (form) =>
+        new Promise((resolve, reject) => {
+          // populate request params
+          const params = DEFAULT_PARAMETERS('data', 'expr_calls');
+          params.append('get_results', '1');
+          params.append('display_rp', '1');
+          params.append('offset', '0');
+          params.append('limit', '10000');
+          // if (form.selectedTissue?.length > 0) {
+          //  params.append('anat_entity_id', form.selectedTissue);
+          // } else {
+          params.append('anat_entity_id', 'SUMMARY');
+          // }
+          // NOTE: must be set for this call to work
+          params.append('anat_entity_descendant', '1');
+          params.append('cell_type_id', 'SUMMARY');
+          params.append('cond_param2', 'anat_entity');
+          
+          // specific to this call
+          params.append('discard_anat_entity_and_children_id', 'SUMMARY');
+          params.append('observed_data', '1');
+          params.append('exclude_non_informative', '1');
+
+          if (form.selectedSpecies) {
+            params.append('species_id', form.selectedSpecies);
+          }
+          form.selectedGene.forEach((g) => 
+            params.append('gene_id', g)
+          );
+          // [...]
+          // const paramsURLCalled = params.toString();
+          const paramsURLCalled = params.toString();
+  
+          const typeToken = 'search'; // alternatives: 'count'
+          axiosInstance
+            .get(`/?${paramsURLCalled}`, {
+              cancelToken: new axios.CancelToken((c) => {
+                SEARCH_CANCEL_API.rawData[typeToken] = c;
+              }),
+            })
+            .then(({ data }) => {
+              SEARCH_CANCEL_API.rawData[typeToken] = null;
+              return resolve({ resp: data, paramsURLCalled });
+            })
+            .catch((error) => {
+              errorHandler(error);
+              reject(error?.response || error?.message);
+            });
+  
+        }),
+
     // TODO: remove "isOnlyCounts" param + related code
     search: (form, isOnlyCounts, bypassInitSearchParam = false) =>
       new Promise((resolve, reject) => {
@@ -495,6 +591,7 @@ const search = {
         // Here we force PageType in the URL to find it easily
         // (The "data" key is already used for the Hash so we can't count on it)
         params.append('pageType', form.pageType);
+        params.append('limit', '10000');
 
         // We get the results count for "localCount"
         params.append('get_result_count', '1');
@@ -513,7 +610,8 @@ const search = {
 
           // const offset = form?.limit * (form?.pageNumber - 1);
           // params.append('offset', offset);
-          params.append('limit', form?.limit);
+          // TODO: make sure limit is always set properly
+          // params.append('limit', form?.limit);
           // Warning : useless for API call but usefull for prefilling pagination
           // params.append('pageNumber', form?.pageNumber);
         }

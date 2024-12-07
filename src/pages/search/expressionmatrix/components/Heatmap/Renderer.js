@@ -1,10 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, forwardRef } from "react";
 import * as d3 from "d3";
+import { Tree } from "./TreeSvg"
+import { ColorLegendSvg } from "./ColorLegendSvg";
+// import { Tooltip } from "../../../Tooltip";
 // import styles from "./renderer.module.css";
+import fonts from "./fonts";
 
 const MARGIN = { top: 10, right: 10, bottom: 50, left: 200 };
+const COLOR_LEGEND_MARGIN = { top: 0, right: 0, bottom: 50, left: 0 };
 
-export const Renderer = ({
+export const Renderer = forwardRef(({
   width,
   height,
   data,
@@ -12,21 +17,36 @@ export const Renderer = ({
   yTerms,
   drilldown,
   termProps,
+  hoveredCell,
   setHoveredCell,
+  clickedCell,
+  setClickedCell,
   setDrilldown,
+  setTermProps,
+  onToggleExpandCollapse,
   colorScale,
+  backgroundColor,
   marginLeft,
   yLabelJustify,
-  showMissingData
-}) => {
+  showLegend,
+  showMissingData,
+  showDescMax,
+  colorLegendWidth,
+  colorLegendHeight,
+}, ref) => {
   // The bounds (=area inside the axis) is calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - marginLeft;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
+  const colorLegendBoundsWidth =
+    colorLegendWidth - COLOR_LEGEND_MARGIN.right - COLOR_LEGEND_MARGIN.left;
+  const colorLegendBoundsHeight =
+    colorLegendHeight - COLOR_LEGEND_MARGIN.top - COLOR_LEGEND_MARGIN.bottom;
 
   // show only selected and top-level data points
-  const dataShow = data.filter((d) => (
-    d.ylvl === 0 || (drilldown && drilldown.expanded.has(d.y))
-  ));
+  // const dataShow = data.filter((d) => (
+  //   d.ylvl === 0 || (drilldown && drilldown.expanded.has(d.y))
+  // ));
+  const dataShow = data;
 
   // TODO: debug - why is "isPopulated" property not passed on correctly from Heatmap??
   // DEBUG: remove console log in prod
@@ -40,17 +60,26 @@ export const Renderer = ({
     function traverse(children, depth, visible, embedLvls) {
       if (!children || !Array.isArray(children)) return;
 
+      // collect low-level children
+      const childrenLowLvl = children.filter((child) => !child.isTopLevelTerm)
+        .sort((a, b) => a.label.localeCompare(b.label));
+      // collect high-level children
+      const childrenHighLvl = children.filter((child) => child.isTopLevelTerm)
+        .sort((a, b) => a.label.localeCompare(b.label));
+
       // Sort the children based on the label
       children.sort((a, b) => a.label.localeCompare(b.label));
   
       // Push the labels at the current depth
-      children.forEach((child, idx, arr) => {
-        if (visible && (termProps[child.id].isPopulated || showMissingData)) {
-          const newLabel = { 
+      [...childrenLowLvl, ...childrenHighLvl].forEach((child, idx, arr) => {
+      // children.forEach((child, idx, arr) => {
+        if (visible && (child.isPopulated || showMissingData)) {
+          const newLabel = {
             id: child.id, 
             label: child.label, 
-            depth, isPopulated: 
-            child.isPopulated, 
+            depth,
+            isTopLevelTerm: child.isTopLevelTerm,
+            isPopulated: child.isPopulated, 
             isExpanded: child.isExpanded, 
             isLastChild: (idx === arr.length-1),
             embeddedInLvls: (idx === arr.length-1) ? [...(embedLvls.filter(x => x!==depth))] : [...embedLvls],
@@ -69,56 +98,22 @@ export const Renderer = ({
   
     return orderedLabels;
   }
+
   const drilldownCopy = JSON.parse(JSON.stringify(drilldown));
   const yTermsOrdered = orderLabelsHierarchically(drilldownCopy);
+  console.log(`[Renderer] yTerms:\n${JSON.stringify(yTerms)}`);
+  console.log(`[Renderer] yTermsOrdered:\n${JSON.stringify(yTermsOrdered)}`);
   // TODO: filter out missing data?
   const yTermsOrderedCopy = JSON.parse(JSON.stringify(yTermsOrdered));
   const yLblOrdered = yTermsOrderedCopy;
 
-  // updates component state!
-  const updateDrilldown = (termId) => {
-  // DEBUG: remove console log in prod
-    console.log(`[Heatmap Renderer] UpdateDrilldown:\n${termId}`);
-
-    function updateExpandedStateHierarchically(terms) {
-      // Helper function to recursively traverse the array
-      function traverse(node) {
-        if (!node || !Array.isArray(node)) return []; // break condition
-    
-        // Add property to each element in the current level
-        return node.map(item => {
-          const newItem = JSON.parse(JSON.stringify(item)); // { ...item };
-          if (item.id === termId) {
-            // get data for descendants
-            if (!newItem.isExpanded && !item.hasBeenQueried) {
-              console.log(`[Heatmap Renderer] UpdateDrilldown - get child data for:\n${termId}`);
-              getChildData(termId);
-              newItem.hasBeenQueried = true;
-            }
-            newItem.isExpanded = !item.isExpanded; // Flip expanded state
-            // newItem.isPopulated = item.isPopulated; // Keep populated state
-            newItem.isPopulated = 5; // TEST
-          }
-          newItem.children = traverse(newItem.children); // Recursively traverse children
-          if (item.termId === termId) {
-            // DEBUG: remove console log in prod
-            console.log(JSON.stringify(newItem));
-          }
-          return newItem;
-        });
-      }
-    
-      // Start traversal from the root
-      return traverse(terms);
-    }
-
-    const newDrilldown = updateExpandedStateHierarchically(drilldown);
-    setDrilldown(newDrilldown);
-  }
+  
 
   // const allYGroups = useMemo(() => [...new Set(dataShow.map((d) => d.y))], [dataShow]);
   const allXGroups = useMemo(() => [...new Set(dataShow.map((d) => d.x))], [dataShow]);
-  const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.label))], [yLblOrdered]);
+  // const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.label))], [yLblOrdered]);
+  const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.id))], [yLblOrdered]);
+
 
   const [min = 0, max = 0] = d3.extent(data.map((d) => d.value)); // extent can return [undefined, undefined], default to [0,0] to fix types
 
@@ -149,44 +144,240 @@ export const Renderer = ({
   const allShapes = dataShow.map((d, i) => {
     const x = xScale(d.x);
     const y = yScale(d.y);
+    const cellWidth = xScale.bandwidth()-4;
+    const cellHeight = yScale.bandwidth()-4;
+    
     if (d.value === null || !x || !y) {
       return null;
     }
     const idx = i;
+    const fillColour = d.isExpressed ? colorScale(d.value) : '#cccccc';
+    const strokeColour = termProps[d.termId].isTopLevelTerm ? colorScale(d.maxExp) : fillColour;
+    const cellData = {
+      geneId: d.geneId,
+      geneName: d.geneName,
+      geneUrlBgee: `https://www.bgee.org/gene/${d.geneId}`,
+      speciesId: d.speciesId,
+      anatEntityId: d.anatEntityId,
+      anatEntityName: d.anatEntityName,
+      anatEntityUrlOls: `http://purl.obolibrary.org/obo/${d.anatEntityId.replace(':', '_')}`,
+      cellTypeId: d.cellTypeId,
+      cellTypeName: d.cellTypeName,
+      cellTypeUrlOls: `http://purl.obolibrary.org/obo/${d.cellTypeId.replace(':', '_')}`,
+      xLabel: `${d.geneId} - ${d.geneName}`,
+      yLabel: `${d.termId} - ${d.termName}`,
+      xPos: x + xScale.bandwidth() + marginLeft,
+      yPos: y + xScale.bandwidth() / 2 + MARGIN.bottom,
+      value: Math.round(d.value * 100) / 100,
+      isExpressed: d.isExpressed,
+      maxExpScore: d.maxExp.toFixed(2),
+      hasDataAffy: d.hasDataAffy,
+      hasDataEst: d.hasDataEst,
+      hasDataInSitu: d.hasDataInSitu,
+      hasDataRnaSeq: d.hasDataRnaSeq,
+      hasDataScRnaSeq: d.hasDataScRnaSeq,
+    };
 
-    return (
-      <rect
-        key={idx}
-        r={4}
-        x={xScale(d.x)}
-        y={yScale(d.y)}
-        width={xScale.bandwidth()}
-        height={yScale.bandwidth()}
-        opacity={1}
-        fill={d.isExpressed ? colorScale(d.value) : '#cccccc'}
-        rx={5}
-        stroke="white"
-        onMouseEnter={(e) => {
-          setHoveredCell({
-            xLabel: `group ${d.x}`,
-            yLabel: `group ${d.y}`,
-            xPos: x + xScale.bandwidth() + marginLeft,
-            yPos: y + xScale.bandwidth() / 2 + MARGIN.bottom,
-            value: Math.round(d.value * 100) / 100,
-            isExpressed: d.isExpressed,
-          });
-        }}
-        onMouseLeave={() => setHoveredCell(null)}
-        cursor="pointer"
-        // onClick={() => updateDrilldown(d.y)}
-      />
-    );
+    // for central circle
+    const r = Math.min(cellWidth, cellHeight) / 2 * .9;
+    const cx = x + (cellWidth / 2);
+    const cy = y + (cellHeight / 2);
+
+    // for horizonal split
+    const w1 = cellWidth * (2/3);
+    const w2 = cellWidth - w1;
+    const x1 = x + w1;
+
+    // return (
+    //   <g id={`heatmapCell-${idx}`}>
+    //     <rect
+    //       key={`valueSelf-${idx}`}
+    //       x={x}
+    //       y={y}
+    //       width={w1}
+    //       height={cellHeight}
+    //       opacity={1}
+    //       fill={fillColour}
+    //       strokeWidth={4}
+    //       onMouseEnter={(e) => {
+    //         setHoveredCell(cellData);
+    //       }}
+    //       onMouseLeave={() => setHoveredCell(null)}
+    //       cursor="pointer"
+    //     />
+
+    //     <rect
+    //       key={`valueDesc-${idx}`}
+    //       x={x1}
+    //       y={y}
+    //       width={w2}
+    //       height={cellHeight}
+    //       opacity={1}
+    //       fill={strokeColour}
+    //       strokeWidth={4}
+    //       onMouseEnter={(e) => {
+    //         setHoveredCell(cellData);
+    //       }}
+    //       onMouseLeave={() => setHoveredCell(null)}
+    //       cursor="pointer"
+    //     />
+    //   </g>     
+    // );
+
+    switch(showDescMax) {
+      case 'border':
+        return (
+          <rect
+            key={`heatMapCell-${idx}`}
+            r={3}
+            x={xScale(d.x)}
+            y={yScale(d.y)}
+            width={xScale.bandwidth()-4}
+            height={yScale.bandwidth()-4}
+            opacity={1}
+            fill={fillColour}
+            rx={5}
+            stroke={strokeColour}
+            strokeWidth={4}
+            onMouseEnter={(e) => {
+              setHoveredCell({
+                xLabel: `${d.geneId} - ${d.geneName}`,
+                yLabel: `${d.termId} - ${d.termName}`,
+                xPos: e.clientX - marginLeft, // x + xScale.bandwidth() + marginLeft,
+                yPos: e.clientY - height, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
+                value: Math.round(d.value * 100) / 100,
+                isExpressed: d.isExpressed,
+                maxExpScore: d.maxExp.toFixed(2),
+              });
+            }}
+            onMouseLeave={() => setHoveredCell(null)}
+            onClick={() => setClickedCell(cellData)}
+            cursor="pointer"
+          />
+        );
+
+      // show circle in center of cell
+      case 'center':
+
+      return (
+        <g key={`heatmapCell-${idx}`}>
+          <rect
+            key={`valueSelf-${idx}`}
+            x={xScale(d.x)}
+            y={yScale(d.y)}
+            width={xScale.bandwidth()-4}
+            height={yScale.bandwidth()-4}
+            opacity={1}
+            fill={fillColour}
+            rx={5}
+            strokeWidth={1}
+            onMouseEnter={(e) => {
+              setHoveredCell({
+                xLabel: `${d.geneId} - ${d.geneName}`,
+                yLabel: `${d.termId} - ${d.termName}`,
+                xPos: e.clientX - marginLeft, // x + xScale.bandwidth() + marginLeft,
+                yPos: e.clientY - height, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
+                value: Math.round(d.value * 100) / 100,
+                isExpressed: d.isExpressed,
+                maxExpScore: d.maxExp.toFixed(2),
+              });
+            }}
+            onMouseLeave={() => setHoveredCell(null)}
+            onClick={() => setClickedCell(cellData)}
+            cursor="pointer"
+          />
+
+          <circle 
+            key={`valueDesc-${idx}`}
+            r = {r}
+            cx = {cx}
+            cy = {cy}
+            fill = {strokeColour}
+          />
+        </g>     
+      );
+
+      // split data cell horizontally (max. desc. value on right)
+      case 'split':
+
+        return (
+          <g key={`heatmapCell-${idx}`}>
+            <rect
+              key={`valueSelf-${idx}`}
+              x={x}
+              y={y}
+              width={w1}
+              height={cellHeight}
+              opacity={1}
+              fill={fillColour}
+              strokeWidth={4}
+              onMouseEnter={(e) => {
+                setHoveredCell(cellData);
+              }}
+              onMouseLeave={() => setHoveredCell(null)}
+              onClick={() => setClickedCell(cellData)}
+              cursor="pointer"
+            />
+    
+            <rect
+              key={`valueDesc-${idx}`}
+              x={x1}
+              y={y}
+              width={w2}
+              height={cellHeight}
+              opacity={1}
+              fill={strokeColour}
+              strokeWidth={4}
+              onMouseEnter={(e) => {
+                setHoveredCell(cellData);
+              }}
+              onMouseLeave={() => setHoveredCell(null)}
+              onClick={() => setClickedCell(cellData)}
+              cursor="pointer"
+            />
+          </g>     
+        );
+
+      // do not show descendant value
+      default:
+        return (
+          <rect
+            key={`heatMapCell-${idx}`}
+            r={3}
+            x={xScale(d.x)}
+            y={yScale(d.y)}
+            width={xScale.bandwidth()-2}
+            height={yScale.bandwidth()-2}
+            opacity={1}
+            fill={fillColour}
+            rx={5}
+            stroke='white'
+            strokeWidth={2}
+            onMouseEnter={(e) => {
+              setHoveredCell({
+                xLabel: `${d.geneId} - ${d.geneName}`,
+                yLabel: `${d.termId} - ${d.termName}`,
+                xPos: e.clientX, // x + xScale.bandwidth() + marginLeft,
+                yPos: e.clientY, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
+                value: Math.round(d.value * 100) / 100,
+                isExpressed: d.isExpressed,
+                maxExpScore: d.maxExp.toFixed(2),
+              });
+            }}
+            onMouseLeave={() => setHoveredCell(null)}
+            onClick={() => setClickedCell(cellData)}
+            cursor="pointer"
+          />
+        );
+    };
+
   });
 
   const xLabels = allXGroups.map((name, i) => {
     const x = xScale(name);
     const xCoord = x + xScale.bandwidth() / 2;
-    const yCoord = boundsHeight + 10 + (i % 2) * 20; // stagger x labels
+    const yCoord = boundsHeight + 10;
+    // const yCoord = boundsHeight + 10 + (i % 2) * 20; // stagger labels
 
     if (!x) {
       return null;
@@ -195,7 +386,7 @@ export const Renderer = ({
     const idx = i;
     return (
       <text
-        key={idx}
+        key={`heatMapXLabel-${idx}`}
         x={xCoord}
         y={yCoord}
         textAnchor="middle"
@@ -208,6 +399,7 @@ export const Renderer = ({
     );
   });
 
+  console.log(`[Renderer] Preparing y labels...`);
   // const yLabels = allYGroups.map((name, i) => {
   const yLabels = yLblOrdered.map((term, i) => {
     const y = yScale(term.label);
@@ -227,49 +419,52 @@ export const Renderer = ({
     let lblIndicator = '';
     const lblTerm = term.label;
     if (term.depth > 0) {
-      lblIndicator = '?'; // '(?)';
-      if (term.isExpanded) lblIndicator = '\u{025B3}'; // '^'
-      else if(term.hasBeenQueried) lblIndicator = '\u{025BD}'; // 'v';
-
+      if (term.isTopLevelTerm) {
+        lblIndicator = '?'; // '(?)';
+        if (term.isExpanded) lblIndicator = '\u{025B3}'; // '^'
+        // else if(term.hasBeenQueried) lblIndicator = '\u{025BD}'; // 'v';
+        else lblIndicator = '<'; // 'v';
+      }
+      
       if (yLabelJustify === "left") {
         lblTree = `${'-'.repeat(2*term.depth)}${lblIndicator} ${term.label}`;
       }
       else {
-        let postfix = '';
+        let suffix = '';
         for (let lvl=1; lvl <= term.depth; lvl+=1) {
           if (lvl === term.depth) {
             if (term.isLastChild) {
-              postfix = `\u{02500}\u{02518}${postfix}`; // lower-right corner
+              suffix = `\u{02500}\u{02518}${suffix}`; // lower-right corner
             } else {
               // postfix = `\u{02500}\u{02525}${postfix}`;
-              postfix = `\u{02500}\u{02524}${postfix}`; // t-crossing left
+              suffix = `\u{02500}\u{02524}${suffix}`; // t-crossing left
             }
           } else if (term.embeddedInLvls.includes(lvl)) {
             // postfix = `\u{02500}\u{02502}${postfix}`;
-            postfix = `\u{000A0}\u{02502}${postfix}`; // vertical line
+            suffix = `\u{000A0}\u{02502}${suffix}`; // vertical line
           } else {
-            postfix = `\u{000A0}\u{000A0}${postfix}`; // blank space
+            suffix = `\u{000A0}\u{000A0}${suffix}`; // blank space
           }
         }
         // displayText = `${term.label} ${indicator}${'-'.repeat(2*term.depth)}`;
-        lblTree = `${postfix}`;
+        lblTree = `${suffix}`;
       }
     }
-    console.log(`[Renderer] yLabel: ${JSON.stringify(term)}`);
+    // console.log(`[Renderer] yLabel: ${JSON.stringify(term)}`);
        
       // term.label + '\u{02518}' // '.'.repeat(2*term.depth);
       // term.label + ' '.repeat(2*term.depth);
 
     return (
       <text
-        key={idx}
+        key={`heatMapYLabel-${idx}`}
         x={xPos}
         y={yPos}
         textAnchor={anchor}
         dominantBaseline="middle"
         fontSize={15}
         fontFamily="monospace"
-        onClick={() => updateDrilldown(term.id)}
+        onClick={() => onToggleExpandCollapse(term)}
       >
         <tspan fontFamily="sans-serif">{lblTerm} </tspan>
         <tspan fill="red">{lblIndicator}</tspan>
@@ -278,8 +473,39 @@ export const Renderer = ({
     );
   });
 
+  // create numbers 1..100
+  const stopsIdx = Array(101).fill().map((_, index) => index);
+  const colorLegendStops = stopsIdx.map((idx) => (
+    <stop
+      key={`colorLegendStop-${idx}`}
+      stopColor={colorScale(max * idx / 100)}
+      offset={`${idx}%`}
+    />
+  ));
+  const colorLegendPosX = 0;
+  const colorLegendPosY = height;
+
   return (
-    <svg width={width} height={height} style={{ backgroundColor: 'white' }}>
+    <svg ref={ref} width={width} height={height + colorLegendHeight} style={{ backgroundColor }}>
+      <defs>
+        <style>{`
+          @font-face {
+            font-family: 'Open Sans';
+            src: url('data:application/font-woff;charset=utf-8;base64,${fonts.openSansWoff}') format('woff');
+            font-weight: normal;
+            font-style: normal;
+          }
+          @font-face {
+            font-family: 'Spectral Regular';
+            src: url('data:application/font-woff;charset=utf-8;base64,${fonts.spectralRegularWoff}') format('woff');
+            font-weight: normal;
+            font-style: normal;
+          }
+        `}</style>
+        <linearGradient id="colorLegendGradient">
+          {colorLegendStops}
+        </linearGradient>
+      </defs>
       <g
         width={boundsWidth}
         height={boundsHeight}
@@ -287,10 +513,58 @@ export const Renderer = ({
       >
         {allShapes}
         {xLabels}
+      {false &&
         {yLabels}
+      }
+
+        <g transform={`translate(-${marginLeft-10}, 0)`} >
+          <Tree
+            data={drilldown}
+            yScale={yScale}
+            toggleCollapse={onToggleExpandCollapse}
+            labelFont='Open Sans'
+         />
+        </g>
+
+        <g transform={`translate(-${marginLeft-50}, 0)`} >
+          {
+            showLegend ? 
+            <g>
+              <ColorLegendSvg
+                posX={colorLegendPosX}
+                posY={colorLegendPosY}
+                width={colorLegendWidth}
+                height={colorLegendHeight}
+                colorScale={colorScale}
+                interactionData={hoveredCell}
+              />
+            </g>
+            : null
+          }
+
+          {
+            showLegend ?
+            <g>
+              <text
+                id="txtSecondaryLegend"
+                x={colorLegendPosX + colorLegendWidth + 25}
+                y={colorLegendPosY + colorLegendBoundsHeight}
+                dominantBaseline="middle"
+                fontSize={15}
+                fontFamily="sans"
+              >
+                { showDescMax === 'border' ? 'Border color: max. expression score' : null }
+                { showDescMax === 'center' ? 'Central dot: max. expression score' : null }
+                { showDescMax === 'split'  ? 'Right part of cell: max. expression score' : null }
+
+              </text>
+            </g>
+            : null
+          }
+        </g>
       </g>
     </svg>
   );
-};
+});
 
 export default Renderer;

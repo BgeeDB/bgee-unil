@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; 
 
 import Bulma from '../../../components/Bulma';
 
@@ -9,6 +9,7 @@ import PATHS from '../../../routes/paths';
 import { getChildValueFromAttribute } from '../../../helpers/selects';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
+import UserFeedback from './components/UserFeedback';
 
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
@@ -30,7 +31,14 @@ const GeneExpressionMatrixResults = ({
   pageType,
   searchParams,
   triggerSearch,
-  anatomicalTerms
+  triggerHomologSearch,
+  genes,
+  anatomicalTerms,
+  // setAnatomicalTerms,
+  anatomicalTermsProps,
+  // setAnatomicalTermsProps,
+  maxExpScore,
+  onToggleExpandCollapse,
 }) => {
   const loc = useLocation();
 
@@ -185,12 +193,49 @@ const GeneExpressionMatrixResults = ({
     return `${base}${tsv}`;
   }, [mappedResults]);
 
+  // console.log(`[GeneExpressionMatrixResults] maxExpScore:\n${JSON.stringify(maxExpScore, null, 2)}`);
+  // console.log(`"ENSG00000254647" in maxExpScore ? ${"ENSG00000254647" in maxExpScore}`);
+  // console.log(`"UBERON:0000949" in maxExpScore["ENSG00000254647"] ? ${"UBERON:0000949" in maxExpScore["ENSG00000254647"]}`);
+
+  console.log(`[GeneExpressionMatrixResults] results:\n${JSON.stringify(results, null, 2)}`);
+  // console.log(`[GeneExpressionMatrixResults] anatomicalTerms:\n${JSON.stringify(anatomicalTerms, null, 2)}`);
+  console.log(`[GeneExpressionMatrixResults] anatomicalTerms:\n${JSON.stringify(anatomicalTerms)}`);
   const heatmapData = results.map((result) => {
+    const { geneId, name: geneName } = result.gene;
+    const speciesId = result.gene.species.id;
+    const { id: anatEntityId, name: anatEntityName } = result.condition.anatEntity;
+    const { id: cellTypeId, name: cellTypeName } = result.condition.cellType;
+    const termId = `${anatEntityId}-${cellTypeId}`;
+    const termName = cellTypeId !== 'GO:0005575' ? `${anatEntityName} : ${cellTypeName}` : anatEntityName;
+    const expScore = result.expressionScore.expressionScore;
+    const maxExp = (geneId in maxExpScore && termId in maxExpScore[geneId]) 
+      ? maxExpScore[geneId][termId]
+      : 50 + (10 * Math.random());
+    const isExpressed = result.expressionState === 'expressed';
+  
     const row =  {
-      x: `${result.gene.geneId} - ${result.gene.name}`,
-      y: `${result.condition.anatEntity.name}`,
-      value: result.expressionScore.expressionScore,
-      isExpressed: result.expressionState === 'expressed',
+      x: geneName,
+      // y: termName,
+      y: termId,
+      termId,
+      termName,
+      geneId,
+      geneName,
+      speciesId,
+      anatEntityId,
+      anatEntityName,
+      cellTypeId,
+      cellTypeName,
+      // termIsTopLevel: anatomicalTerms.filter(item => item.id === result.condition.anatEntity.id)?.isTopLevelTerm,
+      value: expScore,
+      // TODO: use actual number from API response
+      maxExp,
+      isExpressed,
+      hasDataAffy: result.dataTypesWithData.AFFYMETRIX,
+      hasDataEst: result.dataTypesWithData.EST,
+      hasDataInSitu: result.dataTypesWithData.IN_SITU,
+      hasDataRnaSeq: result.dataTypesWithData.RNA_SEQ,
+      hasDataScRnaSeq: result.dataTypesWithData.SC_RNA_SEQ,
       ylvl: 0
     };
     return row;
@@ -198,7 +243,7 @@ const GeneExpressionMatrixResults = ({
 
   return (
     <>
-      {results?.length > 0 && (
+      {false && (results?.length > 0) && (
       <div className="my-2 is-flex is-justify-content-flex-end">
           <Bulma.Button
             className="download-btn is-small"
@@ -208,7 +253,7 @@ const GeneExpressionMatrixResults = ({
             target="_blank"
             rel="noreferrer"
           >
-            Export current page in TSV
+            Export data in TSV
             <span className="icon is-small ml-1">
               <ion-icon name="download-outline" />
             </span>
@@ -216,15 +261,28 @@ const GeneExpressionMatrixResults = ({
         </div>
       )}
 
+      {results?.length > 0 ? (
       <Heatmap
         data = {heatmapData}
         getChildData = {triggerSearch}
+        getHomologsData = {triggerHomologSearch}
+        xTerns = {genes}
         yTerms = {anatomicalTerms}
+        // setYTerms = {setAnatomicalTerms}
+        termProps = {anatomicalTermsProps}
+        // setTermProps = {setAnatomicalTermsProps}
+        onToggleExpandCollapse = {onToggleExpandCollapse}
         width = {800}
         height = {500}
         backgroundColor = 'white'
       />
+      ) : (
+        <div className="is-flex is-justify-content-center mt-3">
+          Please select search criteria above to display results.
+        </div>
+      )}
 
+      {results?.length > 0 && <UserFeedback />}
     </>
   );
 };

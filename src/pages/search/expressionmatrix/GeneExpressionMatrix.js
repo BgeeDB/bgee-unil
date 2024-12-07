@@ -40,7 +40,10 @@ const URL_ROOT = `${config.archive ? `/${URL_VERSION}` : ''}`;
 const GeneExpressionMatrix = ({ isExprCalls = false }) => {
   const {
     searchResult,
+    genes,
     anatomicalTerms,
+    anatomicalTermsProps,
+    maxExpScore,
     allCounts,
     localCount,
     dataType,
@@ -69,6 +72,7 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     conditionalParam2,
     callTypes,
     setAnatomicalTerms,
+    setAnatomicalTermsProps,
     setCallTypes,
     setConditionalParam2,
     setDataQuality,
@@ -93,11 +97,16 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     setFilters,
     triggerSearch,
     triggerSearchChildren,
+    triggerHomologSearch,
     triggerCounts,
     setPageType,
     addConditionalParam,
     getSearchParams,
+    onToggleExpandCollapse,
   } = useLogic(isExprCalls);
+
+  // DEBUG: remove console log in prod
+  console.log(`[GeneExpressionMatrix] anatomicalTerms:\n${JSON.stringify(anatomicalTerms)}`);
 
   const loc = useLocation();
   const [pageIsBrowseResult, setPageIsBrowseResult] = useState(false);
@@ -111,10 +120,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
   const defaultdataFilters = searchResult?.filters?.[dataType] || {};
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
-
-  // DEBUG: remove console log in prod
-  console.log(`selectedTissue:\n${JSON.stringify(selectedTissue)}`);
-
 
   const countResultKey = () => {
     if (pageType === EXPERIMENTS)
@@ -360,11 +365,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 setDataTypes={setDataTypesExpCalls}
                               />
                               <hr />
-                              <ConditionParameter
-                                conditionalParam2={conditionalParam2}
-                                setConditionalParam2={setConditionalParam2}
-                              />
-                              <hr />
                               <CallType
                                 callTypes={callTypes}
                                 setCallTypes={setCallTypes}
@@ -432,25 +432,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
               />
             )}
             <div className="resultPart">
-              {isLoading ? (
-                <div className="progressWrapper is-justify-content-flex-end	">
-                  <progress
-                    className="progress is-small is-primary"
-                    style={{
-                      animationDuration: '2s',
-                      width: '10%',
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="resultCounts">
-                  {isExprCalls ? (
-                    <>{`${localCount?.assayCount || 0} expressions calls`}</>
-                  ) : (
-                    resultCountLabel
-                  )}
-                </div>
-              )}
               {!!searchResult && dataType && (
                 <RawDataAnnotationsFilters
                   dataFilters={dataFilters}
@@ -478,7 +459,14 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                   pageType={pageType}
                   searchParams={getSearchParams}
                   triggerSearch={triggerSearchChildren}
-                  anatomicalTerms={anatomicalTerms} 
+                  triggerHomologSearch={triggerHomologSearch}
+                  genes={genes}
+                  anatomicalTerms={anatomicalTerms}
+                  // setAnatomicalTerms={setAnatomicalTerms}
+                  anatomicalTermsProps={anatomicalTermsProps}
+                  // setAnatomicalTermsProps={setAnatomicalTermsProps}
+                  maxExpScore={maxExpScore}
+                  onToggleExpandCollapse={onToggleExpandCollapse}
                 />
               )}
             </div>
@@ -503,4 +491,29 @@ const bak = `
                   isExprCalls={isExprCalls}
                   searchParams={getSearchParams}
                 />
+<hr />
+                              <ConditionParameter
+                                conditionalParam2={conditionalParam2}
+                                setConditionalParam2={setConditionalParam2}
+                              />
+
+{isLoading ? (
+                <div className="progressWrapper is-justify-content-flex-end	">
+                  <progress
+                    className="progress is-small is-primary"
+                    style={{
+                      animationDuration: '2s',
+                      width: '10%',
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="resultCounts">
+                  {isExprCalls ? (
+                    <>{[QUOTE][DOLLAR]{localCount?.assayCount || 0} expressions calls[QUOTE]}</>
+                  ) : (
+                    resultCountLabel
+                  )}
+                </div>
+              )}
 `;

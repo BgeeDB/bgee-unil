@@ -19,3 +19,7 @@
   transform:translateY(-50%);
   border-color: transparent black transparent transparent;
 }
+
+a tspan {
+  fill: #920209;
+}
