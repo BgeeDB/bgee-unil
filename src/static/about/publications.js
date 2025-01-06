@@ -22,7 +22,42 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bastian FB, Roux J, Niknejad A, Comte A, Fonseca Costa SS, Mendes de Farias T, Moretti S, Parmentier G, Rech de Laval V, Rosikiewicz M, Wollbrett J, Echchiki A, Escoriza A, Gharib W, Gonzales-Porta M, Jarosz Y, Laurenczy B, Moret P, Person E, Roelli P, Sanjeev K, Seppey M, Robinson-Rechavi M. ',
+                  'Bastian FB, Brandulas Cammarata A, Carsanaro S, Detering H, Huang W-T, Joye S, Niknejad A, Nyamari M, Mendes de Farias T, Moretti S, Tzivanopoulou M, Wollbrett J, Robinson-Rechavi M.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Bgee in 2024: focus on curated single-cell RNA-seq datasets, and query tools',
+                path: 'https://doi.org/10.1093/nar/gkae1118',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: ' in ',
+              },
+              {
+                type: 'text',
+                content:
+                  ' Nucleic Acids Research, 2025, 53:D878-D885. ',
+              },
+              {
+                type: 'link_external',
+                text: 'RIS',
+                path: `${config.ftpDomain}/../general/citation_bgee_2024.ris`,
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Bastian FB, Roux J, Niknejad A, Comte A, Fonseca Costa SS, Mendes de Farias T, Moretti S, Parmentier G, Rech de Laval V, Rosikiewicz M, Wollbrett J, Echchiki A, Escoriza A, Gharib W, Gonzales-Porta M, Jarosz Y, Laurenczy B, Moret P, Person E, Roelli P, Sanjeev K, Seppey M, Robinson-Rechavi M.',
               },
               {
                 type: 'break_line',
