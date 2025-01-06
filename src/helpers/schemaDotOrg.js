@@ -371,7 +371,7 @@ const speciesToLdJSON = ({
         '@type': 'Dataset',
         dateModified: config.bioSchemaModifiedData,
         citation: 'https://doi.org/10.1093/nar/gkaa793',
-        description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and a strain, with reported presence or absence of expression.`,
+        description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and ${id===9606 ? 'an ethnicity' : 'a strain'}, with reported presence or absence of expression.`,
         includedInDataCatalog: {
           '@id': config.genericDomain,
           '@type': 'DataCatalog',
@@ -475,7 +475,7 @@ const speciesToLdJSON = ({
             isAccessibleForFree: 'true',
             name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression simple with all conditions`,
             description:
-              'Anatomical entities, developmental stages, sexes and strains. File without advanced columns.',
+              `Anatomical entities, developmental stages, sexes and ${id===9606 ? 'ethnicities' : 'strains'}. File without advanced columns.`,
             url: `${
               config.genericDomain +
               PATHS.SEARCH.SPECIES_ITEM.replace(':id', id)
@@ -508,7 +508,7 @@ const speciesToLdJSON = ({
             isAccessibleForFree: 'true',
             name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression advanced with all conditions`,
             description:
-              'Anatomical entities, developmental stages, sexes and strains. File with advanced columns.',
+              `Anatomical entities, developmental stages, sexes and ${id===9606 ? 'ethnicities' : 'strains'}. File with advanced columns.`,
             url: `${
               config.genericDomain +
               PATHS.SEARCH.SPECIES_ITEM.replace(':id', id)

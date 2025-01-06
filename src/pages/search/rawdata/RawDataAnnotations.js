@@ -335,6 +335,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 setSelectedStrain={setSelectedStrain}
                                 AutoCompleteByType={AutoCompleteByType}
                                 addConditionalParam={addConditionalParam}
+                                selectedSpecies={selectedSpecies.value}
                               />
                             </div>
                             <div className="my-2">
@@ -375,6 +376,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                               <ConditionParameter
                                 conditionalParam2={conditionalParam2}
                                 setConditionalParam2={setConditionalParam2}
+                                selectedSpecies={selectedSpecies.value}
                               />
                               <hr />
                               <CallType

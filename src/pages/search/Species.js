@@ -255,7 +255,7 @@ const Species = () => {
           <p>
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
-            a life stage, a sex, and a strain, with reported presence or absence
+            a life stage, a sex, and {`${data.species.id === 9606 ? 'an ethnicity' : 'a strain'}`}, with reported presence or absence
             of expression. More information in our{' '}
             <Link
               to={PATHS.SUPPORT.TUTORIAL_GENE_EXPR}
@@ -298,7 +298,7 @@ const Species = () => {
           </div>
           <div className="mt-2">
             <p className="is-size-5 has-text-primary has-text-weight-semibold">
-              Anatomical entities, developmental stages, sexes and strains
+              Anatomical entities, developmental stages, sexes and {`${data.species.id === 9606 ? 'ethnicities' : 'strains'}`}
             </p>
             <ul className="unordered">
               {files.fullXpr.simple && (

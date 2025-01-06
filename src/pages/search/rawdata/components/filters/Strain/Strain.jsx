@@ -7,6 +7,7 @@ const Strain = ({
   setSelectedStrain,
   AutoCompleteByType,
   addConditionalParam,
+  selectedSpecies,
 }) => {
   const getStrainOptions = AutoCompleteByType('strain', (result) => ({
     label: result?.object,
@@ -20,10 +21,12 @@ const Strain = ({
       addConditionalParam(COND_PARAM2_STRAIN_KEY);
   };
 
+  const label = selectedSpecies === 9606 ? 'Ethnicity' : 'Strain';
+
   return (
     <>
       <SelectMultipleWithAutoComplete
-        label="Strain and ethnicity"
+        label={label}
         placeholder="Examples: 'C57BL/6' (for mouse), 'White' (for human)"
         getOptionsFunction={getStrainOptions}
         selectedOptions={selectedStrain}
