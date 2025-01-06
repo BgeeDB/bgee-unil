@@ -51,8 +51,8 @@ You can search using the gene symbol (for instance, *HBB*) or by the gene identi
 at least one of the selected data types.
 
 * **Condition Parameter**: Select the condition parameters to consider for generating expression calls.
-  * For example, selecting only "Anatomical localization" will integrate all strain, developmental and life stage, and sex information, into one singular call per gene and anatomical localization.
-  * Removing a condition parameter, for example "Strain", will integrate all strain data for a particular anatomical localization, developmental and life stage, and sex, into one singular call per gene.
+  * For example, selecting only "Anatomical localization" will integrate all strain/ethnicity, developmental and life stage, and sex information, into one singular call per gene and anatomical localization.
+  * Removing a condition parameter, for example "Strain/Ethnicity", will integrate all strain/ethnicity data for a particular anatomical localization, developmental and life stage, and sex, into one singular call per gene.
 
 * **Call type**: Limit to presence or absence of expression calls. "Present" means expression level significantly above
 background transcriptional noise, "absent" means that the level of expression is not significantly different from the background noise.
@@ -75,7 +75,7 @@ The following filters can be applied:
 * **Anat. entity and cell type**: Anatomical entity (tissue) or cell type. Selection of multiple terms is supported. You can search using common terms, or the ontology ID.
 * **Developmental and life stage**: You can search using common names, or the ontology ID.
 * **Sex**: select any, female, male, hermaphrodite.
-* **Strain**: select strain(s) of interest, including wild type.
+* **Strain/Ethnicity**: select strain(s)/ethnicity(ies) of interest, including wild type.
 
 
 Click ***apply filters*** to apply the filters you selected. Click the *trash icon* to remove the selected filters.
@@ -122,7 +122,7 @@ Below the export current page in TSV button, you can change the number of lines 
 
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
 
-* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity:** Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 

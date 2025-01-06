@@ -79,7 +79,7 @@ Expression calls can be re-grouped by any of the following condition parameters,
 * anatomical entity and cell type
 * developmental and life stage
 * sex
-* strain
+* strain/ethnicity
 
 ![](../img/doc/gene-search/Fig09_Expression-headers-gene-page.png#tutoimgborder)
 

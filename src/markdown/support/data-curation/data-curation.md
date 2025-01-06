@@ -9,7 +9,7 @@ Bgee is a database for retrieval and comparison of gene expression patterns acro
     *   [Anatomical Entity](#anatomical-entity "Quick jump to this section")
     *   [Developmental Stage](#developmental-stage "Quick jump to this section")
     *   [Cell Type](#cell-type "Quick jump to this section")
-    *   [Strain](#strain "Quick jump to this section")
+    *   [Strain/Ethnicity](#strainethnicity "Quick jump to this section")
     *   [Sex](#sex "Quick jump to this section")
     *   [Technologies and Protocols](#technologies-and-protocols "Quick jump to this section")
  *  [Multi-Species Integration](#multi-species-integration "Quick jump to this section")
@@ -23,12 +23,12 @@ Before annotation, we check that the samples are considered healthy wild-type by
 
 Some common scenarios we exclude: cell lines, cell cultures, intestinal germ-free animals, injured animals, polysomal RNA only hybridized, and animals killed by exsanguination under CO2 anesthesia.
 
-Some common scenarios we include: BMI greater than 18.5 and less than 35, fasted animals (considering reasonable fasting time), dark/light circadian rhythms and temperature variation when reasonable for the animal's physiology, short duration low or high-fat diet, mammary glands from virgin, pregnant, and lactating females, oocytes at different stages of maturation, placenta and extraembryonic components during development, animals selected for their behavior, animals from different strains, human post-mortem tissues, light impulse to stress the animals, killed by cervical dislocation or decapitation, and killed by inhalants (CO2).
+Some common scenarios we include: BMI greater than 18.5 and less than 35, fasted animals (considering reasonable fasting time), dark/light circadian rhythms and temperature variation when reasonable for the animal's physiology, short duration low or high-fat diet, mammary glands from virgin, pregnant, and lactating females, oocytes at different stages of maturation, placenta and extraembryonic components during development, animals selected for their behavior, animals from different strains/ethnicities, human post-mortem tissues, light impulse to stress the animals, killed by cervical dislocation or decapitation, and killed by inhalants (CO2).
 ### What data are captured?
 Various data are captured and manually checked, and several data fields must be captured using controlled vocabularies or ontologies. The following data are always captured:
 
 Sample metadata:
-* anatomical entity and/or cell type, developmental stage, sex, strain, species
+* anatomical entity and/or cell type, developmental stage, sex, strain/ethnicity, species
 
 Experiment metadata:
 * scRNA-seq and bulk RNA-seq: library ID, experiment ID, sequencing technology, sequencing platform, sequenced transcript part (3', 5' or full length)
@@ -103,7 +103,7 @@ The following species-specific developmental stage ontologies are used in Bgee:
 ### Cell Type
 The cell ontology is used to annotate cell type. This is only applicable to single-cell RNA-seq experiments. Bgee does not perform its own clustering and cell type annotation, instead the cell type annotations provided by the authors are mapped back to the most appropriate cell ontology term.
 
-### Strain
+### Strain/Ethnicity
 We use the [UniProt controlled vocabulary](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/strains) to report strains.
 
 We report 'subspecies' (as defined by [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy)) as a strain with the parent species annotated as the 'speciesId'.

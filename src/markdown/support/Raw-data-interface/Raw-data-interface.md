@@ -55,7 +55,7 @@ The following filters can always be applied:
 * **Anatomical entities**: Selection of multiple terms is supported. You can search using common terms, or the UBERON ID.
 * **Developmental and life stage**: You can search using common names, or the UBERON or species specific (e.g. HsapDv for humans).
 * **Sexes**: Select sex of interest. Multiple sexes can be selected.
-* **Strains**: Select strain(s) of interest. Multiple strains can be selected.
+* **Strains/Ethnicities**: Select strain(s)/ethnicity(ies) of interest. Multiple strains/ethnicities can be selected.
 
 The following filters can be applied only on some data pages or data types:
 
@@ -145,7 +145,7 @@ As with the *Raw data annotations* or *Processed expression values* pages, the c
 * **Stage ID:** Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name:** Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity:** Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 * **Technology:** Method used to generate the raw gene expression measurements.
 * **Sequencing platform:** Exact instrument name used for the sequencing.
@@ -181,7 +181,7 @@ As with the *Experiments* or *Processed expression values* page, the columns of 
 * **Stage ID:** Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name:** Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity:** Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 * **Technology:** Method used to generate the raw gene expression measurements.
 * **Sequencing platform:** Exact instrument name used for the sequencing.
@@ -235,5 +235,5 @@ The columns of the results table will depend on the data type selected. We descr
 * **Stage ID**: Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name**: Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex**: Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain**: Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity**: Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species**: Describes the species name in binomial nomenclature (scientific name).
