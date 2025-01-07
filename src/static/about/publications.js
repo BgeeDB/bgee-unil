@@ -303,7 +303,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'SPARQL Generation: an analysis on fine-tuning OpenLLaMA for Question Answering over a Life Science Knowledge Graph',
-                path: 'https://doi.org/10.48550/arXiv.2402.04627',
+                path: 'https://ceur-ws.org/Vol-3890/paper-4.pdf',
               },
               {
                 type: 'break_line',
@@ -314,7 +314,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'arXiv, 2024.',
+                content: 'Semantic Web Applications and Tools for Health Care and Life Sciences, 2024, 3890:36-45.',
               },
             ],
           },
