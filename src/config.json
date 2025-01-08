@@ -1,6 +1,6 @@
 {
   "version": "15.2",
-  "fullversion": "15.2.0",
+  "fullversion": "15.2.1",
   "archive": false,
   "genericDomain": "https://www.bgee.org",
   "prodDomain": "https://www.bgee.org",
@@ -35,7 +35,7 @@
     }
   ],
   "contactEmail": "Bgee@sib.swiss",
-  "bioSchemaModifiedData": "2023-07-11",
+  "bioSchemaModifiedData": "2024-12-11",
   "oboLibraryOboPath": "http://purl.obolibrary.org/obo/",
   "oboLibraryNCBITaxonPath": "http://purl.obolibrary.org/obo/NCBITaxon_",
   "isRawDataOnly": false,
