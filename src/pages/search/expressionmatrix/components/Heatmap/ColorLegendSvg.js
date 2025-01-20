@@ -89,7 +89,16 @@ export const ColorLegendSvg = ({
 
   return (
     <g>
-      <g>  
+      <text
+        x={posX}
+        y={posY - 10}
+        fontSize={10}
+        textAnchor="left"
+        fontWeight="bold"
+      >
+        Expression score
+      </text>
+      <g>
         <rect id="colorLegend"
           x={posX} y={posY + 5} 
           width={width}
