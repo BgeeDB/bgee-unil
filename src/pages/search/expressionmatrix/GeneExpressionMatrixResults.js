@@ -272,7 +272,7 @@ const GeneExpressionMatrixResults = ({
         // setTermProps = {setAnatomicalTermsProps}
         onToggleExpandCollapse = {onToggleExpandCollapse}
         width = {800}
-        height = {500}
+        height = {600}
         backgroundColor = 'white'
       />
       ) : (

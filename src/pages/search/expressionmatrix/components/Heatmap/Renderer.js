@@ -6,7 +6,7 @@ import { ColorLegendSvg } from "./ColorLegendSvg";
 // import styles from "./renderer.module.css";
 import fonts from "./fonts";
 
-const MARGIN = { top: 10, right: 10, bottom: 50, left: 200 };
+const MARGIN = { top: 20, right: 10, bottom: 50, left: 200 };
 const COLOR_LEGEND_MARGIN = { top: 0, right: 0, bottom: 50, left: 0 };
 
 export const Renderer = forwardRef(({
@@ -373,7 +373,33 @@ export const Renderer = forwardRef(({
 
   });
 
-  const xLabels = allXGroups.map((name, i) => {
+  const xLabelsTop = allXGroups.map((name, i) => {
+    const x = xScale(name);
+    const xCoord = x + xScale.bandwidth() / 2;
+    const yCoord = -10;
+    // const yCoord = boundsHeight + 10 + (i % 2) * 20; // stagger labels
+
+    if (!x) {
+      return null;
+    }
+
+    const idx = i;
+    return (
+      <text
+        key={`heatMapXLabel-${idx}`}
+        x={xCoord}
+        y={yCoord}
+        textAnchor="middle"
+        dominantBaseline="middle"             
+        fontSize={15}
+        // transform="`rotate(-10) translate(${xCoord}, ${yCoord})`"
+      >
+        {name}
+      </text>
+    );
+  });
+
+  const xLabelsBottom = allXGroups.map((name, i) => {
     const x = xScale(name);
     const xCoord = x + xScale.bandwidth() / 2;
     const yCoord = boundsHeight + 10;
@@ -512,7 +538,8 @@ export const Renderer = forwardRef(({
         transform={`translate(${[marginLeft, MARGIN.top].join(",")})`}
       >
         {allShapes}
-        {xLabels}
+        {xLabelsTop}
+        {xLabelsBottom}
       {false &&
         {yLabels}
       }
