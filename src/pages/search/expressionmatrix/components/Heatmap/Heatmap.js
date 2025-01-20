@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import Bulma from '../../../../../components/Bulma';
 import { Renderer } from "./Renderer";
 import { Tooltip } from "./Tooltip";
+// import Tooltip from "../../../../../components/Tooltip";
 import { DetailView } from "./DetailView";
 import { COLORS, THRESHOLDS, COLOR_LEGEND_HEIGHT } from "./constants";
 import { ColorLegend } from "./ColorLegend";
@@ -111,8 +112,11 @@ export const Heatmap = ({
     console.log(`[Heatmap] ${numVisibleTerms} visible terms`);
     console.log(`[Heatmap] drilldown:\n${JSON.stringify(yTerms, null, 2)}`);
     const flexHeight = Math.max(numVisibleTerms * 20 + COLOR_LEGEND_HEIGHT, 250);
+    const flexMarginLeft = Math.max(maxLabelLength * 7.5 + 50, marginLeft);
+    const flexWidth = Math.max(flexMarginLeft + 50, graphWidth);
     setGraphHeight(flexHeight);
-    setMarginLeft(maxLabelLength * 7 + 50);
+    setGraphWidth(flexWidth);
+    setMarginLeft(flexMarginLeft);
   }, [yTerms]);
 
   // Color scale is computed here bc it must be passed to both the renderer and the legend
@@ -255,6 +259,7 @@ export const Heatmap = ({
         width={graphWidth}
         height={graphHeight - COLOR_LEGEND_HEIGHT}
       />
+      
       </div>
       <div className="column" style={{ position: 'relative', zIndex: 2 }}>
       <DetailView
@@ -385,45 +390,49 @@ export const Heatmap = ({
                 </table>
             </div>
             <div className="column">
-              <h1>DATA</h1>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Show missing data:</td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={showMissingData}
-                        onChange={updateShowMissingData}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Show homologs:</td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={showHomologs}
-                        onChange={updateShowHomologs}
-                      />
-                    </td>
-                  </tr>
-                  { false ? (
-                  <tr>
-                    <td>Show max. descendant score as:</td>
-                    <td>
-                      <select value={showDescMax} onChange={updateShowDescMax}>
-                          <option value="border">border</option>
-                          <option value="center">center</option>
-                          <option value="split">split cell</option>
-                          <option value="none">none</option>
-                        </select>
-                    </td>
-                  </tr>
-                  ): null
-                  }
-                </tbody>
-              </table>
+              { false ? (
+                <div>
+                  <h1>DATA</h1>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Show missing data:</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={showMissingData}
+                            onChange={updateShowMissingData}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Show homologs:</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={showHomologs}
+                            onChange={updateShowHomologs}
+                          />
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Show max. descendant score as:</td>
+                        <td>
+                          <select value={showDescMax} onChange={updateShowDescMax}>
+                              <option value="border">border</option>
+                              <option value="center">center</option>
+                              <option value="split">split cell</option>
+                              <option value="none">none</option>
+                            </select>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              ): null
+              }
             </div>
           </div>
         </div>

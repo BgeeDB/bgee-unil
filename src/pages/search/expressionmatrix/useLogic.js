@@ -262,7 +262,18 @@ const useLogic = (isExprCalls) => {
 
   // prepare term hierarchy from gene expression call data
   const prepTermHierarchy = (expressionCalls) => {
-    const termProps = {};
+    const termProps = { 'UBERON:0001062-GO:0005575': {
+      label: 'anatomical entity',
+      anatEntityId: 'UBERON:0001062',
+      anatEntityLabel: 'anatomical entity',
+      cellTypeId: 'GO:0005575',
+      cellTypeLabel: 'cellular component',
+      isTopLevelTerm: true,
+      isExpanded: true,
+      isPopulated: false,
+      hasBeenQueried: true,
+      isSingleCell: false,
+    }};
     const parents = { [ROOT_TERM_ANAT_ENTITY]: [] };
     const children = { [ROOT_TERM_ANAT_ENTITY]: [] };
     // console.log(`[useLogic.triggerInitialSearch] prepTermHierarchy()`);
@@ -306,6 +317,9 @@ const useLogic = (isExprCalls) => {
       // console.log(`[createNestedStructure] ${termId} - ${depth}`);
       // Get the term's properties
       const term = termProps[termId];
+      if (!term) {
+        console.error(`[useLogic.prepTermHierarchy] term not found: ${termId}`);
+      }
       // Initialize the nested structure
       const nestedTerm = {
         id: termId,
@@ -411,6 +425,7 @@ const useLogic = (isExprCalls) => {
   */
 
   useEffect(() => {
+    console.log(`[useLogic.js] loc.search CHANGED:\n${JSON.stringify(loc.search, null, 2)}`);
     const sp = new URLSearchParams(loc.search);
     const nextLimit = sp.get('limit');
     const nextPageNumber = sp.get('pageNumber');
@@ -463,6 +478,7 @@ const useLogic = (isExprCalls) => {
     setSelectedSexes([]);
   };
 
+  // TODO: remove pageNumber, limit and associated useEffect
   useEffect(() => {
     if (!isFirstSearch) {
       triggerSearch();
@@ -485,6 +501,7 @@ const useLogic = (isExprCalls) => {
   }, []);
   */
 
+  // TODO: remove dataType and associated useEffect
   useEffect(() => {
     if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
@@ -492,6 +509,7 @@ const useLogic = (isExprCalls) => {
     }
   }, [dataType]);
 
+  // TODO: remove pageType and associated useEffect
   useEffect(() => {
     if (!isFirstSearch) {
       setLocalCount({});
@@ -820,7 +838,9 @@ const useLogic = (isExprCalls) => {
 
         // Prepare term hierarchy from returned terms
         const{ anatTerms, termProps } = prepTermHierarchy(resp1.data.expressionData.expressionCalls);
+        console.log(`[useLogic.triggerInitialSearch] anatTerms:\n${JSON.stringify(anatTerms)}`);
         setAnatomicalTerms(anatTerms);
+        console.log(`[useLogic.triggerInitialSearch] termProps:\n${JSON.stringify(termProps)}`);
         const newTermProps = addLowLevelTerms(
           ROOT_TERM_ANAT_ENTITY, 
           anatTerms, 
@@ -1164,7 +1184,9 @@ const useLogic = (isExprCalls) => {
     params.selectedTissue = [selectedTissueId];
     // Fix other condition params to top-level terms (overrides form fields!)
     // params.selectedCellTypes = ['SUMMARY']; // top-level terms
-    params.selectedCellTypes = ['GO:0005575']; // "cellular_component"
+    if (params.selectedCellTypes?.length === 0) {
+      params.selectedCellTypes = ['GO:0005575']; // "cellular_component"
+    }
     // params.selectedDevStages = ['UBERON:0000104']; // "life cycle"
     // params.selectedSexes = ['any'];
     // params.selectedStrain = ['wild-type'];

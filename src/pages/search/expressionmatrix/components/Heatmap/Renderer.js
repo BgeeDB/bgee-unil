@@ -243,11 +243,11 @@ export const Renderer = forwardRef(({
               setHoveredCell({
                 xLabel: `${d.geneId} - ${d.geneName}`,
                 yLabel: `${d.termId} - ${d.termName}`,
-                xPos: e.clientX - marginLeft, // x + xScale.bandwidth() + marginLeft,
-                yPos: e.clientY - height, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
                 value: Math.round(d.value * 100) / 100,
                 isExpressed: d.isExpressed,
                 maxExpScore: d.maxExp.toFixed(2),
+                clientX: e.clientX + 10,
+                clientY: e.clientY - 10
               });
             }}
             onMouseLeave={() => setHoveredCell(null)}
@@ -275,11 +275,11 @@ export const Renderer = forwardRef(({
               setHoveredCell({
                 xLabel: `${d.geneId} - ${d.geneName}`,
                 yLabel: `${d.termId} - ${d.termName}`,
-                xPos: e.clientX - marginLeft, // x + xScale.bandwidth() + marginLeft,
-                yPos: e.clientY - height, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
                 value: Math.round(d.value * 100) / 100,
                 isExpressed: d.isExpressed,
                 maxExpScore: d.maxExp.toFixed(2),
+                clientX: e.clientX + 10,
+                clientY: e.clientY - 10
               });
             }}
             onMouseLeave={() => setHoveredCell(null)}
@@ -357,11 +357,11 @@ export const Renderer = forwardRef(({
               setHoveredCell({
                 xLabel: `${d.geneId} - ${d.geneName}`,
                 yLabel: `${d.termId} - ${d.termName}`,
-                xPos: e.clientX, // x + xScale.bandwidth() + marginLeft,
-                yPos: e.clientY, // y + xScale.bandwidth() / 2 + MARGIN.bottom,
                 value: Math.round(d.value * 100) / 100,
                 isExpressed: d.isExpressed,
                 maxExpScore: d.maxExp.toFixed(2),
+                clientX: e.clientX + 10,
+                clientY: e.clientY - 10
               });
             }}
             onMouseLeave={() => setHoveredCell(null)}

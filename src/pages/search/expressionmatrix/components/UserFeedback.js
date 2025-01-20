@@ -44,7 +44,7 @@ const UserFeedback = () => {
       </div>
 
       <div className="field">
-        <label className="label">A penny for your thoughts:</label>
+        <label className="label">A penny for your thoughts (optional)</label>
         <div className="control">
           <textarea
             className="textarea"
@@ -71,7 +71,7 @@ const UserFeedback = () => {
       <Bulma.Button
         className="is-primary mt-2"
         onClick={handleSubmitFeedback}
-        disabled={!rating}
+        disabled={!rating && !feedback.trim()}
       >
         Submit Feedback
       </Bulma.Button>

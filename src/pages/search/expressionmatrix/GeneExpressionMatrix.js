@@ -33,6 +33,7 @@ import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
 import config from '../../../config.json';
 import GeneExpressionMatrixResults from './GeneExpressionMatrixResults';
+import UserFeedback from './components/UserFeedback';
 
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
@@ -318,6 +319,7 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
+                            { false && ( // TODO: display dev stage as condition param?
                             <div className="my-2 maxWidth50">
                               <DevelopmentalAndLifeStages
                                 devStages={devStages}
@@ -332,6 +334,8 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
+                            )}
+                            { false && ( // TODO: display strain as condition param?
                             <div className="my-2">
                               <Strain
                                 selectedStrain={selectedStrain}
@@ -340,6 +344,8 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
+                            )}
+                            { false && ( // TODO: display sex as condition param?
                             <div className="my-2">
                               <Sex
                                 speciesSexes={speciesSexes}
@@ -347,7 +353,8 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 toggleSex={toggleSex}
                                 addConditionalParam={addConditionalParam}
                               />
-                            </div>
+                              </div>
+                            )}
                           </>
                         )}
                       </div>
@@ -364,11 +371,12 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                                 dataTypes={dataTypesExpCalls}
                                 setDataTypes={setDataTypesExpCalls}
                               />
-                              <hr />
+                              { false && ( // TODO: remove permanently?
                               <CallType
                                 callTypes={callTypes}
                                 setCallTypes={setCallTypes}
                               />
+                              )}
                               <hr />
                               <DataQualityParameter
                                 dataQuality={dataQuality}
@@ -431,7 +439,30 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                 localCount={localCount}
               />
             )}
-            <div className="resultPart">
+            <div className="resultPart" style={{ position: 'relative' }}>
+              {isLoading && (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                  zIndex: 10,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                  <progress
+                    className="progress is-small is-primary m-5"
+                    style={{
+                      animationDuration: '2s',
+                      width: '80%',
+                    }}
+                  />
+                </div>
+              )}
+              
               {!!searchResult && dataType && (
                 <RawDataAnnotationsFilters
                   dataFilters={dataFilters}
@@ -442,34 +473,22 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
                   triggerCounts={triggerCounts}
                 />
               )}
-              {isLoading ? (
-                <div className="progressWrapper">
-                  <progress
-                    className="progress is-small is-primary m-5"
-                    style={{
-                      animationDuration: '2s',
-                      width: '80%',
-                    }}
-                  />
-                </div>
-              ) : (
-                <GeneExpressionMatrixResults
-                  results={results}
-                  columnDescriptions={columnsDesc}
-                  pageType={pageType}
-                  searchParams={getSearchParams}
-                  triggerSearch={triggerSearchChildren}
-                  triggerHomologSearch={triggerHomologSearch}
-                  genes={genes}
-                  anatomicalTerms={anatomicalTerms}
-                  // setAnatomicalTerms={setAnatomicalTerms}
-                  anatomicalTermsProps={anatomicalTermsProps}
-                  // setAnatomicalTermsProps={setAnatomicalTermsProps}
-                  maxExpScore={maxExpScore}
-                  onToggleExpandCollapse={onToggleExpandCollapse}
-                />
-              )}
+              
+              <GeneExpressionMatrixResults
+                results={results}
+                columnDescriptions={columnsDesc}
+                pageType={pageType}
+                searchParams={getSearchParams}
+                triggerSearch={triggerSearchChildren}
+                triggerHomologSearch={triggerHomologSearch}
+                genes={genes}
+                anatomicalTerms={anatomicalTerms}
+                anatomicalTermsProps={anatomicalTermsProps}
+                maxExpScore={maxExpScore}
+                onToggleExpandCollapse={onToggleExpandCollapse}
+              />
             </div>
+            <UserFeedback />
           </div>
         )}
       </div>

@@ -21,6 +21,10 @@ export const Tooltip = ({
     return null;
   }
 
+  // Calculate position to keep tooltip within viewport bounds
+  const tooltipX = Math.min(interactionData.clientX, window.innerWidth - 200); // Assume max tooltip width of 200px
+  const tooltipY = Math.min(interactionData.clientY, window.innerHeight - 100); // Assume max tooltip height of 100px
+
   return (
     // Wrapper div: a rect on top of the viz area
     <div
@@ -38,17 +42,16 @@ export const Tooltip = ({
       <div
         className={styles.tooltip}
         style={{
-          position: "absolute",
-          left: interactionData.xPos,
-          top: interactionData.yPos,
+          position: "fixed",
+          left: tooltipX,
+          top: tooltipY,
         }}
         
       >
-        <TooltipRow label="x" value={interactionData.xLabel} />
-        <TooltipRow label="y" value={interactionData.yLabel} />
+        <TooltipRow label="gene" value={interactionData.xLabel} />
+        <TooltipRow label="anatomy" value={interactionData.yLabel} />
         <TooltipRow label="value" value={String(interactionData.value)} />
         <TooltipRow label="expressed" value={String(interactionData.isExpressed)} />
-        <TooltipRow label="max. expression" value={String(interactionData.maxExpScore)} />
       </div>
     </div>
   );

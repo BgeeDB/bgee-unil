@@ -497,13 +497,48 @@ const search = {
         params.append('offset', '0');
         params.append('limit', '10000');
         if (form.selectedTissue?.length > 0) {
-          params.append('anat_entity_id', "UBERON:0001062");
-          params.append('anat_entity_id', form.selectedTissue);
+          // params.append('anat_entity_id', 'UBERON:0001062');
+          form.selectedTissue.forEach((t) => 
+            params.append('anat_entity_id', t)
+          );
         } else {
           params.append('anat_entity_id', 'SUMMARY');
-          params.append('cell_type_id', 'SUMMARY');
         }
+        // if (form.hasTissueSubStructure) {
+        //   params.append('anat_entity_descendant', '1');
+        // }
+
+        // NOTE: not using cell types here bc we need to request top level terms first
+        // if (form.selectedCellTypes?.length > 0) {
+        //   form.selectedCellTypes.forEach((ct) => 
+        //     params.append('cell_type_id', ct)
+        //   );
+        // } else {
+          // params.append('cell_type_id', 'GO:0005575');
+          params.append('cell_type_id', 'SUMMARY');
+        // }
         params.append('cond_param2', 'anat_entity');
+
+        // if (form.hasCellTypeSubStructure) {
+        //   params.append('cell_type_descendant', '1');
+        // }
+
+        // NOTE: searching by dev stage only makes sense if we display dev stages
+        // if (form.selectedDevStages?.length > 0) {
+        //   form.selectedDevStages.forEach((ds) => 
+        //     params.append('stage_id', ds)
+        //   );
+        //   params.append('cond_param2', 'dev_stage');
+        // }
+
+        // NOTE: searching by strain only makes sense if we display strains
+        // if (form.selectedStrain?.length > 0) {
+        //   form.selectedStrain.forEach((s) => 
+        //     params.append('strain', s)
+        //   );
+        //   params.append('cond_param2', 'strain');
+        // }
+        
         if (form.selectedSpecies) {
           params.append('species_id', form.selectedSpecies);
         }

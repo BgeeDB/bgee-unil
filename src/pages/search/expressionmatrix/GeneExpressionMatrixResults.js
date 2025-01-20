@@ -9,7 +9,6 @@ import PATHS from '../../../routes/paths';
 import { getChildValueFromAttribute } from '../../../helpers/selects';
 import obolibraryLinkFromID from '../../../helpers/obolibraryLinkFromID';
 import { DATA_TYPES, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from './useLogic';
-import UserFeedback from './components/UserFeedback';
 
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
@@ -281,8 +280,7 @@ const GeneExpressionMatrixResults = ({
           Please select search criteria above to display results.
         </div>
       )}
-
-      {results?.length > 0 && <UserFeedback />}
+      
     </>
   );
 };
