@@ -60,9 +60,9 @@ export const TAB_PAGE = [
 
 export const TAB_PAGE_EXPR_CALL = {
   id: EXPR_CALLS,
-  label: 'Present/absent expression calls',
-  searchLabel: 'Search for present/absent expression calls',
-  resultLabel: 'Present/absent expression calls',
+  label: 'Gene expression matrix',
+  searchLabel: 'Search for expression calls',
+  resultLabel: 'Expression matrix',
 };
 
 // building dataTypes depending on config.json
