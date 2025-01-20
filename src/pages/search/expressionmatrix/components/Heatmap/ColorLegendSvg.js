@@ -89,14 +89,54 @@ export const ColorLegendSvg = ({
 
   return (
     <g>
-      <rect id="colorLegend"
-        x={posX} y={posY + 5} 
-        width={width}
-        height={boundsHeight}
-        fill="url(#colorLegendGradient)"
-      />
-      {allTicks}
-      {triangle}
+      <g>  
+        <rect id="colorLegend"
+          x={posX} y={posY + 5} 
+          width={width}
+          height={boundsHeight}
+          fill="url(#colorLegendGradient)"
+        />
+        {allTicks}
+        {triangle}
+      </g>
+      <g>
+        <rect id="rectNotExpressed" 
+          x={posX}
+          y={posY + 40}
+          width={10}
+          height={10}
+          fill="#cccccc"
+          stroke="black"
+          strokeWidth={1}
+          rx={4}
+        />
+        <text 
+          x={posX + 15} 
+          y={posY + 48}
+          fontSize={10}
+          textAnchor="left">
+          Not expressed
+        </text>
+      </g>
+      <g>
+        <rect id="rectNoData" 
+          x={posX + 100}
+          y={posY + 40}
+          width={10}
+          height={10}
+          fill="white"
+          stroke="black"
+          strokeWidth={1}
+          rx={4}
+        />
+        <text 
+          x={posX + 115} 
+          y={posY + 48}
+          fontSize={10}
+          textAnchor="left">
+          No data
+        </text>
+      </g>
     </g>
   );
 };
