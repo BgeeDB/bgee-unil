@@ -1,11 +1,7 @@
 import config from '../../config.json';
 import imagePath from '../../helpers/imagePath';
 
-// TODO CURRENT collaborations only?
-// TODO scFAIR portal and logo?
 // TODO how to link David Osumi-Sutherland? Which affiliation?
-// TODO link scFAIR github?
-// TODO salmonids Bgee portal?
 const collaborations = [
   {
     type: 'title',
@@ -14,7 +10,247 @@ const collaborations = [
   {
     type: 'text',
     content:
-      'This page provides current collaborations of the Bgee project (in alphabetical order).',
+      'This page provides current and past collaborations of the Bgee project (in alphabetical order).',
+  },
+  {
+    type: 'subsection',
+    title: 'Current Bgee collaborations',
+  },
+  {
+    type: 'section',
+    title: 'OMA',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/oma-logo.png'),
+        path: 'https://omabrowser.org/',
+        alt: 'OMA',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content: 'The ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://omabrowser.org/oma/home/',
+            text: 'OMA (Orthologous MAtrix) project',
+          },
+          {
+            type: 'text',
+            content:
+              ' is a method and database for the inference of orthologs among complete genomes.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'As part of a scientific collaboration with OMA, we generated files containing gene expression in homologous anatomical entities. These files are available on ',
+          },
+          {
+            type: 'link_external',
+            path: `${config.genericDomain}/ftp/bgee_v14_1/collaboration/branch_length_expression_divergence/`,
+            text: 'Bgee FTP',
+          },
+          {
+            type: 'text',
+            content: '. ',
+          },
+        ],
+      },
+      {
+        type: 'text',
+        content:
+          'The homologous expression files are also available and free to use for other projects or applications.',
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'Salmobase',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/Salmobase.png'),
+        path: 'https://salmobase.org/',
+        alt: 'Salmobase',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://salmobase.org/',
+            text: 'Salmobase',
+          },
+          {
+            type: 'text',
+            content:
+              ' has been created for making molecular genomic resources for salmonid species publically available in a framework of visualizations and analytic tools.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'In coordination with Salmobase, Bgee developed an ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/master/src/ssaldv',
+            text: 'Atlantic salmon developmental stages ontology',
+          },
+          {
+            type: 'text',
+            content:
+              '.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'scFAIR',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/sc-fair-logo.png'),
+        path: 'https://sc-fair.org/',
+        alt: 'scFAIR',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://sc-fair.org/',
+            text: 'scFAIR',
+          },
+          {
+            type: 'text',
+            content:
+              ' is an ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://www.swissuniversities.ch/en/topics/digitalisation/open-research-data/',
+            text: 'Open Research Data (ORD)',
+          },
+          {
+            type: 'text',
+            content:
+              ' project for the standardization and stewardship of single-cell metadata, funded by swissuniversities.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'The Bgee group is involved with the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://asap.epfl.ch/',
+            text: 'ASAP',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/EPFL) group in Switzerland, but the project is broader and involves also ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://cellxgene.cziscience.com/',
+            text: 'CZ CELLxGENE',
+          },
+          {
+            type: 'text',
+            content:
+              ' and everyone interested in the standardization of single-cell metadata.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'section',
+    title: 'SIB AI',
+    children: [
+      {
+        type: 'link_image',
+        src: imagePath('/logo/sib-emblem.png'),
+        path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
+        alt: 'SIB AI',
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'link_external',
+            path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
+            text: 'SIB AI',
+          },
+          {
+            type: 'text',
+            content:
+              ' is an SIB call to bring added value to the scientific impact of SIB Resources, while proposing innovative technologies - Artificial Intelligence (AI) - that will benefit the scientific community.',
+          },
+        ],
+      },
+      {
+        type: 'rich_text',
+        content: [
+          {
+            type: 'text',
+            content:
+              'The Bgee group is involved with the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://asap.epfl.ch/',
+            text: 'ASAP/Deplancke',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/EPFL) group, and the ',
+          },
+          {
+            type: 'link_external',
+            path: 'https://robinsonlabuzh.github.io/',
+            text: 'Robinson Statistical Bioinformatics',
+          },
+          {
+            type: 'text',
+            content:
+              ' (SIB/UZH) group to develop a pilot implementation of annotation of single-cell RNA-Seq data guided by AI.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'break_line',
+  },
+  {
+    type: 'break_line',
+  },
+  {
+    type: 'subsection',
+    title: 'Past Bgee collaborations',
   },
   {
     type: 'section',
@@ -22,8 +258,8 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/biosoda_logo.png'),
-        path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
+        src: imagePath('/biosoda-logo.png'),
+        path: 'https://www.zhaw.ch/en/research/research-database/project-detailview/projektid/1493/',
         alt: 'Bio-SODA',
       },
       {
@@ -31,7 +267,7 @@ const collaborations = [
         content: [
           {
             type: 'link_external',
-            path: 'https://www.zhaw.ch/no_cache/en/research/research-database/project-detailview/projektid/1493/',
+            path: 'https://www.zhaw.ch/en/research/research-database/project-detailview/projektid/1493/',
             text: 'BioSODA project',
           },
           {
@@ -119,7 +355,7 @@ const collaborations = [
     children: [
       {
         type: 'link_image',
-        src: imagePath('/INODE_Logo--white.png'),
+        src: imagePath('/INODE-Logo.png'),
         path: 'https://www.inode-project.eu/',
         alt: 'INODE',
         style: {
@@ -163,66 +399,11 @@ const collaborations = [
   },
   {
     type: 'section',
-    title: 'OMA',
-    children: [
-      {
-        type: 'link_image',
-        src: imagePath('/oma_logo.png'),
-        path: 'https://omabrowser.org/',
-        alt: 'OMA',
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content: 'The ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://omabrowser.org/oma/home/',
-            text: 'OMA (Orthologous MAtrix) project',
-          },
-          {
-            type: 'text',
-            content:
-              ' is a method and database for the inference of orthologs among complete genomes.',
-          },
-        ],
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content:
-              'As part of a scientific collaboration with OMA, we generated files containing gene expression in homologous anatomical entities. These files are available on ',
-          },
-          {
-            type: 'link_external',
-            path: `${config.genericDomain}/ftp/bgee_v14_1/collaboration/branch_length_expression_divergence/`,
-            text: 'Bgee FTP',
-          },
-          {
-            type: 'text',
-            content: '. ',
-          },
-        ],
-      },
-      {
-        type: 'text',
-        content:
-          'The homologous expression files are also available and free to use for other projects or applications.',
-      },
-    ],
-  },
-  {
-    type: 'section',
     title: 'OncoMX',
     children: [
       {
         type: 'link_image',
-        src: imagePath('/ONCOMX_logo-thin.png'),
+        src: imagePath('/ONCOMX-logo.png'),
         path: 'https://www.oncomx.org/',
         alt: 'OncoMX',
       },
@@ -275,177 +456,6 @@ const collaborations = [
           {
             type: 'text',
             content: '.',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'section',
-    title: 'Salmobase',
-    children: [
-      {
-        type: 'link_image',
-        src: imagePath('/Salmobase.png'),
-        path: 'https://salmobase.org/',
-        alt: 'Salmobase',
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://salmobase.org/',
-            text: 'Salmobase',
-          },
-          {
-            type: 'text',
-            content:
-              ' has been created for making molecular genomic resources for salmonid species publically available in a framework of visualizations and analytic tools.',
-          },
-        ],
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content:
-              'In coordination with Salmobase, Bgee developed an ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://github.com/obophenotype/developmental-stage-ontologies/tree/develop/src/ssaldv',
-            text: 'Atlantic salmon developmental stages ontology',
-          },
-          {
-            type: 'text',
-            content:
-              '.',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'section',
-    title: 'scFAIR',
-    children: [
-      {
-        type: 'link_image',
-        src: imagePath(''),
-        path: 'https://sc-fair.org/',
-        alt: 'scFAIR',
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://sc-fair.org/',
-            text: 'scFAIR',
-          },
-          {
-            type: 'text',
-            content:
-              ' is an ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://www.swissuniversities.ch/en/topics/digitalisation/open-research-data/',
-            text: 'Open Research Data (ORD)',
-          },
-          {
-            type: 'text',
-            content:
-              ' project for the standardization and stewardship of single-cell metadata, funded by swissuniversities.',
-          },
-        ],
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content:
-              'The Bgee group is involved with the ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://asap.epfl.ch/',
-            text: 'ASAP',
-          },
-          {
-            type: 'text',
-            content:
-              ' (SIB/EPFL) group in Switzerland, but the project is broader and involves also ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://cellxgene.cziscience.com/',
-            text: 'CZ CELLxGENE',
-          },
-          {
-            type: 'text',
-            content:
-              ' and everyone interested in the standardization of single-cell metadata.',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'section',
-    title: 'SIB AI',
-    children: [
-      {
-        type: 'link_image',
-        src: imagePath('/logo/sib_emblem.png'),
-        path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
-        alt: 'SIB AI',
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://www.sib.swiss/use-of-ai-to-increase-the-impact-of-sib-resources',
-            text: 'SIB AI',
-          },
-          {
-            type: 'text',
-            content:
-              ' is an SIB call to bring added value to the scientific impact of SIB Resources, while proposing innovative technologies - Artificial Intelligence (AI) - that will benefit the scientific community.',
-          },
-        ],
-      },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'text',
-            content:
-              'The Bgee group is involved with the ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://asap.epfl.ch/',
-            text: 'ASAP/Deplancke',
-          },
-          {
-            type: 'text',
-            content:
-              ' (SIB/EPFL) group, and the ',
-          },
-          {
-            type: 'link_external',
-            path: 'https://robinsonlabuzh.github.io/',
-            text: 'Robinson Statistical Bioinformatics',
-          },
-          {
-            type: 'text',
-            content:
-              ' (SIB/UZH) group to develop a pilot implementation of annotation of single-cell RNA-Seq data guided by AI.',
           },
         ],
       },

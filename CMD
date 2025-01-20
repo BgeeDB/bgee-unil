@@ -1,16 +1,22 @@
 # archives
-rm -Rf archives/15.0-archived/ && yarn archive
-cd archives/15.0-archived/
-rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_0/
+rm -Rf archives/15.1-archived/ && yarn archive
+cd archives/15.1-archived/
+rsync -av --del . bgee@archbioinfo.unil.ch:/var/www/html/bgee.unil.ch/bgee15_1/
 
 # prod
 rm -Rf build && yarn prod
 cd build/
-rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/bgee.unil.ch/
+rsync -av --del . bgee@proxybioinfo.unil.ch:/var/www/html/bgee.unil.ch/
 
-# annotations
-echo 'ACHTUNG! Think to change "isRawDataOnly" to "true" first!'
-rm -Rf build && yarn annot
+
+# rbgee (dev/test server)
+echo 'Set isDevOnly to true to switch to dev build + Update DEV_URL if different from http://rbgee.unil.ch'
+rm -Rf build && yarn dev
 cd build/
-rsync -av --del . bgee@bioinfo.unil.ch:/var/www/html/annotations.bgee.org/
+rsync -av --del . bgee@rbioinfo.unil.ch:/var/www/html/bgee.unil.ch/
 
+# dbbgee (dev/test server)
+echo 'Set isDevOnly to true to switch to dev build + Update DEV_URL if different from http://dbbgee.unil.ch'
+rm -Rf build && yarn dev
+cd build/
+rsync -av --del . bgee@dbbioinfo.unil.ch:/var/www/html/bgee.unil.ch/

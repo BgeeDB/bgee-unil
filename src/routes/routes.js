@@ -13,27 +13,21 @@ import GeneExpressionMatrix from '../pages/search/expressionmatrix/GeneExpressio
 import AnatomicalHomologySearch from '../pages/search/AnatomicalHomologySearch';
 import SpeciesList from '../pages/search/SpeciesList';
 import Species from '../pages/search/Species';
+import SpeciesGeneList from "../pages/search/SpeciesGeneList";
 
 import Experiment from '../pages/search/experiments/Experiment';
 
 import ProcessedExpressionValues from '../pages/download/ProcessedExpressionValues';
 import GeneExpressionCallsDownload from '../pages/download/GeneExpressionCalls';
 
-import ResourcesFile from '../static/resources/docs';
 import RPackageFile from '../static/resources/rPackage';
-import SparqlFile from '../static/resources/sparql';
 import AnnotationsFile from '../static/resources/annotations';
 import OntologiesFile from '../static/resources/ontologies';
 import ResourceSourceFile from '../static/resources/source';
 
-import GtexFile from '../markdown/support/gtex.md';
-import TopAnatFile from '../markdown/support/topAnat.md';
-import GeneExpressionFile from '../markdown/support/geneExpression.md';
-import ProcExprValFile from '../static/support/ProcessedExpressionValues';
-import RNASeqProcExprValFile from '../markdown/support/rnaSeqProcExprValues.md';
-import AffymetrixProcExprValFile from '../markdown/support/affyProcExprValues.md';
-import ScRNASeqFLProcExprValFile from '../markdown/support/scRNASeqFLProcExprValues.md';
+import DatasetsInterestFile from '../markdown/support/datasets_of_interest.md';
 import TutoFile from '../static/support/Tutorials';
+import ScRNASeqProtocolsFile from '../markdown/support/scRNA-seq_Protocols.md';
 import VideoFile from '../static/support/videos';
 import TutoGenePageFile from '../markdown/support/gene-page/Tutorial_gene_page.md';
 import TutoTopAnatFile from '../markdown/support/topAnat/topAnat.md';
@@ -43,7 +37,13 @@ import TutoCurationFile from '../markdown/support/data-curation/data-curation.md
 import TutoExpCompFile from '../markdown/support/expression-comparison/expression-comparison.md';
 import TutoRawDataFile from '../markdown/support/Raw-data-interface/Raw-data-interface.md';
 import TutoAnatHomologyFile from '../markdown/support/anatomical-homology/anatomical-homology.md';
-import FaqFile from '../static/support/faq';
+import TutoAffyExprVal from '../markdown/support/Download-files/affyProcExprValues.md';
+import TutoRNASeqExprVal from '../markdown/support/Download-files/rnaSeqProcExprValues.md';
+import TutoscRNAseqFLExprVal from '../markdown/support/Download-files/scRNASeqFLProcExprValues.md';
+import TutoscRNAseqTBExprVal from '../markdown/support/Download-files/scRNASeqTBProcExprValues.md';
+import TutoExprVal from '../markdown/support/Download-files/procExprValFile.md';
+import TutoGeneExpr from '../markdown/support/Download-files/geneExpression.md';
+import FaqFile from '../markdown/support/FAQ.md';
 
 import AboutFile from '../static/about/about';
 import CollaborationsFile from '../static/about/collaborations';
@@ -56,12 +56,16 @@ import Error from '../pages/Error';
 import DataDumps from '../pages/download/DataDumps';
 import NewsPage from '../pages/about/NewsPage';
 import DataSource from '../pages/about/DataSource';
-import { FULL_LENGTH_LABEL } from '../api/prod/constant';
 
 const ANALYSIS = {
   [PATHS.ANALYSIS.TOP_ANAT]: {
     title: 'TopAnat: Expression enrichment analysis',
     component: TopAnatAnalysis,
+    meta: {
+      title: 'TopAnat: Expression enrichment analysis',
+      description: 'GO-like enrichment of anatomical terms, mapped to genes by expression patterns',
+      keywords: 'Enrichment, Gene expression, Anatomical terms',
+    },
   },
   [PATHS.ANALYSIS.EXPRESSION_COMPARISON]: {
     title: 'Expression comparison',
@@ -78,7 +82,7 @@ const ANALYSIS = {
 
 const SEARCH = {
   [PATHS.SEARCH.GENE]: {
-    title: 'Gene search',
+    title: 'Genes',
     component: GeneList,
   },
   [PATHS.SEARCH.GENE_ITEM]: {
@@ -87,7 +91,7 @@ const SEARCH = {
   },
   [PATHS.SEARCH.ANATOMICAL_HOMOLOGY]: {
     component: AnatomicalHomologySearch,
-    title: 'Anatomical homology search',
+    title: 'Anatomical homologies',
     meta: {
       title: 'Anatomical homology search',
       description:
@@ -97,19 +101,33 @@ const SEARCH = {
   },
   [PATHS.SEARCH.SPECIES]: {
     component: SpeciesList,
-    title: 'Species list',
+    title: 'Species',
   },
   [PATHS.SEARCH.SPECIES_ITEM]: {
     component: Species,
     title: 'Species',
   },
+  [PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES]: {
+    component: SpeciesGeneList,
+    title: 'Species gene list',
+  },
   [PATHS.SEARCH.RAW_DATA_ANNOTATIONS]: {
     component: () => <RawDataAnnotations />,
     title: 'Raw data annotated and processed',
+    meta: {
+      title: 'Raw data annotated and processed',
+      description: 'Search for Experiments, Raw data annotations and Processed expression values',
+      keywords: 'Raw data, annotations, annotated, processed, experiments, raw data annotations, processed expression values',
+    },
   },
   [PATHS.SEARCH.EXPRESSION_CALLS]: {
     component: () => <RawDataAnnotations isExprCalls />,
     title: 'Present/absent expression calls',
+    meta: {
+      title: 'Present/absent expression calls',
+      description: 'Search for Present/absent expression calls',
+      keywords: 'Present, absent, expression calls',
+    },
   },
   [PATHS.SEARCH.EXPRESSION_MATRIX]: {
     component: () => <GeneExpressionMatrix isExprCalls />,
@@ -124,11 +142,11 @@ const SEARCH = {
 const DOWNLOAD = {
   [PATHS.DOWNLOAD.GENE_EXPRESSION_CALLS]: {
     component: GeneExpressionCallsDownload,
-    title: 'Gene expression calls',
+    title: 'Download gene expression calls',
   },
   [PATHS.DOWNLOAD.PROCESSED_EXPRESSION_VALUES]: {
     component: ProcessedExpressionValues,
-    title: 'Processed expression values',
+    title: 'Download processed expression values',
   },
   [PATHS.DOWNLOAD.DATA_DUMPS]: {
     component: DataDumps,
@@ -137,10 +155,6 @@ const DOWNLOAD = {
 };
 
 const RESOURCES = {
-  [PATHS.RESOURCES.DOCS]: {
-    source: ResourcesFile,
-    title: 'Bgee documentation',
-  },
   [PATHS.RESOURCES.R_PACKAGES]: {
     source: RPackageFile,
     title: 'R packages',
@@ -151,19 +165,9 @@ const RESOURCES = {
       keywords: 'R package, Bioconductor, BgeeDB, BgeeCall, Docker container',
     },
   },
-  [PATHS.RESOURCES.SPARQL]: {
-    source: SparqlFile,
-    title: 'SPARQL endpoint',
-    meta: {
-      title: 'SPARQL endpoint documentation',
-      description:
-        'Documentation about how to access the Bgee SPARQL endpoint to retrieve present/absent calls of expression',
-      keywords: 'SPARQL, SPARQL endpoint, GenEx, OWL, OWL2, RDF, ontology',
-    },
-  },
   [PATHS.RESOURCES.ANNOTATIONS]: {
     source: AnnotationsFile,
-    title: 'Annotations',
+    title: 'Annotation resources',
     meta: {
       title: 'Annotation resources',
       description:
@@ -174,7 +178,7 @@ const RESOURCES = {
   },
   [PATHS.RESOURCES.ONTOLOGIES]: {
     source: OntologiesFile,
-    title: 'Ontologies',
+    title: 'Ontology resources',
     meta: {
       title: 'Ontology resources',
       description:
@@ -197,59 +201,31 @@ const RESOURCES = {
 
 const SUPPORT = {
   [PATHS.SUPPORT.GTEX]: {
-    source: GtexFile,
-    title: 'GTEx in Bgee',
+    source: DatasetsInterestFile,
+    title: 'Datasets of interest',
     meta: {
       title: 'Datasets of interest',
       description:
         'Retrieve information about the datasets of special interest present in Bgee and how we integrated them.',
-      keywords: 'Dataset, gene expression dataset, GTEx, annotation',
+      keywords: 'Dataset, gene expression dataset, GTEx, Fly Cell Atlas, FCA, featured experiments, annotation',
     },
-  },
-  [PATHS.SUPPORT.TOP_ANAT]: {
-    source: TopAnatFile,
-    title: 'TopAnat: Expression enrichment analysis',
-    meta: {
-      title: 'TopAnat documentation',
-      description:
-        'Documentation to use TopAnat, performing gene set expression enrichment analyses.',
-      keywords:
-        'TopAnat, gene set enrichment analysis, gene expression enrichment analysis, GO-like enrichment analysis, gene expression patterns, topGO, BgeeDB',
-    },
-  },
-  [PATHS.SUPPORT.GENE_EXPRESSION_CALLS]: {
-    source: GeneExpressionFile,
-    title: 'Gene expression calls',
-  },
-  [PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES]: {
-    source: ProcExprValFile,
-    title: 'Processed expression values',
-    meta: {
-      title: 'Processed expression values files documentation',
-      description:
-        'Documentation of processed expression values download files',
-      keywords: 'Documentation, processed expression values, Download files',
-    },
-  },
-  [PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES]: {
-    source: RNASeqProcExprValFile,
-    title: 'RNA-Seq annotations and processed expression values',
-  },
-  [PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES]: {
-    source: ScRNASeqFLProcExprValFile,
-    title: `${FULL_LENGTH_LABEL} annotations and processed expression values`,
-  },
-  [PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES]: {
-    source: AffymetrixProcExprValFile,
-    title: 'Affymetrix annotations and processed expression values',
   },
   [PATHS.SUPPORT.TUTORIALS]: {
     source: TutoFile,
-    title: 'Tutorials',
+    title: 'Documentation and tutorials',
     meta: {
-      title: 'Tutorials',
-      description: 'Bgee Tutorials',
-      keywords: 'Tutorials',
+      title: 'Documentation and tutorials',
+      description: 'Bgee tutorials and documentation',
+      keywords: 'Tutorials, documentation',
+    },
+  },
+  [PATHS.SUPPORT.SCRNASEQPROTOCOLS]: {
+    source: ScRNASeqProtocolsFile,
+    title: 'scRNA-Seq Protocols: A Comparative Guide',
+    meta: {
+      title: 'Single-cell RNA Sequencing (scRNA-Seq) Protocols: A Comparative Guide',
+      description: 'Single-cell RNA Sequencing (scRNA-Seq) Protocols: A Comparative Guide',
+      keywords: 'Single-cell RNA Sequencing, scRNA-Seq, protocols, Comparative Guide',
     },
   },
   [PATHS.SUPPORT.VIDEOS]: {
@@ -265,34 +241,128 @@ const SUPPORT = {
   [PATHS.SUPPORT.TUTORIAL_GENE_PAGE]: {
     source: TutoGenePageFile,
     title: 'Tutorial: gene page',
+    meta: {
+      title: 'Bgee gene page tutorial',
+      description: 'Bgee Tutorial about gene search and gene page',
+      keywords: 'Tutorial, gene, search',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_TOPANAT]: {
     source: TutoTopAnatFile,
     title: 'Tutorial: TopAnat',
+    meta: {
+      title: 'Bgee TopAnat tutorial',
+      description: 'Bgee Tutorial about TopAnat Uberon enrichment analysis',
+      keywords: 'Tutorial, enrichment analysis, Uberon',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS]: {
     source: TutoExpressionCallsFile,
     title: 'Tutorial: expression calls',
+    meta: {
+      title: 'Bgee expression calls tutorial',
+      description: 'Bgee Tutorial about expression calls search',
+      keywords: 'Tutorial, expression calls, search',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_SPARQL]: {
     source: TutoSPARQLFile,
     title: 'Tutorial: knowledge graph query',
+    meta: {
+      title: 'Bgee knowledge graph tutorial',
+      description: 'Bgee Tutorial about knowledge graph',
+      keywords: 'Tutorial, knowledge graph, RDF, SPARQL, gene-expression profile',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_CURATION]: {
     source: TutoCurationFile,
     title: 'Tutorial: data curation',
+    meta: {
+      title: 'Bgee data curation tutorial',
+      description: 'Bgee Tutorial about data curation and annotation',
+      keywords: 'Tutorial, data curation, annotation',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON]: {
     source: TutoExpCompFile,
     title: 'Tutorial: expression comparison',
+    meta: {
+      title: 'Bgee expression comparison tutorial',
+      description: 'Bgee Tutorial about expression comparison of genes',
+      keywords: 'Tutorial, expression comparison, genes',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_RAW_DATA]: {
     source: TutoRawDataFile,
     title: 'Tutorial: raw data',
+    meta: {
+      title: 'Bgee raw data interface tutorial',
+      description: 'Bgee Tutorial about the raw data interface',
+      keywords: 'Tutorial, raw data, experiments, libraries, processed expression values',
+    },
   },
   [PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY]: {
     source: TutoAnatHomologyFile,
     title: 'Tutorial: anatomical homology',
+    meta: {
+      title: 'Bgee anatomical homology tutorial',
+      description: 'Bgee Tutorial about anatomical homology',
+      keywords: 'Tutorial, anatomical homology, tool, analysis, search',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL]: {
+    source: TutoAffyExprVal,
+    title: 'Tutorial: Affymetrix download file documentation',
+    meta: {
+      title: 'Bgee Affymetrix download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about Affymetrix download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, Affymetrix, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_RNASEQ_EXPR_VAL]: {
+    source: TutoRNASeqExprVal,
+    title: 'Tutorial: RNA-Seq download file documentation',
+    meta: {
+      title: 'Bgee RNA-Seq download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about RNA-Seq download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, RNA-Seq, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_SCRNASEQ_FL_EXPR_VAL]: {
+    source: TutoscRNAseqFLExprVal,
+    title: 'Tutorial: Single cell RNA-Seq full-length download file documentation',
+    meta: {
+      title: 'Bgee Single cell RNA-Seq full-length download file documentation: annotations and processed expression values tutorial',
+      description: 'Bgee Tutorial about Single cell RNA-Seq full-length download file documentation: annotations and processed expression values',
+      keywords: 'Tutorial, Single cell RNA-Seq full-length, scRNA-seq full-length, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_SCRNASEQ_TB_EXPR_VAL]: {
+    source: TutoscRNAseqTBExprVal,
+    title: 'Tutorial: Droplet-based scRNA-seq Data in H5AD Format',
+    meta: {
+      title: 'Bgee Droplet-based scRNA-seq Data in H5AD Format tutorial',
+      description: 'Bgee Tutorial about Droplet-based scRNA-seq Data in H5AD Format',
+      keywords: 'Tutorial, Single cell RNA-Seq Droplet-based, scRNA-seq Droplet-based, Single cell RNA-Seq target-based, scRNA-seq target-based, Download file, Processed expression values, H5AD',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_EXPR_VAL]: {
+    source: TutoExprVal,
+    title: 'Tutorial: Processed expression values download file documentation',
+    meta: {
+      title: 'Bgee Processed expression values download file documentation tutorial',
+      description: 'Bgee Tutorial about Processed expression values download file documentation',
+      keywords: 'Tutorial, Download file, Processed expression values',
+    },
+  },
+  [PATHS.SUPPORT.TUTORIAL_GENE_EXPR]: {
+    source: TutoGeneExpr,
+    title: 'Tutorial: Expression call download file documentation',
+    meta: {
+      title: 'Bgee Expression call download file documentation tutorial',
+      description: 'Bgee Tutorial about Expression call download file documentation',
+      keywords: 'Tutorial, Download file, Expression call',
+    },
   },
   [PATHS.SUPPORT.FAQ]: {
     source: FaqFile,
@@ -317,7 +387,12 @@ const ABOUT = {
   },
   [PATHS.ABOUT.NEWS]: {
     component: NewsPage,
-    title: 'News',
+    title: 'Bgee News',
+    meta: {
+      title: 'Bgee news',
+      description: 'Bgee news describing each new releases',
+      keywords: 'News, latest, information, releases',
+    },
   },
   [PATHS.ABOUT.COLLABORATIONS]: {
     source: CollaborationsFile,

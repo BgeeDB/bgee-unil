@@ -1,16 +1,25 @@
-# Tutorial: Raw data interface
+# Search Experiments, Annotations, and Processed Expression Values
+Instructions on how to search and filter Bgee *experiments*, *raw data annotations* and *processed expression values*, and information on the generated results table.
 
-The raw data interface consists of 3 different tabs (*Experiments*, *Raw data annotations* and *Processed expression values*) that are described in detail below. They all  share a common search form and filtering step. You can access further information on each individual data interface tab by clicking the *Experiments*, *Raw data annotations* or *Processed expression values* links below. You can also read about the search form and the filtering by clicking their respective links.
+*   [Introduction](#introduction "Quick jump to this section")
+*   [Search Form](#search-form "Quick jump to this section")
+*   [Filtering](#filtering "Quick jump to this section")
+*   [Experiments](#experiments "Quick jump to this section")
+    *   [Results Table](#results-table "Quick jump to this section")
+    *   [Results Table - Within an Experiment](#result-table---within-an-experiment "Quick jump to this section")
+    *   [Description of Results](#description-of-results "Quick jump to this section")
+*   [Raw Data Annotations](#raw-data-annotations "Quick jump to this section")
+    *   [Description of Results](#description-of-results-1 "Quick jump to this section")
+*   [Processed Expression Values](#processed-expression-values "Quick jump to this section")
+    *   [Description of Results](#description-of-results-2 "Quick jump to this section")
 
-* [Search Form](#search-form)
-* [Filtering](#filtering)
-* [Experiments](#experiments)
-* [Raw data annotations](#raw-data-annotations)
-* [Processed expression values](#processed-expression-values)
 
-To access the main search page, go to the *Search* section of Bgee's homepage toolbar and select the *Raw data annotated and processed* subsection.
+## Introduction
+Bgee data can be searched and filtered through the *Experiments*, *Raw data annotations* and *Processed expression values* pages. Each page shares a common search form and filtering options and will display a results table that can be exported. The search form, filtering options, and data in the results table are described in detail below.
 
-# Search Form
+To start a search, go to the *Search* section of Bgee's homepage toolbar and select the *Experiments*, *Raw data annotations* or *Processed expression values* subsection. Once on a page, you can easily alternate between data types.
+
+## Search Form
 
 At the top of each data interface page (such as *Experiments*) you will find the form that you can fill in to select specific species, tissues, experiments, and more. The form works as follows:
 
@@ -34,11 +43,11 @@ The following filter options are available through the search form:
 
 After selecting all desired filters from the search form, click the *Submit* button to populate the results table.
 
-# Filtering
+## Filtering
 
 The data can be further filtered from the results table.
 
-## Available filters
+### Available filters
 
 Filters can differ depending on the data page (*experiments*, *raw data annotations*, or *processed expression values*) and the data type (bulk RNA-seq, scRNA-seq, affymetrix, ISH, or EST).
 The following filters can always be applied:
@@ -46,7 +55,7 @@ The following filters can always be applied:
 * **Anatomical entities**: Selection of multiple terms is supported. You can search using common terms, or the UBERON ID.
 * **Developmental and life stage**: You can search using common names, or the UBERON or species specific (e.g. HsapDv for humans).
 * **Sexes**: Select sex of interest. Multiple sexes can be selected.
-* **Strains**: Select strain(s) of interest. Multiple strains can be selected.
+* **Strains/Ethnicities**: Select strain(s)/ethnicity(ies) of interest. Multiple strains/ethnicities can be selected.
 
 The following filters can be applied only on some data pages or data types:
 
@@ -54,18 +63,18 @@ The following filters can be applied only on some data pages or data types:
 * **Experiments**: Available for all data types except ESTs, as such a concept does not exist for the EST data type. Select the experiment(s) of interest, either by the experiment name or the experiment ID. Multiple experiments can be selected.
 * **Assays**: Available for all data types for *Raw data annotations* and *Processed expression values* data. Also available for *Experiments* data of ESTs. Select the assay of interest. Can either be the assay name or the assay ID. Multiple assays can be selected.
 
-## Apply filters
+### Apply filters
 
 Once you select the filters you are interested in you can apply them by clicking on the *Apply filters* button.
 
 ![](../img/doc/Raw-data-interface/postfilter-apply-filters.png#tutoimgborder)
 
-## Number of filtered results
+### Number of filtered results
 
 Once filters are applied the number of filtered results can be seen in red on the top right of the filtering section.
 
 ![](../img/doc/Raw-data-interface/postfilter-number-filtered-results.png#tutoimgborder)
-## Remove filters
+### Remove filters
 
 To remove a filter you can click on the cross on the right side of the filter name.
 
@@ -77,17 +86,17 @@ Then click on the *Apply filters* button.
 It is also possible to remove all filters at once by clicking on the red trash icon to the right of the *Apply filters* button.
 
 ![](../img/doc/Raw-data-interface/postfilter-delete-filters.png#tutoimgborder)
-## Export of filtered results
+### Export of filtered results
 
 Due to the number of potential entries in the result table, we do not support the export of all results at once. The *Export current page in TSV* button will only export the results shown on the current page. However, it is possible to increase the number of entries displayed on the current page by selecting up to 1000 entries using the *Show X entries* dropdown. You can export the entries of the current result table by clicking on the button *Export current page in TSV*.
 
 ![](../img/doc/Raw-data-interface/postfilter-update-number-result-entries.png#tutoimgborder)
 
-# Experiments
+## Experiments
 
 The experiments tab allows you to retrieve the experiments in Bgee that match the specific conditions you are interested in (e.g. species, tissue, developmental stage, etc.) and retrieve library-specific expression values.
 
-We will focus this tutorial on the Mus musculus experiment ERP012910. To access the page click on the *Search* tab in the tool bar then click *Raw data annotated and processed* which will bring you to the Experiments search page. Type in the experiment of interest (ERP012910) in the right search form entitled "Experiment or assay ID" and click *Submit*. Next, click the ERP012910 link in the Experiment ID column to access the ERP012910 experiment page. The video below details how to reach the experiment page in Bgee 15.0. Additionally, you can access the page directly at https://www.bgee.org/experiment/ERP012910.
+We will focus this tutorial on the Mus musculus experiment ERP012910. To access the page click on the *Search* tab in the toolbar then click *Raw data annotated and processed* which will bring you to the Experiments search page. Type in the experiment of interest (ERP012910) in the right search form entitled "Experiment or assay ID" and click *Submit*. Next, click the ERP012910 link in the Experiment ID column to access the ERP012910 experiment page. The video below details how to reach the experiment page in Bgee 15.0. Additionally, you can access the page directly at https://www.bgee.org/experiment/ERP012910.
 
 
 ![](../img/doc/Raw-data-interface/Fig1-Experiment-page-howtogetthere.gif#tutoimgborder)
@@ -98,7 +107,7 @@ Following the previously described steps will bring you to this page.
 
 Alternatively, if you are not looking for a particular experiment but want to search all experiments in Bgee that match specific conditions you are interested in (e.g. species, tissue, developmental stage, etc.), you can simply fill out the [search form](#search-form) as described above and click on *Submit*.
 
-## Results table
+### Results table
 
 The result table at the bottom of the page, which gets populated after searching for a specific experiment ID or filling out the search form, contains 4 columns. You can easily access the more detailed Experiment information by clicking on any Experiment ID name contained in the results table.
 
@@ -109,7 +118,7 @@ The four columns contained in the table are:
 * **Description**: a more detailed description of how the experiment was done and the aims of the project.
 * **Link to raw data annotations**: this link will allow you to see all libraries included in this experiment (inside Bgee) through our raw data annotations page (for further details on this page, see [Raw data annotations](#raw-data-annotations) section).
 
-## Experiment general information
+### Experiment general information
 
 The top section of the experiment page contains general information about the experiment selected. You can find the title of the experiment, the experiment ID, the technology used, a brief description of the experiment, and the original data source with a link to where you can find the relevant data and information outside Bgee.
 
@@ -118,7 +127,7 @@ You may also be interested in the *Download all assays* button which allows the 
 ![](../img/doc/Raw-data-interface/Fig2-General-info-headers.png#tutoimgborder)
 
 
-## Result table - within an experiment
+### Result table - within an experiment
 
 The bottom section of the page contains the results table where each row represents one library from the selected experiment.
 
@@ -128,7 +137,7 @@ The top of the results page has a filter option that filters all the columns usi
 
 As with the *Raw data annotations* or *Processed expression values* pages, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
-## Column descriptions - within an experiment
+### Description of results
 
 * **Library ID:** Unique library identifier for the sequenced or analyzed sample.
 * **Anat. entity ID:** Controlled vocabulary ID (UBERON, CL or species specific term) describing anatomical localization of the sample. Clicking on the Uberon link brings you to the Ontology search page for that Uberon ID where you will be able to see all related substructures or parent terms.
@@ -136,7 +145,7 @@ As with the *Raw data annotations* or *Processed expression values* pages, the c
 * **Stage ID:** Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name:** Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity:** Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 * **Technology:** Method used to generate the raw gene expression measurements.
 * **Sequencing platform:** Exact instrument name used for the sequencing.
@@ -151,18 +160,18 @@ As with the *Raw data annotations* or *Processed expression values* pages, the c
 * **Max rank:** When performing a fractional ranking of the genes in the annotated sample, based on their expression level, maximum rank attained in the sample. Used to normalize ranks across samples and compute expression scores in Bgee.
 * **Link to processed expression values:** The "Browse results" link allows you to access the processed expression values for this library. It will include the expression level and expression p-value for each available gene.
 
-# Raw data annotations
+## Raw data annotations
 
 The raw data annotations tab allows you to retrieve all libraries in Bgee that match your selected conditions and access their fully annotated raw (unprocessed) data. Similar to the *experiments* and *processed expression values* pages, you can fill out the form at the top of the page to specify in which species, tissue, developmental stage, or any other condition you want to see the available data for. You may also just want to select a specific experiment on the top right next to the form and see all available libraries for that experiment.
 
 ![](../img/doc/Raw-data-interface/Raw-data-annotation_homepage.png#tutoimgborder)
 
-## Results table
+### Results table
 
 As with the *Experiments* or *Processed expression values* page, the columns of the results table will depend on the data type selected on top of the filter options. We describe in the *Column description* a definition of all columns present in at least one data type.
 
 
-## Column descriptions
+### Description of results
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Experiment name**: defines the title used to designate this experiment.
@@ -172,7 +181,7 @@ As with the *Experiments* or *Processed expression values* page, the columns of 
 * **Stage ID:** Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name:** Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex:** Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain:** Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity:** Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species:** Describes the species name in binomial nomenclature (scientific name).
 * **Technology:** Method used to generate the raw gene expression measurements.
 * **Sequencing platform:** Exact instrument name used for the sequencing.
@@ -192,17 +201,17 @@ As with the *Experiments* or *Processed expression values* page, the columns of 
 * **Chip ID**: Identifier of the Affymetrix chip.
 * **Evidence ID**: Specific identifier of one results from an in situ hybridization experiment.
 
-# Processed expression values
+## Processed expression values
 The *Processed expression values* tab allows you to gather gene expression information processed using the Bgee pipeline that matches your selected conditions.
 The [form](#search-form) on top of the page allows you to limit which processed expression data is populated in the results table. It is also possible to filter data present in the result table
 using the [filtering section](#filtering).
 
-## Results table
+### Results table
 
 The columns of the results table will depend on the data type selected. We describe in the *Column description* section all columns present in at least one data type.
 
 
-## Column descriptions
+### Description of results
 
 * **Experiment ID**: refers to a unique identifier assigned to the specific experiment done in the study. You can click on this link to access further information on an experiment.
 * **Library ID**: Unique library identifier for the sequenced or analyzed sample.
@@ -218,7 +227,7 @@ The columns of the results table will depend on the data type selected. We descr
 * **Signal intensity**: Log transformation of normalized Affymetrix probeset signal intensities.
 * **Read count**: number of reads mapped to this gene.
 * **UMI count**: number of Unique Molecular Identifier (UMI) mapped to this gene from the Bgee target-based RNA-Seq pipeline.
-* **Expression p-value**: p-value of the expression call. The lower the p-value the higher we trust the gene to be expressed.
+* **Expression p-value**: p-value of the expression call. The lower the p-value the higher we trust the gene to be significantly expressed. For each data type, we identify whether the gene expression level is significantly above the background transcriptional and experimental noise. For instance, for RNA-Seq data, the expression level of selected intergenic regions is used to estimate the background noise in each library, leading to obtain one p-value for the significance of expression for each gene in the library. More specifically for single-cell RNA-Seq data, data are pseudo-bulked per library and cell type to obtain more signal, no statistical present/absent calls are produced per **cell**, but per **cell population** (gene count matrices per cell can still be retrieved, in H5AD format, see the [experiment search](/search/raw-data) to retrieve such data).
 * **Cell type ID**: ID of the cell type of the sample. Clicking the link will give you more information on that cell type by bringing you to the Ontology origin where you can see parent and child terms or cell type function.
 * **Cell type name**: Common name of the cell type of the sample such as "embryonic cell".
 * **Anat. entity ID**: Controlled vocabulary ID (UBERON, CL or species specific term) describing anatomical localization of the sample. Clicking on the Uberon link brings you to the Ontology search page for that Uberon ID where you will be able to see all related substructures or parent terms.
@@ -226,5 +235,5 @@ The columns of the results table will depend on the data type selected. We descr
 * **Stage ID**: Controlled vocabulary ID (UBERON or species specific term) describing the developmental and life stage of the sample. Clicking on the associated link will give you more information about the term, in addition to the parent and child terms.
 * **Stage name**: Common name of the developmental and life stage of the sample, for example, "adult". The terms can be highly precise, such as 4 days old, or if the authors did not use highly precise terms, the most precise parent term is used, such as "life cycle".
 * **Sex**: Annotation of the sex of the sample (male, female, any, hermaphrodite, mixed).
-* **Strain**: Annotation of the specific strain from which the samples were taken, for example C58/J or BXD6.
+* **Strain/Ethnicity**: Annotation of the specific strain/ethnicity from which the samples were taken, for example C58/J or BXD6.
 * **Species**: Describes the species name in binomial nomenclature (scientific name).

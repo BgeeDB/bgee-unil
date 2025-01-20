@@ -19,6 +19,8 @@ export const SEARCH_CANCEL_API = {
     processedValues: null,
     species: null,
     speciesDevelopmentSexe: null,
+    name: null,
+    geneList: null,
   },
   rawData: {
     search: null,
@@ -337,6 +339,37 @@ const search = {
             reject(error?.response);
           });
       }),
+      name: (speciesId) =>
+          new Promise((resolve, reject) => {
+              const params = DEFAULT_PARAMETERS('species', 'name');
+              params.append('species_id', speciesId);
+              axiosInstance
+                  .get(`/?${params.toString()}`, {
+                      cancelToken: new axios.CancelToken((c) => {
+                          SEARCH_CANCEL_API.species.name = c;
+                      }),
+                  })
+                  .then(({ data }) => resolve(data))
+                  .catch((error) => {
+                      errorHandler(error);
+                      reject(error?.response);
+                  });
+          }),
+      geneList: (speciesId) =>
+          new Promise((resolve, reject) => {
+              const params = DEFAULT_PARAMETERS('gene', 'species_list');
+              params.append('species_id', speciesId);
+              axiosInstance
+                  .get(`/?${params.toString()}`, {
+                      cancelToken: new axios.CancelToken((c) => {
+                          SEARCH_CANCEL_API.species.geneList = c;
+                      }),
+                  })
+                  .then(({ data }) => resolve(data))
+                  .catch((error) => {
+                      reject(error?.response);
+                  });
+          }),
   },
   rawData: {
     search: (form, isOnlyCounts, bypassInitSearchParam = false) =>
@@ -414,6 +447,7 @@ const search = {
           params.append('cell_type_descendant', form.hasCellTypeSubStructure);
           params.append('anat_entity_descendant', form.hasTissueSubStructure);
           params.append('stage_descendant', form.hasDevStageSubStructure);
+          params.append('only_propagated', form.onlyPropagated);
 
           // Search form for Expression calls
           if (form?.dataQuality) {
@@ -426,9 +460,6 @@ const search = {
             form.conditionalParam2.forEach((cp) =>
               params.append('cond_param2', cp)
             );
-          }
-          if (form?.condObserved !== undefined) {
-            params.append('cond_observed', form?.condObserved);
           }
 
           // We apply the filters

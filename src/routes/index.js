@@ -57,7 +57,6 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.ANALYSIS.EXPRESSION_COMPARISON,
-                  PATHS.ANALYSIS.EXPRESSION_COMPARISON_RESULT,
                 ]}
                 render={(props) => (
                   <Page
@@ -121,6 +120,18 @@ const Router = () => (
                   <Page
                     {...props}
                     Component={ROUTES[PATHS.SEARCH.SPECIES_ITEM].component}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={[
+                    PATHS.SEARCH.GENE_LIST_ITEM,
+                    PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES]}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={ROUTES[PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES].component}
                   />
                 )}
               />
@@ -229,16 +240,12 @@ const Router = () => (
               <Route
                 exact
                 path={[
-                  PATHS.RESOURCES.DOCS,
                   PATHS.RESOURCES.R_PACKAGES,
-                  PATHS.RESOURCES.SPARQL,
                   PATHS.RESOURCES.ANNOTATIONS,
                   PATHS.RESOURCES.ONTOLOGIES,
                   PATHS.RESOURCES.SOURCE_CODE,
-                  PATHS.SUPPORT.PROCESSED_EXPRESSION_VALUES,
                   PATHS.SUPPORT.TUTORIALS,
                   PATHS.SUPPORT.VIDEOS,
-                  PATHS.SUPPORT.FAQ,
                   PATHS.ABOUT.ABOUT,
                   PATHS.ABOUT.COLLABORATIONS,
                   PATHS.ABOUT.PUBLICATION,
@@ -252,11 +259,7 @@ const Router = () => (
                 exact
                 path={[
                   PATHS.SUPPORT.GTEX,
-                  PATHS.SUPPORT.TOP_ANAT,
-                  PATHS.SUPPORT.GENE_EXPRESSION_CALLS,
-                  PATHS.SUPPORT.RNASEQ_PROCESSED_EXPRESSION_VALUES,
-                  PATHS.SUPPORT.SCRNASEQ_FULLLENGTH_PROCESSED_EXPRESSION_VALUES,
-                  PATHS.SUPPORT.AFFYMETRIX_PROCESSED_EXPRESSION_VALUES,
+                  PATHS.SUPPORT.SCRNASEQPROTOCOLS,
                   PATHS.SUPPORT.TUTORIAL_GENE_PAGE,
                   PATHS.SUPPORT.TUTORIAL_TOPANAT,
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS,
@@ -265,6 +268,13 @@ const Router = () => (
                   PATHS.SUPPORT.TUTORIAL_EXPRESSION_COMPARISON,
                   PATHS.SUPPORT.TUTORIAL_RAW_DATA,
                   PATHS.SUPPORT.TUTORIAL_ANAT_HOMOLOGY,
+                  PATHS.SUPPORT.TUTORIAL_AFFY_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_RNASEQ_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_SCRNASEQ_FL_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_SCRNASEQ_TB_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_EXPR_VAL,
+                  PATHS.SUPPORT.TUTORIAL_GENE_EXPR,
+                  PATHS.SUPPORT.FAQ,
                 ]}
                 render={(props) => (
                   <Page {...props} Component={MarkdownReader} />

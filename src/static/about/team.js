@@ -17,7 +17,7 @@ const team = [
     children: [
       {
         type: 'only_image',
-        src: imagePath('/team/Bgee-team-062023.png'),
+        src: imagePath('/team/Bgee-team-122024.png'),
         alt: 'The current Bgee team',
       },
       {
@@ -25,8 +25,7 @@ const team = [
         content: [
           {
             type: 'text',
-            content:
-              'The Bgee team as of June 2023 photo (from left to right):',
+            content: 'The Bgee team as of December 2023 photo (from left to right):',
           },
         ],
       },
@@ -38,35 +37,16 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Carsanaro, Sara',
+                content: 'Bastian, Frederic',
               },
               {
                 type: 'text',
-                content: ` (Biocurator: sc-FAIR guru, how to make ${FULL_LENGTH_LABEL} metadata useful and usable) `,
+                content: ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto) ',
               },
               {
                 type: 'link_external',
                 text: '[ORCID]',
-                path: 'https://orcid.org/0009-0002-8634-7138',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
-                content: 'Mendes de Farias, Tarcisio',
-              },
-              {
-                type: 'text',
-                content:
-                  ' (Computational biologist: RDF/SPARQL guru, Bgee data disseminator) ',
-              },
-              {
-                type: 'link_external',
-                text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-3175-5372',
+                path: 'https://orcid.org/0000-0002-9415-5104',
               },
             ],
           },
@@ -93,31 +73,11 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Bastian, Frederic',
-              },
-              {
-                type: 'text',
-                content:
-                  ' (Associate Director: grant writer, MySQL and Java developer, Bgee howto) ',
-              },
-              {
-                type: 'link_external',
-                text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-9415-5104',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
                 content: 'Dind, Sagane',
               },
               {
                 type: 'text',
-                content:
-                  ' (Bioinformatician: pre-filter data before curation, molecular protocol master) ',
+                content: ' (Bioinformatician: pre-filter data before curation, molecular protocol master) ',
               },
               {
                 type: 'link_external',
@@ -131,31 +91,12 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Wollbrett, Julien',
-              },
-              {
-                type: 'text',
-                content:
-                  ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer) ',
-              },
-              {
-                type: 'link_external',
-                text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-3099-3117',
-              },
-            ],
-          },
-          {
-            type: 'rich_text',
-            content: [
-              {
-                type: 'bold',
                 content: 'Niknejad, Anne',
               },
               {
                 type: 'text',
                 content:
-                  ' (Lead biocurator: provide "normal", healthy wild-type, expression data: the Bgee core) ',
+                  ' (Lead biocurator: provide reference healthy wild-type expression data: the Bgee core) ',
               },
               {
                 type: 'link_external',
@@ -169,17 +110,16 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Robinson-Rechavi, Marc',
+                content: 'Carsanaro, Sara',
               },
               {
                 type: 'text',
-                content:
-                  ' (Associate Director: roadmap, idea agitator and provider, Bgee initiator) ',
+                content: ` (Biocurator: sc-FAIR guru, how to make ${FULL_LENGTH_LABEL} metadata useful and usable) `,
               },
               {
                 type: 'link_external',
                 text: '[ORCID]',
-                path: 'https://orcid.org/0000-0002-3437-3329',
+                path: 'https://orcid.org/0009-0002-8634-7138',
               },
             ],
           },
@@ -207,11 +147,16 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Schneider, Theo',
+                content: 'Nyamari, Marion',
               },
               {
                 type: 'text',
-                content: ` (not on photo) (Developer assistant: prepare a curation interface to help biocurators)`,
+                content: ` (Graduate student: Exploring the dynamics of gene expression variation and alternative splicing) `,
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0003-0004-9982',
               },
             ],
           },
@@ -220,11 +165,57 @@ const team = [
             content: [
               {
                 type: 'bold',
-                content: 'Huang, Wan-Ting',
+                content: 'Wollbrett, Julien',
               },
               {
                 type: 'text',
-                content: ` (not on photo) (Biocurator assistant: ${FULL_LENGTH_LABEL} data annotator and cleaner)`,
+                content: ' (Software Developer: Bgee R packages maintainer, pipeline and Java developer) ',
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0002-3099-3117',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Robinson-Rechavi, Marc',
+              },
+              {
+                type: 'text',
+                content:
+                  ' (Associate Director: roadmap, idea agitator and provider, Bgee initiator) ',
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0002-3437-3329',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'bold',
+                content: 'Detering, Harry',
+              },
+              {
+                type: 'text',
+                content: ` (Making sense of data through visualisation, machine learning and workflow automation) `,
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0000-0002-0134-7618',
+              },
+              {
+                type: 'text',
+                content: ` (not on the picture)`,
               },
             ],
           },
@@ -322,6 +313,20 @@ const team = [
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0002-1661-7254',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Huang, Wan-Ting ',
+              },
+              {
+                type: 'link_external',
+                text: '[ORCID]',
+                path: 'https://orcid.org/0009-0006-7191-2455',
               },
             ],
           },
@@ -461,6 +466,15 @@ const team = [
                 type: 'link_external',
                 text: '[ORCID]',
                 path: 'https://orcid.org/0000-0003-3248-011X',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Schneider, Theo',
               },
             ],
           },

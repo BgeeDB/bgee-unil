@@ -15,6 +15,8 @@ import TablePagination from './TablePagination';
 import usePagination from '../../hooks/usePagination';
 import TablePaginationWithoutRefresh from './TablePaginationWithoutRefresh';
 
+let idcounter = 0;
+
 const Table = ({
   fullwidth = true,
   classNames = '',
@@ -142,8 +144,9 @@ const Table = ({
     () => (
       <div className="control table-search is-flex is-flex-direction-row is-align-items-center">
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <p className="mr-1">Filter:</p>
+        <label htmlFor={`filtering${idcounter}`} className="mr-1">Filter:</label>
         <Input
+          id={`filtering${idcounter}`}
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -201,6 +204,7 @@ const Table = ({
     ? TablePaginationWithoutRefresh
     : TablePagination;
 
+  idcounter+=1;
   return (
     <TableProvider
       data={{

@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import PATHS from "../../routes/paths";
 import Bulma from '../Bulma';
 import NewsItem from '../NewsItem';
 
@@ -21,11 +23,17 @@ const lastNews = news[news.length - 1];
 const HomeNewsList = () => (
   <>
     <Bulma.Card.Header>
-      <Bulma.Card.Header.Title className="is-size-5 has-text-primary">
-        News
+      <Bulma.Card.Header.Title className="is-size-3 has-text-primary">
+        Bgee News
       </Bulma.Card.Header.Title>
+      <Bulma.Card.Header.Icon>
+        <Link className="internal-link" to={PATHS.ABOUT.NEWS}>
+          See all news
+        </Link>
+      </Bulma.Card.Header.Icon>
+
     </Bulma.Card.Header>
-    <Bulma.Card.Body style={{ height: 350, overflowY: 'auto' }}>
+    <Bulma.Card.Body style={{ overflowY: 'auto' }}>
       <div className="content">
         <NewsItem date={lastNews.date} News={lastNews.markdown} />
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import { COND_PARAM2 } from '../../../useLogic';
 
-const ConditionParameter = ({ conditionalParam2, setConditionalParam2 }) => {
+const ConditionParameter = ({ conditionalParam2, setConditionalParam2, selectedSpecies }) => {
   const toggle = (id) => {
     const indexOfValue = conditionalParam2.indexOf(id);
     if (indexOfValue === -1) {
@@ -14,6 +14,10 @@ const ConditionParameter = ({ conditionalParam2, setConditionalParam2 }) => {
     }
   };
 
+  const label = selectedSpecies === 9606 ? 'ethnicities' : 'strains';
+  const Label = selectedSpecies === 9606 ? 'Ethnicity'   : 'Strain';
+
+  // Override c.label from pages/search/rawdata/useLogic.js by Label because when COND_PARAM2.label is defined, the species taxid is not yet known!
   return (
     <div className="mt-4">
       <label>
@@ -28,10 +32,10 @@ const ConditionParameter = ({ conditionalParam2, setConditionalParam2 }) => {
               produce the expression calls. For instance, if you only select
               "Anatomical localization", each expression call will have been
               produced for a specific organ or cell type, integrating data at
-              all stages, sexes, and strains available for this organ. If you
+              all stages, sexes, and ${label} available for this organ. If you
               select "Anatomical localization" and "Development and life stage",
               expression calls will have been produced for this organ at this
-              stage, integrating data from all sexes and strains available.
+              stage, integrating data from all sexes and ${label} available.
               Therefore the calls have different FDR, call type, etc, depending
               on this selection of condition parameters.`}
             </>
@@ -51,7 +55,7 @@ const ConditionParameter = ({ conditionalParam2, setConditionalParam2 }) => {
                 checked={isSelected}
                 onChange={() => toggle(c.id)}
               />
-              <b className="mx-1">{c.label}</b>
+              <b className="mx-1">{Label}</b>
             </label>
           );
         })}

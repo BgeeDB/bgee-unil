@@ -4,7 +4,7 @@ import PATHS from '../../routes/paths';
 const tutorialValues = [
   {
     type: 'title',
-    content: 'Bgee tutorials',
+    content: 'Bgee Documentation',
   },
   {
     type: 'grid',
@@ -13,7 +13,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Gene search and gene page',
+            title: 'Gene Search and Gene Page',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -29,7 +29,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to search gene and what kind of information you can get from the Bgee gene page.',
+                  'How to search for a gene and the information you can get from the Bgee gene page.',
               },
             ],
           },
@@ -39,7 +39,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: TopAnat, Uberon enrichment analysis',
+            title: 'TopAnat: an Anatomical Entity (Uberon) Enrichment Tool',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -55,7 +55,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to use TopAnat and to do an anatomical enrichment analysis.',
+                  'How to use TopAnat and to identify anatomical entities that have over or under-represented gene expression.',
               },
             ],
           },
@@ -65,7 +65,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Expression call search',
+            title: 'Search for Present/Absent Expression Calls',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -81,7 +81,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to search all gene expression present and absent calls in the Bgee database.',
+                  'How to search gene expression calls in the Bgee database.',
               },
             ],
           },
@@ -91,7 +91,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Data curation in Bgee',
+            title: 'Data Curation in Bgee',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -107,7 +107,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how the curation is done in Bgee.',
+                  'Background on data curation including what data are captured, relevant ontologies, and how data is integrated across species.',
               },
             ],
           },
@@ -117,7 +117,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Querying the Bgee Knowledge Graph',
+            title: 'Querying the Bgee Knowledge Graph with SPARQL',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -133,7 +133,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to query the Bgee Knowledge Graph with SPARQL.',
+                  'How to query the Bgee Knowledge Graph with SPARQL.',
               },
             ],
           },
@@ -143,7 +143,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Comparison of gene expression',
+            title: 'Expression Pattern Comparison',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -159,7 +159,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to compare gene expression for a list of genes in anatomical entities.',
+                  'Compare gene expression across anatomical structures for a list of genes.',
               },
             ],
           },
@@ -169,7 +169,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Raw data interface',
+            title: 'Search Experiments, Data Annotations, and Processed Expression Values',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -185,7 +185,7 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to explore experiments, raw data annotations and processed expression values.',
+                  'How to search and filter experiments, raw data annotations, and processed expression values in the Bgee database.',
               },
             ],
           },
@@ -195,7 +195,7 @@ const tutorialValues = [
         children: [
           {
             type: 'card',
-            title: 'Tutorial: Anatomical homology',
+            title: 'Anatomical Homology',
             image: {
               src: imagePath('/document-text-outline.svg'),
               alt: 'Document logo',
@@ -211,7 +211,59 @@ const tutorialValues = [
               {
                 type: 'text',
                 content:
-                  'Description of how to retrieve anatomical entities that are homologous among different species.',
+                  'How to retrieve anatomical entities that are homologous among different species.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Expression Calls Files',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_GENE_EXPR,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Detailed description of the contents and generation of the presence/absence expression calls download files.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        children: [
+          {
+            type: 'card',
+            title: 'Processed Expression Values File',
+            image: {
+              src: imagePath('/document-text-outline.svg'),
+              alt: 'Document logo',
+            },
+            link: PATHS.SUPPORT.TUTORIAL_EXPR_VAL,
+            linkType: 'internal',
+            classNames: 'mb-3',
+          },
+          {
+            type: 'rich_text',
+            classNames: 'has-text-centered',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Detailed description of the contents and generation of the processed expression and annotation metadata download files.',
               },
             ],
           },

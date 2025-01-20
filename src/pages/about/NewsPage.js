@@ -22,7 +22,7 @@ const news = markdownFiles.keys().map((path) => {
 const NewsPage = () => (
   <>
     <div className="content has-text-centered">
-      <Bulma.Title size={5}>News</Bulma.Title>
+      <Bulma.Title className="title is-3">News</Bulma.Title>
     </div>
     <div className="content">
       {news.reverse().map((item) => (

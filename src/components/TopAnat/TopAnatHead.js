@@ -61,7 +61,7 @@ const TopAnatHead = () => (
     <div id="helpers-top-anat" className="my-4 is-flex">
       <TopAnatHistoryModal />
       <Link
-        to={PATHS.SUPPORT.TOP_ANAT}
+        to={PATHS.SUPPORT.TUTORIAL_TOPANAT}
         className="button is-bgee-link is-outlined mr-2"
       >
         <Bulma.IonIcon name="newspaper-outline" />

@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Button from '../../../components/Bulma/Button/Button';
+import PATHS from '../../../routes/paths';
 import './rawDataAnnotations.scss';
 import RawDataAnnotationResults from './RawDataAnnotationResults';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
@@ -31,6 +32,7 @@ import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
+import OnlyPropagated from './components/filters/OnlyPropagated/OnlyPropagated';
 import config from '../../../config.json';
 
 const APP_VERSION = config.version;
@@ -50,6 +52,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     selectedCellTypes,
     hasTissueSubStructure,
     hasCellTypeSubStructure,
+    onlyPropagated,
     selectedStrain,
     selectedGene,
     selectedExpOrAssay,
@@ -70,6 +73,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     setConditionalParam2,
     setDataQuality,
     setDataTypesExpCalls,
+    setOnlyPropagated,
     onChangeSpecies,
     getSpeciesLabel,
     setSelectedCellTypes,
@@ -137,30 +141,35 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     setPageType(newPageType);
   };
 
+  const formatLargeNumber = (largeNumber) => {
+    const numberToDisplay = new Intl.NumberFormat('en').format(largeNumber || 0);
+    return numberToDisplay;
+  };
+
   const resultCountLabel = useMemo(() => {
     switch (pageType) {
       case EXPERIMENTS:
-        return `${localCount.experimentCount || 0} ${
+        return `${formatLargeNumber(localCount.experimentCount)} ${
           dataType === EST ? 'libraries' : 'experiments'
         }`;
       case RAW_DATA_ANNOTS: {
         if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries`;
+          return `${formatLargeNumber(localCount.assayCount)} libraries`;
         }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
+        return `${formatLargeNumber(localCount.experimentCount)} experiments / ${
+          formatLargeNumber(localCount.assayCount)
         } ${dataType === AFFYMETRIX ? 'chips' : 'assays'}`;
       }
       case PROC_EXPR_VALUES: {
         if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries / ${
-            localCount.callCount || 0
+          return `${formatLargeNumber(localCount.assayCount)} libraries / ${
+            formatLargeNumber(localCount.callCount)
           } gene expression values`;
         }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
+        return `${formatLargeNumber(localCount.experimentCount)} experiments / ${
+          formatLargeNumber(localCount.assayCount)
         } ${dataType === AFFYMETRIX ? 'chips' : 'assays'} / ${
-          localCount.callCount
+          formatLargeNumber(localCount.callCount)
         } gene expression values`;
       }
       default:
@@ -202,6 +211,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
     urlParamsWithoutPageType += `&anat_entity_descendant=${params.hasTissueSubStructure}`;
     urlParamsWithoutPageType += `&cell_type_descendant=${params.hasCellTypeSubStructure}`;
     urlParamsWithoutPageType += `&stage_descendant=${params.hasDevStageSubStructure}`;
+    urlParamsWithoutPageType += `&only_propagated=${params.onlyPropagated}`;
 
     return urlParamsWithoutPageType;
   });
@@ -325,6 +335,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 setSelectedStrain={setSelectedStrain}
                                 AutoCompleteByType={AutoCompleteByType}
                                 addConditionalParam={addConditionalParam}
+                                selectedSpecies={selectedSpecies.value}
                               />
                             </div>
                             <div className="my-2">
@@ -335,6 +346,16 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                                 addConditionalParam={addConditionalParam}
                               />
                             </div>
+                            {(!isExprCalls) && (
+                              <>
+                                <div className="my-2">
+                                  <OnlyPropagated
+                                    onlyPropagated={onlyPropagated}
+                                    setOnlyPropagated={setOnlyPropagated}
+                                  />
+                                </div>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -355,6 +376,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                               <ConditionParameter
                                 conditionalParam2={conditionalParam2}
                                 setConditionalParam2={setConditionalParam2}
+                                selectedSpecies={selectedSpecies.value}
                               />
                               <hr />
                               <CallType
@@ -394,6 +416,11 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
                         >
                           Reinitialize
                         </Button>
+                        <a className="reinit button is-bgee-link is-outlined mr-2"
+                          href={isExprCalls ? `${PATHS.SUPPORT.TUTORIAL_EXPRESSION_CALLS}` : `${PATHS.SUPPORT.TUTORIAL_RAW_DATA}`}
+                        >
+                          Documentation
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -425,7 +452,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
             )}
             <div className="resultPart">
               {isLoading ? (
-                <div className="progressWrapper is-justify-content-flex-end	">
+                <div className="progressWrapper is-justify-content-flex-end">
                   <progress
                     className="progress is-small is-primary"
                     style={{
@@ -437,7 +464,7 @@ const RawDataAnnotations = ({ isExprCalls = false }) => {
               ) : (
                 <div className="resultCounts">
                   {isExprCalls ? (
-                    <>{`${localCount?.assayCount || 0} expressions calls`}</>
+                    <>{`${formatLargeNumber(localCount?.assayCount)} expression calls`}</>
                   ) : (
                     resultCountLabel
                   )}

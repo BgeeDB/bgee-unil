@@ -4,6 +4,7 @@ import Bulma from '../../components/Bulma';
 import classnames from '../../helpers/classnames';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import imagePath from '../../helpers/imagePath';
+import LinkExternal from '../../components/LinkExternal';
 import config from '../../config.json';
 
 const DataDumps = () => (
@@ -23,6 +24,14 @@ const DataDumps = () => (
       <Bulma.Title size={3}>Bgee data dumps</Bulma.Title>
     </div>
 
+    <p className="is-size-5">
+      All data are available under the{' '}
+      <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
+        Creative Commons Zero license (CC0)
+      </LinkExternal>
+      .
+    </p>
+
     <Bulma.Tile kind="ancestor">
       <Bulma.Tile kind="parent">
         <Bulma.Tile kind="child">
@@ -38,7 +47,7 @@ const DataDumps = () => (
                     className={`image is-128x128'
                   }`}
                   >
-                    <img src={imagePath('/logo/mysql_logo.png')} alt="MySQL logo" />
+                    <img src={imagePath('/logo/mysql-logo.png')} alt="MySQL logo" />
                   </figure>
                 </div>
 
@@ -65,7 +74,7 @@ const DataDumps = () => (
               <div className={classnames('card custom-card', 'mb-3')}>
                 <div className="card-image">
                   <figure className="image is-128x128">
-                    <img src={imagePath('/logo/rdf_logo.png')} alt="RDF logo" />
+                    <img src={imagePath('/logo/rdf-logo.png')} alt="RDF logo" />
                   </figure>
                 </div>
 

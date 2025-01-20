@@ -13,23 +13,13 @@ const videos = [
   },
   {
     type: 'section',
-    title: 'Bgee videos playlist',
+    title: 'Bgee YouTube channel',
     children: [
       {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://www.youtube.com/playlist?list=PLoCxWrRWjqB3h9HbVGId2aZgzOaRs6Xzw',
-            text: 'Bgee videos playlist',
-          },
-        ],
-      },
-      {
         type: 'link_image',
-        src: imagePath('/videos/playlist.png'),
-        path: 'https://www.youtube.com/playlist?list=PLoCxWrRWjqB3h9HbVGId2aZgzOaRs6Xzw',
-        alt: 'Bgee videos playlist',
+        src: imagePath('/videos/Bgee-YouTube-Channel.png'),
+        path: 'https://www.youtube.com/@bgeedatabase',
+        alt: 'Bgee YouTube channel',
         classNames: 'youtube-preview-image',
       },
       {
@@ -46,20 +36,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/vjrTq0fGCTk',
-            text: 'Bgee - Introduction of trainers',
-          },
-          {
-            type: 'text',
-            content: ' (May 26, 2023)',
+            path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGLGR9-h8gmD7mCvN2RRHmZV',
+            text: 'All About Bgee',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/vjrTq0fGCTk',
-        src: imagePath('/videos/Bgee--Introduction-of-trainers.png'),
-        alt: 'Bgee - Introduction of trainers',
+        path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGLGR9-h8gmD7mCvN2RRHmZV',
+        src: imagePath('/videos/All-about-Bgee.png'),
+        alt: 'All About Bgee',
         classNames: 'youtube-preview-image',
       },
 {
@@ -70,20 +56,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/x8Fypkwlmuw',
-            text: 'Bgee - an overview',
-          },
-          {
-            type: 'text',
-            content: ' (May 26, 2023)',
+            path: 'https://www.youtube.com/watch?v=k1gPNuNNFwk&list=PLbJBK0jNmCGLgWPLKe6stnNkFnwjpo6q9',
+            text: 'Bgee Course 2024: Gene Expression Made Useful Easily: Tools and Database of Bgee',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/x8Fypkwlmuw',
-        src: imagePath('/videos/Bgee--an-overview2.png'),
-        alt: 'Bgee - an overview',
+        path: 'https://www.youtube.com/watch?v=k1gPNuNNFwk&list=PLbJBK0jNmCGLgWPLKe6stnNkFnwjpo6q9',
+        src: imagePath('/videos/Bgee-Course-2024.png'),
+        alt: 'Bgee Course 2024: Gene Expression Made Useful Easily: Tools and Database of Bgee',
         classNames: 'youtube-preview-image',
       },
 {
@@ -94,20 +76,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/hTx4fk77DZ4',
-            text: 'Data integration in Bgee',
-          },
-          {
-            type: 'text',
-            content: ' (May 26, 2023)',
+            path: 'https://www.youtube.com/watch?v=vjrTq0fGCTk&list=PLbJBK0jNmCGKFCDZUnNoQra3T0E-VDhVu',
+            text: 'Bgee Course 2023: Gene Expression Made Useful Easily: Tools and Database of Bgee',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/hTx4fk77DZ4',
-        src: imagePath('/videos/Data-integration-in-Bgee2.png'),
-        alt: 'Data integration in Bgee',
+        path: 'https://www.youtube.com/watch?v=vjrTq0fGCTk&list=PLbJBK0jNmCGKFCDZUnNoQra3T0E-VDhVu',
+        src: imagePath('/videos/Bgee-Course-2023.png'),
+        alt: 'Bgee Course 2023: Gene Expression Made Useful Easily: Tools and Database of Bgee',
         classNames: 'youtube-preview-image',
       },
 {
@@ -118,20 +96,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/5cbXWL9quCA',
-            text: 'Bgee data access',
-          },
-          {
-            type: 'text',
-            content: ' (May 26, 2023)',
+            path: 'https://www.youtube.com/watch?v=Tmu2x-PH0G4&list=PLbJBK0jNmCGLLVvMbPokgKlCzGU5D4jZQ',
+            text: 'Bgee Course 2022: Gene Expression Made Useful Easily: Tools and Database of Bgee',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/5cbXWL9quCA',
-        src: imagePath('/videos/Bgee--Data-access.png'),
-        alt: 'Bgee data access',
+        path: 'https://www.youtube.com/watch?v=Tmu2x-PH0G4&list=PLbJBK0jNmCGLLVvMbPokgKlCzGU5D4jZQ',
+        src: imagePath('/videos/Bgee-Course-2022.png'),
+        alt: 'Bgee Course 2022: Gene Expression Made Useful Easily: Tools and Database of Bgee',
         classNames: 'youtube-preview-image',
       },
 {
@@ -142,20 +116,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/iUSjT9wDbmU',
-            text: 'Bgee tools',
-          },
-          {
-            type: 'text',
-            content: ' (May 26, 2023)',
+            path: 'https://www.youtube.com/watch?v=hbpEJO2IzxA&list=PLbJBK0jNmCGL_MZehmKl4_Z1Wiz_mA_jq',
+            text: 'Bgee Course 2020: Gene Expression Made Useful Easily: Tools and Database of Bgee',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/iUSjT9wDbmU',
-        src: imagePath('/videos/Bgee-tools.png'),
-        alt: 'Bgee tools',
+        path: 'https://www.youtube.com/watch?v=hbpEJO2IzxA&list=PLbJBK0jNmCGL_MZehmKl4_Z1Wiz_mA_jq',
+        src: imagePath('/videos/Bgee-Course-2020.png'),
+        alt: 'Bgee Course 2020: Gene Expression Made Useful Easily: Tools and Database of Bgee',
         classNames: 'youtube-preview-image',
       },
 {
@@ -166,20 +136,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/PRj9f1gX_PM',
-            text: 'Exploring gene expression with Bgee',
-          },
-          {
-            type: 'text',
-            content: ' (Jan 25, 2021)',
+            path: 'https://www.youtube.com/watch?v=EHNTlOy14t4&list=PLbJBK0jNmCGIS7lYN9qed8r8bceT8fF87&index=3',
+            text: 'Bgee Comparative Genomics',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/PRj9f1gX_PM',
-        src: imagePath('/videos/Exploring-gene-expression-with-Bgee.png'),
-        alt: 'Exploring gene expression with Bgee',
+        path: 'https://www.youtube.com/watch?v=EHNTlOy14t4&list=PLbJBK0jNmCGIS7lYN9qed8r8bceT8fF87&index=3',
+        src: imagePath('/videos/Bgee-Comparative-Genomics.png'),
+        alt: 'Bgee Comparative Genomics',
         classNames: 'youtube-preview-image',
       },
 {
@@ -190,20 +156,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/hbpEJO2IzxA',
-            text: 'Bgee - an overview',
-          },
-          {
-            type: 'text',
-            content: ' (Apr 21, 2020)',
+            path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGIKZuCsZ6daNEwbV0nCS6C0',
+            text: 'Accessing Bgee with Semantic Queries',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/hbpEJO2IzxA',
-        src: imagePath('/videos/Bgee--an-overview.png'),
-        alt: 'Bgee - an overview',
+        path: 'https://www.youtube.com/playlist?list=PLbJBK0jNmCGIKZuCsZ6daNEwbV0nCS6C0',
+        src: imagePath('/videos/Accessing-Bgee-with-Semantic-Queries.png'),
+        alt: 'Accessing Bgee with Semantic Queries',
         classNames: 'youtube-preview-image',
       },
 {
@@ -214,20 +176,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/70OHZDnmULE',
-            text: 'Bgee - Present/absent gene expression calls from transcriptomics data',
-          },
-          {
-            type: 'text',
-            content: ' (Apr 21, 2020)',
+            path: 'https://www.youtube.com/watch?v=9q2q7_DJHRw&list=PLbJBK0jNmCGLGRt7FBSkNcVaJFKyu1G75',
+            text: 'Bgee and scFAIR',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/70OHZDnmULE',
-        src: imagePath('/videos/Bgee--Present_absent-gene-expression-calls-from-transcriptomics-data.png'),
-        alt: 'Bgee - Present/absent gene expression calls from transcriptomics data',
+        path: 'https://www.youtube.com/watch?v=9q2q7_DJHRw&list=PLbJBK0jNmCGLGRt7FBSkNcVaJFKyu1G75',
+        src: imagePath('/videos/Bgee-scFAIR.png'),
+        alt: 'Bgee and scFAIR',
         classNames: 'youtube-preview-image',
       },
 {
@@ -238,92 +196,16 @@ const videos = [
         content: [
           {
             type: 'link_external',
-            path: 'https://youtu.be/xlLM8mtb5O0',
-            text: 'Data integration in Bgee',
-          },
-          {
-            type: 'text',
-            content: ' (Apr 21, 2020)',
+            path: 'https://www.youtube.com/watch?v=ZQyK7IVHbFA&list=PLbJBK0jNmCGJth12mY77thJaJo2xLkbZq',
+            text: 'Bgee at ISMB',
           },
         ],
       },
       {
         type: 'link_image',
-        path: 'https://youtu.be/xlLM8mtb5O0',
-        src: imagePath('/videos/Data-integration-in-Bgee.png'),
-        alt: 'Data integration in Bgee',
-        classNames: 'youtube-preview-image',
-      },
-{
-    type: 'break_line',
-},
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://youtu.be/bJV8B5zGI0g',
-            text: 'Bgee tools and data access',
-          },
-          {
-            type: 'text',
-            content: ' (Apr 21, 2020)',
-          },
-        ],
-      },
-      {
-        type: 'link_image',
-        path: 'https://youtu.be/bJV8B5zGI0g',
-        src: imagePath('/videos/Bgee-tools-and-data-access.png'),
-        alt: 'Bgee tools and data access',
-        classNames: 'youtube-preview-image',
-      },
-{
-    type: 'break_line',
-},
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://youtu.be/RkbsNzMFUs0',
-            text: 'Answering your biological questions right away',
-          },
-          {
-            type: 'text',
-            content: ' (Jun 03, 2020)',
-          },
-        ],
-      },
-      {
-        type: 'link_image',
-        path: 'https://youtu.be/RkbsNzMFUs0',
-        src: imagePath('/videos/Answering-your-biological-questions-right-away.png'),
-        alt: 'Answering your biological questions right away',
-        classNames: 'youtube-preview-image',
-      },
-{
-    type: 'break_line',
-},
-      {
-        type: 'rich_text',
-        content: [
-          {
-            type: 'link_external',
-            path: 'https://youtu.be/EHNTlOy14t4',
-            text: 'Duplication of genes and genomes, expression (Comparative Genomics 3/3)',
-          },
-          {
-            type: 'text',
-            content: ' (Sep 16-18, 2020)',
-          },
-        ],
-      },
-      {
-        type: 'link_image',
-        path: 'https://youtu.be/EHNTlOy14t4',
-        src: imagePath('/videos/Duplication-of-genes-and-genomes--expression.png'),
-        alt: 'Duplication of genes and genomes, expression',
+        path: 'https://www.youtube.com/watch?v=ZQyK7IVHbFA&list=PLbJBK0jNmCGJth12mY77thJaJo2xLkbZq',
+        src: imagePath('/videos/Bgee-at-ISMB.png'),
+        alt: 'Bgee at ISMB',
         classNames: 'youtube-preview-image',
       },
     ],

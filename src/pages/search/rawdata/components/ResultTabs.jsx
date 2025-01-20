@@ -3,6 +3,11 @@
 import React, { useMemo } from 'react';
 import { EXPERIMENTS, PROC_EXPR_VALUES, RAW_DATA_ANNOTS } from '../useLogic';
 
+const formatLargeNumber = (largeNumber) => {
+  const numberToDisplay = new Intl.NumberFormat('en').format(largeNumber || 0);
+  return numberToDisplay;
+};
+
 const ResultTabs = ({
   dataTypes,
   dataType,
@@ -60,7 +65,7 @@ const ResultTabs = ({
             ) : (
               <span className="has-text-danger">
                 &nbsp;(
-                {nb})
+                {`${formatLargeNumber(nb)}`})
               </span>
             )}
           </div>

@@ -141,6 +141,24 @@ const bgeesab = [
               },
             ],
           },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content: 'Prof. ',
+              },
+              {
+                type: 'link_external',
+                path: 'https://som.cuanschutz.edu/Profiles/Faculty/Profile/35865',
+                text: 'Monica Munoz-Torres',
+              },
+              {
+                type: 'text',
+                content: ', Associate Professor of Biomedical Informatics at the School of Medicine, University of Colorado, Colorado, USA',
+              },
+            ],
+          },
         ],
       },
       {
@@ -161,7 +179,7 @@ const bgeesab = [
         children: [
           {
             type: 'text',
-            content: 'February 26 2024',
+            content: 'February 2025',
           },
         ],
       },
@@ -172,6 +190,10 @@ const bgeesab = [
       {
         type: 'unordered_list',
         children: [
+          {
+            type: 'text',
+            content: 'February 26 2024',
+          },
           {
             type: 'text',
             content: 'April 28 2023',

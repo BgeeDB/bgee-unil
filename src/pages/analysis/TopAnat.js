@@ -47,6 +47,15 @@ const TopAnat = () => {
     setResults,
   } = useTopAnat(flowState, setFlowState);
 
+  const oldResultFragment = '#/result/';
+  if (history.location.hash !== '' && history.location.hash.match(oldResultFragment) ) {
+    // Get result hashtag from history.location.hash, and clean the history.location.hash value
+    const resultId = history.location.hash.replace(oldResultFragment, '');
+    history.location.hash = '';
+    // Rewrite the history.location with the current pathname + resultId
+    history.push(`${resultId}`);
+  }
+
   const getJobStatus = React.useCallback((ID, jobID, requestParams = true) => {
     api.topAnat
       .getJob(ID, jobID, requestParams)

@@ -1,6 +1,6 @@
 {
   "name": "bgee",
-  "version": "15.0.1",
+  "version": "15.2.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
@@ -15,6 +15,7 @@
     "@types/react-dom": "^18.2.18",
     "axios": "0.21.4",
     "bulma": "^0.9.3",
+    "craco": "^0.0.3",
     "craco-raw-loader": "^1.0.2",
     "d3": "^7.8.5",
     "dlv": "^1.1.3",
@@ -43,6 +44,7 @@
     "build": "node productionCreation.js",
     "prod": "node productionCreation.js",
     "annot": "node productionCreation.js",
+    "dev": "node productionCreation.js",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,jsx,tsx}\" --quiet=true"

@@ -14,7 +14,7 @@ const ontologies = [
             type: 'card',
             title: 'Developmental stage ontologies',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/logo/github-logo.png'),
               alt: 'Github logo',
             },
             link: 'https://github.com/obophenotype/developmental-stage-ontologies',
@@ -49,7 +49,7 @@ const ontologies = [
             type: 'card',
             title: 'Confidence Information Ontology (CIO)',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/logo/github-logo.png'),
               alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/confidence-information-ontology',
@@ -70,7 +70,7 @@ const ontologies = [
             type: 'card',
             title: 'Homology ontology (HOM)',
             image: {
-              src: imagePath('/logo/github_logo.png'),
+              src: imagePath('/logo/github-logo.png'),
               alt: 'Github logo',
             },
             link: 'https://github.com/BgeeDB/homology-ontology',
@@ -91,7 +91,7 @@ const ontologies = [
             type: 'card',
             title: 'Uberon ontology',
             image: {
-              src: imagePath('/logo/uberon_logo.png'),
+              src: imagePath('/logo/uberon-logo.png'),
               alt: 'Uberon logo',
             },
             link: 'https://uberon.github.io/',
@@ -137,7 +137,7 @@ const ontologies = [
             type: 'card',
             title: 'NCBITaxon ontology',
             image: {
-              src: imagePath('/logo/obofoundry_logo.png'),
+              src: imagePath('/logo/obofoundry-logo.png'),
               alt: 'OBOfoundry logo',
             },
             link: 'http://www.obofoundry.org/ontology/ncbitaxon.html',

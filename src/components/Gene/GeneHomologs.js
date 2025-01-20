@@ -32,7 +32,7 @@ const TaxonNameCell = ({ id, scientificName }) => (
   </>
 );
 const ExpressionComparisonCell = ({ query }) => (
-  <Link to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON}?${query}`}>
+  <Link to={`${PATHS.ANALYSIS.EXPRESSION_COMPARISON}?${query}`} rel="nofollow">
     Compare expression
   </Link>
 );
@@ -58,7 +58,7 @@ const GenesCell = ({ genes }) => {
           ).replace(
             ':speciesId',
             a.geneMappedToSameGeneIdCount === 1 ? '' : a.species.id
-          )}
+          ).replace(/\/$/, '')}
         >
           {a.geneId}
         </Link>

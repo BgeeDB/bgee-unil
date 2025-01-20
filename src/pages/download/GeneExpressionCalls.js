@@ -9,7 +9,6 @@ import api from '../../api';
 import CreativeCommons from '../../components/CreativeCommons';
 import GridSpecies from '../../components/GridSpecies/GridSpecies';
 import classnames from '../../helpers/classnames';
-import LINK_ANCHOR from '../../routes/linkAnchor';
 import GaEvent from '../../components/GaEvent/GaEvent';
 import ExpressionSearch from '../../components/Search/ExpressionSearch';
 import expressionPageHelper from '../../helpers/expressionPageHelper';
@@ -108,8 +107,10 @@ const GeneExpressionCalls = () => {
           className="internal-link"
         >
           processed expression values
-        </Link>
-        . All data are available under the{' '}
+        </Link>.
+      </p>
+      <p className="is-size-5">
+        All data are available under the{' '}
         <LinkExternal to="https://creativecommons.org/publicdomain/zero/1.0/">
           Creative Commons Zero license (CC0)
         </LinkExternal>
@@ -204,7 +205,7 @@ const GeneExpressionCalls = () => {
                             Presence/Absence of expression
                             <Link
                               className="is-size-6 internal-link ml-2 grey has-text-weight-normal"
-                              to={`${PATHS.SUPPORT.GENE_EXPRESSION_CALLS}#${LINK_ANCHOR.GENE_EXPRESSION_CALLS.SINGLE_EXPR_ID}`}
+                              to={`${PATHS.SUPPORT.TUTORIAL_GENE_EXPR}`}
                             >
                               See documentation
                             </Link>
@@ -337,6 +338,22 @@ const GeneExpressionCalls = () => {
                                 Advanced file
                               </span>
                               : includes information by data types
+                            </p>
+                            <p className=" is-size-7">
+                              <a
+                                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Public domain license"
+                              >
+                                <Bulma.Image
+                                  src={imagePath(`/cc-zero.png`)}
+                                  alt="Creative Commons Zero license (CC0)"
+                                  height={15}
+                                  width={80}
+                                  style={{ margin: 0, padding: 0, textAlign: 'left' }}
+                                />
+                              </a>
                             </p>
                           </div>
                         </div>

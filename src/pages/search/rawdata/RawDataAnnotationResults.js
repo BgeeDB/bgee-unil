@@ -192,6 +192,8 @@ const RawDataAnnotationResults = ({
               currentSP.delete('anat_entity_descendant');
               currentSP.delete('pageNumber');
               currentSP.append('anat_entity_descendant', searchParams().hasTissueSubStructure ?? false);
+              currentSP.delete('only_propagated');
+              currentSP.append('only_propagated', searchParams().onlyPropagated ?? true);
               return {
                 type: col.columnType,
                 content: 'Browse results',
@@ -252,7 +254,7 @@ const RawDataAnnotationResults = ({
               isExprCalls ? '' : `${dataType}_`
             }${pageNumber}.tsv`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Export current page in TSV
             <span className="icon is-small ml-1">

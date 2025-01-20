@@ -9,12 +9,16 @@ import LinkExternal from '../../components/LinkExternal';
 import readableFileSize from '../../helpers/readableFileSize';
 import schemaDotOrg from '../../helpers/schemaDotOrg';
 import imagePath from '../../helpers/imagePath';
-import { FULL_LENGTH_LABEL } from '../../api/prod/constant';
+import config from "../../config.json";
+
+const FULL_LENGTH_LABEL = "Full length RNA-Seq";
+const DROPLET_BASED_LABEL = "Droplet based RNA-Seq";
 
 const Species = () => {
   let metaTitle = '';
   let metaDescription = '';
   let metaKeywords = '';
+  let metaLink = '';
 
   const [data, setData] = React.useState();
   const { id } = useParams();
@@ -26,6 +30,7 @@ const Species = () => {
       affymetrix: {},
       rnaSeq: {},
       fullLength: {},
+      dropletBased: {}
     };
 
     if (data) {
@@ -77,6 +82,23 @@ const Species = () => {
         (d) => d.category === 'full_length_data'
       );
       if (search) src.fullLength.data = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'full_length_h5ad'
+      );
+      if (search) src.fullLength.h5ad = search;
+
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_annot'
+      );
+      if (search) src.dropletBased.annot = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_data'
+      );
+      if (search) src.dropletBased.data = search;
+      search = data.downloadFilesGroups.downloadFiles.find(
+        (d) => d.category === 'droplet_based_h5ad'
+      );
+      if (search) src.dropletBased.h5ad = search;
     }
     return src;
   }, [data]);
@@ -97,16 +119,18 @@ const Species = () => {
   if (data) {
     metaTitle = `${data.species.genus}  ${data.species.speciesName}
        ${data.species.name ? `( ${data.species.name} )` : ''}`;
-    metaDescription = `General information and datasets available 
-        in Bgee for species 
+    metaDescription = `General information and datasets available
+        in Bgee for species
         ${data.species.genus}  ${data.species.speciesName}
        ${data.species.name ? `( ${data.species.name} )` : ''}`;
-    metaKeywords = `gene expression in 
+    metaKeywords = `gene expression in
        ${data.species.genus} ${data.species.speciesName},
        ${data.species.name ? `gene expression in ${data.species.name} , ` : ''}
-       ${data.species.genus} ${data.species.speciesName}, 
+       ${data.species.genus} ${data.species.speciesName},
        ${data.species.name ? `${data.species.name} , ` : ''}
        species, taxon`;
+    metaLink = `${config.genericDomain}${PATHS.SEARCH.SPECIES_ITEM
+        .replace(':id', data.species.id)}`;
   }
 
   return !data ? null : (
@@ -116,6 +140,7 @@ const Species = () => {
           <title>{metaTitle}</title>
           <meta name="description" content={metaDescription} />
           <meta name="keywords" content={metaKeywords} />
+          <link rel="canonical" href={metaLink} />
         </Helmet>
       )}
       <div className="content has-text-centered is-flex is-justify-content-center is-align-items-center">
@@ -184,11 +209,35 @@ const Species = () => {
           <div className="is-flex">
             <div style={{ width: 150 }}>
               <p>
-                <b style={{ width: 140 }}>Genome version</b>
+                <b style={{ width: 140 }}>Gene list</b>
               </p>
             </div>
             <div>
-              <p>{data.species.genomeVersion}</p>
+              <p>
+                <Link className="internal-link"
+                      to={PATHS.SEARCH.GENE_LIST_ITEM_BY_SPECIES
+                          .replace(':speciesId', data.species.id)
+                          .replace(':speciesName', data.species.speciesFullNameWithoutSpace?.replace("_", "-").toLowerCase())}
+                      title={`Gene list for ${data.species.genus} ${data.species.speciesName}`}>
+                  All genes for {data.species.genus} {data.species.speciesName} genome version &apos;{data.species.genomeVersion}&apos;
+                </Link>
+              </p>
+            </div>
+          </div>
+          <div className="is-flex">
+            <div style={{ width: 150 }}>
+              <p>
+                <b style={{ width: 140 }}>Experiment list</b>
+              </p>
+            </div>
+            <div>
+              <p>
+                <Link className="internal-link"
+                      to={`${PATHS.SEARCH.RAW_DATA_ANNOTATIONS}?species_id=${data.species.id}`}
+                      title={`Experiment list for ${data.species.genus} ${data.species.speciesName}`}>
+                  All experiments for {data.species.genus} {data.species.speciesName}
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -206,10 +255,10 @@ const Species = () => {
           <p>
             Bgee provides calls of presence/absence of expression. Each call
             corresponds to a unique combination of a gene, an anatomical entity,
-            a life stage, a sex, and a strain, with reported presence or absence
+            a life stage, a sex, and {`${data.species.id === 9606 ? 'an ethnicity' : 'a strain'}`}, with reported presence or absence
             of expression. More information in our{' '}
             <Link
-              to={PATHS.SUPPORT.GENE_EXPRESSION_CALLS}
+              to={PATHS.SUPPORT.TUTORIAL_GENE_EXPR}
               className="internal-link"
             >
               documentation
@@ -249,7 +298,7 @@ const Species = () => {
           </div>
           <div className="mt-2">
             <p className="is-size-5 has-text-primary has-text-weight-semibold">
-              Anatomical entities, developmental stages, sexes and strains
+              Anatomical entities, developmental stages, sexes and {`${data.species.id === 9606 ? 'ethnicities' : 'strains'}`}
             </p>
             <ul className="unordered">
               {files.fullXpr.simple && (
@@ -289,7 +338,14 @@ const Species = () => {
         <div className="">
           <p>
             Bgee provides annotations and experiment annotations, and processed
-            expression values.
+            expression values. More information in our{' '}
+            <Link
+              to={PATHS.SUPPORT.TUTORIAL_EXPR_VAL}
+              className="internal-link"
+            >
+              documentation
+            </Link>
+            .
           </p>
           <div className="mt-2">
             <p
@@ -349,7 +405,7 @@ const Species = () => {
                 )}
                 {files.rnaSeq.data && (
                   <li>
-                    Data (read counts, TPMs, and FPKMs):{' '}
+                    Data (read counts, TPMs):{' '}
                     <a className="internal-link" href={files.rnaSeq.data.path}>
                       <code>{files.rnaSeq.data.name}</code>
                     </a>
@@ -368,7 +424,8 @@ const Species = () => {
             >
               {FULL_LENGTH_LABEL}
             </p>
-            {files.fullLength.annot || files.fullLength.data ? (
+            {files.fullLength.annot || files.fullLength.data ||
+              files.fullLength.h5ad ? (
               <ul className="unordered">
                 {files.fullLength.annot && (
                   <li>
@@ -384,7 +441,7 @@ const Species = () => {
                 )}
                 {files.fullLength.data && (
                   <li>
-                    Data (read counts, TPMs, and FPKMs){' '}
+                    Processed expression values (read counts, TPMs){' '}
                     <a
                       className="internal-link"
                       href={files.fullLength.data.path}
@@ -392,6 +449,69 @@ const Species = () => {
                       <code>{files.fullLength.data.name}</code>
                     </a>
                     {` (${readableFileSize(files.fullLength.data.size)})`}
+                  </li>
+                )}
+                {files.fullLength.h5ad && (
+                  <li>
+                    Processed H5AD data per cell (read counts){' '}
+                    <a
+                      className="internal-link"
+                      href={files.fullLength.h5ad.path}
+                    >
+                      <code>{files.fullLength.h5ad.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.fullLength.h5ad.size)})`}
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="mt-2 mb-4">No data</p>
+            )}
+          </div>
+          <div className="mt-2">
+            <p
+              className="is-size-5 has-text-primary has-text-weight-semibold"
+              id="proc-values-scrna-seq"
+            >
+              {DROPLET_BASED_LABEL}
+            </p>
+            {files.dropletBased.annot || files.dropletBased.data ||
+              files.dropletBased.h5ad ? (
+              <ul className="unordered">
+                {files.dropletBased.annot && (
+                  <li>
+                    Experiments/libraries annotations and meta data:{' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.annot.path}
+                    >
+                      <code>{files.dropletBased.annot.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.annot.size)})`}
+                  </li>
+                )}
+                {files.dropletBased.data && (
+                  <li>
+                    Processed expression values (UMI counts, CPMs){' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.data.path}
+                    >
+                      <code>{files.dropletBased.data.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.data.size)})`}
+                  </li>
+                )}
+                {files.dropletBased.h5ad && (
+                  <li>
+                    Processed H5AD data per cell (UMI counts){' '}
+                    <a
+                      className="internal-link"
+                      href={files.dropletBased.h5ad.path}
+                    >
+                      <code>{files.dropletBased.h5ad.name}</code>
+                    </a>
+                    {` (${readableFileSize(files.dropletBased.h5ad.size)})`}
                   </li>
                 )}
               </ul>

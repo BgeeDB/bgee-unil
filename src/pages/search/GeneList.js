@@ -24,7 +24,8 @@ const onRenderCell =
             to={PATHS.SEARCH.GENE_ITEM_BY_SPECIES.replace(
               ':geneId',
               cell.id
-            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)}
+            ).replace(':speciesId', cell.onlySpecies ? '' : cell.speciesId)
+             .replace(/\/$/, '')}
           >
             {cell[key]}
           </Link>
@@ -154,9 +155,14 @@ const GeneList = () => {
       <div className="content has-text-centered">
         <Bulma.Title size={3}>Gene search</Bulma.Title>
       </div>
-      <p className="is-size-5">
+      <p className="is-size-5 has-text-centered">
         Search for genes based on gene IDs, gene names, gene descriptions,
         synonyms and cross-references.
+      </p>
+      <p className="is-size-5 has-text-centered">
+        <Link className="internal-link" to={`${PATHS.SUPPORT.TUTORIAL_GENE_PAGE}`}>
+          See documentation
+        </Link>
       </p>
       <div>
         <GeneSearch classNames="search-input mx-auto my-3" searchTerm={search}>

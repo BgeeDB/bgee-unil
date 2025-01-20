@@ -1,6 +1,6 @@
 /*
  Duplicated now in global.scss but if we change the gene page to use this component
- we will need to remove thid duplication
+ we will need to remove this duplication
 */
 .tags-source {
   .tag.tag-source:not(:last-child) {
@@ -28,6 +28,6 @@
   &.present {
     background: #9efa9e !important;
     border-color: #0df20d !important;
-    color: #067906 !important;
+    color: #067406 !important;
   }
 }

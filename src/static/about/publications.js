@@ -22,7 +22,42 @@ const publications = [
               {
                 type: 'text',
                 content:
-                  'Bastian FB, Roux J, Niknejad A, Comte A, Fonseca Costa SS, Mendes de Farias T, Moretti S, Parmentier G, Rech de Laval V, Rosikiewicz M, Wollbrett J, Echchiki A, Escoriza A, Gharib W, Gonzales-Porta M, Jarosz Y, Laurenczy B, Moret P, Person E, Roelli P, Sanjeev K, Seppey M, Robinson-Rechavi M. ',
+                  'Bastian FB, Brandulas Cammarata A, Carsanaro S, Detering H, Huang W-T, Joye S, Niknejad A, Nyamari M, Mendes de Farias T, Moretti S, Tzivanopoulou M, Wollbrett J, Robinson-Rechavi M.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'Bgee in 2024: focus on curated single-cell RNA-seq datasets, and query tools',
+                path: 'https://doi.org/10.1093/nar/gkae1118',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: ' in ',
+              },
+              {
+                type: 'text',
+                content:
+                  ' Nucleic Acids Research, 2025, 53:D878-D885. ',
+              },
+              {
+                type: 'link_external',
+                text: 'RIS',
+                path: `${config.ftpDomain}/../general/citation_bgee_2024.ris`,
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Bastian FB, Roux J, Niknejad A, Comte A, Fonseca Costa SS, Mendes de Farias T, Moretti S, Parmentier G, Rech de Laval V, Rosikiewicz M, Wollbrett J, Echchiki A, Escoriza A, Gharib W, Gonzales-Porta M, Jarosz Y, Laurenczy B, Moret P, Person E, Roelli P, Sanjeev K, Seppey M, Robinson-Rechavi M.',
               },
               {
                 type: 'break_line',
@@ -202,6 +237,93 @@ const publications = [
               {
                 type: 'text',
                 content:
+                  'Emonet V, Bolleman J, Duvaud D, Mendes de Farias T, Sima AC',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'LLM-based SPARQL Query Generation from Natural Language over Federated Knowledge Graphs',
+                path: 'https://doi.org/10.48550/arXiv.2410.06062',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Bolleman J, Emonet V, Altenhoff A, Bairoch A, Blatter M-C, Bridge A, Duvaud S, Gasteiger E, Kuznetsov D, Moretti S, Michel P-A, Morgat A, Pagni M, Redaschi N, Zahn-Zabal M, Mendes de Farias T, Sima AC',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications',
+                path: 'https://doi.org/10.48550/arXiv.2410.06010',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'arXiv, 2024.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
+                  'Rangel JC, Mendes de Farias T, Sima AC, Kobayashi N.',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'link_external',
+                text: 'SPARQL Generation: an analysis on fine-tuning OpenLLaMA for Question Answering over a Life Science Knowledge Graph',
+                path: 'https://ceur-ws.org/Vol-3890/paper-4.pdf',
+              },
+              {
+                type: 'break_line',
+              },
+              {
+                type: 'italic',
+                content: 'in ',
+              },
+              {
+                type: 'text',
+                content: 'Semantic Web Applications and Tools for Health Care and Life Sciences, 2024, 3890:36-45.',
+              },
+            ],
+          },
+          {
+            type: 'rich_text',
+            content: [
+              {
+                type: 'text',
+                content:
                   'Mendes de Farias T, Altenhoff A, Bairoch A, Bastian FB, Crameri K, Dauvillier J, Dessimoz C, Glover N, Gnodtke K, Hayes C, Kriventseva E, Moretti S, Morgat A, Oesterle S, Sima A-C, Szklarczyk D, Topalov O, Toure V, Unni D, von Mering C, Wollbrett J, Zdobnov E, Samarasinghe K, Gehant S, Baratin D, Burdet B, Ibberson M, Redaschi N, Robinson-Rechavi M, Mehl F, Pagni M, Lisacek F, Bolleman J, Michel P-A, Zahn-Zabal M, Bridge AJ, Kuznetsov D, Bansal P.',
               },
               {
@@ -221,7 +343,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'Nucleic Acids Research, 2024.',
+                content: 'Nucleic Acids Research, 2024, 52:D44-D51.',
               },
             ],
           },
@@ -268,7 +390,7 @@ const publications = [
               {
                 type: 'link_external',
                 text: 'On the Potential of Artificial Intelligence Chatbots for Data Exploration of Federated Bioinformatics Knowledge Graphs',
-                path: 'https://doi.org/10.48550/arXiv.2304.10427',
+                path: 'https://ceur-ws.org/Vol-3466/paper1.pdf',
               },
               {
                 type: 'break_line',
@@ -279,7 +401,7 @@ const publications = [
               },
               {
                 type: 'text',
-                content: 'arXiv, 2023.',
+                content: 'Proceedings of the 6th Workshop on Semantic Web Solutions for Large-Scale Biomedical Data Analytics, 2023, 3466:paper1.',
               },
             ],
           },

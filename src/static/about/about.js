@@ -16,12 +16,39 @@ const about = [
     ],
   },
   {
+    type: 'rich_text',
+    content: [
+      {
+        content: `Bgee is a Global Core Biodata Resources (`,
+        type: 'bold',
+      },
+      {
+        text: `GCBR`,
+        path: 'https://globalbiodata.org/scientific-activities/global-core-biodata-resources',
+        type: 'link_external',
+      },
+      {
+        content: `), and also an ELIXIR Recommended Interoperability Resources (`,
+        type: 'bold',
+      },
+      {
+        text: `RIR`,
+        path: 'https://elixir-europe.org/platforms/interoperability/rirs',
+        type: 'link_external',
+      },
+      {
+        content: `).`,
+        type: 'bold',
+      },
+    ],
+  },
+  {
     type: 'section',
     title: 'What is Bgee?',
     children: [
       {
         type: 'text',
-        content: `Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question "where is a gene expressed?" and supports research in cancer and agriculture as well as evolutionary biology.`,
+        content: `Bgee is a database for retrieval and comparison of gene expression patterns across multiple animal species. It provides an intuitive answer to the question "where is a gene expressed?" and supports research in cancer and agriculture, as well as evolutionary biology.`,
       },
       {
         type: 'unordered_list',
@@ -29,12 +56,12 @@ const about = [
           {
             type: 'text',
             content:
-              'Bgee data are produced from multiple data types (RNA-Seq, Affymetrix, in situ hybridization, EST data), and multiple data sets, that are all integrated consistently to provide a single answer to the question: "where is this gene expressed?"',
+              'Bgee data are produced from multiple data types (bulk RNA-Seq, scRNA-Seq, Affymetrix, in situ hybridization, EST data), and multiple data sets, that are all integrated consistently to provide a single answer to the question: "where is this gene expressed?"',
           },
           {
             type: 'text',
             content:
-              'Bgee is based exclusively on curated "normal", healthy wild-type expression data (e.g., no gene knock-out, no treatment, no disease), to provide a comparable reference of normal gene expression.',
+              'Bgee is based exclusively on curated healthy wild-type expression data (e.g., no gene knock-out, no treatment, no disease), to provide a comparable reference of gene expression.',
           },
           {
             type: 'text',
@@ -255,24 +282,6 @@ const about = [
           },
         ],
       },
-      {
-        type: 'rich_text',
-        content: [
-          {
-            content: 'More information is provided in the ',
-            type: 'text',
-          },
-          {
-            text: 'documentation',
-            path: PATHS.RESOURCES.DOCS,
-            type: 'link_internal',
-          },
-          {
-            content: '.',
-            type: 'text',
-          },
-        ],
-      },
     ],
   },
   {
@@ -289,7 +298,7 @@ const about = [
           {
             type: 'link_external',
             text: 'Evolutionary Bioinformatics group',
-            path: 'https://bioinfo.unil.ch/',
+            path: 'https://www.sib.swiss/marc-robinson-rechavi-frederic-bastian-group',
           },
           {
             type: 'text',
@@ -440,12 +449,12 @@ const about = [
           {
             type: 'text',
             content:
-              'More information about data analyses and database content is available in the ',
+              'The Bgee blog can be found ',
           },
           {
-            type: 'link_internal',
-            text: 'documentation',
-            path: PATHS.RESOURCES.DOCS,
+            type: 'link_external',
+            text: 'here',
+            path: 'https://bgeedb.wordpress.com/',
           },
           {
             type: 'text',
