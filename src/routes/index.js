@@ -135,7 +135,6 @@ const Router = () => (
                   />
                 )}
               />
-
               <Route
                 exact
                 path={PATHS.SEARCH.RAW_DATA_ANNOTATIONS}
@@ -144,6 +143,18 @@ const Router = () => (
                     {...props}
                     Component={
                       ROUTES[PATHS.SEARCH.RAW_DATA_ANNOTATIONS].component
+                    }
+                  />
+                )}
+              />
+              <Route
+                exact
+                path={PATHS.SEARCH.EXPRESSION_MATRIX}
+                render={(props) => (
+                  <Page
+                    {...props}
+                    Component={
+                      ROUTES[PATHS.SEARCH.EXPRESSION_MATRIX].component
                     }
                   />
                 )}
