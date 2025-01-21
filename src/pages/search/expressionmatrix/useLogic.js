@@ -17,7 +17,7 @@ import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
 import { isEmpty } from '../../../helpers/arrayHelper';
 import dataAnatTerms from '../../../assets/anatomy.curated.flat.csv';
 // DEBUG: remove in PROD
-import maxExpScoreCsv from '../../../assets/maxExpScore.csv'
+// import maxExpScoreCsv from '../../../assets/maxExpScore.csv'
 
 // to workaround backend server issues
 // import apiResp1 from '../../../assets/response_query1.INS.json';
