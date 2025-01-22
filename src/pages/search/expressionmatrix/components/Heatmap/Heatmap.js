@@ -1,13 +1,12 @@
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as d3 from "d3";
 import Bulma from '../../../../../components/Bulma';
 import { Renderer } from "./Renderer";
 import { Tooltip } from "./Tooltip";
-// import Tooltip from "../../../../../components/Tooltip";
 import { DetailView } from "./DetailView";
 import { COLORS, THRESHOLDS, COLOR_LEGEND_HEIGHT } from "./constants";
-import { ColorLegend } from "./ColorLegend";
-// import 'bulma/css/bulma.min.css';
+
+const SHOW_DEBUG_OPTIONS = false;
 
 export const Heatmap = ({ 
   width, 
@@ -36,7 +35,6 @@ export const Heatmap = ({
   const [showDescMax, setShowDescMax] = useState('none');
   const [showMissingData, setShowMissingData] = useState(true);
   const [showHomologs, setShowHomologs] = useState(false);
-  const [drilldown, setDrilldown] = useState([]);
   const [showSettings, setShowSettings] = useState(false);
 
 
@@ -80,12 +78,6 @@ export const Heatmap = ({
   // console.log(`[Heatmap] yTerms:\n${JSON.stringify(yTerms, null, 2)}`);
   console.log(`[Heatmap] data:\n${JSON.stringify(data)}`);
 
-  // prepare initial drilldown state
-  useEffect(() => {    
-    // setDrilldown(yLabels);
-    setDrilldown(yTerms);
-  }, []);
-
   // choose plot dimensions based on number of visible terms (y axis) and longest term label
   useEffect(() => {
     console.log(`[Heatmap] (Re)calculating graph height...`);
@@ -110,7 +102,7 @@ export const Heatmap = ({
 
     const { count: numVisibleTerms, maxLabelLength}  = countVisibleTerms(yTerms);
     console.log(`[Heatmap] ${numVisibleTerms} visible terms`);
-    console.log(`[Heatmap] drilldown:\n${JSON.stringify(yTerms, null, 2)}`);
+    console.log(`[Heatmap] yTerms:\n${JSON.stringify(yTerms, null, 2)}`);
     const flexHeight = Math.max(numVisibleTerms * 20 + COLOR_LEGEND_HEIGHT, 250);
     const flexMarginLeft = Math.max(maxLabelLength * 7.5 + 50, marginLeft);
     const flexWidth = Math.max(flexMarginLeft + 50, graphWidth);
@@ -232,17 +224,12 @@ export const Heatmap = ({
         data={displayData}
         getChildData={getChildData}
         yTerms={yTerms}
-        // drilldown={drilldown}
         drilldown={yTerms}
         termProps={termProps}
-        // termProps={termPropsRef.current}
         hoveredCell={hoveredCell}
         setHoveredCell={setHoveredCell}
         clickedCell={clickedCell}
         setClickedCell={setClickedCell}
-        // setDrilldown={setDrilldown}
-        // setDrilldown={setYTerms}
-        // setTermProps={setTermProps}
         onToggleExpandCollapse={onToggleExpandCollapse}
         colorScale={colorScale}
         marginLeft={marginLeft}
@@ -390,7 +377,7 @@ export const Heatmap = ({
                 </table>
             </div>
             <div className="column">
-              { false ? (
+              { SHOW_DEBUG_OPTIONS ? (
                 <div>
                   <h1>DATA</h1>
                   <table>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 const TreeNode = ({ node, depth, index, yScale, toggleCollapse, labelFont }) => {
   // const [collapsed, setCollapsed] = useState(false);
