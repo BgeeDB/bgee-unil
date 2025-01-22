@@ -27,7 +27,6 @@ import Gene from './components/filters/Gene/Gene';
 import ExperimentOrAssay from './components/filters/ExperimentOrAssay/ExperimentOrAssay';
 import RawDataAnnotationsFilters from './RawDataAnnotationsFilters';
 import DataType from './components/filters/DataType/DataType';
-import ConditionParameter from './components/filters/ConditionParameter';
 import ResultTabs from './components/ResultTabs';
 import DataQualityParameter from './components/filters/DataQualityParameter';
 import CallType from './components/filters/CallType';
@@ -66,7 +65,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     filters,
     limit,
     isCountLoading,
-    pageNumber,
     pageType,
     dataTypesExpCalls,
     dataQuality,
@@ -497,42 +495,3 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
 };
 
 export default GeneExpressionMatrix;
-
-const bak = `
-<RawDataAnnotationResults
-                  results={results}
-                  resultCount={allCounts[dataType]}
-                  dataType={dataType}
-                  maxPage={maxPage}
-                  columnDescriptions={columnsDesc}
-                  pageType={pageType}
-                  pageNumber={pageNumber}
-                  isExprCalls={isExprCalls}
-                  searchParams={getSearchParams}
-                />
-<hr />
-                              <ConditionParameter
-                                conditionalParam2={conditionalParam2}
-                                setConditionalParam2={setConditionalParam2}
-                              />
-
-{isLoading ? (
-                <div className="progressWrapper is-justify-content-flex-end	">
-                  <progress
-                    className="progress is-small is-primary"
-                    style={{
-                      animationDuration: '2s',
-                      width: '10%',
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="resultCounts">
-                  {isExprCalls ? (
-                    <>{[QUOTE][DOLLAR]{localCount?.assayCount || 0} expressions calls[QUOTE]}</>
-                  ) : (
-                    resultCountLabel
-                  )}
-                </div>
-              )}
-`;
