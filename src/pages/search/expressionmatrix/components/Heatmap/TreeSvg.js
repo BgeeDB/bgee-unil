@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import TreeNode from './TreeNode';
 
 export const Tree = ({ data, yScale, toggleCollapse, labelFont }) => {

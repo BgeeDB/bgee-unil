@@ -1,4 +1,3 @@
-import React from 'react';
 import HelpIcon from '../../../../../../components/HelpIcon';
 import { COND_PARAM2 } from '../../../useLogic';
 

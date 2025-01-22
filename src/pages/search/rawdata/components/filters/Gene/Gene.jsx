@@ -1,4 +1,3 @@
-import React from 'react';
 import SelectMultipleWithAutoComplete from '../../../../../../components/SelectMultipleWithAtuComplete/SelectMultipleWithAutoComplete';
 import { getGeneLabel } from '../../../../../../helpers/gene';
 

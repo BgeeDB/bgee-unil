@@ -1,4 +1,3 @@
-import React from 'react';
 import { Helmet } from 'react-helmet';
 import Bulma from '../../components/Bulma';
 import classnames from '../../helpers/classnames';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Helmet } from 'react-helmet';
 import staticBuilder from '../helpers/staticBuilder';
 import ROUTES from '../routes/routes';

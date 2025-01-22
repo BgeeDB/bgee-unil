@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import Bulma from '../../../../components/Bulma';
 import Table from '../../../../components/Table';
