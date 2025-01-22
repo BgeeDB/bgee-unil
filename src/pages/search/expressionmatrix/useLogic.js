@@ -159,7 +159,6 @@ export const ALL_CALL_TYPE = [
   { id: NOT_EXPRESSED, label: 'Absent' },
 ];
 
-const BASE_PAGE_NUMBER = '1';
 const BASE_LIMIT = '10000';
 
 const useLogic = (isExprCalls) => {
@@ -173,7 +172,6 @@ const useLogic = (isExprCalls) => {
   const initDataType = initSearch.get('data_type') || DATA_TYPES[0].id;
   const initDataTypeExpCalls = initSearch.getAll('data_type') || ALL_DATA_TYPES_ID;
   const initLimit = initSearch.get('limit') || BASE_LIMIT;
-  const initPageNumber = initSearch.get('pageNumber') || BASE_PAGE_NUMBER;
   const initPageType = initSearch.get('pageType') || EXPERIMENTS;
 
   // Page Type / Data Type
@@ -222,9 +220,6 @@ const useLogic = (isExprCalls) => {
   const [allCounts, setAllCounts] = useState({});
   // Store only the count of the current DataType ( to match the filters)
   const [localCount, setLocalCount] = useState({});
-  const [limit, setLimit] = useState(initLimit);
-  // TODO: remove?
-  const [pageNumber, setPageNumber] = useState(initPageNumber);
 
   // filters
   const [filters, setFilters] = useState({});
@@ -426,17 +421,6 @@ const useLogic = (isExprCalls) => {
 
   useEffect(() => {
     console.log(`[useLogic.js] loc.search CHANGED:\n${JSON.stringify(loc.search, null, 2)}`);
-    const sp = new URLSearchParams(loc.search);
-    const nextLimit = sp.get('limit');
-    const nextPageNumber = sp.get('pageNumber');
-    if (nextLimit !== null) {
-      setLimit(nextLimit);
-    }
-    if (nextPageNumber) {
-      setPageNumber(nextPageNumber);
-    } else {
-      setPageNumber(1);
-    }
 
     // If we are already on the Raw-Data page and we try to access it again in the Header all the search variables will be cleared.
     // If there is no search variable we set back the page to it default state.
@@ -457,7 +441,7 @@ const useLogic = (isExprCalls) => {
       setIsFirstSearch(false);
       setLocalCount({});
       triggerCounts();
-      triggerSearch(true, true);
+      triggerSearch(true);
 
       setNeedToResetThePage(false);
     }
@@ -477,13 +461,6 @@ const useLogic = (isExprCalls) => {
     setSelectedTissue([]);
     setSelectedSexes([]);
   };
-
-  // TODO: remove pageNumber, limit and associated useEffect
-  useEffect(() => {
-    if (!isFirstSearch) {
-      triggerSearch();
-    }
-  }, [pageNumber, limit]);
 
   // TODO: adjust parameters for first search
   /*
@@ -505,7 +482,7 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch && !isExprCalls) {
       setLocalCount({});
-      triggerSearch(false, false);
+      triggerSearch(false);
     }
   }, [dataType]);
 
@@ -513,7 +490,7 @@ const useLogic = (isExprCalls) => {
   useEffect(() => {
     if (!isFirstSearch) {
       setLocalCount({});
-      triggerSearch(true, true);
+      triggerSearch(true);
       triggerCounts();
     }
   }, [pageType]);
@@ -755,8 +732,6 @@ const useLogic = (isExprCalls) => {
       hasCellTypeSubStructure,
       hasDevStageSubStructure,
       hasTissueSubStructure,
-      pageNumber,
-      limit,
       queryGenes: [], // HD: store homologous genes
     };
 
@@ -805,7 +780,7 @@ const useLogic = (isExprCalls) => {
   // TODO: factor out repetitive code (between this function and triggerSearch, triggerInitialSearchComplementary)
   const triggerInitialSearch = async () => {
     const params = getSearchParams();
-    params.limit = 10000;
+    params.limit = BASE_LIMIT;
     
     // TODO: if only one gene was selected -> get gene homologs?
     console.log(`[useLogic.triggerInitialSearch] selected gene:\n${JSON.stringify(params.selectedGene)}`);
@@ -901,14 +876,8 @@ const useLogic = (isExprCalls) => {
         searchParams.delete('filters_for_all');
 
         // The following code clean the url of any default value
-        if (searchParams.get('limit') === '50') {
-          searchParams.delete('limit');
-        }
         if (searchParams.get('pageType') === 'experiments') {
           searchParams.delete('pageType');
-        }
-        if (searchParams.get('pageNumber') === '1') {
-          searchParams.delete('pageNumber');
         }
         if (searchParams.get('sex') === 'all') {
           searchParams.delete('sex');
@@ -1004,14 +973,9 @@ const useLogic = (isExprCalls) => {
   };
 
   const triggerSearch = async (
-    cleanFilters = false,
-    cleanPagination = false
+    cleanFilters = false
   ) => {
     const params = getSearchParams();
-    if (cleanPagination) {
-      params.pageNumber = BASE_PAGE_NUMBER;
-      params.limit = BASE_LIMIT;
-    }
     if (cleanFilters) {
       params.filters = {};
       setFilters({});
@@ -1055,7 +1019,7 @@ const useLogic = (isExprCalls) => {
     params.hasCellTypeSubStructure = 0;
     params.hasTissueSubStructure = 0;
     params.hasDevStageSubStructure = 0;
-    params.limit = 10000;
+    params.limit = BASE_LIMIT;
 
     setIsLoading(true);
     return api.search.geneExpressionMatrix
@@ -1108,14 +1072,8 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('filters_for_all');
 
           // The following code clean the url of any default value
-          if (searchParams.get('limit') === '50') {
-            searchParams.delete('limit');
-          }
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
-          }
-          if (searchParams.get('pageNumber') === '1') {
-            searchParams.delete('pageNumber');
           }
           if (searchParams.get('sex') === 'all') {
             searchParams.delete('sex');
@@ -1193,7 +1151,7 @@ const useLogic = (isExprCalls) => {
     // params.hasCellTypeSubStructure = 0;
     params.hasTissueSubStructure = 1; // we want children of parent term!
     // params.hasDevStageSubStructure = 0;
-    params.limit = 10000;
+    params.limit = BASE_LIMIT;
     params.conditionalParam2 = ['anat_entity']; // HD: restrict to anatomical terms
     // TODO: add filters?
 
@@ -1245,14 +1203,8 @@ const useLogic = (isExprCalls) => {
           searchParams.delete('filters_for_all');
 
           // The following code clean the url of any default value
-          if (searchParams.get('limit') === '50') {
-            searchParams.delete('limit');
-          }
           if (searchParams.get('pageType') === 'experiments') {
             searchParams.delete('pageType');
-          }
-          if (searchParams.get('pageNumber') === '1') {
-            searchParams.delete('pageNumber');
           }
           if (searchParams.get('sex') === 'all') {
             searchParams.delete('sex');
@@ -1578,10 +1530,8 @@ const useLogic = (isExprCalls) => {
     selectedSexes,
     isLoading,
     filters,
-    limit,
     localCount,
     isCountLoading,
-    pageNumber,
     pageType,
     dataTypesExpCalls,
     dataQuality,

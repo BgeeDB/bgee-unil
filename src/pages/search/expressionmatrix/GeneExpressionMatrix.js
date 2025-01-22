@@ -63,7 +63,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     selectedSexes,
     isLoading,
     filters,
-    limit,
     isCountLoading,
     pageType,
     dataTypesExpCalls,
@@ -128,8 +127,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     // Return AssayCount if pageType==RAW_DATA_ANNOTS or pageType==EXPR_CALLS
     return 'assayCount';
   }
-
-  const maxPage = Math.ceil((localCount?.[countResultKey()] || 0) / limit);
 
   const detailedData = isExprCalls
     ? TAB_PAGE_EXPR_CALL
