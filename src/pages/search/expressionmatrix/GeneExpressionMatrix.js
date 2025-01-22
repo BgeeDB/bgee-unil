@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Button from '../../../components/Bulma/Button/Button';
@@ -10,12 +10,7 @@ import './rawDataAnnotations.scss';
 import DevelopmentalAndLifeStages from './components/filters/DevelopmentalAndLifeStages/DevelopmentalAndLifeStages';
 import Species from './components/filters/Species/Species';
 import useLogic, {
-  AFFYMETRIX,
   DATA_TYPES,
-  EST,
-  EXPERIMENTS,
-  PROC_EXPR_VALUES,
-  RAW_DATA_ANNOTS,
   TAB_PAGE,
   TAB_PAGE_EXPR_CALL,
 } from './useLogic';
@@ -67,12 +62,8 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     pageType,
     dataTypesExpCalls,
     dataQuality,
-    conditionalParam2,
     callTypes,
-    setAnatomicalTerms,
-    setAnatomicalTermsProps,
     setCallTypes,
-    setConditionalParam2,
     setDataQuality,
     setDataTypesExpCalls,
     onChangeSpecies,
@@ -119,15 +110,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
   const dataFiltersExprCall = searchResult?.filters || {};
   const dataFilters = isExprCalls ? dataFiltersExprCall : defaultdataFilters;
 
-  const countResultKey = () => {
-    if (pageType === EXPERIMENTS)
-      return 'experimentCount';
-    if (pageType === PROC_EXPR_VALUES)
-      return 'callCount';
-    // Return AssayCount if pageType==RAW_DATA_ANNOTS or pageType==EXPR_CALLS
-    return 'assayCount';
-  }
-
   const detailedData = isExprCalls
     ? TAB_PAGE_EXPR_CALL
     : TAB_PAGE.find((d) => d.id === pageType);
@@ -145,37 +127,6 @@ const GeneExpressionMatrix = ({ isExprCalls = false }) => {
     setPageIsBrowseResult(false);
     setPageType(newPageType);
   };
-
-  const resultCountLabel = useMemo(() => {
-    switch (pageType) {
-      case EXPERIMENTS:
-        return `${localCount.experimentCount || 0} ${
-          dataType === EST ? 'libraries' : 'experiments'
-        }`;
-      case RAW_DATA_ANNOTS: {
-        if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries`;
-        }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
-        } ${dataType === AFFYMETRIX ? 'chips' : 'assays'}`;
-      }
-      case PROC_EXPR_VALUES: {
-        if (dataType === EST) {
-          return `${localCount.assayCount || 0} libraries / ${
-            localCount.callCount || 0
-          } gene expression values`;
-        }
-        return `${localCount.experimentCount || 0} experiments /  ${
-          localCount.assayCount || 0
-        } ${dataType === AFFYMETRIX ? 'chips' : 'assays'} / ${
-          localCount.callCount
-        } gene expression values`;
-      }
-      default:
-        return '';
-    }
-  }, [pageType, localCount, dataType]);
 
   const parameterFromForm = (() => {
     // When the user right-click and 'open new' we need to pass only the parameter from the form, not those from the filters

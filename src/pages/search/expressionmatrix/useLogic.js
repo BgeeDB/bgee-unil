@@ -3,7 +3,6 @@
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import * as d3 from "d3";
 import api from '../../../api';
 import { getGeneLabel } from '../../../helpers/gene';
 import {
@@ -15,9 +14,9 @@ import { EMPTY_SPECIES_VALUE } from './components/filters/Species/Species';
 import config from '../../../config.json';
 import { FULL_LENGTH_LABEL } from '../../../api/prod/constant';
 import { isEmpty } from '../../../helpers/arrayHelper';
-import dataAnatTerms from '../../../assets/anatomy.curated.flat.csv';
+// import dataAnatTerms from '../../../assets/anatomy.curated.flat.csv';
 // DEBUG: remove in PROD
-import maxExpScoreCsv from '../../../assets/maxExpScore.csv'
+// import maxExpScoreCsv from '../../../assets/maxExpScore.csv'
 
 // to workaround backend server issues
 // import apiResp1 from '../../../assets/response_query1.INS.json';
@@ -171,7 +170,6 @@ const useLogic = (isExprCalls) => {
 
   const initDataType = initSearch.get('data_type') || DATA_TYPES[0].id;
   const initDataTypeExpCalls = initSearch.getAll('data_type') || ALL_DATA_TYPES_ID;
-  const initLimit = initSearch.get('limit') || BASE_LIMIT;
   const initPageType = initSearch.get('pageType') || EXPERIMENTS;
 
   // Page Type / Data Type
@@ -214,8 +212,8 @@ const useLogic = (isExprCalls) => {
   const [isCountLoading, setIsCountLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [searchResult, setSearchResult] = useState(null);
-  const [maxExpScore, setMaxExpScore] = useState({});
-  const [genes, setGenes] = useState({});
+  // const [maxExpScore, setMaxExpScore] = useState({});
+  const maxExpScore = [];
   // Store all counts per dataType
   const [allCounts, setAllCounts] = useState({});
   // Store only the count of the current DataType ( to match the filters)
@@ -232,7 +230,6 @@ const useLogic = (isExprCalls) => {
   const [pageCanLoadFirstCount, setPageCanLoadFirstCount] = useState(false);
 
   // HD: howto keep state about anatomical hierarchy?
-  const [anatomicalHierarchyTerms, setAnatomicalHierarchyTerms] = useState([]);
   const [anatomicalTerms, setAnatomicalTerms] = useState([]);
   const [anatomicalTermsProps, setAnatomicalTermsProps] = useState({});
   
@@ -355,7 +352,7 @@ const useLogic = (isExprCalls) => {
     const newTerms = {};
 
     // Helper function to recursively find the term by id and add children
-    const addChildren = (term, depth) => {
+    const addChildren = (term) => {
       // Check if the current term's id matches the parentId
       if (term.id === parentId) {
         // Loop through each expressionCall and add children to the term
@@ -382,7 +379,7 @@ const useLogic = (isExprCalls) => {
         });
       } else {
         // If not the matching term, recurse into its children
-        term.children.forEach(child => addChildren(child, child.depth+1));
+        term.children.forEach(child => addChildren(child));
       }
     };
   
@@ -800,7 +797,7 @@ const useLogic = (isExprCalls) => {
       ]);
 
       const { resp: resp1, paramsURLCalled: paramsURLCalled1 } = result1;
-      const { resp: resp2, paramsURLCalled: paramsURLCalled2 } = result2;
+      const { resp: resp2 } = result2;
 
       // const paramsURLCalled1 = params.toString();
       // const [ resp1, resp2 ] = [ apiResp1, apiResp2 ];
@@ -950,7 +947,7 @@ const useLogic = (isExprCalls) => {
                 const homoRes = await api.search.geneExpressionMatrix.initialSearch(searchParams);
                 homologCalls.push(homoRes.resp.data.expressionData.expressionCalls);
                 console.log(`[useLogic.triggerHomologSearch] Search result for gene ${gene.geneId} and species ${gene.species.id}:\n${JSON.stringify(homoRes.resp.data)}`);
-                const newData = searchResult;
+                // const newData = searchResult;
                 // newData.expressionData.expressionCalls.push(homoRes.resp.data.expressionData.expressionCalls);
                 // setSearchResult(newData);
             } catch (error) {
@@ -1009,9 +1006,6 @@ const useLogic = (isExprCalls) => {
       })
     }
     
-
-    // HD: Add anatomical hierarchy to selected tissues
-    params.selectedTissue = params.selectedTissue.concat(anatomicalHierarchyTerms);
     // HD: Fix other condition params to top-level terms (overrides form fields!)
     params.selectedCellTypes = ['GO:0005575']; // "cellular_component"
     params.selectedDevStages = ['UBERON:0000104']; // "life cycle"
