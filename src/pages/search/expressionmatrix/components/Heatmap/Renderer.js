@@ -13,16 +13,12 @@ export const Renderer = forwardRef(({
   width,
   height,
   data,
-  getChildData,
   yTerms,
   drilldown,
   termProps,
   hoveredCell,
   setHoveredCell,
-  clickedCell,
   setClickedCell,
-  setDrilldown,
-  setTermProps,
   onToggleExpandCollapse,
   colorScale,
   backgroundColor,
@@ -37,8 +33,6 @@ export const Renderer = forwardRef(({
   // The bounds (=area inside the axis) is calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - marginLeft;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
-  const colorLegendBoundsWidth =
-    colorLegendWidth - COLOR_LEGEND_MARGIN.right - COLOR_LEGEND_MARGIN.left;
   const colorLegendBoundsHeight =
     colorLegendHeight - COLOR_LEGEND_MARGIN.top - COLOR_LEGEND_MARGIN.bottom;
 
@@ -114,9 +108,6 @@ export const Renderer = forwardRef(({
   // const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.label))], [yLblOrdered]);
   const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.id))], [yLblOrdered]);
 
-
-  const [min = 0, max = 0] = d3.extent(data.map((d) => d.value)); // extent can return [undefined, undefined], default to [0,0] to fix types
-
   const xScale = useMemo(() => (
     d3
       .scaleBand()
@@ -132,13 +123,6 @@ export const Renderer = forwardRef(({
       .domain(allYGroups)
       .padding(0.01)
   ), [dataShow, height]);
-
-  /*
-  var colorScale = d3
-    .scaleSequential()
-    .interpolator(d3.interpolateInferno)
-    .domain([min, max]);
-  */
 
   // Build the rectangles
   const allShapes = dataShow.map((d, i) => {
@@ -311,7 +295,7 @@ export const Renderer = forwardRef(({
               opacity={1}
               fill={fillColour}
               strokeWidth={4}
-              onMouseEnter={(e) => {
+              onMouseEnter={() => {
                 setHoveredCell(cellData);
               }}
               onMouseLeave={() => setHoveredCell(null)}
@@ -328,7 +312,7 @@ export const Renderer = forwardRef(({
               opacity={1}
               fill={strokeColour}
               strokeWidth={4}
-              onMouseEnter={(e) => {
+              onMouseEnter={() => {
                 setHoveredCell(cellData);
               }}
               onMouseLeave={() => setHoveredCell(null)}
@@ -498,6 +482,9 @@ export const Renderer = forwardRef(({
       </text>
     );
   });
+
+  const [min = 0, max = 0] = d3.extent(data.map((d) => d.value)); // extent can return [undefined, undefined], default to [0,0] to fix types
+  console.log(`[Renderer] min: ${min}, max: ${max}`);
 
   // create numbers 1..100
   const stopsIdx = Array(101).fill().map((_, index) => index);
