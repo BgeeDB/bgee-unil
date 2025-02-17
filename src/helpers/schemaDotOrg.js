@@ -655,8 +655,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq UMI counts, CPM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq UMI counts, CPM (Counts Per Million).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
@@ -665,8 +665,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (UMI counts)`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (UMI counts).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq', 'H5AD'],
       url: `${window.location.href}#proc-values-scrna-seq`,
       distribution: [ {'@type': 'DataDownload', encodingFormat: 'H5AD', contentUrl: file.path, }, ],
