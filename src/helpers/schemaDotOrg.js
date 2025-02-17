@@ -225,9 +225,11 @@ const datasetToLdJSON = () => {
             description: 'The aim of Bgee is to help biologists to use and understand gene expression',
             logo: 'https://www.bgee.org/img/logo/bgee13_hp_logo.png',
             sameAs: [
-                'https://twitter.com/Bgeedb',
+                'https://bsky.app/profile/bgee.org',
                 'https://genomic.social/@bgeedb',
-                'https://bgeedb.wordpress.com/',
+                'https://www.linkedin.com/company/bgee/',
+                'https://www.youtube.com/@bgeedatabase',
+                'https://en.wikipedia.org/wiki/Bgee'
             ],
             parentOrganization: [{
                 '@type': 'Organization',
@@ -370,7 +372,7 @@ const speciesToLdJSON = ({
       {
         '@type': 'Dataset',
         dateModified: config.bioSchemaModifiedData,
-        citation: 'https://doi.org/10.1093/nar/gkaa793',
+        citation: '["https://doi.org/10.1093/nar/gkaa793","https://doi.org/10.1093/nar/gkae1118"]',
         description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} calls of presence/absence of expression. Each call corresponds to a unique combination of a gene, an anatomical entity, a life stage, a sex, and ${id===9606 ? 'an ethnicity' : 'a strain'}, with reported presence or absence of expression.`,
         includedInDataCatalog: {
           '@id': config.genericDomain,
@@ -408,8 +410,7 @@ const speciesToLdJSON = ({
             },
             isAccessibleForFree: 'true',
             name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression simple`,
-            description:
-              'Anatomical entities only, file without advanced columns.',
+            description: 'Anatomical entities only, file without advanced columns.',
             url: `${
               config.genericDomain +
               PATHS.SEARCH.SPECIES_ITEM.replace(':id', id)
@@ -441,8 +442,7 @@ const speciesToLdJSON = ({
             },
             isAccessibleForFree: 'true',
             name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} gene expression advanced`,
-            description:
-              'Anatomical entities only, file with advanced columns.',
+            description: 'Anatomical entities only, file with advanced columns.',
             url: `${
               config.genericDomain +
               PATHS.SEARCH.SPECIES_ITEM.replace(':id', id)
@@ -587,6 +587,7 @@ const speciesToLdJSON = ({
       url: `${window.location.href}#proc-values-affymetrix`,
     });
   }
+
   file = downloadFiles.find((d) => d.category === 'rnaseq_annot');
   if (file) {
     json.subjectOf[1].hasPart.push({
@@ -607,13 +608,14 @@ const speciesToLdJSON = ({
       url: `${window.location.href}#proc-values-rna-seq`,
     });
   }
+
   file = downloadFiles.find((d) => d.category === 'full_length_annot');
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
       name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiment libraries`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/ libraries annotations and metadata.`,
-      keywords: ['scRNA-Seq', 'Single cell RNA-Seq'],
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/libraries annotations and metadata.`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
   }
@@ -623,8 +625,51 @@ const speciesToLdJSON = ({
       ...fileDownloadProps(file),
       name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM and FPKM`,
       description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
-      keywords: ['scRNA-Seq', 'Single cell RNA-Seq'],
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
+    });
+  }
+  file = downloadFiles.find((d) => d.category === 'full_length_h5ad');
+  if (file) {
+    json.subjectOf[1].hasPart.push({
+      ...fileDownloadProps(file),
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq', 'H5AD'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
+      distribution: [ {'@type': 'DataDownload', encodingFormat: 'H5AD', contentUrl: file.path, }, ],
+    });
+  }
+
+  file = downloadFiles.find((d) => d.category === 'droplet_based_annot');
+  if (file) {
+    json.subjectOf[1].hasPart.push({
+      ...fileDownloadProps(file),
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiment libraries`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/libraries annotations and metadata.`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
+    });
+  }
+  file = downloadFiles.find((d) => d.category === 'droplet_based_data');
+  if (file) {
+    json.subjectOf[1].hasPart.push({
+      ...fileDownloadProps(file),
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
+    });
+  }
+  file = downloadFiles.find((d) => d.category === 'droplet_based_h5ad');
+  if (file) {
+    json.subjectOf[1].hasPart.push({
+      ...fileDownloadProps(file),
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
+      keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq', 'H5AD'],
+      url: `${window.location.href}#proc-values-scrna-seq`,
+      distribution: [ {'@type': 'DataDownload', encodingFormat: 'H5AD', contentUrl: file.path, }, ],
     });
   }
 
