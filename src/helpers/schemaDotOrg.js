@@ -613,8 +613,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiment libraries`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/libraries annotations and metadata.`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single cell RNA-Seq experiment libraries`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single cell RNA-Seq experiments/libraries annotations and metadata.`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
@@ -623,8 +623,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single Cell RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
@@ -633,8 +633,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Full length Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Full length RNA-Seq', 'H5AD'],
       url: `${window.location.href}#proc-values-scrna-seq`,
       distribution: [ {'@type': 'DataDownload', encodingFormat: 'H5AD', contentUrl: file.path, }, ],
@@ -645,8 +645,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiment libraries`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single cell RNA-Seq experiments/libraries annotations and metadata.`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single cell RNA-Seq experiment libraries`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single cell RNA-Seq experiments/libraries annotations and metadata.`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
@@ -655,8 +655,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM and FPKM`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq read counts, TPM and FPKM`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq read counts, TPM (Transcript Per Million) and FPKM (Fragments Per Kilobase of transcript per Million mapped reads).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq'],
       url: `${window.location.href}#proc-values-scrna-seq`,
     });
@@ -665,8 +665,8 @@ const speciesToLdJSON = ({
   if (file) {
     json.subjectOf[1].hasPart.push({
       ...fileDownloadProps(file),
-      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
-      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
+      name: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (read counts)`,
+      description: `${genus} ${speciesName}${ name ? ` (${name})` : ''} Droplet based Single Cell RNA-Seq processed H5AD data per cell (read counts).`,
       keywords: ['scRNA-Seq', 'Single cell RNA-Seq', 'Droplet based RNA-Seq', 'H5AD'],
       url: `${window.location.href}#proc-values-scrna-seq`,
       distribution: [ {'@type': 'DataDownload', encodingFormat: 'H5AD', contentUrl: file.path, }, ],
