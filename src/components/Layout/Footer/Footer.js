@@ -87,6 +87,7 @@ const Footer = () => {
             <ul>
               <li><Link to={PATHS.ANALYSIS.TOP_ANAT} className="nav_a">TopAnat</Link></li>
               <li><Link to={PATHS.ANALYSIS.EXPRESSION_COMPARISON} className="nav_a">Expression comparison</Link></li>
+              <li><Link to={PATHS.SEARCH.EXPRESSION_MATRIX} className="nav_a">Gene expression matrix (beta)</Link></li>
             </ul>
           </div>
           <div className="nav-footer-col-spacer" />

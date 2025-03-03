@@ -130,7 +130,7 @@ const SEARCH = {
   },
   [PATHS.SEARCH.EXPRESSION_MATRIX]: {
     component: () => <GeneExpressionMatrix isExprCalls />,
-    title: 'Gene expression matrix',
+    title: 'Gene expression matrix (beta)',
   },
   [PATHS.SEARCH.EXPERIMENT]: {
     component: Experiment,

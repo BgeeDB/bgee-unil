@@ -27,12 +27,6 @@ const NAVBAR_LEFT = [
     path: PATHS.ANALYSIS.EXPRESSION_COMPARISON,
   },
   {
-    key: 'page.search.expression-matrix',
-    title: 'Expression comparison (beta)',
-    type: 'internal',
-    path: PATHS.SEARCH.EXPRESSION_MATRIX,
-  },
-  {
     key: 'page.search.raw-data-experiment',
     title: 'Raw data',
     type: 'internal',
@@ -106,7 +100,6 @@ const Header = () => {
         {!config?.isRawDataOnly && (
             <div className={`navbar-menu ${hamburgerActive ? 'is-active' : ''}`}>
               <MenuModal />
-              
               <div className="navbar-start">
                 {NAVBAR_LEFT.map(({ key, title, type, path }) => {
                   switch (type) {
