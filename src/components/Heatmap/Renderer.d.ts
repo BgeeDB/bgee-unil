@@ -2,6 +2,7 @@ import type * as React from 'react';
 
 export type RendererProps = {
   width: number;
+  /** Caller height with the legend already removed. `0` sizes rows from `defaultCellHeight`. */
   height: number;
   backgroundColor?: string;
   data: unknown;
@@ -23,7 +24,10 @@ export type RendererProps = {
   minCellWidth?: number;
   minCellHeight?: number;
   maxGraphWidth?: number;
+  defaultCellHeight?: number;
   setGraphWidth: React.Dispatch<React.SetStateAction<any>>;
+  setGraphHeight?: React.Dispatch<React.SetStateAction<any>>;
+  rendererMargins?: { top: number; right: number; bottom: number; left: number };
   rowOrdering: string;
   rowAggFn: string;
   getChildData?: unknown;

@@ -1,4 +1,4 @@
-import { useMemo, forwardRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, forwardRef } from 'react';
 import * as d3 from 'd3';
 import { Tree } from './TreeSvg';
 import { ColorLegendSvg } from './ColorLegendSvg';
@@ -6,11 +6,15 @@ import { ColorLegendSvg } from './ColorLegendSvg';
 // import styles from "./renderer.module.css";
 import fonts from './fonts';
 import { computeTermAggregates } from './heatmapAggregates';
+import { isOthersBucket } from '../../helpers/othersAnatomicalBucket';
 
 function sortSiblingTerms(children, rowOrdering, scoreMap) {
   if (!children?.length) return children;
-  const low = children.filter((c) => !c.isTopLevelTerm);
-  const high = children.filter((c) => c.isTopLevelTerm);
+  // The synthetic "others" bucket has no expression score and stays last in every ordering.
+  const pinnedBottom = children.filter((c) => isOthersBucket(c));
+  const sortable = children.filter((c) => !isOthersBucket(c));
+  const low = sortable.filter((c) => !c.isTopLevelTerm);
+  const high = sortable.filter((c) => c.isTopLevelTerm);
   const cmpAlpha = (a, b) => a.label.localeCompare(b.label);
   const cmpExpr = (a, b) => {
     const sa = scoreMap.has(a.id) ? scoreMap.get(a.id) : -Infinity;
@@ -21,7 +25,7 @@ function sortSiblingTerms(children, rowOrdering, scoreMap) {
   const cmp = rowOrdering === 'expression' ? cmpExpr : cmpAlpha;
   low.sort(cmp);
   high.sort(cmp);
-  return [...low, ...high];
+  return [...low, ...high, ...pinnedBottom];
 }
 
 function reorderAnatomyTree(nodes, rowOrdering, scoreMap) {
@@ -33,8 +37,75 @@ function reorderAnatomyTree(nodes, rowOrdering, scoreMap) {
   return sortSiblingTerms(withSubtrees, rowOrdering, scoreMap);
 }
 
-const MARGIN = { top: 50, right: 10, bottom: 50, left: 200 };
-const COLOR_LEGEND_MARGIN = { top: 0, right: 0, bottom: 50, left: 0 };
+const DEFAULT_MARGIN = { top: 50, right: 10, bottom: 50, left: 200 };
+
+// X-axis label geometry constants (must match the <text> elements below)
+const X_LABEL_FONT_SIZE = 15;
+const X_LABEL_LINE_HEIGHT = 1.2;
+// Empirical average glyph width for 15px sans-serif (Open Sans); slight over-estimate is safer.
+const X_LABEL_CHAR_WIDTH = 8.5;
+// Extra breathing room added on top of the projected label extent.
+const X_LABEL_PADDING = 15;
+// Bottom labels are anchored this far below the cells (see xLabelsBottom).
+const X_LABEL_ANCHOR_OFFSET = 10;
+// Minimum gap between the bottom of the heatmap cells and the color legend.
+const DEFAULT_BOTTOM_LABEL_GAP = 40;
+// ColorLegendSvg draws its title and help badge above posY (badge top is at posY - 23).
+const COLOR_LEGEND_OVERFLOW_TOP = 25;
+// Baseline of the "Not expressed" / "No data" row in ColorLegendSvg (posY + 48).
+const COLOR_LEGEND_SWATCH_BASELINE = 48;
+
+// Estimate how far a bottom x-axis label hangs below its anchor when rotated.
+// Bottom labels use textAnchor="end" and dominantBaseline="middle", so the
+// string extends to the left of the anchor before rotation.
+const estimateLabelExtentBelowAnchor = (text, rotationDeg) => {
+  if (!text) return 0;
+  const lines = text.split('\n');
+  const rotRad = (rotationDeg * Math.PI) / 180;
+  const sin = Math.sin(rotRad);
+  const cos = Math.cos(rotRad);
+  const maxLineLength = Math.max(...lines.map((line) => line.length));
+  const textWidth = maxLineLength * X_LABEL_CHAR_WIDTH;
+  const lineHeight = X_LABEL_FONT_SIZE * X_LABEL_LINE_HEIGHT;
+  const yMin = -X_LABEL_FONT_SIZE / 2;
+  const yMax = (lines.length - 1) * lineHeight + X_LABEL_FONT_SIZE / 2;
+  const corners = [
+    [-textWidth, yMin],
+    [0, yMin],
+    [-textWidth, yMax],
+    [0, yMax],
+  ];
+  const maxY = Math.max(...corners.map(([x, y]) => x * sin + y * cos));
+  return Math.max(0, maxY);
+};
+
+// Full axis-aligned height of a label. Used for the top margin, where labels
+// grow upward and clipping the top of the SVG is the failure mode.
+const estimateLabelVerticalExtent = (text, rotationDeg) => {
+  if (!text) return 0;
+  const lines = text.split('\n');
+  const rotRad = (rotationDeg * Math.PI) / 180;
+  const sinAbs = Math.abs(Math.sin(rotRad));
+  const cosAbs = Math.abs(Math.cos(rotRad));
+  const maxLineLength = Math.max(...lines.map((line) => line.length));
+  const textWidth = maxLineLength * X_LABEL_CHAR_WIDTH;
+  const lineHeight = X_LABEL_FONT_SIZE * X_LABEL_LINE_HEIGHT;
+  const textHeight = lines.length === 1 ? X_LABEL_FONT_SIZE : (lines.length - 1) * lineHeight + X_LABEL_FONT_SIZE;
+  return sinAbs * textWidth + cosAbs * textHeight;
+};
+
+const renderSvgTextLines = (text, keyPrefix) => {
+  const lines = text.split('\n');
+  if (lines.length === 1) {
+    return text;
+  }
+
+  return lines.map((line, lineIdx) => (
+    <tspan key={`${keyPrefix}-line-${lineIdx}`} x={0} dy={lineIdx === 0 ? 0 : `${X_LABEL_LINE_HEIGHT}em`}>
+      {line}
+    </tspan>
+  ));
+};
 
 export const Renderer = forwardRef(
   (
@@ -42,6 +113,7 @@ export const Renderer = forwardRef(
       width,
       height,
       data,
+      xTerms,
       drilldown,
       termProps,
       hoveredCell,
@@ -60,17 +132,55 @@ export const Renderer = forwardRef(
       maxCellWidth,
       minCellWidth = 20,
       minCellHeight = 10,
-      maxGraphWidth = 1000,
-      setGraphWidth,
       rowOrdering = 'alphabetical',
       rowAggFn = 'mean',
+      defaultCellHeight = 15,
+      maxGraphWidth = 800,
+      setGraphWidth,
+      setGraphHeight,
+      scaleSvg = false,
+      rendererMargins,
     },
     ref
   ) => {
+    // Use provided margins or fall back to default
+    const MARGIN = rendererMargins || DEFAULT_MARGIN;
     // The bounds (=area inside the axis) is calculated by substracting the margins
     const boundsWidth = width - MARGIN.right - marginLeft;
-    const boundsHeight = height - MARGIN.top - MARGIN.bottom;
-    const colorLegendBoundsHeight = colorLegendHeight - COLOR_LEGEND_MARGIN.top - COLOR_LEGEND_MARGIN.bottom;
+
+    // Determine how much vertical space the rotated x-axis labels need so that
+    // top labels are not clipped and bottom labels don't overlap the legend.
+    const { topLabelSpace, bottomLabelSpace } = useMemo(() => {
+      let maxTopText = '';
+      let maxBottomText = '';
+      xTerms.forEach((t) => {
+        const top = t?.topLabel ?? t?.label ?? t?.value ?? '';
+        const bottom = t?.bottomLabel ?? t?.label ?? t?.value ?? '';
+        if (
+          estimateLabelVerticalExtent(top, xLabelRotation) > estimateLabelVerticalExtent(maxTopText, xLabelRotation)
+        ) {
+          maxTopText = top;
+        }
+        if (
+          estimateLabelExtentBelowAnchor(bottom, xLabelRotation) >
+          estimateLabelExtentBelowAnchor(maxBottomText, xLabelRotation)
+        ) {
+          maxBottomText = bottom;
+        }
+      });
+      return {
+        topLabelSpace: estimateLabelVerticalExtent(maxTopText, xLabelRotation) + X_LABEL_PADDING,
+        // Hang below the anchor, then leave room for the legend title drawn above posY.
+        bottomLabelSpace:
+          X_LABEL_ANCHOR_OFFSET +
+          estimateLabelExtentBelowAnchor(maxBottomText, xLabelRotation) +
+          COLOR_LEGEND_OVERFLOW_TOP +
+          X_LABEL_PADDING,
+      };
+    }, [xTerms, xLabelRotation]);
+
+    const effectiveMarginTop = Math.max(MARGIN.top, topLabelSpace);
+    const bottomLabelGap = Math.max(DEFAULT_BOTTOM_LABEL_GAP, bottomLabelSpace);
 
     // show only selected and top-level data points
     // const dataShow = data.filter((d) => (
@@ -133,30 +243,45 @@ export const Renderer = forwardRef(
     const yTermsOrderedCopy = JSON.parse(JSON.stringify(yTermsOrdered));
     const yLblOrdered = yTermsOrderedCopy;
 
-    // const allYGroups = useMemo(() => [...new Set(dataShow.map((d) => d.y))], [dataShow]);
-    const allXGroups = useMemo(() => [...new Set(dataShow.map((d) => d.x))], [dataShow]);
+    // Use xTerms.value for scale domain (unique key per column), xTerms.label for display
+    const allXGroups = useMemo(() => xTerms.map((d) => d.value ?? d.label ?? 'Unknown'), [xTerms]);
     // const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.label))], [yLblOrdered]);
     const allYGroups = useMemo(() => [...new Set(yLblOrdered.map((d) => d.id))], [yLblOrdered]);
 
-    const xScale = useMemo(() => {
-      const cellWidth = Math.max(maxCellWidth, minCellWidth);
-      // Calculate required width based on minimum cell width, including 4px margin
-      const requiredWidth = allXGroups.length * (cellWidth + 4);
-      if (requiredWidth > boundsWidth) {
-        // Update graph width if needed
-        setGraphWidth(requiredWidth + MARGIN.right + marginLeft);
+    const xCellWidth = Math.max(maxCellWidth, minCellWidth);
+    // Required width based on minimum cell width, including 4px margin
+    const requiredXWidth = allXGroups.length * (xCellWidth + 4);
+    const xScale = useMemo(
+      () => d3.scaleBand().range([0, requiredXWidth]).domain(allXGroups).padding(0.01),
+      [requiredXWidth, allXGroups]
+    );
+
+    // Grow the graph after render. Setting parent state inside useMemo updates Heatmap while Renderer renders.
+    useEffect(() => {
+      if (requiredXWidth > boundsWidth && setGraphWidth) {
+        setGraphWidth(requiredXWidth + MARGIN.right + marginLeft);
       }
+    }, [requiredXWidth, boundsWidth, marginLeft, MARGIN.right, setGraphWidth]);
 
-      return d3.scaleBand().range([0, requiredWidth]).domain(allXGroups).padding(0.01);
-    }, [dataShow, width, maxCellWidth, minCellWidth, allXGroups, boundsWidth, marginLeft, setGraphWidth]);
+    // Size rows from the desired cell height during this render. `height` is the
+    // caller's requested size with the legend already removed; 0 means the rows
+    // alone decide. A larger request stretches the band. A smaller one does not
+    // collapse rows to minCellHeight (that fallback painted short cells until hover).
+    const desiredCellBand = allYGroups.length * defaultCellHeight;
+    const requestedCellBand = height - effectiveMarginTop - bottomLabelGap - MARGIN.bottom;
+    const cellBandHeight = Math.max(desiredCellBand, requestedCellBand, 0);
+    const svgHeight = effectiveMarginTop + cellBandHeight + bottomLabelGap + MARGIN.bottom + colorLegendHeight;
 
-    const yScale = useMemo(() => {
-      // Calculate required height based on minimum cell height, including 4px margin
-      const requiredHeight = allYGroups.length * (minCellHeight + 4);
-      const actualHeight = Math.max(boundsHeight, requiredHeight);
+    const yScale = useMemo(
+      () => d3.scaleBand().range([0, cellBandHeight]).domain(allYGroups).padding(0.01),
+      [cellBandHeight, allYGroups]
+    );
 
-      return d3.scaleBand().range([0, actualHeight]).domain(allYGroups).padding(0.01);
-    }, [dataShow, height, minCellHeight, allYGroups, boundsHeight]);
+    // Keep parent state aligned before paint so the tooltip uses the same height.
+    useLayoutEffect(() => {
+      if (!setGraphHeight) return;
+      setGraphHeight((current) => (Number(current) === svgHeight ? current : svgHeight));
+    }, [svgHeight, setGraphHeight]);
 
     // Build the rectangles
     const allShapes = dataShow.map((d, i) => {
@@ -177,8 +302,10 @@ export const Renderer = forwardRef(
       const cellData = {
         geneId: d.geneId,
         geneName: d.geneName,
-        geneUrlBgee: `https://www.bgee.org/gene/${d.geneId}`,
+        geneUrlBgee: `/gene/${d.geneId}`,
         speciesId: d.speciesId,
+        speciesLabel: d.speciesLabel,
+        speciesUrl: d.speciesId ? `/species/${d.speciesId}` : undefined,
         anatEntityId: d.anatEntityId,
         anatEntityName: d.anatEntityName,
         anatEntityUrlOls: `http://purl.obolibrary.org/obo/${d.anatEntityId.replace(':', '_')}`,
@@ -191,6 +318,7 @@ export const Renderer = forwardRef(
         yPos: y + xScale.bandwidth() / 2 + MARGIN.bottom,
         value: Math.round(d.value * 100) / 100,
         isExpressed: d.isExpressed,
+        expressionQuality: d.expressionQuality,
         // maxExpScore: d.maxExp.toFixed(2),
         hasDataAffy: d.hasDataAffy,
         hasDataEst: d.hasDataEst,
@@ -198,6 +326,16 @@ export const Renderer = forwardRef(
         hasDataRnaSeq: d.hasDataRnaSeq,
         hasDataScRnaSeq: d.hasDataScRnaSeq,
       };
+      const getHoverData = (e, yLabel = `${d.termId} - ${d.termName}`) => ({
+        speciesLabel: d.speciesLabel,
+        xLabel: `${d.geneId} - ${d.geneName}`,
+        yLabel,
+        value: Math.round(d.value * 100) / 100,
+        isExpressed: d.isExpressed,
+        ...(d.maxExp != null && { maxExpScore: d.maxExp.toFixed(2) }),
+        clientX: e.clientX + 10,
+        clientY: e.clientY - 10,
+      });
 
       // for central circle
       const r = (Math.min(cellWidth, cellHeight) / 2) * 0.9;
@@ -261,15 +399,7 @@ export const Renderer = forwardRef(
               stroke={strokeColour}
               strokeWidth={4}
               onMouseEnter={(e) => {
-                setHoveredCell({
-                  xLabel: `${d.geneId} - ${d.geneName}`,
-                  yLabel: `${d.termId} - ${d.termName}`,
-                  value: Math.round(d.value * 100) / 100,
-                  isExpressed: d.isExpressed,
-                  maxExpScore: d.maxExp.toFixed(2),
-                  clientX: e.clientX + 10,
-                  clientY: e.clientY - 10,
-                });
+                setHoveredCell(getHoverData(e));
               }}
               onMouseLeave={() => setHoveredCell(null)}
               onClick={() => setClickedCell(cellData)}
@@ -292,15 +422,7 @@ export const Renderer = forwardRef(
                 rx={5}
                 strokeWidth={1}
                 onMouseEnter={(e) => {
-                  setHoveredCell({
-                    xLabel: `${d.geneId} - ${d.geneName}`,
-                    yLabel: `${d.termId} - ${d.termName}`,
-                    value: Math.round(d.value * 100) / 100,
-                    isExpressed: d.isExpressed,
-                    maxExpScore: d.maxExp.toFixed(2),
-                    clientX: e.clientX + 10,
-                    clientY: e.clientY - 10,
-                  });
+                  setHoveredCell(getHoverData(e));
                 }}
                 onMouseLeave={() => setHoveredCell(null)}
                 onClick={() => setClickedCell(cellData)}
@@ -324,8 +446,8 @@ export const Renderer = forwardRef(
                 opacity={1}
                 fill={fillColour}
                 strokeWidth={4}
-                onMouseEnter={() => {
-                  setHoveredCell(cellData);
+                onMouseEnter={(e) => {
+                  setHoveredCell({ ...cellData, clientX: e.clientX + 10, clientY: e.clientY - 10 });
                 }}
                 onMouseLeave={() => setHoveredCell(null)}
                 onClick={() => setClickedCell(cellData)}
@@ -341,8 +463,8 @@ export const Renderer = forwardRef(
                 opacity={1}
                 fill={strokeColour}
                 strokeWidth={4}
-                onMouseEnter={() => {
-                  setHoveredCell(cellData);
+                onMouseEnter={(e) => {
+                  setHoveredCell({ ...cellData, clientX: e.clientX + 10, clientY: e.clientY - 10 });
                 }}
                 onMouseLeave={() => setHoveredCell(null)}
                 onClick={() => setClickedCell(cellData)}
@@ -367,15 +489,7 @@ export const Renderer = forwardRef(
               stroke="white"
               strokeWidth={2}
               onMouseEnter={(e) => {
-                setHoveredCell({
-                  xLabel: `${d.geneId} - ${d.geneName}`,
-                  yLabel: `${d.termId} - ${d.termName}`,
-                  value: Math.round(d.value * 100) / 100,
-                  isExpressed: d.isExpressed,
-                  // maxExpScore: d.maxExp.toFixed(2),
-                  clientX: e.clientX + 10,
-                  clientY: e.clientY - 10,
-                });
+                setHoveredCell(getHoverData(e, `${d.termName}`));
               }}
               onMouseLeave={() => setHoveredCell(null)}
               onClick={() => setClickedCell(cellData)}
@@ -385,56 +499,53 @@ export const Renderer = forwardRef(
       }
     });
 
-    const xLabelsTop = allXGroups.map((name, i) => {
-      const x = xScale(name);
+    const xLabelsTop = xTerms.map((term, i) => {
+      const x = xScale(term.value ?? term.label);
       const xCoord = x + xScale.bandwidth() / 2;
       const yCoord = -10;
-      // const yCoord = boundsHeight + 10 + (i % 2) * 20; // stagger labels
+      const displayLabel = term.topLabel ?? term.label ?? term.value ?? 'Unknown';
 
-      if (!x) {
+      if (x === undefined) {
         return null;
       }
 
-      const idx = i;
       return (
         <text
-          key={`heatMapXLabel-${idx}`}
+          key={`heatMapXLabel-${i}`}
           x={xLabelRotation === 0 ? xCoord : null}
           y={xLabelRotation === 0 ? yCoord : null}
           transform={xLabelRotation !== 0 ? `translate(${xCoord}, ${yCoord}) rotate(${xLabelRotation})` : null}
           textAnchor={xLabelRotation === 0 ? 'middle' : 'start'}
           dominantBaseline="middle"
           fontSize={15}
-          // transform="`rotate(-10) translate(${xCoord}, ${yCoord})`"
         >
-          {name}
+          {renderSvgTextLines(displayLabel, `heatMapXLabel-${i}`)}
         </text>
       );
     });
 
-    const xLabelsBottom = allXGroups.map((name, i) => {
-      const x = xScale(name);
+    const xLabelsBottom = xTerms.map((term, i) => {
+      const x = xScale(term.value ?? term.label);
       const xCoord = x + xScale.bandwidth() / 2;
-      const yCoord = boundsHeight + 10;
-      // const yCoord = boundsHeight + 10 + (i % 2) * 20; // stagger labels
+      const actualHeatmapHeight = yScale.range()[1] || 0;
+      const yCoord = actualHeatmapHeight + X_LABEL_ANCHOR_OFFSET;
+      const displayLabel = term.bottomLabel ?? term.label ?? term.value ?? 'Unknown';
 
-      if (!x) {
+      if (x === undefined) {
         return null;
       }
 
-      const idx = i;
       return (
         <text
-          key={`heatMapXLabel-${idx}`}
+          key={`heatMapXLabelBottom-${i}`}
           x={xLabelRotation === 0 ? xCoord : null}
           y={xLabelRotation === 0 ? yCoord : null}
           transform={xLabelRotation !== 0 ? `translate(${xCoord}, ${yCoord}) rotate(${xLabelRotation})` : null}
           textAnchor={xLabelRotation === 0 ? 'middle' : 'end'}
           dominantBaseline="middle"
           fontSize={15}
-          // transform="`rotate(-10) translate(${xCoord}, ${yCoord})`"
         >
-          {name}
+          {renderSvgTextLines(displayLabel, `heatMapXLabelBottom-${i}`)}
         </text>
       );
     });
@@ -451,16 +562,21 @@ export const Renderer = forwardRef(
       <stop key={`colorLegendStop-${idx}`} stopColor={colorScale((max * idx) / 100)} offset={`${idx}%`} />
     ));
     const colorLegendPosX = 0;
-    const colorLegendPosY = height;
+    // Position legend after the main heatmap
+    // Calculate the actual heatmap content height (yScale range height)
+    const actualHeatmapHeight = yScale.range()[1] || 0;
+    // Position legend just below the heatmap, with enough gap to clear the
+    // (possibly rotated and long) bottom x-axis labels.
+    const colorLegendPosY = actualHeatmapHeight + bottomLabelGap;
 
     return (
       <svg
         ref={ref}
         width={Math.min(width, maxGraphWidth)}
-        height={height + colorLegendHeight}
+        height={svgHeight}
         style={{ backgroundColor }}
-        viewBox={`0 0 ${width} ${height + colorLegendHeight}`}
-        preserveAspectRatio="xMidYMid meet"
+        viewBox={`0 0 ${width} ${svgHeight}`}
+        preserveAspectRatio={scaleSvg ? 'xMidYMid meet' : 'none'}
       >
         <defs>
           <style>{`
@@ -479,13 +595,18 @@ export const Renderer = forwardRef(
         `}</style>
           <linearGradient id="colorLegendGradient">{colorLegendStops}</linearGradient>
         </defs>
-        <g width={boundsWidth} height={boundsHeight} transform={`translate(${[marginLeft, MARGIN.top].join(',')})`}>
-          {allShapes}
-          {xLabelsTop}
-          {xLabelsBottom}
-
-          <g transform={`translate(-${marginLeft - 10}, 5)`}>
-            <Tree data={drilldown} yScale={yScale} toggleCollapse={onToggleExpandCollapse} labelFont="Open Sans" />
+        <g
+          width={boundsWidth}
+          height={cellBandHeight}
+          transform={`translate(${[marginLeft, effectiveMarginTop].join(',')})`}
+        >
+          <g>
+            <g>{allShapes}</g>
+            <g>{xLabelsTop}</g>
+            <g>{xLabelsBottom}</g>
+            <g transform={`translate(-${marginLeft - 10}, 5)`}>
+              <Tree data={drilldown} yScale={yScale} toggleCollapse={onToggleExpandCollapse} labelFont="Open Sans" />
+            </g>
           </g>
 
           <g transform={`translate(-${marginLeft - 50}, 0)`}>
@@ -493,7 +614,7 @@ export const Renderer = forwardRef(
               <g>
                 <ColorLegendSvg
                   posX={colorLegendPosX}
-                  posY={colorLegendPosY - 50}
+                  posY={colorLegendPosY}
                   width={colorLegendWidth}
                   height={colorLegendHeight}
                   colorScale={colorScale}
@@ -507,7 +628,7 @@ export const Renderer = forwardRef(
                 <text
                   id="txtSecondaryLegend"
                   x={colorLegendPosX + colorLegendWidth + 25}
-                  y={colorLegendPosY + colorLegendBoundsHeight}
+                  y={colorLegendPosY + COLOR_LEGEND_SWATCH_BASELINE}
                   dominantBaseline="middle"
                   fontSize={15}
                   fontFamily="sans"

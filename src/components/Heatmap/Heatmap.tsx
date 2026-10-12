@@ -51,11 +51,11 @@ export type HeatmapProps = {
   onToggleExpandCollapse: any;
   isLoading?: boolean;
   isInitializingFromUrl?: boolean;
-  defaultXLabelRotation?: unknown;
-  defaultMaxGraphWidth?: unknown;
-  defaultCellHeight?: unknown;
-  showResetButton?: unknown;
-  rendererMargins?: unknown;
+  defaultXLabelRotation?: number;
+  defaultMaxGraphWidth?: number;
+  defaultCellHeight?: number;
+  showResetButton?: boolean;
+  rendererMargins?: { top: number; right: number; bottom: number; left: number };
 };
 
 const Heatmap = ({
@@ -63,23 +63,32 @@ const Heatmap = ({
   height = 800,
   backgroundColor = '#ffffff',
   data,
+  getChildData,
+  xTerms,
   yTerms,
   termProps,
   yLabelJustify = 'right',
   onToggleExpandCollapse,
-  ..._heatmapMatrixOnlyOpts
+  defaultXLabelRotation = 0,
+  defaultMaxGraphWidth = 800,
+  defaultCellHeight = 30,
+  rendererMargins,
 }: HeatmapProps) => {
-  void _heatmapMatrixOnlyOpts;
   // COMPONENT STATE
   const [hoveredCell, setHoveredCell] = useState(null);
   const [clickedCell, setClickedCell] = useState(null);
   const [showLegend, setShowLegend] = useState(() => getStoredValue(STORAGE_KEYS.SHOW_LEGEND, true));
-  const [xLabelRotation, setXLabelRotation] = useState(() => getStoredValue(STORAGE_KEYS.X_LABEL_ROTATION, 0));
+  const [xLabelRotation, setXLabelRotation] = useState(() =>
+    getStoredValue(STORAGE_KEYS.X_LABEL_ROTATION, defaultXLabelRotation)
+  );
   const [yLabelAlign, setYLabelAlign] = useState(() => getStoredValue(STORAGE_KEYS.Y_LABEL_ALIGN, yLabelJustify));
   const [graphWidth, setGraphWidth] = useState(width);
   const [graphHeight, setGraphHeight] = useState(height);
+  // Full SVG height requested from the settings field. Null keeps the row pitch
+  // at defaultCellHeight instead of stretching into the initial placeholder height.
+  const [minSvgHeight, setMinSvgHeight] = useState<number | null>(null);
   // outer width, if graphWidth > maxGraphWidth -> scale SVG down
-  const [maxGraphWidth, setMaxGraphWidth] = useState(800);
+  const [maxGraphWidth, setMaxGraphWidth] = useState(defaultMaxGraphWidth);
   const [cellWidth, setCellWidth] = useState(() => getStoredValue(STORAGE_KEYS.CELL_WIDTH, 50));
   const [colorPalette, setColorPalette] = useState(() => getStoredValue(STORAGE_KEYS.COLOR_PALETTE, 'viridis'));
   const [bgColor, setBgColor] = useState(() => getStoredValue(STORAGE_KEYS.BACKGROUND_COLOR, backgroundColor));
@@ -95,7 +104,7 @@ const Heatmap = ({
 
   // Add state to track input values during editing
   const [graphWidthInput, setGraphWidthInput] = useState(maxGraphWidth);
-  const [graphHeightInput, setGraphHeightInput] = useState(graphHeight);
+  const [graphHeightInput, setGraphHeightInput] = useState(String(graphHeight));
 
   // Update local input state without updating the actual graphWidth
   const handleGraphWidthChange = (event) => {
@@ -115,9 +124,15 @@ const Heatmap = ({
 
   // Update the actual graphHeight and localStorage on blur
   const handleGraphHeightBlur = (event) => {
-    const { value } = event.target;
+    const value = Number(event.target.value);
+    if (!Number.isFinite(value) || value <= 0) return;
+    setMinSvgHeight(value);
     setGraphHeight(value);
   };
+
+  useEffect(() => {
+    setGraphHeightInput(String(graphHeight));
+  }, [graphHeight]);
 
   // Move visibleTermIds before colorScale
   // Memoize the visible term IDs calculation
@@ -233,31 +248,24 @@ const Heatmap = ({
   useEffect(() => {
     // console.log(`[Heatmap] (Re)calculating graph height...`);
     // console.log(`[Heatmap] drilldown:\n${JSON.stringify(drilldown)}`);
-    function countVisibleTerms(terms) {
-      let count = 0;
+    function longestVisibleLabel(terms) {
       let maxLabelLength = 0;
 
       function traverse(item) {
-        count += 1;
-        maxLabelLength = Math.max(maxLabelLength, item.label.length);
-        if (item.isExpanded) {
-          if (item.children && item.children.length > 0) {
-            item.children.forEach(traverse);
-          }
+        maxLabelLength = Math.max(maxLabelLength, item.label?.length || 0);
+        if (item.isExpanded && item.children?.length) {
+          item.children.forEach(traverse);
         }
       }
 
       terms.forEach(traverse);
-      return { count, maxLabelLength };
+      return maxLabelLength;
     }
 
-    const { count: numVisibleTerms, maxLabelLength } = countVisibleTerms(yTerms);
-    // console.log(`[Heatmap] ${numVisibleTerms} visible terms`);
+    const maxLabelLength = longestVisibleLabel(yTerms);
     // console.log(`[Heatmap] yTerms:\n${JSON.stringify(yTerms, null, 2)}`);
-    const flexHeight = Math.max(numVisibleTerms * 30 + COLOR_LEGEND_HEIGHT, 250);
     const flexMarginLeft = Math.max(maxLabelLength * 7.5 + 50, marginLeft);
     const flexWidth = Math.max(flexMarginLeft + 50, graphWidth);
-    setGraphHeight(flexHeight);
     setGraphWidth(flexWidth);
     setMarginLeft(flexMarginLeft);
   }, [yTerms]);
@@ -370,7 +378,7 @@ const Heatmap = ({
           <Renderer
             ref={svgRef}
             width={graphWidth}
-            height={graphHeight - COLOR_LEGEND_HEIGHT}
+            height={minSvgHeight != null ? minSvgHeight - COLOR_LEGEND_HEIGHT : 0}
             backgroundColor={bgColor}
             data={displayData}
             drilldown={yTerms}
@@ -391,8 +399,13 @@ const Heatmap = ({
             maxCellWidth={cellWidth}
             maxGraphWidth={maxGraphWidth}
             setGraphWidth={setGraphWidth}
+            getChildData={getChildData}
+            xTerms={xTerms}
+            defaultCellHeight={defaultCellHeight}
             rowOrdering={rowOrdering}
             rowAggFn={rowAggFn}
+            setGraphHeight={setGraphHeight}
+            rendererMargins={rendererMargins}
           />
 
           <Tooltip interactionData={hoveredCell} width={graphWidth} height={graphHeight - COLOR_LEGEND_HEIGHT} />

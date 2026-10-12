@@ -1,11 +1,13 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import Bulma from '../Bulma';
 import api from '../../api';
 import Heatmap from '../Heatmap/Heatmap';
 import GENE_DETAILS_HTML_IDS from '../../helpers/constants/GeneDetailsHtmlIds';
+import { getSpeciesLabel } from '../../helpers/getSpeciesLabel';
 import useQuery from '../../hooks/useQuery';
 import config from '../../config.json';
+import { appendOthersBucket } from '../../helpers/othersAnatomicalBucket';
 
 const APP_VERSION = config.version;
 const URL_VERSION = APP_VERSION.replaceAll('.', '-');
@@ -50,6 +52,18 @@ const DATA_TYPES = [
   },
 ];
 export const ALL_DATA_TYPES = DATA_TYPES.map((data) => data.key);
+
+const sameDataTypeSelection = (left: string[], right: string[]) => {
+  if (left.length !== right.length) return false;
+  const rightKeys = new Set(right);
+  return left.every((key) => rightKeys.has(key));
+};
+
+const dataTypesFromQuery = (queryValue) => {
+  const allowed = new Set(ALL_DATA_TYPES);
+  const selected = (queryValue?.toString().split(',') || []).filter((key) => allowed.has(key));
+  return selected.length > 0 ? selected : null;
+};
 export const ROOT_TERM_ANAT_ENTITY = 'UBERON:0001062-GO:0005575';
 export const BASE_LIMIT = '10000';
 export const EXPR_CALLS = 'expr_calls';
@@ -73,6 +87,7 @@ type ExpressionSearchParams = {
   limit?: string;
   conditionalParam2?: string[];
   condObserved?: number;
+  observedData?: boolean;
   discardAnatEntityAndChildrenId?: string;
 };
 
@@ -98,7 +113,7 @@ type GeneExpressionGraphProps = {
   geneName?: string;
 };
 
-const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) => {
+const GeneExpressionGraph = ({ geneId, geneName, speciesId }: GeneExpressionGraphProps) => {
   // Init from URL
   const location = useLocation();
   const initSearch = new URLSearchParams(location.search);
@@ -107,6 +122,12 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingChildren, setIsLoadingChildren] = useState(false);
   const [searchResult, setSearchResult] = useState<any>();
+  const geneTerms = [
+    {
+      label: geneName ? `${geneId} - ${geneName}` : geneId,
+      value: geneId,
+    },
+  ];
   const [anatomicalTerms, setAnatomicalTerms] = useState<AnatomicalTermNode[]>([]);
   const [anatomicalTermsProps, setAnatomicalTermsProps] = useState<Record<string, any>>({});
   const [dataType, setDataTypes] = useState<string[]>(ALL_DATA_TYPES);
@@ -115,18 +136,25 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
 
   // Sync local state with URL parameter
   useEffect(() => {
-    if (dataTypeExpr) {
-      setDataTypes(dataTypeExpr.split(','));
-    } else {
-      setDataTypes(ALL_DATA_TYPES);
-    }
+    setDataTypes(dataTypesFromQuery(dataTypeExpr) || ALL_DATA_TYPES);
   }, [dataTypeExpr]);
+
+  const dataTypeFieldsRef = useRef<HTMLDivElement>(null);
+  // Checkboxes the user sees. Read at click time so Update is not stuck on a selection
+  // that React has not committed yet.
+  const selectedDataTypes = () => {
+    const inputs = dataTypeFieldsRef.current?.querySelectorAll<HTMLInputElement>('input[type="checkbox"][data-key]');
+    if (!inputs?.length) return dataType;
+    const checked = new Set(
+      [...inputs].filter((input) => input.checked && input.dataset.key).map((input) => input.dataset.key as string)
+    );
+    return DATA_TYPES.map((type) => type.key).filter((key) => checked.has(key));
+  };
 
   // In order to disable the search button if the search has already been made
   const formSearchButtonIsDisabled = useMemo(() => {
-    const oldDataType = (dataTypeExpr?.split(',') || DATA_TYPES.map((d) => d.key)).sort();
-
-    return JSON.stringify(dataType.sort()) === JSON.stringify(oldDataType);
+    const oldDataType = dataTypesFromQuery(dataTypeExpr) || ALL_DATA_TYPES;
+    return sameDataTypeSelection(dataType, oldDataType);
   }, [dataType, dataTypeExpr]);
 
   const getSearchParams = (): ExpressionSearchParams => {
@@ -135,7 +163,8 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
       isFirstSearch: true,
       initSearch,
       pageType: EXPR_CALLS,
-      dataType: dataTypeExpr?.split(',') || dataType,
+      dataType: dataTypesFromQuery(dataTypeExpr) || ALL_DATA_TYPES,
+      // SUMMARY calls ignore this and request bronze. Expansion uses it.
       dataQuality: 'SILVER',
       selectedExpOrAssay: [],
       selectedSpecies: speciesId,
@@ -237,56 +266,9 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
     // console.log(`[GeneExpressionGraph.prepTermHierarchy] termProps:\n${JSON.stringify(termProps)}`);
     // console.log(`[GeneExpressionGraph.prepTermHierarchy] roots:\n${JSON.stringify(roots)}`);
     const anatTerms = roots.map((root) => createNestedStructure(root));
-    // console.log(`[GeneExpressionGraph.triggerInitialSearch] anatTerms (top-level):\n${JSON.stringify(anatTerms, null, 2)}`);
+    appendOthersBucket(anatTerms, termProps);
 
     return { anatTerms, termProps };
-  };
-
-  // add lower level ontology terms to existing hierarchy based on exression call data
-  const addLowLevelTerms = (parentId, nestedStructure, terms, expressionCalls) => {
-    // Make a copy of termProps to avoid reassigning the parameter directly
-    const newTerms: Record<string, { label: string; isTopLevel: boolean }> = {};
-
-    // Helper function to recursively find the term by id and add children
-    const addChildren = (term) => {
-      // Check if the current term's id matches the parentId
-      if (term.id === parentId) {
-        // Loop through each expressionCall and add children to the term
-        expressionCalls.forEach((call) => {
-          const { anatEntity, cellType } = call.condition;
-          const termId = `${anatEntity.id}-${cellType.id}`;
-          const termLabel = cellType.id !== 'GO:0005575' ? `${anatEntity.name} : ${cellType.name}` : anatEntity.name;
-          if (!(termId in terms) && !(termId in newTerms)) {
-            const newChild = {
-              id: termId,
-              label: termLabel,
-              anatEntityId: anatEntity.id,
-              anatEntityLabel: anatEntity.name,
-              cellTypeId: cellType.id,
-              cellTypeLabel: cellType.name,
-              depth: term.depth + 1,
-              isTopLevelTerm: false,
-              children: [] as AnatomicalTermNode[],
-            } as AnatomicalTermNode;
-            term.children.push(newChild);
-            // Add the new term to termProps
-            newTerms[termId] = {
-              label: termLabel,
-              isTopLevel: false,
-            };
-          }
-        });
-      } else {
-        // If not the matching term, recurse into its children
-        term.children.forEach((child) => addChildren(child));
-      }
-    };
-
-    // Start the recursive search from each root term in the nested structure
-    nestedStructure.forEach((root) => addChildren(root));
-
-    // Return the updated termProps
-    return newTerms;
   };
 
   const triggerInitialSearch = async () => {
@@ -299,37 +281,16 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
     setIsLoading(true);
 
     try {
-      // console.log(`[GeneExpressionGraph.triggerInitialSearch] submitting API requests...`);
-      const [result1, result2] = await Promise.all([
-        api.search.geneExpressionMatrix.initialSearch(params),
-        api.search.geneExpressionMatrix.initialSearchComplementary(params),
-      ]);
+      const { resp } = await api.search.geneExpressionMatrix.initialSearch(params);
 
-      const { resp: resp1 } = result1;
-      const { resp: resp2 } = result2;
-
-      if (resp1.code === 200 && resp2.code === 200) {
-        // console.log(JSON.stringify(resp1));
-        // console.log(JSON.stringify(resp2));
-
-        const { anatTerms, termProps } = prepTermHierarchy(resp1.data.expressionData.expressionCalls);
-        // console.log(`[GeneExpressionGraph.triggerInitialSearch] anatTerms:\n${JSON.stringify(anatTerms)}`);
+      if (resp.code === 200) {
+        const { anatTerms, termProps } = prepTermHierarchy(resp.data.expressionData.expressionCalls);
         setAnatomicalTerms(anatTerms);
-        // console.log(`[GeneExpressionGraph.triggerInitialSearch] termProps:\n${JSON.stringify(termProps)}`);
-        const newTermProps = addLowLevelTerms(
-          ROOT_TERM_ANAT_ENTITY,
-          anatTerms,
-          termProps,
-          resp2.data.expressionData.expressionCalls
-        );
-        Object.assign(termProps, newTermProps);
         setAnatomicalTermsProps(termProps);
-
-        const { data } = resp1;
-        data.expressionData.expressionCalls.push(...resp2.data.expressionData.expressionCalls);
-
         setIsLoading(false);
-        setSearchResult(data);
+        setSearchResult(resp.data);
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
       logApiError('[GeneExpressionGraph.triggerInitialSearch]', error, {
@@ -354,17 +315,16 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
     params.isFirstSearch = false;
     // Set parent anatomical term as selected tissue
     params.selectedTissue = [selectedTissueId];
-    // Fix other condition params to top-level terms (overrides form fields!)
+    // Do not send cell_type_id — child expansion is anatomical terms only.
     params.hasTissueSubStructure = 1; // we want children of parent term!
     params.limit = BASE_LIMIT;
     params.conditionalParam2 = ['anat_entity']; // restrict to anatomical terms
     params.condObserved = 1;
-    // HD: discard top-level terms from search results
-    // NOTE: use only when we want to get children of "multicellular organism"
-    if (parentId === 'UBERON:0000468-GO:0005575') {
-      console.log(`[GeneExpressionGraph] !use discardAnatEntityAndChildrenId: SUMMARY!`);
-      params.discardAnatEntityAndChildrenId = 'SUMMARY';
-    }
+    params.observedData = true;
+    // Partition the SUMMARY forest: punch out other top-level organ subtrees.
+    // The backend ignores discard seeds that are ancestors of the include term, so this
+    // is safe for nested SUMMARY organs (e.g. CNS) as well as the residual bucket.
+    params.discardAnatEntityAndChildrenId = 'SUMMARY';
 
     setIsLoadingChildren(true);
     // DEBUG: remove console log in prod
@@ -408,7 +368,7 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
           const { id: anatEntityId, name: anatEntityName } = exprCall.condition.anatEntity;
           const { id: cellTypeId, name: cellTypeName } = exprCall.condition.cellType;
           const isSingleCell = cellTypeId !== 'GO:0005575';
-          // if (!(anatEntityId === selectedTissueId && cellTypeId === 'GO:0005575')) {
+          if (anatEntityId === 'SUMMARY') return;
           if (!(anatEntityId === selectedTissueId) || isSingleCell) {
             newChildTerms.add(
               JSON.stringify({
@@ -589,13 +549,14 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
       const isExpressed = result.expressionState === 'expressed';
 
       return {
-        x: gName?.length > 0 ? gName : gId,
+        x: gId, // Use geneId for x coordinate (matches xTerms.value for scale domain)
         y: termId,
         termId,
         termName,
         geneId: gId,
         geneName: gName,
         speciesId: specId,
+        speciesLabel: getSpeciesLabel(result.gene.species),
         anatEntityId,
         anatEntityName,
         cellTypeId,
@@ -604,6 +565,7 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
         isExpressed,
         hasDataAffy: result.dataTypesWithData.AFFYMETRIX,
         hasDataEst: result.dataTypesWithData.EST,
+        expressionQuality: result.expressionQuality,
         hasDataInSitu: result.dataTypesWithData.IN_SITU,
         hasDataRnaSeq: result.dataTypesWithData.RNA_SEQ,
         hasDataScRnaSeq: result.dataTypesWithData.SC_RNA_SEQ,
@@ -624,11 +586,12 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
           </progress>
         )}
 
-        <div className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
+        <div ref={dataTypeFieldsRef} className="is-flex is-flex-wrap-wrap gene-expr-fields-wrapper mt-2">
           {DATA_TYPES.map((c) => (
             <label className="checkbox ml-2 is-size-7 is-flex is-align-items-center" key={c.key}>
               <input
                 type="checkbox"
+                data-key={c.key}
                 checked={!!dataType.find((d) => d === c.key)}
                 onChange={(e) => {
                   setDataTypes((prev) => {
@@ -648,7 +611,7 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
           ))}
           <Bulma.Button
             className="search-form"
-            disabled={JSON.stringify(dataType.sort()) === JSON.stringify(DATA_TYPES.map((d) => d.key).sort())}
+            disabled={sameDataTypeSelection(dataType, ALL_DATA_TYPES)}
             onClick={() => setDataTypes(DATA_TYPES.map((d) => d.key))}
           >
             Select All
@@ -662,12 +625,10 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
             className="search-form"
             disabled={formSearchButtonIsDisabled}
             onClick={() => {
+              const selected = selectedDataTypes();
               const queryParams = new URLSearchParams(window.location.search);
-              if (
-                JSON.stringify(dataType.sort()) !== JSON.stringify(DATA_TYPES.map((d) => d.key).sort()) &&
-                dataType.length > 0
-              )
-                queryParams.set(dataTypeKey, dataType.join(','));
+              if (!sameDataTypeSelection(selected, ALL_DATA_TYPES) && selected.length > 0)
+                queryParams.set(dataTypeKey, selected.join(','));
               else queryParams.delete(dataTypeKey);
 
               navigate(`${URL_ROOT}${location.pathname}?${queryParams.toString()}`, {
@@ -680,10 +641,11 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
           </Bulma.Button>
         </div>
 
-        {!isLoading && searchResult && heatmapData.length > 0 && (
+        {!isLoading && searchResult && anatomicalTerms.length > 0 && (
           <Heatmap
             data={heatmapData}
             getChildData={triggerSearchChildren}
+            xTerms={geneTerms}
             yTerms={anatomicalTerms}
             termProps={anatomicalTermsProps}
             onToggleExpandCollapse={onToggleExpandCollapse}
@@ -693,7 +655,7 @@ const GeneExpressionGraph = ({ geneId, speciesId }: GeneExpressionGraphProps) =>
             backgroundColor="white"
           />
         )}
-        {!isLoading && searchResult && heatmapData.length === 0 && (
+        {!isLoading && searchResult && anatomicalTerms.length === 0 && heatmapData.length === 0 && (
           <div className="is-flex is-justify-content-center is-align-items-center">
             <p className="is-size-4">No data found</p>
           </div>
