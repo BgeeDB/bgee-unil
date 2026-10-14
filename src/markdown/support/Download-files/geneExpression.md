@@ -188,7 +188,7 @@ Call quality from all data types for the selected combination of condition param
 
 ##### <a name="fdr-column-11"></a>FDR (column 11)
 
-FDR-corrected p-value of the call.
+FDR-corrected p-value of the call. Bgee does not report p-values below 1e-15, in this column or in the FDR columns of each data type: a value of 1e-15 means 1e-15 or less.
 
 ##### <a name="expression-score-column-12"></a>Expression score (column 12)
 
